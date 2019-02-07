@@ -21,3 +21,8 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+src/leftNav.js
+package.json
+package-lock.json
+public/index.html
+src/App.js
