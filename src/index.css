@@ -1,14 +1,196 @@
-body {
-  margin: 0;
-  padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+@charset "utf-8";
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-}
+/* CSS Document */
+
+	html {display:table; height:100%; width:100%;}
+	body {height:100%; font-family: 'Roboto Condensed', sans-serif; font-weight:300; font-size:14px;}
+
+
+/*** Bootstrap Theming ***/
+
+/* Template DOMs */
+	.container-fluid {padding:0;}
+	.left-nav {display: flex; flex-direction: column; background-color:#000;}
+	.content { float: right; display: flex; flex-direction: column; background-color:#F5F5F5; }
+
+    label.nested {width:110px;}
+    input.nested {width:150px;}
+
+ 	/* Custom Checkbox Inputs*/
+	label.custom-checkbox {margin-bottom:0; overflow:hidden;} /* Keep it vertically aligned in table rows */
+	.custom-checkbox {display: block; position: relative;  height: 25px; width: 25px; margin:0 auto; overflow:hidden; cursor: pointer; font-size: 22px; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;}
+	.custom-checkbox input {position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0;} /* Hides the browsers version */
+	.checkmark {position: absolute; top: 0; left: 0; height: 25px; width: 25px; background-color: #F5F5F5; border:solid 1px #CCC; border-radius:4px;} /* Creates new checkmark */
+	.custom-checkbox:hover input ~ .checkmark {background-color: #666; border:solid 1px #666;} /* Adds hover color to the box */
+	.custom-checkbox input:checked ~ .checkmark {background-color: #666; border:solid 1px #666;} /* Adds blue background color to the box when checked */
+
+	
+	.checkmark:after {content: ""; position: absolute; display: none;} /* Creates the checkmark indicator (hidden when not checked) */
+	.custom-checkbox input:checked ~ .checkmark:after {display: block;} /* Show the checkmark when checked */
+	.custom-checkbox .checkmark:after {left: 9px;top: 5px; width: 5px; height: 10px; border: solid white; border-width: 0 3px 3px 0; -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); transform: rotate(45deg);} /* Styles the checkmark */
+	
+	
+
+	/* Custom Default Links*/
+	a {color:#01579b;}
+	
+	.btn {font-size:1em;}
+	.btn-primary {background-color:#01579b; color:#fff; border:none;}
+	.btn-secondary {color:#495057; background-color:#F5F5F5; border-color:#CCC;}
+	.btn-secondary.action {vertical-align:middle; padding:.25rem;}
+
+	.form-control {font-size:1em; display:inline-block; background-color:#F5F5F5;}
+	.dropdown {display:inline-block; padding-left:0;} 
+
+	.landing {width:100vw; height:100vh; background-color:#333; background-image:url(images/guitar-bg.jpg); background-size:cover;}
+
+	.table thead {box-shadow:0px 3px 3px #F5F5F5; z-index:1;}
+	.table thead th {border-bottom:1px solid #dee2e6;}
+	.table td, .table th {border-top:none; border-bottom:1px solid #dee2e6; vertical-align:middle; padding:.50rem}
+
+	/* Table Column widths no longer supported in Bootstrap 4 reliably */
+	
+	.table td.td-2 {max-width:2%;}
+	.table td.td-5 {max-width:5%;}
+	.table td.td-10 {max-width:10%;}
+	.table td.td-20 {max-width:20%;}
+	.table td.td-30 {max-width:30%;}
+	.table td.td-40 {max-width:40%;}
+	.table td.td-50 {max-width:50%;}
+	.table td.td-60 {max-width:60%;}
+	.table td.td-70 {max-width:70%;}
+	.table td.td-80 {max-width:80%;}
+	.table td.td-90 {max-width:90%;}
+
+	.centered {text-align:center;}
+
+	.material-icons {display:inline-flex; vertical-align:middle;}
+	.purple-icon {color:#c208bb;}
+
+/*** End Bootstrap Theming ***/
+
+
+	/* External Template */
+	.logo {position:fixed; height:102px; width:110px; margin: 20px;}
+	
+	nav.top-nav.ext {width:100%; text-align:right;}
+	nav.top-nav.ext ul {list-style:none; margin:0 40px 0 0; padding:0;}
+	nav.top-nav.ext ul li {display:inline-block;}
+	nav.top-nav.ext ul li a {display:block; margin-right:30px; padding:10px; color:#fff; text-decoration:none;}
+	nav.top-nav.ext ul li a:hover {color:#dc2c46;}
+	
+	.over-bar {position:absolute; top:34%; height:200px; width:100%; color:#fff; text-align:center; padding:20px; z-index:1;}
+	
+	@keyframes overbar-h1
+	{
+		0% {opacity:0.0;}
+	   50% {opacity:0.0;}
+	  100% {opacity:1.0;}
+	}
+	
+	.over-bar h1 {font-size:4.2em; animation-name:overbar-h1; animation-duration:1s; animation-timing-function:ease-in-out;}
+	
+	@keyframes overbar-h2
+	{
+		0% {opacity:0.0;}
+	   50% {opacity:0.0;}
+	  100% {opacity:1.0;}
+	}
+	
+	.over-bar h2 {font-size:1.6em; animation-name:overbar-h2; animation-duration:2s; animation-timing-function:ease-in-out;}
+	
+	
+	@keyframes bar
+	{
+		0% {height:0px; opacity:0.0;}
+		100% {height:200px; opacity: 0.7;}
+	}
+	
+	.bar {position:absolute; top:34%; height:200px; width:100%; color:#fff; background-color:#000; opacity:0.7; animation-name:bar; animation-duration:1s;}
+	
+	@keyframes btn-span
+	{
+		0% {opacity:0.0;}
+	   50% {opacity:0.0;}
+	  100% {opacity:1.0;}
+	}
+	
+	.over-bar span {display:inline-block; margin-top:10px; animation-name:btn-span; animation-duration:3s; animation-timing-function:ease-in-out;}
+	.over-bar button {width:160px; color:#fff;}
+	
+	.over-bar button.access.btn {background-color:#dc2c46; margin-right:5px;}
+	.over-bar button.access.btn:hover {background-color:#f14760; box-shadow: 3px 3px 3px #111;}
+	
+	.over-bar button.log-in.btn {background-color:#5e30a8; margin-left:5px;}
+	.over-bar button.log-in.btn:hover {background-color:#7546c1; box-shadow: 3px 3px 3px #111;}
+	
+	/* Internal Template */
+
+	nav.left-nav {display: flex; flex-direction: column; width:260px!important; background-color:#000; text-align:left;}
+	nav.left-nav ul {list-style:none; margin:0; padding:0;}
+	nav.left-nav ul li a {display:block; color:#fff; padding:10px 10px 10px 20px; text-decoration:none; border-bottom:solid 1px #000;}
+	nav.left-nav ul li a:hover {background-color:#333;}
+	nav.left-nav ul li a.steps {background-color:#464646;}
+	nav.left-nav ul li a.steps:hover {color:#333; background-color:#F5F5F5;}
+
+	nav.left-nav span.count-circle {color:#333; font-weight:700; padding: 3px 8px; margin:auto 6px auto 3px;}
+	
+	nav.left-nav span.left-nav-logo {display:block; margin:20px auto 10px auto; background-image:url(images/guardian-logo.png); background-repeat:no-repeat; height:133px; width:144px;}
+	
+	nav.left-nav .fixed-left-nav {position:fixed; width:100%; top:0; left:0; padding: 0px 0px 0px 0px; background-image:url(images/gradient-logo-bg.png); background-repeat:no-repeat; background-size:auto; overflow: hidden; background-color:#000;}
+
+	nav.top-nav.int {text-align:right;}
+	nav.top-nav.int ul {list-style:none; margin:0 40px 0 0; padding:0;}
+	nav.top-nav.int ul li {display:inline-block;}
+	nav.top-nav.int ul li a {display:block; margin-right:30px; padding:8px; color:#333; text-decoration:none;}
+	nav.top-nav.int ul li a:hover {color:#01579b;}
+	nav.top-nav.int ul li a.help {background-color:#01579b; color:#fff;}
+
+	/* Page Formats */
+	section.page-container {display: flex; flex-direction: column; margin:0px 40px 40px 40px; padding:30px; background-color:#fff;}
+ 	section.page-container h1 {font-size:2.2em;}
+	section.page-container h2 {font-size:1.4em; margin-top:70px;}
+
+	span.count-circle {background-color:#80d8ff; padding: 3px 10px; border-radius:100%;}
+
+	span.project-right {float:right;}
+	span.project-status {vertical-align:sub; font-style:italic;}
+	
+	button.close-project {margin-left:30px;}
+	
+	.required-ind {color:#FF0000;}
+
+	.save-buttons {text-align:right; padding-right:30px; padding-bottom:30px; background-color:#fff;}
+	.save-buttons .btn {margin-left:10px;}
+
+	/* Release Information */
+
+	.album-art-drop {border:solid 1px #CCC; background-color:#d9f3fe; height:190px;}
+	.cover-art label {vertical-align:top; padding-top:5px;}
+
+	.notes-row {margin-left:15px;}
+	.notes-row > textarea {vertical-align:top; width:96.5%; height:120px;}	
+
+	/* Project Contacts */
+
+	.additional-contacts label {margin-left:15px; vertical-align:top;} 
+	.additional-contacts textarea {height:120px; margin-left:-2px; width:97.5%;}
+
+	/* Audio Files */
+	
+	.audio-drop-area  {border:solid 1px #CCC; width:100%; height:190px; background-color:#d9f3fe;}
+   	 td.track-draggable-area {background-color:#d9f3fe; padding:.30rem .60rem; vertical-align:top; }
+	.draggable-track {border-radius:4px; background-color:#fff; margin:7px 0 24px 0; padding:6px; box-shadow:2px 3px 8px #8c9396; cursor:grab;}
+	.draggable-track:last-child {margin-bottom:4px;}
+	.droppable-cell {height:32px; border:dashed 1px #CCC; border-radius:4px; padding:6px; background-color: #f5f5f5;}
+	.sortable-audio-file {width:100%; padding:6px; border-radius:4px; background-color:#d9f3fe; display:inline-flex; vertical-align:middle; box-shadow:2px 3px 8px #8c9396; cursor:grab;}
+	.sortable-audio-file .material-icons {padding-right:10px;}
+	.sortable-audio-file span {line-height:24px;}
+
+	.table-section {display: flex; flex-direction: column; margin:0px 40px 40px 40px;}
+	.table-section .nav-tabs {border-bottom:none;}
+	.table-section .nav-link:first-child {margin-left:30px;}
+	.table-section .nav-link.active {border:none;}
+	.table-section .tab-pane {background-color:#FFF; padding:30px;}
+	
+	
