@@ -11,20 +11,20 @@ const AppRouter = () => (
       <nav>
         <ul>
           <li>
-            <Link to="/">Home</Link>
+            1<Link to="/">Home</Link>
           </li>
           <li>
-            <Link to="/about/">About</Link>
+            2<Link to="/about/">About</Link>
           </li>
           <li>
-            <Link to="/users/">Users</Link>
+            3<Link to="/users/">Users</Link>
           </li>
         </ul>
       </nav>
 
-      <Route path="/" exact component={Index} />
-      <Route path="/about/" component={About} />
-      <Route path="/users/" component={Users} />
+      4<Route path="/" exact component={Index} />
+      5<Route path="/about/" component={About} />
+      6<Route path="/users/" component={Users} />
     </div>
   </Router>
 );

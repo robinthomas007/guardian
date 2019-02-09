@@ -1,0 +1,314 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Guardian | Audio Files</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="css/site.css">
+</head>
+<body>
+<section class="container-fluid h-100">
+<section class="row h-100 no-gutters">
+<nav class="left-nav col-2">
+		<section class="fixed-left-nav col-2">
+			<span class="left-nav-logo"></span>
+			<!-- Left Nav State when in a Project -->
+			<ul>
+			<!-- We only display steps 3-7 if a user has completed steps 1 & 2 //// We only display the step options at all if a user is creating a new project or editing an existing project, either way a project must have been selected --> 
+				<li><a class="steps" href="release-information.html">Step <span class="count-circle">1</span> Release Information</a> <span class="checkbox"></span></li>
+				<li><a class="steps" href="project-contacts.html">Step <span class="count-circle">2</span> Project Contacts</a> <span class="checkbox"></span></li>
+				<li><a class="steps" href="audio-files.html">Step <span class="count-circle">3</span> Audio Files (#)</a> <span class="checkbox"></span></li><!-- # is a placeholder for the sum of the audio files uploaded for the project -->
+				<li><a class="steps" href="track-information.html">Step <span class="count-circle">4</span> Track Information (#)</a> <span class="checkbox"></span></li><!-- # is a placeholder for the sum of the audio files the have track titles and ISRCs entered for the project -->
+				<li><a class="steps" href="territorial-rights.html">Step <span class="count-circle">5</span> Territorial Rights</a> <span class="checkbox"></span></li>
+				<li><a class="steps" href="blocking-policies.html">Step <span class="count-circle">6</span> Blocking Policies</a> <span class="checkbox"></span></li>
+				<li><a class="steps" href="project-review.html">Step <span class="count-circle">7</span> Review &amp; Submit</a> <span class="checkbox"></span></li>
+	
+				<li><a href="release-information.html">New Project</a></li>
+				<li><a href="project-search.html">Find a Project</a></li>
+				<li><a href="project-search.html">Recent Projects</a></li>
+			</ul>
+	
+			<!-- Left Nav State Prior to Project Selection 
+			<ul>
+				<li><a href="">New Project</a></li>
+				<li><a href="">Find a Project</a></li>
+				<li><a href="">Recent Projects</a></li>
+			</ul>
+			-->
+	</section><!-- END Fixed Left Nav -->	
+</nav>
+	
+<section class="content col-10">
+		
+		<nav class="top-nav int">
+			<ul>
+				<li><a class="help" href="/help-guide.html">Help Guide</a></li>
+				<li>Welcome, #User First &amp; Last Name#</li>
+				<li><a href="/index.html">Log Out</a></li>
+			</ul>
+		</nav>
+		
+		<section class="page-container">
+		<div class="row">
+		<div class="col 4">
+		<h1>#Project Title#</h1>
+		</div>
+		<div class="col-7">
+			<span class="project-right"><span class="project-status"><label>STATUS:</label>#PROJECT STATUS# </span>
+			<!-- Project Status can be Incomplete, In Review or Submitted -->
+				<button class="close-project btn" onClick="location.href = 'project-search.html'">Close Project</button></span>
+			<!-- Close project button will save and close the project pushing the user back to the internal landing or 'Find a Project' page -->
+		</div> 
+		</div>
+		<h2>Step <span class="count-circle">3</span> Audio Files</h2>
+		<p>In this step, you can upload audio files for filtering by either dragging &amp; dropping or clicking to browse files, e.g. mp3, WAV, etc. Tracks can also be reordered with drag and drop. This section must be completed by clicking on the 'Save &amp; Continue' button below.</p>
+		<form>
+			<section class="row">
+				
+					<div class="form-group col-12">
+					<label>Drag &amp; Drop Audio Files Below</label>
+					
+					<div class="form-control audio-drop-area col-12">
+					</div>
+				</div>
+			</section>
+		
+		</form>
+	</section>
+	<section class="table-section no-gutters">
+		<nav>
+  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Disc 1</a>
+    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false"> + Add A Disc</a>
+  </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+ <!-- Pre-sort Table 
+ <table class="table">
+  <thead>
+    <tr>
+      
+      <th>Audio File Name</th>
+      <th class="centered">#</th>
+      <th>Drag Audio Files Here</th>
+      <th>ISRC <i>(Optional)</i></th><!-- Label should toggle between (Optional) and (Required) based on workflow. This is determined by whether the user has upload audio files. If they have, then it's required, if not optional -->
+       <!-- Pre-sort Table 
+      <th>Track Title</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="10" class="track-draggable-area">
+      	<div class="draggable-track">Sample Track Name 1</div>     
+     	<div class="draggable-track">Sample Track Name 2</div>
+     	<div class="draggable-track">Sample Track Name 3</div>
+     	<div class="draggable-track">Sample Track Name 4</div>
+     	<div class="draggable-track">Sample Track Name 5</div>
+     	<div class="draggable-track">Sample Track Name 6</div>
+     	<div class="draggable-track">Sample Track Name 7</div>
+     	<div class="draggable-track">Sample Track Name 8</div>
+     	<div class="draggable-track">Sample Track Name 9</div>
+     	<div class="draggable-track">Sample Track Name 10</div>
+      </td><!-- Rowspan should equal row count -->
+       <!-- Pre-sort Table 
+      <td class="centered">1</td>
+      <td><div class="droppable-cell"></div></td>
+      <td>01234578910</td>
+      <td>Sample Track Title 1</td>
+    </tr>
+     <tr>
+      <td class="centered">2</td>
+      <td><div class="droppable-cell"></div></td>
+      <td>01234578910</td>
+      <td>Sample Track Title 1</td>
+    </tr>
+     <tr>
+      <td class="centered">3</td>
+      <td><div class="droppable-cell"></div></td>
+      <td>01234578910</td>
+      <td>Sample Track Title 1</td>
+    </tr>
+     <tr>
+      <td class="centered">4</td>
+      <td><div class="droppable-cell"></div></td>
+      <td>01234578910</td>
+      <td>Sample Track Title 1</td>
+    </tr>
+     <tr>
+      <td class="centered">5</td>
+      <td><div class="droppable-cell"></div></td>
+      <td>01234578910</td>
+      <td>Sample Track Title 1</td>
+    </tr>
+     <tr>
+      <td class="centered">6</td>
+      <td><div class="droppable-cell"></div></td>
+      <td>01234578910</td>
+      <td>Sample Track Title 1</td>
+    </tr>
+     <tr>
+      <td class="centered">7</td>
+      <td><div class="droppable-cell"></div></td>
+      <td>01234578910</td>
+      <td>Sample Track Title 1</td>
+    </tr>
+     <tr>
+      <td class="centered">8</td>
+       <td><div class="droppable-cell"></div></td>
+      <td>01234578910</td>
+      <td>Sample Track Title 1</td>
+    </tr> <tr>
+      <td class="centered">9</td>
+       <td><div class="droppable-cell"></div></td>
+      <td>01234578910</td>
+      <td>Sample Track Title 1</td>
+    </tr> <tr>
+      <td class="centered">10</td>
+      <td><div class="droppable-cell"></div></td>
+      <td>01234578910</td>
+      <td>Sample Track Title 1</td>
+    </tr>
+  </tbody>
+</table>
+-->
+<table class="table">
+  <thead>
+    <tr>
+      <th class="centered">#</th>
+      <th>Audio File</th>
+      <th>ISRC <i><span class="required-ind">(Required)</span></i></th><!-- Label should toggle between (Optional) and (Required) based on workflow. This is determined by whether the user has upload audio files. If they have, then it's required, if not optional -->
+      <th>Track Title</th>
+      <th class="centered">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="centered">1</td>
+      <td><div class="sortable-audio-file"><i class="material-icons">format_line_spacing</i><span>Sample Track Name 1</span></div></td>
+      <td>01234578910</td>
+      <td>Sample Track Title 1</td>
+      <td class="centered">
+      <button class="btn btn-secondary action"><i class="material-icons">refresh</i></button>
+      <button class="btn btn-secondary action"><i class="material-icons">delete</i></button>
+      </td>
+    </tr>
+    <tr>
+      <td class="centered">2</td>
+      <td><div class="sortable-audio-file"><i class="material-icons">format_line_spacing</i><span>Sample Track Name 2</span></div></td>
+      <td>01234578910</td>
+      <td>Sample Track Title 2</td>
+      <td class="centered">
+      <button class="btn btn-secondary action"><i class="material-icons">refresh</i></button>
+      <button class="btn btn-secondary action"><i class="material-icons">delete</i></button>
+      </td>
+    </tr>
+    <tr>
+      <td class="centered">3</td>
+      <td><div class="sortable-audio-file"><i class="material-icons">format_line_spacing</i><span>Sample Track Name 3</span></div></td>
+      <td>01234578910</td>
+      <td>Sample Track Title 3</td>
+      <td class="centered">
+      <button class="btn btn-secondary action"><i class="material-icons">refresh</i></button>
+      <button class="btn btn-secondary action"><i class="material-icons">delete</i></button>
+      </td>
+    </tr>
+    <tr>
+      <td class="centered">4</td>
+      <td><div class="sortable-audio-file"><i class="material-icons">format_line_spacing</i><span>Sample Track Name 4</span></div></td>
+      <td>01234578910</td>
+      <td>Sample Track Title 4</td>
+      <td class="centered">
+      <button class="btn btn-secondary action"><i class="material-icons">refresh</i></button>
+      <button class="btn btn-secondary action"><i class="material-icons">delete</i></button>
+      </td>
+    </tr>
+    <tr>
+      <td class="centered">5</td>
+      <td><div class="sortable-audio-file"><i class="material-icons">format_line_spacing</i><span>Sample Track Name 5</span></div></td>
+      <td>01234578910</td>
+      <td>Sample Track Title 5</td>
+      <td class="centered">
+      <button class="btn btn-secondary action"><i class="material-icons">refresh</i></button>
+      <button class="btn btn-secondary action"><i class="material-icons">delete</i></button>
+      </td>
+    </tr>
+    <tr>
+      <td class="centered">6</td>
+      <td><div class="sortable-audio-file"><i class="material-icons">format_line_spacing</i><span>Sample Track Name 6</span></div></td>
+      <td>01234578910</td>
+      <td>Sample Track Title 6</td>
+      <td class="centered">
+      <button class="btn btn-secondary action"><i class="material-icons">refresh</i></button>
+      <button class="btn btn-secondary action"><i class="material-icons">delete</i></button>
+      </td>
+    </tr>
+    <tr>
+      <td class="centered">7</td>
+      <td><div class="sortable-audio-file"><i class="material-icons">format_line_spacing</i><span>Sample Track Name 7</span></div></td>
+      <td>01234578910</td>
+      <td>Sample Track Title 7</td>
+      <td class="centered">
+      <button class="btn btn-secondary action"><i class="material-icons">refresh</i></button>
+      <button class="btn btn-secondary action"><i class="material-icons">delete</i></button>
+      </td>
+    </tr>
+    <tr>
+      <td class="centered">8</td>
+      <td><div class="sortable-audio-file"><i class="material-icons">format_line_spacing</i><span>Sample Track Name 8</span></div></td>
+      <td>01234578910</td>
+      <td>Sample Track Title 8</td>
+      <td class="centered">
+      <button class="btn btn-secondary action"><i class="material-icons">refresh</i></button>
+      <button class="btn btn-secondary action"><i class="material-icons">delete</i></button>
+      </td>
+    </tr>
+    <tr>
+      <td class="centered">9</td>
+      <td><div class="sortable-audio-file"><i class="material-icons">format_line_spacing</i><span>Sample Track Name 9</span></div></td>
+      <td>01234578910</td>
+      <td>Sample Track Title 9</td>
+      <td class="centered">
+      <button class="btn btn-secondary action"><i class="material-icons">refresh</i></button>
+      <button class="btn btn-secondary action"><i class="material-icons">delete</i></button>
+      </td>
+    </tr>
+    <tr>
+      <td class="centered">10</td>
+      <td><div class="sortable-audio-file"><i class="material-icons">format_line_spacing</i><span>Sample Track Name 10</span></div></td>
+      <td>01234578910</td>
+      <td>Sample Track Title 10</td>
+      <td class="centered">
+      <button class="btn btn-secondary action"><i class="material-icons">refresh</i></button>
+      <button class="btn btn-secondary action"><i class="material-icons">delete</i></button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+  
+
+  </div>
+  <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
+</div>
+<section class="row no-gutters save-buttons">
+				<div class="col-9"></div>
+				<div class="col-3">
+					<button type="button" class="btn btn-secondary">Save</button>
+					<button type="button" class="btn btn-primary">Save &amp; Continue</button>
+				</div>
+			</section>
+	</section>
+ 
+</section><!-- End Content -->
+</section><!-- End Main Row -->
+</section><!-- End Container -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

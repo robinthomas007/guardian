@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Guardian | Project Contacts</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="css/site.css">
+</head>
+<body>
+<section class="container-fluid h-100">
+<section class="row h-100 no-gutters">
+<nav class="left-nav col-2">
+		<section class="fixed-left-nav col-2">
+			<span class="left-nav-logo"></span>
+			<!-- Left Nav State when in a Project -->
+			<ul>
+			<!-- We only display steps 3-7 if a user has completed steps 1 & 2 //// We only display the step options at all if a user is creating a new project or editing an existing project, either way a project must have been selected --> 
+				<li><a class="steps" href="release-information.html">Step <span class="count-circle">1</span> Release Information</a> <span class="checkbox"></span></li>
+				<li><a class="steps" href="project-contacts.html">Step <span class="count-circle">2</span> Project Contacts</a> <span class="checkbox"></span></li>
+				<li><a class="steps" href="audio-files.html">Step <span class="count-circle">3</span> Audio Files (#)</a> <span class="checkbox"></span></li><!-- # is a placeholder for the sum of the audio files uploaded for the project -->
+				<li><a class="steps" href="track-information.html">Step <span class="count-circle">4</span> Track Information (#)</a> <span class="checkbox"></span></li><!-- # is a placeholder for the sum of the audio files the have track titles and ISRCs entered for the project -->
+				<li><a class="steps" href="territorial-rights.html">Step <span class="count-circle">5</span> Territorial Rights</a> <span class="checkbox"></span></li>
+				<li><a class="steps" href="blocking-policies.html">Step <span class="count-circle">6</span> Blocking Policies</a> <span class="checkbox"></span></li>
+				<li><a class="steps" href="project-review.html">Step <span class="count-circle">7</span> Review &amp; Submit</a> <span class="checkbox"></span></li>
+	
+				<li><a href="release-information.html">New Project</a></li>
+				<li><a href="project-search.html">Find a Project</a></li>
+				<li><a href="project-search.html?sortBy=recent">Recent Projects</a></li>
+			</ul>
+	
+			<!-- Left Nav State Prior to Project Selection 
+			<ul>
+				<li><a href="">New Project</a></li>
+				<li><a href="">Find a Project</a></li>
+				<li><a href="">Recent Projects</a></li>
+			</ul>
+			-->
+	</section><!-- END Fixed Left Nav -->	
+</nav>
+	
+<section class="content col-10">
+		
+		<nav class="top-nav int">
+			<ul>
+				<li><a class="help" href="help-guide.html">Help Guide</a></li>
+				<li>Welcome, #User First &amp; Last Name#</li>
+				<li><a href="index.html">Log Out</a></li>
+			</ul>
+		</nav>
+		
+		<section class="page-container h-100">
+		<div class="row">
+		<div class="col 4">
+		<h1>#Project Title#</h1>
+		</div>
+		<div class="col-7">
+			<span class="project-right"><span class="project-status"><label>STATUS:</label>#PROJECT STATUS# </span>
+			<!-- Project Status can be Incomplete, In Review or Submitted -->
+			<button class="close-project btn" onClick="location.href = 'project-search.html'">Close Project</button></span>
+			<!-- Close project button will save and close the project pushing the user back to the internal landing or 'Find a Project' page -->
+		</div> 
+		</div>
+		<h2>Step <span class="count-circle">2</span> Project Contacts</h2>
+		<p>In this step, you can choose which contacts will be associated with the project that has recently been created. You can select the level of project security (i.e., who will be able to see the project) and who should be contacted regarding this project if necessary. Required fields are indicated with an <span class="required-ind">*</span>.</p>
+		<br />
+		<form>
+			<section class="row">
+				<div class="col-12">
+					<div class="form-group">
+						<label class="col-form-label col-2" for="projectTitle">Project Security <span class="required-ind">*</span></label>
+						<div class="dropdown col-9">
+						<button type="button" id="projectSecurityDropdown" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">
+							Private (Viewable on by you)
+						</button>
+						<div class="dropdown-menu" aria-labelledby="projectSecurityDropdown">
+							<a class="dropdown-item" href="#">Private (Viewable on by you)</a>
+   						  <!-- Need this to swap out one or the other depending on the users selection 'Private' being the default selection -->
+    						  <a class="dropdown-item" href="#">Public (Viewable by all label members)</a>
+						</div>
+					</div>
+					</div>
+					<div class="form-group">
+						<label class="col-form-label col-2">Primary Contact <span class="required-ind">*</span></label>
+						<input type="text" class="form-control col-5" id="primaryContact" placeholder="#Users First &amp; Last Name#">
+					</div>
+					<div class="form-group">
+						<label class="col-form-label col-2">Primary Contact Email <span class="required-ind">*</span></label>
+						<input type="email" class="form-control col-5" id="primaryEmail" placeholder="#Users Email Default#">
+					</div>
+				</div>
+			</section>
+			 <section class="row additional-contacts">	
+					<div class="form-group col-2">
+						<label class="col-form-label">Additional Contacts</label>
+					</div>
+					<div class="form-group col-10">
+						<textarea class="form-control"></textarea>
+					</div>
+				</section>
+			<section class="row save-buttons">
+				<div class="col-9"></div>
+				<div class="col-3">
+					<button type="button" class="btn btn-secondary">Save</button>
+					<button type="button" class="btn btn-primary" onClick="location.href = 'audio-files.html'">Save &amp; Continue</button>
+				</div>
+			</section>
+		</form>
+	</section>
+	</section><!-- End Content -->
+	</section><!-- End Main Row -->
+</section><!-- End Container -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
