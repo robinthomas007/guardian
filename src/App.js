@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
 
 import LeftNav from './components/leftNav';
-import Content from './content';
+import TopNav from './components/topNav';
+import Content from './components/content';
 
 class App extends Component {
   render() {
     return (
-      <div style={{border: 'solid 1 red', position: 'relative'}}>
+      <section class="container-fluid h-100">
           <LeftNav />
           <Content />
-      </div>
-
-
+      </section>
     );
   }
 }

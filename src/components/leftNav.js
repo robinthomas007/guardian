@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import {ReleaseinformationPage, NewProjectPage, AudioFilesPage} from './pages';
 
 const mockUserAccess = 'admin';
 
@@ -89,7 +90,7 @@ const MakeUserNavLinks = (props) => {
 			<span className="checkbox"></span>
 
 			<div>
-				<Route path={props.navRoute} component={showNavPath} />
+				<Route path={props.navRoute} component={ReleaseinformationPage} />
 			</div>
 			
 		</li>
@@ -135,13 +136,12 @@ const LeftNav = () => {
 				<Router>
 					<ul>
 						{userLinks}
-
 						{adminLinks}
 					</ul>
 				</Router>
 			</section>
 		</nav>
-    )
+  )
 }
 
 export default LeftNav;
