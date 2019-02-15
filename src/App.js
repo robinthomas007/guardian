@@ -7,7 +7,7 @@ import Content from './components/content';
 class App extends Component {
   render() {
     return (
-      <section class="container-fluid h-100">
+      <section className="container-fluid h-100">
           <LeftNav />
           <Content />
       </section>

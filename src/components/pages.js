@@ -12,6 +12,9 @@ const getPageProjectStatus= () => {
 };
 
 const NewProjectPage = () => {
+
+    console.log(1)
+
     return(
         <section class="page-container h-100">
             <div class="row">
@@ -80,7 +83,7 @@ const NewProjectPage = () => {
                     </div>
                 </section>
             </form>
-    </section>
+        </section>
     )
 };
 
@@ -167,7 +170,7 @@ const AudioFilesPage = () => {
                     <h1>#Project Title#</h1>
                 </div>
                 <div class="col-7">
-                    --<getPageProjectStatus />
+                    <getPageProjectStatus />
                 </div> 
             </div>
             

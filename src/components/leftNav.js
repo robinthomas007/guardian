@@ -88,11 +88,6 @@ const MakeUserNavLinks = (props) => {
 				Step <span className="count-circle">{props.index + 1}</span> {props.linkText}
 			</Link>
 			<span className="checkbox"></span>
-
-			<div>
-				<Route path={props.navRoute} component={ReleaseinformationPage} />
-			</div>
-			
 		</li>
 	)
 };
@@ -103,10 +98,6 @@ const MakeAdminNavLinks = (props) => {
 	return(
 		<li key={props.index}>
 			<Link to={{pathname: props.navRoute, state: {navID: props.navID}}}>{props.linkText}</Link>
-			<div>
-				<Route path={props.navRoute} component={showNavPath} />
-			</div>
-			
 		</li>
 	)
 };
