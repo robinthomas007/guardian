@@ -28,13 +28,15 @@ const navList = {
 		trackInformation :{
 			linkText : 'Track Information (#)',
 			navRoute : '/trackInformation',
-			userAccess : 'user'
+			userAccess : 'user',
+			postRelease : true
 		},
 	
 		territorialRights: {
 			linkText : 'Territorial Rights',
 			navRoute : '/territorialRights',
-			userAccess : 'user'
+			userAccess : 'user',
+			postRelease : true
 		},
 	
 		blockingPolicies : {
@@ -84,10 +86,13 @@ const MakeUserNavLinks = (props) => {
 
 	return(
 		<li key={props.index}>
-			<Link className="steps" to={{pathname: props.navRoute, state: {navID: props.navID}}}>
+			<Link className="steps" to={{pathname: props.navRoute}} replace>
 				Step <span className="count-circle">{props.index + 1}</span> {props.linkText}
+				<label class="custom-checkbox">
+  					<input type="checkbox" />
+  					<span class="checkmark"></span> 
+				</label> 
 			</Link>
-			<span className="checkbox"></span>
 		</li>
 	)
 };
@@ -126,6 +131,7 @@ const LeftNav = () => {
 				<span className="left-nav-logo"></span>
 				<Router>
 					<ul>
+						
 						{userLinks}
 						{adminLinks}
 					</ul>

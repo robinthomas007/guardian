@@ -10,7 +10,7 @@ class Content extends Component {
                 <TopNav />
                 <Router>
                     <div>
-                        <Route exact path="/releaseInformation" exact component={ReleaseinformationPage}></Route>
+                        <Route path="/releaseInformation" render={ () => <ReleaseinformationPage location={window.location.pathname} state={this.state}/> }/>
                         <Route path="/newProject" component={NewProjectPage}></Route>
                         <Route path="/audioFiles" component={AudioFilesPage}></Route>
                     </div>
@@ -19,4 +19,7 @@ class Content extends Component {
         )
     }
 }
+
 export default Content;
+
+
