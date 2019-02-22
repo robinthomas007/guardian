@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import {ReleaseinformationPage, NewProjectPage, AudioFilesPage} from './pages';
 
 const mockUserAccess = 'admin';
 
@@ -88,9 +87,9 @@ const MakeUserNavLinks = (props) => {
 		<li key={props.index}>
 			<Link className="steps" to={{pathname: props.navRoute}} replace>
 				Step <span className="count-circle">{props.index + 1}</span> {props.linkText}
-				<label class="custom-checkbox">
+				<label className="custom-checkbox">
   					<input type="checkbox" />
-  					<span class="checkmark"></span> 
+  					<span className="checkmark"></span> 
 				</label> 
 			</Link>
 		</li>
@@ -126,18 +125,15 @@ const LeftNav = () => {
 	);
 
   return(
-		<nav className="left-nav col-2">
-			<section className="fixed-left-nav col-2">
-				<span className="left-nav-logo"></span>
-				<Router>
-					<ul>
-						
-						{userLinks}
-						{adminLinks}
-					</ul>
-				</Router>
-			</section>
-		</nav>
+	<nav className="left-nav col-2">
+		<section className="fixed-left-nav col-2">
+			<span className="left-nav-logo"></span>
+			<ul>
+				{userLinks}
+				{adminLinks}
+			</ul>
+		</section>
+	</nav>
   )
 }
 
