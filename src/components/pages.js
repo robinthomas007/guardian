@@ -1,4 +1,9 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { BrowserRouter, Route, Redirect} from "react-router-dom";
+import LeftNav from './leftNav';
+import Login from './Login';
 
 const GetPageProjectStatus= (props) => {
     return(
@@ -228,9 +233,90 @@ const ReleaseinformationPage= (props) => {
 };
 
 const AudioFilesPage = (props) => {
+    const audioFilesMockData = {
+        headers : [
 
-    console.log('AudioFilesPage: ' + props.key)
-    
+        ],
+
+        disc1 : {
+            tracks : [
+                {
+                    trackSequence : 1,
+                    trackAudioFile : 'Sample Track Name 1',
+                    trackISRC : '012345678910',
+                    trackTitle : 'Sample Track Title 1'
+                },
+                {
+                    trackSequence : 2,
+                    trackAudioFile : 'Sample Track Name 2',
+                    trackISRC : '012345678910',
+                    trackTitle : 'Sample Track Title 2'
+                },
+                {
+                    trackSequence : 3,
+                    trackAudioFile : 'Sample Track Name 3',
+                    trackISRC : '012345678910',
+                    trackTitle : 'Sample Track Title 3'
+                },
+                {
+                    trackSequence : 4,
+                    trackAudioFile : 'Sample Track Name 4',
+                    trackISRC : '012345678910',
+                    trackTitle : 'Sample Track Title 4'
+                },
+                {
+                    trackSequence : 5,
+                    trackAudioFile : 'Sample Track Name 5',
+                    trackISRC : '012345678910',
+                    trackTitle : 'Sample Track Title 5'
+                }
+            ]
+        }
+    }
+
+    class AudioVideoDataTable extends Component {
+
+        render() {
+
+            const AudioVideoDataHeader = () => {
+
+                return(
+                    <thead>
+                        <tr>
+                            <th className="centered">#</th>
+                            <th>Audio File</th>
+                            <th>ISRC <i><span className="required-ind">(Required)</span></i></th>
+                            <th>Track Title</th>
+                            <th className="centered">Actions</th>
+                        </tr>
+                    </thead>
+                )
+            }
+
+            const dataRows = audioFilesMockData.disc1.tracks.map( (track) => 
+                <tr>
+                    <td className="centered">{track.trackSequence}</td>
+                    <td><div className="sortable-audio-file"><i className="material-icons">format_line_spacing</i><span>{track.trackAudioFile}</span></div></td>
+                    <td>{track.trackISRC}</td>
+                    <td>{track.trackTitle}</td>
+                    <td className="centered">
+                       <button className="btn btn-secondary action"><i className="material-icons">refresh</i></button>
+                        <button className="btn btn-secondary action"><i className="material-icons">delete</i></button>
+                    </td>
+                </tr>
+           )
+
+            return (
+                <table className="table">
+                    <AudioVideoDataHeader />
+                    <tbody>
+                        {dataRows}
+                    </tbody>
+                </table>
+            )
+        }
+    }
+
     return(
         <section className="page-container h-100">
             <div className="row">
@@ -265,119 +351,8 @@ const AudioFilesPage = (props) => {
             
             <div className="tab-content" id="nav-tabContent">
                 <div className="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                <table className="table">
-                    <thead>
-                        <tr>
-                            <th className="centered">#</th>
-                            <th>Audio File</th>
-                            <th>ISRC <i><span className="required-ind">(Required)</span></i></th>
-                            <th>Track Title</th>
-                            <th className="centered">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td className="centered">1</td>
-                            <td><div className="sortable-audio-file"><i className="material-icons">format_line_spacing</i><span>Sample Track Name 1</span></div></td>
-                            <td>01234578910</td>
-                            <td>Sample Track Title 1</td>
-                            <td className="centered">
-                                <button className="btn btn-secondary action"><i className="material-icons">refresh</i></button>
-                                <button className="btn btn-secondary action"><i className="material-icons">delete</i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="centered">2</td>
-                            <td><div className="sortable-audio-file"><i className="material-icons">format_line_spacing</i><span>Sample Track Name 2</span></div></td>
-                            <td>01234578910</td>
-                            <td>Sample Track Title 2</td>
-                            <td className="centered">
-                                <button className="btn btn-secondary action"><i className="material-icons">refresh</i></button>
-                                <button className="btn btn-secondary action"><i className="material-icons">delete</i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="centered">3</td>
-                            <td><div className="sortable-audio-file"><i className="material-icons">format_line_spacing</i><span>Sample Track Name 3</span></div></td>
-                            <td>01234578910</td>
-                            <td>Sample Track Title 3</td>
-                            <td className="centered">
-                                <button className="btn btn-secondary action"><i className="material-icons">refresh</i></button>
-                                <button className="btn btn-secondary action"><i className="material-icons">delete</i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="centered">4</td>
-                            <td><div className="sortable-audio-file"><i className="material-icons">format_line_spacing</i><span>Sample Track Name 4</span></div></td>
-                            <td>01234578910</td>
-                            <td>Sample Track Title 4</td>
-                            <td className="centered">
-                                <button className="btn btn-secondary action"><i className="material-icons">refresh</i></button>
-                                <button className="btn btn-secondary action"><i className="material-icons">delete</i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="centered">5</td>
-                            <td><div className="sortable-audio-file"><i className="material-icons">format_line_spacing</i><span>Sample Track Name 5</span></div></td>
-                            <td>01234578910</td>
-                            <td>Sample Track Title 5</td>
-                            <td className="centered">
-                                <button className="btn btn-secondary action"><i className="material-icons">refresh</i></button>
-                                <button className="btn btn-secondary action"><i className="material-icons">delete</i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="centered">6</td>
-                            <td><div className="sortable-audio-file"><i className="material-icons">format_line_spacing</i><span>Sample Track Name 6</span></div></td>
-                            <td>01234578910</td>
-                            <td>Sample Track Title 6</td>
-                            <td className="centered">
-                                <button className="btn btn-secondary action"><i className="material-icons">refresh</i></button>
-                                <button className="btn btn-secondary action"><i className="material-icons">delete</i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="centered">7</td>
-                            <td><div className="sortable-audio-file"><i className="material-icons">format_line_spacing</i><span>Sample Track Name 7</span></div></td>
-                            <td>01234578910</td>
-                            <td>Sample Track Title 7</td>
-                            <td className="centered">
-                                <button className="btn btn-secondary action"><i className="material-icons">refresh</i></button>
-                                <button className="btn btn-secondary action"><i className="material-icons">delete</i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="centered">8</td>
-                            <td><div className="sortable-audio-file"><i className="material-icons">format_line_spacing</i><span>Sample Track Name 8</span></div></td>
-                            <td>01234578910</td>
-                            <td>Sample Track Title 8</td>
-                            <td className="centered">
-                                <button className="btn btn-secondary action"><i className="material-icons">refresh</i></button>
-                                <button className="btn btn-secondary action"><i className="material-icons">delete</i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="centered">9</td>
-                            <td><div className="sortable-audio-file"><i className="material-icons">format_line_spacing</i><span>Sample Track Name 9</span></div></td>
-                            <td>01234578910</td>
-                            <td>Sample Track Title 9</td>
-                            <td className="centered">
-                                <button className="btn btn-secondary action"><i className="material-icons">refresh</i></button>
-                                <button className="btn btn-secondary action"><i className="material-icons">delete</i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="centered">10</td>
-                            <td><div className="sortable-audio-file"><i className="material-icons">format_line_spacing</i><span>Sample Track Name 10</span></div></td>
-                            <td>01234578910</td>
-                            <td>Sample Track Title 10</td>
-                            <td className="centered">
-                                <button className="btn btn-secondary action"><i className="material-icons">refresh</i></button>
-                                <button className="btn btn-secondary action"><i className="material-icons">delete</i></button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+
+                <AudioVideoDataTable />
             </div>
             <div className="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
         </div>
@@ -395,219 +370,142 @@ const AudioFilesPage = (props) => {
 };
 
 const TrackInformationPage = (props) => {
-    return(
-        <section className="page-container h-100">
-           <section className="row">
-              <div className="col 4">
-                 <h1>#Project Title#</h1>
-              </div>
-              <div className="col-7">
-                    <GetPageProjectStatus />
-                </div> 
-           </section>
-           <h2>Step <span className="count-circle">4</span> Track Information</h2>
-           <p>In this step, you can upload audio files for filtering by either dragging &amp; dropping or clicking to browse files, e.g. mp3, WAV, etc. Tracks can also be reordered with drag and drop. This section must be completed by clicking on the 'Save &amp; Continue' button below.</p>
-           <table className="table">
-              <thead>
-                 <tr>
-                    <th className="td-2 centered">#</th>
-                    <th className="td-2"></th>
-                    <th className="td-5"></th>
-                    <th className="td-30">ISRC <i>(Optional)</i></th>
-                    <th className="td-30">Track Title</th>
-                    <th className="td-10 centered">Single</th>
-                    <th className="td-10 centered">Release Date</th>
-                    <th className="td-10 centered">Actions</th>
-                 </tr>
-              </thead>
-              <tbody>
-                 <tr>
-                    <td className="centered">1</td>
+
+    const TrackInformationMockData = {
+        tracks : [
+            {
+                trackSequence : 1,
+                trackAudioFile : 'Sample Track Name 1',
+                trackISRC : '012345678910',
+                trackTitle : 'Sample Track Title 1',
+                trackSingle: false,
+                trackReleaseDate: '',
+            },
+            {
+                trackSequence : 2,
+                trackAudioFile : 'Sample Track Name 2',
+                trackISRC : '012345678910',
+                trackTitle : 'Sample Track Title 2',
+                trackSingle : false,
+                trackReleaseDate : ''
+            },
+            {
+                trackSequence : 3,
+                trackAudioFile : 'Sample Track Name 3',
+                trackISRC : '012345678910',
+                trackTitle : 'Sample Track Title 3',
+                trackSingle : false,
+                trackReleaseDate : ''
+            },
+            {
+                trackSequence : 4,
+                trackAudioFile : 'Sample Track Name 4',
+                trackISRC : '012345678910',
+                trackTitle : 'Sample Track Title 4',
+                trackSingle : false,
+                trackReleaseDate : ''
+            }
+        ]
+    }
+
+    class TrackInformationDataTable extends Component {
+
+        render() {
+
+            const TrackInformationDataHeader = () => {
+
+                return(
+                    <thead>
+                        <tr>
+                            <th className="td-2 centered">#</th>
+                            <th className="td-2"></th>
+                            <th className="td-5"></th>
+                            <th className="td-30">ISRC <i>(Optional)</i></th>
+                            <th className="td-30">Track Title</th>
+                            <th className="td-10 centered">Single</th>
+                            <th className="td-10 centered">Release Date</th>
+                            <th className="td-10 centered">Actions</th>
+                        </tr>
+                    </thead>
+                )
+            }
+
+            const dataRows = TrackInformationMockData.tracks.map( (track) => 
+                <tr>
+                    <td className="centered">{track.trackSequence}</td>
                     <td><i className="material-icons">format_line_spacing</i></td>
                     <td className="centered"><i className="material-icons purple-icon">audiotrack</i></td>
-                    <td>01234578910</td>
-                    <td>Sample Track Title 1</td>
+                    <td>{track.trackISRC}</td>
+                    <td>{track.trackTitle}</td>
                     <td className="centered">
-                       <label className="custom-checkbox">
+                        <label className="custom-checkbox">
                             <input type="checkbox" />
                             <span className="checkmark"></span>
-                       </label>
+                        </label>
                     </td>
-                    <td className="centered"></td>
+                    <td className="centered">{track.trackReleaseDate}</td>
                     <td className="centered">
-                       <button className="btn btn-secondary action"><i className="material-icons">publish</i></button>
-                       <button className="btn btn-secondary action"><i className="material-icons">delete</i></button>
+                        <button className="btn btn-secondary action"><i className="material-icons">publish</i></button>
+                        <button className="btn btn-secondary action"><i className="material-icons">delete</i></button>
                     </td>
-                 </tr>
-                 <tr>
-                    <td className="centered">1</td>
-                    <td><i className="material-icons">format_line_spacing</i></td>
-                    <td className="centered"><i className="material-icons purple-icon">audiotrack</i></td>
-                    <td>01234578910</td>
-                    <td>Sample Track Title 1</td>
-                    <td className="centered">
-                       <label className="custom-checkbox">
-                       <input type="checkbox" />>
-                       <span className="checkmark"></span>
-                       </label>
-                    </td>
-                    <td className="centered"></td>
-                    <td className="centered">
-                       <button className="btn btn-secondary action"><i className="material-icons">publish</i></button>
-                       <button className="btn btn-secondary action"><i className="material-icons">delete</i></button>
-                    </td>
-                 </tr>
-                 <tr>
-                    <td className="centered">1</td>
-                    <td><i className="material-icons">format_line_spacing</i></td>
-                    <td className="centered"><i className="material-icons purple-icon">audiotrack</i></td>
-                    <td>01234578910</td>
-                    <td>Sample Track Title 1</td>
-                    <td className="centered">
-                       <label className="custom-checkbox">
-                       <input type="checkbox" />
-                       <span className="checkmark"></span>
-                       </label>
-                    </td>
-                    <td className="centered"></td>
-                    <td className="centered">
-                       <button className="btn btn-secondary action"><i className="material-icons">publish</i></button>
-                       <button className="btn btn-secondary action"><i className="material-icons">delete</i></button>
-                    </td>
-                 </tr>
-                 <tr>
-                    <td className="centered">1</td>
-                    <td><i className="material-icons">format_line_spacing</i></td>
-                    <td className="centered"><i className="material-icons purple-icon">audiotrack</i></td>
-                    <td>01234578910</td>
-                    <td>Sample Track Title 1</td>
-                    <td className="centered">
-                       <label className="custom-checkbox">
-                       <input type="checkbox" />
-                       <span className="checkmark"></span>
-                       </label>
-                    </td>
-                    <td className="centered"></td>
-                    <td className="centered">
-                       <button className="btn btn-secondary action"><i className="material-icons">publish</i></button>
-                       <button className="btn btn-secondary action"><i className="material-icons">delete</i></button>
-                    </td>
-                 </tr>
-                 <tr>
-                    <td className="centered">1</td>
-                    <td><i className="material-icons">format_line_spacing</i></td>
-                    <td className="centered"><i className="material-icons purple-icon">audiotrack</i></td>
-                    <td>01234578910</td>
-                    <td>Sample Track Title 1</td>
-                    <td className="centered">
-                       <label className="custom-checkbox">
-                       <input type="checkbox" />
-                       <span className="checkmark"></span>
-                       </label>
-                    </td>
-                    <td className="centered"></td>
-                    <td className="centered">
-                       <button className="btn btn-secondary action"><i className="material-icons">publish</i></button>
-                       <button className="btn btn-secondary action"><i className="material-icons">delete</i></button>
-                    </td>
-                 </tr>
-                 <tr>
-                    <td className="centered">1</td>
-                    <td><i className="material-icons">format_line_spacing</i></td>
-                    <td className="centered"><i className="material-icons purple-icon">audiotrack</i></td>
-                    <td>01234578910</td>
-                    <td>Sample Track Title 1</td>
-                    <td className="centered">
-                       <label className="custom-checkbox">
-                       <input type="checkbox" />
-                       <span className="checkmark"></span>
-                       </label>
-                    </td>
-                    <td className="centered"></td>
-                    <td className="centered">
-                       <button className="btn btn-secondary action"><i className="material-icons">publish</i></button>
-                       <button className="btn btn-secondary action"><i className="material-icons">delete</i></button>
-                    </td>
-                 </tr>
-                 <tr>
-                    <td className="centered">1</td>
-                    <td><i className="material-icons">format_line_spacing</i></td>
-                    <td className="centered"><i className="material-icons purple-icon">audiotrack</i></td>
-                    <td>01234578910</td>
-                    <td>Sample Track Title 1</td>
-                    <td className="centered">
-                       <label className="custom-checkbox">
-                       <input type="checkbox" />
-                       <span className="checkmark"></span>
-                       </label>
-                    </td>
-                    <td className="centered"></td>
-                    <td className="centered">
-                       <button className="btn btn-secondary action"><i className="material-icons">publish</i></button>
-                       <button className="btn btn-secondary action"><i className="material-icons">delete</i></button>
-                    </td>
-                 </tr>
-                 <tr>
-                    <td className="centered">1</td>
-                    <td><i className="material-icons">format_line_spacing</i></td>
-                    <td className="centered"><i className="material-icons purple-icon">audiotrack</i></td>
-                    <td>01234578910</td>
-                    <td>Sample Track Title 1</td>
-                    <td className="centered">
-                       <label className="custom-checkbox">
-                       <input type="checkbox" />
-                       <span className="checkmark"></span>
-                       </label>
-                    </td>
-                    <td className="centered"></td>
-                    <td className="centered">
-                       <button className="btn btn-secondary action"><i className="material-icons">publish</i></button>
-                       <button className="btn btn-secondary action"><i className="material-icons">delete</i></button>
-                    </td>
-                 </tr>
-                 <tr>
-                    <td className="centered">1</td>
-                    <td><i className="material-icons">format_line_spacing</i></td>
-                    <td className="centered"><i className="material-icons purple-icon">audiotrack</i></td>
-                    <td>01234578910</td>
-                    <td>Sample Track Title 1</td>
-                    <td className="centered">
-                       <label className="custom-checkbox">
-                       <input type="checkbox" />
-                       <span className="checkmark"></span>
-                       </label>
-                    </td>
-                    <td className="centered"></td>
-                    <td className="centered">
-                       <button className="btn btn-secondary action"><i className="material-icons">publish</i></button>
-                       <button className="btn btn-secondary action"><i className="material-icons">delete</i></button>
-                    </td>
-                 </tr>
-                 <tr>
-                    <td className="centered">1</td>
-                    <td><i className="material-icons">format_line_spacing</i></td>
-                    <td className="centered"><i className="material-icons purple-icon">audiotrack</i></td>
-                    <td>01234578910</td>
-                    <td>Sample Track Title 1</td>
-                    <td className="centered">
-                       <label className="custom-checkbox">
-                       <input type="checkbox" />
-                       <span className="checkmark"></span>
-                       </label>
-                    </td>
-                    <td className="centered"></td>
-                    <td className="centered">
-                       <button className="btn btn-secondary action"><i className="material-icons">publish</i></button>
-                       <button className="btn btn-secondary action"><i className="material-icons">delete</i></button>
-                    </td>
-                 </tr>
-              </tbody>
-           </table>
+                </tr>
+           )
+
+            return (
+                <table className="table">
+                    <TrackInformationDataHeader />
+                    <tbody>
+                        {dataRows}
+                    </tbody>
+                </table>
+            )
+        }
+    }
+
+    return(
+        <section className="page-container h-100">
+            <section className="row">
+                <div className="col 4">
+                    <h1>#Project Title#</h1>
+                </div>
+                <div className="col-7">
+                        <GetPageProjectStatus />
+                    </div> 
+            </section>
+
+            <h2>Step <span className="count-circle">4</span> Track Information</h2>
+            
+            <p>In this step, you can upload audio files for filtering by either dragging &amp; dropping or clicking to browse files, e.g. mp3, WAV, etc. Tracks can also be reordered with drag and drop. This section must be completed by clicking on the 'Save &amp; Continue' button below.</p>
+
+            <TrackInformationDataTable />
         </section>
     )
 };
 
 const TerritorialRightsPage = (props) => {
+
+    const TerritorialRightsMockData = {
+        tracks : [
+            {
+                trackAudioFile : 'Sample Track Name 1',
+                trackISRC : '012345678910',
+            },
+            {
+                trackAudioFile : 'Sample Track Name 2',
+                trackISRC : '012345678910',
+            },
+            {
+                trackAudioFile : 'Sample Track Name 3',
+                trackISRC : '012345678910',
+            },
+            {
+                trackAudioFile : 'Sample Track Name 4',
+                trackISRC : '012345678910',
+            }
+        ]
+    }
+
+
     return(
         <section className="page-container h-100">
             <div className="row">
@@ -928,8 +826,8 @@ const BlockingPoliciesPage = (props) => {
                                             <td nowrap>
                                                 <div className="dropdown">
                                                     <button type="button" id="selectTracksDropdown" className="btn btn-secondary dropdown-toggle territory-tracks" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">
-                                    Select Tracks or Drag Below
-                                </button>
+                                                        Select Tracks or Drag Below
+                                                    </button>
                                                     <ul className="dropdown-menu tracks" aria-labelledby="selectTracksDropdown">
                                                         <li>
                                                             <label className="dropdown-item custom-checkbox">
@@ -1057,4 +955,71 @@ const BlockingPoliciesPage = (props) => {
     )
 };
 
-export {NewProjectPage, ReleaseinformationPage, AudioFilesPage, ProjectContactsPage, TrackInformationPage, TerritorialRightsPage, BlockingPoliciesPage};
+class LoginPage extends Component {
+
+    state = {
+        redirect : false
+    }
+
+    setRedirect = () => {
+
+        console.log('setRedirect')
+
+        this.setState(
+            {
+                redirect : true
+            }
+        )
+    }
+
+    renderRedirect = () => {
+        console.log('renderRedirect')
+
+        if (this.state.redirect) {
+            ReactDOM.render(<Login />, document.getElementById('root'))
+        }
+    }
+
+    render() {
+        return(
+            <section className="container-fluid landing">
+                <section className="logo"><img src="images/guardian-logo.png" /></section>
+    
+                <nav className="top-nav ext">
+                    <ul>
+                        <li><a href="">Help Guide</a></li>
+                        <li><a href="">Request Access</a></li>
+                        <li><a href="release-information.html">Log In</a></li>
+                    </ul>
+                </nav>
+    
+                <section className="over-bar">
+                    <h1>WELCOME TO THE GUARDIAN</h1>
+                    <h2>CONTENT PROTECTION, LEAK DETECTION &amp; ANTI-PIRACY</h2>
+                    <span>
+                        <button className="access btn">Request Access</button>
+                        <button className="log-in btn" onClick={this.setRedirect}>Log In</button>
+
+                        {this.renderRedirect()}
+
+                        {/*
+                        <Button
+                            onClick={this.setRedirect}
+                            className="log-in btn"
+                        >
+                            Log In
+                        </Button>
+                        */}
+    
+                    </span>
+                </section>
+    
+                <section className="bar"></section>
+                
+            </section>
+        )
+    }
+}
+
+
+export {LoginPage, NewProjectPage, ReleaseinformationPage, AudioFilesPage, ProjectContactsPage, TrackInformationPage, TerritorialRightsPage, BlockingPoliciesPage};

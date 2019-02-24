@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Route, Link } from "react-router-dom";
 
 const mockUserAccess = 'admin';
 
@@ -71,14 +71,6 @@ const navList = {
 		}
 	}
 };
-
-class showNavPath extends React.Component {
-	render() {
-		return(
-			<div>{this.props.location.state.navID}</div>
-		)
-	}
-}
 
 const MakeUserNavLinks = (props) => {
 	//console.log('MakeUserNavLinks : ' + props.linkText)

@@ -1,19 +1,25 @@
 import React, { Component } from 'react';
-import LeftNav from './components/leftNav';
-import Content from './components/content';
-import { BrowserRouter} from "react-router-dom";
+import { BrowserRouter, Route} from "react-router-dom";
+import {LoginPage} from './components/pages';
 
 class App extends Component {
-  render() {
-    return (
+  
+  constructor(props) {
+    super(props);
 
-      <BrowserRouter>
-        <div className="row h-100 no-gutters">
-          <LeftNav />
-          <Content />
-        </div>
-      </BrowserRouter>
-    );
+    this.state = {
+      loggedIn: false,
+    };
+
+  }
+
+  render() {
+    return(
+     <BrowserRouter>
+        <Route exact path="/" component={LoginPage}></Route>
+    </BrowserRouter>
+    )
+
   }
 }
 
