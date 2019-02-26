@@ -2,15 +2,10 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route} from "react-router-dom";
 import {LoginPage} from './components/pages';
 import { Security, SecureRoute, ImplicitCallback } from '@okta/okta-react';
-
-const config = {
-  issuer: 'https://dev-192402.oktapreview.com/oauth2/default',
-  redirect_uri: window.location.origin + '/implicit/callback',
-  client_id: '0oaji620egWzO8C8A0h7'
-}
+import config from './config'
 
 class App extends Component {
-  
+
   constructor(props) {
     super(props);
 
