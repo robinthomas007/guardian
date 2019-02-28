@@ -24,12 +24,18 @@
 	.custom-checkbox:hover input ~ .checkmark {background-color: #666; border:solid 1px #666;} /* Adds hover color to the box */
 	.custom-checkbox input:checked ~ .checkmark {background-color: #666; border:solid 1px #666;} /* Adds blue background color to the box when checked */
 
-	
 	.checkmark:after {content: ""; position: absolute; display: none;} /* Creates the checkmark indicator (hidden when not checked) */
 	.custom-checkbox input:checked ~ .checkmark:after {display: block;} /* Show the checkmark when checked */
 	.custom-checkbox .checkmark:after {left: 9px;top: 5px; width: 5px; height: 10px; border: solid white; border-width: 0 3px 3px 0; -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); transform: rotate(45deg);} /* Styles the checkmark */
+
+	.check-cover {display:block; height:25px; width:25px; position:absolute; border:solid 1px red; z-index:100; background-color:transparent;}
+	.static-checkmark {position: absolute; top: 0; left: 0; height: 25px; width: 25px; background-color: #fff; border:solid 1px #666; border-radius:2px;} /* Creates new checkmark */
+	.custom-checkbox input:checked ~ .static-checkmark {display: block; background-color: #FFF; border:solid 1px #FFF;} /* Adds blue background color to the box when checked */
+	.static-checkmark:after {content: ""; position: absolute; display: none;} /* Creates the checkmark indicator (hidden when not checked) */
+	.custom-checkbox input:checked ~ .static-checkmark:after {display: block;} /* Show the checkmark when checked */
+	.custom-checkbox .static-checkmark:after {left: 9px;top: 5px; width: 5px; height: 10px; border: solid #666; border-width: 0 3px 3px 0; -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); transform: rotate(45deg);} /* Styles the checkmark */
 	
-	
+
 
 	/* Custom Default Links*/
 	a {color:#01579b;}
@@ -53,17 +59,18 @@
 
 	/* Table Column widths no longer supported in Bootstrap 4 reliably */
 	
-	.table td.td-2 {max-width:2%;}
-	.table td.td-5 {max-width:5%;}
-	.table td.td-10 {max-width:10%;}
-	.table td.td-20 {max-width:20%;}
-	.table td.td-30 {max-width:30%;}
-	.table td.td-40 {max-width:40%;}
-	.table td.td-50 {max-width:50%;}
-	.table td.td-60 {max-width:60%;}
-	.table td.td-70 {max-width:70%;}
-	.table td.td-80 {max-width:80%;}
-	.table td.td-90 {max-width:90%;}
+	.td-2 {max-width:2%;}
+	.td-5 {max-width:5%;}
+	.td-10 {max-width:10%;}
+	.td-20 {max-width:20%;}
+	.td-25 {max-width:25%;}
+	.td-30 {max-width:30%;}
+	.td-40 {max-width:40%;}
+	.td-50 {max-width:50%;}
+	.td-60 {max-width:60%;}
+	.td-70 {max-width:70%;}
+	.td-80 {max-width:80%;}
+	.td-90 {max-width:90%;}
 
 	.centered {text-align:center;}
 
@@ -156,7 +163,10 @@
 	section.page-container h2 {font-size:1.4em;}
 	section.page-container h3 {font-size:1.2em;}
 
-	.row.step-description{margin:40px auto;}
+	.artist-label-name {font-size:1.4em;}
+
+	.row.step-description{margin:40px 0px;}
+	.row.step-description.review {margin:40px 0px 0px 0px;}
 
 	span.count-circle {background-color:#80d8ff; padding: 3px 10px; border-radius:100%;}
 
@@ -234,5 +244,20 @@
 	.platform-sprite.facebook {background-position:0px -100px;}
 	.platform-sprite.instagram {background-position:0px -150px;}
 	.platform-sprite.twitter {background-position:0px -200px;}
+
+	.platform-sprite.small {display:block; height:28px; width:80px; background-image:url(../images/platforms-sprite.png); background-repeat:no-repeat;}
+	.platform-sprite.small.youtube {background-position:0px -250px;}
+	.platform-sprite.small.soundcloud {background-position:0px -278px;}
+	.platform-sprite.small.facebook {background-position:0px -306px;}
+	.platform-sprite.small.instagram {background-position:0px -334px;}
+	.platform-sprite.small.twitter {background-position:0px -362px;}
 	
-	
+	/* Review & Submit */
+	.page-container.review-section {cursor:pointer; border: 3px solid #FFF; outline-offset:-3px; padding:27px; transition: border-color 0.6s linear;}
+	.page-container.review-section:hover{cursor:pointer; border: 3px solid #15B6DF; outline-offset:-3px; padding:27px;}
+	.page-container.review-section label {font-weight:700;}
+
+	img.album-art {height:160px; width:160px; background-color:#f5f5f5;}
+
+	.review-card {padding:30px; background-color:#f5f5f5;}
+	section.page-container.review-section section.row.save-buttons {margin-top:30px; padding-right:0px; padding-bottom:0px;}

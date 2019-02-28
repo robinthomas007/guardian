@@ -2,7 +2,7 @@
 
 /* CSS Document */
 
-	html { height:100%; width:100%;}
+	html {height:100%; width:100%;}
 	body {height:100%; font-family: 'Roboto Condensed', sans-serif; font-weight:300; font-size:14px;}
 
 
@@ -11,7 +11,7 @@
 /* Template DOMs */
 	.container-fluid {padding:0;}
 	.left-nav {display: flex; flex-direction: column; background-color:#000;}
-	.content { float: right; display: flex; flex-direction: column; background-color:#F5F5F5; }
+	.content {display: flex; flex-direction: column; background-color:#F5F5F5; }
 
     label.nested {width:110px;}
     input.nested {width:150px;}
@@ -20,16 +20,22 @@
 	label.custom-checkbox {margin-bottom:0; overflow:hidden;} /* Keep it vertically aligned in table rows */
 	.custom-checkbox {display: block; position: relative;  height: 25px; width: 25px; margin:0 auto; overflow:hidden; cursor: pointer; font-size: 22px; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;}
 	.custom-checkbox input {position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0;} /* Hides the browsers version */
-	.checkmark {position: absolute; top: 0; left: 0; height: 25px; width: 25px; background-color: #F5F5F5; border:solid 1px #CCC; border-radius:4px;} /* Creates new checkmark */
+	.checkmark {position: absolute; top: 0; left: 0; height: 25px; width: 25px; background-color: #F5F5F5; border:solid 1px #CCC; border-radius:2px;} /* Creates new checkmark */
 	.custom-checkbox:hover input ~ .checkmark {background-color: #666; border:solid 1px #666;} /* Adds hover color to the box */
 	.custom-checkbox input:checked ~ .checkmark {background-color: #666; border:solid 1px #666;} /* Adds blue background color to the box when checked */
 
-	
 	.checkmark:after {content: ""; position: absolute; display: none;} /* Creates the checkmark indicator (hidden when not checked) */
 	.custom-checkbox input:checked ~ .checkmark:after {display: block;} /* Show the checkmark when checked */
 	.custom-checkbox .checkmark:after {left: 9px;top: 5px; width: 5px; height: 10px; border: solid white; border-width: 0 3px 3px 0; -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); transform: rotate(45deg);} /* Styles the checkmark */
+
+	.check-cover {display:block; height:25px; width:25px; position:absolute; border:solid 1px red; z-index:100; background-color:transparent;}
+	.static-checkmark {position: absolute; top: 0; left: 0; height: 25px; width: 25px; background-color: #fff; border:solid 1px #666; border-radius:2px;} /* Creates new checkmark */
+	.custom-checkbox input:checked ~ .static-checkmark {display: block; background-color: #FFF; border:solid 1px #FFF;} /* Adds blue background color to the box when checked */
+	.static-checkmark:after {content: ""; position: absolute; display: none;} /* Creates the checkmark indicator (hidden when not checked) */
+	.custom-checkbox input:checked ~ .static-checkmark:after {display: block;} /* Show the checkmark when checked */
+	.custom-checkbox .static-checkmark:after {left: 9px;top: 5px; width: 5px; height: 10px; border: solid #666; border-width: 0 3px 3px 0; -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); transform: rotate(45deg);} /* Styles the checkmark */
 	
-	
+
 
 	/* Custom Default Links*/
 	a {color:#01579b;}
@@ -39,10 +45,13 @@
 	.btn-secondary {color:#495057; background-color:#F5F5F5; border-color:#CCC;}
 	.btn-secondary.action {vertical-align:middle; padding:.25rem;}
 
-	.form-control {font-size:1em; display:inline-block; background-color:#F5F5F5;}
-	.dropdown {display:inline-block; padding-left:0;} 
+	.dropdown {display:inline-block; padding-left:0;}
+	.dropdown-menu {box-shadow:2px 3px 8px #8c9396;}
 
-	.landing {width:100vw; height:100vh; background-color:#333; background-image:url(images/guitar-bg.jpg); background-size:cover;}
+	.form-control {font-size:1em; display:inline-block; background-color:#F5F5F5;}
+	
+
+	.landing {width:100vw; height:100vh; background-color:#333; background-image:url(/images/guitar-bg.jpg); background-size:cover;}
 
 	.table thead {box-shadow:0px 3px 3px #F5F5F5; z-index:1;}
 	.table thead th {border-bottom:1px solid #dee2e6;}
@@ -50,20 +59,22 @@
 
 	/* Table Column widths no longer supported in Bootstrap 4 reliably */
 	
-	.table td.td-2 {max-width:2%;}
-	.table td.td-5 {max-width:5%;}
-	.table td.td-10 {max-width:10%;}
-	.table td.td-20 {max-width:20%;}
-	.table td.td-30 {max-width:30%;}
-	.table td.td-40 {max-width:40%;}
-	.table td.td-50 {max-width:50%;}
-	.table td.td-60 {max-width:60%;}
-	.table td.td-70 {max-width:70%;}
-	.table td.td-80 {max-width:80%;}
-	.table td.td-90 {max-width:90%;}
+	.td-2 {max-width:2%;}
+	.td-5 {max-width:5%;}
+	.td-10 {max-width:10%;}
+	.td-20 {max-width:20%;}
+	.td-25 {max-width:25%;}
+	.td-30 {max-width:30%;}
+	.td-40 {max-width:40%;}
+	.td-50 {max-width:50%;}
+	.td-60 {max-width:60%;}
+	.td-70 {max-width:70%;}
+	.td-80 {max-width:80%;}
+	.td-90 {max-width:90%;}
 
 	.centered {text-align:center;}
 
+	h3 .material-icons {font-size:1.2em; margin-left:10px; cursor:pointer;}
 	.material-icons {display:inline-flex; vertical-align:middle;}
 	.purple-icon {color:#c208bb;}
 
@@ -128,16 +139,16 @@
 
 	nav.left-nav {display: flex; flex-direction: column; width:260px!important; background-color:#000; text-align:left;}
 	nav.left-nav ul {list-style:none; margin:0; padding:0;}
-	nav.left-nav ul li a {display:block; color:#fff; padding:10px 10px 10px 20px; text-decoration:none; border-bottom:solid 1px #000;}
+	nav.left-nav ul li a {display:block; color:#fff; padding:10px 10px 10px 20px; text-decoration:none; border-bottom:solid 1px #333;}
 	nav.left-nav ul li a:hover {background-color:#333;}
 	nav.left-nav ul li a.steps {background-color:#464646;}
 	nav.left-nav ul li a.steps:hover {color:#333; background-color:#F5F5F5;}
 
 	nav.left-nav span.count-circle {color:#333; font-weight:700; padding: 3px 8px; margin:auto 6px auto 3px;}
 	
-	nav.left-nav span.left-nav-logo {display:block; margin:20px auto 10px auto; background-image:url(images/guardian-logo.png); background-repeat:no-repeat; height:133px; width:144px;}
+	nav.left-nav span.left-nav-logo {display:block; margin:20px auto 10px auto; background-image:url(/images/guardian-logo.png); background-repeat:no-repeat; height:133px; width:144px;}
 	
-	nav.left-nav .fixed-left-nav {position:fixed; width:100%; top:0; left:0; padding: 0px 0px 0px 0px; background-image:url(images/gradient-logo-bg.png); background-repeat:no-repeat; background-size:auto; overflow: hidden; background-color:#000;}
+	nav.left-nav .fixed-left-nav {position:fixed; width:100%; top:0; left:0; padding: 0px 0px 0px 0px; background-image:url(/images/gradient-logo-bg.png); background-repeat:no-repeat; background-size:auto; overflow: hidden; background-color:#000;}
 
 	nav.top-nav.int {text-align:right;}
 	nav.top-nav.int ul {list-style:none; margin:0 40px 0 0; padding:0;}
@@ -149,7 +160,13 @@
 	/* Page Formats */
 	section.page-container {display: flex; flex-direction: column; margin:0px 40px 40px 40px; padding:30px; background-color:#fff;}
  	section.page-container h1 {font-size:2.2em;}
-	section.page-container h2 {font-size:1.4em; margin-top:70px;}
+	section.page-container h2 {font-size:1.4em;}
+	section.page-container h3 {font-size:1.2em;}
+
+	.artist-label-name {font-size:1.4em;}
+
+	.row.step-description{margin:40px 0px;}
+	.row.step-description.review {margin:40px 0px 0px 0px;}
 
 	span.count-circle {background-color:#80d8ff; padding: 3px 10px; border-radius:100%;}
 
@@ -176,14 +193,14 @@
 	.additional-contacts label {margin-left:15px; vertical-align:top;} 
 	.additional-contacts textarea {height:120px; margin-left:-2px; width:97.5%;}
 
-	/* Audio Files */
+	/* Audio Files & Track Information */
 	
 	.audio-drop-area  {border:solid 1px #CCC; width:100%; height:190px; background-color:#d9f3fe;}
-   	 td.track-draggable-area {background-color:#d9f3fe; padding:.30rem .60rem; vertical-align:top; }
-	.draggable-track {border-radius:4px; background-color:#fff; margin:7px 0 24px 0; padding:6px; box-shadow:2px 3px 8px #8c9396; cursor:grab;}
-	.draggable-track:last-child {margin-bottom:4px;}
-	.droppable-cell {height:32px; border:dashed 1px #CCC; border-radius:4px; padding:6px; background-color: #f5f5f5;}
-	.sortable-audio-file {width:100%; padding:6px; border-radius:4px; background-color:#d9f3fe; display:inline-flex; vertical-align:middle; box-shadow:2px 3px 8px #8c9396; cursor:grab;}
+   	.track-draggable-area {background-color:#d9f3fe; border:dashed 1px #CCC; padding:.30rem .60rem; vertical-align:top; }
+	.draggable-track {border-radius:2px; background-color:#fff; margin:7px 0; padding:6px; box-shadow:2px 3px 8px #8c9396; cursor:grab;}
+
+	.droppable-cell {height:32px; border:dashed 1px #CCC; border-radius:2px; padding:6px; background-color: #f5f5f5;}
+	.sortable-audio-file {width:100%; padding:6px; border-radius:2px; background-color:#d9f3fe; display:inline-flex; vertical-align:middle; box-shadow:2px 3px 8px #8c9396; cursor:grab;}
 	.sortable-audio-file .material-icons {padding-right:10px;}
 	.sortable-audio-file span {line-height:24px;}
 
@@ -192,5 +209,55 @@
 	.table-section .nav-link:first-child {margin-left:30px;}
 	.table-section .nav-link.active {border:none;}
 	.table-section .tab-pane {background-color:#FFF; padding:30px;}
+
+	/* Territorial Rights & Blocking Polcies */
+
+	.card-nav {text-align:right; margin-bottom:10px;}
+	.card-nav .dropdown {margin-left:10px;}
+
+	.set-card {margin-left:-20px; padding:1rem; background-color:#F5F5F5; }
+	.set-card btn.dropdown {background-color:#fff;}
+	.set-card table.table td {vertical-align:top; border-bottom:none;}
+	.set-card .track-draggable-area {max-height:400px; overflow-y: auto; overflow-x:hidden;}
+
+	span.drag-drop-arrow {display:block; height:33px; position:absolute; padding-left:50px; left:-38px; bottom:-44px; background-image:url(/images/drag-over-arrow.png); background-repeat:no-repeat;  z-index:10;}
+	span.drag-drop-arrow > span {position:absolute; top:-20px; left:-10px; width:160px; font-size: .7em; font-weight:700;}
+
+	ul.countries, ul.tracks {margin:0; padding:.75rem; list-style:none;}
+	ul.tracks {min-width:260px;} 
+	ul.countries li, ul.tracks li {display:flex; padding-bottom:.60rem;}
+	ul.countries li .dropdown-item, ul.tracks li .dropdown-item {margin:0rem 0rem;}
+	ul.countries li:last-child, ul.tracks li:last-child  {padding-bottom:0;}
+	ul.countries li span, ul.tracks li span {vertical-align:middle;}
+	ul.countries li label.dropdown-item, ul.tracks li label.dropdown-item {padding:.50rem 1.1rem;}
+
+	.dropdown .custom-checkbox {display:inline-block; }
+	.track-draggable-area.territory-tracks {min-height:324px;}
+	.territory-tracks {width:260px;}
 	
+	.option-text {color:#999; font-style:italic;}
+	.required-text {color:#FF0000; font-style:italic;}
+
+	.platform-sprite {display:block; height:50px; width:140px; background-image:url(/images/platforms-sprite.png); background-repeat:no-repeat;}
+	.platform-sprite.youtube {background-position:0px 0px;}
+	.platform-sprite.soundcloud {background-position:0px -50px;}
+	.platform-sprite.facebook {background-position:0px -100px;}
+	.platform-sprite.instagram {background-position:0px -150px;}
+	.platform-sprite.twitter {background-position:0px -200px;}
+
+	.platform-sprite.small {display:block; height:28px; width:80px; background-image:url(/images/platforms-sprite.png); background-repeat:no-repeat;}
+	.platform-sprite.small.youtube {background-position:0px -250px;}
+	.platform-sprite.small.soundcloud {background-position:0px -278px;}
+	.platform-sprite.small.facebook {background-position:0px -306px;}
+	.platform-sprite.small.instagram {background-position:0px -334px;}
+	.platform-sprite.small.twitter {background-position:0px -362px;}
 	
+	/* Review & Submit */
+	.page-container.review-section {cursor:pointer; border: 3px solid #FFF; outline-offset:-3px; padding:27px; transition: border-color 0.6s linear;}
+	.page-container.review-section:hover{cursor:pointer; border: 3px solid #15B6DF; outline-offset:-3px; padding:27px;}
+	.page-container.review-section label {font-weight:700;}
+
+	img.album-art {height:160px; width:160px; background-color:#f5f5f5;}
+
+	.review-card {padding:30px; background-color:#f5f5f5;}
+	section.page-container.review-section section.row.save-buttons {margin-top:30px; padding-right:0px; padding-bottom:0px;}

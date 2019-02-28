@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import TopNav from './topNav';
-import { ReleaseinformationPage, NewProjectPage, AudioFilesPage, ProjectContactsPage, TrackInformationPage, TerritorialRightsPage, BlockingPoliciesPage} from './pages';
+import TopNav from './TopNav';
+import { ReleaseinformationPage, NewProjectPage, AudioFilesPage, ProjectContactsPage, TrackInformationPage, TerritorialRightsPage, BlockingPoliciesPage, ReviewAndSubmitPage} from './pages';
 import { BrowserRouter as Router, Route, Switch, Link, Blocker, withRouter, Redirect } from "react-router-dom";
 
 class Content extends Component {
@@ -16,6 +16,7 @@ class Content extends Component {
                     <Route path="/blockingPolicies" component={BlockingPoliciesPage}></Route>
                     <Route path="/newProject" component={NewProjectPage}></Route>
                     <Route path="/audioFiles" component={AudioFilesPage}></Route>
+                    <Route path="/reviewSubmit" component={ReviewAndSubmitPage}></Route>
                 </div>
             </div>
         )

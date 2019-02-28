@@ -79,18 +79,18 @@ const MakeUserNavLinks = (props) => {
 		<li key={props.index}>
 			<Link className="steps" to={{pathname: props.navRoute}} replace>
 				Step <span className="count-circle">{props.index + 1}</span> {props.linkText}
-				<label className="custom-checkbox">
+				
+				{/* <label className="custom-checkbox">
   					<input type="checkbox" />
   					<span className="checkmark"></span> 
-				</label> 
+				</label>
+				*/}
 			</Link>
 		</li>
 	)
 };
 
 const MakeAdminNavLinks = (props) => {
-	//console.log('MakeUserNavLinks : ' + props.linkText)
-
 	return(
 		<li key={props.index}>
 			<Link to={{pathname: props.navRoute, state: {navID: props.navID}}}>{props.linkText}</Link>
