@@ -1261,8 +1261,7 @@ class LoginPage extends Component {
     render() {
         return(
             <section className="container-fluid landing">
-                <section className="logo"><img src="images/guardian-logo.png" /></section>
-    
+                <section className="logo"><img src="/static/images/guardian-logo.png" /></section>
                 <nav className="top-nav ext">
                     <ul>
                         <li><a href="">Help Guide</a></li>
