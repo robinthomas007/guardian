@@ -1,0 +1,312 @@
+{
+    "user" : {
+        "firstName" : "John",
+        "lastName" : "Doe"
+    },
+
+    "project" : {
+        "projectTitle" : "Test Project Title",
+        "projectStatus" : "AWESOME"
+    },
+
+    "pages" : {
+
+        "ReviewAndSubmit" : {
+            "releaseInfo" : {
+                "projectTitle" : "Sample Project Title With A Longer Name",
+                "projectType" : "Sample Project Type",
+                "projectArtist" : "Sample Artist Name",
+                "projectLabel" : "Sample Label Name",
+                "projectReleaseDate" : "12/25/2020",
+                "projectNotes" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+            },
+
+            "contactInfo" : {
+                "primaryContact" : "John Doe",
+                "primaryEmail" : "john.doe@umusic.com",
+                "additionalContacts" : "jane.doe@umusic.com; another.email@umusic.com",
+                "projectSecurity" : "Public (Viewable by all label members)"
+            },
+
+            "audioTrackInfo" : [
+                {
+                    "discSequence" : "1",
+                    "discAudioFile" : "Track Name 1",
+                    "discISRC" : 	"123456789101",
+                    "discArtist" : "Example Artist Name 1",
+                    "discSingle" : true,
+                    "discReleaseDate" : "12/28/18"
+                }
+            ],
+
+            "territorialRightsInfo" : {
+                "rightsPolicies" : [
+                    {
+                        "rightsPolicyName" : "Global Rights Policy",
+                        "rightsPolicyTracks" : "Track Name 2",
+                        "rightsOwned" : "Worldwide",
+                        "rightsNotOwned" : "N/A"
+                    }
+                ]
+            },
+
+            "blockingPoliciesInfo" : {
+                "blockingPolicyName" : "Blocking Policy 1",
+                "blockingPolicyTracks" : [
+                    "Track Name 1"
+                ]
+            }
+        },
+
+        "TerritorialRights" : {
+            "tracks" : [
+                {
+                    "trackAudioFile" : "Sample Track Name 1",
+                    "trackISRC" : "012345678910"
+                },
+                {
+                    "trackAudioFile" : "Sample Track Name 2",
+                    "trackISRC" : "012345678910"
+                },
+                {
+                    "trackAudioFile" : "Sample Track Name 3",
+                    "trackISRC" : "012345678910"
+                },
+                {
+                    "trackAudioFile" : "Sample Track Name 4",
+                    "trackISRC" : "012345678910"
+                }
+            ], 
+    
+            "countriesWithRights" : [
+                {
+                    "countryName" : "Country 1",
+                    "countryID" : "C1"
+                },
+                {
+                    "countryName" : "Country 2",
+                    "countryID" : "C2"
+                },
+                {
+                    "countryName" : "Country 3",
+                    "countryID" : "C3"
+                }
+            ], 
+    
+            "countriesWithOutRights" : [
+                {
+                    "countryName" : "Country 4",
+                    "countryID" : "C4"
+                },
+                {
+                    "countryName" : "Country 5",
+                    "countryID" : "C5"
+                },
+                {
+                    "countryName" : "Country 6",
+                    "countryID" : "C6"
+                }
+            ]
+        },
+
+        "TrackInformation" : {
+            "tracks" : [
+                {
+                    "trackSequence" : 1,
+                    "trackAudioFile" : "Sample Track Name 1",
+                    "trackISRC" : "012345678910",
+                    "trackTitle" : "Sample Track Title 1",
+                    "trackSingle" : false,
+                    "trackReleaseDate" : ""
+                },
+                {
+                    "trackSequence" : 2,
+                    "trackAudioFile" : "Sample Track Name 2",
+                    "rackISRC" : "012345678910",
+                    "trackTitle" : "Sample Track Title 2",
+                    "trackSingle" : false,
+                    "trackReleaseDate" : ""
+                },
+                {
+                    "trackSequence" : 3,
+                    "trackAudioFile" : "Sample Track Name 3",
+                    "trackISRC" : "012345678910",
+                    "trackTitle" : "Sample Track Title 3",
+                    "trackSingle" : false,
+                    "trackReleaseDate" : ""
+                },
+                {
+                    "trackSequence" : 4,
+                    "trackAudioFile" : "Sample Track Name 4",
+                    "trackISRC" : "012345678910",
+                    "trackTitle" : "Sample Track Title 4",
+                    "trackSingle" : false,
+                    "trackReleaseDate" : ""
+                }
+            ]
+        },
+
+        "AudioFiles" : {
+            "disc1" : {
+                "tracks" : [
+                    {
+                        "trackSequence" : 1,
+                        "trackAudioFile" : "Sample Track Name 1",
+                        "trackISRC" : "012345678910",
+                        "trackTitle" : "Sample Track Title 1"
+                    },
+                    {
+                        "trackSequence" : 2,
+                        "trackAudioFile" : "Sample Track Name 2",
+                        "trackISRC" : "012345678910",
+                        "trackTitle" : "Sample Track Title 2"
+                    },
+                    {
+                        "trackSequence" : 3,
+                        "trackAudioFile" : "Sample Track Name 3",
+                        "trackISRC" : "012345678910",
+                        "trackTitle ": "Sample Track Title 3"
+                    },
+                    {
+                        "trackSequence" : 4,
+                        "trackAudioFile" : "Sample Track Name 4",
+                        "trackISRC" : "012345678910",
+                        "trackTitle" : "Sample Track Title 4"
+                    },
+                    {
+                        "trackSequence" : 5,
+                        "trackAudioFile" : "Sample Track Name 5",
+                        "trackISRC" : "012345678910",
+                        "trackTitle" : "Sample Track Title 5"
+                    }
+                ]
+            }
+        },
+
+        "BlockingPolicies" : {
+
+            "blockingPolicySets" : [
+                {
+                    "setTitle" : "Blocking Policy Set 1",
+                    "tracks" : {},
+                    "sites" : {
+                        "youTube" : {
+                            "siteImageClass" : "youtube",
+                            "siteMonetize" : false,
+                            "siteBlock" : false,
+                            "siteDuration" : "duration",
+                            "siteBlockUntil" : "Block Until"
+                        },
+    
+                        "soundCloud" : {
+                            "siteImageClass" : "soundcloud",
+                            "siteMonetize" : false,
+                            "siteBlock" : false,
+                            "siteDuration" : "duration",
+                            "siteBlockUntil" : "Block Until"
+                        },
+    
+                        "faceBook": {
+                            "siteImageClass" : "faceBook",
+                            "siteMonetize" : false,
+                            "siteBlock" : false,
+                            "siteDuration" : "duration",
+                            "siteBlockUntil" : "Block Until"
+                        },
+    
+                        "instaGram" : {
+                            "siteImageClass" : "instagram",
+                            "siteMonetize" : false,
+                            "siteBlock" : false,
+                            "siteDuration" : "duration",
+                            "siteBlockUntil" : "Block Until"
+                        },
+    
+                        "twitter": {
+                            "siteImageClass" : "twitter",
+                            "siteMonetize" : false,
+                            "siteBlock" : false,
+                            "siteDuration" : "duration",
+                            "siteBlockUntil" : "Block Until"
+                        }
+                    }
+                }
+            ],
+    
+            "tracks" : [
+                {
+                    "trackAudioFile" : "Sample Track Name 1",
+                    "trackISRC" : "012345678910",
+                    "trackPolicy" : false
+                },
+                {
+                    "trackAudioFile" : "Sample Track Name 2",
+                    "trackISRC" : "012345678910",
+                    "trackPolicy" : false
+                },
+                {
+                    "trackAudioFile" : "Sample Track Name 3",
+                    "trackISRC": "012345678910",
+                    "trackPolicy" : false
+                },
+                {
+                    "trackAudioFile" : "Sample Track Name 4",
+                    "trackISRC" : "012345678910",
+                    "trackPolicy" : false
+                },
+                {
+                    "trackAudioFile" : "Sample Track Name 5",
+                    "trackISRC" : "012345678910",
+                    "trackPolicy" : false
+                }
+            ]
+        },
+
+        "ReviewAndSubmitMockData" : {
+            "releaseInfo" : {
+                "projectTitle" : "Sample Project Title With A Longer Name",
+                "projectType" : "Sample Project Type",
+                "projectArtist" : "Sample Artist Name",
+                "projectLabel" : "Sample Label Name",
+                "projectReleaseDate" : "12/25/2020",
+                "projectNotes" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+            },
+
+            "contactInfo" : {
+                "primaryContact" : "John Doe",
+                "primaryEmail" : "john.doe@umusic.com",
+                "additionalContacts" : "jane.doe@umusic.com; another.email@umusic.com",
+                "projectSecurity" : "Public (Viewable by all label members)"
+            },
+
+            "audioTrackInfo" : [
+                {
+                    "discSequence" : "1",
+                    "discAudioFile" : "Track Name 1",
+                    "discISRC" : "123456789101",
+                    "discArtist" : "Example Artist Name 1",
+                    "discSingle" : true,
+                    "discReleaseDate" : "12/28/18"
+                }
+            ],
+
+            "territorialRightsInfo" : {
+                "rightsPolicies" : [
+                    {
+                        "rightsPolicyName" : "Global Rights Policy",
+                        "rightsPolicyTracks" : "Track Name 2",
+                        "rightsOwned" : "Worldwide",
+                        "rightsNotOwned" : "N/A"
+                    }
+                ]
+            },
+
+            "blockingPoliciesInfo" : {
+                "blockingPolicyName" : "Blocking Policy 1",
+                "blockingPolicyTracks" : [
+                    "Track Name 1"
+                ]
+            }
+        }
+    }
+}
