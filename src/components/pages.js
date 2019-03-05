@@ -23,7 +23,7 @@ class PageHeader extends Component {
 
         const headers = new Headers(
             {
-                'X-FP-API-KEY': '6Hgjh4IjXQWuVDzaPK4F9vsIC9RSm3847ti5RZU5'
+                'X-FP-API-KEY': ''
             }
         )
 
@@ -78,6 +78,11 @@ class PageHeader extends Component {
 };
 
 const ProjectContactsPage= (props) => {
+
+    const saveAndContinue = () => {
+        alert('Save Contacts and Continue')
+    }
+    
     return(
         <section className="page-container h-100">
 
@@ -93,7 +98,7 @@ const ProjectContactsPage= (props) => {
                 <section className="row">
                     <div className="col-12">
                         <div className="form-group">
-                            <label className="col-form-label col-2" for="projectTitle">Project Security <span className="required-ind">*</span></label>
+                            <label className="col-form-label col-2" htmlFor="projectTitle">Project Security <span className="required-ind">*</span></label>
                             <div className="dropdown col-9">
                                 <button type="button" id="projectSecurityDropdown" className="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">
                                     Private (Viewable on by you)
@@ -113,7 +118,7 @@ const ProjectContactsPage= (props) => {
                     
                         <div className="form-group">
                             <label className="col-form-label col-2">Primary Contact Email <span className="required-ind">*</span></label>
-                            <input type="email" className="form-control col-5" id="primaryEmail" placeholder="#Users Email Default#" />>
+                            <input type="email" className="form-control col-5" id="primaryEmail" placeholder="#Users Email Default#" />
                         </div>
                     </div>
                 </section>
@@ -131,7 +136,7 @@ const ProjectContactsPage= (props) => {
                     <div className="col-9"></div>
                     <div className="col-3">
                         <button type="button" className="btn btn-secondary">Save</button>
-                        <button type="button" className="btn btn-primary" onClick="location.href = 'audio-files.html'">Save &amp; Continue</button>
+                        <button type="button" className="btn btn-primary" onClick={saveAndContinue}>Save &amp; Continue</button>
                     </div>
                 </section>
             </form>
@@ -208,6 +213,11 @@ const NewProjectPage= (props) => {
 };
 
 const ReleaseinformationPage= (props) => {
+
+    const saveAndContinue = () => {
+        alert('Save and Continue')
+    }
+
     return(
         <section className="page-container h-100">
 
@@ -267,7 +277,7 @@ const ReleaseinformationPage= (props) => {
                     <div className="col-9"></div>
                     <div className="col-3">
                         <button type="button" className="btn btn-secondary">Save</button>
-                        <button type="button" className="btn btn-primary" onClick="location.href = 'project-contacts.html'">Save &amp; Continue</button>
+                        <button type="button" className="btn btn-primary" onClick={saveAndContinue}>Save &amp; Continue</button>
                     </div>
                 </section>
             </form>
