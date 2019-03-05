@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter as Route, Link } from "react-router-dom";
+import React, { Component } from 'react';
+import { BrowserRouter as Route, NavLink } from "react-router-dom";
 
 const mockUserAccess = 'admin';
 
@@ -75,17 +75,13 @@ const navList = {
 const MakeUserNavLinks = (props) => {
 	//console.log('MakeUserNavLinks : ' + props.linkText)
 
+	const activeStyle = {color: '#333', backgroundColor: '#F5F5F5'}
+
 	return(
 		<li key={props.index}>
-			<Link className="steps" to={{pathname: props.navRoute}} replace>
+			<NavLink className="steps" activeStyle={activeStyle} to={{pathname: props.navRoute}} replace>
 				Step <span className="count-circle">{props.index + 1}</span> {props.linkText}
-				
-				{/* <label className="custom-checkbox">
-  					<input type="checkbox" />
-  					<span className="checkmark"></span> 
-				</label>
-				*/}
-			</Link>
+			</NavLink>
 		</li>
 	)
 };
@@ -93,40 +89,46 @@ const MakeUserNavLinks = (props) => {
 const MakeAdminNavLinks = (props) => {
 	return(
 		<li key={props.index}>
-			<Link to={{pathname: props.navRoute, state: {navID: props.navID}}}>{props.linkText}</Link>
+			<NavLink to={{pathname: props.navRoute, state: {navID: props.navID}}}>{props.linkText}</NavLink>
 		</li>
 	)
 };
 
-const LeftNav = () => {
 
-	const adminLinks = Object.keys(navList.admin).map(
-		function(link, i) { 
-				return(
-					<MakeAdminNavLinks key={i} index={i} linkText={navList.admin[link].linkText} navRoute={navList.admin[link].navRoute} navID={link}/>
-				)
-		}
-	);
+class LeftNav extends Component {
 
-	const userLinks = Object.keys(navList.steps).map(
-		function(link, i) { 
-				return(
-					<MakeUserNavLinks key={i} index={i} linkText={navList.steps[link].linkText} navRoute={navList.steps[link].navRoute} navID={link}/>
-				)
-		}
-	);
+	render() {
 
-  return(
-	<nav className="left-nav col-2">
-		<section className="fixed-left-nav col-2">
-			<span className="left-nav-logo"></span>
-			<ul>
-				{userLinks}
-				{adminLinks}
-			</ul>
-		</section>
-	</nav>
-  )
+		const adminLinks = Object.keys(navList.admin).map(
+			function(link, i) { 
+					return(
+						<MakeAdminNavLinks key={i} index={i} linkText={navList.admin[link].linkText} navRoute={navList.admin[link].navRoute} navID={link}/>
+					)
+			}
+		);
+	
+		const userLinks = Object.keys(navList.steps).map(
+			function(link, i) { 
+					return(
+						<MakeUserNavLinks key={i} index={i} linkText={navList.steps[link].linkText} navRoute={navList.steps[link].navRoute} navID={link}/>
+					)
+			}
+		);
+
+		return(
+			<nav className="left-nav col-2">
+				<section className="fixed-left-nav col-2">
+					<span className="left-nav-logo"></span>
+					<ul>
+						{userLinks}
+						{adminLinks}
+					</ul>
+				</section>
+			</nav>
+		)
+	}
 }
+
+
 
 export default LeftNav;

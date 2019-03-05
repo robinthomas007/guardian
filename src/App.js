@@ -18,7 +18,8 @@ class App extends Component {
   render() {
     return(
      <BrowserRouter>
-        <Security issuer={config.okta.issuer}
+        <Security 
+          issuer={config.okta.issuer}
           client_id={config.okta.client_id}
           redirect_uri={config.okta.redirect_uri}
         >

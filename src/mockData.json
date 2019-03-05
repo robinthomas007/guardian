@@ -1,7 +1,11 @@
 {
     "user" : {
         "firstName" : "John",
-        "lastName" : "Doe"
+        "lastName" : "Doe",
+        "email" : "john.doe@umusic.net",
+        "labels" : [
+            
+        ]
     },
 
     "project" : {
