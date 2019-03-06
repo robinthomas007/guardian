@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
 import TopNav from './TopNav';
-import { ReleaseinformationPage, NewProjectPage, AudioFilesPage, ProjectContactsPage, TrackInformationPage, TerritorialRightsPage, BlockingPoliciesPage, ReviewAndSubmitPage} from './pages';
 import { BrowserRouter as Router, Route, Switch, Link, Blocker, withRouter, Redirect } from "react-router-dom";
+import TrackInformationPage from './pages/TrackInformationPage';
+import ProjectContactsPage from './pages/ProjectContactsPage';
+import NewProjectPage from './pages/NewProjectPage';
+import AudioFilesPage from './pages/AudioFilesPage';
+import ReviewAndSubmitPage from './pages/ReviewAndSubmitPage';
+import BlockingPoliciesPage from './pages/BlockingPoliciesPage';
+import TerritorialRightsPage from './pages/TerritorialRightsPage';
+import ReleaseInformationPage from './pages/ReleaseInformationPage';
 
 class Content extends Component {
     render() {
@@ -9,7 +16,7 @@ class Content extends Component {
             <div className="content col-10">
                 <TopNav />
                 <div>
-                    <Route path="/releaseInformation" component={ReleaseinformationPage}></Route>
+                    <Route path="/releaseInformation" component={ReleaseInformationPage}></Route>
                     <Route path="/projectContacts" component={ProjectContactsPage}></Route>
                     <Route path="/trackInformation" component={TrackInformationPage}></Route>
                     <Route path="/territorialRights" component={TerritorialRightsPage}></Route>

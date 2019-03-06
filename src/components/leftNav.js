@@ -129,6 +129,4 @@ class LeftNav extends Component {
 	}
 }
 
-
-
 export default LeftNav;

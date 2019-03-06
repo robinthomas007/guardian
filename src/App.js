@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route} from "react-router-dom";
-import {LoginPage} from './components/pages';
+import LoginPage from './components/pages/LoginPage';
+
 import { Security, SecureRoute, ImplicitCallback } from '@okta/okta-react';
 import config from './config';
 
