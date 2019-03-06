@@ -9,7 +9,7 @@ const ButtonDropDown = (props) => {
                 id="selectRightsDropdown" 
                 className="btn btn-secondary dropdown-toggle" 
                 data-toggle="dropdown" 
-                aria-haspop="true" 
+                aria-haspopup="true" 
                 aria-expanded="false"
             >Select a Saved Rights Set</button>
 

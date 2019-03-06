@@ -21,8 +21,8 @@ class AudioFilesPage extends Component {
             )
         }
 
-        const dataRows = mockData.pages.AudioFiles.disc1.tracks.map( (track) => 
-            <tr>
+        const dataRows = mockData.pages.AudioFiles.disc1.tracks.map( (track, i) => 
+            <tr key={i}>
                 <td className="centered">{track.trackSequence}</td>
                 <td><div className="sortable-audio-file"><i className="material-icons">format_line_spacing</i><span>{track.trackAudioFile}</span></div></td>
                 <td>{track.trackISRC}</td>

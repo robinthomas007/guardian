@@ -125,7 +125,7 @@ class TerritorialRightsPage extends Component {
                                         <tr className="row no-gutters">
                                             <td className="col-4">
                                                 <div className="dropdown">
-                                                    <button type="button" id="selectTracksDropdown" className="btn btn-secondary dropdown-toggle territory-tracks" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">
+                                                    <button type="button" id="selectTracksDropdown" className="btn btn-secondary dropdown-toggle territory-tracks" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                         Select Tracks or Drag Below
                                                     </button>
                                                     <ul className="dropdown-menu tracks" aria-labelledby="selectTracksDropdown">
@@ -136,7 +136,7 @@ class TerritorialRightsPage extends Component {
                                             </td>
                                             <td className="col-4">
                                                 <div className="dropdown">
-                                                    <button type="button" id="includedCountriesDropdown" className="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">
+                                                    <button type="button" id="includedCountriesDropdown" className="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                         Select Countries
                                                     </button>
                                                     <ul className="dropdown-menu countries" aria-labelledby="includedCountriesDropdown">
@@ -146,7 +146,7 @@ class TerritorialRightsPage extends Component {
                                             </td>
                                             <td className="col-4">
                                                 <div className="dropdown">
-                                                    <button type="button" id="excludedCountriesDropdown" className="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">
+                                                    <button type="button" id="excludedCountriesDropdown" className="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                         Select Countries
                                                     </button>
                                                     <ul className="dropdown-menu countries" aria-labelledby="excludedCountriesDropdown">

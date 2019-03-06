@@ -27,7 +27,7 @@ class ProjectContactsPage extends Component {
                             <div className="form-group">
                                 <label className="col-form-label col-2" htmlFor="projectTitle">Project Security <span className="required-ind">*</span></label>
                                 <div className="dropdown col-9">
-                                    <button type="button" id="projectSecurityDropdown" className="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">
+                                    <button type="button" id="projectSecurityDropdown" className="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Private (Viewable on by you)
                                     </button>
                                 

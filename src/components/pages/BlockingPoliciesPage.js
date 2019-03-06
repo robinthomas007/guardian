@@ -131,7 +131,7 @@ class BlockingPoliciesPage extends Component {
                                     <tr>
                                         <td nowrap>
                                             <div className="dropdown">
-                                                <button type="button" id="selectTracksDropdown" className="btn btn-secondary dropdown-toggle territory-tracks" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">
+                                                <button type="button" id="selectTracksDropdown" className="btn btn-secondary dropdown-toggle territory-tracks" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     Select Tracks or Drag Below
                                                 </button>
                                                 <ul className="dropdown-menu tracks" aria-labelledby="selectTracksDropdown">

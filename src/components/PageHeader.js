@@ -11,40 +11,7 @@ class PageHeader extends Component {
             user : {}
         };
     }
-
-    componentDidMount() {
-        console.log('mounted')
-
-        const headers = new Headers(
-            {
-                'X-FP-API-KEY': ''
-            }
-        )
-
-        fetch ('https://7qfuflvtx0.execute-api.us-east-1.amazonaws.com/dev/login', {
-
-            method : 'POST',
-            mode : 'cors',
-            headers : headers,
-            body : {
-                "UserToken" : "0"
-            }
-
-            }).then (
-                function(response) {
-                    return response.json();
-                }
-            )
-            .then (
-                function (userJSON) {
-                    console.log(JSON.stringify(userJSON))
-                }
-            )
-            .catch(
-                error => console.error(error)
-            );
-    }
-    
+   
     render() {
         const closeProject = () => {
             alert('Close Project');
