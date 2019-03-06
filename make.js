@@ -21,14 +21,21 @@ function replaceInFile(templ, outfile, replaceOpts) {
   }
 }
 
+let all_repl_from = []
+let all_repl_to = []
+for (let k in process.env) {
+  all_repl_from.push(`{{${k}}}`)
+  all_repl_to.push(process.env[k])
+}
+
 // create array of all replacement files and options
 let replacements = [
   {
     templ: "src/config/index.templ.js",
     outfile: "src/config/index.js",
     replaceOpts: {
-      from: [/{{OKTA_ISSUER}}/g, /{{OKTA_CLIENT_ID}}/g, /{{API_KEY}}/g],
-      to: [process.env.OKTA_ISSUER, process.env.OKTA_CLIENT_ID, process.env.API_KEY],
+      from: all_repl_from,
+      to: all_repl_to,
     }
   }
 ];
