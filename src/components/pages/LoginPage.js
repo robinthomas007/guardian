@@ -10,27 +10,11 @@ class LoginPage extends Component {
         redirect : false
     }
 
-    setRedirect = () => {
-
-        console.log('setRedirect')
-
-        this.setState(
-            {
-                redirect : true
-            }
-        )
-    }
-
-    renderRedirect = () => {
-        console.log('renderRedirect')
-
-        if (this.state.redirect) {
-            ReactDOM.render(<Login />, document.getElementById('root'))
-        }
-    }
 
     render() {
+
         return(
+
             <section className="container-fluid landing">
                 <section className="logo"><img src="/static/images/guardian-logo.png" /></section>
                 <nav className="top-nav ext">
@@ -46,9 +30,7 @@ class LoginPage extends Component {
                     <h2>CONTENT PROTECTION, LEAK DETECTION &amp; ANTI-PIRACY</h2>
                     <span>
                         <button className="access btn">Request Access</button>
-                        <button className="log-in btn" onClick={this.setRedirect}>Log In</button>
-
-                        {this.renderRedirect()}
+                        <button className="log-in btn" onClick={this.props.loginButtonClick}>Log In</button>
 
                         {/*
                         <Button

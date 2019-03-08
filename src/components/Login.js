@@ -7,18 +7,34 @@ import Content from './content';
 
 class Login extends Component {
 
+    constructor() {
+        super();
+
+        this.state = {
+            loggedIn : ''
+        };
+    }
+
+    getLandingPage = (loggedIn) => {
+        if(!loggedIn) {
+            return(
+                <Redirect to='/releaseInformation' />
+            )
+        }
+    }
+
     render() {
         return (
             <BrowserRouter>
                  <div className="row h-100 no-gutters">
                     <LeftNav />
                     <Content />
-                    <Redirect to='/releaseInformation' />
                 </div>
             </BrowserRouter>
         )
     }
 
 }
+
 
 export default Login;
