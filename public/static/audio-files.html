@@ -10,8 +10,35 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="css/site.css">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </head>
 <body>
+
+ <script type="text/javascript">
+   $(document).ready(function(){
+        $("#haveAudio").modal('show');
+    });
+</script>
+<div id="haveAudio" class="modal fade" role="dialog">
+ <div class="modal-dialog">
+   <!-- Modal content-->
+   <div class="modal-content">
+     <div class="modal-header">
+     </div>
+     <div class="modal-body centered">
+       <h3>Do you have audio files?</h3>
+       <button type="button" class="btn btn-primary" data-dismiss="modal">Yes</button>
+       <button type="button" class="btn btn-primary" data-dismiss="modal" onClick="location.href = 'track-information.html'">No</button>
+     </div>
+     <div class="modal-footer">
+     </div>
+   </div>
+ </div>
+ </div>
+
+
 <section class="container-fluid h-100">
 <section class="row h-100 no-gutters">
 <nav class="left-nav col-2">
@@ -65,8 +92,12 @@
 			<!-- Close project button will save and close the project pushing the user back to the internal landing or 'Find a Project' page -->
 		</div> 
 		</div>
+			<div class="row no-gutters step-description">
+			<div class="col-12">
 		<h2>Step <span class="count-circle">3</span> Audio Files</h2>
 		<p>In this step, you can upload audio files for filtering by either dragging &amp; dropping or clicking to browse files, e.g. mp3, WAV, etc. Tracks can also be reordered with drag and drop. This section must be completed by clicking on the 'Save &amp; Continue' button below.</p>
+				</div>
+			</div>
 		<form>
 			<section class="row">
 				
@@ -191,8 +222,8 @@
     <tr>
       <td class="centered">1</td>
       <td><div class="sortable-audio-file"><i class="material-icons">format_line_spacing</i><span>Sample Track Name 1</span></div></td>
-      <td>01234578910</td>
-      <td>Sample Track Title 1</td>
+      <td><input type="text" class="form-control" value="01234578910" /></td>
+      <td><input type="text" class="form-control" value="Sample Track Title" /></td>
       <td class="centered">
       <button class="btn btn-secondary action"><i class="material-icons">refresh</i></button>
       <button class="btn btn-secondary action"><i class="material-icons">delete</i></button>
@@ -201,8 +232,8 @@
     <tr>
       <td class="centered">2</td>
       <td><div class="sortable-audio-file"><i class="material-icons">format_line_spacing</i><span>Sample Track Name 2</span></div></td>
-      <td>01234578910</td>
-      <td>Sample Track Title 2</td>
+      <td><input type="text" class="form-control" value="01234578910" /></td>
+      <td><input type="text" class="form-control" value="Sample Track Title" /></td>
       <td class="centered">
       <button class="btn btn-secondary action"><i class="material-icons">refresh</i></button>
       <button class="btn btn-secondary action"><i class="material-icons">delete</i></button>
@@ -211,8 +242,8 @@
     <tr>
       <td class="centered">3</td>
       <td><div class="sortable-audio-file"><i class="material-icons">format_line_spacing</i><span>Sample Track Name 3</span></div></td>
-      <td>01234578910</td>
-      <td>Sample Track Title 3</td>
+      <td><input type="text" class="form-control" value="01234578910" /></td>
+      <td><input type="text" class="form-control" value="Sample Track Title" /></td>
       <td class="centered">
       <button class="btn btn-secondary action"><i class="material-icons">refresh</i></button>
       <button class="btn btn-secondary action"><i class="material-icons">delete</i></button>
@@ -221,8 +252,8 @@
     <tr>
       <td class="centered">4</td>
       <td><div class="sortable-audio-file"><i class="material-icons">format_line_spacing</i><span>Sample Track Name 4</span></div></td>
-      <td>01234578910</td>
-      <td>Sample Track Title 4</td>
+      <td><input type="text" class="form-control" value="01234578910" /></td>
+      <td><input type="text" class="form-control" value="Sample Track Title" /></td>
       <td class="centered">
       <button class="btn btn-secondary action"><i class="material-icons">refresh</i></button>
       <button class="btn btn-secondary action"><i class="material-icons">delete</i></button>
@@ -231,8 +262,8 @@
     <tr>
       <td class="centered">5</td>
       <td><div class="sortable-audio-file"><i class="material-icons">format_line_spacing</i><span>Sample Track Name 5</span></div></td>
-      <td>01234578910</td>
-      <td>Sample Track Title 5</td>
+      <td><input type="text" class="form-control" value="01234578910" /></td>
+      <td><input type="text" class="form-control" value="Sample Track Title" /></td>
       <td class="centered">
       <button class="btn btn-secondary action"><i class="material-icons">refresh</i></button>
       <button class="btn btn-secondary action"><i class="material-icons">delete</i></button>
@@ -241,8 +272,8 @@
     <tr>
       <td class="centered">6</td>
       <td><div class="sortable-audio-file"><i class="material-icons">format_line_spacing</i><span>Sample Track Name 6</span></div></td>
-      <td>01234578910</td>
-      <td>Sample Track Title 6</td>
+      <td><input type="text" class="form-control" value="01234578910" /></td>
+      <td><input type="text" class="form-control" value="Sample Track Title" /></td>
       <td class="centered">
       <button class="btn btn-secondary action"><i class="material-icons">refresh</i></button>
       <button class="btn btn-secondary action"><i class="material-icons">delete</i></button>
@@ -251,8 +282,8 @@
     <tr>
       <td class="centered">7</td>
       <td><div class="sortable-audio-file"><i class="material-icons">format_line_spacing</i><span>Sample Track Name 7</span></div></td>
-      <td>01234578910</td>
-      <td>Sample Track Title 7</td>
+      <td><input type="text" class="form-control" value="01234578910" /></td>
+      <td><input type="text" class="form-control" value="Sample Track Title" /></td>
       <td class="centered">
       <button class="btn btn-secondary action"><i class="material-icons">refresh</i></button>
       <button class="btn btn-secondary action"><i class="material-icons">delete</i></button>
@@ -261,8 +292,8 @@
     <tr>
       <td class="centered">8</td>
       <td><div class="sortable-audio-file"><i class="material-icons">format_line_spacing</i><span>Sample Track Name 8</span></div></td>
-      <td>01234578910</td>
-      <td>Sample Track Title 8</td>
+      <td><input type="text" class="form-control" value="01234578910" /></td>
+      <td><input type="text" class="form-control" value="Sample Track Title" /></td>
       <td class="centered">
       <button class="btn btn-secondary action"><i class="material-icons">refresh</i></button>
       <button class="btn btn-secondary action"><i class="material-icons">delete</i></button>
@@ -271,8 +302,8 @@
     <tr>
       <td class="centered">9</td>
       <td><div class="sortable-audio-file"><i class="material-icons">format_line_spacing</i><span>Sample Track Name 9</span></div></td>
-      <td>01234578910</td>
-      <td>Sample Track Title 9</td>
+      <td><input type="text" class="form-control" value="01234578910" /></td>
+      <td><input type="text" class="form-control" value="Sample Track Title" /></td>
       <td class="centered">
       <button class="btn btn-secondary action"><i class="material-icons">refresh</i></button>
       <button class="btn btn-secondary action"><i class="material-icons">delete</i></button>
@@ -281,8 +312,8 @@
     <tr>
       <td class="centered">10</td>
       <td><div class="sortable-audio-file"><i class="material-icons">format_line_spacing</i><span>Sample Track Name 10</span></div></td>
-      <td>01234578910</td>
-      <td>Sample Track Title 10</td>
+      <td><input type="text" class="form-control" value="01234578910" /></td>
+      <td><input type="text" class="form-control" value="Sample Track Title" /></td>
       <td class="centered">
       <button class="btn btn-secondary action"><i class="material-icons">refresh</i></button>
       <button class="btn btn-secondary action"><i class="material-icons">delete</i></button>
@@ -307,8 +338,5 @@
 </section><!-- End Content -->
 </section><!-- End Main Row -->
 </section><!-- End Container -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 </html>
