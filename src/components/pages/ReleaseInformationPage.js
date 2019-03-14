@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import React, { Component,form } from 'react';
 import {Table, Grid, Button, Form } from 'react-bootstrap'; 
 import PageHeader from '../PageHeader';
 import Notification from '../notifications/notifications';
