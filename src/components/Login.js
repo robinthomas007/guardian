@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Redirect} from "react-router-dom";
 import LeftNav from './leftNav';
 import Content from './content';
+import { timingSafeEqual } from 'crypto';
 
 
 class Login extends Component {
@@ -11,16 +12,9 @@ class Login extends Component {
         super();
 
         this.state = {
-            loggedIn : ''
-        };
-    }
-
-    getLandingPage = (loggedIn) => {
-        if(!loggedIn) {
-            return(
-                <Redirect to='/releaseInformation' />
-            )
+            loggedIn : false
         }
+
     }
 
     render() {
@@ -29,12 +23,11 @@ class Login extends Component {
                  <div className="row h-100 no-gutters">
                     <LeftNav />
                     <Content />
+                    <Redirect to='/releaseInformation' />
                 </div>
             </BrowserRouter>
         )
     }
-
 }
-
 
 export default Login;
