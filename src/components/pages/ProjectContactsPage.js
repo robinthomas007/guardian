@@ -3,8 +3,28 @@ import {Table, Grid, Button, Form } from 'react-bootstrap';
 import PageHeader from '../PageHeader';
 
 class ProjectContactsPage extends Component {
-  
+    constructor() {
 
+        super();
+
+        this.state = {
+            projectTitle: ''
+        }
+    }
+
+    handleChange = (event) => {
+
+        {/* 
+        this is dynamically changing / adding to the state whenever the inputs are updated
+         - it also uses their id as the state attribute so this.state.x = the current value of the input named x
+     */}
+        const eventTarget = event.target.id;
+        this.setState(
+            { eventTarget: event.target.value }
+        )
+
+        console.log(this.state.eventTarget)
+        }
     
     render() {
 
@@ -30,7 +50,7 @@ class ProjectContactsPage extends Component {
 
                 <Form.Group>
                     <Form.Label className='col-form-label col-2'>Project Security <span className='required-ind'>*</span></Form.Label>
-                    <Form.Control id='projectSecuritydropdown' as='select' className='col-form-label dropdown col-2' value='' onChange={this.handleChange}>
+                    <Form.Control id='projectSecuritydropdown' as='select' className='col-form-label dropdown col-2' value={this.state.value} onChange={this.handleChange}>
                         <option selected>Private (Viewable By You)</option>
                         <option>Public (Viewable By All Label Users)</option>
                     </Form.Control>
@@ -38,12 +58,12 @@ class ProjectContactsPage extends Component {
 
                 <Form.Group>
                     <Form.Label className='col-form-label col-2'>Primary Contact <span className='required-ind'>*</span></Form.Label>
-                    <Form.Control className='form-control col-5'  id='primaryContact' value='Primary Contact Name' onChange={this.handleChange} ></Form.Control>
+                    <Form.Control className='form-control col-5'  id='primaryContact' value={this.state.value} onChange={this.handleChange} ></Form.Control>
                 </Form.Group>
 
                 <Form.Group>
                     <Form.Label className='col-form-label col-2'>Primary Contact Email<span className='required-ind'>*</span></Form.Label>
-                    <Form.Control className='form-control col-5'  id='primaryContactemail' value='Primary Contact Email' onChange={this.handleChange} ></Form.Control>
+                    <Form.Control className='form-control col-5'  id='primaryContactemail' value={this.state.value} onChange={this.handleChange} ></Form.Control>
                 </Form.Group>
 
                 <div className='row additional-contacts'>
@@ -51,7 +71,7 @@ class ProjectContactsPage extends Component {
                     <Form.Label>Addtional Contacts</Form.Label>
                     </Form.Group>
                     <Form.Group className="form-group col-10">
-                     <Form.Control className='' as='textarea' rows='5' value='' onChange={this.handleChange}></Form.Control>
+                     <Form.Control className='' as='textarea' rows='5' value={this.state.value} onChange={this.handleChange}></Form.Control>
                  </Form.Group>
                     </div>
                 </div>
