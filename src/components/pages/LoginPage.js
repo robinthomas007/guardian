@@ -21,7 +21,7 @@ class LoginPage extends Component {
                     <ul>
                         <li><a href="">Help Guide</a></li>
                         <li><a href="">Request Access</a></li>
-                        <li><a href="release-information.html">Log In</a></li>
+                        <li><a href="releaseinformation">Log In</a></li>
                     </ul>
                 </nav>
     
