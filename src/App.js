@@ -14,6 +14,7 @@ class App extends Component {
             issuer={config.okta.issuer}
             client_id={config.okta.client_id}
             redirect_uri={config.okta.redirect_uri}
+            className={'h-100'}
           >
 
             <Switch>

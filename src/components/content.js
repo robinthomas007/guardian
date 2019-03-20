@@ -50,9 +50,9 @@ export default withAuth(class Content extends Component {
       sessionStorage.setItem('idtoken', this.state.idtoken)
       sessionStorage.setItem('user', JSON.stringify(this.state.user))
 
-      console.log('accessToken: ' + this.state.accesstoken)
-      console.log('idToken: ' + this.state.idtoken)
-      console.log('user: ' + this.state.user)
+      //console.log('accessToken: ' + this.state.accesstoken)
+      //console.log('idToken: ' + this.state.idtoken)
+      //console.log('user: ' + this.state.user)
 
       return (
             <div className="row h-100 no-gutters">
