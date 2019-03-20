@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import Login from '../Login';
 
 const mockData = require('../../mockData.json');
 
@@ -10,6 +8,12 @@ class LoginPage extends Component {
         redirect : false
     }
 
+    login = () => {
+        return(
+            this.props.history.push('/releaseinformation')
+        )
+        
+    }
 
     render() {
 
@@ -21,7 +25,7 @@ class LoginPage extends Component {
                     <ul>
                         <li><a href="">Help Guide</a></li>
                         <li><a href="">Request Access</a></li>
-                        <li><a href="releaseinformation">Log In</a></li>
+                        <li><a href="/releaseinformation">Log In</a></li>
                     </ul>
                 </nav>
     
@@ -30,9 +34,13 @@ class LoginPage extends Component {
                     <h2>CONTENT PROTECTION, LEAK DETECTION &amp; ANTI-PIRACY</h2>
                     <span>
                         <button className="access btn">Request Access</button>
-                        <button className="log-in btn" onClick={this.props.loginButtonClick}>Log In</button>
+                        <button className="log-in btn" onClick={this.login}>Log In</button>
 
                         {/*
+
+                        this.props.history.push('/releaseinformation')
+
+
                         <Button
                             onClick={this.setRedirect}
                             className="log-in btn"

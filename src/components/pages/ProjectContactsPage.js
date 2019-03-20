@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import {Table, Grid, Button, Form } from 'react-bootstrap'; 
 import PageHeader from '../PageHeader';
 
 class ProjectContactsPage extends Component {
+
     constructor() {
 
         super();
@@ -13,18 +13,13 @@ class ProjectContactsPage extends Component {
     }
 
     handleChange = (event) => {
-
-        {/* 
-        this is dynamically changing / adding to the state whenever the inputs are updated
-         - it also uses their id as the state attribute so this.state.x = the current value of the input named x
-     */}
         const eventTarget = event.target.id;
         this.setState(
             { eventTarget: event.target.value }
         )
-
         console.log(this.state.eventTarget)
-        }
+    }
+
     
     render() {
 
@@ -44,55 +39,8 @@ class ProjectContactsPage extends Component {
                     </div>
                 </div>
     
-            <Form>
-            <div className="row">
-                <div className="col-12">
-
-                <Form.Group>
-                    <Form.Label className='col-form-label col-2'>Project Security <span className='required-ind'>*</span></Form.Label>
-                    <Form.Control id='projectSecuritydropdown' as='select' className='col-form-label dropdown col-2' value={this.state.value} onChange={this.handleChange}>
-                        <option selected>Private (Viewable By You)</option>
-                        <option>Public (Viewable By All Label Users)</option>
-                    </Form.Control>
-                </Form.Group>
-
-                <Form.Group>
-                    <Form.Label className='col-form-label col-2'>Primary Contact <span className='required-ind'>*</span></Form.Label>
-                    <Form.Control className='form-control col-5'  id='primaryContact' value={this.state.value} onChange={this.handleChange} ></Form.Control>
-                </Form.Group>
-
-                <Form.Group>
-                    <Form.Label className='col-form-label col-2'>Primary Contact Email<span className='required-ind'>*</span></Form.Label>
-                    <Form.Control className='form-control col-5'  id='primaryContactemail' value={this.state.value} onChange={this.handleChange} ></Form.Control>
-                </Form.Group>
-
-                <div className='row additional-contacts'>
-                <Form.Group className="form-group col-2">
-                    <Form.Label>Addtional Contacts</Form.Label>
-                    </Form.Group>
-                    <Form.Group className="form-group col-10">
-                     <Form.Control className='' as='textarea' rows='5' value={this.state.value} onChange={this.handleChange}></Form.Control>
-                 </Form.Group>
-                    </div>
-                </div>
-            </div>
-            <div className="row save-buttons">
-                        <div className="col-9"></div>
-                        <div className="col-3">
-                            <button type="button" className="btn btn-secondary">Save</button>
-                            <button type="button" className="btn btn-primary" onClick={saveAndContinue}>Save &amp; Continue</button>
-                        </div>
-                    </div>
-            </Form>
-
-
-
-
-
-{/*
-
                 <form>
-                    <div className="row">
+                    <section className="row">
                         <div className="col-12">
                             <div className="form-group">
                                 <label className="col-form-label col-2" htmlFor="projectTitle">Project Security <span className="required-ind">*</span></label>
@@ -118,26 +66,25 @@ class ProjectContactsPage extends Component {
                                 <input type="email" className="form-control col-5" id="primaryEmail" placeholder="#Users Email Default#" />
                             </div>
                         </div>
-                    </div>
+                    </section>
                     
-                    <div className="row additional-contacts">	
+                    <section className="row additional-contacts">	
                         <div className="form-group col-2">
                             <label className="col-form-label">Additional Contacts</label>
                         </div>
                         <div className="form-group col-10">
                             <textarea className="form-control"></textarea>
                         </div>
-                    </div>
+                    </section>
                 
-                    <div className="row save-buttons">
+                    <section className="row save-buttons">
                         <div className="col-9"></div>
                         <div className="col-3">
                             <button type="button" className="btn btn-secondary">Save</button>
                             <button type="button" className="btn btn-primary" onClick={saveAndContinue}>Save &amp; Continue</button>
                         </div>
-                    </div>
+                    </section>
                 </form>
-                 */}
             </section>
         )
     }

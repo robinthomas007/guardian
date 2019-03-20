@@ -27,8 +27,8 @@ const TrackInformationPage = (props) => {
                 )
             }
 
-            const dataRows = mockData.pages.TrackInformation.tracks.map( (track) => 
-                <tr>
+            const dataRows = mockData.pages.TrackInformation.tracks.map( (track, i) => 
+                <tr key={i}>
                     <td className="centered">{track.trackSequence}</td>
                     <td><i className="material-icons">format_line_spacing</i></td>
                     <td className="centered"><i className="material-icons purple-icon">audiotrack</i></td>

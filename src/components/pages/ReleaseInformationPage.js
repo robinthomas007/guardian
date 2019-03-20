@@ -4,10 +4,16 @@ import PageHeader from '../PageHeader';
 import Notification from '../notifications/notifications';
 
 
-class ReleaseInformationForm extends React.Component {
+const mockData = require('../../mockData.json');
+
+
+class ReleaseinformationPage extends Component {
+
     constructor(props) {
         super(props);
-        this.state = { value: '' };
+        this.state = { 
+            
+        };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -18,47 +24,44 @@ class ReleaseInformationForm extends React.Component {
     }
 
     handleSubmit(event) {
-        alert('A project title was submitted: ' + this.state.value);
         event.preventDefault();
-    }
-}
 
+        /* https://medium.com/@everdimension/how-to-handle-forms-with-just-react-ac066c48bd4f 
+        
+                    {
+            "UserToken": "string",
+            "Project": {
+                "id": 0,
+                "title": "string",
+                "projectType": "string",
+                "artist": "string",
+                "label": 0,
+                "releaseDate": "string",
+                "notes": "string"
+            }
+            }
+        
+        
+        */
 
-const mockData = require('../../mockData.json');
+        const formData = new FormData (event.target);
 
+        console.log(formData)
 
-class ReleaseinformationPage extends Component {
-    constructor() {
-
-        super();
-
-        this.state = {
-            projectTitle: ''
-        }
-    }
-
-    handleChange = (event) => {
-
-        {/* 
-        this is dynamically changing / adding to the state whenever the inputs are updated
-         - it also uses their id as the state attribute so this.state.x = the current value of the input named x
-     */}
-        const eventTarget = event.target.id;
-        this.setState(
-            { eventTarget: event.target.value }
-        )
-
-        console.log(this.state.eventTarget)
+        fetch('https://api-dev.umusic.net/guardian/project', {
+            method : 'POST',
+            body : formData
+        })
     }
 
-    render() {
+
+   render() {
         const saveAndContinue = () => {
             alert('Save and Continue')
         }
 
         return (
             <section className="page-container h-100">
-
 
                 <PageHeader />
 
@@ -69,7 +72,7 @@ class ReleaseinformationPage extends Component {
                     </div>
                 </div>
 
-               <Form>
+               <Form onSubmit={(e)=>this.handleSubmit(e)}>
                     <div className="row">
                         <div className="col-8">
                             <Form.Group>
@@ -129,7 +132,7 @@ class ReleaseinformationPage extends Component {
                     <section className="row save-buttons">
                         <div className="col-9"></div>
                         <div className="col-3">
-                            <Notification />
+                             <input type="submit" value="Save &amp; Continue" />
                         </div>
                     </section>
                 </Form> 

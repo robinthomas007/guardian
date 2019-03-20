@@ -33,7 +33,7 @@ class NewProjectPage extends Component {
                             <div className="form-group">
                                 <label className="col-form-label col-3">Project Type <span className="required-ind">*</span></label>
                                 <div className="dropdown col-8">
-                                    <button type="button" id="projectDropdown" className="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">
+                                    <button type="button" id="projectDropdown" className="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Private (Default)
                                     </button>
                                     <div className="dropdown-menu" aria-labelledby="projectDropdown">
@@ -44,7 +44,7 @@ class NewProjectPage extends Component {
                             </div>
                             <label className="col-form-label col-3">Releasing Label <span className="required-ind">*</span></label>
                             <div className="dropdown col-3">
-                                <button type="button" id="labelDropdown" className="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">Label 1 (Default)</button>
+                                <button type="button" id="labelDropdown" className="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Label 1 (Default)</button>
                                 <div className="dropdown-menu" aria-labelledby="labelDropdown">
                                     <a className="dropdown-item" href="#">Label Option 2</a>
                                     <a className="dropdown-item" href="#">Label Option 3</a>

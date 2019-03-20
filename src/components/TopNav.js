@@ -70,11 +70,14 @@ class TopNav extends Component {
     }
 
     render() {
+
+        const user = JSON.parse(sessionStorage.getItem('user'));
+
         return(
             <nav className="top-nav int">
                 <ul>
                     <li><a className="help" href="#" onClick={this.handleHelpClick}>Help Guide</a></li>
-                    <li>Welcome, {this.state.userName}</li>
+                    <li>Welcome, {user.name}</li>
                     <li><a href="#" onClick={this.handleLogoutClick}>Log Out</a></li>
                 </ul>
             </nav>
