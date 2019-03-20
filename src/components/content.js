@@ -19,7 +19,8 @@ export default withAuth(class Content extends Component {
     this.state = {
         messages: null,
         accesstoken: '',
-        idtoken: ''
+        idtoken: '',
+        user : {}
     }
     this.checkAuthentication();
   }
@@ -41,17 +42,19 @@ export default withAuth(class Content extends Component {
         this.setState({ user });
     }
 
+ }
+
+    render() {
+
       sessionStorage.setItem('accessToken', this.state.accesstoken)
-      sessionStorage.setItem('idtoken', idtoken)
-      sessionStorage.setItem('user', JSON.stringify(user))
+      sessionStorage.setItem('idtoken', this.state.idtoken)
+      sessionStorage.setItem('user', JSON.stringify(this.state.user))
 
       console.log('accessToken: ' + this.state.accesstoken)
       console.log('idToken: ' + this.state.idtoken)
       console.log('user: ' + this.state.user)
-  }
 
-    render() {
-        return (
+      return (
             <div className="row h-100 no-gutters">
                 <LeftNav />           
           

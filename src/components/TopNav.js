@@ -78,6 +78,7 @@ class TopNav extends Component {
                 <ul>
                     <li><a className="help" href="#" onClick={this.handleHelpClick}>Help Guide</a></li>
                     <li>Welcome, {user.name}</li>
+                                        <li>Welcome, {user.name}</li>
                     <li><a href="#" onClick={this.handleLogoutClick}>Log Out</a></li>
                 </ul>
             </nav>
