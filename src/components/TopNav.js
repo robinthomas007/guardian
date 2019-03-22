@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import config from '../config';
+import { withAuth } from '@okta/okta-react';
 
 const mockData = require('../mockData.json');
 
-class TopNav extends Component {
-  
+export default withAuth(class TopNav extends Component {
+    
     constructor() {
         super();
 
@@ -17,9 +18,7 @@ class TopNav extends Component {
 
     handleLogoutClick = (e) => {
         e.preventDefault();
-        return(
-            alert('Log Out')
-        )
+        this.props.auth.logout('/');
     }
 
     handleHelpClick = (e) => {
@@ -35,6 +34,7 @@ class TopNav extends Component {
         )
         this.setState({labels : userLabels})
     }
+
 
     componentDidMount() {
 
@@ -82,6 +82,4 @@ class TopNav extends Component {
             </nav>
         )
     }
-}
-
-export default TopNav;
+})
