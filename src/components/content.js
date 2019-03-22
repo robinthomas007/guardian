@@ -23,7 +23,7 @@ export default withAuth(class Content extends Component {
         user : {}
     }
     this.checkAuthentication();
-  }
+  };
 
   async checkAuthentication() {
       const accesstoken = await this.props.auth.getAccessToken();
@@ -41,10 +41,9 @@ export default withAuth(class Content extends Component {
       if (user !== this.state.user) {
         this.setState({ user });
     }
+  }
 
- }
-
-    render() {
+  render() {
 
       sessionStorage.setItem('accessToken', this.state.accesstoken)
       sessionStorage.setItem('idtoken', this.state.idtoken)
