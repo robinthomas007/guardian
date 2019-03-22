@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Table, Grid, Button, Form } from 'react-bootstrap'; 
 import PageHeader from '../PageHeader';
 
 class ProjectContactsPage extends Component {
@@ -39,52 +40,46 @@ class ProjectContactsPage extends Component {
                     </div>
                 </div>
     
-                <form>
-                    <section className="row">
-                        <div className="col-12">
-                            <div className="form-group">
-                                <label className="col-form-label col-2" htmlFor="projectTitle">Project Security <span className="required-ind">*</span></label>
-                                <div className="dropdown col-9">
-                                    <button type="button" id="projectSecurityDropdown" className="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Private (Viewable on by you)
-                                    </button>
-                                
-                                    <div className="dropdown-menu" aria-labelledby="projectSecurityDropdown">
-                                        <a className="dropdown-item" href="#">Private (Viewable on by you)</a>
-                                        <a className="dropdown-item" href="#">Public (Viewable by all label members)</a>
-                                    </div>
-                                </div>
-                            </div>
-                        
-                            <div className="form-group">
-                                <label className="col-form-label col-2">Primary Contact <span className="required-ind">*</span></label>
-                                <input type="text" className="form-control col-5" id="primaryContact" placeholder="#Users First &amp; Last Name#" />
-                            </div>
-                        
-                            <div className="form-group">
-                                <label className="col-form-label col-2">Primary Contact Email <span className="required-ind">*</span></label>
-                                <input type="email" className="form-control col-5" id="primaryEmail" placeholder="#Users Email Default#" />
-                            </div>
-                        </div>
-                    </section>
-                    
-                    <section className="row additional-contacts">	
-                        <div className="form-group col-2">
-                            <label className="col-form-label">Additional Contacts</label>
-                        </div>
-                        <div className="form-group col-10">
-                            <textarea className="form-control"></textarea>
-                        </div>
-                    </section>
-                
-                    <section className="row save-buttons">
+                <Form>
+            <div className="row">
+                <div className="col-12">
+
+                <Form.Group>
+                    <Form.Label className='col-form-label col-2'>Project Security <span className='required-ind'>*</span></Form.Label>
+                    <Form.Control id='projectSecuritydropdown' as='select' className='col-form-label dropdown col-2' value='' onChange={this.handleChange}>
+                        <option selected>Private (Viewable By You)</option>
+                        <option>Public (Viewable By All Label Users)</option>
+                    </Form.Control>
+                </Form.Group>
+
+                <Form.Group>
+                    <Form.Label className='col-form-label col-2'>Primary Contact <span className='required-ind'>*</span></Form.Label>
+                    <Form.Control className='form-control col-5'  id='primaryContact' value='Primary Contact Name' onChange={this.handleChange} ></Form.Control>
+                </Form.Group>
+
+                <Form.Group>
+                    <Form.Label className='col-form-label col-2'>Primary Contact Email<span className='required-ind'>*</span></Form.Label>
+                    <Form.Control className='form-control col-5'  id='primaryContactemail' value='Primary Contact Email' onChange={this.handleChange} ></Form.Control>
+                </Form.Group>
+
+                <div className='row additional-contacts'>
+                <Form.Group className="form-group col-2">
+                    <Form.Label>Addtional Contacts</Form.Label>
+                    </Form.Group>
+                    <Form.Group className="form-group col-10">
+                     <Form.Control className='' as='textarea' rows='5' value='' onChange={this.handleChange}></Form.Control>
+                 </Form.Group>
+                    </div>
+                </div>
+            </div>
+            <div className="row save-buttons">
                         <div className="col-9"></div>
                         <div className="col-3">
                             <button type="button" className="btn btn-secondary">Save</button>
                             <button type="button" className="btn btn-primary" onClick={saveAndContinue}>Save &amp; Continue</button>
                         </div>
-                    </section>
-                </form>
+                    </div>
+            </Form>
             </section>
         )
     }
