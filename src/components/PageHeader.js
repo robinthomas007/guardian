@@ -4,18 +4,24 @@ const mockData = require('../mockData.json');
 
 class PageHeader extends Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.state = {
             user : {}
         };
     }
    
+
+    handleProjectCloseClick = (event) => {
+        event.preventDefault();
+
+        //clear the local storage
+        localStorage.removeItem('projectData')
+
+    }
+
     render() {
-        const closeProject = () => {
-            alert('Close Project');
-        }
 
         return(
             <div className="row">
@@ -29,7 +35,7 @@ class PageHeader extends Component {
                         </span>
                         <button 
                             className="close-project btn" 
-                            onClick={closeProject}
+                            onClick={this.handleProjectCloseClick}
                         >Close Project</button>
                     </span>
                 </div> 

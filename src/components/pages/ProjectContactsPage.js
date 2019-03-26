@@ -1,20 +1,22 @@
 import React, { Component } from 'react';
 import {Table, Grid, Button, Form } from 'react-bootstrap'; 
 import PageHeader from '../PageHeader';
+import config from '../../config';
 
-const userObj = JSON.parse(sessionStorage.getItem('user'))
 
 class ProjectContactsPage extends Component {
-
 
     constructor() {
 
         super();
 
+        const userObj = JSON.parse(sessionStorage.getItem('user'))
+
         this.state = {
             formInputs : JSON.parse(localStorage.getItem('projectData'))
         }
 
+        this.state.userObj = JSON.parse(sessionStorage.getItem('user'))
         this.state.formInputs.projectPrimaryContact = userObj.name
         this.state.formInputs.projectPrimaryEmail = userObj.email
 
@@ -30,14 +32,49 @@ class ProjectContactsPage extends Component {
     handleSubmit(event) {
         
         event.preventDefault();
+        
+        const user = JSON.parse(sessionStorage.getItem('user'))
 
-        console.log('-------------------------------------')
-        console.log(this.state.formInputs)
-        console.log('-------------------------------------')
-        //we need to save the form data to localStorage at this point instead of posting to the API
+        const fetchHeaders = new Headers(
+            {
+                "Content-Type": "application/json",
+                "Authorization" : sessionStorage.getItem('accessToken')
+            }
+        )
+
+        const fetchBody = JSON.stringify( {
+            "User" : {
+                "email" : user.email
+            },
+            "Project" : this.state.formInputs
+        })
 
 
+        console.log('--------------------------')
+        console.log('HEADERS:')
+        console.log(fetchHeaders)
 
+        console.log('BODY:')
+        console.log(fetchBody)
+        console.log('--------------------------')
+
+        fetch ('https://api-qa.umusic.net/guardian/project', {
+            method : 'POST',
+            headers : fetchHeaders,
+            body : fetchBody
+        }).then (response => 
+            {
+                return(response.json());
+            }
+        )
+        .then (responseJSON => 
+            {
+                console.log(responseJSON)
+            }
+        )
+        .catch(
+            error => console.error(error)
+        );
     }
 
     render() {
@@ -66,7 +103,7 @@ class ProjectContactsPage extends Component {
                                     id='projectSecurity' 
                                     as='select' 
                                     className='col-form-label dropdown col-2' 
-                                    value={this.state.value} 
+                                    value={this.state.formInputs.projectSecurity}
                                     onChange={this.handleChange}>
                                         <option value="0" selected>Private (Viewable By You)</option>
                                         <option value="1">Public (Viewable By All Label Users)</option>

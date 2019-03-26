@@ -19,6 +19,9 @@ export default withAuth(class TopNav extends Component {
     handleLogoutClick = (e) => {
         e.preventDefault();
         this.props.auth.logout('/');
+        
+        //clear the local storage
+        localStorage.clear()
     }
 
     handleHelpClick = (e) => {
@@ -41,7 +44,7 @@ export default withAuth(class TopNav extends Component {
         const fetchHeaders = new Headers(
             {
                 "Content-Type": "application/json",
-                'X-API-KEY': config.api.key
+                "Authorization" : sessionStorage.getItem('accessToken')
             }
         )
         const fetchBody = JSON.stringify( {
@@ -59,6 +62,9 @@ export default withAuth(class TopNav extends Component {
         )
         .then (userJSON => 
             {
+
+                console.log('--' + userJSON.User.name + '--')
+
                 this.setState({userName : userJSON.User.name})
                 this.setUserLabels(userJSON.ReleasingLabels)
             }

@@ -8,12 +8,19 @@ const mockData = require('../../mockData.json');
 
 class ReleaseinformationPage extends Component {
 
-
     constructor(props) {
         super(props);
-        this.state = { 
-            formInputs : {} 
-        };
+
+        if (localStorage.getItem("projectData") === null) {
+            this.state = { 
+                formInputs : {
+                } 
+            };
+        } else {
+            this.state = { 
+                formInputs : JSON.parse(localStorage.getItem("projectData"))
+            };
+        }
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -21,7 +28,7 @@ class ReleaseinformationPage extends Component {
 
     handleChange(event) {
         let inputValue = '';
-        if(event.target.type == 'checkbox') {
+        if(event.target.type === 'checkbox') {
             inputValue = (event.target.checked) ? true : false;
         } else {
             inputValue = event.target.value
@@ -37,6 +44,8 @@ class ReleaseinformationPage extends Component {
         
         console.log('-------------------------------------')
         console.log(localStorage.getItem('projectData'))
+
+        this.props.history.push('/projectContacts')
 
         //we need to save the form data to localStorage at this point instead of posting to the API
     }
@@ -55,7 +64,7 @@ class ReleaseinformationPage extends Component {
                 <div className="row no-gutters step-description">
                     <div className="col-12">
                         <h2>Step <span className="count-circle">1</span> Release Information</h2>
-                        <p>In this step, you can create a new project by submitting basic release information for the system. Required fields are indicated with an *. This section must be completed by selecting the 'Save &amp; Continue' button below.</p>
+                        <p>In this step, you can create a new project by submitting basic release information for the system. Required fields are indicated with an <span className='required-ind'>*</span>. This section must be completed by selecting the 'Save &amp; Continue' button below.</p>
                     </div>
                 </div>
 
@@ -66,7 +75,7 @@ class ReleaseinformationPage extends Component {
                             <Form.Control 
                                 type = 'hidden'
                                 id='projectID'
-                                value={this.state.value}  
+                                value={this.state.formInputs.projectID}
                             />
 
                             <Form.Group>
@@ -76,7 +85,7 @@ class ReleaseinformationPage extends Component {
                                     className='form-control col-8' 
                                     type='text' 
                                     placeholder='Enter a project title' 
-                                    value={this.state.value}
+                                    value={this.state.formInputs.projectTitle}
                                     onChange={this.handleChange}
                                   />
                             </Form.Group>
@@ -88,7 +97,7 @@ class ReleaseinformationPage extends Component {
                                     className='form-control col-8' 
                                     type='text' 
                                     placeholder='Enter an artist name' 
-                                    value={this.state.value}
+                                    value={this.state.formInputs.projectArtistName}
                                     onChange={this.handleChange}
                                 />
                             </Form.Group>
@@ -99,7 +108,7 @@ class ReleaseinformationPage extends Component {
                                     id="projectType" 
                                     as="select" 
                                     className='col-form-label dropdown col-3' 
-                                    value={this.state.value}
+                                    value={this.state.formInputs.projectType}
                                     onChange={this.handleChange}>
                                         <option selected>Album (Default)</option>
                                         <option>Collection</option>
@@ -113,7 +122,7 @@ class ReleaseinformationPage extends Component {
                                     id="projectReleasingLabel" 
                                     as="select" 
                                     className='col-form-label dropdown col-3' 
-                                    value={this.state.value}
+                                    value={this.state.formInputs.projectReleasingLabel}
                                     onChange={this.handleChange}
                                 >
                                     <option selected>User Primary Label (Default)</option>
@@ -128,6 +137,7 @@ class ReleaseinformationPage extends Component {
                                     id='projectReleaseDateTBD' 
                                     className='form-control' 
                                     type='checkbox' 
+                                    value={this.state.formInputs.projectReleaseDateTBD}
                                     onChange={this.handleChange}
                                 />
                             
@@ -136,7 +146,7 @@ class ReleaseinformationPage extends Component {
                                         id="projectReleaseDate" 
                                         className='form-control col-3' 
                                         type='date' 
-                                        value={this.state.value} 
+                                        value={this.state.formInputs.projectReleaseDate}
                                         onChange={this.handleChange}
                                     />
                             </Form.Group>
@@ -155,7 +165,7 @@ class ReleaseinformationPage extends Component {
                                 className='' 
                                 as='textarea' 
                                 rows='3' 
-                                value={this.state.value} 
+                                value={this.state.formInputs.projectNotes}
                                 onChange={this.handleChange}
                             />
                         </Form.Group>
