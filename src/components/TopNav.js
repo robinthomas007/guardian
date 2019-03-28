@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import config from '../config';
+import { withAuth } from '@okta/okta-react';
 
 const mockData = require('../mockData.json');
 
-class TopNav extends Component {
-  
+export default withAuth(class TopNav extends Component {
+    
     constructor() {
         super();
 
@@ -17,9 +18,10 @@ class TopNav extends Component {
 
     handleLogoutClick = (e) => {
         e.preventDefault();
-        return(
-            alert('Log Out')
-        )
+        this.props.auth.logout('/');
+        
+        //clear the local storage
+        localStorage.clear()
     }
 
     handleHelpClick = (e) => {
@@ -36,12 +38,13 @@ class TopNav extends Component {
         this.setState({labels : userLabels})
     }
 
+
     componentDidMount() {
 
         const fetchHeaders = new Headers(
             {
                 "Content-Type": "application/json",
-                'X-API-KEY': config.api.key
+                "Authorization" : sessionStorage.getItem('accessToken')
             }
         )
         const fetchBody = JSON.stringify( {
@@ -59,6 +62,9 @@ class TopNav extends Component {
         )
         .then (userJSON => 
             {
+
+                console.log('--' + userJSON.User.name + '--')
+
                 this.setState({userName : userJSON.User.name})
                 this.setUserLabels(userJSON.ReleasingLabels)
             }
@@ -82,6 +88,4 @@ class TopNav extends Component {
             </nav>
         )
     }
-}
-
-export default TopNav;
+})

@@ -10,6 +10,7 @@ import ReviewAndSubmitPage from './pages/ReviewAndSubmitPage';
 import BlockingPoliciesPage from './pages/BlockingPoliciesPage';
 import TerritorialRightsPage from './pages/TerritorialRightsPage';
 import ReleaseInformationPage from './pages/ReleaseInformationPage';
+import FindProject from './pages/FindProjectPage';
 import { withAuth } from '@okta/okta-react';
 
 export default withAuth(class Content extends Component {
@@ -23,7 +24,7 @@ export default withAuth(class Content extends Component {
         user : {}
     }
     this.checkAuthentication();
-  }
+  };
 
   async checkAuthentication() {
       const accesstoken = await this.props.auth.getAccessToken();
@@ -41,10 +42,9 @@ export default withAuth(class Content extends Component {
       if (user !== this.state.user) {
         this.setState({ user });
     }
+  }
 
- }
-
-    render() {
+  render() {
 
       sessionStorage.setItem('accessToken', this.state.accesstoken)
       sessionStorage.setItem('idtoken', this.state.idtoken)
@@ -70,6 +70,7 @@ export default withAuth(class Content extends Component {
                   <SecureRoute path="/newProject" component={NewProjectPage} />
                   <SecureRoute path="/audioFiles" component={AudioFilesPage} />
                   <SecureRoute path="/reviewSubmit" component={ReviewAndSubmitPage}/>
+                  <SecureRoute path="/findProject" component={FindProject}/>
                 </div>
           </div>
         );

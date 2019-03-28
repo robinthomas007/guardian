@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import {Table, Grid, Button, Form } from 'react-bootstrap'; 
 import PageHeader from '../PageHeader';
+import config from '../../config';
+
 
 class ProjectContactsPage extends Component {
 
@@ -8,25 +10,76 @@ class ProjectContactsPage extends Component {
 
         super();
 
+        const userObj = JSON.parse(sessionStorage.getItem('user'))
+
         this.state = {
-            projectTitle: ''
+            formInputs : JSON.parse(localStorage.getItem('projectData'))
         }
+
+        this.state.userObj = JSON.parse(sessionStorage.getItem('user'))
+        this.state.formInputs.projectPrimaryContact = userObj.name
+        this.state.formInputs.projectPrimaryEmail = userObj.email
+
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleChange = (event) => {
-        const eventTarget = event.target.id;
-        this.setState(
-            { eventTarget: event.target.value }
+    handleChange(event) {
+        this.setState( {formInputs : { ...this.state.formInputs, [event.target.id] : event.target.value}} )
+        console.log(this.state.formInputs)
+    }
+
+    handleSubmit(event) {
+        
+        event.preventDefault();
+        
+        const user = JSON.parse(sessionStorage.getItem('user'))
+
+        const fetchHeaders = new Headers(
+            {
+                "Content-Type": "application/json",
+                "Authorization" : sessionStorage.getItem('accessToken')
+            }
         )
-        console.log(this.state.eventTarget)
+
+        const fetchBody = JSON.stringify( {
+            "User" : {
+                "email" : user.email
+            },
+            "Project" : this.state.formInputs
+        })
+
+
+        console.log('--------------------------')
+        console.log('HEADERS:')
+        console.log(fetchHeaders)
+
+        console.log('BODY:')
+        console.log(fetchBody)
+        console.log('--------------------------')
+
+        fetch ('https://api-qa.umusic.net/guardian/project', {
+            method : 'POST',
+            headers : fetchHeaders,
+            body : fetchBody
+        }).then (response => 
+            {
+                return(response.json());
+            }
+        )
+        .then (responseJSON => 
+            {
+                console.log(responseJSON)
+            }
+        )
+        .catch(
+            error => console.error(error)
+        );
     }
 
-    
     render() {
 
-        const saveAndContinue = () => {
-            alert('Save Contacts and Continue')
-        }
+        const userObj = JSON.parse(sessionStorage.getItem('user'))
 
         return(
             <section className="page-container h-100">
@@ -41,45 +94,68 @@ class ProjectContactsPage extends Component {
                 </div>
     
                 <Form>
-            <div className="row">
-                <div className="col-12">
+                    <div className="row">
+                        <div className="col-12">
 
-                <Form.Group>
-                    <Form.Label className='col-form-label col-2'>Project Security <span className='required-ind'>*</span></Form.Label>
-                    <Form.Control id='projectSecuritydropdown' as='select' className='col-form-label dropdown col-2' value='' onChange={this.handleChange}>
-                        <option selected>Private (Viewable By You)</option>
-                        <option>Public (Viewable By All Label Users)</option>
-                    </Form.Control>
-                </Form.Group>
+                            <Form.Group>
+                                <Form.Label className='col-form-label col-2'>Project Security <span className='required-ind'>*</span></Form.Label>
+                                <Form.Control 
+                                    id='projectSecurity' 
+                                    as='select' 
+                                    className='col-form-label dropdown col-2' 
+                                    value={this.state.formInputs.projectSecurity}
+                                    onChange={this.handleChange}>
+                                        <option value="0" selected>Private (Viewable By You)</option>
+                                        <option value="1">Public (Viewable By All Label Users)</option>
+                                </Form.Control>
+                            </Form.Group>
 
-                <Form.Group>
-                    <Form.Label className='col-form-label col-2'>Primary Contact <span className='required-ind'>*</span></Form.Label>
-                    <Form.Control className='form-control col-5'  id='primaryContact' value='Primary Contact Name' onChange={this.handleChange} ></Form.Control>
-                </Form.Group>
+                            <Form.Group>
+                                <Form.Label className='col-form-label col-2'>Primary Contact <span className='required-ind'>*</span></Form.Label>
+                                <Form.Control 
+                                    className='form-control col-5' 
+                                    id='projectPrimaryContact' 
+                                    value={this.state.formInputs.projectPrimaryContact}
+                                    onChange={this.handleChange} 
+                                />
+                            </Form.Group>
 
-                <Form.Group>
-                    <Form.Label className='col-form-label col-2'>Primary Contact Email<span className='required-ind'>*</span></Form.Label>
-                    <Form.Control className='form-control col-5'  id='primaryContactemail' value='Primary Contact Email' onChange={this.handleChange} ></Form.Control>
-                </Form.Group>
+                            <Form.Group>
+                                <Form.Label className='col-form-label col-2'>Primary Contact Email<span className='required-ind'>*</span></Form.Label>
+                                <Form.Control 
+                                    className='form-control col-5' 
+                                    id='projectPrimaryEmail' 
+                                    value={this.state.formInputs.projectPrimaryEmail}
+                                    onChange={this.handleChange} 
+                                />
+                            </Form.Group>
 
-                <div className='row additional-contacts'>
-                <Form.Group className="form-group col-2">
-                    <Form.Label>Addtional Contacts</Form.Label>
-                    </Form.Group>
-                    <Form.Group className="form-group col-10">
-                     <Form.Control className='' as='textarea' rows='5' value='' onChange={this.handleChange}></Form.Control>
-                 </Form.Group>
+                            <div className='row additional-contacts'>
+                                <Form.Group className="form-group col-2">
+                                    <Form.Label>Addtional Contacts</Form.Label>
+                                </Form.Group>
+                                
+                                <Form.Group className="form-group col-10">
+                                    <Form.Control 
+                                        id='projectAdditionalContacts'
+                                        className='' 
+                                        as='textarea' 
+                                        rows='5' 
+                                        value={this.state.value}
+                                        onChange={this.handleChange}
+                                    />
+                                </Form.Group>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div className="row save-buttons">
+                    <div className="row save-buttons">
                         <div className="col-9"></div>
                         <div className="col-3">
                             <button type="button" className="btn btn-secondary">Save</button>
-                            <button type="button" className="btn btn-primary" onClick={saveAndContinue}>Save &amp; Continue</button>
+                            <button type="button" className="btn btn-primary" onClick={this.handleSubmit}>Save &amp; Continue</button>
                         </div>
                     </div>
-            </Form>
+                </Form>
             </section>
         )
     }

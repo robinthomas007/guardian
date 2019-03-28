@@ -7,7 +7,22 @@ import config from './config';
 
 
 class App extends Component {
+
+  clearLocalStorage() {
+    alert(123)
+  }
+
+  componentDidMount() {
+    window.addEventListener("onUnload", this.clearLocalStorage)
+ }
+
   render() {
+
+    window.addEventListener('beforeunload', (event) => {
+      alert(123)
+    });
+    
+
     return (
       <Router>
           <Security 

@@ -6,52 +6,48 @@ import Notification from '../notifications/notifications';
 
 const mockData = require('../../mockData.json');
 
-
 class ReleaseinformationPage extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { 
-            
-        };
+
+        if (localStorage.getItem("projectData") === null) {
+            this.state = { 
+                formInputs : {
+                } 
+            };
+        } else {
+            this.state = { 
+                formInputs : JSON.parse(localStorage.getItem("projectData"))
+            };
+        }
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleChange(event) {
-        this.setState({ value: event.target.value });
+        let inputValue = '';
+        if(event.target.type === 'checkbox') {
+            inputValue = (event.target.checked) ? true : false;
+        } else {
+            inputValue = event.target.value
+        }
+        //this gets the inputs into the state.formInputs obj on change
+        this.setState( {formInputs : { ...this.state.formInputs, [event.target.id] : inputValue}} )
+        console.log(this.state.formInputs)
     }
 
     handleSubmit(event) {
         event.preventDefault();
-
-        /* https://medium.com/@everdimension/how-to-handle-forms-with-just-react-ac066c48bd4f 
+        localStorage.setItem('projectData', JSON.stringify(this.state.formInputs));
         
-                    {
-            "UserToken": "string",
-            "Project": {
-                "id": 0,
-                "title": "string",
-                "projectType": "string",
-                "artist": "string",
-                "label": 0,
-                "releaseDate": "string",
-                "notes": "string"
-            }
-            }
-        
-        
-        */
+        console.log('-------------------------------------')
+        console.log(localStorage.getItem('projectData'))
 
-        const formData = new FormData (event.target);
+        this.props.history.push('/projectContacts')
 
-        console.log(formData)
-
-        fetch('https://api-dev.umusic.net/guardian/project', {
-            method : 'POST',
-            body : formData
-        })
+        //we need to save the form data to localStorage at this point instead of posting to the API
     }
 
 
@@ -68,149 +64,120 @@ class ReleaseinformationPage extends Component {
                 <div className="row no-gutters step-description">
                     <div className="col-12">
                         <h2>Step <span className="count-circle">1</span> Release Information</h2>
-                        <p>In this step, you can create a new project by submitting basic release information for the system. Required fields are indicated with an *. This section must be completed by selecting the 'Save &amp; Continue' button below.</p>
+                        <p>In this step, you can create a new project by submitting basic release information for the system. Required fields are indicated with an <span className='required-ind'>*</span>. This section must be completed by selecting the 'Save &amp; Continue' button below.</p>
                     </div>
                 </div>
 
-               <Form onSubmit={(e)=>this.handleSubmit(e)}>
+               <Form>
                     <div className="row">
                         <div className="col-8">
+
+                            <Form.Control 
+                                type = 'hidden'
+                                id='projectID'
+                                value={this.state.formInputs.projectID}
+                            />
+
                             <Form.Group>
                                 <Form.Label className='col-form-label col-3'>Project Title<span className="required-ind">*</span></Form.Label>
-                                <Form.Control id='projectTitle' className='form-control col-8' type='text' placeholder='Enter a project title' value={this.state.value}
-                                    onChange={this.handleChange}></Form.Control>
+                                <Form.Control 
+                                    id='projectTitle' 
+                                    className='form-control col-8' 
+                                    type='text' 
+                                    placeholder='Enter a project title' 
+                                    value={this.state.formInputs.projectTitle}
+                                    onChange={this.handleChange}
+                                  />
                             </Form.Group>
 
                             <Form.Group>
                                 <Form.Label className='col-form-label col-3'>Artist<span className="required-ind">*</span></Form.Label>
-                                <Form.Control id='artistName' className='form-control col-8' type='text' placeholder='Enter an artist name' value={this.state.value}
-                                    onChange={this.handleChange}></Form.Control>
+                                <Form.Control 
+                                    id='projectArtistName' 
+                                    className='form-control col-8' 
+                                    type='text' 
+                                    placeholder='Enter an artist name' 
+                                    value={this.state.formInputs.projectArtistName}
+                                    onChange={this.handleChange}
+                                />
                             </Form.Group>
                             
                             <Form.Group>
                                 <Form.Label className='col-form-label col-3'>Project Type<span className="required-ind">*</span></Form.Label>
-                                <Form.Control id="projectTypedropdown" as="select" className='col-form-label dropdown col-3' value={this.state.value}
+                                <Form.Control 
+                                    id="projectType" 
+                                    as="select" 
+                                    className='col-form-label dropdown col-3' 
+                                    value={this.state.formInputs.projectType}
                                     onChange={this.handleChange}>
-                                    <option selected>Album (Default)</option>
-                                    <option>Collection</option>
-                                    <option>Single</option>
+                                        <option selected>Album (Default)</option>
+                                        <option>Collection</option>
+                                        <option>Single</option>
                                 </Form.Control>
                             </Form.Group>
 
                               <Form.Group>
                                 <Form.Label className='col-form-label col-3'>Releasing Label<span className="required-ind">*</span></Form.Label>
-                                    <Form.Control id="releasingLabeldropdown" as="select" className='col-form-label dropdown col-3' value={this.state.value}
-                                    onChange={this.handleChange}>
+                                <Form.Control 
+                                    id="projectReleasingLabel" 
+                                    as="select" 
+                                    className='col-form-label dropdown col-3' 
+                                    value={this.state.formInputs.projectReleasingLabel}
+                                    onChange={this.handleChange}
+                                >
                                     <option selected>User Primary Label (Default)</option>
                                     <option>User Label Option 2</option>
                                     <option>User Label Option 3</option>
-                                    </Form.Control>
-                                </Form.Group>
+                                </Form.Control>
+                            </Form.Group>
 
                             <Form.Group>
                                 <Form.Label className="col-form-label col-3">Release TBD</Form.Label>
-                                <Form.Control id='releaseDatetbd' className='form-control' type='checkbox' checked value={this.state.value} onChange={this.handleChange}></Form.Control>
+                                <Form.Control 
+                                    id='projectReleaseDateTBD' 
+                                    className='form-control' 
+                                    type='checkbox' 
+                                    value={this.state.formInputs.projectReleaseDateTBD}
+                                    onChange={this.handleChange}
+                                />
                             
                                 <Form.Label className="col-form-label col-3">Release Date<span className="required-ind">*</span></Form.Label>
-                                <input className='form-control col-3' type='date' value={this.state.value} onChange={this.handleChange}></input>
+                                    <input 
+                                        id="projectReleaseDate" 
+                                        className='form-control col-3' 
+                                        type='date' 
+                                        value={this.state.formInputs.projectReleaseDate}
+                                        onChange={this.handleChange}
+                                    />
                             </Form.Group>
-                            </div>
+                        </div>
 
-                            <Form.Group className="form-group col-4 cover-art">
-                                <Form.Label className="col-form-label col-3">Cover Art</Form.Label>
-                                <div id="droppable" className="form-control album-art-drop col-8"></div>
-                            </Form.Group>
+                        <Form.Group className="form-group col-4 cover-art">
+                            <Form.Label className="col-form-label col-3">Cover Art</Form.Label>
+                            <div id="droppable" className="form-control album-art-drop col-8"></div>
+                        </Form.Group>
 
-                            <Form.Group className='form-group col-12 notes-row'>
-                                <Form.Label>Notes</Form.Label>
-                                <br />
-                                <Form.Control className='' as='textarea' rows='3' value={this.state.value} onChange={this.handleChange}></Form.Control>
-                            </Form.Group>
-
-                        
+                        <Form.Group className='form-group col-12 notes-row'>
+                            <Form.Label>Notes</Form.Label>
+                            <br />
+                            <Form.Control 
+                                id="projectNotes" 
+                                className='' 
+                                as='textarea' 
+                                rows='3' 
+                                value={this.state.formInputs.projectNotes}
+                                onChange={this.handleChange}
+                            />
+                        </Form.Group>
                     </div>
                     <section className="row save-buttons">
                         <div className="col-9"></div>
                         <div className="col-3">
-                             <input type="submit" value="Save &amp; Continue" />
+                            <button type="submit" className="btn btn-primary" onClick={this.handleSubmit}>Save &amp; Continue</button>
                         </div>
                     </section>
                 </Form> 
-
-{/* 
-                <form onSubmit={this.handleSubmit}>
-                    <section className="row">
-                        <div className="col-8">
-                            <div className="form-group">
-                                <label className="col-form-label col-3" htmlFor="projectTitle">Project Title<span className="required-ind">*</span></label>
-                                <input
-                                    type="text"
-                                    className="form-control col-8"
-                                    id="projectTitle"
-                                    placeholder="Enter a Project Title"
-                                    value={this.state.value}
-                                    onChange={this.handleChange}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label className="col-form-label col-3" htmlFor="artistName">Artist<span className="required-ind">*</span></label>
-                                <input
-                                    type="text"
-                                    className="form-control col-8"
-                                    id="artistName"
-                                    placeholder="Enter an Artist's Name"
-                                    onChange={this.handleChange}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label className="col-form-label col-3">Project Type <span className="required-ind">*</span></label>
-                                <div className="dropdown col-8">
-
-
-                                    <button type="button" id="projectDropdown" className="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Private (Default)
-                                </button>
-                                    <div className="dropdown-menu" aria-labelledby="projectDropdown">
-                                        <a className="dropdown-item" href="#">Private (Default)</a>
-                                        <a className="dropdown-item" href="#">Public</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <label className="col-form-label col-3">Releasing Label <span className="required-ind">*</span></label>
-                            <div className="dropdown col-3">
-                                <button type="button" id="labelDropdown" className="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Label 1 (Default)
-                            </button>
-                                <div className="dropdown-menu" aria-labelledby="labelDropdown">
-                                    <a className="dropdown-item" href="#">Label Option 2</a>
-                                    <a className="dropdown-item" href="#">Label Option 3</a>
-                                </div>
-                            </div>
-                            <label className="col-form-label nested">Release Date <span className="required-ind">*</span></label>
-                            <input type="date" className="form-control nested" />
-                        </div>
-                        <div className="form-group col-4 cover-art">
-                            <label className="col-form-label col-3">Cover Art</label>
-                            <div id="droppable" className="form-control album-art-drop col-8"></div>
-                        </div>
-                        <div className="form-group col-12 notes-row">
-                            <label className="col-form-label">Notes</label>
-                            <br />
-                            <textarea className="form-control"></textarea>
-                        </div>
-                    </section>
-                    <section className="row save-buttons">
-                        <div className="col-9"></div>
-                        <div className="col-3">
-                            <button type="button" className="btn btn-secondary">Save</button>
-                            <Notification />
-                        </div>
-                    </section>
-                </form>
-                 */}
             </section>
-           
         )
     }
 };
