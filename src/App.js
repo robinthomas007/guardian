@@ -5,24 +5,14 @@ import Content from "./components/content";
 import { Security, SecureRoute, ImplicitCallback } from '@okta/okta-react';
 import config from './config';
 
-
 class App extends Component {
 
-  clearLocalStorage() {
-    alert(123)
-  }
-
   componentDidMount() {
-    window.addEventListener("onUnload", this.clearLocalStorage)
- }
+    //clear the local storage
+    localStorage.removeItem('projectData')
+  };
 
   render() {
-
-    window.addEventListener('beforeunload', (event) => {
-      alert(123)
-    });
-    
-
     return (
       <Router>
           <Security 
