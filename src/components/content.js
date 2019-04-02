@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
-import TopNav from './TopNav';
-import LeftNav from './leftNav';
+import TopNav from './template/TopNav/TopNav';
+import LeftNav from './template/LeftNav/LeftNav';
 import { SecureRoute } from "@okta/okta-react";
-import TrackInformationPage from './pages/TrackInformationPage';
-import ProjectContactsPage from './pages/ProjectContactsPage';
+import TrackInformationPage from './pages/TrackInformation/TrackInformationPage';
+import ProjectContactsPage from './pages/ProjectContacts/ProjectContactsPage';
 import NewProjectPage from './pages/NewProjectPage';
-import AudioFilesPage from './pages/AudioFilesPage';
-import ReviewAndSubmitPage from './pages/ReviewAndSubmitPage';
-import BlockingPoliciesPage from './pages/BlockingPoliciesPage';
-import TerritorialRightsPage from './pages/TerritorialRightsPage';
-import ReleaseInformationPage from './pages/ReleaseInformationPage';
-import FindProject from './pages/FindProjectPage';
+import AudioFilesPage from './pages/AudioFiles/AudioFilesPage';
+import ReviewAndSubmitPage from './pages/ReviewAndSubmit/ReviewAndSubmitPage';
+import BlockingPoliciesPage from './pages/BlockingPolicies/BlockingPoliciesPage';
+import TerritorialRightsPage from './pages/TerritorialRights/TerritorialRightsPage';
+import ReleaseInformationPage from './pages/ReleaseInformation/ReleaseInformationPage';
+import FindProject from './pages/FindProject/FindProjectPage';
 import { withAuth } from '@okta/okta-react';
 
 export default withAuth(class Content extends Component {

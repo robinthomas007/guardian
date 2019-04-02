@@ -1,0 +1,16 @@
+section.page-container {display: flex; flex-direction: column; margin:0px 40px 40px 40px; padding:30px; background-color:#fff;}
+section.page-container h1 {font-size:2.2em;}
+section.page-container h2 {font-size:1.4em;}
+section.page-container h3 {font-size:1.2em;}
+
+.artist-label-name {font-size:1.4em;}
+
+.row.step-description{margin:40px 0px;}
+.row.step-description.review {margin:40px 0px 0px 0px;}
+
+span.count-circle {background-color:#80d8ff; padding: 3px 10px; border-radius:100%;}
+
+span.project-right {float:right;}
+span.project-status {vertical-align:sub; font-style:italic;}
+	
+button.close-project {margin-left:30px;}

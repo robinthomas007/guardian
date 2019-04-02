@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import {Table, Grid, Button, Form } from 'react-bootstrap'; 
-import PageHeader from '../PageHeader';
-import Notification from '../notifications/notifications';
+import PageHeader from '../PageHeader/PageHeader'; 
+import './ReleaseInformation.css';
 
 
-const mockData = require('../../mockData.json');
+const mockData = require('../../../mockData.json');
 
 class ReleaseinformationPage extends Component {
 

@@ -34,10 +34,7 @@
 	.static-checkmark:after {content: ""; position: absolute; display: none;} /* Creates the checkmark indicator (hidden when not checked) */
 	.custom-checkbox input:checked ~ .static-checkmark:after {display: block;} /* Show the checkmark when checked */
 	.custom-checkbox .static-checkmark:after {left: 9px;top: 5px; width: 5px; height: 10px; border: solid #666; border-width: 0 3px 3px 0; -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); transform: rotate(45deg);} /* Styles the checkmark */
-	
 
-
-	/* Custom Default Links*/
 	a {color:#01579b;}
 	
 	.btn {font-size:1em; border-radius:2px;}
@@ -52,9 +49,6 @@
 	.show > .btn-secondary.dropdown-toggle {background-color:#fff; border-color:#CCC; color:#333;}
 
 	.form-control {font-size:1em; display:inline-block; background-color:#F5F5F5; border-radius:2px;}
-	
-
-	.landing {width:100vw; height:100vh; background-color:#333; background-image:url(images/guitar-bg.jpg); background-size:cover;}
 
 	.table thead {box-shadow:0px 3px 3px #F5F5F5; z-index:1;}
 	.table thead th {border-bottom:1px solid #dee2e6;}
@@ -83,207 +77,17 @@
 
 	.modal-header {border-bottom:none;}
 	.modal-footer {border-top:none;}
-
-/*** End Bootstrap Theming ***/
-
-
-	/* External Template */
-	.logo {position:fixed; height:102px; width:110px; margin: 20px;}
-	
-	nav.top-nav.ext {width:100%; text-align:right;}
-	nav.top-nav.ext ul {list-style:none; margin:0 40px 0 0; padding:0;}
-	nav.top-nav.ext ul li {display:inline-block;}
-	nav.top-nav.ext ul li a {display:block; margin-right:30px; padding:10px; color:#fff; text-decoration:none;}
-	nav.top-nav.ext ul li a:hover {color:#dc2c46;}
-	
-	.over-bar {position:absolute; top:34%; height:200px; width:100%; color:#fff; text-align:center; padding:20px; z-index:1;}
-	
-	@keyframes overbar-h1
-	{
-		0% {opacity:0.0;}
-	   50% {opacity:0.0;}
-	  100% {opacity:1.0;}
-	}
-	
-	.over-bar h1 {font-size:4.2em; animation-name:overbar-h1; animation-duration:1s; animation-timing-function:ease-in-out;}
-	
-	@keyframes overbar-h2
-	{
-		0% {opacity:0.0;}
-	   50% {opacity:0.0;}
-	  100% {opacity:1.0;}
-	}
-	
-	.over-bar h2 {font-size:1.6em; animation-name:overbar-h2; animation-duration:2s; animation-timing-function:ease-in-out;}
-	
-	
-	@keyframes bar
-	{
-		0% {height:0px; opacity:0.0;}
-		100% {height:200px; opacity: 0.7;}
-	}
-	
-	.bar {position:absolute; top:34%; height:200px; width:100%; color:#fff; background-color:#000; opacity:0.7; animation-name:bar; animation-duration:1s;}
-	
-	@keyframes btn-span
-	{
-		0% {opacity:0.0;}
-	   50% {opacity:0.0;}
-	  100% {opacity:1.0;}
-	}
-	
-	.over-bar span {display:inline-block; margin-top:10px; animation-name:btn-span; animation-duration:3s; animation-timing-function:ease-in-out;}
-	.over-bar button {width:160px; color:#fff;}
-	
-	.over-bar button.access.btn {background-color:#dc2c46; margin-right:5px;}
-	.over-bar button.access.btn:hover {background-color:#f14760; box-shadow: 3px 3px 3px #111;}
-	
-	.over-bar button.log-in.btn {background-color:#5e30a8; margin-left:5px;}
-	.over-bar button.log-in.btn:hover {background-color:#7546c1; box-shadow: 3px 3px 3px #111;}
-	
-	/* Internal Template */
-
-	nav.left-nav {display: flex; flex-direction: column; width:260px!important; background-color:#000; text-align:left;}
-	nav.left-nav ul {list-style:none; margin:0; padding:0; background-color:#000;}
-	nav.left-nav ul li a {display:block; color:#fff; padding:10px 10px 10px 20px; text-decoration:none; border-bottom:solid 1px #333;}
-	nav.left-nav ul li a:hover {background-color:#333;}
-	nav.left-nav ul li a.steps {background-color:#464646;}
-	nav.left-nav ul li a.steps:hover {color:#333; background-color:#F5F5F5;}
-
-	nav.left-nav span.count-circle {color:#333; font-weight:700; padding: 3px 8px; margin:auto 6px auto 3px;}
-	
-	nav.left-nav span.left-nav-logo {display:block; margin:20px auto 10px auto; background-image:url(images/guardian-logo.png); background-repeat:no-repeat; height:133px; width:144px;}
-	
-	nav.left-nav .fixed-left-nav {position:fixed; width:100%; top:0; left:0; padding: 0px 0px 0px 0px; background-image:url(images/gradient-logo-bg.png); background-repeat:no-repeat; background-size:auto; overflow: hidden; background-color:#000;}
-
-
-	nav.top-nav.int {text-align:right;}
-	nav.top-nav.int ul {list-style:none; margin:0 40px 0 0; padding:0;}
-	nav.top-nav.int ul li {display:inline-block;}
-	nav.top-nav.int ul li a {display:block; margin-right:30px; padding:8px; color:#333; text-decoration:none;}
-	nav.top-nav.int ul li a:hover {color:#01579b;}
-	nav.top-nav.int ul li a.help {background-color:#01579b; color:#fff;}
-
-	/* Page Formats */
-	section.page-container {display: flex; flex-direction: column; margin:0px 40px 40px 40px; padding:30px; background-color:#fff;}
- 	section.page-container h1 {font-size:2.2em;}
-	section.page-container h2 {font-size:1.4em;}
-	section.page-container h3 {font-size:1.2em;}
-
-	.artist-label-name {font-size:1.4em;}
-
-	.row.step-description{margin:40px 0px;}
-	.row.step-description.review {margin:40px 0px 0px 0px;}
-
-	span.count-circle {background-color:#80d8ff; padding: 3px 10px; border-radius:100%;}
-
-	span.project-right {float:right;}
-	span.project-status {vertical-align:sub; font-style:italic;}
-	
-	button.close-project {margin-left:30px;}
 	
 	.required-ind {color:#FF0000;}
 
 	.save-buttons {text-align:right; padding-right:30px; padding-bottom:30px; background-color:#fff;}
 	.save-buttons .btn {margin-left:10px;}
 
-	/* Release Information */
 
-	.album-art-drop {border:solid 1px #CCC; background-color:#d9f3fe; height:190px;}
-	.cover-art label {vertical-align:top; padding-top:5px;}
 
-	.notes-row {margin-left:15px;}
-	.notes-row > textarea {vertical-align:top; width:96.5%; height:120px;}	
 
-	/* Project Contacts */
 
-	.additional-contacts label {margin-left:15px; vertical-align:top;} 
-	.additional-contacts textarea {height:120px; margin-left:-2px; width:97.5%;}
-
-	/* Audio Files & Track Information */
 	
-	.audio-drop-area  {border:solid 1px #CCC; width:100%; height:190px; background-color:#d9f3fe;}
-   	.track-draggable-area {background-color:#d9f3fe; border:dashed 1px #CCC; padding:.30rem .60rem; vertical-align:top; }
-	.draggable-track {border-radius:2px; background-color:#fff; margin:7px 0; padding:6px; box-shadow:2px 3px 8px #8c9396; cursor:grab;}
-
-	.droppable-cell {height:32px; border:dashed 1px #CCC; border-radius:2px; padding:6px; background-color: #f5f5f5;}
-	.sortable-audio-file {width:100%; padding:6px; border-radius:2px; background-color:#d9f3fe; display:inline-flex; vertical-align:middle; box-shadow:2px 3px 8px #8c9396; cursor:grab;}
-	.sortable-audio-file .material-icons {padding-right:10px;}
-	.sortable-audio-file span {line-height:24px;}
-
-	.table-section {display: flex; flex-direction: column; margin:0px 40px 40px 40px;}
-	.table-section .nav-tabs {border-bottom:none;}
-	.table-section .nav-link:first-child {margin-left:30px;}
-	.table-section .nav-link.active {border:none;}
-	.table-section .tab-pane {background-color:#FFF; padding:30px;}
-
-	/* Territorial Rights & Blocking Polcies */
-
-	.card-nav {text-align:right; margin-bottom:10px;}
-	.card-nav .dropdown {margin-left:10px;}
-
-	.set-card {margin-left:-20px; padding:1rem; background-color:#F5F5F5; }
-	.set-card btn.dropdown {background-color:#fff;}
-	.set-card table.table td {vertical-align:top; border-bottom:none;}
-	.set-card .track-draggable-area {max-height:400px; overflow-y: auto; overflow-x:hidden;}
-
-	span.drag-drop-arrow {display:block; height:33px; position:absolute; padding-left:50px; left:-38px; bottom:-44px; background-image:url(images/drag-over-arrow.png); background-repeat:no-repeat;  z-index:10;}
-	span.drag-drop-arrow > span {position:absolute; top:-20px; left:-10px; width:160px; font-size: .7em; font-weight:700;}
-
-	ul.countries, ul.tracks {margin:0; padding:.75rem; list-style:none;}
-	ul.tracks {min-width:260px;} 
-	ul.countries li, ul.tracks li {display:flex; padding-bottom:.60rem;}
-	ul.countries li .dropdown-item, ul.tracks li .dropdown-item {margin:0rem 0rem;}
-	ul.countries li:last-child, ul.tracks li:last-child  {padding-bottom:0;}
-	ul.countries li span, ul.tracks li span {vertical-align:middle;}
-	ul.countries li label.dropdown-item, ul.tracks li label.dropdown-item {padding:.50rem 1.1rem;}
-
-	.dropdown .custom-checkbox {display:inline-block; }
-	.track-draggable-area.territory-tracks {min-height:324px;}
-	.territory-tracks {width:260px;}
 	
-	.option-text {color:#999; font-style:italic;}
-	.required-text {color:#FF0000; font-style:italic;}
 
-	.platform-sprite {display:block; height:50px; width:140px; background-image:url(images/platforms-sprite.png); background-repeat:no-repeat;}
-	.platform-sprite.youtube {background-position:0px 0px;}
-	.platform-sprite.soundcloud {background-position:0px -50px;}
-	.platform-sprite.facebook {background-position:0px -100px;}
-	.platform-sprite.instagram {background-position:0px -150px;}
-	.platform-sprite.twitter {background-position:0px -200px;}
 
-	.platform-sprite.small {display:block; height:28px; width:80px; background-image:url(images/platforms-sprite.png); background-repeat:no-repeat;}
-	.platform-sprite.small.youtube {background-position:0px -250px;}
-	.platform-sprite.small.soundcloud {background-position:0px -278px;}
-	.platform-sprite.small.facebook {background-position:0px -306px;}
-	.platform-sprite.small.instagram {background-position:0px -334px;}
-	.platform-sprite.small.twitter {background-position:0px -362px;}
-	
-	/* Review & Submit */
-	.page-container.review-section {cursor:pointer; border: 3px solid #FFF; outline-offset:-3px; padding:27px; transition: border-color 0.6s linear;}
-	.page-container.review-section:hover{cursor:pointer; border: 3px solid #15B6DF; outline-offset:-3px; padding:27px;}
-	.page-container.review-section label {font-weight:700;}
-
-	img.album-art {height:160px; width:160px; background-color:#f5f5f5;}
-
-	.review-card {padding:30px; background-color:#f5f5f5;}
-	section.page-container.review-section section.row.save-buttons {margin-top:30px; padding-right:0px; padding-bottom:0px;}
-
-	/* Find A Project */
-	ul.search-row {list-style:none; margin:0; padding:0;}
-	ul.search-row li {display:inline-block; padding:0;}
-	ul.search-row li > input {margin:auto 10px; width:100%;}
-	ul.search-row li i {font-size:20px;}
-
-	ul.search-row.filters {margin-top:20px;}
-	ul.search-row.filters li {vertical-align:sub;}
-	ul.search-row.filters li label { margin-left:20px; font-weight:700;}
-	ul.search-row.filters button {margin-top:-3px; margin-left:6px; box-shadow:2px 2px 2px #f5f5f5;}
-	ul.search-row.filters li i {font-size:18px; margin-right:-5px;}
-
-	td.status {width:80px; background-color:#f5f5f5;}
-	td.status i {font-size:20px; color:#ff0000;}
-	
-	ul.results-controls {list-style:none; margin:0; padding:0; margin-bottom:30px;}
-	ul.results-controls .dropdown {margin:auto 6px;}
-	ul.results-controls span {margin-bottom:-60px;}
