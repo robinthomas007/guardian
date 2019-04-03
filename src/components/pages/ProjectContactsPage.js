@@ -5,28 +5,44 @@ import config from '../../config';
 
 
 class ProjectContactsPage extends Component {
+    
+    
 
     constructor() {
 
         super();
 
-        const userObj = JSON.parse(sessionStorage.getItem('user'))
-
-        this.state = {
-            formInputs : JSON.parse(localStorage.getItem('projectData'))
+        //this need to be done in a better way
+        if(localStorage.getItem('projectData')) {
+            this.state = {
+                formInputs : JSON.parse(localStorage.getItem('projectData'))
+            }
+        } else {
+            this.state = {
+                formInputs : {}
+            }
         }
 
-        this.state.userObj = JSON.parse(sessionStorage.getItem('user'))
-        this.state.formInputs.projectPrimaryContact = userObj.name
-        this.state.formInputs.projectPrimaryEmail = userObj.email
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+
+        console.log(this.state.formInputs)
     }
 
     handleChange(event) {
         this.setState( {formInputs : { ...this.state.formInputs, [event.target.id] : event.target.value}} )
         console.log(this.state.formInputs)
+    }
+
+    componentDidMount() {
+        const user = JSON.parse(sessionStorage.getItem('user'))
+
+        this.setState( {formInputs : { ...this.state.formInputs, 'projectPrimaryContact' : user.name}} )
+        this.setState( {formInputs : { ...this.state.formInputs, 'projectPrimaryEmail' : user.email}} )
+        this.setState( {formInputs : { ...this.state.formInputs, 'projectSecurity' : '' }} )
+        this.setState( {formInputs : { ...this.state.formInputs, 'projectAdditionalContacts' : '' }} )
+        
     }
 
     handleSubmit(event) {
@@ -70,6 +86,9 @@ class ProjectContactsPage extends Component {
         .then (responseJSON => 
             {
                 console.log(responseJSON)
+
+                //clear the local storage
+                localStorage.removeItem('projectData')
             }
         )
         .catch(
@@ -79,7 +98,7 @@ class ProjectContactsPage extends Component {
 
     render() {
 
-        const userObj = JSON.parse(sessionStorage.getItem('user'))
+        const user = JSON.parse(sessionStorage.getItem('user'))
 
         return(
             <section className="page-container h-100">
@@ -115,7 +134,7 @@ class ProjectContactsPage extends Component {
                                 <Form.Control 
                                     className='form-control col-5' 
                                     id='projectPrimaryContact' 
-                                    value={this.state.formInputs.projectPrimaryContact}
+                                    value={user.name}
                                     onChange={this.handleChange} 
                                 />
                             </Form.Group>
@@ -125,7 +144,7 @@ class ProjectContactsPage extends Component {
                                 <Form.Control 
                                     className='form-control col-5' 
                                     id='projectPrimaryEmail' 
-                                    value={this.state.formInputs.projectPrimaryEmail}
+                                    value={user.email}
                                     onChange={this.handleChange} 
                                 />
                             </Form.Group>
@@ -141,7 +160,7 @@ class ProjectContactsPage extends Component {
                                         className='' 
                                         as='textarea' 
                                         rows='5' 
-                                        value={this.state.value}
+                                        value={this.state.formInputs.projectAdditionalContacts}
                                         onChange={this.handleChange}
                                     />
                                 </Form.Group>

@@ -10,7 +10,7 @@ class PageHeader extends Component {
         this.state = {
             user : {}
         };
-    }
+    };
    
 
     handleProjectCloseClick = (event) => {
@@ -18,8 +18,7 @@ class PageHeader extends Component {
 
         //clear the local storage
         localStorage.removeItem('projectData')
-
-    }
+    };
 
     render() {
 
