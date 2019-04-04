@@ -24,7 +24,7 @@ class ReleaseinformationPage extends Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-    }
+    };
 
     handleChange(event) {
         let inputValue = '';
@@ -36,7 +36,7 @@ class ReleaseinformationPage extends Component {
         //this gets the inputs into the state.formInputs obj on change
         this.setState( {formInputs : { ...this.state.formInputs, [event.target.id] : inputValue}} )
         console.log(this.state.formInputs)
-    }
+    };
 
     handleSubmit(event) {
         event.preventDefault();
@@ -48,10 +48,16 @@ class ReleaseinformationPage extends Component {
         this.props.history.push('/projectContacts')
 
         //we need to save the form data to localStorage at this point instead of posting to the API
+    };
+
+    GetReleaseLabelOptions = () => {
+        return(
+            123
+        )
     }
 
-
    render() {
+
         const saveAndContinue = () => {
             alert('Save and Continue')
         }
@@ -110,9 +116,9 @@ class ReleaseinformationPage extends Component {
                                     className='col-form-label dropdown col-3' 
                                     value={this.state.formInputs.projectType}
                                     onChange={this.handleChange}>
-                                        <option selected>Album (Default)</option>
-                                        <option>Collection</option>
-                                        <option>Single</option>
+                                        <option value="0" selected>Album (Default)</option>
+                                        <option value="1">Collection</option>
+                                        <option value="2">Single</option>
                                 </Form.Control>
                             </Form.Group>
 
@@ -125,22 +131,15 @@ class ReleaseinformationPage extends Component {
                                     value={this.state.formInputs.projectReleasingLabel}
                                     onChange={this.handleChange}
                                 >
-                                    <option selected>User Primary Label (Default)</option>
-                                    <option>User Label Option 2</option>
-                                    <option>User Label Option 3</option>
+                                    <option value="2818" selected>User Primary Label (Default)</option>
+                                    <option value="1">User Label Option 2</option>
+                                    <option value="2">User Label Option 3</option>
+
+                                    {this.getReleaseLabelOptions}
                                 </Form.Control>
                             </Form.Group>
 
-                            <Form.Group>                               
-                                <Form.Label className="col-form-label col-3">Release Date<span className="required-ind">*</span></Form.Label>
-                                    <input 
-                                        id="projectReleaseDate" 
-                                        className='form-control col-3' 
-                                        type='date' 
-                                        value={this.state.formInputs.projectReleaseDate}
-                                        onChange={this.handleChange}
-                                    />
-
+                            <Form.Group>
                                 <Form.Label className="col-form-label col-3">Release TBD</Form.Label>
                                 <Form.Control 
                                     id='projectReleaseDateTBD' 
@@ -149,6 +148,15 @@ class ReleaseinformationPage extends Component {
                                     value={this.state.formInputs.projectReleaseDateTBD}
                                     onChange={this.handleChange}
                                 />
+                            
+                                <Form.Label className="col-form-label col-3">Release Date<span className="required-ind">*</span></Form.Label>
+                                    <input 
+                                        id="projectReleaseDate" 
+                                        className='form-control col-3' 
+                                        type='date' 
+                                        value={this.state.formInputs.projectReleaseDate}
+                                        onChange={this.handleChange}
+                                    />
                             </Form.Group>
                         </div>
 

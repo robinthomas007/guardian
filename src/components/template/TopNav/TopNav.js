@@ -32,15 +32,23 @@ export default withAuth(class TopNav extends Component {
         )
     }
 
-    setUserLabels = (labels) => {
-        const userLabels = labels.map( (label) => 
-            label.name
-        )
-        this.setState({labels : userLabels})
+    setUserLabelsSessionData = (labels) => {
+        const userSessionDataObj = JSON.parse(sessionStorage.getItem('user'))
+        if(labels && userSessionDataObj) {
+            userSessionDataObj.labels = labels;
+            sessionStorage.setItem('user', JSON.stringify(userSessionDataObj))
+        }
+
+        console.log('------ USER LABELS to SESSION ------')
+        console.log(userSessionDataObj)
+        console.log('------------------------------------')
     }
 
-
     componentDidMount() {
+
+        const user = JSON.parse(sessionStorage.getItem('user'))
+
+        console.log(user.email)
 
         const fetchHeaders = new Headers(
             {
@@ -49,7 +57,9 @@ export default withAuth(class TopNav extends Component {
             }
         )
         const fetchBody = JSON.stringify( {
-            "UserToken" : "0"
+            "User" : {
+                "email" : user.email
+            }
         })
 
         fetch ('https://api-dev.umusic.net/guardian/login', {
@@ -63,11 +73,9 @@ export default withAuth(class TopNav extends Component {
         )
         .then (userJSON => 
             {
-
-                console.log('--' + userJSON.User.name + '--')
-
-                this.setState({userName : userJSON.User.name})
-                this.setUserLabels(userJSON.ReleasingLabels)
+                console.log('----------- USER JSON ----------- ')
+                console.log(userJSON)
+                this.setUserLabelsSessionData(userJSON.ReleasingLabels)
             }
         )
         .catch(

@@ -5,20 +5,19 @@ import './ProjectContacts.css';
 
 
 class ProjectContactsPage extends Component {
+    constructor(props) {
 
-    constructor() {
+        const user = JSON.parse(sessionStorage.getItem('user'))
 
-        super();
-
-        const userObj = JSON.parse(sessionStorage.getItem('user'))
-
+        super(props);
         this.state = {
-            formInputs : JSON.parse(localStorage.getItem('projectData'))
+            formInputs : {
+                "projectPrimaryContact" : user.name, 
+                "projectPrimaryContactEmail" : user.email,
+                "projectSecurity" : '', 
+                "projectAdditionalContacts" : ''
+            }
         }
-
-        this.state.userObj = JSON.parse(sessionStorage.getItem('user'))
-        this.state.formInputs.projectPrimaryContact = userObj.name
-        this.state.formInputs.projectPrimaryEmail = userObj.email
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -32,8 +31,13 @@ class ProjectContactsPage extends Component {
     handleSubmit(event) {
         
         event.preventDefault();
-        
+
+        const releaseInformationInputs = JSON.parse(localStorage.getItem('projectData'))
         const user = JSON.parse(sessionStorage.getItem('user'))
+        
+        console.log('--- TWO FORM INPUTS ----')
+        console.log(JSON.stringify({...releaseInformationInputs, ...this.state.formInputs}))
+        console.log('------------------------')
 
         const fetchHeaders = new Headers(
             {
@@ -46,7 +50,7 @@ class ProjectContactsPage extends Component {
             "User" : {
                 "email" : user.email
             },
-            "Project" : this.state.formInputs
+            "Project" : {...releaseInformationInputs, ...this.state.formInputs}
         })
 
 
@@ -58,7 +62,7 @@ class ProjectContactsPage extends Component {
         console.log(fetchBody)
         console.log('--------------------------')
 
-        fetch ('https://api-qa.umusic.net/guardian/project', {
+        fetch ('https://api-dev.umusic.net/guardian/project', {
             method : 'POST',
             headers : fetchHeaders,
             body : fetchBody
@@ -70,6 +74,9 @@ class ProjectContactsPage extends Component {
         .then (responseJSON => 
             {
                 console.log(responseJSON)
+
+                //clear the local storage
+                //localStorage.removeItem('projectData')
             }
         )
         .catch(
@@ -79,7 +86,7 @@ class ProjectContactsPage extends Component {
 
     render() {
 
-        const userObj = JSON.parse(sessionStorage.getItem('user'))
+        const user = JSON.parse(sessionStorage.getItem('user'))
 
         return(
             <section className="page-container h-100">
@@ -124,8 +131,8 @@ class ProjectContactsPage extends Component {
                                 <Form.Label className='col-form-label col-2'>Primary Contact Email<span className='required-ind'>*</span></Form.Label>
                                 <Form.Control 
                                     className='form-control col-5' 
-                                    id='projectPrimaryEmail' 
-                                    value={this.state.formInputs.projectPrimaryEmail}
+                                    id='projectPrimaryContactEmail' 
+                                    value={this.state.formInputs.projectPrimaryContactEmail}
                                     onChange={this.handleChange} 
                                 />
                             </Form.Group>
@@ -141,7 +148,7 @@ class ProjectContactsPage extends Component {
                                         className='' 
                                         as='textarea' 
                                         rows='5' 
-                                        value={this.state.value}
+                                        value={this.state.formInputs.projectAdditionalContacts}
                                         onChange={this.handleChange}
                                     />
                                 </Form.Group>

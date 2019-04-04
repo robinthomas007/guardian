@@ -4,7 +4,6 @@ import LeftNav from './template/LeftNav/LeftNav';
 import { SecureRoute } from "@okta/okta-react";
 import TrackInformationPage from './pages/TrackInformation/TrackInformationPage';
 import ProjectContactsPage from './pages/ProjectContacts/ProjectContactsPage';
-import NewProjectPage from './pages/NewProjectPage';
 import AudioFilesPage from './pages/AudioFiles/AudioFilesPage';
 import ReviewAndSubmitPage from './pages/ReviewAndSubmit/ReviewAndSubmitPage';
 import BlockingPoliciesPage from './pages/BlockingPolicies/BlockingPoliciesPage';
@@ -33,27 +32,21 @@ export default withAuth(class Content extends Component {
 
       if (accesstoken !== this.state.accesstoken) {
           this.setState({ accesstoken });
+          sessionStorage.setItem('accessToken', accesstoken)
       }
 
       if (idtoken !== this.state.idtoken) {
           this.setState({ idtoken });
+          sessionStorage.setItem('idtoken', idtoken)
       }
 
       if (user !== this.state.user) {
         this.setState({ user });
+        sessionStorage.setItem('user', JSON.stringify(user))
     }
   }
 
   render() {
-
-      sessionStorage.setItem('accessToken', this.state.accesstoken)
-      sessionStorage.setItem('idtoken', this.state.idtoken)
-      sessionStorage.setItem('user', JSON.stringify(this.state.user))
-
-      //console.log('accessToken: ' + this.state.accesstoken)
-      //console.log('idToken: ' + this.state.idtoken)
-      //console.log('user: ' + this.state.user)
-
       return (
             <div className="row h-100 no-gutters">
                 <LeftNav />           
@@ -67,7 +60,7 @@ export default withAuth(class Content extends Component {
                   <SecureRoute path="/trackInformation" component={TrackInformationPage}/>
                   <SecureRoute path="/territorialRights" component={TerritorialRightsPage}/>
                   <SecureRoute path="/blockingPolicies" component={BlockingPoliciesPage}/>
-                  <SecureRoute path="/newProject" component={NewProjectPage} />
+                  <SecureRoute path="/newProject" component={ReleaseInformationPage} />
                   <SecureRoute path="/audioFiles" component={AudioFilesPage} />
                   <SecureRoute path="/reviewSubmit" component={ReviewAndSubmitPage}/>
                   <SecureRoute path="/findProject" component={FindProject}/>
