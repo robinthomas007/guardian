@@ -12,40 +12,39 @@ class FindProjectPage extends Component {
 
         return(
             <div>
-                <PageHeader />
-
-								<section class="page-container">
-			<div class="row">
-				<div class="col 4">
-				<h1>Find A Project</h1>
-				</div>
-				<div class="col-7">
-				</div> 
-				</div>
-				<div class="row no-gutters step-description">
-					<div class="col-12">
-				<p>Search for an existing project or release in the search bar below. Projects can be located by Artist, Track, ISRC or Project Title (Album, Compilation, EP, or Single name). <br />
-				Can't find what you're looking for? Email us at <a href="mailto:guardian-support@umusic.com">guardian-support@umusic.com</a>.
-				</p>
+				<section class="page-container">
+					<div class="row">
+						<div class="col 4">
+							<h1>Find A Project</h1>
+						</div>
+						<div class="col-7">
+						</div> 
+					</div>
+				
+					<div class="row no-gutters step-description">
+						<div class="col-12">
+							<p>Search for an existing project or release in the search bar below. Projects can be located by Artist, Track, ISRC or Project Title (Album, Compilation, EP, or Single name). <br />
+							Can't find what you're looking for? Email us at <a href="mailto:guardian-support@umusic.com">guardian-support@umusic.com</a>.
+							</p>
 					</div> 
 				</div>
 				<ul class="row search-row">
-				<li class="col-2 d-flex"></li>
-				<li class="col-8 d-flex justify-content-center">
-					<button class="btn btn-secondary" type="button"><i class="material-icons">settings</i> Filters</button>
-					<input class="form-control" type="search" />
-					<button class="btn btn-primary" type="button"><i class="material-icons">search</i> Search</button>
-				</li>
-				<li class="col-2 d-flex"></li>
+					<li class="col-2 d-flex"></li>
+					<li class="col-8 d-flex justify-content-center">
+						<button class="btn btn-secondary" type="button"><i class="material-icons">settings</i> Filters</button>
+						<input class="form-control" type="search" />
+						<button class="btn btn-primary" type="button"><i class="material-icons">search</i> Search</button>
+					</li>
+					<li class="col-2 d-flex"></li>
 				</ul>
 				<ul class="row search-row filters">
-				<li class="col-2 d-flex"></li>
-				<li class="col-8 d-flex">
-					Selected Filters:
-					<span><label>Label: </label> <button class="btn btn-sm btn-secondary">Label Name <i class="material-icons">close</i></button></span>
-					<span><label>Last Update: </label> <button class="btn btn-sm btn-secondary">12/28/2018 <i class="material-icons">close</i></button></span>
-				</li>
-				<li class="col-2 d-flex"></li>
+					<li class="col-2 d-flex"></li>
+					<li class="col-8 d-flex">
+						Selected Filters:
+						<span><label>Label: </label> <button class="btn btn-sm btn-secondary">Label Name <i class="material-icons">close</i></button></span>
+						<span><label>Last Update: </label> <button class="btn btn-sm btn-secondary">12/28/2018 <i class="material-icons">close</i></button></span>
+					</li>
+					<li class="col-2 d-flex"></li>
 				</ul>
 			</section>
 			
