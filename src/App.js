@@ -8,6 +8,7 @@ import config from './config';
 class App extends Component {
 
   componentDidMount() {
+
     //clear the local storage
     localStorage.removeItem('projectData')
   };

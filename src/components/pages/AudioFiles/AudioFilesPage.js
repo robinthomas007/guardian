@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import PageHeader from '../PageHeader/PageHeader';
+import {Table, Grid, Button, Form } from 'react-bootstrap'; 
+
 import './AudioFiles.css';
 
 const mockData = require('../../../mockData.json');
 
 class AudioFilesPage extends Component {
-
-
     
     render() {
 
@@ -39,12 +39,12 @@ class AudioFilesPage extends Component {
 
         const AudioVideoDataTable = () => {
             return (
-                <table className="table">
+                <Table hover>
                     <AudioVideoDataHeader />
                     <tbody>
                         {dataRows}
                     </tbody>
-                </table>
+                </Table>
             )
         }
 

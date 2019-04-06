@@ -4,6 +4,62 @@ import './FindProject.css';
 
 class FindProjectPage extends Component {
   
+    handleSubmit(event) {
+        
+        event.preventDefault();
+
+        const releaseInformationInputs = JSON.parse(localStorage.getItem('projectData'))
+        const user = JSON.parse(sessionStorage.getItem('user'))
+        
+        console.log('--- TWO FORM INPUTS ----')
+        console.log(JSON.stringify({...releaseInformationInputs, ...this.state.formInputs}))
+        console.log('------------------------')
+
+        const fetchHeaders = new Headers(
+            {
+                "Content-Type": "application/json",
+                "Authorization" : sessionStorage.getItem('accessToken')
+            }
+        )
+
+        const fetchBody = JSON.stringify( {
+            "User" : {
+                "email" : user.email
+            },
+            "Project" : {...releaseInformationInputs, ...this.state.formInputs}
+        })
+
+
+        console.log('--------------------------')
+        console.log('HEADERS:')
+        console.log(fetchHeaders)
+
+        console.log('BODY:')
+        console.log(fetchBody)
+        console.log('--------------------------')
+
+        fetch ('https://api-dev.umusic.net/guardian/project', {
+            method : 'POST',
+            headers : fetchHeaders,
+            body : fetchBody
+        }).then (response => 
+            {
+                return(response.json());
+            }
+        )
+        .then (responseJSON => 
+            {
+                console.log(responseJSON)
+
+                //clear the local storage
+                //localStorage.removeItem('projectData')
+            }
+        )
+        .catch(
+            error => console.error(error)
+        );
+    }
+
     render() {
 
         const saveAndContinue = () => {

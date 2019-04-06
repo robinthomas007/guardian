@@ -2,22 +2,21 @@ import React, { Component } from 'react';
 import config from '../../../config';
 import { withAuth } from '@okta/okta-react';
 import './TopNav.css'
+import { POINT_CONVERSION_COMPRESSED } from 'constants';
 
 const mockData = require('../../../mockData.json');
 
 export default withAuth(class TopNav extends Component {
-    
-    constructor() {
-        super();
 
+    constructor(props) {
+        super(props)
         this.state = {
-            userName : '',
-            labels : [
-            ]
+
         }
     }
 
     handleLogoutClick = (e) => {
+
         e.preventDefault();
         this.props.auth.logout('/');
         
@@ -37,6 +36,7 @@ export default withAuth(class TopNav extends Component {
         if(labels && userSessionDataObj) {
             userSessionDataObj.labels = labels;
             sessionStorage.setItem('user', JSON.stringify(userSessionDataObj))
+
         }
 
         console.log('------ USER LABELS to SESSION ------')
@@ -44,11 +44,9 @@ export default withAuth(class TopNav extends Component {
         console.log('------------------------------------')
     }
 
-    componentDidMount() {
+    componentDidMount(props) {
 
-        const user = JSON.parse(sessionStorage.getItem('user'))
-
-        console.log(user.email)
+        console.log(this.state.userName)
 
         const fetchHeaders = new Headers(
             {
@@ -58,7 +56,7 @@ export default withAuth(class TopNav extends Component {
         )
         const fetchBody = JSON.stringify( {
             "User" : {
-                "email" : user.email
+                "email" : this.state.userName
             }
         })
 
@@ -84,9 +82,7 @@ export default withAuth(class TopNav extends Component {
     }
 
     render() {
-
         const user = JSON.parse(sessionStorage.getItem('user'));
-
         return(
             <nav className="top-nav int">
                 <ul>

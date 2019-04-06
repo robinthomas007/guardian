@@ -31,41 +31,42 @@ export default withAuth(class Content extends Component {
       const user = await this.props.auth.getUser();
 
       if (accesstoken !== this.state.accesstoken) {
+          sessionStorage.setItem('accessToken', accesstoken)  
           this.setState({ accesstoken });
-          sessionStorage.setItem('accessToken', accesstoken)
       }
 
       if (idtoken !== this.state.idtoken) {
-          this.setState({ idtoken });
           sessionStorage.setItem('idtoken', idtoken)
+          this.setState({ idtoken });
       }
 
       if (user !== this.state.user) {
-        this.setState({ user });
         sessionStorage.setItem('user', JSON.stringify(user))
+        this.setState({ user });
     }
   }
 
   render() {
+      sessionStorage.setItem('user', JSON.stringify(this.state.user))
       return (
-            <div className="row h-100 no-gutters">
-                <LeftNav />           
-          
-                <div className="content col-10">
-                  
-                  <TopNav />
+        <div className="row h-100 no-gutters">
+              <LeftNav />           
+        
+              <div className="content col-10">
+                
+                <TopNav />
 
-                  <SecureRoute path="/releaseInformation" component={ReleaseInformationPage}/>
-                  <SecureRoute path="/projectContacts" component={ProjectContactsPage}/>
-                  <SecureRoute path="/trackInformation" component={TrackInformationPage}/>
-                  <SecureRoute path="/territorialRights" component={TerritorialRightsPage}/>
-                  <SecureRoute path="/blockingPolicies" component={BlockingPoliciesPage}/>
-                  <SecureRoute path="/newProject" component={ReleaseInformationPage} />
-                  <SecureRoute path="/audioFiles" component={AudioFilesPage} />
-                  <SecureRoute path="/reviewSubmit" component={ReviewAndSubmitPage}/>
-                  <SecureRoute path="/findProject" component={FindProject}/>
-                </div>
-          </div>
+                <SecureRoute path="/releaseInformation" component={ReleaseInformationPage}/>
+                <SecureRoute path="/projectContacts" component={ProjectContactsPage}/>
+                <SecureRoute path="/trackInformation" component={TrackInformationPage}/>
+                <SecureRoute path="/territorialRights" component={TerritorialRightsPage}/>
+                <SecureRoute path="/blockingPolicies" component={BlockingPoliciesPage}/>
+                <SecureRoute path="/newProject" component={ReleaseInformationPage} />
+                <SecureRoute path="/audioFiles" component={AudioFilesPage} />
+                <SecureRoute path="/reviewSubmit" component={ReviewAndSubmitPage}/>
+                <SecureRoute path="/findProject" component={FindProject}/>
+              </div>
+        </div>
         );
     }
 });

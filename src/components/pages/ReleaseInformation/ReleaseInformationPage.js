@@ -45,15 +45,14 @@ class ReleaseinformationPage extends Component {
         console.log('-------------------------------------')
         console.log(localStorage.getItem('projectData'))
 
-        this.props.history.push('/projectContacts')
 
         //we need to save the form data to localStorage at this point instead of posting to the API
     };
 
-    GetReleaseLabelOptions = () => {
-        return(
-            123
-        )
+    getUserReleaseLabels() {
+        const userObj = sessionStorage.getItem('user');
+        console.log('userObj')
+        console.log(userObj)
     }
 
    render() {
@@ -119,6 +118,8 @@ class ReleaseinformationPage extends Component {
                                         <option value="0" selected>Album (Default)</option>
                                         <option value="1">Collection</option>
                                         <option value="2">Single</option>
+
+                                        {this.getUserReleaseLabels}
                                 </Form.Control>
                             </Form.Group>
 
