@@ -1,44 +1,42 @@
 import React, { Component } from 'react';
 import PageHeader from '../PageHeader/PageHeader';
 import './FindProject.css';
+import { AST_This } from 'terser';
 
 class FindProjectPage extends Component {
   
-    handleSubmit(event) {
-        
-        event.preventDefault();
+	constructor(props) {
 
-        const releaseInformationInputs = JSON.parse(localStorage.getItem('projectData'))
         const user = JSON.parse(sessionStorage.getItem('user'))
-        
-        console.log('--- TWO FORM INPUTS ----')
-        console.log(JSON.stringify({...releaseInformationInputs, ...this.state.formInputs}))
-        console.log('------------------------')
+
+        super(props);
+        this.state = {
+			searchResults : {}
+		}
+		this.renderProjects = this.renderProjects.bind(this);
+	}
+
+	componentDidMount(props) {
+		const user = JSON.parse(sessionStorage.getItem('user'))
 
         const fetchHeaders = new Headers(
             {
                 "Content-Type": "application/json",
                 "Authorization" : sessionStorage.getItem('accessToken')
             }
-        )
+		)
 
-        const fetchBody = JSON.stringify( {
+		const fetchBody = JSON.stringify( {
             "User" : {
-                "email" : user.email
-            },
-            "Project" : {...releaseInformationInputs, ...this.state.formInputs}
+				"email" : user.email,
+			},
+			
+			"SearchCriteria" : {
+				"projectTitle" : " "
+			}
         })
 
-
-        console.log('--------------------------')
-        console.log('HEADERS:')
-        console.log(fetchHeaders)
-
-        console.log('BODY:')
-        console.log(fetchBody)
-        console.log('--------------------------')
-
-        fetch ('https://api-dev.umusic.net/guardian/project', {
+        fetch ('https://api-dev.umusic.net/guardian/project/search', {
             method : 'POST',
             headers : fetchHeaders,
             body : fetchBody
@@ -49,10 +47,7 @@ class FindProjectPage extends Component {
         )
         .then (responseJSON => 
             {
-                console.log(responseJSON)
-
-                //clear the local storage
-                //localStorage.removeItem('projectData')
+				this.setState( {searchResults : responseJSON.Projects })
             }
         )
         .catch(
@@ -60,13 +55,38 @@ class FindProjectPage extends Component {
         );
     }
 
+	renderProjects(projects) {
+		if(projects) {
+			return Object.keys(projects).map(function(project, i) {
+
+				var projectData = projects[project]
+	
+				return(
+					<tr key={i}>
+						<td>{projectData.projectTitle}</td>
+						<td>{projectData.projectArtistName}</td>
+						<td>{projectData.projectReleasingLabel}</td>
+						<td>{projectData.projectLastModified}</td>
+						<td class="status"><span>In Progress</span></td>
+						<td class="status centered"><i class="material-icons">block</i></td>
+						<td class="status centered"><i class="material-icons">block</i></td>
+						<td class="status centered"><i class="material-icons">block</i></td>
+						<td class="status centered"><i class="material-icons">block</i></td>
+						<td class="status centered"><i class="material-icons">block</i></td>
+						<td class="status centered"><i class="material-icons">block</i></td>
+					</tr>
+				)
+			})
+		}
+	}
+
     render() {
 
         const saveAndContinue = () => {
             alert('Save Contacts and Continue')
         }
-
-        return(
+		
+		return(
             <div>
 				<section class="page-container">
 					<div class="row">
@@ -167,142 +187,13 @@ class FindProjectPage extends Component {
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>Project Title Name</td>
-							<td>Artist Name</td>
-							<td>Label Name</td>
-							<td class="centered">12/28/2018</td>
-							<td class="status"><span>In Progress</span></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-						</tr>
-						<tr>
-							<td>Project Title Name</td>
-							<td>Artist Name</td>
-							<td>Label Name</td>
-							<td class="centered">12/28/2018</td>
-							<td class="status"><span>In Progress</span></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-						</tr>
-						<tr>
-							<td>Project Title Name</td>
-							<td>Artist Name</td>
-							<td>Label Name</td>
-							<td class="centered">12/28/2018</td>
-							<td class="status"><span>In Progress</span></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-						</tr>
-						<tr>
-							<td>Project Title Name</td>
-							<td>Artist Name</td>
-							<td>Label Name</td>
-							<td class="centered">12/28/2018</td>
-							<td class="status"><span>In Progress</span></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-						</tr>
-						<tr>
-							<td>Project Title Name</td>
-							<td>Artist Name</td>
-							<td>Label Name</td>
-							<td class="centered">12/28/2018</td>
-							<td class="status"><span>In Progress</span></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-						</tr>
-						<tr>
-							<td>Project Title Name</td>
-							<td>Artist Name</td>
-							<td>Label Name</td>
-							<td class="centered">12/28/2018</td>
-							<td class="status"><span>In Progress</span></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-						</tr>
-						<tr>
-							<td>Project Title Name</td>
-							<td>Artist Name</td>
-							<td>Label Name</td>
-							<td class="centered">12/28/2018</td>
-							<td class="status"><span>In Progress</span></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-						</tr>
-						<tr>
-							<td>Project Title Name</td>
-							<td>Artist Name</td>
-							<td>Label Name</td>
-							<td class="centered">12/28/2018</td>
-							<td class="status"><span>In Progress</span></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-						</tr>
-						<tr>
-							<td>Project Title Name</td>
-							<td>Artist Name</td>
-							<td>Label Name</td>
-							<td class="centered">12/28/2018</td>
-							<td class="status"><span>In Progress</span></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-						</tr>
-						<tr>
-							<td>Project Title Name</td>
-							<td>Artist Name</td>
-							<td>Label Name</td>
-							<td class="centered">12/28/2018</td>
-							<td class="status"><span>In Progress</span></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-							<td class="status centered"><i class="material-icons">block</i></td>
-						</tr>
+						{this.renderProjects(this.state.searchResults)}
 					</tbody>
 				</table>
 			</section>
-    </div>
+    	</div>
 
-				)
+		)
 	}
 }
 export default FindProjectPage;

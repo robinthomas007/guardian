@@ -17,6 +17,7 @@ export default withAuth(class Content extends Component {
   constructor(props) {
     super(props)
     this.state = {
+        loading : true,
         messages: null,
         accesstoken: '',
         idtoken: '',
@@ -31,25 +32,30 @@ export default withAuth(class Content extends Component {
       const user = await this.props.auth.getUser();
 
       if (accesstoken !== this.state.accesstoken) {
-          sessionStorage.setItem('accessToken', accesstoken)  
-          this.setState({ accesstoken });
+        this.setState({ accesstoken });
+        sessionStorage.setItem('accessToken', accesstoken)  
       }
 
       if (idtoken !== this.state.idtoken) {
-          sessionStorage.setItem('idtoken', idtoken)
-          this.setState({ idtoken });
+        this.setState({ idtoken });
+        sessionStorage.setItem('idtoken', idtoken)
       }
 
       if (user !== this.state.user) {
-        sessionStorage.setItem('user', JSON.stringify(user))
         this.setState({ user });
+        sessionStorage.setItem('user', JSON.stringify(user))
     }
   }
 
+  componentWillUpdate() {
+    //sessionStorage.setItem('user', JSON.stringify(this.state.user))
+    //sessionStorage.setItem('idtoken', this.state.idtoken)
+    //sessionStorage.setItem('accessToken', this.state.accesstoken) 
+  }
+
   render() {
-      sessionStorage.setItem('user', JSON.stringify(this.state.user))
       return (
-        <div className="row h-100 no-gutters">
+            <div className="row h-100 no-gutters">
               <LeftNav />           
         
               <div className="content col-10">

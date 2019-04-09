@@ -20,6 +20,7 @@ class PageHeader extends Component {
         localStorage.removeItem('projectData')
     };
 
+    
     render() {
 
         return(
