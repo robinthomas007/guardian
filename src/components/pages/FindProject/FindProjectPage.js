@@ -6,9 +6,6 @@ import { AST_This } from 'terser';
 class FindProjectPage extends Component {
   
 	constructor(props) {
-
-        const user = JSON.parse(sessionStorage.getItem('user'))
-
         super(props);
         this.state = {
 			searchResults : {},
@@ -18,6 +15,7 @@ class FindProjectPage extends Component {
 			},
 			searchResultsCount : 0
 		}
+
 		this.renderProjects = this.renderProjects.bind(this);
 	}
 
@@ -35,7 +33,6 @@ class FindProjectPage extends Component {
             "User" : {
 				"email" : user.email,
 			},
-			
 			searchCriteria : this.state.searchCriteria
         })
 
@@ -64,6 +61,22 @@ class FindProjectPage extends Component {
 	}
 
 	renderProjects(projects) {
+
+		const checkStepStatus = (stepStatus) => {
+			if(stepStatus) {
+				return(
+					<label class="custom-checkbox">
+						<input disabled type="checkbox" checked/>
+						<span class="static-checkmark"></span>
+					</label> 
+				)
+			} else {
+				return(
+					<i className="material-icons">block</i>
+				)
+			}
+		}
+
 		if(projects) {
 			return Object.keys(projects).map(function(project, i) {
 				return(
@@ -73,12 +86,12 @@ class FindProjectPage extends Component {
 						<td>{projects[project].projectReleasingLabel}</td>
 						<td>{projects[project].projectLastModified}</td>
 						<td className="status"><span>In Progress</span></td>
-						<td className="status centered"><i className="material-icons">block</i></td>
-						<td className="status centered"><i className="material-icons">block</i></td>
-						<td className="status centered"><i className="material-icons">block</i></td>
-						<td className="status centered"><i className="material-icons">block</i></td>
-						<td className="status centered"><i className="material-icons">block</i></td>
-						<td className="status centered"><i className="material-icons">block</i></td>
+						<td className="status centered">{checkStepStatus(projects[project].isStep1Complete)}</td>
+						<td className="status centered">{checkStepStatus(projects[project].isStep2Complete)}</td>
+						<td className="status centered">{checkStepStatus(projects[project].isStep3Complete)}</td>
+						<td className="status centered">{checkStepStatus(projects[project].isStep4Complete)}</td>
+						<td className="status centered">{checkStepStatus(projects[project].isStep5Complete)}</td>
+						<td className="status centered">{checkStepStatus(projects[project].isStep6Complete)}</td>
 					</tr>
 				)
 			})
