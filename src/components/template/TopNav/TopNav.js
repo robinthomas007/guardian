@@ -22,15 +22,6 @@ export default withAuth(class TopNav extends Component {
         //this.updateState = this.updateState.bind(this);
     }
 
-    componentWillReceiveProps(nextProps) {
-        this.updateState();
-    }
-
-    updateState() {
-        const userStore = JSON.parse(sessionStorage.getItem('user'))
-        this.setState({ user : userStore })
-    }
-
     handleLogoutClick = (e) => {
 
         e.preventDefault();
@@ -62,7 +53,7 @@ export default withAuth(class TopNav extends Component {
 
     componentDidMount() {
         
-        //this.setState({user : JSON.parse(sessionStorage.getItem('user'))})
+        this.setState({user : JSON.parse(sessionStorage.getItem('user'))})
 
         const fetchHeaders = new Headers(
             {
