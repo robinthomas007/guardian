@@ -12,10 +12,7 @@ export default withAuth(class TopNav extends Component {
         super(props)
 
         this.state = {
-            user : {
-                name : "",
-                email : ""
-            },
+            user : JSON.parse(sessionStorage.getItem('user')),
             labels : []
         }
 
@@ -42,8 +39,11 @@ export default withAuth(class TopNav extends Component {
         const user = JSON.parse(sessionStorage.getItem('user'))
         if(labels && user) {
             user.labels = labels;
-            sessionStorage.setItem('user', JSON.stringify(user))
 
+            console.log('-- LABELS --')
+            console.log(labels)
+
+            sessionStorage.setItem('user', JSON.stringify(user))
         }
 
         console.log('------ USER LABELS to SESSION ------')
@@ -52,23 +52,16 @@ export default withAuth(class TopNav extends Component {
     }
 
     componentDidMount() {
-        
-        this.setState({user : JSON.parse(sessionStorage.getItem('user'))})
-
         const fetchHeaders = new Headers(
             {
-                "Content-Type": "application/json",
+                "Content-Type" : "application/json",
                 "Authorization" : sessionStorage.getItem('accessToken')
             }
         )
 
-        console.log(
-            'FH: ' + this.state.user.email
-        )
-
         const fetchBody = JSON.stringify( {
-            "User" : {
-                "email" : this.state.user.email
+            User : {
+                email : JSON.parse(sessionStorage.getItem('user')).email
             }
         })
 
@@ -84,6 +77,9 @@ export default withAuth(class TopNav extends Component {
         .then (userJSON => 
             {
                 this.setUserLabelsSessionData(userJSON.ReleasingLabels)
+
+                console.log(' -- Releasing Labels -- ')
+                console.log(userJSON.ReleasingLabels)
             }
         )
         .catch(

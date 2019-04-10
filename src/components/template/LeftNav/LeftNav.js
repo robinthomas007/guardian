@@ -65,6 +65,12 @@ const navList = {
 			userAccess : 'admin'
 		},
 	
+		userAdmin : {
+			linkText : 'User Administration',
+			navRoute : '/userAdmin',
+			userAccess : 'admin'
+		},
+
 		recentProjects : {
 			linkText : 'Recent Projects',
 			navRoute : '/recentProjects',
@@ -120,8 +126,10 @@ class LeftNav extends Component {
 			<nav className="left-nav col-2">
 				<section className="fixed-left-nav col-2">
 					<span className="left-nav-logo"></span>
-					<ul>
+					<ul id="steps">
 						{userLinks}
+					</ul>
+					<ul>
 						{adminLinks}
 					</ul>
 				</section>

@@ -47,10 +47,20 @@ export default withAuth(class Content extends Component {
     }
   }
 
+  componentDidMount() {
+
+}
+
+
   componentWillUpdate() {
+
+    alert(sessionStorage.getItem('accessToken'))
     //sessionStorage.setItem('user', JSON.stringify(this.state.user))
     //sessionStorage.setItem('idtoken', this.state.idtoken)
-    //sessionStorage.setItem('accessToken', this.state.accesstoken) 
+    //sessionStorage.setItem('accessToken', this.state.accesstoken)
+    
+    
+    
   }
 
   render() {

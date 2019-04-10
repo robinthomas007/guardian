@@ -9,7 +9,9 @@ class PageHeader extends Component {
         super(props);
 
         this.state = {
-            user : {}
+            user : {},
+            projectTitle : props.projectTitle
+
         };
     }
    
@@ -22,12 +24,24 @@ class PageHeader extends Component {
 
     }
 
+    getProjectTitle = () => {
+        if(this.props.projectTitle) {
+            return(
+                <h1>{this.props.projectTitle}</h1>
+            )
+        } else {
+            return(
+                <h1>{mockData.project.projectTitle}</h1>
+            )
+        }
+    }
+
     render() {
 
         return(
             <div className="row">
                 <div className="col 4">
-                    <h1>{mockData.project.projectTitle}</h1>
+                    {this.getProjectTitle()}
                 </div>
                 <div className="col-7">
                     <span className="project-right">

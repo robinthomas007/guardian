@@ -22,6 +22,7 @@ class ReleaseinformationPage extends Component {
             };
         }
 
+        this.state.user = JSON.parse(sessionStorage.getItem('user'))
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     };
@@ -40,26 +41,36 @@ class ReleaseinformationPage extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
+
         localStorage.setItem('projectData', JSON.stringify(this.state.formInputs));
-        
-        console.log('-------------------------------------')
         console.log(localStorage.getItem('projectData'))
 
-
-        //we need to save the form data to localStorage at this point instead of posting to the API
+        this.props.history.push('/projectContacts')
     };
 
-    getUserReleaseLabels() {
-        const userObj = sessionStorage.getItem('user');
-        console.log('userObj')
-        console.log(userObj)
+    getUserReleasingLabels() {
+        const labels = JSON.parse(sessionStorage.getItem('user')).labels
+        
+        const labelOptions = labels.map((label, i) =>
+            <option value={label.id}>{label.name}</option>
+        );
+
+
+        return(
+            <Form.Control 
+                id="projectReleasingLabel" 
+                as="select" 
+                className='col-form-label dropdown col-3' 
+                value={this.state.formInputs.projectReleasingLabel}
+                onChange={this.handleChange}
+            >
+            {labelOptions}
+          </Form.Control>
+        )
+
     }
 
-   render() {
-
-        const saveAndContinue = () => {
-            alert('Save and Continue')
-        }
+    render() {
 
         return (
             <section className="page-container h-100">
@@ -109,6 +120,7 @@ class ReleaseinformationPage extends Component {
                             
                             <Form.Group>
                                 <Form.Label className='col-form-label col-3'>Project Type<span className="required-ind">*</span></Form.Label>
+                                
                                 <Form.Control 
                                     id="projectType" 
                                     as="select" 
@@ -119,7 +131,7 @@ class ReleaseinformationPage extends Component {
                                         <option value="1">Collection</option>
                                         <option value="2">Single</option>
 
-                                        {this.getUserReleaseLabels}
+                                        
                                 </Form.Control>
                             </Form.Group>
 
@@ -135,9 +147,11 @@ class ReleaseinformationPage extends Component {
                                     <option value="2818" selected>User Primary Label (Default)</option>
                                     <option value="1">User Label Option 2</option>
                                     <option value="2">User Label Option 3</option>
+                                  </Form.Control>
 
-                                    {this.getReleaseLabelOptions}
-                                </Form.Control>
+
+                                    
+
                             </Form.Group>
 
                             <Form.Group>
