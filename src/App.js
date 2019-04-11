@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import LoginPage from './components/pages/HomePage/HomePage';
-import FindProject from './components/pages/FindProject/FindProjectPage';
 import Content from "./components/content";
 import { Security, SecureRoute, ImplicitCallback } from '@okta/okta-react';
 import config from './config';
@@ -28,7 +27,7 @@ class App extends Component {
               <Route path="/implicit/callback" component={ImplicitCallback} />
               <Route path="/" exact={true} component={LoginPage} />
               <Route path="/login" exact={true} component={LoginPage} />
-              <SecureRoute path="/" component={FindProject} />
+              <SecureRoute path="/" component={Content} />
             </Switch>
           </Security>
       </Router>
