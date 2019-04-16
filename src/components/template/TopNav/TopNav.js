@@ -25,8 +25,7 @@ export default withAuth(class TopNav extends Component {
 
         //this.loadUserToState = this.loadUserToState.bind(this);
         this.getUserNameFromState = this.getUserNameFromState.bind(this);
-        this.getUserEmailFromState = this.getUserEmailFromState.bind(this);
-
+        this.handleLogoutClick = this.handleLogoutClick.bind(this);
 
     }
 
@@ -37,6 +36,9 @@ export default withAuth(class TopNav extends Component {
         
         //clear the local storage
         localStorage.clear()
+
+        //redirect to login page
+        //this.props.history.push('')
     }
 
     handleHelpClick = (e) => {
@@ -116,12 +118,6 @@ export default withAuth(class TopNav extends Component {
             } else {
                 return(null)
             }
-    }
-
-    getUserEmailFromState() {
-        return(
-            this.state.user.email
-        )
     }
 
     render() {

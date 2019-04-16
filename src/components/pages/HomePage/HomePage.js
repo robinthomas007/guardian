@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import './HomePage.css'
 
-const mockData = require('../../../mockData.json');
-
 class HomePage extends Component {
 
     state = {
@@ -11,7 +9,7 @@ class HomePage extends Component {
 
     login = () => {
         return(
-            this.props.history.push('/releaseinformation')
+            this.props.history.push('/releaseInformation')
         )
         
     }
