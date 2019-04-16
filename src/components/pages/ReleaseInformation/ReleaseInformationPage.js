@@ -22,7 +22,6 @@ class ReleaseinformationPage extends Component {
             };
         }
 
-        this.state.user = JSON.parse(sessionStorage.getItem('user'))
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     };
@@ -48,27 +47,7 @@ class ReleaseinformationPage extends Component {
         this.props.history.push('/projectContacts')
     };
 
-    getUserReleasingLabels() {
-        const labels = JSON.parse(sessionStorage.getItem('user')).labels
-        
-        const labelOptions = labels.map((label, i) =>
-            <option value={label.id}>{label.name}</option>
-        );
 
-
-        return(
-            <Form.Control 
-                id="projectReleasingLabel" 
-                as="select" 
-                className='col-form-label dropdown col-3' 
-                value={this.state.formInputs.projectReleasingLabel}
-                onChange={this.handleChange}
-            >
-            {labelOptions}
-          </Form.Control>
-        )
-
-    }
 
     render() {
 
@@ -149,8 +128,6 @@ class ReleaseinformationPage extends Component {
                                     <option value="2">User Label Option 3</option>
                                   </Form.Control>
 
-
-                                    
 
                             </Form.Group>
 

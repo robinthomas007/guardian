@@ -5,6 +5,9 @@ import './TopNav.css'
 import { POINT_CONVERSION_COMPRESSED } from 'constants';
 
 const mockData = require('../../../mockData.json');
+const user = JSON.parse(sessionStorage.getItem('user'))
+let testVar = '123'
+
 
 export default withAuth(class TopNav extends Component {
 
@@ -12,11 +15,19 @@ export default withAuth(class TopNav extends Component {
         super(props)
 
         this.state = {
-            user : JSON.parse(sessionStorage.getItem('user')),
+            user : {
+                email : '',
+                name : ''
+            },
+            ready : false,
             labels : []
         }
 
-        //this.updateState = this.updateState.bind(this);
+        //this.loadUserToState = this.loadUserToState.bind(this);
+        this.getUserNameFromState = this.getUserNameFromState.bind(this);
+        this.getUserEmailFromState = this.getUserEmailFromState.bind(this);
+
+
     }
 
     handleLogoutClick = (e) => {
@@ -51,7 +62,8 @@ export default withAuth(class TopNav extends Component {
         console.log('------------------------------------')
     }
 
-    componentDidMount() {
+    setUserLabels = (email) => {
+
         const fetchHeaders = new Headers(
             {
                 "Content-Type" : "application/json",
@@ -77,9 +89,7 @@ export default withAuth(class TopNav extends Component {
         .then (userJSON => 
             {
                 this.setUserLabelsSessionData(userJSON.ReleasingLabels)
-
-                console.log(' -- Releasing Labels -- ')
-                console.log(userJSON.ReleasingLabels)
+                //this.setState({userName : JSON.parse(sessionStorage.getItem('user')).name})
             }
         )
         .catch(
@@ -87,15 +97,42 @@ export default withAuth(class TopNav extends Component {
         );
     }
 
-    render() {
+    componentWillMount() {
+        this.setState({user : this.props.user})
+        
+    }
+
+    componentDidMount() {
+        this.setState( {user : JSON.parse(sessionStorage.getItem('user'))} )
+    }
+
+    getUserNameFromState() {
+        const user = JSON.parse(sessionStorage.getItem('user'))
+
+            if(user) {
+                return(
+                    user.name
+                )
+            } else {
+                return(null)
+            }
+    }
+
+    getUserEmailFromState() {
         return(
-            <nav className="top-nav int">
-                <ul>
-                    <li><a className="help" href="#" onClick={this.handleHelpClick}>Help Guide</a></li>
-                    <li>Welcome, {this.state.user.name}</li>
-                    <li><a href="#" onClick={this.handleLogoutClick}>Log Out</a></li>
-                </ul>
-            </nav>
+            this.state.user.email
         )
+    }
+
+    render() {
+            return(
+                <nav className="top-nav int">
+                    <ul>
+                        <li><a className="help" href="#" onClick={this.handleHelpClick}>Help Guide</a></li>
+                        <li>Welcome, {this.getUserNameFromState()}</li>
+                        <li><a href="#" onClick={this.handleLogoutClick}>Log Out</a></li>
+                    </ul>
+                </nav>
+            )
     }
 })

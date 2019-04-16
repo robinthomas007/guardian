@@ -39,6 +39,7 @@ class ProjectContactsPage extends Component {
         console.log(JSON.stringify({...releaseInformationInputs, ...this.state.formInputs}))
         console.log('------------------------')
 
+        
         const fetchHeaders = new Headers(
             {
                 "Content-Type": "application/json",

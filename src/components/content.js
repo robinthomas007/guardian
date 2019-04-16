@@ -33,7 +33,7 @@ export default withAuth(class Content extends Component {
 
       if (accesstoken !== this.state.accesstoken) {
         this.setState({ accesstoken });
-        sessionStorage.setItem('accessToken', accesstoken)  
+        sessionStorage.setItem('accessToken', accesstoken)
       }
 
       if (idtoken !== this.state.idtoken) {
@@ -47,31 +47,34 @@ export default withAuth(class Content extends Component {
       }
   }
 
-  componentWillUpdate() {
-    
+  componentDidMount() {
+
+    //sessionStorage.setItem('accessToken', this.props.auth.getAccessToken())
+    //sessionStorage.setItem('idtoken', this.props.auth.getIdToken())
+    //sessionStorage.setItem('user', JSON.stringify(this.props.auth.getUser()))
   }
 
   render() {
       return (
-            <div className="row h-100 no-gutters">
-              <LeftNav />           
-        
-              <div className="content col-10">
-                
-                <TopNav />
+        <div className="row h-100 no-gutters">
+          <LeftNav />           
 
-                <SecureRoute path="/releaseInformation" component={ReleaseInformationPage}/>
-                <SecureRoute path="/projectContacts" component={ProjectContactsPage}/>
-                <SecureRoute path="/trackInformation" component={TrackInformationPage}/>
-                <SecureRoute path="/territorialRights" component={TerritorialRightsPage}/>
-                <SecureRoute path="/blockingPolicies" component={BlockingPoliciesPage}/>
-                <SecureRoute path="/newProject" component={ReleaseInformationPage} />
-                <SecureRoute path="/audioFiles" component={AudioFilesPage} />
-                <SecureRoute path="/reviewSubmit" component={ReviewAndSubmitPage}/>
-                <SecureRoute path="/findProject" component={FindProject}/>
-              </div>
+          <div className="content col-10">
+            
+            <TopNav user={JSON.parse(sessionStorage.getItem('user'))}/>
+
+            <SecureRoute path="/releaseInformation" component={ReleaseInformationPage}/>
+            <SecureRoute path="/projectContacts" component={ProjectContactsPage}/>
+            <SecureRoute path="/trackInformation" component={TrackInformationPage}/>
+            <SecureRoute path="/territorialRights" component={TerritorialRightsPage}/>
+            <SecureRoute path="/blockingPolicies" component={BlockingPoliciesPage}/>
+            <SecureRoute path="/newProject" component={ReleaseInformationPage} />
+            <SecureRoute path="/audioFiles" component={AudioFilesPage} />
+            <SecureRoute path="/reviewSubmit" component={ReviewAndSubmitPage}/>
+            <SecureRoute path="/findProject" component={FindProject}/>
+          </div>
         </div>
-        );
+      );
     }
 });
 
