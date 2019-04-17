@@ -65,9 +65,21 @@ class ReleaseinformationPage extends Component {
 
                <Form>
                     <div className="row">
-                        <div className="col-8">
+                    <div className="col-3">
+                       
+</div>
+<div className="col-8">
+<div className="col-7">
+fields
+</div>
+<div className="col-4">
+art
+</div>
+</div>
 
-                            <Form.Control 
+</div>
+                        <div className="col-8">
+                        <Form.Control 
                                 type = 'hidden'
                                 id='projectID'
                                 value={this.state.formInputs.projectID}
@@ -106,7 +118,7 @@ class ReleaseinformationPage extends Component {
                                     className='col-form-label dropdown col-3' 
                                     value={this.state.formInputs.projectType}
                                     onChange={this.handleChange}>
-                                        <option value="0" selected>Album (Default)</option>
+                                        <option value="0">Album (Default)</option>
                                         <option value="1">Collection</option>
                                         <option value="2">Single</option>
 
@@ -123,25 +135,14 @@ class ReleaseinformationPage extends Component {
                                     value={this.state.formInputs.projectReleasingLabel}
                                     onChange={this.handleChange}
                                 >
-                                    <option value="2818" selected>User Primary Label (Default)</option>
+                                    <option value="2818">User Primary Label (Default)</option>
                                     <option value="1">User Label Option 2</option>
                                     <option value="2">User Label Option 3</option>
                                   </Form.Control>
-
-
                             </Form.Group>
 
                             <Form.Group>
-                                <Form.Label className="col-form-label col-3">Release TBD</Form.Label>
-                                <Form.Control 
-                                    id='projectReleaseDateTBD' 
-                                    className='form-control' 
-                                    type='checkbox' 
-                                    value={this.state.formInputs.projectReleaseDateTBD}
-                                    onChange={this.handleChange}
-                                />
-                            
-                                <Form.Label className="col-form-label col-3">Release Date<span className="required-ind">*</span></Form.Label>
+                            <Form.Label className="col-form-label col-3">Release Date<span className="required-ind">*</span></Form.Label>
                                     <input 
                                         id="projectReleaseDate" 
                                         className='form-control col-3' 
@@ -149,27 +150,51 @@ class ReleaseinformationPage extends Component {
                                         value={this.state.formInputs.projectReleaseDate}
                                         onChange={this.handleChange}
                                     />
-                            </Form.Group>
-                        </div>
 
-                        <Form.Group className="form-group col-4 cover-art">
+                                <Form.Label className="col-form-label col-2 tbd">Release TBD</Form.Label>
+                            
+                            <label className="custom-checkbox"> 		
+                                            <input id='projectReleaseDateTBD' 
+                                                className='form-control col-3' 
+                                                type='checkbox' 
+                                                value={this.state.formInputs.projectReleaseDateTBD}
+                                                onChange={this.handleChange} />
+                                            <span className="checkmark ">				
+                                            </span>
+                                            </label>
+                            
+                              
+                            </Form.Group>
+                          
+                    </div>
+
+                    <div class="col-4">
+                        <Form.Group className="form-group cover-art">
                             <Form.Label className="col-form-label col-3">Cover Art</Form.Label>
                             <div id="droppable" className="form-control album-art-drop col-8"></div>
                         </Form.Group>
+                    </div>    
 
-                        <Form.Group className='form-group col-12 notes-row'>
-                            <Form.Label>Notes</Form.Label>
-                            <br />
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                        
+                    <Form.Group className='form-group'>
+                            <Form.Label className="col-2 notes">Notes</Form.Label>
                             <Form.Control 
                                 id="projectNotes" 
-                                className='' 
+                                className='col-9' 
                                 as='textarea' 
                                 rows='3' 
                                 value={this.state.formInputs.projectNotes}
                                 onChange={this.handleChange}
                             />
                         </Form.Group>
-                    </div>
+                        </div>
+                        </div>     
+                  
+                      
+                    
                     <section className="row save-buttons">
                         <div className="col-9"></div>
                         <div className="col-3">

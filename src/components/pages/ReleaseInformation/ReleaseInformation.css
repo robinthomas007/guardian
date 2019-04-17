@@ -2,8 +2,12 @@
 .cover-art label {vertical-align:top; padding-top:5px;}
 			
 .notes-row {margin-left:15px;}
-.notes-row > textarea {vertical-align:top; width:96.5%; height:120px;}
+.notes-row > textarea {vertical-align:top; height:120px;}
 
+label.custom-checkbox {display: inline-block; vertical-align:middle;}
+
+.col-form-label.col-2.tbd {margin-left:30px; margin-right:-20px;}
+.col-3.notes.form-label {vertical-align: top;}
 
 
 	
