@@ -79,58 +79,97 @@ const navList = {
 	}
 };
 
-const MakeUserNavLinks = (props) => {
-	//console.log('MakeUserNavLinks : ' + props.linkText)
-
-	const activeStyle = {color: '#333', backgroundColor: '#F5F5F5'}
-
-	return(
-		<li key={props.index}>
-			<NavLink className="steps" activeStyle={activeStyle} to={{pathname: props.navRoute}} replace>
-				Step <span className="count-circle">{props.index + 1}</span> {props.linkText}
-			</NavLink>
-		</li>
-	)
-};
-
-const MakeAdminNavLinks = (props) => {
-	return(
-		<li key={props.index}>
-			<NavLink to={{pathname: props.navRoute, state: {navID: props.navID}}}>{props.linkText}</NavLink>
-		</li>
-	)
-};
-
-
 class LeftNav extends Component {
 
-	render() {
+    constructor(props) {
+        super(props);
 
+		this.state = {
+
+		}
+		this.handleChange = this.handleNavClick.bind(this);
+		this.getAdminLinks = this.getAdminLinks.bind(this);
+    };
+
+	handleNavClick(link){
+		if(this.state.activeNav !== link) {
+			this.setState( { activeNav : link } )
+		}
+		console.log(this.state.activeNav)
+	}
+
+	getUserLinks() {
+		
+		const activeStyle = {color: '#333', backgroundColor: '#F5F5F5'}
+
+		const stepLinks = Object.keys(navList.steps).map(
+			function(link, i) { 
+				return(
+					<li key={i}>
+
+						<NavLink 
+							className="steps" 
+							activeStyle={activeStyle} 
+							to={{pathname: navList.steps[link].navRoute}} 
+							replace
+							isActive={
+								function(match) {
+									if (!match) {
+										return false;
+									} else {
+										this.handleNavClick(link)
+										return true;
+									}
+								}.bind(this)
+							}
+							>
+								Step <span className="count-circle">{i + 1}</span> {navList.steps[link].linkText}
+						</NavLink>
+
+
+
+					</li>
+				)
+			}.bind(this)
+		);
+		return(stepLinks)
+	}
+
+	getAdminLinks() {
 		const adminLinks = Object.keys(navList.admin).map(
 			function(link, i) { 
-					return(
-						<MakeAdminNavLinks key={i} index={i} linkText={navList.admin[link].linkText} navRoute={navList.admin[link].navRoute} navID={link}/>
-					)
-			}
+				return(
+					<li key={i}>
+						<NavLink 
+							to={{pathname: navList.admin[link].navRoute, state: {activeNav: navList.admin[link]}}}
+							isActive={
+								function(match) {
+									if (!match) {
+										return false;
+									} else {
+										this.handleNavClick(link)
+										return true;
+									}
+								}.bind(this)
+							}	
+						>{navList.admin[link].linkText}</NavLink>
+					</li>
+				)
+			}.bind(this)
 		);
-	
-		const userLinks = Object.keys(navList.steps).map(
-			function(link, i) { 
-					return(
-						<MakeUserNavLinks key={i} index={i} linkText={navList.steps[link].linkText} navRoute={navList.steps[link].navRoute} navID={link}/>
-					)
-			}
-		);
+		return(adminLinks)
+	}
 
+	render() {
 		return(
 			<nav className="left-nav col-2">
 				<section className="fixed-left-nav col-2">
 					<span className="left-nav-logo"></span>
 					<ul id="steps">
-						{userLinks}
+						{this.getUserLinks()}
 					</ul>
 					<ul>
-						{adminLinks}
+						{this.getAdminLinks()}
 					</ul>
 				</section>
 			</nav>

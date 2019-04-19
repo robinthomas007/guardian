@@ -22,6 +22,8 @@ class FindProjectPage extends Component {
 	componentDidMount(props) {
 		const user = JSON.parse(sessionStorage.getItem('user'))
 
+		console.log(user.email)
+
         const fetchHeaders = new Headers(
             {
                 "Content-Type": "application/json",
@@ -29,12 +31,21 @@ class FindProjectPage extends Component {
             }
 		)
 
+		console.log(sessionStorage.getItem('accessToken'))
+
 		const fetchBody = JSON.stringify( {
             "User" : {
-				"email" : user.email,
+				"email" : user.email
 			},
-			searchCriteria : this.state.searchCriteria
-        })
+			"projectSearchCriteria" : {
+				
+			}
+		})
+		
+		console.log('--HEADERS--')
+		console.log(fetchHeaders)
+		console.log('--BODY--')
+		console.log(fetchBody)
 
         fetch ('https://api-dev.umusic.net/guardian/project/search', {
             method : 'POST',
@@ -47,6 +58,9 @@ class FindProjectPage extends Component {
         )
         .then (responseJSON => 
             {
+				console.log('--responseJSON--')
+				console.log(responseJSON)
+
 				this.setState( {searchResults : responseJSON.Projects })
 				this.updateSearchCount(responseJSON.Projects)
             }
@@ -58,6 +72,13 @@ class FindProjectPage extends Component {
 
 	updateSearchCount(projects) {
 		this.setState({searchResultsCount : projects.length})
+	}
+
+
+	handleRowClick = (projectID) => {
+		console.log('------------------------')
+		console.log('Coming Soon: Load The Project with an ID of ' + projectID)
+		console.log('------------------------')
 	}
 
 	renderProjects(projects) {
@@ -80,7 +101,7 @@ class FindProjectPage extends Component {
 		if(projects) {
 			return Object.keys(projects).map(function(project, i) {
 				return(
-					<tr key={i}>
+					<tr key={i} onClick={() => this.handleRowClick(projects[project].projectID)}>
 						<td>{projects[project].projectTitle}</td>
 						<td>{projects[project].projectArtistName}</td>
 						<td>{projects[project].projectReleasingLabel}</td>
@@ -94,7 +115,7 @@ class FindProjectPage extends Component {
 						<td className="status centered">{checkStepStatus(projects[project].isStep6Complete)}</td>
 					</tr>
 				)
-			})
+			}.bind(this))
 		}
 	}
 
@@ -214,5 +235,5 @@ class FindProjectPage extends Component {
 		)
 	}
 }
+
 export default FindProjectPage;
-	

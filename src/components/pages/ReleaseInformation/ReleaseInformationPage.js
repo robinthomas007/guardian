@@ -106,7 +106,7 @@ class ReleaseinformationPage extends Component {
                                     className='col-form-label dropdown col-3' 
                                     value={this.state.formInputs.projectType}
                                     onChange={this.handleChange}>
-                                        <option value="0" selected>Album (Default)</option>
+                                        <option value="0">Album (Default)</option>
                                         <option value="1">Collection</option>
                                         <option value="2">Single</option>
 
@@ -123,7 +123,7 @@ class ReleaseinformationPage extends Component {
                                     value={this.state.formInputs.projectReleasingLabel}
                                     onChange={this.handleChange}
                                 >
-                                    <option value="2818" selected>User Primary Label (Default)</option>
+                                    <option value="18">User Primary Label (Default)</option>
                                     <option value="1">User Label Option 2</option>
                                     <option value="2">User Label Option 3</option>
                                   </Form.Control>
