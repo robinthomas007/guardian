@@ -49,6 +49,8 @@ export default withAuth(class Content extends Component {
 
   componentDidMount() {
 
+    console.log(sessionStorage.getItem('idtoken'))
+
     //sessionStorage.setItem('accessToken', this.props.auth.getAccessToken())
     //sessionStorage.setItem('idtoken', this.props.auth.getIdToken())
     //sessionStorage.setItem('user', JSON.stringify(this.props.auth.getUser()))
@@ -70,7 +72,8 @@ export default withAuth(class Content extends Component {
             <SecureRoute path="/blockingPolicies" component={BlockingPoliciesPage}/>
             <SecureRoute path="/newProject" component={ReleaseInformationPage} />
             <SecureRoute path="/audioFiles" component={AudioFilesPage} />
-            <SecureRoute path="/reviewSubmit" component={ReviewAndSubmitPage}/>
+            <SecureRoute path="/reviewSubmit" exact component={ReviewAndSubmitPage}/>
+            <SecureRoute path="/reviewSubmit/:projectID" component={ReviewAndSubmitPage}/>
             <SecureRoute path="/findProject" component={FindProject}/>
           </div>
         </div>

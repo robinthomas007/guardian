@@ -31,7 +31,7 @@ class PageHeader extends Component {
             )
         } else {
             return(
-                <h1>{mockData.project.projectTitle}</h1>
+                <h1></h1>
             )
         }
     }

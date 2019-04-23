@@ -91,6 +91,7 @@ class LeftNav extends Component {
 		this.getAdminLinks = this.getAdminLinks.bind(this);
     };
 
+
 	handleNavClick(link){
 		if(this.state.activeNav !== link) {
 			this.setState( { activeNav : link } )
@@ -126,8 +127,6 @@ class LeftNav extends Component {
 								Step <span className="count-circle">{i + 1}</span> {navList.steps[link].linkText}
 						</NavLink>
 
-
-
 					</li>
 				)
 			}.bind(this)
@@ -161,15 +160,18 @@ class LeftNav extends Component {
 	}
 
 	render() {
+		const userLinks = this.getUserLinks()
+		const adminLinks = this.getAdminLinks()
+
 		return(
 			<nav className="left-nav col-2">
 				<section className="fixed-left-nav col-2">
 					<span className="left-nav-logo"></span>
 					<ul id="steps">
-						{this.getUserLinks()}
+						{userLinks}
 					</ul>
 					<ul>
-						{this.getAdminLinks()}
+						{adminLinks}
 					</ul>
 				</section>
 			</nav>

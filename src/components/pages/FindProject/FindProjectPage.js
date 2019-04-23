@@ -37,7 +37,7 @@ class FindProjectPage extends Component {
             "User" : {
 				"email" : user.email
 			},
-			"projectSearchCriteria" : {
+			"SearchCriteria" : {
 				
 			}
 		})
@@ -79,6 +79,8 @@ class FindProjectPage extends Component {
 		console.log('------------------------')
 		console.log('Coming Soon: Load The Project with an ID of ' + projectID)
 		console.log('------------------------')
+
+		this.props.history.push('/reviewSubmit/' + projectID)
 	}
 
 	renderProjects(projects) {
