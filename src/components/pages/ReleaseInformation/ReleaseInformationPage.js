@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Table, Grid, Button, Form } from 'react-bootstrap'; 
+import {Table, Grid, Button, Form } from 'react-bootstrap'; 
 import PageHeader from '../PageHeader/PageHeader'; 
 import './ReleaseInformation.css';
 
@@ -135,9 +135,9 @@ art
                                     value={this.state.formInputs.projectReleasingLabel}
                                     onChange={this.handleChange}
                                 >
-                                    <option value="2818">User Primary Label (Default)</option>
-                                    <option value="1">User Label Option 2</option>
-                                    <option value="2">User Label Option 3</option>
+                                    <option value="114">Universal Music</option>
+                                    <option value="3">Abbey Audio</option>
+                                    <option value="1">A&M</option>
                                   </Form.Control>
                             </Form.Group>
 
