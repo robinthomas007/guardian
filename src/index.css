@@ -35,7 +35,7 @@
 	.custom-checkbox input:checked ~ .static-checkmark:after {display: block;} /* Show the checkmark when checked */
 	.custom-checkbox .static-checkmark:after {left: 9px;top: 5px; width: 5px; height: 10px; border: solid #666; border-width: 0 3px 3px 0; -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); transform: rotate(45deg);} /* Styles the checkmark */
 	
-
+	.dropdown {padding:0px 8px !important;}
 
 	/* Custom Default Links*/
 	a {color:#01579b;}
