@@ -66,19 +66,10 @@ class ReleaseinformationPage extends Component {
                <Form>
                     <div className="row">
                     <div className="col-3">
-                       
-</div>
-<div className="col-8">
-<div className="col-7">
-fields
-</div>
-<div className="col-4">
-art
-</div>
-</div>
-
-</div>
-                        <div className="col-8">
+            </div>
+        </div>
+        <div class="row col-12">
+        <div className="col-8">
                         <Form.Control 
                                 type = 'hidden'
                                 id='projectID'
@@ -165,31 +156,29 @@ art
                             
                               
                             </Form.Group>
-                          
-                    </div>
-
-                    <div class="col-4">
-                        <Form.Group className="form-group cover-art">
-                            <Form.Label className="col-form-label col-3">Cover Art</Form.Label>
-                            <div id="droppable" className="form-control album-art-drop col-8"></div>
-                        </Form.Group>
-                    </div>    
-
-                
-                    <div class="row">
-                        <div class="col-12">
-                        
-                    <Form.Group className='form-group'>
-                            <Form.Label className="col-2 notes">Notes</Form.Label>
+                            <Form.Group className='form-group'>
+                            <Form.Label className="col-3 notes">Notes</Form.Label>
                             <Form.Control 
                                 id="projectNotes" 
-                                className='col-9' 
+                                className='col-8' 
                                 as='textarea' 
                                 rows='3' 
                                 value={this.state.formInputs.projectNotes}
                                 onChange={this.handleChange}
                             />
                         </Form.Group>
+                    </div>
+                    <div class="col-4">
+                        <Form.Group className="form-group cover-art">
+                            <Form.Label className="col-form-label col-3">Cover Art</Form.Label>
+                            <div id="droppable" className="form-control album-art-drop col-8"></div>
+                        </Form.Group>
+                    </div> 
+        </div>
+        <div class="row notes-row no-gutters">
+                        <div class="col-12">
+                        
+                   
                         </div>
                         </div>     
                   
