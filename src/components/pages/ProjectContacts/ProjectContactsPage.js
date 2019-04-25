@@ -78,6 +78,9 @@ class ProjectContactsPage extends Component {
 
                 //clear the local storage
                 localStorage.removeItem('projectData')
+
+                alert('Your Project has been saved!')
+
             }
         )
         .catch(
