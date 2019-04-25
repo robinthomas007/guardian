@@ -77,7 +77,7 @@ class ProjectContactsPage extends Component {
                 console.log(responseJSON)
 
                 //clear the local storage
-                //localStorage.removeItem('projectData')
+                localStorage.removeItem('projectData')
             }
         )
         .catch(
