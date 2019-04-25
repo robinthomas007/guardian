@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './PageHeader.css'
+import { withRouter } from "react-router";
 
 const mockData = require('../../../mockData.json');
 
@@ -21,6 +22,8 @@ class PageHeader extends Component {
 
         //clear the local storage
         localStorage.removeItem('projectData')
+
+        this.props.history.push('/findProject')
 
     }
 
@@ -59,4 +62,4 @@ class PageHeader extends Component {
     }
 };
 
-export default PageHeader;
+export default withRouter(PageHeader);

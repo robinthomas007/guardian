@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PageHeader from '../PageHeader/PageHeader';
 import './FindProject.css';
 import { AST_This } from 'terser';
 
@@ -76,10 +75,6 @@ class FindProjectPage extends Component {
 
 
 	handleRowClick = (projectID) => {
-		console.log('------------------------')
-		console.log('Coming Soon: Load The Project with an ID of ' + projectID)
-		console.log('------------------------')
-
 		this.props.history.push('/reviewSubmit/' + projectID)
 	}
 

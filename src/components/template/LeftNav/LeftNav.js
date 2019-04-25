@@ -56,13 +56,11 @@ const navList = {
 		newProject : {
 			linkText : 'New Project',
 			navRoute : '/newProject',
-			userAccess : 'admin'
 		},
 	
 		findProject : {
 			linkText : 'Find a Project',
 			navRoute : '/findProject',
-			userAccess : 'admin'
 		},
 	
 		userAdmin : {
@@ -74,7 +72,6 @@ const navList = {
 		recentProjects : {
 			linkText : 'Recent Projects',
 			navRoute : '/recentProjects',
-			userAccess : 'admin'
 		}
 	}
 };
@@ -85,9 +82,10 @@ class LeftNav extends Component {
         super(props);
 
 		this.state = {
-
+			showSteps : true,
+			activeNav : ''
 		}
-		this.handleChange = this.handleNavClick.bind(this);
+		this.handleNavClick = this.handleNavClick.bind(this);
 		this.getAdminLinks = this.getAdminLinks.bind(this);
     };
 
@@ -96,7 +94,6 @@ class LeftNav extends Component {
 		if(this.state.activeNav !== link) {
 			this.setState( { activeNav : link } )
 		}
-		console.log(this.state.activeNav)
 	}
 
 	getUserLinks() {
@@ -159,21 +156,34 @@ class LeftNav extends Component {
 		return(adminLinks)
 	}
 
-	render() {
-		const userLinks = this.getUserLinks()
-		const adminLinks = this.getAdminLinks()
+	getStepsClass() {
+		let stepsStyle = {}
 
+		if(this.state.activeNav === 'findProject' || this.state.activeNav === 'userAdmin') {
+			stepsStyle = {display : 'none'}
+		}
+
+		return(stepsStyle)
+	}
+
+	getNav() {
+		return(
+			<section className="fixed-left-nav col-2">
+				<span className="left-nav-logo"></span>
+				<ul id="NavSteps" style={this.getStepsClass()}>
+					{this.getUserLinks()}
+				</ul>
+				<ul>
+					{this.getAdminLinks()}
+				</ul>
+			</section>
+		)
+	}
+
+	render() {
 		return(
 			<nav className="left-nav col-2">
-				<section className="fixed-left-nav col-2">
-					<span className="left-nav-logo"></span>
-					<ul id="steps">
-						{userLinks}
-					</ul>
-					<ul>
-						{adminLinks}
-					</ul>
-				</section>
+				{this.getNav()}
 			</nav>
 		)
 	}
