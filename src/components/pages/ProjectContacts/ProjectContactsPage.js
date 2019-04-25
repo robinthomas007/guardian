@@ -79,7 +79,8 @@ class ProjectContactsPage extends Component {
                 //clear the local storage
                 localStorage.removeItem('projectData')
 
-                alert('Your Project has been saved!')
+                //alert('Your Project has been saved!')
+                this.props.history.push('/audioFiles')
 
             }
         )
