@@ -68,7 +68,7 @@ class ReleaseinformationPage extends Component {
                     <div className="col-3">
             </div>
         </div>
-        <div class="row col-12">
+        <div className="row col-12">
         <div className="col-8">
                         <Form.Control 
                                 type = 'hidden'
@@ -168,15 +168,15 @@ class ReleaseinformationPage extends Component {
                             />
                         </Form.Group>
                     </div>
-                    <div class="col-4">
+                    <div className="col-4">
                         <Form.Group className="form-group cover-art">
                             <Form.Label className="col-form-label col-3">Cover Art</Form.Label>
                             <div id="droppable" className="form-control album-art-drop col-8"></div>
                         </Form.Group>
                     </div> 
         </div>
-        <div class="row notes-row no-gutters">
-                        <div class="col-12">
+        <div className="row notes-row no-gutters">
+                        <div className="col-12">
                         
                    
                         </div>
