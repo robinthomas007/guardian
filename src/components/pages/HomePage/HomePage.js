@@ -9,7 +9,7 @@ class HomePage extends Component {
 
     login = () => {
         return(
-            this.props.history.push('/releaseInformation')
+            this.props.history.push('/findProject')
         )
         
     }
@@ -24,7 +24,7 @@ class HomePage extends Component {
                     <ul>
                         <li><a href="">Help Guide</a></li>
                         <li><a href="">Request Access</a></li>
-                        <li><a href="/releaseinformation">Log In</a></li>
+                        <li><a href="/releaseInformation">Log In</a></li>
                     </ul>
                 </nav>
     
@@ -34,20 +34,6 @@ class HomePage extends Component {
                     <span>
                         <button className="access btn">Request Access</button>
                         <button className="log-in btn" onClick={this.login}>Log In</button>
-
-                        {/*
-
-                        this.props.history.push('/releaseinformation')
-
-
-                        <Button
-                            onClick={this.setRedirect}
-                            className="log-in btn"
-                        >
-                            Log In
-                        </Button>
-                        */}
-    
                     </span>
                 </section>
     
