@@ -34,7 +34,7 @@ class PageHeader extends Component {
             )
         } else {
             return(
-                <h1></h1>
+                <h1>New Project</h1>
             )
         }
     }

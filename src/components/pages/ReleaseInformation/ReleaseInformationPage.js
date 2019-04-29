@@ -51,6 +51,11 @@ class ReleaseinformationPage extends Component {
 
     render() {
 
+        const user = JSON.parse(sessionStorage.getItem('user'))
+        
+        console.log("user")
+        console.log(user)
+
         return (
             <section className="page-container h-100">
 
@@ -63,14 +68,14 @@ class ReleaseinformationPage extends Component {
                     </div>
                 </div>
 
-               <Form>
+                <Form>
                     <div className="row">
-                    <div className="col-3">
-            </div>
-        </div>
-        <div class="row col-12">
-        <div className="col-8">
-                        <Form.Control 
+                        <div className="col-3"></div>
+                    </div>
+        
+                    <div className="row col-12">
+                        <div className="col-8">
+                            <Form.Control 
                                 type = 'hidden'
                                 id='projectID'
                                 value={this.state.formInputs.projectID}
@@ -102,22 +107,20 @@ class ReleaseinformationPage extends Component {
                             
                             <Form.Group>
                                 <Form.Label className='col-form-label col-3'>Project Type<span className="required-ind">*</span></Form.Label>
-                                
                                 <Form.Control 
                                     id="projectType" 
                                     as="select" 
                                     className='col-form-label dropdown col-3' 
                                     value={this.state.formInputs.projectType}
-                                    onChange={this.handleChange}>
-                                        <option value="0">Album (Default)</option>
-                                        <option value="1">Collection</option>
-                                        <option value="2">Single</option>
-
-                                        
+                                    onChange={this.handleChange}
+                                >
+                                    <option value="0">Album (Default)</option>
+                                    <option value="1">Collection</option>
+                                    <option value="2">Single</option>
                                 </Form.Control>
                             </Form.Group>
 
-                              <Form.Group>
+                            <Form.Group>
                                 <Form.Label className='col-form-label col-3'>Releasing Label<span className="required-ind">*</span></Form.Label>
                                 <Form.Control 
                                     id="projectReleasingLabel" 
@@ -129,11 +132,11 @@ class ReleaseinformationPage extends Component {
                                     <option value="114">Universal Music</option>
                                     <option value="3">Abbey Audio</option>
                                     <option value="1">A&M</option>
-                                  </Form.Control>
+                                </Form.Control>
                             </Form.Group>
 
                             <Form.Group>
-                            <Form.Label className="col-form-label col-3">Release Date<span className="required-ind">*</span></Form.Label>
+                                <Form.Label className="col-form-label col-3">Release Date<span className="required-ind">*</span></Form.Label>
                                     <input 
                                         id="projectReleaseDate" 
                                         className='form-control col-3' 
@@ -143,47 +146,42 @@ class ReleaseinformationPage extends Component {
                                     />
 
                                 <Form.Label className="col-form-label col-2 tbd">Release TBD</Form.Label>
-                            
-                            <label className="custom-checkbox"> 		
-                                            <input id='projectReleaseDateTBD' 
-                                                className='form-control col-3' 
-                                                type='checkbox' 
-                                                value={this.state.formInputs.projectReleaseDateTBD}
-                                                onChange={this.handleChange} />
-                                            <span className="checkmark ">				
-                                            </span>
-                                            </label>
-                            
-                              
+                                <label className="custom-checkbox"> 		
+                                    <input id='projectReleaseDateTBD' 
+                                        className='form-control col-3' 
+                                        type='checkbox' 
+                                        value={this.state.formInputs.projectReleaseDateTBD}
+                                        onChange={this.handleChange}
+                                    />
+                                    <span className="checkmark "></span>
+                                </label>
                             </Form.Group>
+
                             <Form.Group className='form-group'>
-                            <Form.Label className="col-3 notes">Notes</Form.Label>
-                            <Form.Control 
-                                id="projectNotes" 
-                                className='col-8' 
-                                as='textarea' 
-                                rows='3' 
-                                value={this.state.formInputs.projectNotes}
-                                onChange={this.handleChange}
-                            />
-                        </Form.Group>
-                    </div>
-                    <div class="col-4">
-                        <Form.Group className="form-group cover-art">
-                            <Form.Label className="col-form-label col-3">Cover Art</Form.Label>
-                            <div id="droppable" className="form-control album-art-drop col-8"></div>
-                        </Form.Group>
-                    </div> 
-        </div>
-        <div class="row notes-row no-gutters">
-                        <div class="col-12">
-                        
-                   
+                                <Form.Label className="col-3 notes">Notes</Form.Label>
+                                <Form.Control 
+                                    id="projectNotes" 
+                                    className='col-8' 
+                                    as='textarea' 
+                                    rows='3' 
+                                    value={this.state.formInputs.projectNotes}
+                                    onChange={this.handleChange}
+                                />
+                            </Form.Group>
                         </div>
-                        </div>     
-                  
-                      
+                            
+                        <div className="col-4">
+                            <Form.Group className="form-group cover-art">
+                                <Form.Label className="col-form-label col-3">Cover Art</Form.Label>
+                                <div id="droppable" className="form-control album-art-drop col-8"></div>
+                            </Form.Group>
+                        </div> 
+                    </div>
                     
+                    <div className="row notes-row no-gutters">
+                        <div className="col-12"></div>
+                    </div>     
+                
                     <section className="row save-buttons">
                         <div className="col-9"></div>
                         <div className="col-3">

@@ -21,10 +21,15 @@ export default withAuth(class Content extends Component {
         messages: null,
         accesstoken: '',
         idtoken: '',
-        user : {}
+        user : {},
+        isAdmin : false,
+        userLoaded : false
+
     }
+    this.getUserData = this.getUserData.bind(this);
     this.checkAuthentication();
   };
+
 
   async checkAuthentication() {
       const accesstoken = await this.props.auth.getAccessToken();
@@ -33,37 +38,75 @@ export default withAuth(class Content extends Component {
 
       if (accesstoken !== this.state.accesstoken) {
         this.setState({ accesstoken });
-        sessionStorage.setItem('accessToken', accesstoken)
+
       }
 
       if (idtoken !== this.state.idtoken) {
         this.setState({ idtoken });
-        sessionStorage.setItem('idtoken', idtoken)
+
       }
 
       if (user !== this.state.user) {
         this.setState({ user });
-        sessionStorage.setItem('user', JSON.stringify(user))
       }
+
+      sessionStorage.setItem('idtoken', idtoken)
+      sessionStorage.setItem('accessToken', accesstoken)
+      sessionStorage.setItem('user', JSON.stringify(user))
+
+      this.setState( {user : user } );
+      this.setState( {userLoaded : true } );
+
+      const userData = this.getUserData();
   }
-
-  componentDidMount() {
-
-    console.log(sessionStorage.getItem('idtoken'))
-
-    //sessionStorage.setItem('accessToken', this.props.auth.getAccessToken())
-    //sessionStorage.setItem('idtoken', this.props.auth.getIdToken())
-    //sessionStorage.setItem('user', JSON.stringify(this.props.auth.getUser()))
+  
+  getUserData(userEmail) {
+      const user = JSON.parse(sessionStorage.getItem('user'))
+      const fetchHeaders = new Headers(
+        {
+            "Content-Type" : "application/json",
+            "Authorization" : sessionStorage.getItem('accessToken')
+        }
+      )
+  
+      const fetchBody = JSON.stringify( {
+          "User" : {
+            "email" : this.state.user.email
+          }
+      })
+      
+      fetch ('https://api-dev.umusic.net/guardian/login', {
+          method : 'POST',
+          headers : fetchHeaders,
+          body : fetchBody
+      }).then (response => 
+          {
+            return(response.json());
+          }
+      )
+      .then (userJSON => 
+          {
+            const newUserObj = {...userJSON, ...user};
+            sessionStorage.setItem('user', JSON.stringify(newUserObj))
+            this.setState({isAdmin : userJSON.IsAdmin})
+          }
+      )
+      .catch(
+          error => console.error(error)
+      );
   }
 
   render() {
+
+    if(this.state.userLoaded) {
       return (
         <div className="row h-100 no-gutters">
-          <LeftNav />           
+
+          <LeftNav isAdmin={this.state.isAdmin}/>
 
           <div className="content col-10">
             
-            <TopNav user={JSON.parse(sessionStorage.getItem('user'))}/>
+            <TopNav userObj={this.state.user}/>
 
             <SecureRoute path="/releaseInformation" component={ReleaseInformationPage}/>
             <SecureRoute path="/projectContacts" component={ProjectContactsPage}/>
@@ -78,6 +121,11 @@ export default withAuth(class Content extends Component {
           </div>
         </div>
       );
+    } else {
+      return (
+        <div className="row h-100 no-gutters"></div>
+      )
     }
+  }
 });
 

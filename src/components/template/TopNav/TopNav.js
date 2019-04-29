@@ -6,7 +6,6 @@ import { POINT_CONVERSION_COMPRESSED } from 'constants';
 
 const mockData = require('../../../mockData.json');
 const user = JSON.parse(sessionStorage.getItem('user'))
-let testVar = '123'
 
 
 export default withAuth(class TopNav extends Component {
@@ -19,6 +18,12 @@ export default withAuth(class TopNav extends Component {
                 email : '',
                 name : ''
             },
+
+            userObj : this.props.userObj,
+
+            userName : '',
+            userEmail : '',
+
             ready : false,
             labels : []
         }
@@ -26,7 +31,7 @@ export default withAuth(class TopNav extends Component {
         //this.loadUserToState = this.loadUserToState.bind(this);
         this.getUserNameFromState = this.getUserNameFromState.bind(this);
         this.handleLogoutClick = this.handleLogoutClick.bind(this);
-
+        this.setUserLabels = this.setUserLabels.bind(this);
     }
 
     handleLogoutClick = (e) => {
@@ -75,10 +80,11 @@ export default withAuth(class TopNav extends Component {
 
         const fetchBody = JSON.stringify( {
             User : {
-                email : JSON.parse(sessionStorage.getItem('user')).email
+                email : this.props.userObj.email
             }
         })
 
+        
         fetch ('https://api-dev.umusic.net/guardian/login', {
             method : 'POST',
             headers : fetchHeaders,
@@ -90,7 +96,13 @@ export default withAuth(class TopNav extends Component {
         )
         .then (userJSON => 
             {
-                this.setUserLabelsSessionData(userJSON.ReleasingLabels)
+
+                console.log(userJSON);
+                console.log('----------------------');
+
+                console.log(userJSON.ReleasingLabels);
+
+                //this.setUserLabelsSessionData(userJSON.ReleasingLabels)
                 //this.setState({userName : JSON.parse(sessionStorage.getItem('user')).name})
             }
         )
@@ -101,11 +113,18 @@ export default withAuth(class TopNav extends Component {
 
     componentWillMount() {
         this.setState({user : this.props.user})
-        
     }
 
     componentDidMount() {
-        this.setState( {user : JSON.parse(sessionStorage.getItem('user'))} )
+        const user = JSON.parse(sessionStorage.getItem('user'));
+
+        if(user !== this.state.user) {
+           // this.setState( {user : user} )
+        }
+
+        //this.setUserLabels()
+
+        //this.setUserLabels()
     }
 
     getUserNameFromState() {
@@ -125,7 +144,7 @@ export default withAuth(class TopNav extends Component {
                 <nav className="top-nav int">
                     <ul>
                         <li><a className="help" href="#" onClick={this.handleHelpClick}>Help Guide</a></li>
-                        <li>Welcome, {this.getUserNameFromState()}</li>
+                        <li>Welcome, {this.state.userObj.name}</li>
                         <li><a href="#" onClick={this.handleLogoutClick}>Log Out</a></li>
                     </ul>
                 </nav>

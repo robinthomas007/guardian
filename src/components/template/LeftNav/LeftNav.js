@@ -52,6 +52,8 @@ const navList = {
 		},
 	},
 
+
+
 	admin : {
 		newProject : {
 			linkText : 'New Project',
@@ -66,7 +68,7 @@ const navList = {
 		userAdmin : {
 			linkText : 'User Administration',
 			navRoute : '/userAdmin',
-			userAccess : 'admin'
+			adminAccess : true
 		},
 
 		recentProjects : {
@@ -83,12 +85,14 @@ class LeftNav extends Component {
 
 		this.state = {
 			showSteps : true,
-			activeNav : ''
+			activeNav : '',
+			user : this.props.user
 		}
 		this.handleNavClick = this.handleNavClick.bind(this);
 		this.getAdminLinks = this.getAdminLinks.bind(this);
     };
 
+	
 
 	handleNavClick(link){
 		if(this.state.activeNav !== link) {
@@ -134,23 +138,26 @@ class LeftNav extends Component {
 	getAdminLinks() {
 		const adminLinks = Object.keys(navList.admin).map(
 			function(link, i) { 
-				return(
-					<li key={i}>
-						<NavLink 
-							to={{pathname: navList.admin[link].navRoute, state: {activeNav: navList.admin[link]}}}
-							isActive={
-								function(match) {
-									if (!match) {
-										return false;
-									} else {
-										this.handleNavClick(link)
-										return true;
-									}
-								}.bind(this)
-							}	
-						>{navList.admin[link].linkText}</NavLink>
-					</li>
-				)
+				if(!navList.admin[link].adminAccess || (navList.admin[link].adminAccess && this.props.isAdmin)) {
+					return(
+						<li key={i}>
+							<NavLink 
+								to={{pathname: navList.admin[link].navRoute, state: {activeNav: navList.admin[link]}}}
+								isActive={
+									function(match) {
+										if (!match) {
+											return false;
+										} else {
+											this.handleNavClick(link)
+											return true;
+										}
+									}.bind(this)
+								}	
+							>{navList.admin[link].linkText}</NavLink>
+						</li>
+					)
+				}
+
 			}.bind(this)
 		);
 		return(adminLinks)
@@ -167,6 +174,7 @@ class LeftNav extends Component {
 	}
 
 	getNav() {
+
 		return(
 			<section className="fixed-left-nav col-2">
 				<span className="left-nav-logo"></span>
