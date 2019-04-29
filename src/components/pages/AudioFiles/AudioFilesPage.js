@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PageHeader from '../PageHeader/PageHeader';
-import {Table, Grid, Button, Form } from 'react-bootstrap'; 
+import {Table, Grid, Button, Form, Modal } from 'react-bootstrap'; 
+import HaveAudioModal from '../../modals/HaveAudioModal';
 
 import './AudioFiles.css';
 
@@ -12,6 +13,7 @@ class AudioFilesPage extends Component {
 
         const AudioVideoDataHeader = () => {
             return(
+                
                 <thead>
                     <tr>
                         <th className="centered">#</th>
@@ -50,7 +52,7 @@ class AudioFilesPage extends Component {
 
         return(
             <section className="page-container h-100">
-                
+                <HaveAudioModal />
                 <PageHeader />
 
                 <div className="row no-gutters step-description">
