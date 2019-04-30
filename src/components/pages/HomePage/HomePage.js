@@ -24,7 +24,7 @@ class HomePage extends Component {
                     <ul>
                         <li><a href="">Help Guide</a></li>
                         <li><a href="">Request Access</a></li>
-                        <li><a href="/releaseInformation">Log In</a></li>
+                        <li><a href="" onClick={this.login}>Log In</a></li>
                     </ul>
                 </nav>
     
