@@ -136,6 +136,9 @@ class LeftNav extends Component {
 	}
 
 	getAdminLinks() {
+
+		const activeStyle = {color: '#333', backgroundColor: '#F5F5F5'}
+
 		const adminLinks = Object.keys(navList.admin).map(
 			function(link, i) { 
 				if(!navList.admin[link].adminAccess || (navList.admin[link].adminAccess && this.props.isAdmin)) {
@@ -143,6 +146,7 @@ class LeftNav extends Component {
 						<li key={i}>
 							<NavLink 
 								to={{pathname: navList.admin[link].navRoute, state: {activeNav: navList.admin[link]}}}
+								activeStyle={activeStyle} 
 								isActive={
 									function(match) {
 										if (!match) {
