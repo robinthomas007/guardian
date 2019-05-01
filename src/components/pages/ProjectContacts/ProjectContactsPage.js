@@ -14,7 +14,7 @@ class ProjectContactsPage extends Component {
             formInputs : {
                 "projectPrimaryContact" : user.name, 
                 "projectPrimaryContactEmail" : user.email,
-                "projectSecurity" : '', 
+                "projectSecurityID" : '1', 
                 "projectAdditionalContacts" : ''
             }
         }
@@ -112,12 +112,12 @@ class ProjectContactsPage extends Component {
                             <Form.Group>
                                 <Form.Label className='col-form-label col-2'>Project Security <span className='required-ind'>*</span></Form.Label>
                                 <Form.Control 
-                                    id='projectSecurity' 
+                                    id='projectSecurityID' 
                                     as='select' 
                                     className='col-form-label dropdown col-2' 
-                                    value={this.state.formInputs.projectSecurity}
+                                    value={this.state.formInputs.projectSecurityID}
                                     onChange={this.handleChange}>
-                                        <option value="0" selected>Private (Viewable By You)</option>
+                                        <option value="0">Private (Viewable By You)</option>
                                         <option value="1">Public (Viewable By All Label Users)</option>
                                 </Form.Control>
                             </Form.Group>
