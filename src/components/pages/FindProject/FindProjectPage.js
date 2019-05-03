@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './FindProject.css';
 import { AST_This } from 'terser';
+import IntroModal from '../../modals/IntroModal';
 
 class FindProjectPage extends Component {
   
@@ -123,7 +124,9 @@ class FindProjectPage extends Component {
         }
 		
 		return(
+
             <div>
+				<IntroModal />
 				<section className="page-container">
 					<div className="row">
 						<div className="col 4">
@@ -171,7 +174,6 @@ class FindProjectPage extends Component {
 						<a className="btn btn-secondary dropdown-toggle" href="#" role="button" id="viewCountdropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						10
 						</a>
-
 						<div className="dropdown-menu" aria-labelledby="viewCountdropdown">
 						<a className="dropdown-item" href="#">10</a>
 						<a className="dropdown-item" href="#">25</a>
@@ -206,7 +208,7 @@ class FindProjectPage extends Component {
 				</ul>
 
 			
-				<table className="table">
+				<table className="table table-hover">
 					<thead>
 						<tr>
 							<th>Project Title</th>
