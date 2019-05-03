@@ -37,7 +37,7 @@ class HaveAudioModal extends Component {
   render() {
     return (
       <>
-        <Modal show={this.state.show} onHide={this.handleClose}>
+        <Modal id='HaveAudioModal' show={this.state.show} onHide={this.handleClose}>
           <Modal.Header>
             <Modal.Title></Modal.Title>
           </Modal.Header>
