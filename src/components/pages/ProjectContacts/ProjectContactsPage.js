@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {Table, Grid, Button, Form } from 'react-bootstrap'; 
 import PageHeader from '../PageHeader/PageHeader';
 import './ProjectContacts.css';
-
+import { withRouter } from 'react-router-dom';
 
 class ProjectContactsPage extends Component {
     constructor(props) {
@@ -173,4 +173,4 @@ class ProjectContactsPage extends Component {
     }
 };
 
-export default ProjectContactsPage;
+export default withRouter(ProjectContactsPage);

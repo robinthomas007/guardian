@@ -121,9 +121,11 @@ class FindProjectPage extends Component {
         const saveAndContinue = () => {
             alert('Save Contacts and Continue')
         }
-		
+
 		return(
             <div>
+	
+
 				<section className="page-container">
 					<div className="row">
 						<div className="col 4">
@@ -206,7 +208,7 @@ class FindProjectPage extends Component {
 				</ul>
 
 			
-				<table className="table">
+				<table className="table table-hover">
 					<thead>
 						<tr>
 							<th>Project Title</th>

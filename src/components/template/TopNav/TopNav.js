@@ -140,6 +140,7 @@ export default withAuth(class TopNav extends Component {
     }
 
     render() {
+        
             return(
                 <nav className="top-nav int">
                     <ul>

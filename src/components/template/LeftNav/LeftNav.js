@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { BrowserRouter as Route, NavLink } from "react-router-dom";
 import './LeftNav.css'
 
-const mockUserAccess = 'admin';
-
 const navList = {
 
 	steps : {
@@ -51,8 +49,6 @@ const navList = {
 			userAccess : 'user'
 		},
 	},
-
-
 
 	admin : {
 		newProject : {

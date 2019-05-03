@@ -57,10 +57,16 @@ export default withAuth(class Content extends Component {
       this.setState( {user : user } );
       this.setState( {userLoaded : true } );
 
-      const userData = this.getUserData();
+
+      if(this.state.userLoaded) {
+        const userData = this.getUserData();
+      }
+
+      //console.log('userData')
+      //console.log(userData)
   }
   
-  getUserData(userEmail) {
+  getUserData() {
       const user = JSON.parse(sessionStorage.getItem('user'))
       const fetchHeaders = new Headers(
         {
@@ -83,15 +89,21 @@ export default withAuth(class Content extends Component {
           {
             return(response.json());
           }
-      )
-      .then (userJSON => 
+      ).then (userJSON => 
           {
             const newUserObj = {...userJSON, ...user};
-            sessionStorage.setItem('user', JSON.stringify(newUserObj))
+
             this.setState({isAdmin : userJSON.IsAdmin})
+            this.setState({user : newUserObj})
+            console.log(newUserObj)
+            
+            //sessionStorage.removeItem('user')
+            sessionStorage.setItem('user', JSON.stringify(newUserObj))
+
           }
-      )
-      .catch(
+      ).then ( 
+        console.log(' -aaa- ' + sessionStorage.getItem('user'))
+      ).catch(
           error => console.error(error)
       );
   }
@@ -108,8 +120,8 @@ export default withAuth(class Content extends Component {
             
             <TopNav userObj={this.state.user}/>
 
-            <SecureRoute path="/releaseInformation" component={ReleaseInformationPage}/>
-            <SecureRoute path="/projectContacts" component={ProjectContactsPage}/>
+            <SecureRoute path="/releaseInformation" render={ () => ( <ReleaseInformationPage user={this.state.user} />) } />
+            <SecureRoute path="/projectContacts"  render={ () => ( <ProjectContactsPage user={this.state.user} />) } />
             <SecureRoute path="/trackInformation" component={TrackInformationPage}/>
             <SecureRoute path="/territorialRights" component={TerritorialRightsPage}/>
             <SecureRoute path="/blockingPolicies" component={BlockingPoliciesPage}/>

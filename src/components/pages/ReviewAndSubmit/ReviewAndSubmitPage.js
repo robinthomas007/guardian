@@ -47,7 +47,11 @@ class ReviewAndSubmitPage extends Component {
             }
         )
         .then (responseJSON => 
+
+
+
             {
+                console.log('WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW')
                 console.log(responseJSON)
                 this.setState({ projectTitle : responseJSON.Project.projectTitle })
                 this.setState({ projectArtistName : responseJSON.Project.projectArtistName })

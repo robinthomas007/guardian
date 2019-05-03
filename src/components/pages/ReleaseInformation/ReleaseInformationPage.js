@@ -2,8 +2,82 @@ import React, { Component } from 'react';
 import {Table, Grid, Button, Form } from 'react-bootstrap'; 
 import PageHeader from '../PageHeader/PageHeader'; 
 import './ReleaseInformation.css';
+import { withRouter } from 'react-router-dom';
+import Cookies from 'universal-cookie';
+import UUID from 'uuid';
 
 class ReleasingLabelsInput extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            user : this.props.user,
+            value : this.props.value,
+            onChange : this.props.onChange,
+        }
+
+
+        this.getReleasingLabelOptions = this.getReleasingLabelOptions.bind(this);
+    }
+
+    getReleasingLabelOptions() {
+
+        let labelOptions = ''
+        let defaultLabelID = ''
+        if(this.props.user && this.props.user.ReleasingLabels) {
+            labelOptions = this.props.user.ReleasingLabels.map( (label, i) =>
+                <option key={i} value={label.id}>{label.name}</option>
+            )
+        }
+        console.log('defaultLabelID')
+        console.log(defaultLabelID)
+
+        return(labelOptions)
+    }
+
+    componentDidMount() {
+        if(this.props.user && this.props.user.ReleasingLabels) {
+            //this.handleStateUpdate('projectReleasingLabelID', this.props.user.ReleasingLabels[0].id)
+        }
+    }
+
+    render() {
+
+        const cookies = new Cookies();
+        const todaysDate = new Date();
+        const futureDate = new Date(todaysDate.getFullYear() + 100, todaysDate.getMonth(), todaysDate.getDate())
+        
+        const uuidv4 = require('uuid/v4');
+        //alert('sessionID ' + uuidv4()  + 'transactionID  ' + uuidv4()  )
+
+        if(!cookies.get('guardianShowLoginModal')) {
+            //set a cookie
+            cookies.set('guardianShowLoginModal', false, { path:'/', expires: futureDate });
+        } else {
+            //alert('already have it - deleting')
+            //cookies.remove('guardianShowLoginModal')
+        }
+
+        //console log the cookie
+        console.log(cookies.get('guardianShowLoginModal'));
+
+
+        return(
+            <Form.Control 
+                id="projectReleasingLabelID" 
+                as="select" 
+                className='col-form-label dropdown col-3' 
+                value={this.props.value}
+                onChange={this.state.onChange}
+            >
+                {this.getReleasingLabelOptions()}
+            </Form.Control>
+        )
+    }
+
+}
+
+class ProjectTypesInput extends Component {
 
     constructor(props) {
         super(props);
@@ -11,27 +85,27 @@ class ReleasingLabelsInput extends Component {
         this.state = {
             user : this.props.user,
             value : this.props.value,
-            onClick : this.props.onClick
+            onChange : this.props.onChange
         }
     }
 
     render() {
-        let labelOptions = ''
-        if(this.props.user && this.props.user.ReleasingLabels) {
-            labelOptions = this.props.user.ReleasingLabels.map( (label, i) =>
-                <option value="label.id">{label.name}</option>
+        let projectTypeOptions = ''
+        if(this.props.user && this.props.user.ProjectTypes) {
+            projectTypeOptions = this.props.user.ProjectTypes.map( (projectType, i) =>
+                <option key={i} value={projectType.id}>{projectType.name}</option>
             )
         }
         return(
             <Form.Control 
-                id="projectReleasingLabelID" 
+                id="projectTypeID" 
                 as="select" 
                 className='col-form-label dropdown col-3' 
                 value={this.state.value}
-                onChange={this.state.onClick}
-            >
-                {labelOptions}
-            </Form.Control>
+                onChange={this.state.onChange}
+        >
+            {projectTypeOptions}
+        </Form.Control>
         )
     }
 
@@ -49,7 +123,7 @@ class ReleaseinformationPage extends Component {
                     "projectTitle" : '',
                     "projectArtistName" : '',
                     "projectTypeID" : '1',
-                    "projectReleasingLabelID" : '114',
+                    "projectReleasingLabelID" : '',
                     "projectReleaseDate" : '',
                     "projectReleaseDateTBD" : false,
                     "projectNotes" : ''
@@ -63,6 +137,8 @@ class ReleaseinformationPage extends Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleStateUpdate = this.handleStateUpdate.bind(this);
+
     };
 
     handleChange(event) {
@@ -81,12 +157,15 @@ class ReleaseinformationPage extends Component {
         event.preventDefault();
 
         localStorage.setItem('projectData', JSON.stringify(this.state.formInputs));
-        console.log(localStorage.getItem('projectData'))
 
         this.props.history.push('/projectContacts')
     };
 
+    handleStateUpdate(inputID, inputValue) {
+        this.setState( {formInputs : { ...this.state.formInputs, [inputID] : inputValue}} )
 
+        alert(1111111 + inputID + ' : ' + inputValue)
+    }
 
     render() {
         return (
@@ -140,35 +219,21 @@ class ReleaseinformationPage extends Component {
                             
                             <Form.Group>
                                 <Form.Label className='col-form-label col-3'>Project Type<span className="required-ind">*</span></Form.Label>
-                                <Form.Control 
-                                    id="projectTypeID" 
-                                    as="select" 
-                                    className='col-form-label dropdown col-3' 
-                                    value={this.state.formInputs.projectTypeID}
+                                <ProjectTypesInput
+                                    user={this.props.user} 
+                                    value={this.state.formInputs.projectTypeID} 
                                     onChange={this.handleChange}
-                                >
-                                    <option value="1">Album</option>
-                                    <option value="2">Collection</option>
-                                    <option value="3">Single</option>
-                                </Form.Control>
+                                />
+
                             </Form.Group>
 
                             <Form.Group>
                                 <Form.Label className='col-form-label col-3'>Releasing Label<span className="required-ind">*</span></Form.Label>
-
-                                <Form.Control 
-                                    id="projectReleasingLabelID" 
-                                    as="select" 
-                                    className='col-form-label dropdown col-3' 
-                                    value={this.state.formInputs.projectReleasingLabelID}
+                                <ReleasingLabelsInput 
+                                    user={this.props.user} 
+                                    value={this.state.formInputs.projectReleasingLabelID} 
                                     onChange={this.handleChange}
-                                >
-                                    <option value="114">Universal Music</option>
-                                    <option value="3">Abbey Audio</option>
-                                    <option value="1">A&M</option>
-                                </Form.Control>
-
-
+                                />
                             </Form.Group>
 
                             <Form.Group>
@@ -230,4 +295,4 @@ class ReleaseinformationPage extends Component {
     }
 };
 
-export default ReleaseinformationPage;
+export default withRouter(ReleaseinformationPage);
