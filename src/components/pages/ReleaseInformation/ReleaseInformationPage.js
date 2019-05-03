@@ -3,8 +3,39 @@ import {Table, Grid, Button, Form } from 'react-bootstrap';
 import PageHeader from '../PageHeader/PageHeader'; 
 import './ReleaseInformation.css';
 
+class ReleasingLabelsInput extends Component {
 
-const mockData = require('../../../mockData.json');
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            user : this.props.user,
+            value : this.props.value,
+            onClick : this.props.onClick
+        }
+    }
+
+    render() {
+        let labelOptions = ''
+        if(this.props.user && this.props.user.ReleasingLabels) {
+            labelOptions = this.props.user.ReleasingLabels.map( (label, i) =>
+                <option value="label.id">{label.name}</option>
+            )
+        }
+        return(
+            <Form.Control 
+                id="projectReleasingLabelID" 
+                as="select" 
+                className='col-form-label dropdown col-3' 
+                value={this.state.value}
+                onChange={this.state.onClick}
+            >
+                {labelOptions}
+            </Form.Control>
+        )
+    }
+
+}
 
 class ReleaseinformationPage extends Component {
 
@@ -14,7 +45,15 @@ class ReleaseinformationPage extends Component {
         if (localStorage.getItem("projectData") === null) {
             this.state = { 
                 formInputs : {
-                } 
+                    "projectID" : '',
+                    "projectTitle" : '',
+                    "projectArtistName" : '',
+                    "projectTypeID" : '1',
+                    "projectReleasingLabelID" : '114',
+                    "projectReleaseDate" : '',
+                    "projectReleaseDateTBD" : false,
+                    "projectNotes" : ''
+                }
             };
         } else {
             this.state = { 
@@ -50,12 +89,6 @@ class ReleaseinformationPage extends Component {
 
 
     render() {
-
-        const user = JSON.parse(sessionStorage.getItem('user'))
-        
-        console.log("user")
-        console.log(user)
-
         return (
             <section className="page-container h-100">
 
@@ -108,31 +141,34 @@ class ReleaseinformationPage extends Component {
                             <Form.Group>
                                 <Form.Label className='col-form-label col-3'>Project Type<span className="required-ind">*</span></Form.Label>
                                 <Form.Control 
-                                    id="projectType" 
+                                    id="projectTypeID" 
                                     as="select" 
                                     className='col-form-label dropdown col-3' 
-                                    value={this.state.formInputs.projectType}
+                                    value={this.state.formInputs.projectTypeID}
                                     onChange={this.handleChange}
                                 >
-                                    <option value="0">Album (Default)</option>
-                                    <option value="1">Collection</option>
-                                    <option value="2">Single</option>
+                                    <option value="1">Album</option>
+                                    <option value="2">Collection</option>
+                                    <option value="3">Single</option>
                                 </Form.Control>
                             </Form.Group>
 
                             <Form.Group>
                                 <Form.Label className='col-form-label col-3'>Releasing Label<span className="required-ind">*</span></Form.Label>
+
                                 <Form.Control 
-                                    id="projectReleasingLabel" 
+                                    id="projectReleasingLabelID" 
                                     as="select" 
                                     className='col-form-label dropdown col-3' 
-                                    value={this.state.formInputs.projectReleasingLabel}
+                                    value={this.state.formInputs.projectReleasingLabelID}
                                     onChange={this.handleChange}
                                 >
                                     <option value="114">Universal Music</option>
                                     <option value="3">Abbey Audio</option>
                                     <option value="1">A&M</option>
                                 </Form.Control>
+
+
                             </Form.Group>
 
                             <Form.Group>
