@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import {Table, Grid, Button, Form } from 'react-bootstrap'; 
 import PageHeader from '../PageHeader/PageHeader';
+import { withRouter } from "react-router";
 import './ProjectContacts.css';
-import { withRouter } from 'react-router-dom';
 
 class ProjectContactsPage extends Component {
     constructor(props) {
@@ -31,6 +31,7 @@ class ProjectContactsPage extends Component {
     handleSubmit(event) {
         
         event.preventDefault();
+        this.props.history.push('/AudioFiles')
 
         const releaseInformationInputs = JSON.parse(localStorage.getItem('projectData'))
         const user = JSON.parse(sessionStorage.getItem('user'))
