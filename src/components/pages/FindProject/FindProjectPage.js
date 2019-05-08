@@ -10,20 +10,25 @@ class FindProjectPage extends Component {
         this.state = {
 			searchResults : {},
 			searchCriteria : {
-				projectTitle : " ",
-				projectArtistName : ""
+				searchTerm : '',
+				searchId : '',
+				itemsPerPage : '',
+				pageNumber : '',
+				sortColumn : '',
+				sortOrder : ''
 			},
+			
 			searchResultsCount : 0
 		}
 
 		this.renderProjects = this.renderProjects.bind(this);
+		this.handleChange = this.handleChange.bind(this);
+		this.handleProjectSearch = this.handleProjectSearch.bind(this);
 	}
 
-	componentDidMount(props) {
+
+	handleProjectSearch() {
 		const user = JSON.parse(sessionStorage.getItem('user'))
-
-		console.log(user.email)
-
         const fetchHeaders = new Headers(
             {
                 "Content-Type": "application/json",
@@ -31,22 +36,13 @@ class FindProjectPage extends Component {
             }
 		)
 
-		console.log(sessionStorage.getItem('accessToken'))
-
 		const fetchBody = JSON.stringify( {
             "User" : {
 				"email" : user.email
 			},
-			"SearchCriteria" : {
-				
-			}
+			"SearchCriteria" : this.state.searchCriteria
 		})
 		
-		console.log('--HEADERS--')
-		console.log(fetchHeaders)
-		console.log('--BODY--')
-		console.log(fetchBody)
-
         fetch ('https://api-dev.umusic.net/guardian/project/search', {
             method : 'POST',
             headers : fetchHeaders,
@@ -68,6 +64,10 @@ class FindProjectPage extends Component {
         .catch(
             error => console.error(error)
 		);
+	}
+
+	componentDidMount(props) {
+		this.handleProjectSearch()
     }
 
 	updateSearchCount(projects) {
@@ -78,6 +78,11 @@ class FindProjectPage extends Component {
 	handleRowClick = (projectID) => {
 		this.props.history.push('/reviewSubmit/' + projectID)
 	}
+
+    handleChange(event) {
+        this.setState( {searchCriteria : { ...this.state.searchCriteria, "searchTerm" : event.target.value}} )
+        console.log(this.state.searchCriteria.searchTerm)
+    }
 
 	renderProjects(projects) {
 
@@ -124,9 +129,10 @@ class FindProjectPage extends Component {
         }
 
 		return(
-
             <div>
+				
 				<IntroModal />
+
 				<section className="page-container">
 					<div className="row">
 						<div className="col 4">
@@ -147,8 +153,8 @@ class FindProjectPage extends Component {
 					<li className="col-2 d-flex"></li>
 					<li className="col-8 d-flex justify-content-center">
 						<button className="btn btn-secondary" type="button"><i className="material-icons">settings</i> Filters</button>
-						<input className="form-control" type="search" />
-						<button className="btn btn-primary" type="button"><i className="material-icons">search</i> Search</button>
+						<input className="form-control" type="search" id="searchInput" onChange={this.handleChange} />
+						<button className="btn btn-primary" type="button" onClick={this.handleProjectSearch}><i className="material-icons">search</i> Search</button>
 					</li>
 					<li className="col-2 d-flex"></li>
 				</ul>
