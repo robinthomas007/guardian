@@ -40,11 +40,8 @@ class ReviewAndSubmitPage extends Component {
             {
                 return(response.json());
             }
-        )
-        .then (responseJSON => 
+        ).then (responseJSON => 
             {
-                console.log('WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW')
-                console.log(responseJSON)
                 this.setState({ projectTitle : responseJSON.Project.projectTitle })
                 this.setState({ projectArtistName : responseJSON.Project.projectArtistName })
                 this.setState({ projectSecurity : responseJSON.Project.projectSecurity })
@@ -213,26 +210,28 @@ class ReviewAndSubmitPage extends Component {
                 <div className="col-12">
                     <br />
                     <div className="review-card">
-                    <table className="table">
-                        <tr className="row no-gutters">
-                            <th className="col-3">Rights Policy Name</th>
-                            <th className="col-3">Tracks With This Policy</th>
-                            <th className="col-3">Owned In</th>
-                            <th className="col-3">Not Owned In</th>
-                        </tr>
-                        <tr className="row no-gutters">
-                            <td className="col-3">Global Rights Policy</td>
-                            <td className="col-3">Track Name 2</td>
-                            <td className="col-3">Worldwide</td>
-                            <td className="col-3">N/A</td>
-                        </tr>
-                        <tr className="row no-gutters">
-                            <td className="col-3"></td>
-                            <td className="col-3">Track Name 4</td>
-                            <td className="col-3">USA, Canada, UK</td>
-                            <td className="col-3">N/A</td>
-                        </tr>
-                    </table>
+                        <table className="table">
+                            <tbody>
+                                <tr className="row no-gutters">
+                                    <th className="col-3">Rights Policy Name</th>
+                                    <th className="col-3">Tracks With This Policy</th>
+                                    <th className="col-3">Owned In</th>
+                                    <th className="col-3">Not Owned In</th>
+                                </tr>
+                                <tr className="row no-gutters">
+                                    <td className="col-3">Global Rights Policy</td>
+                                    <td className="col-3">Track Name 2</td>
+                                    <td className="col-3">Worldwide</td>
+                                    <td className="col-3">N/A</td>
+                                </tr>
+                                <tr className="row no-gutters">
+                                    <td className="col-3"></td>
+                                    <td className="col-3">Track Name 4</td>
+                                    <td className="col-3">USA, Canada, UK</td>
+                                    <td className="col-3">N/A</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                     </div>
                 </div>

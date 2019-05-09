@@ -59,8 +59,13 @@ export default withAuth(class Content extends Component {
       sessionStorage.setItem('accessToken', accesstoken)
       sessionStorage.setItem('user', JSON.stringify(user))
 
-      this.setState( {user : user } );
-      this.setState( {userLoaded : true } );
+      if(this.state.user !== user) {
+        this.setState( {user : user } );
+      }
+      
+      if(!this.state.userLoaded) {
+        this.setState( {userLoaded : true } );
+      }
 
       if(this.state.userLoaded) {
         const userData = this.getUserData();
@@ -121,7 +126,7 @@ export default withAuth(class Content extends Component {
             <SecureRoute path="/trackInformation" component={TrackInformationPage}/>
             <SecureRoute path="/territorialRights" component={TerritorialRightsPage}/>
             <SecureRoute path="/blockingPolicies" component={BlockingPoliciesPage}/>
-            <SecureRoute path="/newProject" component={ReleaseInformationPage} />
+            <SecureRoute path="/newProject"  render={ () => ( <ReleaseInformationPage user={this.state.user} />) } />
             <SecureRoute path="/audioFiles" component={AudioFilesPage} />
             <SecureRoute path="/reviewSubmit" exact component={ReviewAndSubmitPage}/>
             <SecureRoute path="/reviewSubmit/:projectID" component={ReviewAndSubmitPage}/>
