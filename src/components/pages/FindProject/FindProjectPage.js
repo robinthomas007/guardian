@@ -13,12 +13,13 @@ class FindProjectPage extends Component {
 			searchCriteria : {
 				searchTerm : '',
 				searchId : '',
-				itemsPerPage : '',
-				pageNumber : '',
+				itemsPerPage : '50',
+				pageNumber : '1',
 				sortColumn : '',
 				sortOrder : ''
 			},
 			
+			viewCount : 50,
 			searchResultsCount : 0
 		}
 
@@ -26,6 +27,7 @@ class FindProjectPage extends Component {
 		this.handleChange = this.handleChange.bind(this);
 		this.handleProjectSearch = this.handleProjectSearch.bind(this);
 		this.handleKeyUp = this.handleKeyUp.bind(this);
+		this.setProjectsView = this.setProjectsView.bind(this);
 	}
 
 
@@ -60,7 +62,7 @@ class FindProjectPage extends Component {
 				console.log(responseJSON)
 
 				this.setState( {searchResults : responseJSON.Projects })
-				this.updateSearchCount(responseJSON.Projects)
+				this.updateSearchCount(responseJSON)
             }
         )
         .catch(
@@ -72,8 +74,8 @@ class FindProjectPage extends Component {
 		this.handleProjectSearch()
     }
 
-	updateSearchCount(projects) {
-		this.setState({searchResultsCount : projects.length})
+	updateSearchCount(responseJSON) {
+		this.setState({searchResultsCount : responseJSON.TotalItems})
 	}
 
 
@@ -128,6 +130,13 @@ class FindProjectPage extends Component {
 		if(e.key === 'Enter') {
 			this.handleProjectSearch()
 		}		
+	}
+
+	setProjectsView(e) {
+		const itemCount = parseInt(e.target.innerHTML)
+		this.setState(currentState => ({searchCriteria : { ...this.state.searchCriteria, 'itemsPerPage' : itemCount}}), () => {
+			this.handleProjectSearch()
+		});
 	}
 
     render() {
@@ -197,12 +206,12 @@ class FindProjectPage extends Component {
 					
 					<div className="dropdown show">
 						<a className="btn btn-secondary dropdown-toggle" href="#" role="button" id="viewCountdropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						10
+							{this.state.searchCriteria.itemsPerPage}
 						</a>
 						<div className="dropdown-menu" aria-labelledby="viewCountdropdown">
-						<a className="dropdown-item" href="#">10</a>
-						<a className="dropdown-item" href="#">25</a>
-						<a className="dropdown-item" href="#">50</a>
+							<a className="dropdown-item" onClick={this.setProjectsView}>10</a>
+							<a className="dropdown-item" onClick={this.setProjectsView}>25</a>
+							<a className="dropdown-item" onClick={this.setProjectsView}>50</a>
 						</div>
 					</div>
 					
