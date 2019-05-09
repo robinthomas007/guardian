@@ -24,6 +24,7 @@ class FindProjectPage extends Component {
 		this.renderProjects = this.renderProjects.bind(this);
 		this.handleChange = this.handleChange.bind(this);
 		this.handleProjectSearch = this.handleProjectSearch.bind(this);
+		this.handleKeyUp = this.handleKeyUp.bind(this);
 	}
 
 
@@ -122,6 +123,12 @@ class FindProjectPage extends Component {
 		}
 	}
 
+	handleKeyUp(e) {
+		if(e.key === 'Enter') {
+			this.handleProjectSearch()
+		}		
+	}
+
     render() {
 
         const saveAndContinue = () => {
@@ -158,6 +165,7 @@ class FindProjectPage extends Component {
 							className="form-control" 
 							type="search" 
 							onChange={this.handleChange}
+							onKeyUp={this.handleKeyUp}
 						/>
 						<button 
 							id="projectSearchButton" 
