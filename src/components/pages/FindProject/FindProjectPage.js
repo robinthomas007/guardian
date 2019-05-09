@@ -153,8 +153,18 @@ class FindProjectPage extends Component {
 					<li className="col-2 d-flex"></li>
 					<li className="col-8 d-flex justify-content-center">
 						<button className="btn btn-secondary" type="button"><i className="material-icons">settings</i> Filters</button>
-						<input className="form-control" type="search" id="searchInput" onChange={this.handleChange} />
-						<button className="btn btn-primary" type="button" onClick={this.handleProjectSearch}><i className="material-icons">search</i> Search</button>
+						<input 
+							id="projectSearchInput" 
+							className="form-control" 
+							type="search" 
+							onChange={this.handleChange}
+						/>
+						<button 
+							id="projectSearchButton" 
+							className="btn btn-primary" 
+							type="button" 
+							onClick={this.handleProjectSearch}
+						><i className="material-icons">search</i> Search</button>
 					</li>
 					<li className="col-2 d-flex"></li>
 				</ul>
