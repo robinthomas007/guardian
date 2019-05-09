@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Table, Grid, Button, Form, Pagination } from 'react-bootstrap'; 
 import './FindProject.css';
 import { AST_This } from 'terser';
 import IntroModal from '../../modals/IntroModal';
@@ -108,8 +109,8 @@ class FindProjectPage extends Component {
 						<td>{projects[project].projectTitle}</td>
 						<td>{projects[project].projectArtistName}</td>
 						<td>{projects[project].projectReleasingLabel}</td>
-						<td>{projects[project].projectLastModified}</td>
-						<td className="status"><span>In Progress</span></td>
+						<td className="text-nowrap centered">{projects[project].projectLastModified}</td>
+						<td className="status text-nowrap"><span>In Progress</span></td>
 						<td className="status centered">{checkStepStatus(projects[project].isStep1Complete)}</td>
 						<td className="status centered">{checkStepStatus(projects[project].isStep2Complete)}</td>
 						<td className="status centered">{checkStepStatus(projects[project].isStep3Complete)}</td>
@@ -223,15 +224,15 @@ class FindProjectPage extends Component {
 					<li className="col-4 d-flex"></li>
 				</ul>
 
-			
-				<table className="table table-hover">
+			<div className="table-responsive">
+				<Table>
 					<thead>
 						<tr>
-							<th>Project Title</th>
-							<th>Artist</th>
-							<th>Label</th>
-							<th className="centered">Last Update</th>
-							<th>Status</th>
+							<th className="w-15 text-nowrap">Project Title</th>
+							<th className="w-10">Artist</th>
+							<th className="w-5">Label</th>
+							<th className="w-5 centered text-nowrap">Last Update</th>
+							<th className="w-5">Status</th>
 							<th className="centered">Project</th>
 							<th className="centered">Contacts</th>
 							<th className="centered">Audio</th>
@@ -243,7 +244,8 @@ class FindProjectPage extends Component {
 					<tbody>
 						{this.renderProjects(this.state.searchResults)}
 					</tbody>
-				</table>
+				</Table>
+				</div>
 			</section>
     	</div>
 

@@ -17,6 +17,5 @@
 	ul.results-controls .dropdown {margin:auto 6px;}
 	ul.results-controls span {margin-bottom:-60px;}
 
-	table.table-hover tbody tr {border: 3px solid #fff; border-spacing:3px;}
-	table.table-hover tbody tr:hover {cursor:pointer; border: 3px solid #15B6DF; transition: border-color 0.6s linear; }
+	table tbody tr:hover, table tbody tr:hover td {cursor:pointer; background-color: #d9f3fe!important; transition: background-color 0.3s linear; }
 	
