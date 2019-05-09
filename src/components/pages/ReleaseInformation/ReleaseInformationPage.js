@@ -16,7 +16,6 @@ class ReleasingLabelsInput extends Component {
             onChange : this.props.onChange,
         }
 
-
         this.getReleasingLabelOptions = this.getReleasingLabelOptions.bind(this);
     }
 
@@ -29,38 +28,10 @@ class ReleasingLabelsInput extends Component {
                 <option key={i} value={label.id}>{label.name}</option>
             )
         }
-        console.log('defaultLabelID')
-        console.log(defaultLabelID)
-
         return(labelOptions)
     }
 
-    componentDidMount() {
-        if(this.props.user && this.props.user.ReleasingLabels) {
-            //this.handleStateUpdate('projectReleasingLabelID', this.props.user.ReleasingLabels[0].id)
-        }
-    }
-
     render() {
-
-        const cookies = new Cookies();
-        const todaysDate = new Date();
-        const futureDate = new Date(todaysDate.getFullYear() + 100, todaysDate.getMonth(), todaysDate.getDate())
-        
-        const uuidv4 = require('uuid/v4');
-        //alert('sessionID ' + uuidv4()  + 'transactionID  ' + uuidv4()  )
-
-        if(!cookies.get('guardianShowLoginModal')) {
-            //set a cookie
-            cookies.set('guardianShowLoginModal', false, { path:'/', expires: futureDate });
-        } else {
-            //alert('already have it - deleting')
-            //cookies.remove('guardianShowLoginModal')
-        }
-
-        //console log the cookie
-        console.log(cookies.get('guardianShowLoginModal'));
-
 
         return(
             <Form.Control 
@@ -78,15 +49,8 @@ class ReleasingLabelsInput extends Component {
 }
 
 class ProjectTypesInput extends Component {
-
     constructor(props) {
         super(props);
-
-        this.state = {
-            user : this.props.user,
-            value : this.props.value,
-            onChange : this.props.onChange
-        }
     }
 
     render() {
@@ -101,14 +65,13 @@ class ProjectTypesInput extends Component {
                 id="projectTypeID" 
                 as="select" 
                 className='col-form-label dropdown col-3' 
-                value={this.state.value}
-                onChange={this.state.onChange}
-        >
+                value={ this.props.value}
+                onChange={this.props.onChange}
+            >
             {projectTypeOptions}
         </Form.Control>
         )
     }
-
 }
 
 class ReleaseinformationPage extends Component {
@@ -137,8 +100,6 @@ class ReleaseinformationPage extends Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleStateUpdate = this.handleStateUpdate.bind(this);
-
     };
 
     handleChange(event) {
@@ -155,16 +116,14 @@ class ReleaseinformationPage extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-
         localStorage.setItem('projectData', JSON.stringify(this.state.formInputs));
-
         this.props.history.push('/projectContacts')
     };
 
-    handleStateUpdate(inputID, inputValue) {
-        this.setState( {formInputs : { ...this.state.formInputs, [inputID] : inputValue}} )
-
-        alert(1111111 + inputID + ' : ' + inputValue)
+    componentDidMount() {
+        if(this.props.user && this.props.user.DefaultReleasingLabelID) {
+            this.setState( {formInputs : { ...this.state.formInputs, "projectReleasingLabelID" : this.props.user.DefaultReleasingLabelID}} )
+        }
     }
 
     render() {

@@ -2,10 +2,6 @@ import React, { Component } from 'react';
 import PageHeader from '../PageHeader/PageHeader';
 import './ReviewAndSubmit.css';
 
-class HandleSectionClick extends Component {
-
-}
-
 class ReviewAndSubmitPage extends Component {
 
     constructor(props) {
@@ -14,13 +10,12 @@ class ReviewAndSubmitPage extends Component {
         this.state = { 
             projectID : props.projectID
         }
+
+        this.handleReleaseInformationClick = this.handleReleaseInformationClick.bind(this);
     };
 
 
     componentDidMount() {
-
-
-
         const user = JSON.parse(sessionStorage.getItem('user'))
         const fetchHeaders = new Headers(
             {
@@ -47,9 +42,6 @@ class ReviewAndSubmitPage extends Component {
             }
         )
         .then (responseJSON => 
-
-
-
             {
                 console.log('WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW')
                 console.log(responseJSON)
@@ -71,6 +63,10 @@ class ReviewAndSubmitPage extends Component {
         );
     }
 
+    handleReleaseInformationClick() {
+        console.log(this.props.match.params.projectID)
+    }
+
     render() {
         return(
             <div>		
@@ -85,7 +81,7 @@ class ReviewAndSubmitPage extends Component {
                         </div>
                     </div>
                 </section>
-                <section className="page-container review-section" onClick={<HandleSectionClick URL='/release-information.html' projectID/>}>
+                <section className="page-container review-section" onClick={this.handleReleaseInformationClick}>
                     <div className="row no-gutters">
                         <div className="col-10 justify-content-start">
                             <h2>Release Information</h2>

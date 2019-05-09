@@ -4,6 +4,46 @@ import PageHeader from '../PageHeader/PageHeader';
 import { withRouter } from "react-router";
 import './ProjectContacts.css';
 
+class ProjectSecurityInput extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            user : this.props.user,
+            value : this.props.value,
+            onChange : this.props.onChange,
+        }
+        
+        this.getProjectSecurityOptions = this.getProjectSecurityOptions.bind(this);
+    }
+
+    getProjectSecurityOptions() {
+        let projectSecurityOptions = ''
+        if(this.props.user && this.props.user.ProjectSecurities) {
+            projectSecurityOptions = this.props.user.ProjectSecurities.map( (projectSecurity, i) =>
+                <option key={i} value={projectSecurity.id}>{projectSecurity.name}</option>
+            )
+        }
+
+        return(projectSecurityOptions)
+    }
+
+    render() {
+        return(
+            <Form.Control 
+                id='projectSecurityID' 
+                as='select' 
+                className='col-form-label dropdown col-2' 
+                value = {this.props.value}
+                onChange={this.state.onChange}
+            >
+                {this.getProjectSecurityOptions()}
+            </Form.Control>
+        )
+    }
+}
+
 class ProjectContactsPage extends Component {
     constructor(props) {
 
@@ -26,6 +66,21 @@ class ProjectContactsPage extends Component {
     handleChange(event) {
         this.setState( {formInputs : { ...this.state.formInputs, [event.target.id] : event.target.value}} )
         console.log(this.state.formInputs)
+    }
+
+    getProjectSecurityOptions() {
+
+        let securityOptions = ''
+        let defaultLabelID = ''
+        if(this.props.user && this.props.user.ProjectSecurities) {
+            securityOptions = this.props.user.ProjectSecurities.map( (security, i) =>
+                <option key={i} value={security.id}>{security.name}</option>
+            )
+        }
+        console.log('securityOptions')
+        console.log(securityOptions)
+
+        return(securityOptions)
     }
 
     handleSubmit(event) {
@@ -90,6 +145,10 @@ class ProjectContactsPage extends Component {
         );
     }
 
+    componentDidMount() {
+        this.getProjectSecurityOptions()
+    }
+
     render() {
 
         const user = JSON.parse(sessionStorage.getItem('user'))
@@ -112,15 +171,11 @@ class ProjectContactsPage extends Component {
 
                             <Form.Group>
                                 <Form.Label className='col-form-label col-2'>Project Security <span className='required-ind'>*</span></Form.Label>
-                                <Form.Control 
-                                    id='projectSecurityID' 
-                                    as='select' 
-                                    className='col-form-label dropdown col-2' 
-                                    value={this.state.formInputs.projectSecurityID}
-                                    onChange={this.handleChange}>
-                                        <option value="0">Private (Viewable By You)</option>
-                                        <option value="1">Public (Viewable By All Label Users)</option>
-                                </Form.Control>
+                                <ProjectSecurityInput 
+                                    user={this.props.user} 
+                                    value={this.state.formInputs.projectSecurityID} 
+                                    onChange={this.handleChange}                                
+                                />
                             </Form.Group>
 
                             <Form.Group>

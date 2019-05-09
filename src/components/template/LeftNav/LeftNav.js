@@ -88,8 +88,6 @@ class LeftNav extends Component {
 		this.getAdminLinks = this.getAdminLinks.bind(this);
     };
 
-	
-
 	handleNavClick(link){
 		if(this.state.activeNav !== link) {
 			this.setState( { activeNav : link } )
@@ -132,9 +130,7 @@ class LeftNav extends Component {
 	}
 
 	getAdminLinks() {
-
 		const activeStyle = {color: '#333', backgroundColor: '#F5F5F5'}
-
 		const adminLinks = Object.keys(navList.admin).map(
 			function(link, i) { 
 				if(!navList.admin[link].adminAccess || (navList.admin[link].adminAccess && this.props.isAdmin)) {

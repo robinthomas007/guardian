@@ -11,10 +11,14 @@ import TerritorialRightsPage from './pages/TerritorialRights/TerritorialRightsPa
 import ReleaseInformationPage from './pages/ReleaseInformation/ReleaseInformationPage';
 import FindProject from './pages/FindProject/FindProjectPage';
 import { withAuth } from '@okta/okta-react';
+import UUID from 'uuid';
 
 export default withAuth(class Content extends Component {
 
   constructor(props) {
+
+    const uuidv4 = require('uuid/v4');
+
     super(props)
     this.state = {
         loading : true,
@@ -23,7 +27,8 @@ export default withAuth(class Content extends Component {
         idtoken: '',
         user : {},
         isAdmin : false,
-        userLoaded : false
+        userLoaded : false,
+        sessionId : uuidv4()
 
     }
     this.getUserData = this.getUserData.bind(this);
@@ -57,13 +62,9 @@ export default withAuth(class Content extends Component {
       this.setState( {user : user } );
       this.setState( {userLoaded : true } );
 
-
       if(this.state.userLoaded) {
         const userData = this.getUserData();
       }
-
-      //console.log('userData')
-      //console.log(userData)
   }
   
   getUserData() {
@@ -78,7 +79,7 @@ export default withAuth(class Content extends Component {
       const fetchBody = JSON.stringify( {
           "User" : {
             "email" : this.state.user.email
-          }
+          } 
       })
       
       fetch ('https://api-dev.umusic.net/guardian/login', {
@@ -95,14 +96,9 @@ export default withAuth(class Content extends Component {
 
             this.setState({isAdmin : userJSON.IsAdmin})
             this.setState({user : newUserObj})
-            console.log(newUserObj)
-            
-            //sessionStorage.removeItem('user')
             sessionStorage.setItem('user', JSON.stringify(newUserObj))
 
           }
-      ).then ( 
-        console.log(' -aaa- ' + sessionStorage.getItem('user'))
       ).catch(
           error => console.error(error)
       );
