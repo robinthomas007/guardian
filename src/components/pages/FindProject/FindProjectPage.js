@@ -4,6 +4,39 @@ import './FindProject.css';
 import { AST_This } from 'terser';
 import IntroModal from '../../modals/IntroModal';
 
+class TablePager extends Component {
+	constructor(props) {
+        super(props);
+        this.state = {
+			activePage : 1,
+			items :  this.props.items,
+			limit :  5,
+			pageCount : this.props.items,
+			totalItems : this.props.totalItems,
+			itemsPerPage : this.props.itemsPerPage
+		}
+	}
+
+	render() {
+		const buttonCount = Math.ceil( parseInt(this.props.totalItems) / parseInt(this.props.itemsPerPage))
+		const paginationItems = []
+
+		for (var i = 0; i < buttonCount; i++) {
+			paginationItems.push(<Pagination.Item key={i} onClick={this.props.handlePaginationChange}>{i + 1}</Pagination.Item>);
+		}
+
+		return(
+			<Pagination activepage={this.state.activePage} items={1} limit={5}>
+				<Pagination.First onClick={this.props.handlePaginationChange} />
+				<Pagination.Prev onClick={this.props.handlePaginationChange} />
+				{paginationItems}
+				<Pagination.Next onClick={this.props.handlePaginationChange}/>
+				<Pagination.Last onClick={this.props.handlePaginationChange} />
+			</Pagination>
+		)
+	}
+}
+
 class FindProjectPage extends Component {
   
 	constructor(props) {
@@ -18,9 +51,8 @@ class FindProjectPage extends Component {
 				sortColumn : '',
 				sortOrder : ''
 			},
-			
-			viewCount : 50,
-			searchResultsCount : 0
+			searchResultsCount : 0,
+			currentPageNumber : 1
 		}
 
 		this.renderProjects = this.renderProjects.bind(this);
@@ -28,6 +60,7 @@ class FindProjectPage extends Component {
 		this.handleProjectSearch = this.handleProjectSearch.bind(this);
 		this.handleKeyUp = this.handleKeyUp.bind(this);
 		this.setProjectsView = this.setProjectsView.bind(this);
+		this.handlePaginationChange = this.handlePaginationChange.bind(this);
 	}
 
 
@@ -58,9 +91,6 @@ class FindProjectPage extends Component {
         )
         .then (responseJSON => 
             {
-				console.log('--responseJSON--')
-				console.log(responseJSON)
-
 				this.setState( {searchResults : responseJSON.Projects })
 				this.updateSearchCount(responseJSON)
             }
@@ -85,7 +115,6 @@ class FindProjectPage extends Component {
 
     handleChange(event) {
         this.setState( {searchCriteria : { ...this.state.searchCriteria, "searchTerm" : event.target.value}} )
-        console.log(this.state.searchCriteria.searchTerm)
     }
 
 	renderProjects(projects) {
@@ -138,6 +167,15 @@ class FindProjectPage extends Component {
 			this.handleProjectSearch()
 		});
 	}
+
+	handlePaginationChange(e) {
+		const page = parseInt(e.target.innerHTML)
+		this.setState(currentState => ({searchCriteria : { ...this.state.searchCriteria, 'pageNumber' : page}}), () => {
+			this.handleProjectSearch()
+		});
+	}
+
+
 
     render() {
 
@@ -219,23 +257,12 @@ class FindProjectPage extends Component {
 					</li>
 					<li className="col-4 d-flex justify-content-center">
 						<nav aria-label="Page navigation example">
-							<ul className="pagination">
-							<li className="page-item">
-								<a className="page-link" href="#" aria-label="Previous">
-								<span aria-hidden="true">&laquo;</span>
-								<span className="sr-only">Previous</span>
-								</a>
-							</li>
-							<li className="page-item"><a className="page-link" href="#">1</a></li>
-							<li className="page-item"><a className="page-link" href="#">2</a></li>
-							<li className="page-item"><a className="page-link" href="#">3</a></li>
-							<li className="page-item">
-								<a className="page-link" href="#" aria-label="Next">
-								<span aria-hidden="true">&raquo;</span>
-								<span className="sr-only">Next</span>
-								</a>
-							</li>
-							</ul>
+							<TablePager 
+								activePage={this.state.searchCriteria.pageNumber} 
+								totalItems={this.state.searchResultsCount} 
+								itemsPerPage={this.state.searchCriteria.itemsPerPage}
+								handlePaginationChange={this.handlePaginationChange}
+							/>
 						</nav>
 					</li>
 					<li className="col-4 d-flex"></li>
