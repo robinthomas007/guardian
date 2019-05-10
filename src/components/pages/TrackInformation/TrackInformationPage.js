@@ -34,15 +34,15 @@ const TrackInformationPage = (props) => {
                     <td className="centered">{track.trackSequence}</td>
                     <td><i className="material-icons">format_line_spacing</i></td>
                     <td className="centered"><i className="material-icons purple-icon">audiotrack</i></td>
-                    <td><Form.Control type="text" value="{track.trackISRC}"></Form.Control></td>
-                    <td><Form.Control type="text" value="{track.trackTitle}"></Form.Control></td>
+                    <td><Form.Control type="text" value={track.trackISRC}></Form.Control></td>
+                    <td><Form.Control type="text" value={track.trackTitle}></Form.Control></td>
                     <td className="centered">
                         <label className="custom-checkbox">
                             <input type="checkbox" />
                             <span className="checkmark"></span>
                         </label>
                     </td>
-                    <td className="centered"><Form.Control type="date" value="{track.trackReleaseDate}"></Form.Control> </td>
+                    <td className="centered"><Form.Control type="date" value={track.trackReleaseDate}></Form.Control> </td>
                     <td className="centered">
                         <button className="btn btn-secondary action"><i className="material-icons">publish</i></button>
                         <button className="btn btn-secondary action"><i className="material-icons">delete</i></button>
