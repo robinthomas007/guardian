@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Table, Grid, Button, Form } from 'react-bootstrap'; 
 import PageHeader from '../PageHeader/PageHeader';
 import './TrackInformation.css';
 
@@ -28,34 +29,37 @@ const TrackInformationPage = (props) => {
                 )
             }
 
-            const dataRows = mockData.pages.TrackInformation.tracks.map( (track, i) => 
-                <tr key={i}>
+            const dataRows = mockData.pages.TrackInformation.tracks.map( (track, i) =>
+              <tr key={i}>
                     <td className="centered">{track.trackSequence}</td>
                     <td><i className="material-icons">format_line_spacing</i></td>
                     <td className="centered"><i className="material-icons purple-icon">audiotrack</i></td>
-                    <td>{track.trackISRC}</td>
-                    <td>{track.trackTitle}</td>
+                    <td><Form.Control type="text" value="{track.trackISRC}"></Form.Control></td>
+                    <td><Form.Control type="text" value="{track.trackTitle}"></Form.Control></td>
                     <td className="centered">
                         <label className="custom-checkbox">
                             <input type="checkbox" />
                             <span className="checkmark"></span>
                         </label>
                     </td>
-                    <td className="centered">{track.trackReleaseDate}</td>
+                    <td className="centered"><Form.Control type="date" value="{track.trackReleaseDate}"></Form.Control> </td>
                     <td className="centered">
                         <button className="btn btn-secondary action"><i className="material-icons">publish</i></button>
                         <button className="btn btn-secondary action"><i className="material-icons">delete</i></button>
                     </td>
                 </tr>
+               
            )
 
             return (
-                <table className="table">
+             <Form>
+                <Table>
                     <TrackInformationDataHeader />
                     <tbody>
                         {dataRows}
                     </tbody>
-                </table>
+                </Table>
+            </Form> 
             )
         }
     }
