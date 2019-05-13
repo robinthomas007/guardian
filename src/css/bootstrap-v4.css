@@ -1,9 +1,9 @@
 .noty_theme__bootstrap-v4.noty_bar {
-  margin: 4px 0;
+  margin: 0;
   overflow: hidden;
   position: relative;
   border: 1px solid transparent;
-  border-radius: .25rem; }
+  border-radius: 0; }
   .noty_theme__bootstrap-v4.noty_bar .noty_body {
     padding: .75rem 1.25rem; }
   .noty_theme__bootstrap-v4.noty_bar .noty_buttons {
