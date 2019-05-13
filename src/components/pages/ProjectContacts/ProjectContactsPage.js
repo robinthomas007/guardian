@@ -3,6 +3,7 @@ import {Table, Grid, Button, Form } from 'react-bootstrap';
 import PageHeader from '../PageHeader/PageHeader';
 import { withRouter } from "react-router";
 import './ProjectContacts.css';
+import Noty from 'noty'
 
 class ProjectSecurityInput extends Component {
 
@@ -61,7 +62,24 @@ class ProjectContactsPage extends Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.showNotification = this.showNotification.bind(this);
     }
+
+    showNotification(e){
+        e.preventDefault();
+        new Noty ({
+        type: 'success',
+        id:'projectSaved',
+        text: 'Your project has been successfully saved',
+        theme: 'bootstrap-v4',
+        layout: 'top',
+        timeout: '2000',
+        }).on('afterShow', function() {
+          // this.props.history.push('/audioFiles')
+         }).show()
+    
+
+        };
 
     handleChange(event) {
         this.setState( {formInputs : { ...this.state.formInputs, [event.target.id] : event.target.value}} )
@@ -136,7 +154,9 @@ class ProjectContactsPage extends Component {
                 localStorage.removeItem('projectData')
 
                 //alert('Your Project has been saved!')
-                this.props.history.push('/audioFiles')
+                this.showNotification(event);
+
+                
 
             }
         )

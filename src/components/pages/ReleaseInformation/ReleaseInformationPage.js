@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import UUID from 'uuid';
 
+
 class ReleasingLabelsInput extends Component {
 
     constructor(props) {
