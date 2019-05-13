@@ -13,7 +13,6 @@ class AudioFilesPage extends Component {
 
         const AudioVideoDataHeader = () => {
             return(
-                
                 <thead>
                     <tr>
                         <th className="centered">#</th>
@@ -52,7 +51,9 @@ class AudioFilesPage extends Component {
 
         return(
             <section className="page-container h-100">
+                
                 <HaveAudioModal />
+
                 <PageHeader />
 
                 <div className="row no-gutters step-description">
