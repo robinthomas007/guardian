@@ -13,6 +13,7 @@ import FindProject from './pages/FindProject/FindProjectPage';
 import { withAuth } from '@okta/okta-react';
 import UUID from 'uuid';
 
+
 export default withAuth(class Content extends Component {
 
   constructor(props) {
