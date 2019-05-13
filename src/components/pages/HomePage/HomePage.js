@@ -32,8 +32,8 @@ class HomePage extends Component {
                     <h1>WELCOME TO THE GUARDIAN</h1>
                     <h2>CONTENT PROTECTION, LEAK DETECTION &amp; ANTI-PIRACY</h2>
                     <span>
-                        <button className="access btn">Request Access</button>
-                        <button className="log-in btn" onClick={this.login}>Log In</button>
+                        <button id="loginRequestAccess" className="access btn">Request Access</button>
+                        <button id="loginLogIn" className="log-in btn" onClick={this.login}>Log In</button>
                     </span>
                 </section>
     
