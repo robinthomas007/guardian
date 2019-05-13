@@ -70,10 +70,10 @@ class ProjectContactsPage extends Component {
         new Noty ({
         type: 'success',
         id:'projectSaved',
-        text: 'Your project has been successfully saved',
+        text: 'Your project has been successfully saved!',
         theme: 'bootstrap-v4',
         layout: 'top',
-        timeout: '2000',
+        timeout: '3000',
         }).on('afterShow', function() {
           // this.props.history.push('/audioFiles')
          }).show()
