@@ -16,14 +16,14 @@ const TrackInformationPage = (props) => {
                 return(
                     <thead>
                         <tr>
-                            <th className="td-2 centered">#</th>
-                            <th className="td-2"></th>
-                            <th className="td-5"></th>
-                            <th className="td-30">ISRC <i>(Optional)</i></th>
-                            <th className="td-30">Track Title</th>
-                            <th className="td-10 centered">Single</th>
-                            <th className="td-10 centered">Release Date</th>
-                            <th className="td-10 centered">Actions</th>
+                            <th className="text-center">#</th>
+                            <th className="text-center"></th>
+                            <th className="text-center"></th>
+                            <th className="">ISRC <i>(Optional)</i></th>
+                            <th className="">Track Title</th>
+                            <th className="text-center">Single</th>
+                            <th>Release Date</th>
+                            <th className="text-center">Actions</th>
                         </tr>
                     </thead>
                 )
@@ -31,19 +31,19 @@ const TrackInformationPage = (props) => {
 
             const dataRows = mockData.pages.TrackInformation.tracks.map( (track, i) =>
               <tr key={i}>
-                    <td className="centered">{track.trackSequence}</td>
-                    <td><i className="material-icons">format_line_spacing</i></td>
-                    <td className="centered"><i className="material-icons purple-icon">audiotrack</i></td>
-                    <td><Form.Control type="text" value={track.trackISRC}></Form.Control></td>
-                    <td><Form.Control type="text" value={track.trackTitle}></Form.Control></td>
-                    <td className="centered">
+                    <td className="align-middle text-center">{track.trackSequence}</td>
+                    <td className="align-middle text-center"><i className="material-icons">format_line_spacing</i></td>
+                    <td className="align-middle text-center"><i className="material-icons purple-icon">audiotrack</i></td>
+                    <td className="align-middle"><Form.Control type="text" value={track.trackISRC}></Form.Control></td>
+                    <td className="align-middle"><Form.Control type="text" value={track.trackTitle}></Form.Control></td>
+                    <td className="align-middle text-center">
                         <label className="custom-checkbox">
                             <input type="checkbox" />
                             <span className="checkmark"></span>
                         </label>
                     </td>
-                    <td className="centered"><Form.Control type="date" value={track.trackReleaseDate}></Form.Control> </td>
-                    <td className="centered">
+                    <td><Form.Control type="date" value={track.trackReleaseDate}></Form.Control></td>
+                    <td className="align-middle text-center">
                         <button className="btn btn-secondary action"><i className="material-icons">publish</i></button>
                         <button className="btn btn-secondary action"><i className="material-icons">delete</i></button>
                     </td>
@@ -52,14 +52,15 @@ const TrackInformationPage = (props) => {
            )
 
             return (
-             <Form>
+          
+            <div className="table-responsive">
                 <Table>
                     <TrackInformationDataHeader />
                     <tbody>
                         {dataRows}
                     </tbody>
                 </Table>
-            </Form> 
+           </div>
             )
         }
     }
