@@ -138,17 +138,17 @@ class FindProjectPage extends Component {
 			return Object.keys(projects).map(function(project, i) {
 				return(
 					<tr className="d-flex" key={i} onClick={() => this.handleRowClick(projects[project].projectID)}>
-						<td className="col-2 align-middle">{projects[project].projectTitle}</td>
-						<td className="col-2 align-middle">{projects[project].projectArtistName}</td>
-						<td className="col-2 align-middle">{projects[project].projectReleasingLabel}</td>
-						<td className="col-1 align-middle text-center">{projects[project].projectLastModified}</td>
-						<td className="col-1 align-middle status text-nowrap"><span>In Progress</span></td>
-						<td className="status align-middle text-center">{checkStepStatus(projects[project].isStep1Complete)}</td>
-						<td className="status align-middle text-center">{checkStepStatus(projects[project].isStep2Complete)}</td>
-						<td className="status align-middle text-center">{checkStepStatus(projects[project].isStep3Complete)}</td>
-						<td className="status align-middle text-center">{checkStepStatus(projects[project].isStep4Complete)}</td>
-						<td className="status align-middle text-center">{checkStepStatus(projects[project].isStep5Complete)}</td>
-						<td className="status align-middle text-center">{checkStepStatus(projects[project].isStep6Complete)}</td>
+						<td className="col-2">{projects[project].projectTitle}</td>
+						<td className="col-2">{projects[project].projectArtistName}</td>
+						<td className="col-2">{projects[project].projectReleasingLabel}</td>
+						<td className="col-1 text-center">{projects[project].projectLastModified}</td>
+						<td className="col-1 status text-nowrap"><span>In Progress</span></td>
+						<td className="status text-center">{checkStepStatus(projects[project].isStep1Complete)}</td>
+						<td className="status text-center">{checkStepStatus(projects[project].isStep2Complete)}</td>
+						<td className="status text-center">{checkStepStatus(projects[project].isStep3Complete)}</td>
+						<td className="status text-center">{checkStepStatus(projects[project].isStep4Complete)}</td>
+						<td className="status text-center">{checkStepStatus(projects[project].isStep5Complete)}</td>
+						<td className="status text-center">{checkStepStatus(projects[project].isStep6Complete)}</td>
 					</tr>
 				)
 			}.bind(this))

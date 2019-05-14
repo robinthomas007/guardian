@@ -19,8 +19,8 @@ const TrackInformationPage = (props) => {
                             <th className="text-center">#</th>
                             <th className="text-center"></th>
                             <th className="text-center"></th>
-                            <th className="">ISRC <i>(Optional)</i></th>
-                            <th className="">Track Title</th>
+                            <th>ISRC <i>(Optional)</i></th>
+                            <th>Track Title</th>
                             <th className="text-center">Single</th>
                             <th>Release Date</th>
                             <th className="text-center">Actions</th>
@@ -31,19 +31,19 @@ const TrackInformationPage = (props) => {
 
             const dataRows = mockData.pages.TrackInformation.tracks.map( (track, i) =>
               <tr key={i}>
-                    <td className="align-middle text-center">{track.trackSequence}</td>
-                    <td className="align-middle text-center"><i className="material-icons">format_line_spacing</i></td>
-                    <td className="align-middle text-center"><i className="material-icons purple-icon">audiotrack</i></td>
-                    <td className="align-middle"><Form.Control type="text" value={track.trackISRC}></Form.Control></td>
-                    <td className="align-middle"><Form.Control type="text" value={track.trackTitle}></Form.Control></td>
-                    <td className="align-middle text-center">
+                    <td className="text-center">{track.trackSequence}</td>
+                    <td className="text-center"><i className="material-icons">format_line_spacing</i></td>
+                    <td className="text-center"><i className="material-icons purple-icon">audiotrack</i></td>
+                    <td><Form.Control type="text" value={track.trackISRC}></Form.Control></td>
+                    <td><Form.Control type="text" value={track.trackTitle}></Form.Control></td>
+                    <td className="text-center">
                         <label className="custom-checkbox">
                             <input type="checkbox" />
                             <span className="checkmark"></span>
                         </label>
                     </td>
                     <td><Form.Control type="date" value={track.trackReleaseDate}></Form.Control></td>
-                    <td className="align-middle text-center">
+                    <td className="text-center">
                         <button className="btn btn-secondary action"><i className="material-icons">publish</i></button>
                         <button className="btn btn-secondary action"><i className="material-icons">delete</i></button>
                     </td>
