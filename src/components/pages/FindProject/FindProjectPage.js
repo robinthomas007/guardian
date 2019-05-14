@@ -72,9 +72,19 @@ class TablePager extends Component {
 		}
 	}
 
+	componentDidUpdate() {
+		let buttonCount = Math.ceil( parseInt(this.props.totalItems) / parseInt(this.props.itemsPerPage))
+		const pageValue = parseInt(this.state.activePage) - 1
+
+
+
+		if (pageValue > buttonCount) {
+			this.setState({activePage : buttonCount })
+			this.props.handlePaginationChange(buttonCount)
+		}
+	}
+
 	render() {
-
-
 		const buttonCount = Math.ceil( parseInt(this.props.totalItems) / parseInt(this.props.itemsPerPage))
 		const paginationItems = []
 		let pagerStart = this.state.pagerStart
