@@ -18,6 +18,7 @@
 
 	 /* Custom Checkbox Inputs*/
 	input[type="checkbox"] {height:22px; width:22px;}
+	input[type="date"] {width:160px;}
 	label.custom-checkbox {margin-bottom:0; overflow:hidden;} /* Keep it vertically aligned in table rows */
 	.custom-checkbox {display: block; position: relative;  height: 25px; width: 25px; margin:0 auto; overflow:hidden; cursor: pointer; font-size: 22px; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;}
 	.custom-checkbox input {position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0;} /* Hides the browsers version */
@@ -58,7 +59,7 @@
 
 	.table thead {box-shadow:0px 3px 3px #F5F5F5; z-index:1;}
 	.table thead th {border-bottom:1px solid #dee2e6;}
-	.table td, .table th {border-top:none; border-bottom:1px solid #dee2e6; vertical-align:middle; padding:.50rem}
+	.table td, .table th {border-top:none; border-bottom:1px solid #dee2e6; padding:.50rem}
 
 	/* Table Column widths no longer supported in Bootstrap 4 reliably */
 	
@@ -75,8 +76,6 @@
 	.td-80 {max-width:80%;}
 	.td-90 {max-width:90%;}
 
-	.centered {text-align:center;}
-
 	h3 .material-icons {font-size:1.2em; margin-left:10px; cursor:pointer;}
 	.material-icons {display:inline-flex; vertical-align:middle;}
 	.purple-icon {color:#c208bb;}
@@ -88,7 +87,7 @@
 
 
 	/* External Template */
-	.logo {position:fixed; height:102px; width:110px; margin: 20px;}
+	.logo {position:fixed; height:102px; width:110px; margin:20px;}
 	
 	nav.top-nav.ext {width:100%; text-align:right;}
 	nav.top-nav.ext ul {list-style:none; margin:0 40px 0 0; padding:0;}
