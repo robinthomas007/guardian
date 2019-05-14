@@ -68,12 +68,12 @@ class ProjectContactsPage extends Component {
     showNotification(e){
         e.preventDefault();
         new Noty ({
-        type: 'success',
-        id:'projectSaved',
-        text: 'Your project has been successfully saved',
-        theme: 'bootstrap-v4',
-        layout: 'top',
-        timeout: '2000',
+            type: 'success',
+            id:'projectSaved',
+            text: 'Your project has been successfully saved',
+            theme: 'bootstrap-v4',
+            layout: 'top',
+            timeout: '2000',
         }).on('afterShow', function() {
           // this.props.history.push('/audioFiles')
          }).show()

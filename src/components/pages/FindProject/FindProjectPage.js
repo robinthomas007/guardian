@@ -13,25 +13,82 @@ class TablePager extends Component {
 			limit :  5,
 			pageCount : this.props.items,
 			totalItems : this.props.totalItems,
-			itemsPerPage : this.props.itemsPerPage
+			itemsPerPage : this.props.itemsPerPage,
+			pagerStart : 0,
+			pagerEnd : 5
+		}
+
+		this.handlePageClick = this.handlePageClick.bind(this);
+		this.handlePageNextClick = this.handlePageNextClick.bind(this);
+		this.handlePagePreviousClick = this.handlePagePreviousClick.bind(this);
+	}
+
+	handlePageClick(e) {
+		const pageValue = parseInt(e.target.innerHTML)
+		this.setState({activePage : pageValue })
+		this.props.handlePaginationChange(pageValue)
+	}
+
+	handlePageNextClick() {
+		const pageValue = parseInt(this.state.activePage) + 1
+		let buttonCount = Math.ceil( parseInt(this.props.totalItems) / parseInt(this.props.itemsPerPage))
+		let pagerStart = this.state.pagerStart
+		let pagerEnd = parseInt(this.state.pagerEnd)
+
+		if(pageValue <= buttonCount) {
+			this.setState({activePage : pageValue })
+			this.props.handlePaginationChange(pageValue)
+		} else if(pageValue < 1) {
+			this.setState({pagerStart : pageValue })
+		} else if ( (pageValue > pagerStart) && (pageValue < buttonCount) ){
+			this.setState({pagerStart : pageValue})
+		} 
+
+		if ( (pageValue >= pagerEnd) && buttonCount > pagerEnd) {
+			this.setState({pagerStart : pageValue - 3})
+			this.setState({pagerEnd : pageValue + 2})
+		} 
+	}
+
+	handlePagePreviousClick() {
+		const pageValue = parseInt(this.state.activePage) - 1
+		let buttonCount = Math.ceil( parseInt(this.props.totalItems) / parseInt(this.props.itemsPerPage))
+		let pagerStart = this.state.pagerStart
+		let pagerEnd = parseInt(this.state.pagerEnd)
+		let newPagerStart = (buttonCount - pagerStart)
+
+		if(buttonCount > this.state.limit)  {
+			buttonCount = this.state.limit
+		}
+
+		if(pageValue > 0) {
+			this.setState({activePage : pageValue })
+			this.props.handlePaginationChange(pageValue)
+		} 
+
+		if ( (pageValue <= pagerStart) && buttonCount > pagerStart) {
+			this.setState({pagerStart : 0})
+			this.setState({pagerEnd : buttonCount})
 		}
 	}
 
 	render() {
+
+
 		const buttonCount = Math.ceil( parseInt(this.props.totalItems) / parseInt(this.props.itemsPerPage))
 		const paginationItems = []
+		let pagerStart = this.state.pagerStart
+		let pagerEnd = (buttonCount > this.state.pagerEnd) ? this.state.pagerEnd : buttonCount
 
-		for (var i = 0; i < buttonCount; i++) {
-			paginationItems.push(<Pagination.Item key={i} onClick={this.props.handlePaginationChange}>{i + 1}</Pagination.Item>);
+		for (var i = pagerStart; i < pagerEnd; i++) {
+			paginationItems.push(<Pagination.Item key={i + 1} className={this.state.activePage === i+1 ? 'active' : ''} onClick={this.handlePageClick}>{i + 1}</Pagination.Item>);
 		}
 
 		return(
-			<Pagination activepage={this.state.activePage} items={1} limit={5}>
-				<Pagination.First onClick={this.props.handlePaginationChange} />
-				<Pagination.Prev onClick={this.props.handlePaginationChange} />
+			<Pagination activepage={this.state.activePage} items={5} limit={5}>
+				<Pagination.Prev onClick={this.handlePagePreviousClick} />
 				{paginationItems}
-				<Pagination.Next onClick={this.props.handlePaginationChange}/>
-				<Pagination.Last onClick={this.props.handlePaginationChange} />
+				<Pagination.Next onClick={this.handlePageNextClick}/>
 			</Pagination>
 		)
 	}
@@ -168,9 +225,9 @@ class FindProjectPage extends Component {
 		});
 	}
 
-	handlePaginationChange(e) {
-		const page = parseInt(e.target.innerHTML)
-		this.setState(currentState => ({searchCriteria : { ...this.state.searchCriteria, 'pageNumber' : page}}), () => {
+	handlePaginationChange(newPage) {
+		const page = (parseInt(newPage) -1 )
+		this.setState(currentState => ({searchCriteria : { ...this.state.searchCriteria, 'pageNumber' : newPage}}), () => {
 			this.handleProjectSearch()
 		});
 	}
@@ -243,7 +300,15 @@ class FindProjectPage extends Component {
 					<span>Viewing</span>
 					
 					<div className="dropdown show">
-						<a className="btn btn-secondary dropdown-toggle" href="#" role="button" id="viewCountdropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<a 
+							className="btn btn-secondary dropdown-toggle" 
+							href="#" 
+							role="button" 
+							id="viewCountdropdown" 
+							data-toggle="dropdown" 
+							aria-haspopup="true" 
+							aria-expanded="false"
+						>
 							{this.state.searchCriteria.itemsPerPage}
 						</a>
 						<div className="dropdown-menu" aria-labelledby="viewCountdropdown">
@@ -262,6 +327,7 @@ class FindProjectPage extends Component {
 								totalItems={this.state.searchResultsCount} 
 								itemsPerPage={this.state.searchCriteria.itemsPerPage}
 								handlePaginationChange={this.handlePaginationChange}
+								projectViewCount={this.state.searchCriteria.itemsPerPage}
 							/>
 						</nav>
 					</li>
