@@ -1,9 +1,9 @@
 .noty_theme__bootstrap-v4.noty_bar {
-  margin: 4px 0;
+  margin: 0;
   overflow: hidden;
   position: relative;
   border: 1px solid transparent;
-  border-radius: .25rem; }
+  border-radius: 0; }
   .noty_theme__bootstrap-v4.noty_bar .noty_body {
     padding: .75rem 1.25rem; }
   .noty_theme__bootstrap-v4.noty_bar .noty_buttons {
@@ -46,6 +46,10 @@
   border-color: #bce8f1; }
 
 .noty_theme__bootstrap-v4.noty_type__success {
-  background-color: #80d8ff;
-  color: #333;
-  border-color: #80d8ff; }
+  background-color:#01579b;
+  color:#fff;
+  border-color: #01579b;
+  text-align:center;
+  font-size:1.2em;
+  box-shadow:3px 3px 3px #333;
+}

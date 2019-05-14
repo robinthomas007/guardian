@@ -194,12 +194,12 @@ class FindProjectPage extends Component {
 		if(projects) {
 			return Object.keys(projects).map(function(project, i) {
 				return(
-					<tr key={i} onClick={() => this.handleRowClick(projects[project].projectID)}>
-						<td>{projects[project].projectTitle}</td>
-						<td>{projects[project].projectArtistName}</td>
-						<td>{projects[project].projectReleasingLabel}</td>
-						<td className="text-nowrap centered">{projects[project].projectLastModified}</td>
-						<td className="status text-nowrap"><span>In Progress</span></td>
+					<tr className="d-flex" key={i} onClick={() => this.handleRowClick(projects[project].projectID)}>
+						<td className="col-2">{projects[project].projectTitle}</td>
+						<td className="col-2">{projects[project].projectArtistName}</td>
+						<td className="col-2">{projects[project].projectReleasingLabel}</td>
+						<td className="col-1 centered">{projects[project].projectLastModified}</td>
+						<td className="col-1 status text-nowrap"><span>In Progress</span></td>
 						<td className="status centered">{checkStepStatus(projects[project].isStep1Complete)}</td>
 						<td className="status centered">{checkStepStatus(projects[project].isStep2Complete)}</td>
 						<td className="status centered">{checkStepStatus(projects[project].isStep3Complete)}</td>
@@ -333,22 +333,21 @@ class FindProjectPage extends Component {
 					</li>
 					<li className="col-4 d-flex"></li>
 				</ul>
-
-			<div className="table-responsive">
+<div className="table-responsive">
 				<Table>
 					<thead>
-						<tr>
-							<th className="w-15 text-nowrap">Project Title</th>
-							<th className="w-10">Artist</th>
-							<th className="w-5">Label</th>
-							<th className="w-5 centered text-nowrap">Last Update</th>
-							<th className="w-5">Status</th>
-							<th className="centered">Project</th>
-							<th className="centered">Contacts</th>
-							<th className="centered">Audio</th>
-							<th className="centered">Tracks</th>
-							<th className="centered">Territories</th>
-							<th className="centered">Blocking</th>
+						<tr className='d-flex'>
+							<th className="col-2 text-nowrap">Project Title</th>
+							<th className="col-2">Artist</th>
+							<th className="col-2">Label</th>
+							<th className="col-1 centered">Last Update</th>
+							<th className="col-1">Status</th>
+							<th className="status centered">Project</th>
+							<th className="status centered">Contacts</th>
+							<th className="status centered">Audio</th>
+							<th className="status centered">Tracks</th>
+							<th className="status centered">Territories</th>
+							<th className="status centered">Blocking</th>
 						</tr>
 					</thead>
 					<tbody>
