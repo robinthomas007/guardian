@@ -64,6 +64,7 @@ class ProjectContactsPage extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.showNotification = this.showNotification.bind(this);
     }
+    
 
     showNotification(e){
         new Noty ({

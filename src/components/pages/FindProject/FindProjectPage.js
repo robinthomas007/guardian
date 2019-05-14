@@ -271,7 +271,44 @@ class FindProjectPage extends Component {
 				<ul className="row search-row">
 					<li className="col-2 d-flex"></li>
 					<li className="col-8 d-flex justify-content-center">
-						<button className="btn btn-secondary" type="button"><i className="material-icons">settings</i> Filters</button>
+						<div class="dropdown">
+						<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<i className="material-icons">settings</i> Filters
+						</button>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+							<Form>
+								<ul>
+									<li>Search Filters</li>
+									<li>
+										<label>By Label</label>
+										<div class="dropdown">
+
+										</div>
+									</li>
+									<li>
+										<label>By Status</label>
+										<div class="dropdown">
+
+										</div>
+									</li>
+									<li>
+										<label>Has Audio</label>
+									</li>
+									<li>
+										<label>Has Blocking</label>
+									</li>
+									<li>
+										<label>Last Updated</label><br />
+										<label>From</label><br />
+										<input type="date" /><br />
+										<label>To</label><br />
+										<input type="date" />
+									</li>
+								</ul>
+							</Form>
+						</div>
+						</div>
+						
 						<input 
 							id="projectSearchInput" 
 							className="form-control" 
