@@ -79,6 +79,16 @@ class ProjectContactsPage extends Component {
         ).show()
     };
 
+    showNotSavedNotification(e){
+        new Noty ({
+            type: 'error',
+            id:'projectSaved',
+            text: 'Your project has NOT been successfully saved',
+            theme: 'bootstrap-v4',
+            layout: 'top',
+            timeout: '3000'
+        }).show()
+    };
 
     handleChange(event) {
         this.setState( {formInputs : { ...this.state.formInputs, [event.target.id] : event.target.value}} )
@@ -131,11 +141,14 @@ class ProjectContactsPage extends Component {
             {
                 console.log(responseJSON)
 
-                //clear the local storage
-                localStorage.removeItem('projectData')
-
-                //alert('Your Project has been saved!')
-                this.showNotification(event)
+                if(responseJSON.errorMessage) {
+                    this.showNotSavedNotification(event)
+                } else {
+                    this.showNotification(event)
+                    
+                    //clear the local storage
+                    localStorage.removeItem('projectData')
+                }
             }
         )
         .catch(
