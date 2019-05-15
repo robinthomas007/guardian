@@ -11,7 +11,7 @@ class ReviewAndSubmitPage extends Component {
             projectID : props.projectID
         }
 
-        this.handleReleaseInformationClick = this.handleReleaseInformationClick.bind(this);
+        this.handleProjectCategoryClick = this.handleProjectCategoryClick.bind(this);
     };
 
 
@@ -60,9 +60,14 @@ class ReviewAndSubmitPage extends Component {
         );
     }
 
-    handleReleaseInformationClick() {
-        console.log(this.props.match.params.projectID)
+    handleProjectCategoryClick() {
+        console.log('Load Info for: ' + this.props.match.params.projectID)
     }
+
+    handleSaveAndContinueClick() {
+        alert('save and continue')
+    }
+
 
     render() {
         return(
@@ -78,7 +83,7 @@ class ReviewAndSubmitPage extends Component {
                         </div>
                     </div>
                 </section>
-                <section className="page-container review-section" onClick={this.handleReleaseInformationClick}>
+                <section className="page-container review-section" onClick={this.handleProjectCategoryClick}>
                     <div className="row no-gutters">
                         <div className="col-10 justify-content-start">
                             <h2>Release Information</h2>
@@ -117,7 +122,7 @@ class ReviewAndSubmitPage extends Component {
                     </div>
                 </section>
             
-                <section className="page-container review-section" onClick="location.href = 'project-contacts.html'">
+                <section className="page-container review-section" onClick={this.handleProjectCategoryClick}>
                     <div className="row no-gutters">
                         <div className="col-10 justify-content-start">
                             <h2>Project Contacts</h2>
@@ -143,7 +148,7 @@ class ReviewAndSubmitPage extends Component {
                     </div>
                 </section>
             
-                <section className="page-container review-section" onClick="location.href = 'track-information.html'">
+                <section className="page-container review-section" onClick={this.handleProjectCategoryClick}>
                     <div className="row no-gutters">
                         <div className="col-10 justify-content-start">
                         <h2>Audio Files &amp; Track Information</h2>
@@ -199,7 +204,7 @@ class ReviewAndSubmitPage extends Component {
                 </div>
             </section>
             
-            <section className="page-container review-section" onClick="location.href = 'track-information.html'">
+            <section className="page-container review-section" onClick={this.handleProjectCategoryClick}>
                 <div className="row no-gutters">
                     <div className="col-10 justify-content-start">
                     <h2>Territorial Rights</h2>
@@ -237,7 +242,7 @@ class ReviewAndSubmitPage extends Component {
                 </div>
             </section>
             
-            <section className="page-container review-section" onClick="location.href = 'track-information.html'">
+            <section className="page-container review-section" onClick={this.handleProjectCategoryClick}>
                 <div className="row no-gutters">
                     <div className="col-10 justify-content-start">
                     <h2>Blocking Polices</h2>
@@ -251,8 +256,8 @@ class ReviewAndSubmitPage extends Component {
                         <table className="table">
                             <thead>
                                 <tr>
-                                    <th className="align-text-bottom" nowrap>Blocking Policy Name</th>
-                                    <th className="align-text-bottom" nowrap>Tracks With This Policy</th>
+                                    <th className="align-text-bottom" nowrap="nowrap">Blocking Policy Name</th>
+                                    <th className="align-text-bottom" nowrap="nowrap">Tracks With This Policy</th>
                                     <th className="align-items-center"><span className="platform-sprite small youtube"></span></th>
                                     <th className="align-items-center"><span className="platform-sprite small soundcloud"></span></th>
                                     <th className="align-items-center"><span className="platform-sprite small facebook"></span></th>
@@ -262,15 +267,15 @@ class ReviewAndSubmitPage extends Component {
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td nowrap>Blocking Policy 1</td>
-                                    <td className="" nowrap>Track Name 1</td>
-                                    <td className="align-items-center" nowrap>Leave Up All</td>
-                                    <td className="align-items-center" nowrap>Block &lt; 30 Sec</td>
-                                    <td className="align-items-center" nowrap>Block All<br />
+                                    <td nowrap="nowrap">Blocking Policy 1</td>
+                                    <td className="" nowrap="nowrap">Track Name 1</td>
+                                    <td className="align-items-center" nowrap="nowrap">Leave Up All</td>
+                                    <td className="align-items-center" nowrap="nowrap">Block &lt; 30 Sec</td>
+                                    <td className="align-items-center" nowrap="nowrap">Block All<br />
                                     <span className="block-date">Until 12/28/2019</span>
                                     </td>
-                                    <td className="align-items-center" nowrap>Leave Up All</td>
-                                    <td className="align-items-center" nowrap>Leave Up All</td>
+                                    <td className="align-items-center" nowrap="nowrap">Leave Up All</td>
+                                    <td className="align-items-center" nowrap="nowrap">Leave Up All</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -282,7 +287,7 @@ class ReviewAndSubmitPage extends Component {
                     <div className="col-9"></div>
                     <div className="col-3 align-content-end">
                         <button type="button" className="btn btn-secondary">Save</button>
-                        <button type="button" className="btn btn-primary" onClick="location.href = 'project-contacts.html'">Save &amp; Continue</button>
+                        <button type="button" className="btn btn-primary" onClick={this.handleSaveAndContinueClick}>Save &amp; Continue</button>
                     </div>
                 </section>
             </section>

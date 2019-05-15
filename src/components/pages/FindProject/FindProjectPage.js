@@ -75,9 +75,15 @@ class TablePager extends Component {
 	componentDidUpdate() {
 		let buttonCount = Math.ceil( parseInt(this.props.totalItems) / parseInt(this.props.itemsPerPage))
 		const pageValue = parseInt(this.state.activePage) - 1
+
+
+		console.log(pageValue + ' : ' + buttonCount)
+
+
 		if (pageValue > buttonCount) {
-			this.setState({activePage : buttonCount })
-			this.props.handlePaginationChange(buttonCount)
+			this.setState(currentState => ({activePage : buttonCount }), () => {
+				this.props.handlePaginationChange(this.state.activePage)
+			});
 		}
 	}
 
@@ -238,8 +244,6 @@ class FindProjectPage extends Component {
 			this.handleProjectSearch()
 		});
 	}
-
-
 
     render() {
 
