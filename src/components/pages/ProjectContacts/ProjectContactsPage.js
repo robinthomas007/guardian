@@ -67,20 +67,18 @@ class ProjectContactsPage extends Component {
     
 
     showNotification(e){
-        e.preventDefault();
         new Noty ({
             type: 'success',
             id:'projectSaved',
             text: 'Your project has been successfully saved',
             theme: 'bootstrap-v4',
             layout: 'top',
-            timeout: '2000',
-        }).on('afterShow', function() {
-          // this.props.history.push('/audioFiles')
-         }).show()
-    
+            timeout: '3000'
+        }).on('afterClose', ()  =>
+            this.props.history.push('/audioFiles')
+        ).show()
+    };
 
-        };
 
     handleChange(event) {
         this.setState( {formInputs : { ...this.state.formInputs, [event.target.id] : event.target.value}} )
@@ -103,18 +101,9 @@ class ProjectContactsPage extends Component {
     }
 
     handleSubmit(event) {
-        
-        event.preventDefault();
-        this.props.history.push('/AudioFiles')
-
         const releaseInformationInputs = JSON.parse(localStorage.getItem('projectData'))
         const user = JSON.parse(sessionStorage.getItem('user'))
-        
-        console.log('--- TWO FORM INPUTS ----')
-        console.log(JSON.stringify({...releaseInformationInputs, ...this.state.formInputs}))
-        console.log('------------------------')
 
-        
         const fetchHeaders = new Headers(
             {
                 "Content-Type": "application/json",
@@ -128,15 +117,6 @@ class ProjectContactsPage extends Component {
             },
             "Project" : {...releaseInformationInputs, ...this.state.formInputs}
         })
-
-
-        console.log('--------------------------')
-        console.log('HEADERS:')
-        console.log(fetchHeaders)
-
-        console.log('BODY:')
-        console.log(fetchBody)
-        console.log('--------------------------')
 
         fetch ('https://api-dev.umusic.net/guardian/project', {
             method : 'POST',
@@ -155,10 +135,7 @@ class ProjectContactsPage extends Component {
                 localStorage.removeItem('projectData')
 
                 //alert('Your Project has been saved!')
-                this.showNotification(event);
-
-                
-
+                this.showNotification(event)
             }
         )
         .catch(
