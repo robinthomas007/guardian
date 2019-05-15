@@ -279,34 +279,56 @@ class FindProjectPage extends Component {
 						<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							<i className="material-icons">settings</i> Filters
 						</button>
-						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+						<div class="dropdown-menu search-filters" aria-labelledby="dropdownMenuButton">
 							<Form>
 								<ul>
 									<li>Search Filters</li>
 									<li>
 										<label>By Label</label>
 										<div class="dropdown">
-
+										<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											Dropdown button
+										</button>
+										<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+											<a class="dropdown-item" href="#">Action</a>
+											<a class="dropdown-item" href="#">Another action</a>
+											<a class="dropdown-item" href="#">Something else here</a>
+										</div>
 										</div>
 									</li>
 									<li>
 										<label>By Status</label>
 										<div class="dropdown">
-
+										<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											Dropdown button
+										</button>
+										<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+											<a class="dropdown-item" href="#">Action</a>
+											<a class="dropdown-item" href="#">Another action</a>
+											<a class="dropdown-item" href="#">Something else here</a>
+										</div>
 										</div>
 									</li>
 									<li>
 										<label>Has Audio</label>
+										<label className="custom-checkbox">
+											<input type="checkbox" />
+											<span className="checkmark"></span>
+										</label>
 									</li>
 									<li>
 										<label>Has Blocking</label>
+										<label className="custom-checkbox">
+											<input type="checkbox" />
+											<span className="checkmark"></span>
+										</label>
 									</li>
 									<li>
 										<label>Last Updated</label><br />
 										<label>From</label><br />
-										<input type="date" /><br />
+										<Form.Control type="date" /><br />
 										<label>To</label><br />
-										<input type="date" />
+										<Form.Control type="date" />
 									</li>
 								</ul>
 							</Form>

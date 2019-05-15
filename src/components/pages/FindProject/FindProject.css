@@ -20,3 +20,4 @@
 
 	table tbody tr:hover, table tbody tr:hover td {cursor:pointer; background-color: #d9f3fe!important; transition: background-color 0.3s linear; }
 	
+	div.dropdown-menu.search-filters {font-size:.8rem;}
