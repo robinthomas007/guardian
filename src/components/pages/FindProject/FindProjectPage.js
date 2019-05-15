@@ -361,9 +361,9 @@ class FindProjectPage extends Component {
 			<section className="page-container">
 			
 			
-				<ul className="row no-gutters results-controls">
+				<ul className="row results-controls">
 					<li className="col-4 d-flex">
-					<span>Viewing</span>
+					<span className="viewing">Viewing</span>
 					
 					<div className="dropdown show">
 						<a 
@@ -384,7 +384,7 @@ class FindProjectPage extends Component {
 						</div>
 					</div>
 					
-					<span>of {this.state.searchResultsCount} Results</span>
+					<span className="viewing">of {this.state.searchResultsCount} Results</span>
 					</li>
 					<li className="col-4 d-flex justify-content-center">
 						<nav aria-label="Page navigation example">
