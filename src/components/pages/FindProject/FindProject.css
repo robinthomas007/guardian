@@ -15,9 +15,13 @@
 	td.status i {font-size:20px; color:#ff0000;}
 	
 	ul.results-controls {list-style:none; margin:0; padding:0; margin-bottom:30px;}
-	ul.results-controls .dropdown {margin:auto 6px;}
-	ul.results-controls span {margin-bottom:-60px;}
+	ul.results-controls .dropdown {margin:auto 6px; }
+	ul.results-controls .dropdown .dropdown-toggle, ul.results-controls .dropdown .dropdown-menu {color:#01578B; font-size:.9rem;}
+	ul.results-controls span.viewing {padding-top: 7px; margin-left:-8px; margin-right:-8px;}
+
+	.page-item.active .page-link {Background-color:#02578B;}
 
 	table tbody tr:hover, table tbody tr:hover td {cursor:pointer; background-color: #d9f3fe!important; transition: background-color 0.3s linear; }
 	
-	div.dropdown-menu.search-filters {font-size:.8rem;}
+	div.dropdown-menu.search-filters {font-size:.9rem;}
+	div.dropdown-menu.search-filters ul {margin:0; padding:20px;}
