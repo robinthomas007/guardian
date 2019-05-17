@@ -141,18 +141,21 @@ class ReleaseinformationPage extends Component {
             });
         } else {
             this.setState( {formInputAttributes : { ...this.state.formInputAttributes.projectReleaseDate, 'projectReleaseDate' : inputDisabledState}} )
+            this.handleChange(event)
         }
 
-        this.handleChange(event)
+        
     }
 
     handleChange(event) {
+
         let inputValue = '';
         if(event.target.type === 'checkbox') {
             inputValue = (event.target.checked) ? true : false;
         } else {
             inputValue = event.target.value
         }
+
         //this gets the inputs into the state.formInputs obj on change
         this.setState( {formInputs : { ...this.state.formInputs, [event.target.id] : inputValue}} )
         console.log(this.state.formInputs)
