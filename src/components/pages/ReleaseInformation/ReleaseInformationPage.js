@@ -6,7 +6,6 @@ import { withRouter } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import UUID from 'uuid';
 
-
 class ReleasingLabelsInput extends Component {
 
     constructor(props) {
@@ -91,17 +90,61 @@ class ReleaseinformationPage extends Component {
                     "projectReleaseDate" : '',
                     "projectReleaseDateTBD" : false,
                     "projectNotes" : ''
+                },
+
+                formInputAttributes : {
+                    "projectID" : {},
+                    "projectTitle" : {},
+                    "projectArtistName" : {},
+                    "projectTypeID" : {},
+                    "projectReleasingLabelID" : {},
+                    "projectReleaseDate" : {
+                        'disabled' : false
+                    },
+                    "projectReleaseDateTBD" : {
+                    },
+                    "projectNotes" : {}
                 }
             };
         } else {
             this.state = { 
-                formInputs : JSON.parse(localStorage.getItem("projectData"))
+                formInputs : JSON.parse(localStorage.getItem("projectData")),
+                formInputAttributes : {
+                    "projectID" : {},
+                    "projectTitle" : {},
+                    "projectArtistName" : {},
+                    "projectTypeID" : {},
+                    "projectReleasingLabelID" : {},
+                    "projectReleaseDate" : {
+                        'disabled' : false
+                    },
+                    "projectReleaseDateTBD" : {
+                    },
+                    "projectNotes" : {}
+                }
             };
         }
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleReleaseTBDChange = this.handleReleaseTBDChange.bind(this);
     };
+
+    handleReleaseTBDChange(event) {
+        const isChecked = event.target.checked
+        let inputDisabledState = {...this.state.formInputAttributes.projectReleaseDate}
+            inputDisabledState.disabled = isChecked
+
+        if(isChecked) {
+            this.setState(currentState => ({formInputs : { ...this.state.formInputs, 'projectReleaseDate' : ''}}), () => {
+                this.setState( {formInputAttributes : { ...this.state.formInputAttributes.projectReleaseDate, 'projectReleaseDate' : inputDisabledState}} )
+            });
+        } else {
+            this.setState( {formInputAttributes : { ...this.state.formInputAttributes.projectReleaseDate, 'projectReleaseDate' : inputDisabledState}} )
+        }
+
+        this.handleChange(event)
+    }
 
     handleChange(event) {
         let inputValue = '';
@@ -121,8 +164,8 @@ class ReleaseinformationPage extends Component {
         this.props.history.push('/projectContacts')
     };
 
-    componentDidMount() {
-        if(this.props.user && this.props.user.DefaultReleasingLabelID) {
+    componentDidUpdate() {
+        if(this.props.user && this.props.user.DefaultReleasingLabelID && (this.state.formInputs.projectReleasingLabelID !== this.props.user.DefaultReleasingLabelID)) {
             this.setState( {formInputs : { ...this.state.formInputs, "projectReleasingLabelID" : this.props.user.DefaultReleasingLabelID}} )
         }
     }
@@ -204,6 +247,7 @@ class ReleaseinformationPage extends Component {
                                         type='date' 
                                         value={this.state.formInputs.projectReleaseDate}
                                         onChange={this.handleChange}
+                                        disabled={this.state.formInputAttributes.projectReleaseDate.disabled}
                                     />
 
                                 <Form.Label className="col-form-label col-2 tbd">Release TBD</Form.Label>
@@ -212,7 +256,7 @@ class ReleaseinformationPage extends Component {
                                         className='form-control col-3' 
                                         type='checkbox' 
                                         value={this.state.formInputs.projectReleaseDateTBD}
-                                        onChange={this.handleChange}
+                                        onChange={this.handleReleaseTBDChange}
                                     />
                                     <span className="checkmark "></span>
                                 </label>
