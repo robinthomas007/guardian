@@ -280,31 +280,29 @@ class FindProjectPage extends Component {
 							<i className="material-icons">settings</i> Filters
 						</button>
 						<div className="dropdown-menu search-filters" aria-labelledby="dropdownMenuButton">
-						
-							<h5>Search Filters</h5>
-								<br />
 						<div className="row no-gutters">
 							<div className="col-2">
-							<label>By Label</label><br />
-							<label>Has Audio</label><br />
+								<label>By Label</label><br />
+								<label>Has Audio</label><br />
 							</div>
 							<div className="col-4">
 										<div class="dropdown">
-										<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-											Default Label
+										<button class="btn btn-secondary dropdown-toggle" type="button" id="labeldropdownMenuButton" data-toggle="filter-dropdown" aria-haspopup="true" aria-expanded="false">
+											No Filter
 										</button>
-										<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+										<div class="dropdown-menu" aria-labelledby="labeldropdownMenuButton">
+											<a class="dropdown-item" href="#">No Filter</a>
 											<a class="dropdown-item" href="#">Label 1</a>
 											<a class="dropdown-item" href="#">Label 2</a>
 											<a class="dropdown-item" href="#">Label 3</a>
 										</div>
 										</div>
 										<div class="dropdown">
-										<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-											No Selection
+										<button class="btn btn-secondary dropdown-toggle" type="button" id="audiodropdownMenuButton" data-toggle="audio-dropdown" aria-haspopup="true" aria-expanded="false">
+											No Filter
 										</button>
-										<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-											<a class="dropdown-item" href="#">No Selection</a>
+										<div class="dropdown-menu" aria-labelledby="audiodropdownMenuButton">
+											<a class="dropdown-item" href="#">No Filter</a>
 											<a class="dropdown-item" href="#">Has Audio</a>
 											<a class="dropdown-item" href="#">Does Not Have Audio</a>
 										</div>
@@ -312,38 +310,42 @@ class FindProjectPage extends Component {
 										
 							</div>
 							<div className="col-2">
-							<label>By Status</label><br />
-							<label>Has Blocking</label><br />
-							
+								<label>By Status</label><br />
+								<label>Has Blocking</label>
 							</div>
 							<div className="col-4">
 										<div class="dropdown">
-										<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-											Dropdown button
+										<button class="btn btn-secondary dropdown-toggle" type="button" id="statusdropdownMenuButton" data-toggle="status-dropdown" aria-haspopup="true" aria-expanded="false">
+											No Filter
 										</button>
-										<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-											<a class="dropdown-item" href="#">Action</a>
-											<a class="dropdown-item" href="#">Another action</a>
-											<a class="dropdown-item" href="#">Something else here</a>
+										<div class="dropdown-menu" aria-labelledby="statusdropdownMenuButton">
+											<a class="dropdown-item" href="#">No Filter</a>
+											<a class="dropdown-item" href="#">In Progress</a>
+											<a class="dropdown-item" href="#">Submitted</a>
+											<a class="dropdown-item" href="#">Completed</a>
 										</div>
 										</div>
 										<div class="dropdown">
-										<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-											Dropdown button
+										<button class="btn btn-secondary dropdown-toggle" type="button" id="blockingdropdownMenuButton" data-toggle="blocking-dropdown" aria-haspopup="true" aria-expanded="false">
+											No Filter
 										</button>
-										<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-											<a class="dropdown-item" href="#">Action</a>
-											<a class="dropdown-item" href="#">Another action</a>
-											<a class="dropdown-item" href="#">Something else here</a>
+										<div class="dropdown-menu" aria-labelledby="blockingdropdownMenuButton">
+											<a class="dropdown-item" href="#">No Filter</a>
+											<a class="dropdown-item" href="#">Has Blocking</a>
+											<a class="dropdown-item" href="#">Does Not Have Blocking</a>
 										</div>
 										</div>
-									
 							</div>
 							<div className="col-2">
 							<label>Last Updated</label>
 							</div>
 							<div className="col-10">
 							<Form.Control type="date" /> <label> to</label><Form.Control type="date" />
+							</div>
+							<div className="col-8"></div>
+							<div className="col-4 d-flex justify-content-end">
+							<button type="button" class="btn btn-secondary">Cancel</button>
+    						<button type="button" class="btn btn-primary">Search</button>
 							</div>
 							</div>
 					</div>
