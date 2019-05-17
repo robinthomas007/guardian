@@ -116,7 +116,7 @@ class FindProjectPage extends Component {
 			searchCriteria : {
 				searchTerm : '',
 				searchId : '',
-				itemsPerPage : '50',
+				itemsPerPage : '10',
 				pageNumber : '1',
 				sortColumn : '',
 				sortOrder : ''
