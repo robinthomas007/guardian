@@ -210,8 +210,8 @@ class FindProjectPage extends Component {
 					<tr className="d-flex" key={i} onClick={() => this.handleRowClick(projects[project].projectID)}>
 						<td className="col-2">{projects[project].projectTitle}</td>
 						<td className="col-2">{projects[project].projectArtistName}</td>
-						<td className="col-2">{projects[project].projectReleasingLabel}</td>
-						<td className="col-1 text-center">{projects[project].projectLastModified}</td>
+						<td className="col-1">{projects[project].projectReleasingLabel}</td>
+						<td className="col-2 text-center">{projects[project].projectLastModified}</td>
 						<td className="col-1 status text-nowrap"><span>In Progress</span></td>
 						<td className="status text-center">{checkStepStatus(projects[project].isStep1Complete)}</td>
 						<td className="status text-center">{checkStepStatus(projects[project].isStep2Complete)}</td>
@@ -275,16 +275,48 @@ class FindProjectPage extends Component {
 				<ul className="row search-row">
 					<li className="col-2 d-flex"></li>
 					<li className="col-8 d-flex justify-content-center">
-						<div class="dropdown">
-						<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<div className="dropdown">
+						<button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							<i className="material-icons">settings</i> Filters
 						</button>
-						<div class="dropdown-menu search-filters" aria-labelledby="dropdownMenuButton">
-							<Form>
-								<ul>
-									<li>Search Filters</li>
-									<li>
-										<label>By Label</label>
+						<div className="dropdown-menu search-filters" aria-labelledby="dropdownMenuButton">
+						
+							<h5>Search Filters</h5>
+								<br />
+						<div className="row no-gutters">
+							<div className="col-2">
+							<label>By Label</label><br />
+							<label>Has Audio</label><br />
+							</div>
+							<div className="col-4">
+										<div class="dropdown">
+										<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											Default Label
+										</button>
+										<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+											<a class="dropdown-item" href="#">Label 1</a>
+											<a class="dropdown-item" href="#">Label 2</a>
+											<a class="dropdown-item" href="#">Label 3</a>
+										</div>
+										</div>
+										<div class="dropdown">
+										<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											No Selection
+										</button>
+										<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+											<a class="dropdown-item" href="#">No Selection</a>
+											<a class="dropdown-item" href="#">Has Audio</a>
+											<a class="dropdown-item" href="#">Does Not Have Audio</a>
+										</div>
+										</div>
+										
+							</div>
+							<div className="col-2">
+							<label>By Status</label><br />
+							<label>Has Blocking</label><br />
+							
+							</div>
+							<div className="col-4">
 										<div class="dropdown">
 										<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 											Dropdown button
@@ -295,9 +327,6 @@ class FindProjectPage extends Component {
 											<a class="dropdown-item" href="#">Something else here</a>
 										</div>
 										</div>
-									</li>
-									<li>
-										<label>By Status</label>
 										<div class="dropdown">
 										<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 											Dropdown button
@@ -308,32 +337,18 @@ class FindProjectPage extends Component {
 											<a class="dropdown-item" href="#">Something else here</a>
 										</div>
 										</div>
-									</li>
-									<li>
-										<label>Has Audio</label>
-										<label className="custom-checkbox">
-											<input type="checkbox" />
-											<span className="checkmark"></span>
-										</label>
-									</li>
-									<li>
-										<label>Has Blocking</label>
-										<label className="custom-checkbox">
-											<input type="checkbox" />
-											<span className="checkmark"></span>
-										</label>
-									</li>
-									<li>
-										<label>Last Updated</label><br />
-										<label>From</label><br />
-										<Form.Control type="date" /><br />
-										<label>To</label><br />
-										<Form.Control type="date" />
-									</li>
-								</ul>
-							</Form>
-						</div>
-						</div>
+									
+							</div>
+							<div className="col-2">
+							<label>Last Updated</label>
+							</div>
+							<div className="col-10">
+							<Form.Control type="date" /> <label> to</label><Form.Control type="date" />
+							</div>
+							</div>
+					</div>
+					</div>
+						
 						
 						<input 
 							id="projectSearchInput" 
@@ -409,8 +424,8 @@ class FindProjectPage extends Component {
 						<tr className='d-flex'>
 							<th className="col-2 text-nowrap">Project Title</th>
 							<th className="col-2">Artist</th>
-							<th className="col-2">Label</th>
-							<th className="col-1 text-center">Last Update</th>
+							<th className="col-1">Label</th>
+							<th className="col-2 text-center">Last Update</th>
 							<th className="col-1">Status</th>
 							<th className="status text-center">Project</th>
 							<th className="status text-center">Contacts</th>

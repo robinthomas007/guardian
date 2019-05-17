@@ -19,9 +19,16 @@
 	ul.results-controls .dropdown .dropdown-toggle, ul.results-controls .dropdown .dropdown-menu {color:#01578B; font-size:.9rem;}
 	ul.results-controls span.viewing {padding-top: 7px; margin-left:-8px; margin-right:-8px;}
 
-	.page-item.active .page-link {Background-color:#02578B;}
+	.page-link {position: relative; display: block; padding: .5rem .75rem; margin-left: -1px; line-height: 1.25; color:#01578B; background-color: #fff; border: 1px solid #dee2e6;}
+	.page-item.active .page-link {background-color:#01578B; border-color:#01578B;}
+
+	.btn-secondary:not(:disabled):not(.disabled).active,
+	.btn-secondary:not(:disabled):not(.disabled):active,
+	.show>.btn-secondary.dropdown-toggle {color: #333; background-color:#fff; border-color: #ccc;}
 
 	table tbody tr:hover, table tbody tr:hover td {cursor:pointer; background-color: #d9f3fe!important; transition: background-color 0.3s linear; }
 	
-	div.dropdown-menu.search-filters {font-size:.9rem;}
-	div.dropdown-menu.search-filters ul {margin:0; padding:20px;}
+	div.dropdown-menu.search-filters { padding:20px; font-size:.9rem; width:650px;}
+	div.dropdown-menu.search-filters .dropdown-toggle {margin-bottom:20px;}
+	div.dropdown-menu.search-filters label {line-height:36px; margin-bottom:20px;}
+	div.dropdown-menu.search-filters input[type="date"] {margin:0px 8px;}
