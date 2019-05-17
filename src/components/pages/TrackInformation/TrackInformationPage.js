@@ -67,17 +67,23 @@ const TrackInformationPage = (props) => {
 
     return(
         <section className="page-container h-100">
-            
-            <PageHeader />
-
+              <PageHeader />
             <div className="row no-gutters step-description">
                 <div className="col-12">
                     <h2>Step <span className="count-circle">4</span> Track Information</h2>
                     <p>In this step, you can upload audio files for filtering by either dragging &amp; dropping or clicking to browse files, e.g. mp3, WAV, etc. Tracks can also be reordered with drag and drop. This section must be completed by clicking on the 'Save &amp; Continue' button below.</p>
                 </div>
             </div>
-
-            <TrackInformationDataTable />
+            <div>
+              <TrackInformationDataTable />
+            </div>
+        	<section class="row save-buttons">
+            <div class="col-9"></div>
+            <div class="col-3">
+                <button type="button" class="btn btn-secondary">Save</button>
+                <button type="button" class="btn btn-primary" onClick="location.href = 'audio-files.html'">Save &amp; Continue</button>
+            </div>
+        </section>
         </section>
     )
 };
