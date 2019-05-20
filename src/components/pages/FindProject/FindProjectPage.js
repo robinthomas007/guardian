@@ -192,9 +192,9 @@ class FindProjectPage extends Component {
 		const checkStepStatus = (stepStatus) => {
 			if(stepStatus) {
 				return(
-					<label class="custom-checkbox">
+					<label className="custom-checkbox">
 						<input disabled type="checkbox" checked/>
-						<span class="static-checkmark"></span>
+						<span className="static-checkmark"></span>
 					</label> 
 				)
 			} else {
@@ -270,84 +270,96 @@ class FindProjectPage extends Component {
 							<p>Search for an existing project or release in the search bar below. Projects can be located by Artist, Track, ISRC or Project Title (Album, Compilation, EP, or Single name). <br />
 							Can't find what you're looking for? Email us at <a href="mailto:guardian-support@umusic.com">guardian-support@umusic.com</a>.
 							</p>
-					</div> 
-				</div>
-				<ul className="row search-row">
-					<li className="col-2 d-flex"></li>
-					<li className="col-8 d-flex justify-content-center">
-						<div className="dropdown">
-						<button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							<i className="material-icons">settings</i> Filters
-						</button>
-						<div className="dropdown-menu search-filters" aria-labelledby="dropdownMenuButton">
+						</div> 
+					</div>
+
+					<ul className="row search-row">
+						<li className="col-2 d-flex"></li>
+						<li className="col-8 d-flex justify-content-center">
+							<div className="dropdown">
+								<button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									<i className="material-icons">settings</i> Filters
+								</button>
 						
-							<h5>Search Filters</h5>
-								<br />
-						<div className="row no-gutters">
-							<div className="col-2">
-							<label>By Label</label><br />
-							<label>Has Audio</label><br />
-							</div>
-							<div className="col-4">
-										<div class="dropdown">
-										<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-											Default Label
-										</button>
-										<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-											<a class="dropdown-item" href="#">Label 1</a>
-											<a class="dropdown-item" href="#">Label 2</a>
-											<a class="dropdown-item" href="#">Label 3</a>
+								<div className="dropdown-menu search-filters" aria-labelledby="dropdownMenuButton">
+									<h5>Search Filters</h5>
+									<br />
+						
+									<div className="row no-gutters">
+										<div className="col-2">
+											<label>By Label</label><br />
+											<label>Has Audio</label><br />
 										</div>
-										</div>
-										<div class="dropdown">
-										<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-											No Selection
-										</button>
-										<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-											<a class="dropdown-item" href="#">No Selection</a>
-											<a class="dropdown-item" href="#">Has Audio</a>
-											<a class="dropdown-item" href="#">Does Not Have Audio</a>
-										</div>
-										</div>
-										
-							</div>
-							<div className="col-2">
-							<label>By Status</label><br />
-							<label>Has Blocking</label><br />
 							
-							</div>
-							<div className="col-4">
-										<div class="dropdown">
-										<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-											Dropdown button
-										</button>
-										<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-											<a class="dropdown-item" href="#">Action</a>
-											<a class="dropdown-item" href="#">Another action</a>
-											<a class="dropdown-item" href="#">Something else here</a>
+										<div className="col-4">
+											<div className="dropdown">
+												<button 
+													className="btn btn-secondary dropdown-toggle" 
+													type="button" 
+													id="dropdownMenuButton" 
+													data-toggle="dropdown" 
+													aria-haspopup="true" 
+													aria-expanded="false">
+													Default Label
+												</button>
+												<div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+													<a className="dropdown-item" href="#">Label 1</a>
+													<a className="dropdown-item" href="#">Label 2</a>
+													<a className="dropdown-item" href="#">Label 3</a>
+												</div>
+											</div>
+
+											<div className="dropdown">
+												<button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+													No Selection
+												</button>
+												<div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+													<a className="dropdown-item" href="#">No Selection</a>
+													<a className="dropdown-item" href="#">Has Audio</a>
+													<a className="dropdown-item" href="#">Does Not Have Audio</a>
+												</div>
+											</div>
 										</div>
+							
+										<div className="col-2">
+											<label>By Status</label><br />
+											<label>Has Blocking</label><br />
+							
 										</div>
-										<div class="dropdown">
-										<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-											Dropdown button
-										</button>
-										<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-											<a class="dropdown-item" href="#">Action</a>
-											<a class="dropdown-item" href="#">Another action</a>
-											<a class="dropdown-item" href="#">Something else here</a>
+							
+										<div className="col-4">
+											<div className="dropdown">
+												<button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+													Dropdown button
+												</button>
+
+												<div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+													<a className="dropdown-item" href="#">Action</a>
+													<a className="dropdown-item" href="#">Another action</a>
+													<a className="dropdown-item" href="#">Something else here</a>
+												</div>
+											</div>
+											<div className="dropdown">
+											<button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+												Dropdown button
+											</button>
+											<div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+												<a className="dropdown-item" href="#">Action</a>
+												<a className="dropdown-item" href="#">Another action</a>
+												<a className="dropdown-item" href="#">Something else here</a>
+											</div>
 										</div>
-										</div>
-									
+									</div>
+									<div className="col-2">
+										<label>Last Updated</label>
+									</div>
+							
+									<div className="col-10">
+										<Form.Control type="date" /> <label> to</label><Form.Control type="date" />
+									</div>
+								</div>
 							</div>
-							<div className="col-2">
-							<label>Last Updated</label>
-							</div>
-							<div className="col-10">
-							<Form.Control type="date" /> <label> to</label><Form.Control type="date" />
-							</div>
-							</div>
-					</div>
-					</div>
+						</div>
 						
 						
 						<input 
