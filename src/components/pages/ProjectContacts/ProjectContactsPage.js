@@ -56,7 +56,9 @@ class ProjectContactsPage extends Component {
                 "projectPrimaryContact" : user.name, 
                 "projectPrimaryContactEmail" : user.email,
                 "projectSecurityID" : '1', 
-                "projectAdditionalContacts" : ''
+                "projectAdditionalContacts" : '',
+                "projectStatusID" : '1',
+
             }
         }
 
