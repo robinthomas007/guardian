@@ -78,10 +78,12 @@ const TrackInformationPage = (props) => {
               <TrackInformationDataTable />
             </div>
         	<section class="row save-buttons">
-            <div class="col-9"></div>
+            <div class="col-9">
+                <button type="button" class="btn btn-primary float-left" onClick="">Add Track</button>
+            </div>
             <div class="col-3">
                 <button type="button" class="btn btn-secondary">Save</button>
-                <button type="button" class="btn btn-primary" onClick="location.href = 'audio-files.html'">Save &amp; Continue</button>
+                <button type="button" class="btn btn-primary" onClick="location.href = 'territorialRights.html'">Save &amp; Continue</button>
             </div>
         </section>
         </section>
