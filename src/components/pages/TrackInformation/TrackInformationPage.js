@@ -3,63 +3,66 @@ import {Table, Grid, Button, Form } from 'react-bootstrap';
 import PageHeader from '../PageHeader/PageHeader';
 import './TrackInformation.css';
 
-const mockData = require('../../../mockData.json');
-
-
 class TrackInformationDataTable extends Component {
 
-    render() {
+    constructor(props) {
+        super(props);
 
-        const TrackInformationDataHeader = () => {
+        const dataRows = this.props.data
 
-            return(
-                <thead>
-                    <tr>
-                        <th className="text-center">#</th>
-                        <th className="text-center"></th>
-                        <th className="text-center"></th>
-                        <th>ISRC <i>(Optional)</i></th>
-                        <th>Track Title</th>
-                        <th className="text-center">Single</th>
-                        <th>Release Date</th>
-                        <th className="text-center">Actions</th>
-                    </tr>
-                </thead>
-            )
+        this.state = {
+            dataRows : dataRows
         }
+    }
+ 
+    trackInformationDataHeader = () => {
+        return(
+            <thead>
+                <tr>
+                    <th className="text-center">#</th>
+                    <th className="text-center"></th>
+                    <th className="text-center"></th>
+                    <th>ISRC <i>(Optional)</i></th>
+                    <th>Track Title</th>
+                    <th className="text-center">Single</th>
+                    <th>Release Date111</th>
+                    <th className="text-center">Actions</th>
+                </tr>
+            </thead>
+        )
+    }
 
-        const dataRows = mockData.pages.TrackInformation.tracks.map( (track, i) =>
+    render() {
+        let dataRows = this.state.dataRows.map( (track, i) =>
           <tr key={i}>
                 <td className="text-center">{track.trackSequence}</td>
                 <td className="text-center"><i className="material-icons">format_line_spacing</i></td>
                 <td className="text-center"><i className="material-icons purple-icon">audiotrack</i></td>
-                <td><Form.Control type="text" value={track.trackISRC}></Form.Control></td>
-                <td><Form.Control type="text" value={track.trackTitle}></Form.Control></td>
+                <td><Form.Control type="text" defaultValue={track.trackISRC}></Form.Control></td>
+                <td><Form.Control type="text" defaultValue={track.trackTitle}></Form.Control></td>
                 <td className="text-center">
                     <label className="custom-checkbox">
-                        <input type="checkbox" />
+                        <input type="checkbox" defaultChecked={track.trackSingle}/>
                         <span className="checkmark"></span>
                     </label>
                 </td>
-                <td><Form.Control type="date" value={track.trackReleaseDate}></Form.Control></td>
+                <td><Form.Control type="date" defaultValue={track.trackReleaseDate}></Form.Control></td>
                 <td className="text-center">
                     <button className="btn btn-secondary action"><i className="material-icons">publish</i></button>
                     <button className="btn btn-secondary action"><i className="material-icons">delete</i></button>
                 </td>
             </tr>
-           
        )
 
         return (
-      
-        <div className="table-responsive">
-            <Table>
-                <TrackInformationDataHeader />
-                <tbody>
-                    {dataRows}
-                </tbody>
-            </Table>
-       </div>
+            <div className="table-responsive">
+                <Table>
+                    {this.trackInformationDataHeader()}
+                    <tbody>
+                        {dataRows}
+                    </tbody>
+                </Table>
+            </div>
         )
     }
 }
@@ -69,21 +72,52 @@ class TrackInformationPage extends Component {
 
     constructor(props) {
         super(props);
-
         this.state = {
             tableRows : [
                 {
-                    trackSequence : 0,
+                    trackSequence : 1,
                     trackISRC: '1234567890',
                     trackTitle : 'Test 1',
+                    trackSingle : true,
+                    trackReleaseDate : ''
+                },
+                {
+                    trackSequence : 2,
+                    trackISRC: '2345678901',
+                    trackTitle : 'Test 2',
                     trackSingle : false,
                     trackReleaseDate : ''
                 }
             ]
         }
+        this.addBlankRow = this.addBlankRow.bind(this);
+    }
+  
+    getBlankRow = (rowCount) => {
+        return(
+            {
+                trackSequence : rowCount + 1,
+                trackISRC: '',
+                trackTitle : '',
+                trackSingle : false,
+                trackReleaseDate : ''
+            }
+        )
+    }
+
+    addBlankRow() {
+        var rowCount = this.state.tableRows.length
+        var newRow = this.state.tableRows   
+            newRow.push(this.getBlankRow(rowCount))
+        this.setState({tableRows : newRow})
     }
 
     render() {
+
+        if(this.state.tableRows.length <= 0) {
+            this.addBlankRow()
+        } 
+
         return (
             <section className="page-container h-100">
                 <PageHeader />
@@ -94,15 +128,15 @@ class TrackInformationPage extends Component {
                     </div>
                 </div>
                 <div>
-                    <TrackInformationDataTable />
+                    <TrackInformationDataTable data={this.state.tableRows} />
                 </div>
-                <section class="row save-buttons">
-                    <div class="col-9">
-                        <button type="button" class="btn btn-primary float-left" onClick="">Add Track</button>
+                <section className="row save-buttons">
+                    <div className="col-9">
+                        <button type="button" className="btn btn-primary float-left" onClick={this.addBlankRow}>Add Track</button>
                     </div>
-                    <div class="col-3">
-                        <button type="button" class="btn btn-secondary">Save</button>
-                        <button type="button" class="btn btn-primary" onClick="location.href = 'territorialRights.html'">Save &amp; Continue</button>
+                    <div className="col-3">
+                        <button type="button" className="btn btn-secondary">Save</button>
+                        <button type="button" className="btn btn-primary">Save &amp; Continue</button>
                     </div>
                 </section>
             </section>
