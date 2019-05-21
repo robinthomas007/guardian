@@ -138,13 +138,13 @@ class ReleaseinformationPage extends Component {
         if(isChecked) {
             this.setState(currentState => ({formInputs : { ...this.state.formInputs, 'projectReleaseDate' : ''}}), () => {
                 this.setState( {formInputAttributes : { ...this.state.formInputAttributes.projectReleaseDate, 'projectReleaseDate' : inputDisabledState}} )
+                
             });
         } else {
             this.setState( {formInputAttributes : { ...this.state.formInputAttributes.projectReleaseDate, 'projectReleaseDate' : inputDisabledState}} )
-            this.handleChange(event)
+            
         }
-
-        
+        this.setState( {formInputs : { ...this.state.formInputs, 'projectReleaseDateTBD' : isChecked}} )
     }
 
     handleChange(event) {
