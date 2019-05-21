@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Table, Grid, Button, Form } from 'react-bootstrap'; 
 import PageHeader from '../PageHeader/PageHeader';
+import ReplaceAudioModal from '../../modals/ReplaceAudioModal';
 import './TrackInformation.css';
 
 class TrackInformationDataTable extends Component {
@@ -46,9 +47,16 @@ class TrackInformationDataTable extends Component {
                         <span className="checkmark"></span>
                     </label>
                 </td>
-                <td><Form.Control type="date" defaultValue={track.trackReleaseDate}></Form.Control></td>
+                <td>
+                    <Form.Control 
+                        type="date" 
+                        defaultValue={track.trackReleaseDate.date}
+                        disabled={track.trackReleaseDate.disabled}
+                    >
+                    </Form.Control>
+                </td>
                 <td className="text-center">
-                    <button className="btn btn-secondary action"><i className="material-icons">publish</i></button>
+                    <button className="btn btn-secondary action" onClick={this.props.showClick}><i className="material-icons">publish</i></button>
                     <button className="btn btn-secondary action"><i className="material-icons">delete</i></button>
                 </td>
             </tr>
@@ -74,23 +82,13 @@ class TrackInformationPage extends Component {
         super(props);
         this.state = {
             tableRows : [
-                {
-                    trackSequence : 1,
-                    trackISRC: '1234567890',
-                    trackTitle : 'Test 1',
-                    trackSingle : true,
-                    trackReleaseDate : ''
-                },
-                {
-                    trackSequence : 2,
-                    trackISRC: '2345678901',
-                    trackTitle : 'Test 2',
-                    trackSingle : false,
-                    trackReleaseDate : ''
-                }
-            ]
+
+            ],
+            showReplaceModal : false
         }
         this.addBlankRow = this.addBlankRow.bind(this);
+        this.showTrackModal = this.showTrackModal.bind(this);
+        this.hideTrackModal = this.hideTrackModal.bind(this);
     }
   
     getBlankRow = (rowCount) => {
@@ -100,7 +98,10 @@ class TrackInformationPage extends Component {
                 trackISRC: '',
                 trackTitle : '',
                 trackSingle : false,
-                trackReleaseDate : ''
+                trackReleaseDate : {
+                    date : '01/11/1111',
+                    disabled : true
+                }
             }
         )
     }
@@ -112,6 +113,14 @@ class TrackInformationPage extends Component {
         this.setState({tableRows : newRow})
     }
 
+    showTrackModal() {
+        this.setState({showReplaceModal : true})
+    }
+
+    hideTrackModal() {
+        this.setState({showReplaceModal : false})
+    }
+
     render() {
 
         if(this.state.tableRows.length <= 0) {
@@ -120,6 +129,9 @@ class TrackInformationPage extends Component {
 
         return (
             <section className="page-container h-100">
+            
+                <ReplaceAudioModal showModal={this.state.showReplaceModal} handleClose={this.hideTrackModal}/>
+
                 <PageHeader />
                 <div className="row no-gutters step-description">
                     <div className="col-12">
@@ -128,7 +140,7 @@ class TrackInformationPage extends Component {
                     </div>
                 </div>
                 <div>
-                    <TrackInformationDataTable data={this.state.tableRows} />
+                    <TrackInformationDataTable data={this.state.tableRows} showClick={this.showTrackModal}/>
                 </div>
                 <section className="row save-buttons">
                     <div className="col-9">

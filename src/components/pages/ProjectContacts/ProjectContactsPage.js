@@ -59,7 +59,8 @@ class ProjectContactsPage extends Component {
                 "projectAdditionalContacts" : '',
                 "projectStatusID" : '1',
 
-            }
+            },
+            project : {}
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -148,6 +149,8 @@ class ProjectContactsPage extends Component {
                 } else {
                     this.showNotification(event)
                     
+                    this.setState({project : responseJSON})
+
                     //clear the local storage
                     localStorage.removeItem('projectData')
                 }
