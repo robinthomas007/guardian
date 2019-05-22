@@ -27,14 +27,24 @@ class ReplaceAudioModal extends Component {
     
     return (
       <Modal id='ReplaceAudioModal' show={this.props.showModal} onHide={this.handleClose}>
-        <Modal.Header>
+        <Modal.Header closeButton>
           <Modal.Title>Replace Audio File</Modal.Title>
         </Modal.Header>
-        
-        <Modal.Body>Drag and drop or click to browse in the area below to replace the cirresponding audio file.</Modal.Body>
+        <Modal.Body>
+          <ul>
+            <li>
+              Use the area below to replace the corresponding audio file.
+            </li>
+            <li>
+              <div class="audio-drop-area d-flex justify-content-center">
+              <span class="align-self-center">Drag and Drop Audio Files or Click Here To Browse</span>
+              </div>
+            </li>
+          </ul>
+        </Modal.Body>
           <Modal.Footer>
             <Button variant="primary" onClick={this.handleClose}>
-              Close
+              Done
             </Button>
           </Modal.Footer>
         </Modal>
