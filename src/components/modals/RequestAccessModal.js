@@ -57,7 +57,7 @@ class RequestAccessModal extends Component {
             <Button variant="secondary" onClick={this.handleClose}>
               Cancel
             </Button>
-            <Button variant="primary">
+            <Button variant="primary" onClick={this.handleClose}>
               Submit
             </Button>
           </Modal.Footer>
