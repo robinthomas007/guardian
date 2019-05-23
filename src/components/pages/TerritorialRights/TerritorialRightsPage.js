@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PageHeader from '../PageHeader/PageHeader';
-import ButtonDropDown from '../../ButtonDropDown';
 import './TerritorialRights.css'
 
 const mockData = require('../../../mockData.json');
@@ -19,7 +18,7 @@ class TerritorialRightsPage extends Component {
     
         const TracksWithNoSetPolicy = mockData.pages.TerritorialRights.tracks.map( function (noPolicyTrack, i) {
             return(
-                <div key={i} className="draggable-track">
+                <div key={i} draggable className="draggable-track">
                     <i className="material-icons">dehaze</i>{noPolicyTrack.trackAudioFile}
                 </div>
             )
@@ -90,17 +89,13 @@ class TerritorialRightsPage extends Component {
                                     onClick={createNewRightsSet}
                                     className="btn btn-primary"
                                 >Create a New Rights Set</button>
-                                <ButtonDropDown 
-                                    text='test' 
-                                    options={[1,2,3]}
-                                />
                             </div>
                         </div>
                     </div>
                 </div>
                 <div className="row">
                     <div className="col-3">
-                        <div className="track-draggable-area">
+                        <div className="track-draggable-area" droppable>
                             {TracksWithNoSetPolicy}
                         </div>
                     </div>
@@ -118,14 +113,13 @@ class TerritorialRightsPage extends Component {
                                     <thead>
                                         <tr className="row no-gutters">
                                             <th className="col-4" nowrap>Tracks with this Rights Set</th>
-                                            <th className="col-4" nowrap>Has Rights In</th>
-                                            <th className="col-4" nowrap>Does Not Have Rights In</th>
+                                            <th className="col-8" nowrap>Rights Set Rules</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr className="row no-gutters">
                                             <td className="col-4">
-                                                <div className="dropdown">
+                                                <div className="dropdown tracks-dropdown">
                                                     <button type="button" id="selectTracksDropdown" className="btn btn-secondary dropdown-toggle territory-tracks" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                         Select Tracks or Drag Below
                                                     </button>
@@ -133,25 +127,19 @@ class TerritorialRightsPage extends Component {
                                                         {TracksWithNoSetPolicyDrop}
                                                     </ul>
                                                 </div>
-                                                <div className="track-draggable-area territory-tracks"></div>
+                                                <div droppable className="track-draggable-area territory-tracks">
+
+                                                </div>
                                             </td>
-                                            <td className="col-4">
+                                            <td className="col-8">
+                                                <label>Only Has Rights In</label><input type="radio" />
+                                                <label>Has Rights Everywhere Except</label><input type="radio" />
                                                 <div className="dropdown">
                                                     <button type="button" id="includedCountriesDropdown" className="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                         Select Countries
                                                     </button>
                                                     <ul className="dropdown-menu countries" aria-labelledby="includedCountriesDropdown">
                                                         {CountriesWithRights}
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                            <td className="col-4">
-                                                <div className="dropdown">
-                                                    <button type="button" id="excludedCountriesDropdown" className="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        Select Countries
-                                                    </button>
-                                                    <ul className="dropdown-menu countries" aria-labelledby="excludedCountriesDropdown">
-                                                        {CountriesWithOutRights}
                                                     </ul>
                                                 </div>
                                             </td>
