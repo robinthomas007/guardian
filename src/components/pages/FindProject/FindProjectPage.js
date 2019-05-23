@@ -431,7 +431,7 @@ class FindProjectPage extends Component {
 					<li className="col-4 d-flex"></li>
 				</ul>
 <div className="table-responsive">
-				<Table>
+				<Table className="find-project-table">
 					<thead>
 						<tr className='d-flex'>
 							<th className="col-2 text-nowrap">Project Title</th>
