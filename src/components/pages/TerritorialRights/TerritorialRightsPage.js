@@ -89,13 +89,23 @@ class TerritorialRightsPage extends Component {
                                     onClick={createNewRightsSet}
                                     className="btn btn-primary"
                                 >Create a New Rights Set</button>
+                                <div className="dropdown">
+												<button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+													Custom Rights Sets
+												</button>
+												<div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+													<a className="dropdown-item" href="#">Custom Rights Set 1</a>
+													<a className="dropdown-item" href="#">Custom Rights Set 2</a>
+													<a className="dropdown-item" href="#">Custom Rights Set 3</a>
+												</div>
+											</div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div className="row">
                     <div className="col-3">
-                        <div className="track-draggable-area" droppable>
+                        <div className="track-draggable-area h-100" droppable>
                             {TracksWithNoSetPolicy}
                         </div>
                     </div>
@@ -105,19 +115,21 @@ class TerritorialRightsPage extends Component {
                                 <div className="col-12">
                                     <h3>Territorial Rights Set 1 
                                         <i className="material-icons" data-toggle="tooltip" title="Edit Rights Set Name">edit</i>
+                                        <i className="material-icons" data-toggle="tooltip" title="Edit Rights Set Name">save</i>
                                     </h3>
                                 </div>
                             </div>
-                            <div className="row no-gutters">
-                                <table className="table">
+                            <div className="table-responsive d-flex row no-gutters">
+                                <table className="territorial-rights-table col-12">
                                     <thead>
-                                        <tr className="row no-gutters">
+                                        <tr className="d-flex row no-gutters">
                                             <th className="col-4" nowrap>Tracks with this Rights Set</th>
-                                            <th className="col-8" nowrap>Rights Set Rules</th>
+                                            <th className="col-4" nowrap>Rights Rule</th>
+                                            <th className="col-4" nowrap>Select Countries</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr className="row no-gutters">
+                                        <tr className="d-flex row no-gutters">
                                             <td className="col-4">
                                                 <div className="dropdown tracks-dropdown">
                                                     <button type="button" id="selectTracksDropdown" className="btn btn-secondary dropdown-toggle territory-tracks" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -131,9 +143,11 @@ class TerritorialRightsPage extends Component {
 
                                                 </div>
                                             </td>
-                                            <td className="col-8">
-                                                <label>Only Has Rights In</label><input type="radio" />
-                                                <label>Has Rights Everywhere Except</label><input type="radio" />
+                                            <td className="col-4">
+                                            <input type="radio" /> <label>Only Has Rights In</label><br />
+                                            <input type="radio" /> <label>Has Rights Everywhere Except</label>
+                                            </td>
+                                            <td className="col-4">
                                                 <div className="dropdown">
                                                     <button type="button" id="includedCountriesDropdown" className="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                         Select Countries
