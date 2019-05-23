@@ -33,9 +33,11 @@ class TrackInformationDataTable extends Component {
         )
     }
 
+
+
     render() {
         let dataRows = this.state.dataRows.map( (track, i) =>
-          <tr key={i}>
+          <tr key={i} draggable>
                 <td className="text-center">{track.trackSequence}</td>
                 <td className="text-center"><i className="material-icons">format_line_spacing</i></td>
                 <td className="text-center"><i className="material-icons purple-icon">audiotrack</i></td>
@@ -64,7 +66,7 @@ class TrackInformationDataTable extends Component {
 
         return (
             <div className="table-responsive">
-                <Table>
+                <Table droppable>
                     {this.trackInformationDataHeader()}
                     <tbody>
                         {dataRows}
