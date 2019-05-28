@@ -66,7 +66,7 @@ class TrackInformationDataTable extends Component {
 
         return (
             <div className="table-responsive">
-                <Table droppable>
+                <Table droppable className="track-information">
                     {this.trackInformationDataHeader()}
                     <tbody>
                         {dataRows}

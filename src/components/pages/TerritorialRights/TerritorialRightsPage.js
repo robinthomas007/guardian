@@ -111,14 +111,19 @@ class TerritorialRightsPage extends Component {
                     </div>
                     <div className="col-9">
                         <div className="set-card">
-                            <div className="row no-gutters">
-                                <div className="col-12">
-                                    <h3>Territorial Rights Set 1 
-                                        <i className="material-icons" data-toggle="tooltip" title="Edit Rights Set Name">edit</i>
-                                        <i className="material-icons" data-toggle="tooltip" title="Edit Rights Set Name">save</i>
-                                    </h3>
+                                <div className="row d-flex col-12 no-gutters">
+                                     
+                                    <h3>Territorial Rights Set 1 </h3>
+                                        
+                                    <button className="btn btn-secondary action align-middle">
+                                            <i className="material-icons" data-toggle="tooltip" title="Edit Rights Set Name">edit</i>
+                                        </button>
+                                        <button className="btn btn-secondary action align-middle">
+                                        <i className="material-icons" data-toggle="tooltip" title="Save Rights Set">save</i>
+                                        </button>
+                                       
                                 </div>
-                            </div>
+                           
                             <div className="table-responsive d-flex row no-gutters">
                                 <table className="territorial-rights-table col-12">
                                     <thead>
