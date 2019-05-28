@@ -69,7 +69,10 @@ class ProjectContactsPage extends Component {
     }
     
 
-    showNotification(e){
+    showNotification(e, projectID){
+
+        alert(projectID)
+
         new Noty ({
             type: 'success',
             id:'projectSaved',
@@ -78,7 +81,9 @@ class ProjectContactsPage extends Component {
             layout: 'top',
             timeout: '3000'
         }).on('afterClose', ()  =>
-            this.props.history.push('/audioFiles')
+            this.props.history.push({
+                pathname : '/audioFiles/' + projectID
+            })
         ).show()
     };
 
@@ -147,10 +152,9 @@ class ProjectContactsPage extends Component {
                 if(responseJSON.errorMessage) {
                     this.showNotSavedNotification(event)
                 } else {
-                    this.showNotification(event)
-                    
-                    this.setState({project : responseJSON})
 
+                    this.showNotification(event, responseJSON.Project.projectID)
+                    
                     //clear the local storage
                     localStorage.removeItem('projectData')
                 }
