@@ -12,8 +12,11 @@ class TrackInformationDataTable extends Component {
         const dataRows = this.props.data
 
         this.state = {
-            dataRows : dataRows
+            dataRows : dataRows,
+            formInputs : {}
         }
+
+        this.updateState = this.updateState.bind(this);
     }
  
     trackInformationDataHeader = () => {
@@ -26,38 +29,86 @@ class TrackInformationDataTable extends Component {
                     <th>ISRC <i>(Optional)</i></th>
                     <th>Track Title</th>
                     <th className="text-center">Single</th>
-                    <th>Release Date111</th>
+                    <th>Release Date</th>
                     <th className="text-center">Actions</th>
                 </tr>
             </thead>
         )
     }
 
+    updateState(e) {
+        this.setState( {formInputs : { ...this.state.formInputs, [e.target.id] : e.target.value}} )
+        this.props.handleChange(e)
+    }
+
     render() {
         let dataRows = this.state.dataRows.map( (track, i) =>
           <tr key={i}>
-                <td className="text-center">{track.trackSequence}</td>
+                <td className="text-center">
+                    <Form.Control 
+                        type="hidden" 
+                        id={'trackSequence_' + i} 
+                        defaultValue={track.trackSequence} 
+                        onChange={this.updateState}
+                    ></Form.Control>
+                    <Form.Control 
+                        type="hidden" 
+                        id={'trackID_' + i} 
+                        value={this.state.formInputs['trackID_'+ i]} 
+                        onChange={this.props.handleChange}
+                    ></Form.Control>
+                    {track.trackSequence}
+                </td>
                 <td className="text-center"><i className="material-icons">format_line_spacing</i></td>
                 <td className="text-center"><i className="material-icons purple-icon">audiotrack</i></td>
-                <td><Form.Control type="text" defaultValue={track.trackISRC}></Form.Control></td>
-                <td><Form.Control type="text" defaultValue={track.trackTitle}></Form.Control></td>
+                <td>
+                    <Form.Control 
+                        type="text" 
+                        id={'trackIsrc_' + i} 
+                        value={this.state.formInputs['trackIsrc_'+ i]} 
+                        onChange={this.updateState}
+                    ></Form.Control>
+                </td>
+                <td>
+                    <Form.Control 
+                        type="text" 
+                        id={'trackTitle_' + i} 
+                        value={this.state.formInputs['trackTitle_' + i]} 
+                        onChange={this.updateState}
+                    ></Form.Control>
+                </td>
                 <td className="text-center">
                     <label className="custom-checkbox">
-                        <input type="checkbox" defaultChecked={track.trackSingle}/>
+                        <input 
+                            type="checkbox" 
+                            id={'trackSingle_' + i} 
+                            defaultChecked={track.trackSingle} 
+                            defaultValue={track.trackSingle} 
+                            onChange={this.updateState}/>
                         <span className="checkmark"></span>
                     </label>
                 </td>
                 <td>
                     <Form.Control 
                         type="date" 
+                        id={'trackReleaseDate_' + i}
                         defaultValue={track.trackReleaseDate.date}
                         disabled={track.trackReleaseDate.disabled}
+                        onChange={this.updateState}
                     >
                     </Form.Control>
                 </td>
                 <td className="text-center">
-                    <button className="btn btn-secondary action" onClick={this.props.showClick}><i className="material-icons">publish</i></button>
-                    <button className="btn btn-secondary action"><i className="material-icons">delete</i></button>
+                    <button 
+                        className="btn btn-secondary action" 
+                        rowindex={i} 
+                        onClick={this.props.showClick}
+                    ><i className="material-icons">publish</i></button>
+                    <button 
+                        className="btn btn-secondary action" 
+                        rowindex={i} 
+                        onClick={this.props.removeRow}
+                    ><i className="material-icons">delete</i></button>
                 </td>
             </tr>
        )
@@ -76,31 +127,43 @@ class TrackInformationDataTable extends Component {
 }
 
 
+
+
+
 class TrackInformationPage extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            tableRows : [
-
-            ],
-            showReplaceModal : false
+            formInputs : {},
+            tableRows : [],
+            showReplaceModal : false,
+            tracksData : []
         }
         this.addBlankRow = this.addBlankRow.bind(this);
         this.showTrackModal = this.showTrackModal.bind(this);
         this.hideTrackModal = this.hideTrackModal.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.removeRow = this.removeRow.bind(this);
+
+        console.log(this.state.formInputs)
     }
   
+    removeRow = (e) => {
+        alert(e.target.getAttribute('rowindex'))
+    }
+
     getBlankRow = (rowCount) => {
         return(
             {
                 trackSequence : rowCount + 1,
                 trackISRC: '',
-                trackTitle : '',
+                trackTitle : this.state.formInputs,
                 trackSingle : false,
                 trackReleaseDate : {
-                    date : '01/11/1111',
-                    disabled : true
+                    date : '',
+                    disabled : false
                 }
             }
         )
@@ -121,6 +184,78 @@ class TrackInformationPage extends Component {
         this.setState({showReplaceModal : false})
     }
 
+    handleChange(event) {
+        let inputValue = '';
+        if(event.target.type === 'checkbox') {
+            inputValue = (event.target.checked) ? true : false;
+        } else {
+            inputValue = event.target.value
+        }
+
+        //this gets the inputs into the state.formInputs obj on change
+        this.setState( {formInputs : { ...this.state.formInputs, [event.target.id] : inputValue}} )
+        console.log(this.state.formInputs)
+    };
+
+    componentDidMount() {
+        if(this.props.match && this.props.match.params && this.state.projectID !== this.props.match.params.projectID) {
+          this.setState({projectID : this.props.match.params.projectID})
+        }
+      }
+
+    handleSubmit(event) {
+        const user = JSON.parse(sessionStorage.getItem('user'))
+        let tracksData = this.state.tableRows.map( function (track, i) {
+            return(
+                {
+                    trackID : '',
+                    discNumber : '1',
+                    trackNumber : i + 1,
+                    hasUpload : true,
+                    trackTitle : this.state.formInputs['trackTitle_' + i],
+                    isrc : this.state.formInputs['trackIsrc_' + i],
+                    isSingle : this.state.formInputs['trackSingle_' + i],
+                    trackReleaseDate : this.state.formInputs['trackReleaseDate_' + i]
+                }
+            )  
+        }.bind(this));
+
+        const fetchHeaders = new Headers(
+            {
+                "Content-Type": "application/json",
+                "Authorization" : sessionStorage.getItem('accessToken')
+            }
+        )
+
+        const fetchBody = JSON.stringify( {
+            "User" : {
+                "email" : user.email
+            },
+            "projectID": this.props.match.params.projectID,
+            "Tracks" : tracksData
+        })
+
+        fetch ('https://api-dev.umusic.net/guardian/project/track', {
+            method : 'POST',
+            headers : fetchHeaders,
+            body : fetchBody
+        }).then (response => 
+            {
+                return(response.json());
+            }
+        )
+        .then (responseJSON => 
+            {
+                alert('success!')
+                console.log(responseJSON)
+            }
+        )
+        .catch(
+            error => 
+                console.error('fail: ' + error)
+        );
+    }
+
     render() {
 
         if(this.state.tableRows.length <= 0) {
@@ -133,6 +268,7 @@ class TrackInformationPage extends Component {
                 <ReplaceAudioModal showModal={this.state.showReplaceModal} handleClose={this.hideTrackModal}/>
 
                 <PageHeader />
+
                 <div className="row no-gutters step-description">
                     <div className="col-12">
                         <h2>Step <span className="count-circle">4</span> Track Information</h2>
@@ -140,15 +276,31 @@ class TrackInformationPage extends Component {
                     </div>
                 </div>
                 <div>
-                    <TrackInformationDataTable data={this.state.tableRows} showClick={this.showTrackModal}/>
+                    <TrackInformationDataTable 
+                        data={this.state.tableRows} 
+                        showClick={this.showTrackModal} 
+                        handleChange={this.handleChange}
+                        removeRow={this.removeRow}
+                    />
                 </div>
                 <section className="row save-buttons">
                     <div className="col-9">
-                        <button type="button" className="btn btn-primary float-left" onClick={this.addBlankRow}>Add Track</button>
+                        <button 
+                            type="button" 
+                            className="btn btn-primary float-left" 
+                            onClick={this.addBlankRow}
+                        >Add Track</button>
                     </div>
                     <div className="col-3">
-                        <button type="button" className="btn btn-secondary">Save</button>
-                        <button type="button" className="btn btn-primary">Save &amp; Continue</button>
+                        <button 
+                            type="button" 
+                            className="btn btn-secondary"
+                        >Save</button>
+                        <button 
+                            type="button" 
+                            className="btn btn-primary" 
+                            onClick={this.handleSubmit}
+                        >Save &amp; Continue</button>
                     </div>
                 </section>
             </section>

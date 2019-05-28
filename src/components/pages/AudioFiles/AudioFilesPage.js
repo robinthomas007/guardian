@@ -9,7 +9,21 @@ import './AudioFiles.css';
 const mockData = require('../../../mockData.json');
 
 class AudioFilesPage extends Component {
-    
+
+    constructor(props) {
+        super(props);
+        
+        this.state = {
+            projectID : ''
+        }
+    }
+
+    componentDidUpdate() {
+        if(this.props.match && this.props.match.params && this.state.projectID !== this.props.match.params.projectID) {
+            this.setState({projectID : this.props.match.params.projectID})
+        }
+    }
+
     render() {
 
         const AudioVideoDataHeader = () => {
@@ -49,11 +63,12 @@ class AudioFilesPage extends Component {
                 </Table>
             )
         }
-
+        
         return(
+
             <section className="page-container h-100">
                 
-                <HaveAudioModal />
+                <HaveAudioModal projectID={this.props.projectID}/>
 
                 <PageHeader />
 

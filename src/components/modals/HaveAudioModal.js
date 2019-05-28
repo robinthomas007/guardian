@@ -5,8 +5,11 @@ import './HaveAudioModal.css';
 
 class HaveAudioModal extends Component {
   constructor(props, context) {
-    super(props, context);
-
+    super(props);
+    this.state = {
+      projectID : ''
+    }
+        
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
 
@@ -24,13 +27,25 @@ class HaveAudioModal extends Component {
   }
 
   handleNoAudioClick = (event) => {
+
       event.preventDefault();
 
-      this.props.history.push('/trackInformation')
+      if(this.state.projectID) {
+        this.props.history.push({
+          pathname : '/trackInformation/' + this.state.projectID
+        })
+      } else {
+        this.props.history.push({
+          pathname : '/trackInformation'
 
+        })
+      }
   }
 
   componentDidMount() {
+    if(this.props.match && this.props.match.params && this.state.projectID !== this.props.match.params.projectID) {
+      this.setState({projectID : this.props.match.params.projectID})
+    }
     this.handleShow()
   }
 

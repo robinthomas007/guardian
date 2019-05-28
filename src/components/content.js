@@ -124,13 +124,19 @@ export default withAuth(class Content extends Component {
 
             <SecureRoute path="/releaseInformation" render={ () => ( <ReleaseInformationPage user={this.state.user} />) } />
             <SecureRoute path="/projectContacts"  render={ () => ( <ProjectContactsPage user={this.state.user} />) } />
-            <SecureRoute path="/trackInformation" component={TrackInformationPage}/>
-            <SecureRoute path="/territorialRights" component={TerritorialRightsPage}/>
+            
+            <SecureRoute path="/trackInformation" exact component={TrackInformationPage}/>
+            <SecureRoute path="/trackInformation/:projectID" component={TrackInformationPage}/>
+
+            <SecureRoute path="/territorialRights" render={ () => ( <TerritorialRightsPage user={this.state.user} />) }/>
             <SecureRoute path="/blockingPolicies" component={BlockingPoliciesPage}/>
             <SecureRoute path="/newProject"  render={ () => ( <ReleaseInformationPage user={this.state.user} />) } />
-            <SecureRoute path="/audioFiles" component={AudioFilesPage} />
+            <SecureRoute path="/audioFiles" exact render={ () => ( <AudioFilesPage user={this.state.user} />) }/>
+            <SecureRoute path="/audioFiles/:projectID" component={AudioFilesPage}/>
+
             <SecureRoute path="/reviewSubmit" exact component={ReviewAndSubmitPage}/>
             <SecureRoute path="/reviewSubmit/:projectID" component={ReviewAndSubmitPage}/>
+            
             <SecureRoute path="/findProject" component={FindProject}/>
           </div>
         </div>

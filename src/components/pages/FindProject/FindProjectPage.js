@@ -121,6 +121,13 @@ class FindProjectPage extends Component {
 				sortColumn : '',
 				sortOrder : ''
 			},
+			filters : {
+				labelIds : [],
+				hasAduio : '',
+				hasBlocking : '',
+				from : '',
+				to : ''
+			},
 			searchResultsCount : 0,
 			currentPageNumber : 1
 		}
@@ -147,7 +154,8 @@ class FindProjectPage extends Component {
             "User" : {
 				"email" : user.email
 			},
-			"SearchCriteria" : this.state.searchCriteria
+			"SearchCriteria" : this.state.searchCriteria,
+			"Filters" : this.state.filters
 		})
 		
         fetch ('https://api-dev.umusic.net/guardian/project/search', {
@@ -192,9 +200,9 @@ class FindProjectPage extends Component {
 		const checkStepStatus = (stepStatus) => {
 			if(stepStatus) {
 				return(
-					<label className="custom-checkbox">
-						<input disabled type="checkbox" checked/>
-						<span className="static-checkmark"></span>
+					<label className="custom-checkbox">
+						<input disabled type="checkbox" checked/>
+						<span className="static-checkmark"></span>
 					</label> 
 				)
 			} else {
