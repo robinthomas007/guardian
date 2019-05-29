@@ -71,8 +71,6 @@ class ProjectContactsPage extends Component {
 
     showNotification(e, projectID){
 
-        alert(projectID)
-
         new Noty ({
             type: 'success',
             id:'projectSaved',

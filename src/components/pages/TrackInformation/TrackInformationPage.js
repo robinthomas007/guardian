@@ -151,7 +151,7 @@ class TrackInformationPage extends Component {
     }
   
     removeRow = (e) => {
-        alert(e.target.getAttribute('rowindex'))
+        
     }
 
     getBlankRow = (rowCount) => {
@@ -232,7 +232,12 @@ class TrackInformationPage extends Component {
                 "email" : user.email
             },
             "projectID": this.props.match.params.projectID,
-            "Tracks" : tracksData
+            "Discs" : [
+                {
+                    "discNumber" : 1, 
+                    "Tracks" : tracksData
+                }
+            ]
         })
 
         fetch ('https://api-dev.umusic.net/guardian/project/track', {
@@ -246,7 +251,6 @@ class TrackInformationPage extends Component {
         )
         .then (responseJSON => 
             {
-                alert('success!')
                 console.log(responseJSON)
             }
         )
