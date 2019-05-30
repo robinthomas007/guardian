@@ -78,9 +78,25 @@ class ReviewAndSubmitPage extends Component {
 
     getAudioFilesTableData() {
         if(this.state.discs.length >= 1) {
-            const discs = this.state.discs.map( (disc, i) => (
+            return this.state.discs.map( (disc, i) => (
                 disc.Tracks.map( (track, i) => (
-                    alert(track.trackID)                    
+                    this.state.discs.map((disc, i) => (
+                        <tr className="row no-gutters">
+                            <td className="col-1 centered">{track.trackNumber}</td>
+                            <td className="col-2">{track.fileName}</td>
+                            <td className="col-2">{track.trackTitle}</td>
+                            <td className="col-2">{track.isrc}</td>
+                            <td className="col-2"></td>
+                            <td className="col-1 centered">
+                                <label className="custom-checkbox"> 		
+                                    <input disabled type="checkbox"/>
+                                    <span className="static-checkmark"></span>
+                                </label>
+                            </td>
+                            <td className="col-2 centered">{track.trackReleaseDate}</td>
+                        </tr>
+                    )          
+                    )                 
                 )
             )))
         }
