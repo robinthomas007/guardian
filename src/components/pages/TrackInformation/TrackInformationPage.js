@@ -155,11 +155,18 @@ class TrackInformationPage extends Component {
     }
 
     getBlankRow = (rowCount) => {
+        
+        this.setState( {formInputs : { ...this.state.formInputs, ['trackSequence_' + rowCount] : ''}} )
+        this.setState( {formInputs : { ...this.state.formInputs, ['trackISRC_' + rowCount] : ''}} )
+        this.setState( {formInputs : { ...this.state.formInputs, ['trackTitle_' + rowCount] : ''}} )
+        this.setState( {formInputs : { ...this.state.formInputs, ['trackSingle_' + rowCount] : false}} )
+        this.setState( {formInputs : { ...this.state.formInputs, ['trackReleaseDate_' + rowCount] : ''}} )
+
         return(
             {
                 trackSequence : rowCount + 1,
                 trackISRC: '',
-                trackTitle : this.state.formInputs,
+                trackTitle : '',
                 trackSingle : false,
                 trackReleaseDate : {
                     date : '',

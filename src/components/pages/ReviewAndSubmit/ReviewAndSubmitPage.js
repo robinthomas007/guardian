@@ -80,26 +80,26 @@ class ReviewAndSubmitPage extends Component {
         if(this.state.discs.length >= 1) {
             return this.state.discs.map( (disc, i) => (
                 disc.Tracks.map( (track, i) => (
-                    this.state.discs.map((disc, i) => (
-                        <tr className="row no-gutters">
-                            <td className="col-1 centered">{track.trackNumber}</td>
-                            <td className="col-2">{track.fileName}</td>
-                            <td className="col-2">{track.trackTitle}</td>
-                            <td className="col-2">{track.isrc}</td>
-                            <td className="col-2"></td>
-                            <td className="col-1 centered">
-                                <label className="custom-checkbox"> 		
-                                    <input disabled type="checkbox"/>
-                                    <span className="static-checkmark"></span>
-                                </label>
-                            </td>
-                            <td className="col-2 centered">{track.trackReleaseDate}</td>
-                        </tr>
-                    )          
-                    )                 
+                    <tr className="row no-gutters">
+                        <td className="col-1 centered">{track.trackNumber}</td>
+                        <td className="col-2">{track.fileName}</td>
+                        <td className="col-2">{track.trackTitle}</td>
+                        <td className="col-2">{track.isrc}</td>
+                        <td className="col-2"></td>
+                        <td className="col-1 centered">
+                            <label className="custom-checkbox"> 
+                            {track.isSingle
+                                ? <input disabled type="checkbox" checked />
+                                : <input disabled type="checkbox" />
+                            }
+                                <span className="static-checkmark"></span>
+                            </label>
+                        </td>
+                        <td className="col-2 centered">{track.trackReleaseDate}</td>
+                    </tr>
                 )
-            )))
-        }
+            )
+        ))}
     }
 
     render() {
