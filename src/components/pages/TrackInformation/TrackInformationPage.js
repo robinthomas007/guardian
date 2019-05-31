@@ -106,8 +106,8 @@ class TrackInformationDataTable extends Component {
                     ><i className="material-icons">publish</i></button>
                     <button 
                         className="btn btn-secondary action" 
-                        rowindex={i} 
-                        onClick={this.props.removeRow}
+                        rowIndex={i} 
+                        onClick={this.props.removeRow.bind(null, i)}
                     ><i className="material-icons">delete</i></button>
                 </td>
             </tr>
@@ -149,8 +149,24 @@ class TrackInformationPage extends Component {
 
         console.log(this.state.formInputs)
     }
-  
-    removeRow = (e) => {
+
+    reSequenceTracks = () => {
+        var rowCount = this.state.tableRows.length
+        let newTableRows = this.state.tableRows;
+        
+        let newRow = this.state.tableRows.map( function (row, i) {
+            row.trackSequence = i + 1;
+        })
+    }
+
+    removeRow(rowIndex) {
+        let newTableRows = this.state.tableRows;
+        if(rowIndex > 0) {
+            newTableRows.splice(rowIndex, 1)
+            this.setState({tableRows : newTableRows})
+        }
+
+        this.reSequenceTracks()
         
     }
 
