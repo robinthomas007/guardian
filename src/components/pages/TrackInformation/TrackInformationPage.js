@@ -106,8 +106,8 @@ class TrackInformationDataTable extends Component {
                     ><i className="material-icons">publish</i></button>
                     <button 
                         className="btn btn-secondary action" 
-                        rowindex={i} 
-                        onClick={this.props.removeRow}
+                        rowIndex={i} 
+                        onClick={this.props.removeRow.bind(null, i)}
                     ><i className="material-icons">delete</i></button>
                 </td>
             </tr>
@@ -149,17 +149,40 @@ class TrackInformationPage extends Component {
 
         console.log(this.state.formInputs)
     }
-  
-    removeRow = (e) => {
-        alert(e.target.getAttribute('rowindex'))
+
+    reSequenceTracks = () => {
+        var rowCount = this.state.tableRows.length
+        let newTableRows = this.state.tableRows;
+        
+        let newRow = this.state.tableRows.map( function (row, i) {
+            row.trackSequence = i + 1;
+        })
+    }
+
+    removeRow(rowIndex) {
+        let newTableRows = this.state.tableRows;
+        if(rowIndex > 0) {
+            newTableRows.splice(rowIndex, 1)
+            this.setState({tableRows : newTableRows})
+        }
+
+        this.reSequenceTracks()
+        
     }
 
     getBlankRow = (rowCount) => {
+        
+        this.setState( {formInputs : { ...this.state.formInputs, ['trackSequence_' + rowCount] : ''}} )
+        this.setState( {formInputs : { ...this.state.formInputs, ['trackISRC_' + rowCount] : ''}} )
+        this.setState( {formInputs : { ...this.state.formInputs, ['trackTitle_' + rowCount] : ''}} )
+        this.setState( {formInputs : { ...this.state.formInputs, ['trackSingle_' + rowCount] : false}} )
+        this.setState( {formInputs : { ...this.state.formInputs, ['trackReleaseDate_' + rowCount] : ''}} )
+
         return(
             {
                 trackSequence : rowCount + 1,
                 trackISRC: '',
-                trackTitle : this.state.formInputs,
+                trackTitle : '',
                 trackSingle : false,
                 trackReleaseDate : {
                     date : '',
@@ -232,7 +255,12 @@ class TrackInformationPage extends Component {
                 "email" : user.email
             },
             "projectID": this.props.match.params.projectID,
-            "Tracks" : tracksData
+            "Discs" : [
+                {
+                    "discNumber" : 1, 
+                    "Tracks" : tracksData
+                }
+            ]
         })
 
         fetch ('https://api-dev.umusic.net/guardian/project/track', {
@@ -246,7 +274,6 @@ class TrackInformationPage extends Component {
         )
         .then (responseJSON => 
             {
-                alert('success!')
                 console.log(responseJSON)
             }
         )

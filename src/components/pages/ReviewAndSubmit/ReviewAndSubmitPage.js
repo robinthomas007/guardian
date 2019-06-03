@@ -8,7 +8,8 @@ class ReviewAndSubmitPage extends Component {
         super(props);
 
         this.state = { 
-            projectID : props.projectID
+            projectID : props.projectID,
+            discs : {}
         }
 
         this.handleProjectCategoryClick = this.handleProjectCategoryClick.bind(this);
@@ -41,7 +42,9 @@ class ReviewAndSubmitPage extends Component {
                 return(response.json());
             }
         ).then (responseJSON => 
+
             {
+               
                 this.setState({ projectTitle : responseJSON.Project.projectTitle })
                 this.setState({ projectArtistName : responseJSON.Project.projectArtistName })
                 this.setState({ projectSecurity : responseJSON.Project.projectSecurity })
@@ -53,6 +56,11 @@ class ReviewAndSubmitPage extends Component {
                 this.setState({ projectPrimaryContact : responseJSON.Project.projectPrimaryContact })
                 this.setState({ projectPrimaryContactEmail : responseJSON.Project.projectPrimaryContactEmail })
                 this.setState({ projectAdditionalContacts : responseJSON.Project.projectAdditionalContacts })
+
+                this.setState({ discs : responseJSON.Discs })
+
+                console.log('responseJSON.Discs')
+                console.log(responseJSON.Discs)
             }
         )
         .catch(
@@ -68,6 +76,31 @@ class ReviewAndSubmitPage extends Component {
         alert('save and continue')
     }
 
+    getAudioFilesTableData() {
+        if(this.state.discs.length >= 1) {
+            return this.state.discs.map( (disc, i) => (
+                disc.Tracks.map( (track, i) => (
+                    <tr className="row no-gutters">
+                        <td className="col-1 centered">{track.trackNumber}</td>
+                        <td className="col-2">{track.fileName}</td>
+                        <td className="col-2">{track.trackTitle}</td>
+                        <td className="col-2">{track.isrc}</td>
+                        <td className="col-2"></td>
+                        <td className="col-1 centered">
+                            <label className="custom-checkbox"> 
+                            {track.isSingle
+                                ? <input disabled type="checkbox" checked />
+                                : <input disabled type="checkbox" />
+                            }
+                                <span className="static-checkmark"></span>
+                            </label>
+                        </td>
+                        <td className="col-2 centered">{track.trackReleaseDate}</td>
+                    </tr>
+                )
+            )
+        ))}
+    }
 
     render() {
         return(
@@ -181,21 +214,7 @@ class ReviewAndSubmitPage extends Component {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr className="row no-gutters">
-                                        <td className="col-1 centered">1</td>
-                                        <td className="col-2">audio-file-name.mp3</td>
-                                        <td className="col-2">Track Name 1</td>
-                                        <td className="col-2">123456789101</td>
-                                        <td className="col-2">Example Artist Name 1</td>
-                                        <td className="col-1 centered">
-                                            <label className="custom-checkbox"> 		
-                                            <input disabled type="checkbox" checked/>
-                                            <span className="static-checkmark">				
-                                            </span>
-                                            </label>
-                                        </td>
-                                        <td className="col-2 centered">12/28/18</td>
-                                    </tr>
+                                    {this.getAudioFilesTableData()}
                                 </tbody>
                             </table>
                             </div>

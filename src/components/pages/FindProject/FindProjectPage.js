@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Table, Grid, Button, Form, Pagination } from 'react-bootstrap'; 
+import {Table, Grid, Button, Form, Pagination, Dropdown, DropdownButton } from 'react-bootstrap'; 
 import './FindProject.css';
 import { AST_This } from 'terser';
 import IntroModal from '../../modals/IntroModal';
@@ -253,6 +253,10 @@ class FindProjectPage extends Component {
 		});
 	}
 
+	setFilter(e) {
+		e.preventDefault();
+	}
+
     render() {
 
         const saveAndContinue = () => {
@@ -285,7 +289,13 @@ class FindProjectPage extends Component {
 						<li className="col-2 d-flex"></li>
 						<li className="col-8 d-flex justify-content-center">
 							<div className="dropdown">
-								<button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<button 
+									className="btn btn-secondary dropdown-toggle" 
+									type="button" 
+									id="dropdownMenuButton" 
+									data-toggle="dropdown" 
+									aria-haspopup="true" 
+									aria-expanded="false">
 									<i className="material-icons">settings</i> Filters
 								</button>
 						
@@ -310,7 +320,8 @@ class FindProjectPage extends Component {
 													aria-expanded="false">
 													Default Label
 												</button>
-												<div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+												<div className="dropdown-menu" aria-labelledby="dropdownMenuButton" onClick={this.setFilter}>
 													<a className="dropdown-item" href="#">Label 1</a>
 													<a className="dropdown-item" href="#">Label 2</a>
 													<a className="dropdown-item" href="#">Label 3</a>
@@ -332,7 +343,6 @@ class FindProjectPage extends Component {
 										<div className="col-2">
 											<label>By Status</label><br />
 											<label>Has Blocking</label><br />
-							
 										</div>
 							
 										<div className="col-4">
