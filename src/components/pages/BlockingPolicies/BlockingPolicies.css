@@ -20,6 +20,7 @@ ul.countries li span, ul.tracks li span {vertical-align:middle;}
 ul.countries li label.dropdown-item, ul.tracks li label.dropdown-item {padding:.50rem 1.1rem;}
 
 .dropdown .custom-checkbox {display:inline-block; }
+.dropdown.tracks-dropdown {padding-left:0px;}
 .track-draggable-area.territory-tracks {min-height:324px;}
 .territory-tracks {width:260px;}
 
