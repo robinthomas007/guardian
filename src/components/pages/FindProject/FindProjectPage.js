@@ -195,6 +195,20 @@ class FindProjectPage extends Component {
         this.setState( {searchCriteria : { ...this.state.searchCriteria, "searchTerm" : event.target.value}} )
     }
 
+	convertToLocaleTime(dateString) {
+		const utcDate = new Date(dateString + ' UTC');
+			utcDate.setSeconds(0,0);
+		const localTime = utcDate.toLocaleString();
+			
+		let dateArr = localTime.split(' ')
+		let date = dateArr[0].replace(',', '')
+		let timeArr =  dateArr[1].split(':')
+		let amPm = dateArr[2]
+		let dateStr = date + ' ' + timeArr[0] + ':' + timeArr[1] + ' ' + amPm
+
+		return (dateStr)
+	}
+
 	renderProjects(projects) {
 
 		const checkStepStatus = (stepStatus) => {
@@ -219,7 +233,7 @@ class FindProjectPage extends Component {
 						<td className="col-2">{projects[project].projectTitle}</td>
 						<td className="col-2">{projects[project].projectArtistName}</td>
 						<td className="col-1">{projects[project].projectReleasingLabel}</td>
-						<td className="col-2 text-center">{projects[project].projectLastModified}</td>
+						<td className="col-2 text-center">{this.convertToLocaleTime(projects[project].projectLastModified)}</td>
 						<td className="col-1 status text-nowrap"><span>In Progress</span></td>
 						<td className="status text-center">{checkStepStatus(projects[project].isStep1Complete)}</td>
 						<td className="status text-center">{checkStepStatus(projects[project].isStep2Complete)}</td>
@@ -262,6 +276,12 @@ class FindProjectPage extends Component {
         const saveAndContinue = () => {
             alert('Save Contacts and Continue')
         }
+
+		const thisDate = new Date('6/4/2019 11:09 PM' + ' UTC');
+
+		console.log('thisDate.getTimezoneOffset()')
+		console.log('-- ' + thisDate.toLocaleString())
+		console.log(thisDate.getTimezoneOffset())
 
 		return(
             <div>
