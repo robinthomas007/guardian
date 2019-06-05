@@ -239,7 +239,6 @@
 	ul.countries li label.dropdown-item, ul.tracks li label.dropdown-item {padding:.50rem 1.1rem;}
 
 	.dropdown .custom-checkbox {display:inline-block; }
-	.track-draggable-area.territory-tracks {min-height:324px;}
 	.territory-tracks {width:260px;}
 	
 	.option-text {color:#999; font-style:italic;}

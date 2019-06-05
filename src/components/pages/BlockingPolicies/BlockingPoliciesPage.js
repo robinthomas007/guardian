@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Table, Grid, Button, Form } from 'react-bootstrap'; 
 import PageHeader from '../PageHeader/PageHeader';
 import './BlockingPolicies.css';
 
@@ -29,26 +30,26 @@ class BlockingPoliciesPage extends Component {
         const BlockingPolicySite = () => {
     
             return(
-                <table className="table">
+                <Table>
                     <thead >
                         <tr className="row no-gutters">
                             <th className="col-4 " nowrap>Site</th>
-                            <th className="col-2 centered" nowrap>Monetize</th>
-                            <th className="col-2 centered" nowrap>Block</th>
-                            <th className="col-2 centered" nowrap>Duration</th>
-                            <th className="col-2 centered" nowrap>Block Until</th>
+                            <th className="col-2 text-center" nowrap>Monetize</th>
+                            <th className="col-2 text-center" nowrap>Block</th>
+                            <th className="col-2 text-self-center" nowrap>Duration</th>
+                            <th className="col-2 text-self-center" nowrap>Block Until</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr className="row no-gutters">
-                            <td className="col-4 centered align-self-center" nowrap>
+                            <td className="col-4 align-self-center" nowrap>
                                 <span className="platform-sprite youtube"></span>
                             </td>
                             <td className="col-2 centered align-self-center" nowrap>
-                                <input type="radio" />
+                                <Form.Control type="radio" />
                             </td>
                             <td className="col-2 centered align-self-center" nowrap>
-                                <input type="radio" />
+                                <Form.Control type="radio" />
                             </td>
                             <td className="col-2 centered align-self-center" nowrap>Duration</td>
                             <td className="col-2 centered align-self-center" nowrap>Block Until</td>
@@ -58,10 +59,10 @@ class BlockingPoliciesPage extends Component {
                                 <span className="platform-sprite soundcloud"></span>
                             </td>
                             <td className="col-2 centered align-self-center" nowrap>
-                                <input type="radio" />
+                                <Form.Control type="radio" />
                             </td>
                             <td className="col-2 centered align-self-center" nowrap>
-                                <input type="radio" />
+                                <Form.Control type="radio" />
                             </td>
                             <td className="col-2 centered align-self-center" nowrap>Duration</td>
                             <td className="col-2 centered align-self-center" nowrap>Block Until</td>
@@ -71,10 +72,10 @@ class BlockingPoliciesPage extends Component {
                                 <span className="platform-sprite facebook"></span>
                             </td>
                             <td className="col-2 centered align-self-center" nowrap>
-                                <input type="radio" />
+                                <Form.Control type="radio" />
                             </td>
                             <td className="col-2 centered align-self-center" nowrap>
-                                <input type="radio" />
+                                <Form.Control type="radio" />
                             </td>
                             <td className="col-2 centered align-self-center" nowrap>Duration</td>
                             <td className="col-2 centered align-self-center" nowrap>Block Until</td>
@@ -84,29 +85,16 @@ class BlockingPoliciesPage extends Component {
                                 <span className="platform-sprite instagram"></span>
                             </td>
                             <td className="col-2 centered align-self-center" nowrap>
-                                <input type="radio" />
+                                <Form.Control type="radio" />
                             </td>
                             <td className="col-2 centered align-self-center" nowrap>
-                                <input type="radio" />
-                            </td>
-                            <td className="col-2 centered align-self-center" nowrap>Duration</td>
-                            <td className="col-2 centered align-self-center" nowrap>Block Until</td>
-                        </tr>
-                        <tr className="row no-gutters">
-                            <td className="col-4 centered align-self-center" nowrap>
-                                <span className="platform-sprite twitter"></span>
-                            </td>
-                            <td className="col-2 centered align-self-center" nowrap>
-                                <input type="radio" />
-                            </td>
-                            <td className="col-2 centered align-self-center" nowrap>
-                                <input type="radio" />
+                                <Form.Control type="radio" />
                             </td>
                             <td className="col-2 centered align-self-center" nowrap>Duration</td>
                             <td className="col-2 centered align-self-center" nowrap>Block Until</td>
                         </tr>
                     </tbody>
-                </table>
+                </Table>
             )
         }
     
@@ -131,7 +119,7 @@ class BlockingPoliciesPage extends Component {
                                 <tbody>
                                     <tr>
                                         <td nowrap>
-                                            <div className="dropdown">
+                                            <div className="dropdown tracks-dropdown">
                                                 <button type="button" id="selectTracksDropdown" className="btn btn-secondary dropdown-toggle territory-tracks" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     Select Tracks or Drag Below
                                                 </button>
@@ -139,7 +127,7 @@ class BlockingPoliciesPage extends Component {
                                                     {TracksWithNoSetPolicyDrop}
                                                 </ul>
                                             </div>
-                                            <div className="track-draggable-area territory-tracks"></div>
+                                            <div className="track-draggable-area territory-tracks h-100"></div>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -189,7 +177,7 @@ class BlockingPoliciesPage extends Component {
                 </div>
                 <div className="row">
                     <div className="col-3">
-                        <div className="track-draggable-area">
+                        <div className="track-draggable-area h-100">
                             {TracksWithNoSetPolicy}
                         </div>
                     </div>
