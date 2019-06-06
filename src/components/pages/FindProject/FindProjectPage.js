@@ -203,7 +203,7 @@ class FindProjectPage extends Component {
 		let dateArr = localTime.split(' ')
 		let date = dateArr[0].replace(',', '')
 		let timeArr =  dateArr[1].split(':')
-		let amPm = dateArr[2]
+		let amPm = (dateArr[2]) ? dateArr[2] : ''
 		let dateStr = date + ' ' + timeArr[0] + ':' + timeArr[1] + ' ' + amPm
 
 		return (dateStr)
