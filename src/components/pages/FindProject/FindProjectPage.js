@@ -196,7 +196,10 @@ class FindProjectPage extends Component {
     }
 
 	convertToLocaleTime(dateString) {
-		const utcDate = new Date(dateString + ' UTC');
+
+		console.log(dateString)
+
+		const utcDate = new Date(dateString);
 			utcDate.setSeconds(0,0);
 		const localTime = utcDate.toLocaleString();
 			
@@ -276,12 +279,6 @@ class FindProjectPage extends Component {
         const saveAndContinue = () => {
             alert('Save Contacts and Continue')
         }
-
-		const thisDate = new Date('6/4/2019 11:09 PM' + ' UTC');
-
-		console.log('thisDate.getTimezoneOffset()')
-		console.log('-- ' + thisDate.toLocaleString())
-		console.log(thisDate.getTimezoneOffset())
 
 		return(
             <div>
