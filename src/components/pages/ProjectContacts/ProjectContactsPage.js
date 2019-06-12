@@ -174,7 +174,7 @@ class ProjectContactsPage extends Component {
         return(
             <section className="page-container h-100">
 
-                <PageHeader projectTitle='this is a test'/>
+                <PageHeader />
     
                 <div className="row no-gutters step-description">
                     <div className="col-12">

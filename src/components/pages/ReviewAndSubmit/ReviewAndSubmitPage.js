@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PageHeader from '../PageHeader/PageHeader';
 import './ReviewAndSubmit.css';
+import Noty from 'noty';
 
 class ReviewAndSubmitPage extends Component {
 
@@ -14,7 +15,6 @@ class ReviewAndSubmitPage extends Component {
 
         this.handleProjectCategoryClick = this.handleProjectCategoryClick.bind(this);
     };
-
 
     componentDidMount() {
         const user = JSON.parse(sessionStorage.getItem('user'))
@@ -72,8 +72,15 @@ class ReviewAndSubmitPage extends Component {
         console.log('Load Info for: ' + this.props.match.params.projectID)
     }
 
-    handleSaveAndContinueClick() {
-        alert('save and continue')
+    handleSubmitProjectClick() {
+        new Noty ({
+            type: 'success',
+            id:'tracksSaved',
+            text: 'Your project has been successfully saved and submitted for review.',
+            theme: 'bootstrap-v4',
+            layout: 'top',
+            timeout: '3000'
+        }).show() 
     }
 
     getAudioFilesTableData() {
@@ -305,8 +312,7 @@ class ReviewAndSubmitPage extends Component {
                 <section className="row save-buttons">
                     <div className="col-9"></div>
                     <div className="col-3 align-content-end">
-                        <button type="button" className="btn btn-secondary">Save</button>
-                        <button type="button" className="btn btn-primary" onClick={this.handleSaveAndContinueClick}>Save &amp; Continue</button>
+                        <button type="button" className="btn btn-primary" onClick={this.handleSubmitProjectClick}>Submit Project</button>
                     </div>
                 </section>
             </section>

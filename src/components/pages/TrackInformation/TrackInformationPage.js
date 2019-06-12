@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import {Table, Grid, Button, Form } from 'react-bootstrap'; 
 import PageHeader from '../PageHeader/PageHeader';
 import ReplaceAudioModal from '../../modals/ReplaceAudioModal';
+import { withRouter } from "react-router";
 import './TrackInformation.css';
+import Noty from 'noty'
 
 class TrackInformationDataTable extends Component {
 
@@ -17,8 +19,12 @@ class TrackInformationDataTable extends Component {
         }
 
         this.updateState = this.updateState.bind(this);
+
     }
  
+   
+
+
     trackInformationDataHeader = () => {
         return(
             <thead>
@@ -146,6 +152,7 @@ class TrackInformationPage extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.removeRow = this.removeRow.bind(this);
+        this.showNotification = this.showNotification.bind(this);
 
         console.log(this.state.formInputs)
     }
@@ -198,6 +205,30 @@ class TrackInformationPage extends Component {
             newRow.push(this.getBlankRow(rowCount))
         this.setState({tableRows : newRow})
     }
+
+    
+    showNotification(){
+
+        new Noty ({
+            type: 'success',
+            id:'tracksSaved',
+            text: 'Your track information has been successfully saved and submitted for intial protection.',
+            theme: 'bootstrap-v4',
+            layout: 'top',
+            timeout: '3000'
+        }).show() 
+    };
+
+    showNotSavedNotification(e){
+        new Noty ({
+            type: 'error',
+            id:'projectSaved',
+            text: 'Your tracks were NOT successfully saved. Please try again.',
+            theme: 'bootstrap-v4',
+            layout: 'top',
+            timeout: '3000'
+        }).show()
+    };
 
     showTrackModal() {
         this.setState({showReplaceModal : true})
@@ -326,7 +357,7 @@ class TrackInformationPage extends Component {
                         <button 
                             type="button" 
                             className="btn btn-primary" 
-                            onClick={this.handleSubmit}
+                            onClick={this.showNotification}
                         >Save &amp; Continue</button>
                     </div>
                 </section>
@@ -335,4 +366,4 @@ class TrackInformationPage extends Component {
     }
 };
 
-export default TrackInformationPage;
+export default withRouter(TrackInformationPage);

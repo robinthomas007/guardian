@@ -5,6 +5,7 @@ import './ReleaseInformation.css';
 import { withRouter } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import UUID from 'uuid';
+import Noty from 'noty';
 
 class ReleasingLabelsInput extends Component {
 
@@ -30,6 +31,18 @@ class ReleasingLabelsInput extends Component {
         }
         return(labelOptions)
     }
+
+    showNotification(){
+
+        new Noty ({
+            type: 'success',
+            id:'tracksSaved',
+            text: 'Your track information has been successfully saved and submitted for intial protection.',
+            theme: 'bootstrap-v4',
+            layout: 'top',
+            timeout: '3000'
+        }).show() 
+    };
 
     render() {
 

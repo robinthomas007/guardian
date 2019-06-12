@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import PageHeader from '../PageHeader/PageHeader';
 import {Table, Grid, Button, Form, Modal } from 'react-bootstrap'; 
 import HaveAudioModal from '../../modals/HaveAudioModal';
-
-
 import './AudioFiles.css';
+import Noty from 'noty';
 
 const mockData = require('../../../mockData.json');
 
@@ -16,7 +15,21 @@ class AudioFilesPage extends Component {
         this.state = {
             projectID : ''
         }
+
+        this.showNotification = this.showNotification.bind(this);
     }
+
+    showNotification(){
+
+        new Noty ({
+            type: 'success',
+            id:'tracksSaved',
+            text: 'Your track information has been successfully saved.',
+            theme: 'bootstrap-v4',
+            layout: 'top',
+            timeout: '3000'
+        }).show() 
+    };
 
     componentDidUpdate() {
         if(this.props.match && this.props.match.params && this.state.projectID !== this.props.match.params.projectID) {
@@ -107,8 +120,8 @@ class AudioFilesPage extends Component {
             <section className="row no-gutters save-buttons">
                 <div className="col-9"></div>
                 <div className="col-3">
-                    <button type="button" className="btn btn-secondary">Save</button>
-                    <button type="button" className="btn btn-primary">Save &amp; Continue</button>
+                    <button type="button" className="btn btn-secondary" onClick={this.showNotification}>Save</button>
+                    <button type="button" className="btn btn-primary" onClick={this.showNotification}>Save &amp; Continue</button>
                 </div>
             </section>
         </section>
