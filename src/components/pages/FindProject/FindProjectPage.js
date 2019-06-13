@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Table, Grid, Button, Form, Pagination, Dropdown, DropdownButton } from 'react-bootstrap'; 
+import {Table, Grid, Button, Form, Pagination, Dropdown, DropdownButton, Alert } from 'react-bootstrap'; 
 import './FindProject.css';
 import { AST_This } from 'terser';
 import IntroModal from '../../modals/IntroModal';
@@ -100,7 +100,7 @@ class TablePager extends Component {
 		return(
 			<Pagination activepage={this.state.activePage} items={5} limit={5}>
 				<Pagination.Prev onClick={this.handlePagePreviousClick} />
-				{paginationItems}
+					{paginationItems}
 				<Pagination.Next onClick={this.handlePageNextClick}/>
 			</Pagination>
 		)
@@ -119,15 +119,16 @@ class FindProjectPage extends Component {
 				itemsPerPage : '10',
 				pageNumber : '1',
 				sortColumn : '',
-				sortOrder : ''
+				sortOrder : '',
+				filter : {
+					labelIds : [],
+					hasAudio : '',
+					hasBlocking : '',
+					from : '',
+					to : ''
+				},
 			},
-			filters : {
-				labelIds : [],
-				hasAduio : '',
-				hasBlocking : '',
-				from : '',
-				to : ''
-			},
+			showFilterModal : false,
 			searchResultsCount : 0,
 			currentPageNumber : 1
 		}
@@ -138,6 +139,12 @@ class FindProjectPage extends Component {
 		this.handleKeyUp = this.handleKeyUp.bind(this);
 		this.setProjectsView = this.setProjectsView.bind(this);
 		this.handlePaginationChange = this.handlePaginationChange.bind(this);
+		this.handleFilterModalView = this.handleFilterModalView.bind(this);
+		this.setDateFilter =  this.setDateFilter.bind(this);
+	}
+
+	getListingOfLabels(data) {
+
 	}
 
 
@@ -149,15 +156,18 @@ class FindProjectPage extends Component {
                 "Authorization" : sessionStorage.getItem('accessToken')
             }
 		)
+		
 
 		const fetchBody = JSON.stringify( {
             "User" : {
 				"email" : user.email
 			},
 			"SearchCriteria" : this.state.searchCriteria,
-			"Filters" : this.state.filters
 		})
 		
+
+		console.log(fetchBody)
+
         fetch ('https://api-dev.umusic.net/guardian/project/search', {
             method : 'POST',
             headers : fetchHeaders,
@@ -176,6 +186,7 @@ class FindProjectPage extends Component {
         .catch(
             error => console.error(error)
 		);
+
 	}
 
 	componentDidMount(props) {
@@ -197,10 +208,8 @@ class FindProjectPage extends Component {
 
 	convertToLocaleTime(dateString) {
 
-		console.log(dateString)
-
 		const utcDate = new Date(dateString);
-			utcDate.setSeconds(0,0);
+			  utcDate.setSeconds(0,0);
 		const localTime = utcDate.toLocaleString();
 			
 		let dateArr = localTime.split(' ')
@@ -274,7 +283,55 @@ class FindProjectPage extends Component {
 		e.preventDefault();
 	}
 
+	handleSearchModalClick(e) {
+		e.stopPropagation();
+	}
+
+	handleFilterModalView() {
+		(this.state.showFilterModal) ? this.setState({ showFilterModal: false }) :  this.setState({ showFilterModal: true })
+	}
+
+	getToDate(date) {
+		let toDate = new Date(date)
+			toDate.setHours(23,59,59);	
+			toDate.setDate(toDate.getDate() + 1)
+		toDate = toDate.toISOString().replace('Z', '')
+		return(toDate)
+	}
+
+	getFromDate(date) {
+		let toDate = new Date(date)
+			toDate.setHours(0,0,1);	
+
+		toDate = toDate.toISOString().replace('Z', '')
+		return(toDate)
+	}
+
+	setDateFilter(e) {
+		
+		let targetDate = (e.target.value) ?  e.target.value : ''
+
+		let filterState = this.state.searchCriteria.filter
+
+		if(e.target.id == 'filterStartDate') {
+			filterState.from = (targetDate != '') ? this.getFromDate(targetDate) : ''
+			this.setState(currentState => ({filterState}), () => {
+				this.handleProjectSearch()
+				this.handleFilterModalView()
+			});
+
+		} else {
+			filterState.to = (targetDate != '') ? this.getToDate(targetDate) : ''
+			this.setState(currentState => ({filterState}), () => {
+				this.handleProjectSearch()
+				this.handleFilterModalView()
+			});
+		}
+	}
+
     render() {
+
+		console.log(sessionStorage.getItem('user'))
 
         const saveAndContinue = () => {
             alert('Save Contacts and Continue')
@@ -307,17 +364,18 @@ class FindProjectPage extends Component {
 						<li className="col-8 d-flex justify-content-center">
 							<div className="dropdown">
 								<button 
-									className="btn btn-secondary dropdown-toggle" 
+									onClick={this.handleFilterModalView}
+									className="btn btn-secondary " 
 									type="button" 
 									id="dropdownMenuButton" 
-									data-toggle="dropdown" 
 									aria-haspopup="true" 
 									aria-expanded="false">
 									<i className="material-icons">settings</i> Filters
 								</button>
 						
-								<div className="dropdown-menu search-filters" aria-labelledby="dropdownMenuButton">
+								<div className={this.state.showFilterModal ? "dropdown-menu search-filters d-block" : "dropdown-menu search-filters d-none"} aria-labelledby="dropdownMenuButton">
 									<h5>Search Filters</h5>
+
 									<br />
 						
 									<div className="row no-gutters">
@@ -390,7 +448,19 @@ class FindProjectPage extends Component {
 									</div>
 							
 									<div className="col-10">
-										<Form.Control type="date" /> <label> to</label><Form.Control type="date" />
+										<Form.Control 
+											id="filterStartDate"
+											type="date" 
+											onChange={this.setDateFilter} 
+										/>
+										
+										<label> to</label>
+										
+										<Form.Control 
+											id="filterEndDate"
+											type="date" 
+											onChange={this.setDateFilter} 
+										/>
 									</div>
 								</div>
 							</div>
@@ -465,7 +535,8 @@ class FindProjectPage extends Component {
 					</li>
 					<li className="col-4 d-flex"></li>
 				</ul>
-<div className="table-responsive">
+
+			<div className="table-responsive">
 				<Table className="find-project-table">
 					<thead>
 						<tr className='d-flex'>
