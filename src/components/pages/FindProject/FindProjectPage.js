@@ -107,6 +107,84 @@ class TablePager extends Component {
 	}
 }
 
+class LabelsInput extends Component {
+    constructor(props) {
+		super(props);
+		this.state = {}
+		this.handleChange = this.handleChange.bind(this);
+    }
+
+	handleChange(e) {
+		alert(e.target.value)
+	}
+
+    render() {
+        let labelOptions = ''
+        if(this.props.labels) {
+			labelOptions = this.props.labels.map( (label, i) =>
+				<a className="dropdown-item" key={i} value={label.id} value={label.id} onClick={(e) => this.handleChange(e)}>
+					<input type="checkbox" value={label.id} id={label.id} />{label.name}
+				</a>
+            )
+        }
+        return(
+			<div className="dropdown">
+				<button 
+					className="btn btn-secondary dropdown-toggle" 
+					type="button" 
+					id="dropdownMenuButton" 
+					data-toggle="dropdown" 
+					aria-haspopup="true" 
+					aria-expanded="false">
+					Default Label
+				</button>
+
+				<div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+					{labelOptions}
+				</div>
+			</div>
+        )
+    }
+}
+
+class NameIdDropdown extends Component {
+    constructor(props) {
+		super(props);
+		this.state = {}
+		this.handleChange = this.handleChange.bind(this);
+    }
+
+	handleChange(ID) {
+		alert(ID)
+	}
+
+    render() {
+        let inputOptions = ''
+        if(this.props.data) {
+			inputOptions = this.props.data.map( (data, i) =>
+				<a className="dropdown-item" value={data.id} onClick={() => this.handleChange(data.id)}>{data.name}</a>
+            )
+        }
+        return(
+			<div className="dropdown">
+				<button 
+					className="btn btn-secondary dropdown-toggle" 
+					type="button" 
+					id="dropdownMenuButton" 
+					data-toggle="dropdown" 
+					aria-haspopup="true" 
+					aria-expanded="false">
+					Default Label
+				</button>
+
+				<div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+					{inputOptions}
+				</div>
+			</div>
+        )
+    }
+}
+
 class FindProjectPage extends Component {
   
 	constructor(props) {
@@ -128,6 +206,12 @@ class FindProjectPage extends Component {
 					to : ''
 				},
 			},
+
+			labelFacets : [],
+			hasAudioFacets : [],
+			hasBlockingFacets : [],
+			statusFacets : [],
+
 			showFilterModal : false,
 			searchResultsCount : 0,
 			currentPageNumber : 1
@@ -140,6 +224,7 @@ class FindProjectPage extends Component {
 		this.setProjectsView = this.setProjectsView.bind(this);
 		this.handlePaginationChange = this.handlePaginationChange.bind(this);
 		this.handleFilterModalView = this.handleFilterModalView.bind(this);
+		this.setDateFilter =  this.setDateFilter.bind(this);
 		this.setDateFilter =  this.setDateFilter.bind(this);
 	}
 
@@ -164,9 +249,6 @@ class FindProjectPage extends Component {
 			},
 			"SearchCriteria" : this.state.searchCriteria,
 		})
-		
-
-		console.log(fetchBody)
 
         fetch ('https://api-dev.umusic.net/guardian/project/search', {
             method : 'POST',
@@ -180,12 +262,24 @@ class FindProjectPage extends Component {
         .then (responseJSON => 
             {
 				this.setState( {searchResults : responseJSON.Projects })
+				this.setState( {labelFacets : responseJSON.LabelFacets })
+				this.setState( {statusFacets : responseJSON.StatusFacets })
+				this.setState( {hasBlockingFacets : responseJSON.HasBlockingFacets })
+				this.setState( {hasAudioFacets : responseJSON.HasAudioFacets })
+				
+				this.handleSearchFacets();
 				this.updateSearchCount(responseJSON)
+
+				console.log(responseJSON)
             }
         )
         .catch(
             error => console.error(error)
 		);
+
+	}
+
+	handleSearchFacets() {
 
 	}
 
@@ -385,34 +479,8 @@ class FindProjectPage extends Component {
 										</div>
 							
 										<div className="col-4">
-											<div className="dropdown">
-												<button 
-													className="btn btn-secondary dropdown-toggle" 
-													type="button" 
-													id="dropdownMenuButton" 
-													data-toggle="dropdown" 
-													aria-haspopup="true" 
-													aria-expanded="false">
-													Default Label
-												</button>
-
-												<div className="dropdown-menu" aria-labelledby="dropdownMenuButton" onClick={this.setFilter}>
-													<a className="dropdown-item" href="#">Label 1</a>
-													<a className="dropdown-item" href="#">Label 2</a>
-													<a className="dropdown-item" href="#">Label 3</a>
-												</div>
-											</div>
-
-											<div className="dropdown">
-												<button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-													No Selection
-												</button>
-												<div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-													<a className="dropdown-item" href="#">No Selection</a>
-													<a className="dropdown-item" href="#">Has Audio</a>
-													<a className="dropdown-item" href="#">Does Not Have Audio</a>
-												</div>
-											</div>
+											<LabelsInput labels={this.state.labelFacets} />
+											<NameIdDropdown data={this.state.hasAudioFacets} />
 										</div>
 							
 										<div className="col-2">
@@ -421,28 +489,9 @@ class FindProjectPage extends Component {
 										</div>
 							
 										<div className="col-4">
-											<div className="dropdown">
-												<button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-													Dropdown button
-												</button>
-
-												<div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-													<a className="dropdown-item" href="#">Action</a>
-													<a className="dropdown-item" href="#">Another action</a>
-													<a className="dropdown-item" href="#">Something else here</a>
-												</div>
-											</div>
-											<div className="dropdown">
-											<button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-												Dropdown button
-											</button>
-											<div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-												<a className="dropdown-item" href="#">Action</a>
-												<a className="dropdown-item" href="#">Another action</a>
-												<a className="dropdown-item" href="#">Something else here</a>
-											</div>
+											<NameIdDropdown data={this.state.statusFacets} />
+											<NameIdDropdown data={this.state.hasBlockingFacets} />
 										</div>
-									</div>
 									<div className="col-2">
 										<label>Last Updated</label>
 									</div>
