@@ -228,11 +228,6 @@ class FindProjectPage extends Component {
 		this.setDateFilter =  this.setDateFilter.bind(this);
 	}
 
-	getListingOfLabels(data) {
-
-	}
-
-
 	handleProjectSearch() {
 		const user = JSON.parse(sessionStorage.getItem('user'))
         const fetchHeaders = new Headers(
@@ -241,7 +236,6 @@ class FindProjectPage extends Component {
                 "Authorization" : sessionStorage.getItem('accessToken')
             }
 		)
-		
 
 		const fetchBody = JSON.stringify( {
             "User" : {
@@ -402,25 +396,19 @@ class FindProjectPage extends Component {
 	}
 
 	setDateFilter(e) {
-		
 		let targetDate = (e.target.value) ?  e.target.value : ''
-
 		let filterState = this.state.searchCriteria.filter
 
 		if(e.target.id == 'filterStartDate') {
 			filterState.from = (targetDate != '') ? this.getFromDate(targetDate) : ''
-			this.setState(currentState => ({filterState}), () => {
-				this.handleProjectSearch()
-				this.handleFilterModalView()
-			});
-
 		} else {
 			filterState.to = (targetDate != '') ? this.getToDate(targetDate) : ''
-			this.setState(currentState => ({filterState}), () => {
-				this.handleProjectSearch()
-				this.handleFilterModalView()
-			});
 		}
+
+		this.setState(currentState => ({filterState}), () => {
+			this.handleProjectSearch()
+			this.handleFilterModalView()
+		});
 	}
 
     render() {
