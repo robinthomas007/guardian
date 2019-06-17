@@ -104,6 +104,7 @@ class LeftNav extends Component {
 					<li key={i}>
 
 						<NavLink 
+							id={"nav_" + navList.steps[link].navRoute.replace('/', '')}
 							className="steps" 
 							activeStyle={activeStyle} 
 							to={{pathname: navList.steps[link].navRoute}} 
@@ -137,6 +138,7 @@ class LeftNav extends Component {
 					return(
 						<li key={i}>
 							<NavLink 
+								id={"nav_" + navList.admin[link].navRoute.replace('/', '')}
 								to={{pathname: navList.admin[link].navRoute, state: {activeNav: navList.admin[link]}}}
 								activeStyle={activeStyle} 
 								isActive={
