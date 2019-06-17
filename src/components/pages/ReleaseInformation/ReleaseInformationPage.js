@@ -294,7 +294,13 @@ class ReleaseinformationPage extends Component {
                         <div className="col-4">
                             <Form.Group className="form-group cover-art">
                                 <Form.Label className="col-form-label col-3">Cover Art</Form.Label>
-                                <div id="droppable" className="form-control album-art-drop col-8"></div>
+                                <div id="droppable" className="form-control album-art-drop col-8">
+                                    <span className="align-items-center">
+                                    Click to Browse<br />
+                                    or Drag &amp; Drop
+                                    </span>  
+                                    <input type="file" />
+                                </div>
                             </Form.Group>
                         </div> 
                     </div>
