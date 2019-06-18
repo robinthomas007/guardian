@@ -239,7 +239,8 @@ class ReleaseinformationPage extends Component {
                             <Form.Group>
                                 <Form.Label className='col-form-label col-3'>Project Type<span className="required-ind">*</span></Form.Label>
                                 <ProjectTypesInput
-                                    user={this.props.user} 
+                                    user={this.props.user}
+                                    placeholder='Select One'
                                     value={this.state.formInputs.projectTypeID} 
                                     onChange={this.handleChange}
                                 />
@@ -294,7 +295,13 @@ class ReleaseinformationPage extends Component {
                         <div className="col-4">
                             <Form.Group className="form-group cover-art">
                                 <Form.Label className="col-form-label col-3">Cover Art</Form.Label>
-                                <div id="droppable" className="form-control album-art-drop col-8"></div>
+                                <div id="droppable" className="form-control album-art-drop col-8">
+                                    <span className="align-items-center">
+                                    Click to Browse<br />
+                                    or Drag &amp; Drop
+                                    </span>  
+                                    <input type="file" />
+                                </div>
                             </Form.Group>
                         </div> 
                     </div>

@@ -52,6 +52,14 @@
 
 	.dropdown {display:inline-block; padding:0px 8px;}
 	.dropdown-menu {box-shadow:2px 3px 8px #8c9396; min-width:.10rem;}
+	.dropdown-menu > a.dropdown-item {font-size:.9em;}
+
+	.multi-select.dropdown > .dropdown-menu > a.dropdown-item {font-size:.9em; line-height:2em;}
+	.multi-select.dropdown > .dropdown-menu > a.dropdown-item:hover,
+	.multi-select.dropdown > .dropdown-menu > a.dropdown-item:active {cursor:default; background-color:transparent;}
+
+	.multi-select.dropdown > .dropdown-menu > a.dropdown-item .custom-checkbox {margin-right:8px; vertical-align:middle;}
+
 	.show > .btn-secondary.dropdown-toggle {background-color:#fff; border-color:#CCC; color:#333;}
 
 	.form-control {font-size:1em; display:inline-block; background-color:#F5F5F5; border-radius:2px;}

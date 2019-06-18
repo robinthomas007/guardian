@@ -124,13 +124,22 @@ class LabelsInput extends Component {
         let labelOptions = ''
         if(this.props.labels) {
 			labelOptions = this.props.labels.map( (label, i) =>
-				<a className="dropdown-item" key={i} onClick={() => this.handleChange(label)}>
-					<input type="checkbox" value={label.id} id={label.id} />{label.name}
+				<a className="dropdown-item" key={i}>
+					<label className="custom-checkbox"> 		
+									<input   
+										onClick={(e) => this.handleChange(e)}
+										type='checkbox'
+										id={label.id}
+                                        value={label.id}
+                                    />
+                                    <span className="checkmark "></span>
+                                </label>
+					{label.name}
 				</a>
             )
         }
         return(
-			<div className="dropdown">
+			<div className="multi-select dropdown">
 				<button 
 					className="btn btn-secondary dropdown-toggle" 
 					type="button" 
