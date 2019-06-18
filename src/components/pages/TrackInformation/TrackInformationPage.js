@@ -128,7 +128,8 @@ class TrackInformationPage extends Component {
             formInputs : {},
             tableRows : [],
             showReplaceModal : false,
-            tracksData : []
+            tracksData : [],
+            projectReleaseDate : '',
         }
         this.addBlankRow = this.addBlankRow.bind(this);
         this.showTrackModal = this.showTrackModal.bind(this);
@@ -136,11 +137,12 @@ class TrackInformationPage extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.removeRow = this.removeRow.bind(this);
-        this.handlePageLoad = this.handlePageLoad.bind(this);
+        this.handlePageDataLoad = this.handlePageDataLoad.bind(this);
+        this.formatDateToYYYYMMDD = this.formatDateToYYYYMMDD.bind(this);
 
 
         if(this.props.match.params.projectID) {
-            this.handlePageLoad()
+            this.handlePageDataLoad()
         } else {
             this.addBlankRow()
         }
@@ -161,12 +163,16 @@ class TrackInformationPage extends Component {
     }
 
     getBlankRow = () => {
+
+        const projectReleaseDate = this.state.projectReleaseDate
+        let formattedDate = this.formatDateToYYYYMMDD(projectReleaseDate);
+
         return(
             {
                 trackIsrc: '',
                 trackTitle : '',
                 trackSingle : false,
-                trackReleaseDate : ''
+                trackReleaseDate : formattedDate
             }
         )
     }
@@ -203,7 +209,25 @@ class TrackInformationPage extends Component {
         console.log("on change form vslue", this.state.formInputs)
     };
 
-    handlePageLoad() {
+    formatDateToYYYYMMDD(unFormattedDate) {
+        let formattedDate = '';
+
+        if(unFormattedDate) {
+            var d = new Date(unFormattedDate),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+    
+            if (month.length < 2) month = '0' + month;
+            if (day.length < 2) day = '0' + day;
+    
+            formattedDate = [year, month, day].join('-');
+        }
+
+        return(formattedDate)
+    }
+
+    handlePageDataLoad() {
         const user = JSON.parse(sessionStorage.getItem('user'))
         const projectID = this.props.match.params.projectID
         const fetchHeaders = new Headers(
@@ -232,25 +256,22 @@ class TrackInformationPage extends Component {
         ).then (responseJSON => 
 
             {
-                console.log('responseJSON.Discs')
-                console.log(responseJSON.Discs)
-
                 const { tableRows } = this.state;
-
-                let modifiedRows = responseJSON.Discs[0].Tracks.map( function (track, i) {
+                this.setState({projectReleaseDate : responseJSON.Project.projectReleaseDate})
+                let modifiedRows = responseJSON.Discs[0].Tracks.map((track) => {
+                    const displayDate = this.formatDateToYYYYMMDD((track.trackReleaseDate) ? track.trackReleaseDate : responseJSON.Project.projectReleaseDate)
                     return(
                         {
                             trackID : track.trackID,
                             trackIsrc : track.isrc,
                             trackTitle : track.trackTitle,
                             trackSingle : track.isSingle,
-                            trackReleaseDate : track.trackReleaseDate
+                            trackReleaseDate : displayDate
                         }
                     )
                 })
 
-                 this.setState({ tableRows: modifiedRows });
-
+                this.setState({ tableRows: modifiedRows });
             }
         )
         .catch(

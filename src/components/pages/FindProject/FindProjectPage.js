@@ -114,15 +114,17 @@ class LabelsInput extends Component {
 		this.handleChange = this.handleChange.bind(this);
     }
 
-	handleChange(e) {
-		alert(e.target.value)
+	handleChange(label) {
+		this.setState(currentState => ({...this.state, 'selectedID' : label.id}), () => {
+			this.props.onChange(this.state);
+		});
 	}
 
     render() {
         let labelOptions = ''
         if(this.props.labels) {
 			labelOptions = this.props.labels.map( (label, i) =>
-				<a className="dropdown-item" key={i} value={label.id} value={label.id} onClick={(e) => this.handleChange(e)}>
+				<a className="dropdown-item" key={i} onClick={() => this.handleChange(label)}>
 					<input type="checkbox" value={label.id} id={label.id} />{label.name}
 				</a>
             )
@@ -150,19 +152,23 @@ class LabelsInput extends Component {
 class NameIdDropdown extends Component {
     constructor(props) {
 		super(props);
-		this.state = {}
+		this.state = {
+			selectedID : '',
+		}
 		this.handleChange = this.handleChange.bind(this);
     }
 
-	handleChange(ID) {
-		alert(ID)
+	handleChange(data) {
+		this.setState(currentState => ({...this.state, 'selectedID' : data.id}), () => {
+			this.props.onChange(data);
+		});
 	}
 
     render() {
         let inputOptions = ''
         if(this.props.data) {
 			inputOptions = this.props.data.map( (data, i) =>
-				<a className="dropdown-item" value={data.id} onClick={() => this.handleChange(data.id)}>{data.name}</a>
+				<a className="dropdown-item selected" onClick={() => this.handleChange(data)}>{data.name}</a>
             )
         }
         return(
@@ -174,7 +180,7 @@ class NameIdDropdown extends Component {
 					data-toggle="dropdown" 
 					aria-haspopup="true" 
 					aria-expanded="false">
-					Default Label
+					{this.state.selectedText}
 				</button>
 
 				<div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -224,8 +230,10 @@ class FindProjectPage extends Component {
 		this.setProjectsView = this.setProjectsView.bind(this);
 		this.handlePaginationChange = this.handlePaginationChange.bind(this);
 		this.handleFilterModalView = this.handleFilterModalView.bind(this);
-		this.setDateFilter =  this.setDateFilter.bind(this);
-		this.setDateFilter =  this.setDateFilter.bind(this);
+		this.setDateFilter = this.setDateFilter.bind(this);
+		this.handleAudioFacetsChange = this.handleAudioFacetsChange.bind(this);
+		this.handleLabelFacetsChange = this.handleLabelFacetsChange.bind(this);
+		
 	}
 
 	handleProjectSearch() {
@@ -261,7 +269,6 @@ class FindProjectPage extends Component {
 				this.setState( {hasBlockingFacets : responseJSON.HasBlockingFacets })
 				this.setState( {hasAudioFacets : responseJSON.HasAudioFacets })
 				
-				this.handleSearchFacets();
 				this.updateSearchCount(responseJSON)
 
 				console.log(responseJSON)
@@ -273,8 +280,19 @@ class FindProjectPage extends Component {
 
 	}
 
-	handleSearchFacets() {
+	handleAudioFacetsChange(stateObj){
+		let filterState = this.state.searchCriteria.filter
+			filterState.hasAudio = stateObj.selectedID
 
+		console.log('filterState')
+		console.log(filterState)
+		this.setState(currentState => ({filterState}), () => {
+			this.handleProjectSearch()
+		});
+	}
+
+	handleLabelFacetsChange(stateObj){
+		alert(stateObj.selectedID)
 	}
 
 	componentDidMount(props) {
@@ -467,8 +485,8 @@ class FindProjectPage extends Component {
 										</div>
 							
 										<div className="col-4">
-											<LabelsInput labels={this.state.labelFacets} />
-											<NameIdDropdown data={this.state.hasAudioFacets} />
+											<LabelsInput labels={this.state.labelFacets} onChange={this.handleLabelFacetsChange} />
+											<NameIdDropdown data={this.state.hasAudioFacets} onChange={this.handleAudioFacetsChange} />
 										</div>
 							
 										<div className="col-2">

@@ -81,8 +81,8 @@ class ProjectTypesInput extends Component {
                 value={ this.props.value}
                 onChange={this.props.onChange}
             >
-            {projectTypeOptions}
-        </Form.Control>
+                {projectTypeOptions}
+            </Form.Control>
         )
     }
 }
