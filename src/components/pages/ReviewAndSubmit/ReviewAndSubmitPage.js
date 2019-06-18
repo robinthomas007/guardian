@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PageHeader from '../PageHeader/PageHeader';
 import './ReviewAndSubmit.css';
 import Noty from 'noty';
+import { withRouter } from 'react-router-dom';
 
 class ReviewAndSubmitPage extends Component {
 
@@ -69,7 +70,7 @@ class ReviewAndSubmitPage extends Component {
     }
 
     handleProjectCategoryClick() {
-        console.log('Load Info for: ' + this.props.match.params.projectID)
+        this.props.history.push('/trackInformation/' + this.props.match.params.projectID)
     }
 
     handleSubmitProjectClick() {
