@@ -239,7 +239,8 @@ class ReleaseinformationPage extends Component {
                             <Form.Group>
                                 <Form.Label className='col-form-label col-3'>Project Type<span className="required-ind">*</span></Form.Label>
                                 <ProjectTypesInput
-                                    user={this.props.user} 
+                                    user={this.props.user}
+                                    placeholder='Select One'
                                     value={this.state.formInputs.projectTypeID} 
                                     onChange={this.handleChange}
                                 />

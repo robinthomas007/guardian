@@ -31,6 +31,5 @@
 	div.dropdown-menu.search-filters { padding:20px; font-size:.9rem; width:600px;}
 	div.dropdown-menu.search-filters .dropdown-toggle {width:160px; margin-bottom:20px; text-align:left;}
 	div.dropdown-menu.search-filters .dropdown-toggle::after {float:right; margin-top: 8px;}
-	div.dropdown-menu.search-filters label {line-height:36px; margin-bottom:20px;}
 	div.dropdown-menu.search-filters input[type="date"] {margin:0px 8px;}
 	div.dropdown-menu.search-filters button.btn {margin-right:6px;}
