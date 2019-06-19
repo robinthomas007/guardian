@@ -12,3 +12,5 @@ label.custom-checkbox {display:inline-block; vertical-align:middle;}
 #droppable {color:#999; cursor:pointer; text-align:center;}
 #droppable span {position:relative; display:block; text-align:center; margin:66px auto auto auto;}
 input[type=file] {opacity: 0.0; position: absolute; top:0; left: 0; bottom: 0; right:0; width: 100%; height:100%; cursor:pointer;}
+
+img.obj {position:absolute; top:0; left:0;}

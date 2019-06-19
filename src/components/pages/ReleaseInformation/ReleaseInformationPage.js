@@ -81,8 +81,8 @@ class ProjectTypesInput extends Component {
                 value={ this.props.value}
                 onChange={this.props.onChange}
             >
-                {projectTypeOptions}
-            </Form.Control>
+            {projectTypeOptions}
+        </Form.Control>
         )
     }
 }
@@ -180,6 +180,31 @@ class ReleaseinformationPage extends Component {
         this.props.history.push('/projectContacts')
     };
 
+    albumArt(e) {
+
+        const files = e.target.files
+
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            if (!file.type.startsWith('image/')){ continue }
+            const img = document.createElement("img");
+                  img.src = window.URL.createObjectURL(files[i]);
+                  img.height = 188;
+                  img.width = 188;
+                  img.classList.add("obj");
+                  img.file = file;
+
+            const preview = document.getElementById('preview')
+            preview.appendChild(img); // Assuming that "preview" is the div output where the content will be displayed.
+            
+            const reader = new FileReader();
+            reader.onload = (function(aImg) { return function(e) { aImg.src = e.target.result; }; })(img);
+            reader.readAsDataURL(file);
+          }
+
+
+    }
+
     componentDidUpdate() {
         if(this.props.user && this.props.user.DefaultReleasingLabelID && (this.state.formInputs.projectReleasingLabelID !== this.props.user.DefaultReleasingLabelID)) {
             this.setState( {formInputs : { ...this.state.formInputs, "projectReleasingLabelID" : this.props.user.DefaultReleasingLabelID}} )
@@ -240,7 +265,6 @@ class ReleaseinformationPage extends Component {
                                 <Form.Label className='col-form-label col-3'>Project Type<span className="required-ind">*</span></Form.Label>
                                 <ProjectTypesInput
                                     user={this.props.user}
-                                    placeholder='Select One'
                                     value={this.state.formInputs.projectTypeID} 
                                     onChange={this.handleChange}
                                 />
@@ -295,12 +319,12 @@ class ReleaseinformationPage extends Component {
                         <div className="col-4">
                             <Form.Group className="form-group cover-art">
                                 <Form.Label className="col-form-label col-3">Cover Art</Form.Label>
-                                <div id="droppable" className="form-control album-art-drop col-8">
+                                <div id="preview" dropppable="true" className="form-control album-art-drop col-8">
                                     <span className="align-items-center">
                                     Click to Browse<br />
                                     or Drag &amp; Drop
                                     </span>  
-                                    <input type="file" />
+                                    <input type="file" onChange={this.albumArt} />
                                 </div>
                             </Form.Group>
                         </div> 
