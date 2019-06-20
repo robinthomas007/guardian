@@ -195,11 +195,11 @@ class ReleaseinformationPage extends Component {
                   img.file = file;
 
             const preview = document.getElementById('preview')
-            preview.appendChild(img); // Assuming that "preview" is the div output where the content will be displayed.
+                  preview.appendChild(img);
             
             const reader = new FileReader();
-            reader.onload = (function(aImg) { return function(e) { aImg.src = e.target.result; }; })(img);
-            reader.readAsDataURL(file);
+                  reader.onload = (function(aImg) { return function(e) { aImg.src = e.target.result; }; })(img);
+                  reader.readAsDataURL(file);
           }
 
 
