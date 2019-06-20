@@ -69,8 +69,8 @@ class ReviewAndSubmitPage extends Component {
         );
     }
 
-    handleProjectCategoryClick() {
-        this.props.history.push('/trackInformation/' + this.props.match.params.projectID)
+    handleProjectCategoryClick(category) {
+        this.props.history.push(category + this.props.match.params.projectID)
     }
 
     handleSubmitProjectClick() {
@@ -124,7 +124,7 @@ class ReviewAndSubmitPage extends Component {
                         </div>
                     </div>
                 </section>
-                <section className="page-container review-section" onClick={this.handleProjectCategoryClick}>
+                <section className="page-container review-section" onClick={() => this.handleProjectCategoryClick('/releaseInformation/')}>
                     <div className="row no-gutters">
                         <div className="col-10 justify-content-start">
                             <h2>Release Information</h2>
@@ -163,7 +163,7 @@ class ReviewAndSubmitPage extends Component {
                     </div>
                 </section>
             
-                <section className="page-container review-section" onClick={this.handleProjectCategoryClick}>
+                <section className="page-container review-section" onClick={() => this.handleProjectCategoryClick('/projectContacts/')}>
                     <div className="row no-gutters">
                         <div className="col-10 justify-content-start">
                             <h2>Project Contacts</h2>
@@ -189,7 +189,7 @@ class ReviewAndSubmitPage extends Component {
                     </div>
                 </section>
             
-                <section className="page-container review-section" onClick={this.handleProjectCategoryClick}>
+                <section className="page-container review-section" onClick={() => this.handleProjectCategoryClick('/audioFiles/')}>
                     <div className="row no-gutters">
                         <div className="col-10 justify-content-start">
                         <h2>Audio Files &amp; Track Information</h2>
@@ -231,7 +231,7 @@ class ReviewAndSubmitPage extends Component {
                 </div>
             </section>
             
-            <section className="page-container review-section" onClick={this.handleProjectCategoryClick}>
+            <section className="page-container review-section" onClick={() => this.handleProjectCategoryClick('/territorialRights/')}>
                 <div className="row no-gutters">
                     <div className="col-10 justify-content-start">
                     <h2>Territorial Rights</h2>
@@ -269,7 +269,7 @@ class ReviewAndSubmitPage extends Component {
                 </div>
             </section>
             
-            <section className="page-container review-section" onClick={this.handleProjectCategoryClick}>
+            <section className="page-container review-section" onClick={() => this.handleProjectCategoryClick('/blockingPolicies/')}>
                 <div className="row no-gutters">
                     <div className="col-10 justify-content-start">
                     <h2>Blocking Polices</h2>
