@@ -76,10 +76,6 @@ class TablePager extends Component {
 		let buttonCount = Math.ceil( parseInt(this.props.totalItems) / parseInt(this.props.itemsPerPage))
 		const pageValue = parseInt(this.state.activePage) - 1
 
-
-		console.log(pageValue + ' : ' + buttonCount)
-
-
 		if (pageValue > buttonCount) {
 			this.setState(currentState => ({activePage : buttonCount }), () => {
 				this.props.handlePaginationChange(this.state.activePage)
@@ -121,10 +117,9 @@ class LabelsInput extends Component {
     render() {
         let labelOptions = ''
         if(this.props.pageState.labelFacets) {
-			labelOptions = this.props.pageState.labelFacets.map( (label, i) => {
-				
-				const isChecked = (this.props.pageState.searchCriteria.filter.labelIds.indexOf(label.id) >= 0) ? true : false;
 
+			labelOptions = this.props.pageState.labelFacets.map( (label, i) => {
+				const isChecked = (this.props.pageState.searchCriteria.filter.labelIds.indexOf(label.id) >= 0) ? true : false;
 				return(
 					<a className="dropdown-item" key={i}>
 						<label className="custom-checkbox"> 		
@@ -137,7 +132,10 @@ class LabelsInput extends Component {
 							/>
 							<span className="checkmark "></span>
 						</label>
-						{label.name}
+						
+						<label htmlFor={label.id}>
+							{label.name}
+						</label>
 					</a>
 				   )
 			})
@@ -151,7 +149,7 @@ class LabelsInput extends Component {
 					data-toggle="dropdown" 
 					aria-haspopup="true" 
 					aria-expanded="false">
-					Default Label
+					Select Option
 				</button>
 
 				<div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -167,23 +165,42 @@ class NameIdDropdown extends Component {
 		super(props);
 		this.state = {
 			selectedID : '',
+			selectedText : this.props.defaultText
 		}
 		this.handleChange = this.handleChange.bind(this);
     }
 
 	handleChange(data) {
-		this.setState(currentState => ({...this.state, 'selectedID' : data.id}), () => {
-			this.props.onChange(data);
-		});
+
+        const currentState = this.state;
+		const modifiedState = currentState;
+			  modifiedState.selectedID = data.id;
+			  modifiedState.selectedText = data.name;
+
+		this.setState({currentState : modifiedState})
+		this.props.onChange(data);
+	}
+
+	getDefaultOption(defaultText) {
+		const data = {}
+			  data.name = defaultText;
+			  data.id = '';
+
+		return(
+			<a className="dropdown-item selected" onClick={() => this.handleChange(data)}>{defaultText}</a>
+		)
 	}
 
     render() {
-        let inputOptions = ''
-        if(this.props.data) {
+        let inputOptions = []
+
+
+		if(this.props.data) {
 			inputOptions = this.props.data.map( (data, i) =>
 				<a className="dropdown-item selected" onClick={() => this.handleChange(data)}>{data.name}</a>
-            )
-        }
+			)
+		}
+		
         return(
 			<div className="dropdown">
 				<button 
@@ -197,6 +214,7 @@ class NameIdDropdown extends Component {
 				</button>
 
 				<div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+					{this.getDefaultOption(this.props.defaultText)}
 					{inputOptions}
 				</div>
 			</div>
@@ -221,6 +239,7 @@ class FindProjectPage extends Component {
 					labelIds : [],
 					hasAudio : '',
 					hasBlocking : '',
+					statusID : '',
 					from : '',
 					to : ''
 				},
@@ -246,6 +265,8 @@ class FindProjectPage extends Component {
 		this.setDateFilter = this.setDateFilter.bind(this);
 		this.handleAudioFacetsChange = this.handleAudioFacetsChange.bind(this);
 		this.handleLabelFacetsChange = this.handleLabelFacetsChange.bind(this);
+		this.handleStatusFacetsChange = this.handleStatusFacetsChange.bind(this);
+		this.handleHasBlockingFacetsChange = this.handleHasBlockingFacetsChange.bind(this);
 		
 	}
 
@@ -277,10 +298,23 @@ class FindProjectPage extends Component {
         .then (responseJSON => 
             {
 				this.setState( {searchResults : responseJSON.Projects })
-				this.setState( {labelFacets : responseJSON.LabelFacets })
-				this.setState( {statusFacets : responseJSON.StatusFacets })
-				this.setState( {hasBlockingFacets : responseJSON.HasBlockingFacets })
-				this.setState( {hasAudioFacets : responseJSON.HasAudioFacets })
+
+				if(this.state.labelFacets.length <= 0 ) {
+					this.setState( {labelFacets : responseJSON.LabelFacets })
+				}
+				
+
+				if(this.state.statusFacets.length <= 0 ) {
+					this.setState( {statusFacets : responseJSON.StatusFacets })
+				}
+				
+				if(this.state.hasBlockingFacets.length <= 0 ) {
+					this.setState( {hasBlockingFacets : responseJSON.HasBlockingFacets })
+				}
+				
+				if(this.state.hasAudioFacets.length <= 0 ) {
+					this.setState( {hasAudioFacets : responseJSON.HasAudioFacets })
+				}
 				
 				this.updateSearchCount(responseJSON)
 
@@ -293,11 +327,12 @@ class FindProjectPage extends Component {
 
 	}
 
-	handleAudioFacetsChange(stateObj){
-		let filterState = this.state.searchCriteria.filter
-			filterState.hasAudio = stateObj.selectedID
+	handleAudioFacetsChange(data){
+		const { filter } = this.state.searchCriteria;
+		let modifiedHasAudio = filter;
+			modifiedHasAudio.hasAudio = data.id;
 
-		this.setState(currentState => ({filterState}), () => {
+		this.setState(currentState => ({filter : modifiedHasAudio}), () => {
 			this.handleProjectSearch()
 		});
 	}
@@ -315,6 +350,26 @@ class FindProjectPage extends Component {
 		}
 
 		this.setState(currentState => ({ labelIds }), () => {
+			this.handleProjectSearch()
+		});
+	}
+
+	handleStatusFacetsChange(data) {
+		const { filter } = this.state.searchCriteria;
+		let modifiedStatus = filter;
+			modifiedStatus.statusID = data.id;
+
+		this.setState(currentState => ({filter : modifiedStatus}), () => {
+			this.handleProjectSearch()
+		});
+	}
+
+	handleHasBlockingFacetsChange(data) {
+		const { filter } = this.state.searchCriteria;
+		let modifiedHasBlocking = filter;
+			modifiedHasBlocking.hasBlocking = data.id;
+
+		this.setState(currentState => ({filter : modifiedHasBlocking}), () => {
 			this.handleProjectSearch()
 		});
 	}
@@ -509,8 +564,16 @@ class FindProjectPage extends Component {
 										</div>
 							
 										<div className="col-4">
-											<LabelsInput pageState={this.state} onChange={this.handleLabelFacetsChange} />
-											<NameIdDropdown data={this.state.hasAudioFacets} onChange={this.handleAudioFacetsChange} />
+											<LabelsInput 
+												pageState={this.state} 
+												onChange={this.handleLabelFacetsChange}
+												defaultText="Select Option"
+											/>
+											<NameIdDropdown 
+												data={this.state.hasAudioFacets} 
+												onChange={this.handleAudioFacetsChange} 
+												defaultText="Select Option"
+											/>
 										</div>
 							
 										<div className="col-2">
@@ -519,8 +582,16 @@ class FindProjectPage extends Component {
 										</div>
 							
 										<div className="col-4">
-											<NameIdDropdown data={this.state.statusFacets} />
-											<NameIdDropdown data={this.state.hasBlockingFacets} />
+											<NameIdDropdown 
+												data={this.state.statusFacets} 
+												onChange={this.handleStatusFacetsChange} 
+												defaultText="Select Option"
+											/>
+											<NameIdDropdown 
+												data={this.state.hasBlockingFacets} 
+												onChange={this.handleHasBlockingFacetsChange} 
+												defaultText="Select Option"
+											/>
 										</div>
 									<div className="col-2">
 										<label>Last Updated</label>
