@@ -114,29 +114,33 @@ class LabelsInput extends Component {
 		this.handleChange = this.handleChange.bind(this);
     }
 
-	handleChange(label) {
-		this.setState(currentState => ({...this.state, 'selectedID' : label.id}), () => {
-			this.props.onChange(this.state);
-		});
+	handleChange(e) {
+		this.props.onChange(e);
 	}
 
     render() {
         let labelOptions = ''
-        if(this.props.labels) {
-			labelOptions = this.props.labels.map( (label, i) =>
-				<a className="dropdown-item" key={i}>
-					<label className="custom-checkbox"> 		
-									<input   
-										onClick={(e) => this.handleChange(e)}
-										type='checkbox'
-										id={label.id}
-                                        value={label.id}
-                                    />
-                                    <span className="checkmark "></span>
-                                </label>
-					{label.name}
-				</a>
-            )
+        if(this.props.pageState.labelFacets) {
+			labelOptions = this.props.pageState.labelFacets.map( (label, i) => {
+				
+				const isChecked = (this.props.pageState.searchCriteria.filter.labelIds.indexOf(label.id) >= 0) ? true : false;
+
+				return(
+					<a className="dropdown-item" key={i}>
+						<label className="custom-checkbox"> 		
+							<input   
+								onClick={(e) => this.props.onChange(e)}
+								type='checkbox'
+								id={label.id}
+								value={label.id}
+								checked={isChecked}
+							/>
+							<span className="checkmark "></span>
+						</label>
+						{label.name}
+					</a>
+				   )
+			})
         }
         return(
 			<div className="multi-select dropdown">
@@ -293,15 +297,26 @@ class FindProjectPage extends Component {
 		let filterState = this.state.searchCriteria.filter
 			filterState.hasAudio = stateObj.selectedID
 
-		console.log('filterState')
-		console.log(filterState)
 		this.setState(currentState => ({filterState}), () => {
 			this.handleProjectSearch()
 		});
 	}
 
-	handleLabelFacetsChange(stateObj){
-		alert(stateObj.selectedID)
+	handleLabelFacetsChange(e){
+
+		const { labelIds } = this.state.searchCriteria.filter;
+		let modifiedLabelFacets = [];
+
+		if(e.target.checked) {
+			labelIds.push(e.target.value)
+		} else {
+			var index = labelIds.indexOf(e.target.value)
+			labelIds.splice(index, 1)
+		}
+
+		this.setState(currentState => ({ labelIds }), () => {
+			this.handleProjectSearch()
+		});
 	}
 
 	componentDidMount(props) {
@@ -494,7 +509,7 @@ class FindProjectPage extends Component {
 										</div>
 							
 										<div className="col-4">
-											<LabelsInput labels={this.state.labelFacets} onChange={this.handleLabelFacetsChange} />
+											<LabelsInput pageState={this.state} onChange={this.handleLabelFacetsChange} />
 											<NameIdDropdown data={this.state.hasAudioFacets} onChange={this.handleAudioFacetsChange} />
 										</div>
 							

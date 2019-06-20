@@ -205,12 +205,6 @@ class ReleaseinformationPage extends Component {
 
     }
 
-    componentDidUpdate() {
-        if(this.props.user && this.props.user.DefaultReleasingLabelID && (this.state.formInputs.projectReleasingLabelID !== this.props.user.DefaultReleasingLabelID)) {
-            this.setState( {formInputs : { ...this.state.formInputs, "projectReleasingLabelID" : this.props.user.DefaultReleasingLabelID}} )
-        }
-    }
-
     render() {
         return (
             <section className="page-container h-100">
