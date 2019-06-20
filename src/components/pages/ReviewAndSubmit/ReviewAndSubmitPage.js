@@ -189,7 +189,7 @@ class ReviewAndSubmitPage extends Component {
                     </div>
                 </section>
             
-                <section className="page-container review-section" onClick={() => this.handleProjectCategoryClick('/audioFiles/')}>
+                <section className="page-container review-section" onClick={() => this.handleProjectCategoryClick('/trackInformation/')}>
                     <div className="row no-gutters">
                         <div className="col-10 justify-content-start">
                         <h2>Audio Files &amp; Track Information</h2>
