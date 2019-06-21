@@ -559,8 +559,7 @@ class FindProjectPage extends Component {
 						
 									<div className="row no-gutters">
 										<div className="col-2">
-											<label>By Label</label><br />
-											<label>Has Audio</label><br />
+											<label>By Label</label>	
 										</div>
 							
 										<div className="col-4">
@@ -569,16 +568,10 @@ class FindProjectPage extends Component {
 												onChange={this.handleLabelFacetsChange}
 												defaultText="Select Option"
 											/>
-											<NameIdDropdown 
-												data={this.state.hasAudioFacets} 
-												onChange={this.handleAudioFacetsChange} 
-												defaultText="Select Option"
-											/>
 										</div>
 							
 										<div className="col-2">
-											<label>By Status</label><br />
-											<label>Has Blocking</label><br />
+											<label>By Status</label>
 										</div>
 							
 										<div className="col-4">
@@ -586,13 +579,31 @@ class FindProjectPage extends Component {
 												data={this.state.statusFacets} 
 												onChange={this.handleStatusFacetsChange} 
 												defaultText="Select Option"
+											/>		
+										</div>
+
+										<div className="col-2">
+											<label>Has Audio</label>
+											</div>
+										<div className="col-4">
+										<NameIdDropdown 
+												data={this.state.hasAudioFacets} 
+												onChange={this.handleAudioFacetsChange} 
+												defaultText="Select Option"
 											/>
-											<NameIdDropdown 
+										</div>
+
+										<div className="col-2">
+										<label>Has Blocking</label>
+										</div>
+										<div className="col-4">
+										<NameIdDropdown 
 												data={this.state.hasBlockingFacets} 
 												onChange={this.handleHasBlockingFacetsChange} 
 												defaultText="Select Option"
 											/>
 										</div>
+
 									<div className="col-2">
 										<label>Last Updated</label>
 									</div>
