@@ -153,13 +153,12 @@ class TrackInformationPage extends Component {
         const origRows = [...this.state.tableRows]
         let newTableRows = this.state.tableRows;
 
-        if(rowIndex > 0) {
-            newTableRows.splice(rowIndex, 1)
+        newTableRows.splice(rowIndex, 1)
+
+        if(rowIndex <= 0 && newTableRows.length == 0) {
+            this.addBlankRow();
         }
-
         this.setState({tableRows : newTableRows});
-        console.log("Modified table", newTableRows);
-
     }
 
     getBlankRow = () => {
@@ -256,22 +255,27 @@ class TrackInformationPage extends Component {
         ).then (responseJSON => 
 
             {
-                const { tableRows } = this.state;
-                this.setState({projectReleaseDate : responseJSON.Project.projectReleaseDate})
-                let modifiedRows = responseJSON.Discs[0].Tracks.map((track) => {
-                    const displayDate = this.formatDateToYYYYMMDD((track.trackReleaseDate) ? track.trackReleaseDate : responseJSON.Project.projectReleaseDate)
-                    return(
-                        {
-                            trackID : track.trackID,
-                            trackIsrc : track.isrc,
-                            trackTitle : track.trackTitle,
-                            trackSingle : track.isSingle,
-                            trackReleaseDate : displayDate
-                        }
-                    )
-                })
-
-                this.setState({ tableRows: modifiedRows });
+                const hasTracks = (responseJSON && responseJSON.Discs && responseJSON.Discs[0] && responseJSON.Discs[0].Tracks) ? true : false;
+                if(hasTracks) {
+                    const { tableRows } = this.state;
+                    this.setState({projectReleaseDate : responseJSON.Project.projectReleaseDate})
+                    let modifiedRows = responseJSON.Discs[0].Tracks.map((track) => {
+                        const displayDate = this.formatDateToYYYYMMDD((track.trackReleaseDate) ? track.trackReleaseDate : responseJSON.Project.projectReleaseDate)
+                        return(
+                            {
+                                trackID : track.trackID,
+                                trackIsrc : track.isrc,
+                                trackTitle : track.trackTitle,
+                                trackSingle : track.isSingle,
+                                trackReleaseDate : displayDate
+                            }
+                        )
+                    })
+    
+                    this.setState({ tableRows: modifiedRows });
+                } else {
+                    this.addBlankRow()
+                }
             }
         )
         .catch(
