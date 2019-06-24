@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Table, Grid, Button, Form, Tabs, Tab } from 'react-bootstrap'; 
+import {Table, Form, Tabs, Tab } from 'react-bootstrap'; 
 import PageHeader from '../PageHeader/PageHeader';
 import ReplaceAudioModal from '../../modals/ReplaceAudioModal';
 import './TrackInformation.css';
@@ -382,7 +382,7 @@ class TrackInformationPage extends Component {
                         <p>In this step, you can upload audio files for filtering by either dragging &amp; dropping or clicking to browse files, e.g. mp3, WAV, etc. Tracks can also be reordered with drag and drop. This section must be completed by clicking on the 'Save &amp; Continue' button below.</p>
                     </div>
                 </div>
-                
+
             <Tab.Container defaultActiveKey="Disc1">
                 <Tabs>
                     <Tab eventKey="Disc1" title="Disc 1"></Tab>
