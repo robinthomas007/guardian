@@ -186,9 +186,13 @@ class NameIdDropdown extends Component {
 			  data.name = defaultText;
 			  data.id = '';
 
-		return(
-			<a className="dropdown-item selected" onClick={() => this.handleChange(data)}>{defaultText}</a>
-		)
+		if(defaultText && defaultText !== '') {
+			return(
+				<a className="dropdown-item selected" onClick={() => this.handleChange(data)}>{defaultText}</a>
+			)
+		} else {
+			return(null)
+		}
 	}
 
     render() {
