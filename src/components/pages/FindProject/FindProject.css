@@ -33,3 +33,5 @@
 	div.dropdown-menu.search-filters .dropdown-toggle::after {float:right; margin-top: 8px;}
 	div.dropdown-menu.search-filters input[type="date"] {margin:0px 8px;}
 	div.dropdown-menu.search-filters button.btn {margin-right:6px;}
+
+	ul.row.search-row  div.col-2 label{margin-top:8px;}

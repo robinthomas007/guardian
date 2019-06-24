@@ -314,12 +314,17 @@ class ReleaseinformationPage extends Component {
                             <Form.Group className="form-group cover-art">
                                 <Form.Label className="col-form-label col-3">Cover Art</Form.Label>
                                 <div id="preview" dropppable="true" className="form-control album-art-drop col-8">
-                                    <span className="align-items-center">
+                                    <span>
                                     Click to Browse<br />
                                     or Drag &amp; Drop
                                     </span>  
                                     <input type="file" onChange={this.albumArt} />
+                                    <div className="browse-btn">
+                                    <span>Browse Files</span>
+                                    <input type="file" title="Browse Files" onChange={this.albumArt} />
                                 </div>
+                                </div>
+                             
                             </Form.Group>
                         </div> 
                     </div>
