@@ -1,0 +1,7 @@
+.accordion .card {border:none; }
+.accordion .card .card-header {border-bottom:solid 1px #fff; background-color:#f5F5F5;}
+.accordion .card .card-header button.btn.btn-link {font-size:1.1em; color:#01579b; margin-left:-10px;}
+.accordion .card .card-header button.btn.btn-link:hover,
+.accordion .card .card-header button.btn.btn-link:active,
+.accordion .card .card-header button.btn.btn-link:focus,
+.accordion .card .card-header button.btn.btn-link:visited {text-decoration:none;}

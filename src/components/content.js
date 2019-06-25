@@ -10,6 +10,7 @@ import BlockingPoliciesPage from './pages/BlockingPolicies/BlockingPoliciesPage'
 import TerritorialRightsPage from './pages/TerritorialRights/TerritorialRightsPage';
 import ReleaseInformationPage from './pages/ReleaseInformation/ReleaseInformationPage';
 import FindProject from './pages/FindProject/FindProjectPage';
+import HelpGuide from './pages/HelpGuide/HelpGuidePage';
 import { withAuth } from '@okta/okta-react';
 import UUID from 'uuid';
 
@@ -33,6 +34,7 @@ export default withAuth(class Content extends Component {
 
     }
     this.getUserData = this.getUserData.bind(this);
+    this.updateHistory = this.updateHistory.bind(this);
     this.checkAuthentication();
   };
 
@@ -110,6 +112,11 @@ export default withAuth(class Content extends Component {
       );
   }
 
+  updateHistory(historyValue) {
+    this.props.history.push(historyValue)
+    } 
+    
+
   render() {
 
     if(this.state.userLoaded) {
@@ -119,8 +126,8 @@ export default withAuth(class Content extends Component {
           <LeftNav isAdmin={this.state.isAdmin}/>
 
           <div className="content col-10">
-            
-            <TopNav userObj={this.state.user}/>
+           
+            <TopNav userObj={this.state.user} updateParentHistory={this.updateHistory}/> 
 
             <SecureRoute path="/releaseInformation" render={ () => ( <ReleaseInformationPage user={this.state.user} />) } />
             <SecureRoute path="/projectContacts"  render={ () => ( <ProjectContactsPage user={this.state.user} />) } />
@@ -138,6 +145,7 @@ export default withAuth(class Content extends Component {
             <SecureRoute path="/reviewSubmit/:projectID" component={ReviewAndSubmitPage}/>
             
             <SecureRoute path="/findProject" component={FindProject}/>
+            <SecureRoute path="/helpGuide" component={HelpGuide}/>
           </div>
         </div>
       );
