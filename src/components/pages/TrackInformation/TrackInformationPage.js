@@ -30,7 +30,7 @@ class TrackInformationDataTable extends Component {
                     <th>ISRC <i>(Optional)</i></th>
                     <th>Track Title</th>
                     <th className="text-center">Single</th>
-                    <th>Release Date</th>
+                    <th className="release-date-col">Release Date <span>TBD</span></th>
                     <th className="text-center">Actions</th>
                 </tr>
             </thead>
@@ -83,7 +83,7 @@ class TrackInformationDataTable extends Component {
                         <span className="checkmark"></span>
                     </label>
                 </td>
-                <td>
+                <td className="release-date-col">
                     <Form.Control 
                         type="date" 
                         id={'trackReleaseDate'}
@@ -92,6 +92,10 @@ class TrackInformationDataTable extends Component {
                         onChange={(evt) => this.updateState(evt, track, i)}
                     >
                     </Form.Control>
+                    <label className="custom-checkbox"> 
+                            <input type="checkbox"  />
+                            <span className="checkmark"></span>
+                    </label>
                 </td>
                 <td className="text-center">
                     <button 

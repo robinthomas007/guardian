@@ -16,3 +16,6 @@
 .table-section .tab-pane {background-color:#FFF; padding:30px;}
 
 table.table.track-information button.btn.btn-secondary.action {margin-left:5px;}
+
+.release-date-col > span {margin-left:106px;}
+.release-date-col label {margin-left:20px;}
