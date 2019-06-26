@@ -100,9 +100,27 @@ If the territorial rights are specific to only that track, select “No” when 
                         </Accordion.Collapse>
                     </Card>
 
+                    <Card>
+                        <Card.Header>
+                        <Accordion.Toggle as={Button} variant="button" eventKey="4">
+                            How do I use the 'UGC Blocking' screen?
+                        </Accordion.Toggle>
+                        </Card.Header>
+                        <Accordion.Collapse eventKey="4">
+                        <Card.Body>
+                        The UGC Blocking section is where you can request for a project (or specific tracks within a project) to continue to be blocked on licenced platforms beyond the release date.
+                        <br /><br />
+                        If you’d like update the territorial rights for the entire project, be sure to select “Yes” when you receive the pop-up message that reads “Apply these territories as project DEFAULT?”
+If the territorial rights are specific to only that track, select “No” when you receive the pop-up message that reads “Apply these territories as project DEFAULT?”
+                        </Card.Body>
+                        </Accordion.Collapse>
+                    </Card>
+
                 </Accordion>
                     </Tab>
-                    <Tab eventKey="Videos" title="Tutorial Videos">Videos Here</Tab>
+                    <Tab eventKey="Videos" title="Tutorial Videos">
+                    <span className="instructions">Click on a video below to view a tutorial.</span>
+                    </Tab>
                 </Tabs>
 
 
