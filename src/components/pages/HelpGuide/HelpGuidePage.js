@@ -14,10 +14,11 @@ render() {
       
                 <Tabs>
                     <Tab eventKey="FAQs" title="FAQs">
+                        <span className="instructions">Click on a question below to review the information pertaining to the subject.</span>
                     <Accordion>
                     <Card>
                         <Card.Header>
-                        <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                        <Accordion.Toggle as={Button} variant="button" eventKey="0">
                           What actions can I perform on the 'Find A Project' screen?
                         </Accordion.Toggle>
                         </Card.Header>
@@ -39,7 +40,7 @@ render() {
 
                     <Card>
                         <Card.Header>
-                        <Accordion.Toggle as={Button} variant="link" eventKey="1">
+                        <Accordion.Toggle as={Button} variant="button" eventKey="1">
                             What do the various 'Project Statuses' mean? 
                         </Accordion.Toggle>
                         </Card.Header>
@@ -61,7 +62,7 @@ render() {
 
                     <Card>
                         <Card.Header>
-                        <Accordion.Toggle as={Button} variant="link" eventKey="2">
+                        <Accordion.Toggle as={Button} variant="button" eventKey="2">
                             How do the 'Project Security' levels offered differ?
                         </Accordion.Toggle>
                         </Card.Header>
@@ -75,6 +76,25 @@ render() {
                                         <li><label>Public (Viewable By All Label Members):</label> All members within your label group may view and update the project.</li>
                                         <li><label>Private (Viewable Only By You and Additional Contacts):</label> Only you and those accounts or contacts specified within the 'Additional Contacts' box can view and update the project.</li>
                                     </ul>
+
+                        </Card.Body>
+                        </Accordion.Collapse>
+                    </Card>
+
+                    <Card>
+                        <Card.Header>
+                        <Accordion.Toggle as={Button} variant="button" eventKey="3">
+                            How do I use the 'Territorial Rights' screen?
+                        </Accordion.Toggle>
+                        </Card.Header>
+                        <Accordion.Collapse eventKey="3">
+                        <Card.Body>
+                        On the Territorial Rights screen you can specify UMG’s territorial rights for any or all of the tracks for this project.  Please be certain you’re accurately representing this information.
+The Default territorial rights policy is set to “World Wide,” to change this, click on the globe and move the appropriate territories to either the “Included” or “Excluded” box.
+                        <br /><br />
+                        If you’d like update the territorial rights for the entire project, be sure to select “Yes” when you receive the pop-up message that reads “Apply these territories as project DEFAULT?”
+If the territorial rights are specific to only that track, select “No” when you receive the pop-up message that reads “Apply these territories as project DEFAULT?”
+
 
                         </Card.Body>
                         </Accordion.Collapse>
