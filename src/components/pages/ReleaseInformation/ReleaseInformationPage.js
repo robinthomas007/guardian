@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Table, Grid, Button, Form } from 'react-bootstrap'; 
-import PageHeader from '../PageHeader/PageHeader'; 
+import PageHeader from '../PageHeader/PageHeader';
+import ToolTip from '../../ui/Tooltip';
 import './ReleaseInformation.css';
 import { withRouter } from 'react-router-dom';
 import Cookies from 'universal-cookie';
@@ -232,7 +233,10 @@ class ReleaseinformationPage extends Component {
                             />
 
                             <Form.Group>
-                                <Form.Label className='col-form-label col-3'>Project Title<span className="required-ind">*</span></Form.Label>
+                                <Form.Label className='col-form-label col-3'>Project Title
+                                <span className="required-ind">*</span>
+                                <ToolTip message='Enter a title for your project here. It ay consist of any letter, number or symbol from 0-255 characters in length.' />
+                                </Form.Label>
                                 <Form.Control 
                                     id='projectTitle' 
                                     className='form-control col-8' 
@@ -244,7 +248,10 @@ class ReleaseinformationPage extends Component {
                             </Form.Group>
 
                             <Form.Group>
-                                <Form.Label className='col-form-label col-3'>Artist<span className="required-ind">*</span></Form.Label>
+                                <Form.Label className='col-form-label col-3'>Artist
+                                <span className="required-ind">*</span>
+                                <ToolTip message='Enter the artist for your project here. It ay consist of any letter, number or symbol from 0-255 characters in length.' />
+                                </Form.Label>
                                 <Form.Control 
                                     id='projectArtistName' 
                                     className='form-control col-8' 
@@ -256,26 +263,34 @@ class ReleaseinformationPage extends Component {
                             </Form.Group>
                             
                             <Form.Group>
-                                <Form.Label className='col-form-label col-3'>Project Type<span className="required-ind">*</span></Form.Label>
+                                <Form.Label className='col-form-label col-3'>Project Type
+                                <span className="required-ind">*</span>
+                                <ToolTip message='Select a project type for your project. This can help you differentiate and identify projects with similar titles.' />
+                                </Form.Label>
                                 <ProjectTypesInput
                                     user={this.props.user}
                                     value={this.state.formInputs.projectTypeID} 
                                     onChange={this.handleChange}
                                 />
-
                             </Form.Group>
 
                             <Form.Group>
-                                <Form.Label className='col-form-label col-3'>Releasing Label<span className="required-ind">*</span></Form.Label>
+                                <Form.Label className='col-form-label col-3'>Releasing Label
+                                <span className="required-ind">*</span>
+                                <ToolTip message='Please select the releasing labe for your project. If you only have access to a single label, your label will be pre-loaded and not require a selection.' />
+                                </Form.Label>
                                 <ReleasingLabelsInput 
                                     user={this.props.user} 
                                     value={this.state.formInputs.projectReleasingLabelID} 
                                     onChange={this.handleChange}
-                                />
+                                />   
                             </Form.Group>
 
                             <Form.Group>
-                                <Form.Label className="col-form-label col-3">Release Date<span className="required-ind">*</span></Form.Label>
+                                <Form.Label className="col-form-label col-3">Release Date
+                                <span className="required-ind">*</span>
+                                <ToolTip message='Projects with a release date prior to todays date will be considered post-release entries. If the projects release date is to be determined, select the TBD option.' />
+                                </Form.Label>
                                     <input 
                                         id="projectReleaseDate" 
                                         className='form-control col-3' 
@@ -284,7 +299,6 @@ class ReleaseinformationPage extends Component {
                                         onChange={this.handleChange}
                                         disabled={this.state.formInputAttributes.projectReleaseDate.disabled}
                                     />
-
                                 <Form.Label className="col-form-label col-2 tbd">Release TBD</Form.Label>
                                 <label className="custom-checkbox"> 		
                                     <input id='projectReleaseDateTBD' 

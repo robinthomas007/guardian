@@ -1,4 +1,2 @@
-	/* Project Contacts */
-
-	.additional-contacts label {margin-left:15px; vertical-align:top;} 
-	.additional-contacts textarea {height:120px; margin-left:-2px; width:97.5%;}
+.additional-contacts label {width:158px; margin-left:15px; vertical-align:top;} 
+.additional-contacts textarea {height:120px; margin-left:-5px; width:97.5%;}
