@@ -43,29 +43,19 @@ export default withAuth(class TopNav extends Component {
         //clear the local storage
         localStorage.clear()
 
-        //redirect to login page
-        //this.props.history.push('')
     }
 
     handleHelpClick = (e) => {
         e.preventDefault();
-        this.props.updateParentHistory("/helpGuide")
-        } 
+        this.props.updateParentHistory("/trackInformation")
+    }
 
     setUserLabelsSessionData = (labels) => {
         const user = JSON.parse(sessionStorage.getItem('user'))
         if(labels && user) {
             user.labels = labels;
-
-            console.log('-- LABELS --')
-            console.log(labels)
-
             sessionStorage.setItem('user', JSON.stringify(user))
         }
-
-        console.log('------ USER LABELS to SESSION ------')
-        console.log(user)
-        console.log('------------------------------------')
     }
 
     setUserLabels = (email) => {
@@ -112,18 +102,6 @@ export default withAuth(class TopNav extends Component {
 
     componentWillMount() {
         this.setState({user : this.props.user})
-    }
-
-    componentDidMount() {
-        const user = JSON.parse(sessionStorage.getItem('user'));
-
-        if(user !== this.state.user) {
-           // this.setState( {user : user} )
-        }
-
-        //this.setUserLabels()
-
-        //this.setUserLabels()
     }
 
     getUserNameFromState() {

@@ -16,6 +16,7 @@ class ReleasingLabelsInput extends Component {
             user : this.props.user,
             value : this.props.value,
             onChange : this.props.onChange,
+            setParentState : this.props.setParentState
         }
 
         this.getReleasingLabelOptions = this.getReleasingLabelOptions.bind(this);
@@ -26,6 +27,9 @@ class ReleasingLabelsInput extends Component {
         let labelOptions = ''
         let defaultLabelID = ''
         if(this.props.user && this.props.user.ReleasingLabels) {
+
+            this.props.setParentState('projectReleasingLabelID', this.props.user.ReleasingLabels[0].id)
+
             labelOptions = this.props.user.ReleasingLabels.map( (label, i) =>
                 <option key={i} value={label.id}>{label.name}</option>
             )
@@ -142,6 +146,7 @@ class ReleaseinformationPage extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleReleaseTBDChange = this.handleReleaseTBDChange.bind(this);
+        this.setParentState = this.setParentState.bind(this);
     };
 
     handleReleaseTBDChange(event) {
@@ -202,8 +207,17 @@ class ReleaseinformationPage extends Component {
                   reader.onload = (function(aImg) { return function(e) { aImg.src = e.target.result; }; })(img);
                   reader.readAsDataURL(file);
           }
+    }
 
+    setParentState(id, value) {
+        const {formInputs} = this.state;
+        const updatedFormInputs = formInputs;
 
+        updatedFormInputs[id] = value;
+
+        if(formInputs !== updatedFormInputs) {
+            this.setState({formInputs : updatedFormInputs})
+        }
     }
 
     render() {
@@ -283,7 +297,8 @@ class ReleaseinformationPage extends Component {
                                     user={this.props.user} 
                                     value={this.state.formInputs.projectReleasingLabelID} 
                                     onChange={this.handleChange}
-                                />   
+                                    setParentState={this.setParentState}
+                                />
                             </Form.Group>
 
                             <Form.Group>

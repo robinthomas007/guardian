@@ -14,6 +14,7 @@ class App extends Component {
 
     //clear the local storage
     localStorage.removeItem('projectData')
+
   };
 
   render() {
@@ -26,11 +27,16 @@ class App extends Component {
             className={'h-100'}
           >
 
+
             <Switch>
               <Route path="/implicit/callback" component={ImplicitCallback} />
               <Route path="/" exact={true} component={LoginPage} />
               <Route path="/login" exact={true} component={LoginPage} />
               <SecureRoute path="/" component={Content} />
+
+
+              <SecureRoute path="/" render={ () => ( <Content  />) }/>
+
             </Switch>
           </Security>
       </Router>

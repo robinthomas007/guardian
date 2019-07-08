@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Route, NavLink } from "react-router-dom";
 import './LeftNav.css'
+import { withRouter } from 'react-router-dom';
 
 const navList = {
 
@@ -84,9 +85,13 @@ class LeftNav extends Component {
 			activeNav : '',
 			user : this.props.user
 		}
+
 		this.handleNavClick = this.handleNavClick.bind(this);
 		this.getAdminLinks = this.getAdminLinks.bind(this);
     };
+
+
+
 
 	handleNavClick(link){
 		if(this.state.activeNav !== link) {
@@ -195,4 +200,4 @@ class LeftNav extends Component {
 	}
 }
 
-export default LeftNav;
+export default withRouter(LeftNav);
