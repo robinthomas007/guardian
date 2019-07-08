@@ -8,7 +8,6 @@ import ReplaceAudioModal from '../../modals/ReplaceAudioModal';
 import './TrackInformation.css';
 import Noty from 'noty'
 
-
 class TrackInformationPage extends Component {
 
     constructor(props) {

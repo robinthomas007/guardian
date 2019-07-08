@@ -32,6 +32,7 @@ export default withAuth(class TopNav extends Component {
         this.getUserNameFromState = this.getUserNameFromState.bind(this);
         this.handleLogoutClick = this.handleLogoutClick.bind(this);
         this.setUserLabels = this.setUserLabels.bind(this);
+        this.handleHelpClick = this.handleHelpClick.bind(this);
     }
 
     handleLogoutClick = (e) => {
@@ -46,12 +47,10 @@ export default withAuth(class TopNav extends Component {
         //this.props.history.push('')
     }
 
-    handleHelpClick = (e) => {
+    handleHelpClick = (e) => {
         e.preventDefault();
-        return(
-            alert('Help Guide')
-        )
-    }
+        this.props.updateParentHistory("/helpGuide")
+        } 
 
     setUserLabelsSessionData = (labels) => {
         const user = JSON.parse(sessionStorage.getItem('user'))

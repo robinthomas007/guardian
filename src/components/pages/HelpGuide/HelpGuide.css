@@ -1,0 +1,10 @@
+
+span.instructions {display:block; padding:20px 36px 16px 20px; font-size:1.1em; }
+
+.accordion .card {border:none; }
+.accordion .card .card-header {border-bottom:solid 1px #fff; background-color:transparent;}
+.accordion .card .card-header button.btn.btn-button {font-size:1em; color:#01579b; margin-left:-10px; background-color:#F5F5F5; border:solid 1px #CCC;}
+.accordion .card .card-header button.btn.btn-button:hover,
+.accordion .card .card-header button.btn.btn-button:active,
+.accordion .card .card-header button.btn.btn-button:focus,
+.accordion .card .card-header button.btn.btn-button:visited {text-decoration:none;}

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Table, Grid, Button, Form } from 'react-bootstrap'; 
 import PageHeader from '../PageHeader/PageHeader';
+import ToolTip from '../../ui/Tooltip';
 import { withRouter } from "react-router";
 import './ProjectContacts.css';
 import Noty from 'noty'
@@ -188,7 +189,10 @@ class ProjectContactsPage extends Component {
                         <div className="col-12">
 
                             <Form.Group>
-                                <Form.Label className='col-form-label col-2'>Project Security <span className='required-ind'>*</span></Form.Label>
+                                <Form.Label className='col-form-label col-2'>Project Security 
+                                <span className='required-ind'>*</span>
+                                <ToolTip message='Projects are by default, set to private. This means only you may view or make changes to them. If set to public, projects will be made available to everyone within the label group.' />
+                                </Form.Label>
                                 <ProjectSecurityInput 
                                     user={this.props.user} 
                                     value={this.state.formInputs.projectSecurityID} 
@@ -197,7 +201,10 @@ class ProjectContactsPage extends Component {
                             </Form.Group>
 
                             <Form.Group>
-                                <Form.Label className='col-form-label col-2'>Primary Contact <span className='required-ind'>*</span></Form.Label>
+                                <Form.Label className='col-form-label col-2'>Primary Contact 
+                                <span className='required-ind'>*</span>
+                                <ToolTip message='The originator of the project is by default set to be the primary contact. This can be changed here and the project will be created for that users account as long as they have access to the selected label.' />
+                                </Form.Label>
                                 <Form.Control 
                                     className='form-control col-5' 
                                     id='projectPrimaryContact' 
@@ -207,7 +214,10 @@ class ProjectContactsPage extends Component {
                             </Form.Group>
 
                             <Form.Group>
-                                <Form.Label className='col-form-label col-2'>Primary Contact Email<span className='required-ind'>*</span></Form.Label>
+                                <Form.Label className='col-form-label col-2'>Primary Contact Email
+                                <span className='required-ind'>*</span>
+                                <ToolTip message='The email address belonging to the primary contact. This may not belong to any user aside from the primary contact.' />
+                                </Form.Label>
                                 <Form.Control 
                                     className='form-control col-5' 
                                     id='projectPrimaryContactEmail' 
@@ -218,7 +228,9 @@ class ProjectContactsPage extends Component {
 
                             <div className='row additional-contacts'>
                                 <Form.Group className="form-group col-2">
-                                    <Form.Label>Addtional Contacts</Form.Label>
+                                    <Form.Label>Addtional Contacts
+                                    <ToolTip message='Additional contacts or users that youd like to share this project with may be added here. You can copy any paste from Outlook,  or separate a list of users to be added by commas, spaces, semi-colons or any combination of these.' />
+                                    </Form.Label>
                                 </Form.Group>
                                 
                                 <Form.Group className="form-group col-10">
