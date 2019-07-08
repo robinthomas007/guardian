@@ -1,123 +1,12 @@
 import React, { Component } from 'react';
 import {Table, Form, Tabs, Tab } from 'react-bootstrap'; 
 import PageHeader from '../PageHeader/PageHeader';
+import TabbedTracks from '../TrackInformation/pageComponents/TabbedTracks';
+import TrackInformationDataTable from '../TrackInformation/pageComponents/TrackInformationDataTable';
+import TrackInformationDataTable_OLD from '../TrackInformation/pageComponents/TrackInformationDataTable_OLD';
 import ReplaceAudioModal from '../../modals/ReplaceAudioModal';
 import './TrackInformation.css';
 import Noty from 'noty'
-
-class TrackInformationDataTable extends Component {
-
-    constructor(props) {
-        super(props);
-
-        const dataRows = this.props.data
-
-        this.state = {
-            dataRows : dataRows,
-            formInputs : this.props.formInputsState
-        }
-        this.updateState = this.updateState.bind(this);
-    }
- 
-    trackInformationDataHeader = () => {
-
-        return(
-            <thead>
-                <tr>
-                    <th className="text-center">#</th>
-                    <th className="text-center"></th>
-                    <th className="text-center"></th>
-                    <th>ISRC <i>(Optional)</i></th>
-                    <th>Track Title</th>
-                    <th className="text-center">Single</th>
-                    <th>Release Date</th>
-                    <th className="text-center">Actions</th>
-                </tr>
-            </thead>
-        )
-    }
-
-    updateState(evt, track, i) {
-        // this.setState( {formInputs : { ...this.state.formInputs, [e.target.id] : e.target.value}} )
-        this.props.handleChange(evt, track, i)
-    }
-
-    render() {
-        let dataRows = this.props.data.map( (track, i) =>
-          <tr key={i} draggable>
-                <td className="text-center">
-                    <Form.Control 
-                        type="hidden" 
-                        id={'trackID'} 
-                        value={track.trackID} 
-                        onChange={(evt) => this.updateState(evt, track, i)}
-                    ></Form.Control>
-                    {i+1}
-                </td>
-                <td className="text-center"><i className="material-icons">format_line_spacing</i></td>
-                <td className="text-center"><i className="material-icons purple-icon">audiotrack</i></td>
-                <td>
-                    <Form.Control 
-                        type="text" 
-                        id={'trackIsrc'} 
-                        value={track.trackIsrc} 
-                        onChange={(evt) => this.updateState(evt, track, i)}
-                    ></Form.Control>
-                </td>
-                <td>
-                    <Form.Control 
-                        type="text" 
-                        id={'trackTitle'} 
-                        value={track.trackTitle} 
-                        onChange={(evt) => this.updateState(evt, track, i)}
-                    ></Form.Control>
-                </td>
-                <td className="text-center">
-                    <label className="custom-checkbox">
-                        <input 
-                            type="checkbox" 
-                            id={'trackSingle'} 
-                            defaultChecked={track.trackSingle} 
-                            value={track.trackSingle} 
-                            onChange={(evt) => this.updateState(evt, track, i)}/>
-                        <span className="checkmark"></span>
-                    </label>
-                </td>
-                <td>
-                    <Form.Control 
-                        type="date" 
-                        id={'trackReleaseDate'}
-                        value={track.trackReleaseDate}
-                        disabled={track.trackReleaseDate.disabled}
-                        onChange={(evt) => this.updateState(evt, track, i)}
-                    >
-                    </Form.Control>
-                </td>
-                <td className="text-center">
-                    <button 
-                        className="btn btn-secondary action" 
-                        onClick={this.props.showClick}
-                    ><i className="material-icons">publish</i></button>
-                    <button 
-                        className="btn btn-secondary action" 
-                        onClick={this.props.removeRow.bind(null, i)}
-                    ><i className="material-icons">delete</i></button>
-                </td>
-            </tr>
-       )
-
-        return (
-            <div className="table-responsive">
-                <Table droppable="true">
-                    {this.trackInformationDataHeader()}
-                    <tbody>
-                        {dataRows}
-                    </tbody>
-                </Table>
-            </div>
-        )
-    }
-}
 
 
 class TrackInformationPage extends Component {
@@ -130,6 +19,8 @@ class TrackInformationPage extends Component {
             showReplaceModal : false,
             tracksData : [],
             projectReleaseDate : '',
+            projectData : {},
+            activeDiscTab : 1
         }
         this.addBlankRow = this.addBlankRow.bind(this);
         this.showTrackModal = this.showTrackModal.bind(this);
@@ -139,7 +30,7 @@ class TrackInformationPage extends Component {
         this.removeRow = this.removeRow.bind(this);
         this.handlePageDataLoad = this.handlePageDataLoad.bind(this);
         this.formatDateToYYYYMMDD = this.formatDateToYYYYMMDD.bind(this);
-
+        this.setActiveDiscTab = this.setActiveDiscTab.bind(this);
 
         if(this.props.match.params.projectID) {
             this.handlePageDataLoad()
@@ -176,6 +67,10 @@ class TrackInformationPage extends Component {
         )
     }
 
+    setActiveDiscTab(tabID) {
+        this.setState({activeDiscTab : tabID})        
+    }
+
     addBlankRow() {
         var newRow = this.state.tableRows   
             newRow.push(this.getBlankRow())
@@ -202,10 +97,6 @@ class TrackInformationPage extends Component {
               modifiedRows[i][event.target.id] = event.target.value;
         
               this.setState({ tableRows: modifiedRows });
-
-        //this gets the inputs into the state.formInputs obj on change
-        //this.setState( {formInputs : { ...this.state.formInputs, [event.target.id] : inputValue}} )
-        console.log("on change form vslue", this.state.formInputs)
     };
 
     formatDateToYYYYMMDD(unFormattedDate) {
@@ -276,7 +167,11 @@ class TrackInformationPage extends Component {
                 } else {
                     this.addBlankRow()
                 }
+
+                this.setState({projectData : responseJSON})
             }
+
+            
         )
         .catch(
             error => console.error(error)
@@ -383,27 +278,24 @@ class TrackInformationPage extends Component {
                     </div>
                 </div>
 
-            <Tab.Container defaultActiveKey="Disc1">
-                <Tabs>
-                    <Tab eventKey="Disc1" title="Disc 1"></Tab>
-                    <Tab eventKey="AddDisc" title="+ Add A Disc"></Tab>
-                </Tabs>
-
-                <Tab.Content>
-                    <Tab.Pane eventKey="Disc1">
                    
-                    <TrackInformationDataTable 
-                        data={this.state.tableRows} 
-                        showClick={this.showTrackModal} 
-                        handleChange={this.handleChange}
-                        removeRow={this.removeRow}
-                        formInputsState={this.state.formInputs}
-                    />
-                
-                    </Tab.Pane>
-                </Tab.Content>
-            </Tab.Container>
+                <TrackInformationDataTable_OLD 
+                    data={this.state.tableRows} 
+                    showClick={this.showTrackModal} 
+                    handleChange={this.handleChange}
+                    removeRow={this.removeRow}
+                />
                
+
+                {/* <TabbedTracks 
+                    data={this.state.projectData} 
+                    showClick={this.showTrackModal} 
+                    activeDiscTab={this.state.activeDiscTab}
+                    handleActiveDiscUpdate={this.setActiveDiscTab}
+                    handleChange={this.handleChange}
+                /> */}
+
+
                 <section className="row save-buttons">
                     <div className="col-9">
                         <button 
