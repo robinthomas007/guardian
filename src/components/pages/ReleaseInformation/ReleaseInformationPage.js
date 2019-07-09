@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Table, Grid, Button, Form } from 'react-bootstrap'; 
+import {Table, Grid, Button, Form, Alert } from 'react-bootstrap'; 
 import PageHeader from '../PageHeader/PageHeader';
 import ToolTip from '../../ui/Tooltip';
 import './ReleaseInformation.css';
@@ -102,6 +102,7 @@ class ReleaseinformationPage extends Component {
                 formInputs : {
                     "projectID" : '',
                     "projectTitle" : '',
+                    "projectCoverArt" : '',
                     "projectArtistName" : '',
                     "projectTypeID" : '1',
                     "projectReleasingLabelID" : '',
@@ -147,6 +148,8 @@ class ReleaseinformationPage extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleReleaseTBDChange = this.handleReleaseTBDChange.bind(this);
         this.setParentState = this.setParentState.bind(this);
+        this.albumArt = this.albumArt.bind(this);
+        this.handleCoverChange = this.handleCoverChange.bind(this);
     };
 
     handleReleaseTBDChange(event) {
@@ -177,8 +180,38 @@ class ReleaseinformationPage extends Component {
 
         //this gets the inputs into the state.formInputs obj on change
         this.setState( {formInputs : { ...this.state.formInputs, [event.target.id] : inputValue}} )
-        console.log(this.state.formInputs)
+        console.log('-----', this.state.formInputs)
+
     };
+
+    handleCoverChange(file) {
+        const {formInputs} = this.state;
+        const updatedFormInputs = formInputs;
+        let reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function() {
+                updatedFormInputs['projectCoverArt'] = reader.result;
+            }
+            reader.onerror = function() {
+                updatedFormInputs['projectCoverArt'] = '';
+            }
+
+        this.setState({formInputs : updatedFormInputs})
+
+        console.log(updatedFormInputs)
+    };
+
+    setCoverArt(imgSrc) {
+        const img = document.createElement("img");
+              img.src = imgSrc;
+              img.height = 188;
+              img.width = 188;
+              img.classList.add("obj");
+              //img.file = file;
+
+        const preview = document.getElementById('preview')
+              preview.appendChild(img);
+    }
 
     handleSubmit(event) {
         event.preventDefault();
@@ -189,9 +222,9 @@ class ReleaseinformationPage extends Component {
     albumArt(e) {
 
         const files = e.target.files
-
         for (let i = 0; i < files.length; i++) {
             const file = files[i];
+            
             if (!file.type.startsWith('image/')){ continue }
             const img = document.createElement("img");
                   img.src = window.URL.createObjectURL(files[i]);
@@ -204,9 +237,15 @@ class ReleaseinformationPage extends Component {
                   preview.appendChild(img);
             
             const reader = new FileReader();
-                  reader.onload = (function(aImg) { return function(e) { aImg.src = e.target.result; }; })(img);
                   reader.readAsDataURL(file);
-          }
+                  reader.onload = (function(aImg) { 
+                      return function(e) { 
+                          aImg.src = e.target.result; 
+                      }; 
+                  })(img);
+
+            this.handleCoverChange(file);  
+        }
     }
 
     setParentState(id, value) {
@@ -220,7 +259,15 @@ class ReleaseinformationPage extends Component {
         }
     }
 
+    componentDidMount() {
+        if(this.state.formInputs.projectCoverArt !== '') {
+            this.setCoverArt(this.state.formInputs.projectCoverArt)
+        }
+        
+    }
+
     render() {
+
         return (
             <section className="page-container h-100">
 
@@ -344,14 +391,23 @@ class ReleaseinformationPage extends Component {
                                 <Form.Label className="col-form-label col-3">Cover Art</Form.Label>
                                 <div id="preview" dropppable="true" className="form-control album-art-drop col-8">
                                     <span>
-                                    Click to Browse<br />
-                                    or Drag &amp; Drop
+                                        Click to Browse<br />
+                                        or Drag &amp; Drop
                                     </span>  
-                                    <input type="file" onChange={this.albumArt} />
+                                    <input 
+                                        id="projectCoverArt" 
+                                        type="file" 
+                                        onChange={this.albumArt} 
+                                    />
                                     <div className="browse-btn">
-                                    <span>Browse Files</span>
-                                    <input type="file" title="Browse Files" onChange={this.albumArt} />
-                                </div>
+                                        <span>Browse Files</span>
+                                        <input 
+                                            id="projectCoverArtData" 
+                                            type="file" 
+                                            title="Browse Files" 
+                                            onChange={this.albumArt}
+                                        />
+                                    </div>
                                 </div>
                              
                             </Form.Group>
@@ -365,7 +421,12 @@ class ReleaseinformationPage extends Component {
                     <section className="row save-buttons">
                         <div className="col-9"></div>
                         <div className="col-3">
-                            <button type="submit" className="btn btn-primary" onClick={this.handleSubmit}>Save &amp; Continue</button>
+                            <button 
+                                type="submit" 
+                                className="btn btn-primary" 
+                                onClick={this.handleSubmit}
+                                id="releaseInfoSaveAndContinue"
+                            >Save &amp; Continue</button>
                         </div>
                     </section>
                 </Form> 

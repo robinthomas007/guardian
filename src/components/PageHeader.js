@@ -36,6 +36,7 @@ class PageHeader extends Component {
                         <button 
                             className="close-project btn" 
                             onClick={this.handleProjectCloseClick}
+                            id="pageHeadCloseProject"
                         >Close Project</button>
                     </span>
                 </div> 
