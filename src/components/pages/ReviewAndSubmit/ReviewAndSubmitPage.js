@@ -11,6 +11,7 @@ class ReviewAndSubmitPage extends Component {
 
         this.state = { 
             projectID : props.projectID,
+            project : {},
             discs : {}
         }
 
@@ -40,28 +41,20 @@ class ReviewAndSubmitPage extends Component {
             body : fetchBody
         }).then (response => 
             {
+
                 return(response.json());
             }
         ).then (responseJSON => 
 
             {
-               
-                this.setState({ projectTitle : responseJSON.Project.projectTitle })
-                this.setState({ projectArtistName : responseJSON.Project.projectArtistName })
-                this.setState({ projectSecurity : responseJSON.Project.projectSecurity })
-                this.setState({ projectReleasingLabel : responseJSON.Project.projectReleasingLabel })
-                this.setState({ projectReleaseDate : responseJSON.Project.projectReleaseDate })
-                this.setState({ projectNotes : responseJSON.Project.projectNotes })
-                this.setState({ projectType : responseJSON.Project.projectType })
 
-                this.setState({ projectPrimaryContact : responseJSON.Project.projectPrimaryContact })
-                this.setState({ projectPrimaryContactEmail : responseJSON.Project.projectPrimaryContactEmail })
-                this.setState({ projectAdditionalContacts : responseJSON.Project.projectAdditionalContacts })
+                this.setState({project : responseJSON.Project})
+                this.setState({discs : responseJSON.Discs})
 
-                this.setState({ discs : responseJSON.Discs })
 
-                console.log('responseJSON.Discs')
-                console.log(responseJSON.Discs)
+                alert()
+                console.log('responseJSON')
+                console.log(responseJSON)
             }
         )
         .catch(
@@ -136,27 +129,27 @@ class ReviewAndSubmitPage extends Component {
                     <br />
                     <div className="row no-gutters">
                         <div className="col-2">
-                            <img className="album-art" />
+                            <img className="album-art" src={this.state.project.projectCoverArtBase64Data} />
                         </div>
                         <div className="col-10">
                             <div className="row no-gutters">
                                 <div className="col-6">
-                                    <label>Project Title:</label><span> {this.state.projectTitle}</span>
+                                    <label>Project Title:</label><span> {this.state.project.projectTitle}</span>
                                 </div>
                                 <div className="col-6">
-                                    <label>Artist:</label><span> {this.state.projectArtistName}</span>
+                                    <label>Artist:</label><span> {this.state.project.projectArtistName}</span>
                                 </div>
                                 <div className="col-6">
-                                    <label>Project Type:</label><span> {this.state.projectType}</span>
+                                    <label>Project Type:</label><span> {this.state.project.projectType}</span>
                                 </div>
                                 <div className="col-6">
-                                    <label>Label:</label><span> {this.state.projectReleasingLabel}</span>
+                                    <label>Label:</label><span> {this.state.project.projectReleasingLabel}</span>
                                 </div>
                                 <div className="col-12">
-                                    <label>Release Date:</label><span> {this.state.projectReleaseDate}</span>
+                                    <label>Release Date:</label><span> {this.state.project.projectReleaseDate}</span>
                                 </div>
                                 <div className="col-12">
-                                    <label>Notes:</label><span> {this.state.projectNotes}</span>
+                                    <label>Notes:</label><span> {this.state.project.projectNotes}</span>
                                 </div>
                             </div>
                         </div>
@@ -175,16 +168,16 @@ class ReviewAndSubmitPage extends Component {
                     <br />
                     <div className="row no-gutters">
                         <div className="col-6">
-                            <label>Primary Contact:</label><span> {this.state.projectPrimaryContact}</span>
+                            <label>Primary Contact:</label><span> {this.state.project.projectPrimaryContact}</span>
                         </div>
                         <div className="col-6">
-                            <label>Project Security:</label><span> {this.state.projectSecurity}</span>
+                            <label>Project Security:</label><span> {this.state.project.projectSecurity}</span>
                         </div>
                         <div className="col-12">
-                            <label>Primary Email:</label><span> {this.state.projectPrimaryContactEmail}</span>
+                            <label>Primary Email:</label><span> {this.state.project.projectPrimaryContactEmail}</span>
                         </div>
                         <div className="col-12">
-                            <label>Additional Contacts:</label><span> {this.state.projectAdditionalContacts}</span>
+                            <label>Additional Contacts:</label><span> {this.state.project.projectAdditionalContacts}</span>
                         </div>
                     </div>
                 </section>
