@@ -93,7 +93,11 @@ class IntroModal extends Component {
                     <label class="noshow-label">Do not show this anymore.</label>
                   </div>
             
-                  <Button variant="primary" onClick={this.handleClose}>
+                  <Button 
+                    variant="primary" 
+                    onClick={this.handleClose}
+                    id="introModalContinue"
+                  >
                     Continue
                   </Button>
                 </Modal.Footer>
