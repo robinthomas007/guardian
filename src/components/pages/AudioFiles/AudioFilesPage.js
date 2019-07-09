@@ -97,7 +97,13 @@ class AudioFilesPage extends Component {
                         <div className="form-group col-12">
                             <label>Drag &amp; Drop Audio Files Below</label>
     
-                            <div className="form-control audio-drop-area col-12"></div>
+                            <div droppable="true" className="form-control audio-drop-area col-12">
+                            <span>
+                                    Click to Browse<br />
+                                    or Drag &amp; Drop
+                                    </span>  
+                                    <input type="file"  />
+                                    </div>
                         </div>
                     </section>
                 </form>
