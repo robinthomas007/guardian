@@ -64,11 +64,54 @@ class ProjectContactsPage extends Component {
             project : {}
         }
 
+        if(this.props.match.params.projectID) {
+            this.handlePageDataLoad()
+        }
+
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.showNotification = this.showNotification.bind(this);
     }
     
+    handlePageDataLoad() {
+        const user = JSON.parse(sessionStorage.getItem('user'))
+        const projectID = this.props.match.params.projectID
+        const fetchHeaders = new Headers(
+            {
+                "Content-Type": "application/json",
+                "Authorization" : sessionStorage.getItem('accessToken')
+            }
+        )
+
+        const fetchBody = JSON.stringify( {
+            "User" : {
+                "email" : user.email
+            },
+            "ProjectID" : projectID
+        })
+
+
+        fetch ('https://api-dev.umusic.net/guardian/project/review', {
+            method : 'POST',
+            headers : fetchHeaders,
+            body : fetchBody
+        }).then (response => 
+            {
+                return(response.json());
+            }
+        ).then (responseJSON => 
+
+            {
+                const { formInputs } = this.state;
+                let modifiedFormInputs = responseJSON.Project;
+                this.setState({ formInputs: modifiedFormInputs });
+            }
+        )
+        .catch(
+            error => console.error(error)
+        );
+    }
+
 
     showNotification(e, projectID){
 
@@ -111,15 +154,15 @@ class ProjectContactsPage extends Component {
                 <option key={i} value={security.id}>{security.name}</option>
             )
         }
-        console.log('securityOptions')
-        console.log(securityOptions)
-
         return(securityOptions)
     }
 
     handleSubmit(event) {
-        const releaseInformationInputs = JSON.parse(localStorage.getItem('projectData'))
-        const user = JSON.parse(sessionStorage.getItem('user'))
+        const releaseInformationInputs = JSON.parse(localStorage.getItem('projectData'));
+        const user = JSON.parse(sessionStorage.getItem('user'));
+        const projectID = this.props.match.params.projectID;
+
+        const projectFields = (projectID) ? this.state.formInputs : {...releaseInformationInputs, ...this.state.formInputs}
 
         const fetchHeaders = new Headers(
             {
@@ -132,8 +175,9 @@ class ProjectContactsPage extends Component {
             "User" : {
                 "email" : user.email
             },
-            "Project" : {...releaseInformationInputs, ...this.state.formInputs}
+            "Project" : projectFields
         })
+
 
         fetch ('https://api-dev.umusic.net/guardian/project', {
             method : 'POST',

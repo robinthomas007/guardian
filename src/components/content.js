@@ -14,7 +14,6 @@ import HelpGuide from './pages/HelpGuide/HelpGuidePage';
 import { withAuth } from '@okta/okta-react';
 import UUID from 'uuid';
 
-
 export default withAuth(class Content extends Component {
 
   constructor(props) {
@@ -33,6 +32,7 @@ export default withAuth(class Content extends Component {
         sessionId : uuidv4()
 
     }
+    
     this.getUserData = this.getUserData.bind(this);
     this.updateHistory = this.updateHistory.bind(this);
     this.checkAuthentication();
@@ -113,31 +113,39 @@ export default withAuth(class Content extends Component {
   }
 
   updateHistory(historyValue) {
-    this.props.history.push(historyValue)
-    } 
-    
+      this.props.history.push(historyValue)
+  }
 
   render() {
 
     if(this.state.userLoaded) {
+
       return (
         <div className="row h-100 no-gutters">
 
-          <LeftNav isAdmin={this.state.isAdmin}/>
+
+          <LeftNav isAdmin={this.state.isAdmin} />
 
           <div className="content col-10">
-           
-            <TopNav userObj={this.state.user} updateParentHistory={this.updateHistory}/> 
+            
+            <TopNav userObj={this.state.user} updateParentHistory={this.updateHistory}/>
 
             <SecureRoute path="/releaseInformation" render={ () => ( <ReleaseInformationPage user={this.state.user} />) } />
-            <SecureRoute path="/projectContacts"  render={ () => ( <ProjectContactsPage user={this.state.user} />) } />
-            
+
+            <SecureRoute path="/projectContacts" exact render={ () => ( <ProjectContactsPage user={this.state.user} />) }/>
+            <SecureRoute path="/projectContacts/:projectID" render={(props) => (
+              <ProjectContactsPage {...props} user={this.state.user} />
+            )}/>
+
             <SecureRoute path="/trackInformation" exact component={TrackInformationPage}/>
             <SecureRoute path="/trackInformation/:projectID" component={TrackInformationPage}/>
 
             <SecureRoute path="/territorialRights" render={ () => ( <TerritorialRightsPage user={this.state.user} />) }/>
+            
             <SecureRoute path="/blockingPolicies" component={BlockingPoliciesPage}/>
+
             <SecureRoute path="/newProject"  render={ () => ( <ReleaseInformationPage user={this.state.user} />) } />
+
             <SecureRoute path="/audioFiles" exact render={ () => ( <AudioFilesPage user={this.state.user} />) }/>
             <SecureRoute path="/audioFiles/:projectID" component={AudioFilesPage}/>
 
