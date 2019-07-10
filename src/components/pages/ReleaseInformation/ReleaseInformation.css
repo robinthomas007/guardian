@@ -16,3 +16,5 @@ img.obj {position:absolute; top:0; left:0;}
 div.browse-btn {display:block; width:100px; border:1px solid #CCC; border-radius:2px; width:190px; margin-top: 80px; margin-left: -13px; text-align:center; cursor:pointer;}
 div.browse-btn span {position:absolute; width:180px; padding:8px; cursor:pointer;}
 div.browse-btn input {position:relative; height:36px!important; width:84px!important; padding:8px; cursor:pointer;}
+
+button.btn.btn-secondary.action.remove-art {position:absolute; right:6px; z-index:10000; opacity:.7; border:solid 1px #ced4da; }

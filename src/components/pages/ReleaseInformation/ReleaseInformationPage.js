@@ -390,6 +390,10 @@ class ReleaseinformationPage extends Component {
                             <Form.Group className="form-group cover-art">
                                 <Form.Label className="col-form-label col-3">Cover Art</Form.Label>
                                 <div id="preview" dropppable="true" className="form-control album-art-drop col-8">
+                                <Button 
+                                className="btn btn-secondary action remove-art" 
+                                onClick=''
+                                ><i className="material-icons">delete</i></Button>
                                     <span>
                                         Click to Browse<br />
                                         or Drag &amp; Drop
