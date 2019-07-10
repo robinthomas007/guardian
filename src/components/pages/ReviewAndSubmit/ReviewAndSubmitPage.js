@@ -41,18 +41,14 @@ class ReviewAndSubmitPage extends Component {
             body : fetchBody
         }).then (response => 
             {
-
                 return(response.json());
             }
         ).then (responseJSON => 
 
             {
-
                 this.setState({project : responseJSON.Project})
                 this.setState({discs : responseJSON.Discs})
 
-
-                alert()
                 console.log('responseJSON')
                 console.log(responseJSON)
             }
