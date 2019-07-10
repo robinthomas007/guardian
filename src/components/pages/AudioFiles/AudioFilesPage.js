@@ -13,7 +13,7 @@ class AudioVideoDataTable extends Component {
         super(props);
         
         this.state = {
-            files : this.props.data
+            files : []
         }
     }
 
@@ -36,8 +36,6 @@ class AudioVideoDataTable extends Component {
         let dataRows = [];
 
         if(this.props.data) {
-
-            let count = 0;
             dataRows = this.props.data.map( (file, i) => {
                 return(
                     <tr key={i}>
@@ -54,7 +52,11 @@ class AudioVideoDataTable extends Component {
             })
         }
 
-        return(dataRows)
+        return(
+            <tbody>
+                {dataRows}
+            </tbody>
+        )
     }
 
     render() {
@@ -84,7 +86,6 @@ class AudioFilesPage extends Component {
     }
 
     showNotification(){
-
         new Noty ({
             type: 'success',
             id:'tracksSaved',
@@ -141,7 +142,7 @@ class AudioFilesPage extends Component {
                                     Click to Browse<br />
                                     or Drag &amp; Drop
                                     </span>  
-                                    <input type="file" multiple="true" onChange={this.updateFiles}/>
+                                    <input type="file" multiple={true} onChange={this.updateFiles}/>
                                     </div>
                         </div>
                     </section>
