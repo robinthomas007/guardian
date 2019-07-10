@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PageHeader from '../PageHeader/PageHeader';
-import {Table, Tabs, Tab } from 'react-bootstrap'; 
+import {Table, Tabs, Tab, Alert } from 'react-bootstrap'; 
 import HaveAudioModal from '../../modals/HaveAudioModal';
+import { withRouter } from "react-router";
 import './AudioFiles.css';
 import Noty from 'noty';
 import { push_uniq } from 'terser';
@@ -83,6 +84,7 @@ class AudioFilesPage extends Component {
         this.showNotification = this.showNotification.bind(this);
         this.updateFiles = this.updateFiles.bind(this);
         this.deleteRow = this.deleteRow.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this)
     }
 
     showNotification(){
@@ -98,21 +100,56 @@ class AudioFilesPage extends Component {
 
     componentDidUpdate() {
         if(this.props.match && this.props.match.params && this.state.projectID !== this.props.match.params.projectID) {
-            this.setState({projectID : this.props.match.params.projectID})
+            this.setState({projectID : this.props.match.params.projectID});
         }
     }
 
     updateFiles(e) {
         const {files} = this.state;
-        let newFiles = files.concat(Array.from(e.target.files))
-        this.setState({files : newFiles})
+        let newFiles = files.concat(Array.from(e.target.files));
+        this.setState({files : newFiles});
+
+        console.log(newFiles)
     }
 
     deleteRow(rowIndex) {
         const {files} = this.state;
         let newFiles = files;
-            newFiles.splice(rowIndex, 1)
-        this.setState({files : newFiles})
+            newFiles.splice(rowIndex, 1);
+        this.setState({files : newFiles});
+    }
+
+    handleSubmit() {
+
+        const user = JSON.parse(sessionStorage.getItem('user'));
+        const projectID = (this.state.projectID) ? (this.state.projectID) : '';
+
+        const fetchHeaders = new Headers(
+            {
+                // "Content-Type": "application/json",
+                "Authorization" : sessionStorage.getItem('accessToken'),
+                "User-Email" : user.email,
+                "Project-Id" : projectID
+            }
+        )
+
+        fetch ('https://api-dev.umusic.net/guardian-media/api/Upload', {
+            method : 'POST',
+            headers : fetchHeaders,
+            body : this.state.files
+        }).then (response => 
+            {
+                return(response.json());
+            }
+        ).then (responseJSON => 
+            {
+                this.showNotification()
+            }
+        )
+        .catch(
+            error => console.error(error)
+        );
+        
     }
 
     render() {
@@ -136,14 +173,13 @@ class AudioFilesPage extends Component {
                     <section className="row">
                         <div className="form-group col-12">
                             <label>Drag &amp; Drop Audio Files Below</label>
-    
                             <div droppable="true" className="form-control audio-drop-area col-12">
-                            <span>
+                                <span>
                                     Click to Browse<br />
                                     or Drag &amp; Drop
-                                    </span>  
-                                    <input type="file" multiple={true} onChange={this.updateFiles}/>
-                                    </div>
+                                </span>  
+                                <input type="file" multiple={true} onChange={this.updateFiles}/>
+                            </div>
                         </div>
                     </section>
                 </form>
@@ -168,7 +204,7 @@ class AudioFilesPage extends Component {
                 <div className="col-9"></div>
                 <div className="col-3">
                     <button type="button" className="btn btn-secondary" onClick={this.showNotification}>Save</button>
-                    <button type="button" className="btn btn-primary" onClick={this.showNotification}>Save &amp; Continue</button>
+                    <button type="button" className="btn btn-primary" onClick={this.handleSubmit}>Save &amp; Continue</button>
                 </div>
             </section>
         </section>
