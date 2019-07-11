@@ -52,6 +52,7 @@ class PageHeader extends Component {
                             <label>STATUS:</label>{mockData.project.projectStatus}
                         </span>
                         <button 
+                            id="closeProjectButton"
                             className="close-project btn" 
                             onClick={this.handleProjectCloseClick}
                         >Close Project</button>
