@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PageHeader from '../PageHeader/PageHeader';
-import {Table, Tabs, Tab } from 'react-bootstrap'; 
+import {Form, Table, Tabs, Tab } from 'react-bootstrap'; 
 import HaveAudioModal from '../../modals/HaveAudioModal';
 import './AudioFiles.css';
 import Noty from 'noty';
@@ -21,11 +21,12 @@ class AudioVideoDataTable extends Component {
         return(
             <thead>
                 <tr>
-                    <th className="centered">#</th>
+                    <th className="text-center">#</th>
                     <th>Audio File</th>
                     <th>ISRC <i><span className="required-ind">(Required)</span></i></th>
                     <th>Track Title</th>
-                    <th className="centered">Actions</th>
+                    <th>Artist</th>
+                    <th className="text-center">Actions</th>
                 </tr>
             </thead>
         )
@@ -39,11 +40,33 @@ class AudioVideoDataTable extends Component {
             dataRows = this.props.data.map( (file, i) => {
                 return(
                     <tr key={i}>
-                        <td className="centered">{i+1}</td>
-                        <td><div className="sortable-audio-file"><i className="material-icons">format_line_spacing</i><span>{file.name}</span></div></td>
-                        <td></td>
-                        <td></td>
-                        <td className="centered">
+                        <td className="text-center">{i+1}</td>
+                        <td className="audio-file"><div className="sortable-audio-file"><i className="material-icons">format_line_spacing</i><span>{file.name}</span></div></td>
+                        <td>
+                        <Form.Control 
+                                type="text" 
+                                id=''
+                                value=''
+                                onChange=''
+                            ></Form.Control>
+                        </td>
+                        <td>
+                        <Form.Control 
+                                type="text" 
+                                id=''
+                                value=''
+                                onChange=''
+                            ></Form.Control>
+                        </td>
+                        <td>
+                        <Form.Control 
+                                type="text" 
+                                id=''
+                                value=''
+                                onChange=''
+                            ></Form.Control>
+                        </td>
+                        <td className="text-center">
                             <button className="btn btn-secondary action"><i className="material-icons">refresh</i></button>
                             <button className="btn btn-secondary action" onClick={(evt) => this.props.deleteRow(i)}><i className="material-icons">delete</i></button>
                         </td>
@@ -61,10 +84,12 @@ class AudioVideoDataTable extends Component {
 
     render() {
         return (
-            <Table hover>
+            <div className="table-responsive">
+            <Table>
                 {this.AudioVideoDataHeader()}
                 {this.AudioVideoDataBody()}
             </Table>
+            </div>
         )
     }
 
