@@ -47,7 +47,7 @@ export default withAuth(class TopNav extends Component {
 
     handleHelpClick = (e) => {
         e.preventDefault();
-        this.props.updateParentHistory("/trackInformation")
+        this.props.updateParentHistory("/helpGuide")
     }
 
     setUserLabelsSessionData = (labels) => {

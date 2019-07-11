@@ -238,6 +238,7 @@ class ProjectContactsPage extends Component {
                                 <ToolTip message='Projects are by default, set to private. This means only you may view or make changes to them. If set to public, projects will be made available to everyone within the label group.' />
                                 </Form.Label>
                                 <ProjectSecurityInput 
+                                    id='projectSecurity'
                                     user={this.props.user} 
                                     value={this.state.formInputs.projectSecurityID} 
                                     onChange={this.handleChange}                                
@@ -293,8 +294,8 @@ class ProjectContactsPage extends Component {
                     <div className="row save-buttons">
                         <div className="col-9"></div>
                         <div className="col-3">
-                            <button type="button" className="btn btn-secondary">Save</button>
-                            <button type="button" className="btn btn-primary" onClick={this.handleSubmit}>Save &amp; Continue</button>
+                            <button id="contactsSaveButton" type="button" className="btn btn-secondary">Save</button>
+                            <button id="contactsSaveContButton" type="button" className="btn btn-primary" onClick={this.handleSubmit}>Save &amp; Continue</button>
                         </div>
                     </div>
                 </Form>

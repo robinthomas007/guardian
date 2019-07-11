@@ -329,6 +329,7 @@ class ReleaseinformationPage extends Component {
                                 <ToolTip message='Select a project type for your project. This can help you differentiate and identify projects with similar titles.' />
                                 </Form.Label>
                                 <ProjectTypesInput
+                                    id='projectType'
                                     user={this.props.user}
                                     value={this.state.formInputs.projectTypeID} 
                                     onChange={this.handleChange}
@@ -341,6 +342,7 @@ class ReleaseinformationPage extends Component {
                                 <ToolTip message='Please select the releasing labe for your project. If you only have access to a single label, your label will be pre-loaded and not require a selection.' />
                                 </Form.Label>
                                 <ReleasingLabelsInput 
+                                    id='releasingLabel'
                                     user={this.props.user} 
                                     value={this.state.formInputs.projectReleasingLabelID} 
                                     onChange={this.handleChange}
@@ -391,6 +393,7 @@ class ReleaseinformationPage extends Component {
                                 <Form.Label className="col-form-label col-3">Cover Art</Form.Label>
                                 <div id="preview" dropppable="true" className="form-control album-art-drop col-8">
                                 <Button 
+                                id="removeAlbumArt"
                                 className="btn btn-secondary action remove-art" 
                                 onClick=''
                                 ><i className="material-icons">delete</i></Button>
