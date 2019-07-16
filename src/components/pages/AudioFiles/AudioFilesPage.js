@@ -7,115 +7,7 @@ import './AudioFiles.css';
 import Noty from 'noty';
 import { push_uniq } from 'terser';
 
-const mockData = require('../../../mockData.json');
-
-class AudioVideoDataTable extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            files : [],
-            formInputs : {}
-        }
-    }
-
-    AudioVideoDataHeader() {
-        return(
-            <thead>
-                <tr>
-                    <th className="text-center">#</th>
-                    <th>Audio File</th>
-                    <th>ISRC <i><span className="required-ind">(Required)</span></i></th>
-                    <th>Track Title</th>
-                    <th>Artist</th>
-                    <th className="text-center">Actions</th>
-                </tr>
-            </thead>
-        )
-    }
-
-    handleChange(e) {
-        const {formInputs} = this.state;
-        let modifiedFormInputs = formInputs;
-            modifiedFormInputs[e.target.id] = e.target.value;
-
-        this.setState({formInputs : modifiedFormInputs})
-    }
-
-    AudioVideoDataBody(){
-
-        let tableDataRows = [];
-
-        if(this.props.data) {
-            tableDataRows = this.props.data.files.map( (file, i) => {
-                return(
-                    <tr key={i}>
-
-                        <td className="text-center">{i+1}</td>
-                        <td className="audio-file">
-                            <div className="sortable-audio-file">
-                                <i className="material-icons">format_line_spacing</i>
-                                <span>{file.name}</span>
-                                <Form.Control
-                                    type="hidden"
-                                    id="audioFileName"
-                                    onChange={this.props.handleChange}
-                                    value={file.name}
-                                />
-                            </div>
-                        </td>
-                        <td>
-                            <Form.Control
-                                type="text"
-                                id="audioISRC"
-                                value={this.state.formInputs.audioISRC}
-                                onChange={this.handleChange}
-                            />
-                        </td>
-                        <td>
-                            <Form.Control
-                                type="text"
-                                id='audioTrackTitle'
-                                value={this.state.formInputs.audioTrackTitle}
-                                onChange={this.handleChange}
-                            />
-                        </td>
-                        <td>
-                            <Form.Control
-                                type="text"
-                                id='audioArtist'
-                                value={this.state.formInputs.audioArtist}
-                                onChange={this.handleChange}
-                            />
-                        </td>
-                        <td className="text-center">
-                        <button className="btn btn-secondary action"><i className="material-icons">refresh</i></button>
-                        <button className="btn btn-secondary action" onClick={(evt) => this.props.deleteRow(i)}><i className="material-icons">delete</i></button>
-                        </td>
-                    </tr>
-                )
-            })
-        }
-
-        return(
-            <tbody>
-                {tableDataRows}
-            </tbody>
-        )
-    }
-
-    render() {
-        return (
-            <div className="table-responsive">
-                <Table>
-                    {this.AudioVideoDataHeader()}
-                    {this.AudioVideoDataBody()}
-                </Table>
-            </div>
-        )
-    }
-
-}
+import AudioVideoDataTable from '../AudioFiles/pageComponents/audioVideoDataTable'
 
 class AudioFilesPage extends Component {
 
@@ -124,19 +16,50 @@ class AudioFilesPage extends Component {
 
         this.state = {
             projectID : '',
-            files:[]
+            files:[],
+            discs : [],
+            activeTab : 0,
+            pageTableData : []
         }
 
         this.showNotification = this.showNotification.bind(this);
         this.updateFiles = this.updateFiles.bind(this);
         this.deleteRow = this.deleteRow.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.getBase64 = this.getBase64.bind(this);
         this.handleChange = this.handleChange.bind(this)
     }
 
-    handleChange(e) {
-        alert('change')
+    getTrack(track, trackIndex) {
+        return (
+            {
+                artist : (track.artist) ? (track.artist) : '',
+                discNumber : (track.discNumber) ? (track.discNumber) : '',
+                fileName : (track.fileName) ? (track.fileName) : '',
+                hasUpload : (track.hasUpload) ? track.hasUpload : false,
+                isrc : (track.isrc) ? track.isrc : '',
+                isSingle : (track.isSingle) ? track.isSingle : false,
+                trackID : (track.trackID) ? track.trackID : '',
+                trackNumber : (track.trackID) ? (track.trackID) : trackIndex,
+                trackReleaseDate : (track.trackReleaseDate) ? track.trackReleaseDate : '',
+                trackTitle : (track.trackTitle) ? track.trackTitle : '',
+            }
+        ) 
+    }
+
+    handleChange(track, updatedData, rowID) {
+        const {discs} = this.state;
+        let modifiedDiscs = discs;
+
+        const tracksList = updatedData.map( (track, i) => (
+            this.getTrack(track, (i + 1))
+        ))
+
+        modifiedDiscs[track.discNumber] = {
+            "discNumber" : (track.discNumber + 1),
+            "Tracks" : tracksList
+        }
+
+        this.setState({discs : modifiedDiscs})
     }
 
     showNotification(){
@@ -158,44 +81,65 @@ class AudioFilesPage extends Component {
 
     updateFiles(e) {
         const {files} = this.state;
-        let newFiles = files.concat(Array.from(e.target.files));
+        const {discs} = this.state;
+        const {pageTableData} = this.state;
+        const activeTab = this.state.activeTab;
+
+        let modifiedPageTableData = pageTableData;
+        
+        let newFiles = Array.from(e.target.files);
         this.setState({files : newFiles});
 
-        console.log(newFiles)
+        for(var i=0; i<newFiles.length; i++) {
+            let track = {
+                fileName : newFiles[i].name,
+                discNumber : activeTab
+            }
+            modifiedPageTableData.push(this.getTrack(track, i + 1))
+        }
+        this.setState({pageTableData : modifiedPageTableData});
+
+        if(!discs[activeTab]) {
+           let modifiedDiscs = discs;
+               modifiedDiscs[activeTab] = {
+                    "discNumber" : (activeTab + 1),
+                    "Tracks" : modifiedPageTableData
+               }
+            this.setState({discs : modifiedDiscs});
+        }
+
     }
 
     deleteRow(rowIndex) {
         const {files} = this.state;
+        const {discs} = this.state;
+        const {pageTableData} = this.state;
+
+        //remove the track
+        console.log('discs', discs[this.state.activeTab])
+
+        //remove the data row
+        let modifiedPageTableData = pageTableData;
+            modifiedPageTableData.splice(rowIndex, 1);
+        this.setState({pageTableData : modifiedPageTableData});
+
+        //remove the files
         let newFiles = files;
             newFiles.splice(rowIndex, 1);
         this.setState({files : newFiles});
-    }
-
-    getBase64(file, cb) {
-        let reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = function () {
-            cb(reader.result)
-        };
-        reader.onerror = function (error) {
-            console.log('Error: ', error);
-        };
     }
 
     handleFileUpload() {
         var audioFiles = document.getElementById('audioFiles');
         const user = JSON.parse(sessionStorage.getItem('user'));
         const projectID = (this.state.projectID) ? (this.state.projectID) : '';
+        const {pageTableData} = this.state;
+        const modifiedPageTableData = pageTableData;
 
         var formData = new FormData();
-
         for (var i = 0; i < audioFiles.files.length; i++) {
             formData.append('file', audioFiles.files[i]);
         }
-
-
-        console.log(audioFiles.files)
-        console.log(formData)
 
         const fetchHeaders = new Headers(
             {
@@ -217,9 +161,8 @@ class AudioFilesPage extends Component {
         )
         .then (responseJSON =>
             {
-                //this.handleDataSubmit()
-                //alert(responseJSON)
-                this.showNotification();
+                console.log('save response: ', responseJSON);
+                this.handleDataSubmit()
             }
         )
         .catch(
@@ -246,26 +189,10 @@ class AudioFilesPage extends Component {
                 "email" : user.email
             },
             "projectID" : projectID,
-            "Discs" : [
-                {
-                    "discNumber" : "1",
-                    "Tracks" : [
-                        {
-                            "trackID" : "",
-                            "trackNumber" : "",
-                            "hasUpload" : false,
-                            "trackTitle" : "",
-                            "isrc" : "",
-                            "isSingle" : false,
-                            "trackReleaseDate" : "",
-                            "fileName" : ""
-                        }
-                    ]
-                }
-
-            ]
+            "Discs" : this.state.discs
         })
 
+        console.log('fb: ', JSON.parse(fetchBody))
 
         fetch ('https://api-dev.umusic.net/guardian/project/track', {
             method : 'POST',
@@ -278,8 +205,8 @@ class AudioFilesPage extends Component {
         )
         .then (responseJSON => 
             {
-                console.log(responseJSON)
-
+                console.log('save data response: ', responseJSON);
+                this.showNotification();
             }
         )
         .catch(
@@ -289,8 +216,7 @@ class AudioFilesPage extends Component {
 
 
     handleSubmit() {
-        this.handleFileUpload()
-        
+        this.handleFileUpload();
     }
 
     render() {
