@@ -79,6 +79,27 @@ class AudioFilesPage extends Component {
         }
     }
 
+    isValidAudioType(fileName) {
+        const validFiles = {
+            "wav" : 1,
+            "mp3" : 1,
+            "mp4" : 1,
+            "wma" : 1, 
+            "aif" : 1, 
+            "aiff" : 1, 
+            "aac" : 1, 
+            "flac" : 1, 
+            "m4a" : 1
+        }
+
+        const fileNameParts = fileName.toLowerCase().split('.')
+        if(validFiles[fileNameParts[(fileNameParts.length -1)]]) {
+            return(true)
+        } else {
+            return(false)
+        }        
+    }
+
     updateFiles(e) {
         const {files} = this.state;
         const {discs} = this.state;
@@ -95,7 +116,12 @@ class AudioFilesPage extends Component {
                 fileName : newFiles[i].name,
                 discNumber : activeTab
             }
-            modifiedPageTableData.push(this.getTrack(track, i + 1))
+
+            if(this.isValidAudioType(newFiles[i].name)) {
+                modifiedPageTableData.push(this.getTrack(track, i + 1))
+            } else {
+                alert(newFiles[i].name + ' is an invalid audio file')
+            }
         }
         this.setState({pageTableData : modifiedPageTableData});
 
@@ -253,7 +279,7 @@ class AudioFilesPage extends Component {
                                     Click to Browse<br />
                                     or Drag &amp; Drop
                                 </span>
-                                <input type="file" id="audioFiles" multiple={true} onChange={this.updateFiles}/>
+                                <input type="file" id="audioFiles" multiple={true} onChange={this.updateFiles} accept=".wav, .mp3, .mp4, .wma, .aif, .aiff, .aac, .flac, .m4a" />
                             </div>
                         </div>
                     </section>
