@@ -115,12 +115,10 @@ class AudioFilesPage extends Component {
         const {discs} = this.state;
         const {pageTableData} = this.state;
 
-        //remove the track
-        console.log('discs', discs[this.state.activeTab])
-
         //remove the data row
         let modifiedPageTableData = pageTableData;
             modifiedPageTableData.splice(rowIndex, 1);
+
         this.setState({pageTableData : modifiedPageTableData});
 
         //remove the files
@@ -129,7 +127,7 @@ class AudioFilesPage extends Component {
         this.setState({files : newFiles});
     }
 
-    handleFileUpload() {
+    handleSubmit() {
         var audioFiles = document.getElementById('audioFiles');
         const user = JSON.parse(sessionStorage.getItem('user'));
         const projectID = (this.state.projectID) ? (this.state.projectID) : '';
@@ -170,12 +168,29 @@ class AudioFilesPage extends Component {
         );
     }
 
+    setTrackSequence() {
+        const {discs} = this.state;
+        const sortedDiscs = discs;
+
+        sortedDiscs.map( (disc) => {
+            var tracks = disc.Tracks;
+
+            tracks.map( (track, i) => {
+                track.trackNumber = (i + 1)
+            })
+        })
+
+        this.setState({discs : sortedDiscs})
+    }
+
     handleDataSubmit() {
         const releaseInformationInputs = JSON.parse(localStorage.getItem('projectData'));
         const user = JSON.parse(sessionStorage.getItem('user'));
         const projectID = (this.state.projectID) ? (this.state.projectID) : '';
 
         const projectFields = (projectID) ? this.state.formInputs : {...releaseInformationInputs, ...this.state.formInputs}
+
+        this.setTrackSequence();
 
         const fetchHeaders = new Headers(
             {
@@ -191,8 +206,6 @@ class AudioFilesPage extends Component {
             "projectID" : projectID,
             "Discs" : this.state.discs
         })
-
-        console.log('fb: ', JSON.parse(fetchBody))
 
         fetch ('https://api-dev.umusic.net/guardian/project/track', {
             method : 'POST',
@@ -212,11 +225,6 @@ class AudioFilesPage extends Component {
         .catch(
             error => console.error(error)
         );
-    }
-
-
-    handleSubmit() {
-        this.handleFileUpload();
     }
 
     render() {
