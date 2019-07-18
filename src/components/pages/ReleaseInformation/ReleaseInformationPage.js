@@ -151,7 +151,7 @@ class ReleaseinformationPage extends Component {
                     localStorage.setItem('projectData', JSON.stringify(this.state.formInputs));
                     this.props.history.push('/projectContacts')
                 } else {
-                    alert('Coming Soon - Noty message to tell you that ' + this.state.formInputs.projectTitle + ' is a duplicate Project Title.')
+                    alert('Coming Soon - Noty message to tell you that "' + this.state.formInputs.projectTitle + '" is a duplicate Project Title.')
                 }
             }
         )
