@@ -8,98 +8,17 @@ import Cookies from 'universal-cookie';
 import UUID from 'uuid';
 import Noty from 'noty';
 
-class ReleasingLabelsInput extends Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            user : this.props.user,
-            value : this.props.value,
-            onChange : this.props.onChange,
-            setParentState : this.props.setParentState
-        }
-
-        this.getReleasingLabelOptions = this.getReleasingLabelOptions.bind(this);
-    }
-
-    getReleasingLabelOptions() {
-
-        let labelOptions = ''
-        let defaultLabelID = ''
-        if(this.props.user && this.props.user.ReleasingLabels) {
-
-            this.props.setParentState('projectReleasingLabelID', this.props.user.ReleasingLabels[0].id)
-
-            labelOptions = this.props.user.ReleasingLabels.map( (label, i) =>
-                <option key={i} value={label.id}>{label.name}</option>
-            )
-        }
-        return(labelOptions)
-    }
-
-    showNotification(){
-
-        new Noty ({
-            type: 'success',
-            id:'tracksSaved',
-            text: 'Your track information has been successfully saved and submitted for intial protection.',
-            theme: 'bootstrap-v4',
-            layout: 'top',
-            timeout: '3000'
-        }).show() 
-    };
-
-    render() {
-
-        return(
-            <Form.Control 
-                id="projectReleasingLabelID" 
-                as="select" 
-                className='col-form-label dropdown col-3' 
-                value={this.props.value}
-                onChange={this.state.onChange}
-            >
-                {this.getReleasingLabelOptions()}
-            </Form.Control>
-        )
-    }
-
-}
-
-class ProjectTypesInput extends Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        let projectTypeOptions = ''
-        if(this.props.user && this.props.user.ProjectTypes) {
-            projectTypeOptions = this.props.user.ProjectTypes.map( (projectType, i) =>
-                <option key={i} value={projectType.id}>{projectType.name}</option>
-            )
-        }
-        return(
-            <Form.Control 
-                id="projectTypeID" 
-                as="select" 
-                className='col-form-label dropdown col-3' 
-                value={ this.props.value}
-                onChange={this.props.onChange}
-            >
-            {projectTypeOptions}
-        </Form.Control>
-        )
-    }
-}
+import ReleasingLabelsInput from '../ReleaseInformation/pageComponents/ReleasingLabelsInput';
+import ProjectTypesInput from '../ReleaseInformation/pageComponents/ProjectTypesInput';
+import { AST_SymbolExportForeign } from 'terser';
 
 class ReleaseinformationPage extends Component {
 
     constructor(props) {
         super(props);
 
-        if (localStorage.getItem("projectData") === null) {
-            this.state = { 
-                formInputs : {
+        this.state = {
+            formInputs : {
                     "projectID" : '',
                     "projectTitle" : '',
                     "projectCoverArt" : '',
@@ -109,39 +28,14 @@ class ReleaseinformationPage extends Component {
                     "projectReleaseDate" : '',
                     "projectReleaseDateTBD" : false,
                     "projectNotes" : ''
-                },
+            },
 
-                formInputAttributes : {
-                    "projectID" : {},
-                    "projectTitle" : {},
-                    "projectArtistName" : {},
-                    "projectTypeID" : {},
-                    "projectReleasingLabelID" : {},
-                    "projectReleaseDate" : {
-                        'disabled' : false
-                    },
-                    "projectReleaseDateTBD" : {
-                    },
-                    "projectNotes" : {}
-                }
-            };
-        } else {
-            this.state = { 
-                formInputs : JSON.parse(localStorage.getItem("projectData")),
-                formInputAttributes : {
-                    "projectID" : {},
-                    "projectTitle" : {},
-                    "projectArtistName" : {},
-                    "projectTypeID" : {},
-                    "projectReleasingLabelID" : {},
-                    "projectReleaseDate" : {
-                        'disabled' : false
-                    },
-                    "projectReleaseDateTBD" : {
-                    },
-                    "projectNotes" : {}
-                }
-            };
+            projectReleaseDateDisabled : false,
+            projectReleaseDateReset : false
+        }
+
+        if(localStorage.getItem("projectData")) {
+            this.state.formInputs = JSON.parse(localStorage.getItem("projectData"));
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -150,37 +44,44 @@ class ReleaseinformationPage extends Component {
         this.setParentState = this.setParentState.bind(this);
         this.albumArt = this.albumArt.bind(this);
         this.handleCoverChange = this.handleCoverChange.bind(this);
+        this.clearCoverArt = this.clearCoverArt.bind(this);
     };
 
-    handleReleaseTBDChange(event) {
-        const isChecked = event.target.checked
-        let inputDisabledState = {...this.state.formInputAttributes.projectReleaseDate}
-            inputDisabledState.disabled = isChecked
+    handleReleaseTBDChange = (e) => {
+        let {formInputs} = this.state;
+        let {projectReleaseDate} = formInputs;
+        let modifiedProjectReleaseDate = '';
+        let newDate = null;
 
-        if(isChecked) {
-            this.setState(currentState => ({formInputs : { ...this.state.formInputs, 'projectReleaseDate' : ''}}), () => {
-                this.setState( {formInputAttributes : { ...this.state.formInputAttributes.projectReleaseDate, 'projectReleaseDate' : inputDisabledState}} )
-                
-            });
+        this.state.formInputs.projectReleaseDate = null;
+
+        if(e.target.checked) {
+            this.setState({projectReleaseDateDisabled : true})
+
+            //because datepickers don't have a simple way to reset
+            const projectReleaseDatePicker = document.getElementById('projectReleaseDate');
+            if(projectReleaseDatePicker) {
+                projectReleaseDatePicker.value = null
+            }
         } else {
-            this.setState( {formInputAttributes : { ...this.state.formInputAttributes.projectReleaseDate, 'projectReleaseDate' : inputDisabledState}} )
-            
+            this.setState({projectReleaseDateDisabled : false})
         }
-        this.setState( {formInputs : { ...this.state.formInputs, 'projectReleaseDateTBD' : isChecked}} )
+
+        this.handleChange(e)
+        
     }
 
-    handleChange(event) {
-
+    handleChange(e) {
         let inputValue = '';
-        if(event.target.type === 'checkbox') {
-            inputValue = (event.target.checked) ? true : false;
+        if(e.target.type === 'checkbox') {
+            inputValue = (e.target.checked) ? true : false;
         } else {
-            inputValue = event.target.value
+            inputValue = e.target.value
         }
 
         //this gets the inputs into the state.formInputs obj on change
-        this.setState( {formInputs : { ...this.state.formInputs, [event.target.id] : inputValue}} )
-        console.log('-----', this.state.formInputs)
+        this.setState( {formInputs : { ...this.state.formInputs, [e.target.id] : inputValue}} )
+        //console.log('-----', this.state.formInputs)
 
     };
 
@@ -197,8 +98,6 @@ class ReleaseinformationPage extends Component {
             }
 
         this.setState({formInputs : updatedFormInputs})
-
-        console.log(updatedFormInputs)
     };
 
     setCoverArt(imgSrc) {
@@ -207,16 +106,59 @@ class ReleaseinformationPage extends Component {
               img.height = 188;
               img.width = 188;
               img.classList.add("obj");
+              img.id = 'projectCoverArt';
               //img.file = file;
 
         const preview = document.getElementById('preview')
               preview.appendChild(img);
+              
     }
 
     handleSubmit(event) {
+
         event.preventDefault();
-        localStorage.setItem('projectData', JSON.stringify(this.state.formInputs));
-        this.props.history.push('/projectContacts')
+
+        const releaseInformationInputs = JSON.parse(localStorage.getItem('projectData'));
+        const user = JSON.parse(sessionStorage.getItem('user'));
+        const projectID = this.props.match.params.projectID;
+        const fetchHeaders = new Headers(
+            {
+                "Content-Type": "application/json",
+                "Authorization" : sessionStorage.getItem('accessToken')
+            }
+        )
+
+        const fetchBody = JSON.stringify( {
+            "User" : {
+                "email" : user.email
+            },
+            
+            "Project" : this.state.formInputs
+        })
+
+        fetch ('https://api-dev.umusic.net/guardian/project/validate', {
+            method : 'POST',
+            headers : fetchHeaders,
+            body : fetchBody
+        }).then (response => 
+            {
+                return(response.json());
+            }
+        )
+        .then (responseJSON => 
+            {
+                if(responseJSON.IsValid) {
+                    localStorage.setItem('projectData', JSON.stringify(this.state.formInputs));
+                    this.props.history.push('/projectContacts')
+                } else {
+                    alert('Coming Soon - Noty message to tell you that ' + this.state.formInputs.projectTitle + ' is a duplicate Project Title.')
+                }
+            }
+        )
+        .catch(
+            error => console.log(error)
+        );
+
     };
 
     albumArt(e) {
@@ -232,6 +174,7 @@ class ReleaseinformationPage extends Component {
                   img.width = 188;
                   img.classList.add("obj");
                   img.file = file;
+                  img.id = 'projectCoverArt';
 
             const preview = document.getElementById('preview')
                   preview.appendChild(img);
@@ -245,6 +188,15 @@ class ReleaseinformationPage extends Component {
                   })(img);
 
             this.handleCoverChange(file);  
+        }
+    }
+
+    clearCoverArt(e) {
+        const {projectCoverArt} = this.state.formInputs;
+        this.setState({projectCoverArt : ''});
+        const projectCoverArtImg = document.getElementById('projectCoverArt');
+        if(projectCoverArtImg) {
+            projectCoverArtImg.remove();
         }
     }
 
@@ -263,7 +215,10 @@ class ReleaseinformationPage extends Component {
         if(this.state.formInputs.projectCoverArt !== '') {
             this.setCoverArt(this.state.formInputs.projectCoverArt)
         }
-        
+
+        if(this.state.formInputs.projectReleaseDateTBD === true) {
+            this.setState({projectReleaseDateDisabled : true})
+        }
     }
 
     render() {
@@ -295,8 +250,8 @@ class ReleaseinformationPage extends Component {
 
                             <Form.Group>
                                 <Form.Label className='col-form-label col-3'>Project Title
-                                <span className="required-ind">*</span>
-                                <ToolTip message='Enter a title for your project here. It ay consist of any letter, number or symbol from 0-255 characters in length.' />
+                                    <span className="required-ind">*</span>
+                                    <ToolTip message='Enter a title for your project here. It ay consist of any letter, number or symbol from 0-255 characters in length.' />
                                 </Form.Label>
                                 <Form.Control 
                                     id='projectTitle' 
@@ -310,8 +265,8 @@ class ReleaseinformationPage extends Component {
 
                             <Form.Group>
                                 <Form.Label className='col-form-label col-3'>Artist
-                                <span className="required-ind">*</span>
-                                <ToolTip message='Enter the artist for your project here. It ay consist of any letter, number or symbol from 0-255 characters in length.' />
+                                    <span className="required-ind">*</span>
+                                    <ToolTip message='Enter the artist for your project here. It ay consist of any letter, number or symbol from 0-255 characters in length.' />
                                 </Form.Label>
                                 <Form.Control 
                                     id='projectArtistName' 
@@ -325,8 +280,8 @@ class ReleaseinformationPage extends Component {
                             
                             <Form.Group>
                                 <Form.Label className='col-form-label col-3'>Project Type
-                                <span className="required-ind">*</span>
-                                <ToolTip message='Select a project type for your project. This can help you differentiate and identify projects with similar titles.' />
+                                    <span className="required-ind">*</span>
+                                    <ToolTip message='Select a project type for your project. This can help you differentiate and identify projects with similar titles.' />
                                 </Form.Label>
                                 <ProjectTypesInput
                                     id='projectType'
@@ -338,8 +293,8 @@ class ReleaseinformationPage extends Component {
 
                             <Form.Group>
                                 <Form.Label className='col-form-label col-3'>Releasing Label
-                                <span className="required-ind">*</span>
-                                <ToolTip message='Please select the releasing labe for your project. If you only have access to a single label, your label will be pre-loaded and not require a selection.' />
+                                    <span className="required-ind">*</span>
+                                    <ToolTip message='Please select the releasing labe for your project. If you only have access to a single label, your label will be pre-loaded and not require a selection.' />
                                 </Form.Label>
                                 <ReleasingLabelsInput 
                                     id='releasingLabel'
@@ -352,16 +307,18 @@ class ReleaseinformationPage extends Component {
 
                             <Form.Group>
                                 <Form.Label className="col-form-label col-3">Release Date
-                                <span className="required-ind">*</span>
-                                <ToolTip message='Projects with a release date prior to todays date will be considered post-release entries. If the projects release date is to be determined, select the TBD option.' />
+                                    <span className="required-ind">*</span>
+                                    <ToolTip message='Projects with a release date prior to todays date will be considered post-release entries. If the projects release date is to be determined, select the TBD option.' />
                                 </Form.Label>
+
                                     <input 
                                         id="projectReleaseDate" 
                                         className='form-control col-3' 
-                                        type='date' 
+                                        type='date'
                                         value={this.state.formInputs.projectReleaseDate}
+                                        disabled={this.state.projectReleaseDateDisabled}
                                         onChange={this.handleChange}
-                                        disabled={this.state.formInputAttributes.projectReleaseDate.disabled}
+                                        ref={"prdPicker"}
                                     />
                                 <Form.Label className="col-form-label col-2 tbd">Release TBD</Form.Label>
                                 <label className="custom-checkbox"> 		
@@ -370,6 +327,7 @@ class ReleaseinformationPage extends Component {
                                         type='checkbox' 
                                         value={this.state.formInputs.projectReleaseDateTBD}
                                         onChange={this.handleReleaseTBDChange}
+                                        checked={this.state.formInputs.projectReleaseDateTBD}
                                     />
                                     <span className="checkmark "></span>
                                 </label>
@@ -392,11 +350,12 @@ class ReleaseinformationPage extends Component {
                             <Form.Group className="form-group cover-art">
                                 <Form.Label className="col-form-label col-3">Cover Art</Form.Label>
                                 <div id="preview" dropppable="true" className="form-control album-art-drop col-8">
-                                <Button 
-                                id="removeAlbumArt"
-                                className="btn btn-secondary action remove-art" 
-                                onClick=''
-                                ><i className="material-icons">delete</i></Button>
+                                    <Button 
+                                        id="removeAlbumArt"
+                                        className="btn btn-secondary action remove-art" 
+                                        onClick={this.clearCoverArt}
+                                    ><i className="material-icons">delete</i>
+                                    </Button>
                                     <span>
                                         Click to Browse<br />
                                         or Drag &amp; Drop
@@ -416,7 +375,6 @@ class ReleaseinformationPage extends Component {
                                         />
                                     </div>
                                 </div>
-                             
                             </Form.Group>
                         </div> 
                     </div>
