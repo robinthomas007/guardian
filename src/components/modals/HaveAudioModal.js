@@ -58,10 +58,10 @@ class HaveAudioModal extends Component {
           </Modal.Header>
           <Modal.Body>Do you have audio files to upload?</Modal.Body>
           <Modal.Footer>
-            <Button variant="primary" onClick={this.handleClose}>
+            <Button variant="primary" id="yesButton" onClick={this.handleClose}>
               Yes
             </Button>
-            <Button variant="primary" onClick={this.handleNoAudioClick}>
+            <Button variant="primary" id="noButton" onClick={this.handleNoAudioClick}>
               No
             </Button>
           </Modal.Footer>
