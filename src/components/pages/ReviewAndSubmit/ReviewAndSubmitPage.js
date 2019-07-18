@@ -97,6 +97,8 @@ class ReviewAndSubmitPage extends Component {
                 )
             )
         ))}
+
+
     }
 
     render() {
@@ -178,7 +180,7 @@ class ReviewAndSubmitPage extends Component {
                     </div>
                 </section>
             
-                <section className="page-container review-section" onClick={() => this.handleProjectCategoryClick('/trackInformation/')}>
+                <section className="page-container review-section" onClick={() => this.handleProjectCategoryClick('/audioFiles/')}>
                     <div className="row no-gutters">
                         <div className="col-10 justify-content-start">
                         <h2>Audio Files &amp; Track Information</h2>
