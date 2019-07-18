@@ -61,7 +61,7 @@ class ReleaseinformationPage extends Component {
             //because datepickers don't have a simple way to reset
             const projectReleaseDatePicker = document.getElementById('projectReleaseDate');
             if(projectReleaseDatePicker) {
-                projectReleaseDatePicker.value = null
+                projectReleaseDatePicker.value = '';
             }
         } else {
             this.setState({projectReleaseDateDisabled : false})
@@ -151,7 +151,14 @@ class ReleaseinformationPage extends Component {
                     localStorage.setItem('projectData', JSON.stringify(this.state.formInputs));
                     this.props.history.push('/projectContacts')
                 } else {
-                    alert('Coming Soon - Noty message to tell you that "' + this.state.formInputs.projectTitle + '" is a duplicate Project Title.')
+                    new Noty ({
+                        type: 'error',
+                        id:'duplicateTitle',
+                        text: 'The project title <b>' + this.state.formInputs.projectTitle + '</b> already exists. Please choose a new title.',
+                        theme: 'bootstrap-v4',
+                        layout: 'top',
+                        timeout: '3000',
+                    }).show() 
                 }
             }
         )
@@ -310,7 +317,6 @@ class ReleaseinformationPage extends Component {
                                     <span className="required-ind">*</span>
                                     <ToolTip message='Projects with a release date prior to todays date will be considered post-release entries. If the projects release date is to be determined, select the TBD option.' />
                                 </Form.Label>
-
                                     <input 
                                         id="projectReleaseDate" 
                                         className='form-control col-3' 
