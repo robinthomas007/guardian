@@ -82,7 +82,7 @@ class ReviewAndSubmitPage extends Component {
                         <td className="col-2">{track.fileName}</td>
                         <td className="col-2">{track.trackTitle}</td>
                         <td className="col-2">{track.isrc}</td>
-                        <td className="col-2"></td>
+                        <td className="col-2">{track.artist}</td>
                         <td className="col-1 centered">
                             <label className="custom-checkbox"> 
                             {track.isSingle
