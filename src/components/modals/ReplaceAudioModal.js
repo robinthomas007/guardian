@@ -43,7 +43,7 @@ class ReplaceAudioModal extends Component {
           </ul>
         </Modal.Body>
           <Modal.Footer>
-            <Button variant="primary" onClick={this.handleClose}>
+            <Button variant="primary" id="doneButton" onClick={this.handleClose}>
               Done
             </Button>
           </Modal.Footer>

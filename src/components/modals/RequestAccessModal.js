@@ -35,29 +35,29 @@ class RequestAccessModal extends Component {
                 <ul>
                     <li>Fill in the fields below for review by our administrative team.</li>
                     <li>
-                        <Form.Label>First Name</Form.Label> <Form.Control type="text"></Form.Control>
+                        <Form.Label>First Name</Form.Label> <Form.Control type="text" id="firstName"></Form.Control>
                     </li>
                     <li>
-                        <Form.Label>Last Name</Form.Label> <Form.Control type="text"></Form.Control>
+                        <Form.Label>Last Name</Form.Label> <Form.Control type="text" id="lastName"></Form.Control>
                     </li>
                     <li>
-                        <Form.Label>Label/Company</Form.Label> 
+                        <Form.Label id="labelName">Label/Company</Form.Label> 
                    
                     </li>
                     <li>
-                        <Form.Label>Email</Form.Label> <Form.Control type="email"></Form.Control>
+                        <Form.Label>Email</Form.Label> <Form.Control type="email" id="email"></Form.Control>
                     </li>
                     <li>
-                        <Form.Label>Phone</Form.Label> <Form.Control type="text"></Form.Control>
+                        <Form.Label>Phone</Form.Label> <Form.Control type="text" id="phoneNumber"></Form.Control>
                     </li>
                 </ul>
                 </Form>
         </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={this.handleClose}>
+            <Button variant="secondary" id="cancelButton" onClick={this.handleClose}>
               Cancel
             </Button>
-            <Button variant="primary" onClick={this.handleClose}>
+            <Button variant="primary" id="submitButton" onClick={this.handleClose}>
               Submit
             </Button>
           </Modal.Footer>
