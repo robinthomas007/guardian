@@ -21,3 +21,6 @@ input[type=file] {opacity: 0.0; position: absolute; top:0; left: 0; bottom: 0; r
 .table-section .tab-pane {background-color:#FFF; padding:30px;}
 
 td.audio-file {background-color:#d9f3fe;}
+
+
+.droppable {height: 30px;}
