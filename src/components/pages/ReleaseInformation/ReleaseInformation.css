@@ -18,3 +18,5 @@ div.browse-btn span {position:absolute; width:180px; padding:8px; cursor:pointer
 div.browse-btn input {position:relative; height:36px!important; width:84px!important; padding:8px; cursor:pointer;}
 
 button.btn.btn-secondary.action.remove-art {position:absolute; right:6px; z-index:10000; opacity:.7; border:solid 1px #ced4da; }
+
+#duplicateTitle .noty_body {text-align:center; font-weight:700; background-color:#7f1b2e; color:#fff;}

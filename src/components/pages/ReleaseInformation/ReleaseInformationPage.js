@@ -154,10 +154,11 @@ class ReleaseinformationPage extends Component {
                     new Noty ({
                         type: 'error',
                         id:'duplicateTitle',
-                        text: 'The project title <b>' + this.state.formInputs.projectTitle + '</b> already exists. Please choose a new title.',
+                        text: 'The project title ' + responseJSON.projectTitle + ' by ' + responseJSON.projectArtist +' already exists. Please enter a new title. Click to close.',
                         theme: 'bootstrap-v4',
                         layout: 'top',
-                        timeout: '3000',
+                        timeout: false,
+                        onClick: 'Noty.close();'
                     }).show() 
                 }
             }
