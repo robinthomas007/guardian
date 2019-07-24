@@ -4,6 +4,9 @@ import PageHeader from '../PageHeader/PageHeader';
 import ToolTip from '../../ui/Tooltip';
 import { withRouter } from "react-router";
 import './ProjectContacts.css';
+import LoadingImg from '../../ui/LoadingImg';
+import '../../ui/LoadingImg.css';
+
 import Noty from 'noty'
 
 class ProjectSecurityInput extends Component {
@@ -61,7 +64,8 @@ class ProjectContactsPage extends Component {
                 "projectStatusID" : '1',
 
             },
-            project : {}
+            project : {},
+            showloader : false
         }
 
         if(this.props.match.params.projectID) {
@@ -178,6 +182,7 @@ class ProjectContactsPage extends Component {
             "Project" : projectFields
         })
 
+        this.setState({ showloader : true})
 
         fetch ('https://api-dev.umusic.net/guardian/project', {
             method : 'POST',
@@ -195,6 +200,8 @@ class ProjectContactsPage extends Component {
                 if(responseJSON.errorMessage) {
                     this.showNotSavedNotification(event)
                 } else {
+
+                    this.setState({ showloader : false})
 
                     this.showNotification(event, responseJSON.Project.projectID)
                     
@@ -218,6 +225,8 @@ class ProjectContactsPage extends Component {
 
         return(
             <section className="page-container h-100">
+
+                <LoadingImg show={this.state.showloader} />
 
                 <PageHeader />
     
