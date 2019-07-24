@@ -26,7 +26,8 @@ class AudioFilesPage extends Component {
         this.updateFiles = this.updateFiles.bind(this);
         this.deleteRow = this.deleteRow.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleChange = this.handleChange.bind(this)
+        this.handleChange = this.handleChange.bind(this);
+        this.resequencePageTableData = this.resequencePageTableData.bind(this);
     }
 
     getTrack(track, trackIndex) {
@@ -106,34 +107,42 @@ class AudioFilesPage extends Component {
         const {pageTableData} = this.state;
         const activeTab = this.state.activeTab;
 
-        let modifiedPageTableData = pageTableData;
+        let newFiles = (files.length > 0) ? [...Array.from(files), ...Array.from(e.target.files)] : Array.from(e.target.files);
+
+        let modifiedPageTableData = [];
         
-        let newFiles = Array.from(e.target.files);
-        this.setState({files : newFiles});
-
         for(var i=0; i<newFiles.length; i++) {
-            let track = {
-                fileName : newFiles[i].name,
-                discNumber : activeTab
-            }
-
             if(this.isValidAudioType(newFiles[i].name)) {
+                
+                let track = {};
+
+                if(pageTableData[i]) {
+                    track = pageTableData[i]
+                } else {
+                    track = {
+                        fileName : newFiles[i].name,
+                    }
+                }
+                
+                if(!discs[activeTab]) {
+                    let modifiedDiscs = discs;
+                        modifiedDiscs[activeTab] = {
+                            "discNumber" : (activeTab + 1),
+                            "Tracks" : modifiedPageTableData
+                        }
+                    this.setState({discs : modifiedDiscs});
+                }
                 modifiedPageTableData.push(this.getTrack(track, i + 1))
             } else {
                 alert(newFiles[i].name + ' is an invalid audio file')
+
+                //remove this from the file stack
+                newFiles.splice(i,1);
             }
         }
+
+        this.setState({files : newFiles});
         this.setState({pageTableData : modifiedPageTableData});
-
-        if(!discs[activeTab]) {
-           let modifiedDiscs = discs;
-               modifiedDiscs[activeTab] = {
-                    "discNumber" : (activeTab + 1),
-                    "Tracks" : modifiedPageTableData
-               }
-            this.setState({discs : modifiedDiscs});
-        }
-
     }
 
     deleteRow(rowIndex) {
@@ -192,6 +201,18 @@ class AudioFilesPage extends Component {
         .catch(
             error => console.error(error)
         );
+    }
+
+    resequencePageTableData(updatedFiles) {
+        const {files} = this.state;
+        const {pageTableData} = this.state;
+        let modifiedPageTableData = pageTableData;
+
+        for(var i=0; i<updatedFiles.length; i++) {
+            modifiedPageTableData[i].fileName = updatedFiles[i].name
+        }
+
+        this.setState({files : updatedFiles})
     }
 
     setTrackSequence() {
@@ -253,6 +274,8 @@ class AudioFilesPage extends Component {
         );
     }
 
+    
+
     render() {
 
            return(
@@ -297,6 +320,7 @@ class AudioFilesPage extends Component {
                                 data={this.state}
                                 deleteRow={this.deleteRow}
                                 handleChange={this.handleChange}
+                                resequencePageTableData={this.resequencePageTableData}
                             />
                         </Tab.Pane>
                     </Tab.Content>

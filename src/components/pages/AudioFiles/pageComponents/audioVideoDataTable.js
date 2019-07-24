@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {Form, Table, Tabs, Tab, Alert } from 'react-bootstrap';
 
-
 class AudioVideoDataTable extends Component {
     constructor(props) {
         super(props);
@@ -11,9 +10,10 @@ class AudioVideoDataTable extends Component {
             tableData : [],
             discs : [],
             formInputs : {},
-            activeTab : 0
+            activeTab : 0,
+            activeDragSource : null,
+            activeDragTarget : null,
         }
-
         this.handleChange = this.handleChange.bind(this);
         this.deleteRow = this.deleteRow.bind(this);
     }
@@ -45,7 +45,6 @@ class AudioVideoDataTable extends Component {
 
     handleChange(e, track, rowID) {
         const {discs} = this.state;
-        const modifiedDisc = discs;
         const {tableData} = this.state;
 
         track[e.target.id] = e.target.value;
@@ -55,6 +54,39 @@ class AudioVideoDataTable extends Component {
         
         this.setState({tableData : newTableData})
         this.props.handleChange(track, tableData, rowID)
+    }
+
+    updateFileList() {
+        const {files} = this.props.data;
+
+        let modifiedFiles = [...files];
+            modifiedFiles[this.state.activeDragTarget] = files[this.state.activeDragSource];
+            modifiedFiles[this.state.activeDragSource] = files[this.state.activeDragTarget];
+
+        
+        this.props.resequencePageTableData(modifiedFiles)
+    }
+
+    drag(e, i, track) {
+        this.setState({activeDragSource : i})
+        e.dataTransfer.setData("text/html", e.target);
+    }
+
+    drop(e, i, track) {
+        e.preventDefault();
+        this.setState({activeDragTarget : i}, () => this.updateFileList())
+
+        
+        var data = e.dataTransfer.getData("text/html");
+    }
+
+    allowDrop(e) {
+        e.preventDefault();
+
+        //e.target.className = 'audio-drop-area'
+
+        //audio-drop-area
+
     }
 
     AudioVideoDataBody(){
@@ -77,8 +109,8 @@ class AudioVideoDataTable extends Component {
                 return(
                     <tr key={i}>
                         <td className="text-center">{i+1}</td>
-                        <td className="audio-file">
-                            <div className="sortable-audio-file">
+                        <td className="audio-file" onDrop={(e) => this.drop(e, i, track)} onDragOver={this.allowDrop}>
+                            <div draggable="true" onDragStart={(e) => this.drag(e, i, track)} className="sortable-audio-file">
                                 <i className="material-icons">format_line_spacing</i>
                                 <span>{track.fileName}</span>
                                 <Form.Control
@@ -89,6 +121,7 @@ class AudioVideoDataTable extends Component {
                                 />
                             </div>
                         </td>
+
                         <td>
                             <Form.Control
                                 type="text"
@@ -131,6 +164,13 @@ class AudioVideoDataTable extends Component {
                 {tableDataRows}
             </tbody>
         )
+    }
+
+    componentDidUpdate() {
+
+        if(this.props.data.files.length > 0) {
+            //alert(this.props.data.files[0].name + ' : ' + this.props.data.files[1].name)
+        }
     }
 
     render() {
