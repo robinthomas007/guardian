@@ -45,6 +45,8 @@ class AudioFilesPage extends Component {
                 trackTitle : (track.trackTitle) ? track.trackTitle : '',
             }
         ) 
+
+        
     }
 
     handleChange(track, updatedData, rowID) {
@@ -83,14 +85,7 @@ class AudioFilesPage extends Component {
     isValidAudioType(fileName) {
         const validFiles = {
             "wav" : 1,
-            "mp3" : 1,
-            "mp4" : 1,
-            "wma" : 1, 
-            "aif" : 1, 
-            "aiff" : 1, 
-            "aac" : 1, 
-            "flac" : 1, 
-            "m4a" : 1
+            "mp3" : 1
         }
 
         const fileNameParts = fileName.toLowerCase().split('.')
@@ -124,18 +119,17 @@ class AudioFilesPage extends Component {
                     }
                 }
                 
-                if(!discs[activeTab]) {
+                modifiedPageTableData.push(this.getTrack(track, i + 1))
+
+                
                     let modifiedDiscs = discs;
                         modifiedDiscs[activeTab] = {
                             "discNumber" : (activeTab + 1),
                             "Tracks" : modifiedPageTableData
                         }
                     this.setState({discs : modifiedDiscs});
-                }
-                modifiedPageTableData.push(this.getTrack(track, i + 1))
+                
             } else {
-                alert(newFiles[i].name + ' is an invalid audio file')
-
                 //remove this from the file stack
                 newFiles.splice(i,1);
             }
@@ -156,6 +150,7 @@ class AudioFilesPage extends Component {
 
         this.setState({pageTableData : modifiedPageTableData});
 
+
         //remove the files
         let newFiles = files;
             newFiles.splice(rowIndex, 1);
@@ -170,8 +165,9 @@ class AudioFilesPage extends Component {
         const modifiedPageTableData = pageTableData;
 
         var formData = new FormData();
-        for (var i = 0; i < audioFiles.files.length; i++) {
-            formData.append('file', audioFiles.files[i]);
+
+        for (var i = 0; i < this.state.files.length; i++) {
+            formData.append('file', this.state.files[i]);
         }
 
         const fetchHeaders = new Headers(
@@ -194,7 +190,6 @@ class AudioFilesPage extends Component {
         )
         .then (responseJSON =>
             {
-                console.log('save response: ', responseJSON);
                 this.handleDataSubmit()
             }
         )
@@ -230,6 +225,49 @@ class AudioFilesPage extends Component {
         this.setState({discs : sortedDiscs})
     }
 
+    handleDataLoad() {
+        const user = JSON.parse(sessionStorage.getItem('user'));
+        const projectID = (this.state.projectID) ? (this.state.projectID) : '';
+        const {pageTableData} = this.state;
+        const modifiedPageTableData = pageTableData;
+
+        const fetchHeaders = new Headers(
+            {
+                "Authorization" : sessionStorage.getItem('accessToken')
+            }
+        )
+
+        const fetchBody = JSON.stringify( {
+            "User" : {
+                "email" : user.email
+            },
+            "ProjectID" : this.props.match.params.projectID
+        })
+
+        fetch ('https://api-dev.umusic.net/guardian/project/review', {
+            method : 'POST',
+            headers : fetchHeaders,
+            body : fetchBody
+            
+        }).then (response =>
+            {
+                return(response.json());
+            }
+        )
+        .then (responseJSON =>
+            {
+                if(responseJSON.Discs) {
+                    this.setState({discs : responseJSON.Discs})
+                }
+            }
+        )
+        .catch(
+            error => console.error(error)
+        );
+
+        
+    }
+
     handleDataSubmit() {
         const releaseInformationInputs = JSON.parse(localStorage.getItem('projectData'));
         const user = JSON.parse(sessionStorage.getItem('user'));
@@ -238,6 +276,8 @@ class AudioFilesPage extends Component {
         const projectFields = (projectID) ? this.state.formInputs : {...releaseInformationInputs, ...this.state.formInputs}
 
         this.setTrackSequence();
+
+        this.handleDataLoad(this.state.discs)
 
         const fetchHeaders = new Headers(
             {
@@ -265,7 +305,6 @@ class AudioFilesPage extends Component {
         )
         .then (responseJSON => 
             {
-                console.log('save data response: ', responseJSON);
                 this.showNotification();
             }
         )
@@ -274,7 +313,9 @@ class AudioFilesPage extends Component {
         );
     }
 
-    
+    componentDidMount() {
+        this.handleDataLoad()
+    }
 
     render() {
 
@@ -302,7 +343,12 @@ class AudioFilesPage extends Component {
                                     Click to Browse<br />
                                     or Drag &amp; Drop
                                 </span>
-                                <input type="file" id="audioFiles" multiple={true} onChange={this.updateFiles} accept=".wav, .mp3, .mp4, .wma, .aif, .aiff, .aac, .flac, .m4a" />
+                                <input 
+                                    type="file" 
+                                    id="audioFiles" 
+                                    multiple={true} 
+                                    onChange={this.updateFiles} accept=".wav, .mp3"
+                                />
                             </div>
                         </div>
                     </section>
