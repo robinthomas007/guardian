@@ -314,7 +314,7 @@ class AudioFilesPage extends Component {
     }
 
     componentDidMount() {
-        this.handleDataLoad()
+        //this.handleDataLoad()
     }
 
     render() {
