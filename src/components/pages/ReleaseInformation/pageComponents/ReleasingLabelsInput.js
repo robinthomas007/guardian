@@ -10,7 +10,6 @@ class ReleasingLabelsInput extends Component {
             user : this.props.user,
             value : this.props.value,
             onChange : this.props.onChange,
-            setParentState : this.props.setParentState
         }
 
         this.getReleasingLabelOptions = this.getReleasingLabelOptions.bind(this);
@@ -21,9 +20,6 @@ class ReleasingLabelsInput extends Component {
         let labelOptions = ''
         let defaultLabelID = ''
         if(this.props.user && this.props.user.ReleasingLabels) {
-
-            this.props.setParentState('projectReleasingLabelID', this.props.user.ReleasingLabels[0].id)
-
             labelOptions = this.props.user.ReleasingLabels.map( (label, i) =>
                 <option key={i} value={label.id}>{label.name}</option>
             )

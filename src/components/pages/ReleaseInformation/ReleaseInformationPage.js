@@ -30,6 +30,7 @@ class ReleaseinformationPage extends Component {
                     "projectNotes" : ''
             },
 
+
             projectReleaseDateDisabled : false,
             projectReleaseDateReset : false
         }
@@ -208,15 +209,9 @@ class ReleaseinformationPage extends Component {
         }
     }
 
-    setParentState(id, value) {
-        const {formInputs} = this.state;
-        const updatedFormInputs = formInputs;
+    setParentState(e) {
 
-        updatedFormInputs[id] = value;
-
-        if(formInputs !== updatedFormInputs) {
-            this.setState({formInputs : updatedFormInputs})
-        }
+        this.handleChange(e)
     }
 
     componentDidMount() {
@@ -228,6 +223,13 @@ class ReleaseinformationPage extends Component {
             this.setState({projectReleaseDateDisabled : true})
         }
     }
+
+    componentDidUpdate() {
+        if(this.props.user.ReleasingLabels && (this.state.formInputs.projectReleasingLabelID === '')) {
+            this.setState( {formInputs : { ...this.state.formInputs, projectReleasingLabelID : this.props.user.ReleasingLabels[0].id}} )
+        }
+    }
+
 
     render() {
 
@@ -305,11 +307,10 @@ class ReleaseinformationPage extends Component {
                                     <ToolTip message='Please select the releasing labe for your project. If you only have access to a single label, your label will be pre-loaded and not require a selection.' />
                                 </Form.Label>
                                 <ReleasingLabelsInput 
-                                    id='releasingLabel'
+                                    id='projectReleasingLabelID'
                                     user={this.props.user} 
                                     value={this.state.formInputs.projectReleasingLabelID} 
-                                    onChange={this.handleChange}
-                                    setParentState={this.setParentState}
+                                    onChange={this.setParentState}
                                 />
                             </Form.Group>
 
@@ -324,9 +325,16 @@ class ReleaseinformationPage extends Component {
                                         type='date'
                                         value={this.state.formInputs.projectReleaseDate}
                                         disabled={this.state.projectReleaseDateDisabled}
-                                        onChange={this.handleChange}
-                                        ref={"prdPicker"}
+                                        onChange={
+                                            (e) => {
+                                                this.handleChange(e)
+                                            }
+                                        }
+
                                     />
+
+
+
                                 <Form.Label className="col-form-label col-2 tbd">Release TBD</Form.Label>
                                 <label className="custom-checkbox"> 		
                                     <input id='projectReleaseDateTBD' 
