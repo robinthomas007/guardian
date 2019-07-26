@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import '../ui/LoadingImg.css';
 
 
 class LoadingImg extends React.Component {

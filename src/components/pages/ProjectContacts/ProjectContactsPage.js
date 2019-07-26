@@ -5,8 +5,6 @@ import ToolTip from '../../ui/Tooltip';
 import { withRouter } from "react-router";
 import './ProjectContacts.css';
 import LoadingImg from '../../ui/LoadingImg';
-import '../../ui/LoadingImg.css';
-
 import Noty from 'noty'
 
 class ProjectSecurityInput extends Component {
