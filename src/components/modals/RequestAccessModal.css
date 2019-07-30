@@ -2,3 +2,5 @@
 #RequestAccesModal ul li {list-style:none; line-height:3em; margin:0; padding:0;}
 #RequestAccesModal label {width:140px; display:inline-block;}
 #RequestAccesModal input {width:280px; display:inline;}
+
+.modal-dialog {margin:10% auto!important;}

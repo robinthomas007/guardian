@@ -82,7 +82,7 @@ class AudioVideoDataTable extends Component {
 
     allowDrop(e) {
         e.preventDefault();
-
+        e.currentTarget.style.background = '#464646';
         //e.target.className = 'audio-drop-area'
 
         //audio-drop-area

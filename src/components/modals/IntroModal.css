@@ -24,3 +24,5 @@
 #IntroModal .modal-footer {vertical-align:middle;}
 #IntroModal .modal-footer div.show-check {position:fixed; left:15px; bottom:16px; vertical-align:middle;}
 #IntroModal .modal-footer label.noshow-label {margin-left:15px;}
+
+.modal-dialog {margin:10% auto!important;}

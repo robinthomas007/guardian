@@ -70,6 +70,8 @@
 	.table thead th {border-bottom:1px solid #dee2e6;}
 	.table td, .table th {border-top:none; border-bottom:1px solid #dee2e6; padding:.50rem; vertical-align: middle;}
 
+	.modal-dialog {margin:10% auto!important;}
+
 	/* Table Column widths no longer supported in Bootstrap 4 reliably */
 	
 	.td-2 {max-width:2%;}
