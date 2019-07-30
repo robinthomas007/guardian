@@ -330,18 +330,18 @@ class AudioFilesPage extends Component {
                 <div className="row no-gutters step-description">
                     <div className="col-12">
                         <h2>Step <span className="count-circle">3</span> Audio Files</h2>
-                        <p>In this step, you can upload WAV's or MP3's for filtering by either dragging &amp; dropping or clicking to browse. Uploads can then be reordered with drag and drop. This section must be completed by clicking on the 'Save &amp; Continue' button below.</p>
+                        <p>In this step, you can upload audio files for filtering by either dragging &amp; dropping or clicking to browse files, e.g. mp3, WAV, etc. Tracks can also be reordered with drag and drop. This section must be completed by clicking on the 'Save &amp; Continue' button below.</p>
                     </div>
                 </div>
 
                 <form>
                     <section className="row">
                         <div className="form-group col-12">
-                            <label>Drag &amp; Drop WAV's or MP3's Below</label>
+                            <label>Drag &amp; Drop Audio Files Below</label>
                             <div droppable="true" className="form-control audio-drop-area col-12">
                                 <span>
                                     Click to Browse<br />
-                                    or Drag &amp; Drop WAV's or MP3's
+                                    or Drag &amp; Drop
                                 </span>
                                 <input 
                                     type="file" 
