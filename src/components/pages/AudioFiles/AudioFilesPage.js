@@ -66,6 +66,9 @@ class AudioFilesPage extends Component {
     }
 
     showNotification(){
+
+        const projectID = (this.state.projectID) ? (this.state.projectID) : '';
+
         new Noty ({
             type: 'success',
             id:'tracksSaved',
@@ -73,7 +76,11 @@ class AudioFilesPage extends Component {
             theme: 'bootstrap-v4',
             layout: 'top',
             timeout: '3000'
-        }).show()
+        }).on('afterClose', ()  =>
+            this.props.history.push({
+                pathname : '/trackInformation/' + projectID
+            })
+        ).show()
     };
 
     componentDidUpdate() {
@@ -337,7 +344,6 @@ class AudioFilesPage extends Component {
         )
         .then (responseJSON => 
             {
-
                 this.showNotification();
             }
         )
