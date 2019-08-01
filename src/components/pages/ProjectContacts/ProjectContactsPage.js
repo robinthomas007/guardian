@@ -241,12 +241,12 @@ class ProjectContactsPage extends Component {
                             </Form.Group>
 
                             <Form.Group>
-                                <Form.Label className='col-form-label col-2'>Additional Contacts
+                                <Form.Label className='col-form-label col-2 align-top'>Additional Contacts
                                     <ToolTip message='Additional contacts or users that youd like to share this project with may be added here. You can copy any paste from Outlook,  or separate a list of users to be added by commas, spaces, semi-colons or any combination of these.' />
                                 </Form.Label>
                                 <Form.Control 
                                     id='projectAdditionalContacts'
-                                    className='form-control col-8' 
+                                    className='form-control col-10' 
                                     as='textarea' 
                                     rows='5' 
                                     value={this.state.formInputs.projectAdditionalContacts}
