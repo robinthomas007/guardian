@@ -347,7 +347,9 @@ class AudioFilesPage extends Component {
     }
 
     componentDidMount() {
-        this.handleDataLoad()
+        if(this.props.match) {
+            this.handleDataLoad();
+        }
     }
 
     render() {
