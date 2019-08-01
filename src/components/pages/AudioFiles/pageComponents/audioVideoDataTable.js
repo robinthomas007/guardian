@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Form, Table, Tabs, Tab, Alert } from 'react-bootstrap';
+import LoadingImgSm from '../../../ui/LoadingImgSm';
 
 class AudioVideoDataTable extends Component {
     constructor(props) {
@@ -104,8 +105,8 @@ class AudioVideoDataTable extends Component {
                                 <span>{track.fileName}</span>
 
                                 { (track.fileUpload) ? 
-                                    <span className={"project-right notes-row"} id={track.fileName + "_ico"}>
-                                        UPLOADING
+                                    <span className={'loading-right'} id={track.fileName + "_ico"}>
+                                       <LoadingImgSm show={true}/>
                                     </span> : ''
                                 }
 
