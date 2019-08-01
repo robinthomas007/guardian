@@ -96,9 +96,7 @@ class AudioFilesPage extends Component {
     }
 
     updateFiles(e) {
-        const {files} = this.state;
-        const {discs} = this.state;
-        const {pageTableData} = this.state;
+        const {files, discs, pageTableData} = this.state;
         const activeTab = this.state.activeTab;
 
         //let newFiles = (files.length > 0) ? [...Array.from(files), ...Array.from(e.target.files)] : Array.from(e.target.files);
@@ -106,7 +104,7 @@ class AudioFilesPage extends Component {
         let modifiedPageTableData = pageTableData;
         let modifiedDiscs = discs;
 
-
+        alert(pageTableData.length)
 
         for(var i=0; i<newFiles.length; i++) {
             if(this.isValidAudioType(newFiles[i].name)) {
@@ -128,6 +126,8 @@ class AudioFilesPage extends Component {
                 newFiles.splice(i,1);
             }
         }
+
+        alert(modifiedPageTableData.length)
 
         this.handleFileUpload(newFiles)
         this.setState({pageTableData : modifiedPageTableData});
@@ -250,6 +250,10 @@ class AudioFilesPage extends Component {
         this.setState({discs : sortedDiscs})
     }
 
+    processDataLoad() {
+        
+    }
+
     handleDataLoad() {
         const user = JSON.parse(sessionStorage.getItem('user'));
         const projectID = (this.state.projectID) ? (this.state.projectID) : '';
@@ -266,7 +270,8 @@ class AudioFilesPage extends Component {
             "User" : {
                 "email" : user.email
             },
-            "ProjectID" : this.props.match.params.projectID
+            "ProjectID" : (this.props.match.params.projectID) ? this.props.match.params.projectID : ''
+
         })
 
         fetch ('https://api-dev.umusic.net/guardian/project/review', {
@@ -283,6 +288,7 @@ class AudioFilesPage extends Component {
             {
                 if(responseJSON.Discs) {
                     this.setState({discs : responseJSON.Discs})
+                    this.setState({pageTableData : responseJSON.Discs[this.state.activeTab].Tracks})
                 }
             }
         )
@@ -300,8 +306,6 @@ class AudioFilesPage extends Component {
         const projectFields = (projectID) ? this.state.formInputs : {...releaseInformationInputs, ...this.state.formInputs}
 
         this.setTrackSequence();
-
-        //this.handleDataLoad(this.state.discs)
 
         const fetchHeaders = new Headers(
             {
@@ -388,7 +392,7 @@ class AudioFilesPage extends Component {
                     <Tab.Content>
                         <Tab.Pane eventKey="Disc1">
                             <AudioVideoDataTable
-                                data={this.state}
+                                data={this.state.discs[0]}
                                 deleteRow={this.deleteRow}
                                 handleChange={this.handleChange}
                                 resequencePageTableData={this.resequencePageTableData}

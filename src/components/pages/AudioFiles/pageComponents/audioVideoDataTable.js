@@ -85,7 +85,7 @@ class AudioVideoDataTable extends Component {
         let modifiedTableData = tableData;
 
         if(this.props.data) {
-            tableDataRows = this.props.data.pageTableData.map( (track, i) => {
+            tableDataRows = this.props.data.Tracks.map( (track, i) => {
 
                 modifiedTableData[i] = {
                     fileName : track.fileName,
