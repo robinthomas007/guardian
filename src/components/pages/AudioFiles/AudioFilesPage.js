@@ -104,8 +104,6 @@ class AudioFilesPage extends Component {
         let modifiedPageTableData = pageTableData;
         let modifiedDiscs = discs;
 
-        alert(pageTableData.length)
-
         for(var i=0; i<newFiles.length; i++) {
             if(this.isValidAudioType(newFiles[i].name)) {
                 
@@ -126,8 +124,6 @@ class AudioFilesPage extends Component {
                 newFiles.splice(i,1);
             }
         }
-
-        alert(modifiedPageTableData.length)
 
         this.handleFileUpload(newFiles)
         this.setState({pageTableData : modifiedPageTableData});
@@ -248,10 +244,6 @@ class AudioFilesPage extends Component {
         })
 
         this.setState({discs : sortedDiscs})
-    }
-
-    processDataLoad() {
-        
     }
 
     handleDataLoad() {

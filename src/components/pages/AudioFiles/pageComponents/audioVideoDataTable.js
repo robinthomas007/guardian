@@ -92,7 +92,7 @@ class AudioVideoDataTable extends Component {
                     discNumber : (this.props.data.activeTab + 1),
                     isrc : track.isrc,
                     trackTitle : track.trackTitle,
-                    artist : track.artist
+                    artist : track.artist,
                 }
 
                 return(
@@ -102,6 +102,9 @@ class AudioVideoDataTable extends Component {
                             <div draggable="true" onDragStart={(e) => this.drag(e, i, track)} className="sortable-audio-file">
                                 <i className="material-icons">format_line_spacing</i>
                                 <span>{track.fileName}</span>
+
+                                <span id={track.fileName + '_ico'}></span>
+
                                 <Form.Control
                                     type="hidden"
                                     id="fileName"
