@@ -44,6 +44,7 @@ class AudioFilesPage extends Component {
                 trackNumber : (track.trackID) ? (track.trackID) : trackIndex,
                 trackReleaseDate : (track.trackReleaseDate) ? track.trackReleaseDate : '',
                 trackTitle : (track.trackTitle) ? track.trackTitle : '',
+                fileUpload :  (track.fileUpload) ? track.fileUpload : false,
             }
         ) 
     }
@@ -109,6 +110,7 @@ class AudioFilesPage extends Component {
                 
                 let newTrack = {
                     fileName : newFiles[i].name,
+                    fileUpload : true
                 }
                 
                 modifiedPageTableData.push(this.getTrack(newTrack, i + 1))
@@ -141,6 +143,14 @@ class AudioFilesPage extends Component {
         this.setState({pageTableData : modifiedPageTableData});
     }
 
+    hideFileUploadingIndicator(fileName) {
+        let uploadingIndicator = document.getElementById(fileName + '_ico');
+
+        if(uploadingIndicator) {
+            uploadingIndicator.style.display='none';
+        }
+    }
+
     handleFileUpload(files) {
         const user = JSON.parse(sessionStorage.getItem('user'));
         const projectID = (this.state.projectID) ? (this.state.projectID) : '';
@@ -168,7 +178,9 @@ class AudioFilesPage extends Component {
               )
               .then (responseJSON =>
                   {
-                      alert(JSON.stringify(responseJSON))
+
+                        this.hideFileUploadingIndicator(responseJSON[0].fileName);
+                      //alert(JSON.stringify(responseJSON))
                   }
               )
               .catch(

@@ -103,7 +103,11 @@ class AudioVideoDataTable extends Component {
                                 <i className="material-icons">format_line_spacing</i>
                                 <span>{track.fileName}</span>
 
-                                <span id={track.fileName + '_ico'}></span>
+                                { (track.fileUpload) ? 
+                                    <span className={"project-right notes-row"} id={track.fileName + "_ico"}>
+                                        UPLOADING
+                                    </span> : ''
+                                }
 
                                 <Form.Control
                                     type="hidden"
