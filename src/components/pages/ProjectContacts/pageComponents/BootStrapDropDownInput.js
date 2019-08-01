@@ -15,6 +15,11 @@ class BootStrapDropDownInput extends Component {
                 '<i class="material-icons" data-toggle="tooltip" title="Public">group</i> Public (Viewable by all label members)'
             ]
         }
+
+        const{toggleValue} = this.state;
+        let defaultToggleValue = this.state.options[0];
+
+        this.setState({toggleValue : defaultToggleValue})
     }
 
     getOptions = () => {
@@ -54,7 +59,7 @@ class BootStrapDropDownInput extends Component {
 
     render() { 
         return(
-            <Dropdown className="dropdown" onSelect={(e) => this.handleChange(e)}>
+            <Dropdown className={'dropdown ' + this.props.className} onSelect={(e) => this.handleChange(e)}>
                 <Dropdown.Toggle 
                     id="dropdown-basic"
                     dangerouslySetInnerHTML=
