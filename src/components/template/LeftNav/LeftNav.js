@@ -90,9 +90,6 @@ class LeftNav extends Component {
 		this.getAdminLinks = this.getAdminLinks.bind(this);
     };
 
-
-
-
 	handleNavClick(link){
 		if(this.state.activeNav !== link) {
 			this.setState( { activeNav : link } )
@@ -191,7 +188,18 @@ class LeftNav extends Component {
 		)
 	}
 
+	getProject() {
+		if(this.props.history.location.pathname) {
+
+		} else {
+			return(null)
+		}
+	}
+
 	render() {
+
+
+		
 		return(
 			<nav className="left-nav col-2">
 				{this.getNav()}

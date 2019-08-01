@@ -2,51 +2,12 @@ import React, { Component } from 'react';
 import {Table, Grid, Button, Form, Dropdown } from 'react-bootstrap'; 
 import PageHeader from '../PageHeader/PageHeader';
 import ToolTip from '../../ui/Tooltip';
+import BootStrapDropDownInput from '../ProjectContacts/pageComponents/BootStrapDropDownInput';
 import { withRouter } from "react-router";
 import './ProjectContacts.css';
 import LoadingImg from '../../ui/LoadingImg';
-import Noty from 'noty'
+import Noty from 'noty';
 
-class ProjectSecurityInput extends Component {
-
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            user : this.props.user,
-            value : this.props.value,
-            onChange : this.props.onChange,
-        }
-        
-        this.getProjectSecurityOptions = this.getProjectSecurityOptions.bind(this);
-    }
-
-    getProjectSecurityOptions() {
-
-        let projectSecurityOptions = ''
-        if(this.props.user && this.props.user.ProjectSecurities) {
-            projectSecurityOptions = this.props.user.ProjectSecurities.map( (projectSecurity, i) =>
-                <option key={i} value={projectSecurity.id}>{(projectSecurity.id == 1) ? '<i class="material-icons" data-toggle="tooltip" title="Private">lock</i>' : '<i class="material-icons" data-toggle="tooltip" title="Public">group</i>'}{projectSecurity.name}</option>
-            )
-        }
-
-        return(projectSecurityOptions)
-    }
-
-    render() {
-        return(
-            <Form.Control 
-                id='projectSecurityID' 
-                as='select' 
-                className='col-form-label dropdown col-2' 
-                value = {this.props.value}
-                onChange={this.state.onChange}
-            >
-                {this.getProjectSecurityOptions()}
-            </Form.Control>
-        )
-    }
-}
 
 class ProjectContactsPage extends Component {
     constructor(props) {
@@ -61,7 +22,6 @@ class ProjectContactsPage extends Component {
                 "projectSecurityID" : '1', 
                 "projectAdditionalContacts" : '',
                 "projectStatusID" : '1',
-
             },
             project : {},
             showloader : false
@@ -74,6 +34,7 @@ class ProjectContactsPage extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.showNotification = this.showNotification.bind(this);
+        this.handleChangeByID = this.handleChangeByID.bind(this);
     }
     
     handlePageDataLoad() {
@@ -93,7 +54,6 @@ class ProjectContactsPage extends Component {
             "ProjectID" : projectID
         })
 
-
         fetch ('https://api-dev.umusic.net/guardian/project/review', {
             method : 'POST',
             headers : fetchHeaders,
@@ -103,7 +63,6 @@ class ProjectContactsPage extends Component {
                 return(response.json());
             }
         ).then (responseJSON => 
-
             {
                 const { formInputs } = this.state;
                 let modifiedFormInputs = responseJSON.Project;
@@ -117,7 +76,6 @@ class ProjectContactsPage extends Component {
 
 
     showNotification(e, projectID){
-
         new Noty ({
             type: 'success',
             id:'projectSaved',
@@ -145,7 +103,14 @@ class ProjectContactsPage extends Component {
 
     handleChange(event) {
         this.setState( {formInputs : { ...this.state.formInputs, [event.target.id] : event.target.value}} )
-        console.log(this.state.formInputs)
+    }
+
+    handleChangeByID(id, value) {
+        const {formInputs} = this.state;
+        let modifiedFormInput = formInputs;
+            modifiedFormInput[id] = value;
+
+        this.setState({formInputs : modifiedFormInput})
     }
 
     getProjectSecurityOptions() {
@@ -154,8 +119,6 @@ class ProjectContactsPage extends Component {
         let defaultLabelID = ''
         if(this.props.user && this.props.user.ProjectSecurities) {
             securityOptions = this.props.user.ProjectSecurities.map( (security, i) =>
-               
-
                 <option key={i} value={security.id}>{(security.id === 1) ? 'lock' : '' + 1111 + security.name}</option>
             )
         }
@@ -216,10 +179,6 @@ class ProjectContactsPage extends Component {
         );
     }
 
-    componentDidMount() {
-        this.getProjectSecurityOptions()
-    }
-
     render() {
 
         const user = JSON.parse(sessionStorage.getItem('user'))
@@ -241,36 +200,24 @@ class ProjectContactsPage extends Component {
                 <Form>
                     <div className="row">
                         <div className="col-12">
-
                             <Form.Group>
                                 <Form.Label className='col-form-label col-2'>Project Security 
-                                <span className='required-ind'>*</span>
-                                <ToolTip message='Projects are by default, set to private. This means only you may view or make changes to them. If set to public, projects will be made available to everyone within the label group.' />
+                                    <span className='required-ind'>*</span>
+                                    <ToolTip message='Projects are by default, set to private. This means only you may view or make changes to them. If set to public, projects will be made available to everyone within the label group.' />
                                 </Form.Label>
-                                <ProjectSecurityInput 
-                                    id='projectSecurity'
-                                    user={this.props.user} 
-                                    value={this.state.formInputs.projectSecurityID} 
-                                    onChange={this.handleChange}                                
+
+                                <BootStrapDropDownInput 
+                                    id='projectSecurityID'
+                                    value={this.state.formInputs.projectSecurityID}
+                                    onChange={this.handleChangeByID}
                                 />
-                                	<Dropdown className="dropdown">
-							<Dropdown.Toggle id="dropdown-basic">
-                                <i class="material-icons" data-toggle="tooltip" title="Private">lock</i> Private (Viewable By You)
-							</Dropdown.Toggle>
-						  
-							<Dropdown.Menu>
-							  <Dropdown.Item href="#/action-1"><i class="material-icons" data-toggle="tooltip" title="Private">lock</i> Private (Viewable on by you)</Dropdown.Item>
-							  <Dropdown.Item href="#/action-2"><i class="material-icons" data-toggle="tooltip" title="Public">group</i> Public (Viewable by all label members)</Dropdown.Item>
-							</Dropdown.Menu>
-						  </Dropdown>
+
                             </Form.Group>
-
-
 
                             <Form.Group>
                                 <Form.Label className='col-form-label col-2'>Primary Contact 
-                                <span className='required-ind'>*</span>
-                                <ToolTip message='The originator of the project is by default set to be the primary contact. This can be changed here and the project will be created for that users account as long as they have access to the selected label.' />
+                                    <span className='required-ind'>*</span>
+                                    <ToolTip message='The originator of the project is by default set to be the primary contact. This can be changed here and the project will be created for that users account as long as they have access to the selected label.' />
                                 </Form.Label>
                                 <Form.Control 
                                     className='form-control col-5' 
@@ -282,8 +229,8 @@ class ProjectContactsPage extends Component {
 
                             <Form.Group>
                                 <Form.Label className='col-form-label col-2'>Primary Contact Email
-                                <span className='required-ind'>*</span>
-                                <ToolTip message='The email address belonging to the primary contact. This may not belong to any user aside from the primary contact.' />
+                                    <span className='required-ind'>*</span>
+                                    <ToolTip message='The email address belonging to the primary contact. This may not belong to any user aside from the primary contact.' />
                                 </Form.Label>
                                 <Form.Control 
                                     className='form-control col-5' 
@@ -293,23 +240,21 @@ class ProjectContactsPage extends Component {
                                 />
                             </Form.Group>
 
-                            
-                                <Form.Group>
-                                    <Form.Label className='col-form-label col-2'>Additional Contacts
+                            <Form.Group>
+                                <Form.Label className='col-form-label col-2'>Additional Contacts
                                     <ToolTip message='Additional contacts or users that youd like to share this project with may be added here. You can copy any paste from Outlook,  or separate a list of users to be added by commas, spaces, semi-colons or any combination of these.' />
-                                    </Form.Label>
-                                    <Form.Control 
-                                        id='projectAdditionalContacts'
-                                        className='form-control col-8' 
-                                        as='textarea' 
-                                        rows='5' 
-                                        value={this.state.formInputs.projectAdditionalContacts}
-                                        onChange={this.handleChange}
-                                    />
-                                </Form.Group>
-                    
-                            </div>
+                                </Form.Label>
+                                <Form.Control 
+                                    id='projectAdditionalContacts'
+                                    className='form-control col-8' 
+                                    as='textarea' 
+                                    rows='5' 
+                                    value={this.state.formInputs.projectAdditionalContacts}
+                                    onChange={this.handleChange}
+                                />
+                            </Form.Group>
                         </div>
+                    </div>
                
                     <div className="row save-buttons">
                         <div className="col-9"></div>

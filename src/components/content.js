@@ -118,6 +118,8 @@ export default withAuth(class Content extends Component {
 
   render() {
 
+    //console.log('match ', this.props.match.params)
+
     if(this.state.userLoaded) {
 
       return (

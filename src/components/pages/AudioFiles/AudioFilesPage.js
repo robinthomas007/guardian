@@ -27,6 +27,7 @@ class AudioFilesPage extends Component {
         this.deleteRow = this.deleteRow.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleDataSubmit = this.handleDataSubmit.bind(this);
         this.resequencePageTableData = this.resequencePageTableData.bind(this);
     }
 
@@ -45,8 +46,6 @@ class AudioFilesPage extends Component {
                 trackTitle : (track.trackTitle) ? track.trackTitle : '',
             }
         ) 
-
-        
     }
 
     handleChange(track, updatedData, rowID) {
@@ -102,32 +101,27 @@ class AudioFilesPage extends Component {
         const {pageTableData} = this.state;
         const activeTab = this.state.activeTab;
 
-        let newFiles = (files.length > 0) ? [...Array.from(files), ...Array.from(e.target.files)] : Array.from(e.target.files);
+        //let newFiles = (files.length > 0) ? [...Array.from(files), ...Array.from(e.target.files)] : Array.from(e.target.files);
+        let newFiles = Array.from(e.target.files);
+        let modifiedPageTableData = pageTableData;
+        let modifiedDiscs = discs;
 
-        let modifiedPageTableData = [];
-        
+
+
         for(var i=0; i<newFiles.length; i++) {
             if(this.isValidAudioType(newFiles[i].name)) {
                 
-                let track = {};
-
-                if(pageTableData[i]) {
-                    track = pageTableData[i]
-                } else {
-                    track = {
-                        fileName : newFiles[i].name,
-                    }
+                let newTrack = {
+                    fileName : newFiles[i].name,
                 }
                 
-                modifiedPageTableData.push(this.getTrack(track, i + 1))
-
+                modifiedPageTableData.push(this.getTrack(newTrack, i + 1))
                 
-                    let modifiedDiscs = discs;
-                        modifiedDiscs[activeTab] = {
-                            "discNumber" : (activeTab + 1),
-                            "Tracks" : modifiedPageTableData
-                        }
-                    this.setState({discs : modifiedDiscs});
+                modifiedDiscs[activeTab] = {
+                    "discNumber" : (activeTab + 1),
+                    "Tracks" : modifiedPageTableData
+                }
+                this.setState({discs : modifiedDiscs});
                 
             } else {
                 //remove this from the file stack
@@ -135,7 +129,7 @@ class AudioFilesPage extends Component {
             }
         }
 
-        this.setState({files : newFiles});
+        this.handleFileUpload(newFiles)
         this.setState({pageTableData : modifiedPageTableData});
     }
 
@@ -149,12 +143,42 @@ class AudioFilesPage extends Component {
             modifiedPageTableData.splice(rowIndex, 1);
 
         this.setState({pageTableData : modifiedPageTableData});
+    }
 
+    handleFileUpload(files) {
+        const user = JSON.parse(sessionStorage.getItem('user'));
+        const projectID = (this.state.projectID) ? (this.state.projectID) : '';
+        const fetchHeaders = new Headers(
+            {
+                "Authorization" : sessionStorage.getItem('accessToken'),
+                "User-Email" : user.email,
+                "Project-Id" : projectID,
+            }
+        )
 
-        //remove the files
-        let newFiles = files;
-            newFiles.splice(rowIndex, 1);
-        this.setState({files : newFiles});
+        for (var i = 0; i < files.length; i++) {
+            var formData = new FormData();
+                formData.append('file', files[i]);
+
+            fetch('https://api-dev.umusic.net/guardian-media/api/Upload', {
+                method: 'POST',
+                headers : fetchHeaders,
+                body: formData
+              })
+              .then (response =>
+                  {
+                      return(response.json());
+                  }
+              )
+              .then (responseJSON =>
+                  {
+                      alert(JSON.stringify(responseJSON))
+                  }
+              )
+              .catch(
+                  error => console.error(error)
+              );
+        }
     }
 
     handleSubmit() {
@@ -198,16 +222,17 @@ class AudioFilesPage extends Component {
         );
     }
 
-    resequencePageTableData(updatedFiles) {
-        const {files} = this.state;
+    resequencePageTableData(dragSource, dragTarget) {
         const {pageTableData} = this.state;
         let modifiedPageTableData = pageTableData;
 
-        for(var i=0; i<updatedFiles.length; i++) {
-            modifiedPageTableData[i].fileName = updatedFiles[i].name
-        }
+        let sourceData = modifiedPageTableData[dragSource].fileName;
+        let targetData = modifiedPageTableData[dragTarget].fileName;
+        
+        modifiedPageTableData[dragTarget].fileName = sourceData;
+        modifiedPageTableData[dragSource].fileName = targetData;
 
-        this.setState({files : updatedFiles})
+        this.setState({pageTableData : modifiedPageTableData})
     }
 
     setTrackSequence() {
@@ -264,11 +289,10 @@ class AudioFilesPage extends Component {
         .catch(
             error => console.error(error)
         );
-
-        
     }
 
     handleDataSubmit() {
+
         const releaseInformationInputs = JSON.parse(localStorage.getItem('projectData'));
         const user = JSON.parse(sessionStorage.getItem('user'));
         const projectID = (this.state.projectID) ? (this.state.projectID) : '';
@@ -277,7 +301,7 @@ class AudioFilesPage extends Component {
 
         this.setTrackSequence();
 
-        this.handleDataLoad(this.state.discs)
+        //this.handleDataLoad(this.state.discs)
 
         const fetchHeaders = new Headers(
             {
@@ -305,6 +329,7 @@ class AudioFilesPage extends Component {
         )
         .then (responseJSON => 
             {
+
                 this.showNotification();
             }
         )
@@ -314,7 +339,7 @@ class AudioFilesPage extends Component {
     }
 
     componentDidMount() {
-        //this.handleDataLoad()
+        this.handleDataLoad()
     }
 
     render() {
@@ -376,7 +401,7 @@ class AudioFilesPage extends Component {
                 <div className="col-9"></div>
                 <div className="col-3">
                     <button type="button" className="btn btn-secondary" onClick={this.showNotification}>Save</button>
-                    <button type="button" className="btn btn-primary" onClick={this.handleSubmit}>Save &amp; Continue</button>
+                    <button type="button" className="btn btn-primary" onClick={this.handleDataSubmit}>Save &amp; Continue</button>
                 </div>
             </section>
         </section>

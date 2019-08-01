@@ -286,13 +286,13 @@ class TrackInformationPage extends Component {
                 />
                
 
-                {/* <TabbedTracks 
+                <TabbedTracks 
                     data={this.state.projectData} 
                     showClick={this.showTrackModal} 
                     activeDiscTab={this.state.activeDiscTab}
                     handleActiveDiscUpdate={this.setActiveDiscTab}
                     handleChange={this.handleChange}
-                /> */}
+                />
 
 
                 <section className="row save-buttons">

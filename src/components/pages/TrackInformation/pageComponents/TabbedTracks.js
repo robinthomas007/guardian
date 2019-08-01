@@ -12,6 +12,7 @@ class TabbedTracks extends Component {
 
         this.handleTabClick = this.handleTabClick.bind(this);
         this.addDisc = this.addDisc.bind(this);
+        this.updateDiscData = this.updateDiscData.bind(this);
     }
 
     addDisc = () => {
@@ -25,6 +26,20 @@ class TabbedTracks extends Component {
         this.setState({discs : updatedDiscs})
     }
 
+    updateDiscData(discID, discData) {
+        const  {discs} = this.state;
+        discID = parseInt(discID) + 1;
+        //const disc
+
+        //this.setState({discs : discData})
+
+
+        //console.log(thisDisc)
+        //console.log('------')
+        //console.log(discData)
+        
+    }
+
     componentWillReceiveProps(props) {
         this.setState({discs: props.data.Discs});
     }
@@ -35,14 +50,15 @@ class TabbedTracks extends Component {
 
     getDiscTabs = () => {
         if(this.state.discs) {
-
             let discs = this.state.discs.map((disc, i) => { 
-                const count = (i + 1)
+                const count = (i + 1);
+
                 return(
                     <Tab key={i} eventKey={count} title={"Disc " + count}>
                         <TrackInformationDataTable 
                             data={this.props.data} 
                             discID={i}
+                            updateDiscData={this.updateDiscData}
                         />
                     </Tab>
                 )

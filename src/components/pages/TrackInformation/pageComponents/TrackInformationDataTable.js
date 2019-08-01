@@ -10,7 +10,7 @@ class TrackInformationDataTable extends Component {
             DataRows : [],
             tableRows : [],
             projectReleaseDate : '',
-            discID : this.props.discID
+            discID : this.props.discID,
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -18,6 +18,7 @@ class TrackInformationDataTable extends Component {
         this.addBlankRow = this.addBlankRow.bind(this);
         this.formatDateToYYYYMMDD = this.formatDateToYYYYMMDD.bind(this);
         this.handleDataLoad = this.handleDataLoad.bind(this);
+
     }
  
     trackInformationDataHeader = () => {
@@ -47,13 +48,13 @@ class TrackInformationDataTable extends Component {
              event.target.value = (event.target.checked) ? true : false;
         }
 
-        console.log(track)
-
         track[event.target.id] = event.target.value;
         
         this.setState({DataRows : modifiedRows})
 
-        console.log(DataRows)
+        this.props.updateDiscData(i, modifiedRows)
+
+        //console.log(DataRows)
     };
 
     formatDateToYYYYMMDD(unFormattedDate) {
@@ -97,6 +98,7 @@ class TrackInformationDataTable extends Component {
                 trackTitle : '',
                 trackIsrc :  '',
                 isSingle : false,
+                tbdReleaseDate : false,
                 trackReleaseDate : this.formatDateToYYYYMMDD(Project.projectReleaseDate)
             }
         return(blankRow)
@@ -125,6 +127,7 @@ class TrackInformationDataTable extends Component {
                         trackTitle : track.trackTitle,
                         trackIsrc :  track.isrc,
                         isSingle : track.isSingle,
+                        tbdReleaseDate : track.tbdReleaseDate,
                         trackReleaseDate : track.trackReleaseDate
                     }
                 )
@@ -198,7 +201,13 @@ class TrackInformationDataTable extends Component {
                                 onChange={(evt) => this.handleChange(evt, track, i)}
                             />
                             <label className="custom-checkbox"> 
-                                <input type="checkbox" />
+                                <input 
+                                    type="checkbox" 
+                                    id={'tbdReleaseDate'}
+                                    defaultChecked={false} 
+                                    value={false} 
+                                    onChange={(evt) => this.handleChange(evt, track, i)}
+                                />
                                 <span className="checkmark"></span>
                             </label>
                         </td> 

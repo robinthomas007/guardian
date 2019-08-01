@@ -56,17 +56,6 @@ class AudioVideoDataTable extends Component {
         this.props.handleChange(track, tableData, rowID)
     }
 
-    updateFileList() {
-        const {files} = this.props.data;
-
-        let modifiedFiles = [...files];
-            modifiedFiles[this.state.activeDragTarget] = files[this.state.activeDragSource];
-            modifiedFiles[this.state.activeDragSource] = files[this.state.activeDragTarget];
-
-        
-        this.props.resequencePageTableData(modifiedFiles)
-    }
-
     drag(e, i, track) {
         this.setState({activeDragSource : i})
         e.dataTransfer.setData("text/html", e.target);
@@ -74,7 +63,7 @@ class AudioVideoDataTable extends Component {
 
     drop(e, i, track) {
         e.preventDefault();
-        this.setState({activeDragTarget : i}, () => this.updateFileList())
+        this.setState({activeDragTarget : i}, () => this.props.resequencePageTableData(this.state.activeDragSource, this.state.activeDragTarget))
 
         
         var data = e.dataTransfer.getData("text/html");
@@ -82,7 +71,7 @@ class AudioVideoDataTable extends Component {
 
     allowDrop(e) {
         e.preventDefault();
-        e.currentTarget.style.background = '#464646';
+
         //e.target.className = 'audio-drop-area'
 
         //audio-drop-area
@@ -167,10 +156,6 @@ class AudioVideoDataTable extends Component {
     }
 
     componentDidUpdate() {
-
-        if(this.props.data.files.length > 0) {
-            //alert(this.props.data.files[0].name + ' : ' + this.props.data.files[1].name)
-        }
     }
 
     render() {

@@ -7,6 +7,7 @@ class TrackInformationDataTable extends Component {
         super(props);
 
         this.state = {
+            
         }
         this.updateState = this.updateState.bind(this);
     }
@@ -26,7 +27,7 @@ class TrackInformationDataTable extends Component {
                 </tr>
             </thead>
         )
-    }
+    }   
 
     updateState(evt, track, i) {
         // this.setState( {formInputs : { ...this.state.formInputs, [e.target.id] : e.target.value}} )
