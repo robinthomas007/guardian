@@ -16,7 +16,7 @@ class BootStrapDropDownInput extends Component {
             ]
         }
 
-        const{toggleValue} = this.state.toggleValue = this.state.options[0];
+        this.state.toggleValue = this.state.options[0];
     }
 
     getOptions = () => {
