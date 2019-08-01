@@ -37,6 +37,12 @@
 	.custom-checkbox input:checked ~ .static-checkmark:after {display: block;} /* Show the checkmark when checked */
 	.custom-checkbox .static-checkmark:after {left: 9px;top: 5px; width: 5px; height: 10px; border: solid #666; border-width: 0 3px 3px 0; -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); transform: rotate(45deg);} /* Styles the checkmark */
 	
+	select.dropdown {padding:0 8px!important;}
+	.dropdown {padding:0 0!important;}
+	.dropdown > .btn-primary {background-color:#F5F5F5; border: solid 1px #CCC; border-radius:2px; color:#495057; padding:.375rem .75rem; line-height:1.5;}
+	.dropdown i.material-icons {padding:0 6px 0 0;}
+	.dropdown-item:focus, .dropdown-item:hover {color: #fff!important; background-color: #0069d9!important;}
+	.dropdown-toggle::after {margin:0 0 -2px 10px;}
 
 
 	/* Custom Default Links*/
