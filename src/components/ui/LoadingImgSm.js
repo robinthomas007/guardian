@@ -15,7 +15,7 @@ class LoadingImgSm extends React.Component {
         if (this.props.show){
             return(
                 
-                    <div className="loading-bars">
+                    <div className="loading-bars-sm">
                       <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="#333">
                           <g transform="matrix(1 0 0 -1 0 16)">
                               <rect x="2" width="2" height="16" rx="3">
