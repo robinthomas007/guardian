@@ -16,6 +16,7 @@ class AudioFilesPage extends Component {
 
         this.state = {
             projectID : '',
+            projectData : {},
             files:[],
             discs : [],
             activeTab : 0,
@@ -32,9 +33,14 @@ class AudioFilesPage extends Component {
     }
 
     getTrack(track, trackIndex) {
+
+        const {projectData} = this.state;
+
+        let projectArtist = (projectData.projectArtistName) ? projectData.projectArtistName : '';
+
         return (
             {
-                artist : (track.artist) ? (track.artist) : '',
+                artist : (track.artist) ? (track.artist) : projectArtist,
                 discNumber : (track.discNumber) ? (track.discNumber) : '',
                 fileName : (track.fileName) ? (track.fileName) : '',
                 hasUpload : (track.hasUpload) ? track.hasUpload : false,
@@ -265,6 +271,7 @@ class AudioFilesPage extends Component {
         this.setState({discs : sortedDiscs})
     }
 
+
     handleDataLoad() {
         const user = JSON.parse(sessionStorage.getItem('user'));
         const projectID = (this.state.projectID) ? (this.state.projectID) : '';
@@ -282,7 +289,6 @@ class AudioFilesPage extends Component {
                 "email" : user.email
             },
             "ProjectID" : (this.props.match.params.projectID) ? this.props.match.params.projectID : ''
-
         })
 
         fetch ('https://api-dev.umusic.net/guardian/project/review', {
@@ -298,6 +304,7 @@ class AudioFilesPage extends Component {
         .then (responseJSON =>
             {
                 if(responseJSON.Discs) {
+                    this.setState({projectData : responseJSON.Project})
                     this.setState({discs : responseJSON.Discs})
                     this.setState({pageTableData : responseJSON.Discs[this.state.activeTab].Tracks})
                 }
@@ -306,6 +313,10 @@ class AudioFilesPage extends Component {
         .catch(
             error => console.error(error)
         );
+    }
+
+    handlePreSaveDataValidation() {
+        
     }
 
     handleDataSubmit() {
@@ -317,6 +328,8 @@ class AudioFilesPage extends Component {
         const projectFields = (projectID) ? this.state.formInputs : {...releaseInformationInputs, ...this.state.formInputs}
 
         this.setTrackSequence();
+
+        this.handlePreSaveDataValidation();
 
         const fetchHeaders = new Headers(
             {
