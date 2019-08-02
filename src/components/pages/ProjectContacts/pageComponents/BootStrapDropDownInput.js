@@ -23,6 +23,7 @@ class BootStrapDropDownInput extends Component {
         let options = this.state.options.map( (option, i) => {
             return(
                 <Dropdown.Item 
+                    key={i}
                     eventKey={i + 1} 
                     dangerouslySetInnerHTML={{ __html: option }}
                 >
