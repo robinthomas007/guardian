@@ -101,15 +101,14 @@ class AudioVideoDataTable extends Component {
                         <td className="text-center">{i+1}</td>
                         <td className="audio-file" onDrop={(e) => this.drop(e, i, track)} onDragOver={this.allowDrop}>
                             <div draggable="true" onDragStart={(e) => this.drag(e, i, track)} className="sortable-audio-file">
-                                <i className="material-icons">format_line_spacing</i>
-                                <span>{track.fileName}</span>
-
-                                { (track.fileUpload) ? 
-                                    <span className={'loading-right'} id={track.fileName + "_ico"}>
+                               <ul className='audio-file-info'>
+                                   <li><i className="material-icons">format_line_spacing</i></li>
+                                   <li>{track.fileName}</li>
+                                   <li>{ (track.fileUpload) ? 
+                                    <span className="loading-sm" id={track.fileName + "_ico"}>
                                        <LoadingImgSm show={true}/>
-                                    </span> : ''
-                                }
-
+                                    </span> : ''}</li>
+                               </ul>
                                 <Form.Control
                                     type="hidden"
                                     id="fileName"
