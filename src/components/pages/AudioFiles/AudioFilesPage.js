@@ -26,21 +26,16 @@ class AudioFilesPage extends Component {
         this.showNotification = this.showNotification.bind(this);
         this.updateFiles = this.updateFiles.bind(this);
         this.deleteRow = this.deleteRow.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleDataSubmit = this.handleDataSubmit.bind(this);
         this.resequencePageTableData = this.resequencePageTableData.bind(this);
     }
 
     getTrack(track, trackIndex) {
-
         const {projectData} = this.state;
-
-        let projectArtist = (projectData.projectArtistName) ? projectData.projectArtistName : '';
-
         return (
             {
-                artist : (track.artist) ? (track.artist) : projectArtist,
+                artist : (track.artist) ? (track.artist) : (projectData.projectArtistName) ? projectData.projectArtistName : '',
                 discNumber : (track.discNumber) ? (track.discNumber) : '',
                 fileName : (track.fileName) ? (track.fileName) : '',
                 hasUpload : (track.hasUpload) ? track.hasUpload : false,
@@ -110,10 +105,9 @@ class AudioFilesPage extends Component {
     }
 
     updateFiles(e) {
-        const {files, discs, pageTableData} = this.state;
+        const {discs, pageTableData} = this.state;
         const activeTab = this.state.activeTab;
 
-        //let newFiles = (files.length > 0) ? [...Array.from(files), ...Array.from(e.target.files)] : Array.from(e.target.files);
         let newFiles = Array.from(e.target.files);
         let modifiedPageTableData = pageTableData;
         let modifiedDiscs = discs;
@@ -145,8 +139,6 @@ class AudioFilesPage extends Component {
     }
 
     deleteRow(rowIndex) {
-        const {files} = this.state;
-        const {discs} = this.state;
         const {pageTableData} = this.state;
 
         //remove the data row
@@ -191,56 +183,14 @@ class AudioFilesPage extends Component {
               )
               .then (responseJSON =>
                   {
-
-                        this.hideFileUploadingIndicator(responseJSON[0].fileName);
-                      //alert(JSON.stringify(responseJSON))
+                    this.hideFileUploadingIndicator(responseJSON[0].fileName);
+                    //alert(JSON.stringify(responseJSON))
                   }
               )
               .catch(
                   error => console.error(error)
               );
         }
-    }
-
-    handleSubmit() {
-        var audioFiles = document.getElementById('audioFiles');
-        const user = JSON.parse(sessionStorage.getItem('user'));
-        const projectID = (this.state.projectID) ? (this.state.projectID) : '';
-        const {pageTableData} = this.state;
-        const modifiedPageTableData = pageTableData;
-
-        var formData = new FormData();
-
-        for (var i = 0; i < this.state.files.length; i++) {
-            formData.append('file', this.state.files[i]);
-        }
-
-        const fetchHeaders = new Headers(
-            {
-                "Authorization" : sessionStorage.getItem('accessToken'),
-                "User-Email" : user.email,
-                "Project-Id" : projectID,
-            }
-        )
-
-        fetch('https://api-dev.umusic.net/guardian-media/api/Upload', {
-          method: 'POST',
-          headers : fetchHeaders,
-          body: formData
-        })
-        .then (response =>
-            {
-                return(response.json());
-            }
-        )
-        .then (responseJSON =>
-            {
-                this.handleDataSubmit()
-            }
-        )
-        .catch(
-            error => console.error(error)
-        );
     }
 
     resequencePageTableData(dragSource, dragTarget) {
@@ -267,7 +217,6 @@ class AudioFilesPage extends Component {
                 track.trackNumber = (i + 1)
             })
         })
-
         this.setState({discs : sortedDiscs})
     }
 
@@ -315,8 +264,56 @@ class AudioFilesPage extends Component {
         );
     }
 
-    handlePreSaveDataValidation() {
+    isValidIsrc(isrc) {
+        return((isrc.replace(/\W/g, '').length == 12) ? true : false);
+    }
+
+    isValidTitle(title) {
+        return((title.length > 0) ? true : false);
+    }
+
+    setFieldValidation(input, status) {
+        if(status === 'is-invalid') {
+            input.className = input.className.replace('is-invalid', '') + ' is-invalid';
+        } else {
+            input.className = input.className.replace('is-invalid', '');
+        }
         
+    }
+
+    isValidForm() {
+        let isrcs = document.getElementsByClassName('trackIsrcField');
+        let trackTitles = document.getElementsByClassName('trackTitleField');
+        let isValidForm = true;
+
+        for(var i=0; i<isrcs.length; i++) {
+            if(!this.isValidIsrc(isrcs[i].value)) {
+                this.setFieldValidation(isrcs[i], 'is-invalid');
+                isValidForm = false;
+            } else {
+                this.setFieldValidation(isrcs[i], 'is-valid');
+            }
+
+            if(!this.isValidTitle(trackTitles[i].value)) {
+                this.setFieldValidation(trackTitles[i], 'is-invalid');
+                isValidForm = false;
+            } else {
+                this.setFieldValidation(trackTitles[i], 'is-valid');
+            }
+        }
+        return(isValidForm)
+    }
+
+    handlePreSaveDataValidation() {
+        const {pageTableData} = this.state;
+        
+        let validationErrors = [];
+        
+        pageTableData.map( (track, i) => {
+            (!this.isValidIsrc(track.isrc) || !this.isValidTitle(track.trackTitle)) ? validationErrors.push(i) : alert(234)
+        })
+
+        return(validationErrors)
     }
 
     handleDataSubmit() {
@@ -329,40 +326,47 @@ class AudioFilesPage extends Component {
 
         this.setTrackSequence();
 
-        this.handlePreSaveDataValidation();
+        //this.handlePreSaveDataValidation();
 
-        const fetchHeaders = new Headers(
-            {
-                "Content-Type": "application/json",
-                "Authorization" : sessionStorage.getItem('accessToken')
-            }
-        )
+        let formIsValid = this.isValidForm();
 
-        const fetchBody = JSON.stringify( {
-            "User" : {
-                "email" : user.email
-            },
-            "projectID" : projectID,
-            "Discs" : this.state.discs
-        })
+        if (formIsValid ) {
 
-        fetch ('https://api-dev.umusic.net/guardian/project/track', {
-            method : 'POST',
-            headers : fetchHeaders,
-            body : fetchBody
-        }).then (response => 
-            {
-                return(response.json());
-            }
-        )
-        .then (responseJSON => 
-            {
-                this.showNotification();
-            }
-        )
-        .catch(
-            error => console.error(error)
-        );
+            const fetchHeaders = new Headers(
+                {
+                    "Content-Type": "application/json",
+                    "Authorization" : sessionStorage.getItem('accessToken')
+                }
+            )
+
+            const fetchBody = JSON.stringify( {
+                "User" : {
+                    "email" : user.email
+                },
+                "projectID" : projectID,
+                "Discs" : this.state.discs
+            })
+
+            fetch ('https://api-dev.umusic.net/guardian/project/track', {
+                method : 'POST',
+                headers : fetchHeaders,
+                body : fetchBody
+            }).then (response => 
+                {
+                    return(response.json());
+                }
+            )
+            .then (responseJSON => 
+                {
+                    this.showNotification();
+                }
+            )
+            .catch(
+                error => console.error(error)
+            );
+        } else {
+
+        }
     }
 
     componentDidMount() {

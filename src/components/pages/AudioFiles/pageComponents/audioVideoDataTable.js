@@ -26,7 +26,7 @@ class AudioVideoDataTable extends Component {
                     <th className="text-center">#</th>
                     <th>Audio File</th>
                     <th>ISRC <i><span className="required-ind">(Required)</span></i></th>
-                    <th>Track Title</th>
+                    <th>Track Title <i><span className="required-ind">(Required)</span></i></th>
                     <th>Artist</th>
                     <th className="text-center">Actions</th>
                 </tr>
@@ -42,6 +42,31 @@ class AudioVideoDataTable extends Component {
         this.setState({tableData : modifiedTableData})
 
         this.props.deleteRow(rowIndex)
+    }
+
+    isValidIsrc(isrc) {
+        return((isrc.replace(/\W/g, '').length == 12) ? true : false);
+    }
+
+    isValidTitle(title) {
+        return((title.length > 0) ? true : false);
+    }
+
+    setFieldValidation(input, status) {
+        if(status === 'is-invalid') {
+            input.className = input.className.replace('is-invalid', '') + ' is-invalid';
+        } else {
+            input.className = input.className.replace('is-invalid', '');
+        }
+        
+    }
+
+    handleOnBlur(e) {
+        if(e.target.className.match('trackIsrcField')) {
+            (this.isValidIsrc(e.target.value)) ? this.setFieldValidation(e.target, 'is-Valid') : this.setFieldValidation(e.target, 'is-invalid')
+        } else if (e.target.className.match('trackTitleField')) {
+            (this.isValidTitle(e.target.value)) ? this.setFieldValidation(e.target, 'is-Valid') : this.setFieldValidation(e.target, 'is-invalid')
+        }
     }
 
     handleChange(e, track, rowID) {
@@ -78,6 +103,7 @@ class AudioVideoDataTable extends Component {
         //audio-drop-area
 
     }
+
 
     AudioVideoDataBody(){
 
@@ -124,7 +150,12 @@ class AudioVideoDataTable extends Component {
                                 id="isrc"
                                 onChange={ (e) => this.handleChange(e, track, i) }
                                 value={this.state.tableData[i].isrc}
+                                className={'trackIsrcField'}
+                                onBlur={ (e) => this.handleOnBlur(e) }
                             />
+                            <div class="invalid-feedback">
+                                invalid ISRC
+                            </div>
                         </td>
                         <td>
                             <Form.Control
@@ -132,7 +163,12 @@ class AudioVideoDataTable extends Component {
                                 id='trackTitle'
                                 onChange={ (e) => this.handleChange(e, track, i) }
                                 value={this.state.tableData[i].trackTitle}
+                                className={'trackTitleField'}
+                                onBlur={ (e) => this.handleOnBlur(e) }
                             />
+                            <div class="invalid-feedback">
+                                invalid Track Title
+                            </div>
                         </td>
                         <td>
                             <Form.Control
@@ -140,6 +176,7 @@ class AudioVideoDataTable extends Component {
                                 id='artist'
                                 onChange={ (e) => this.handleChange(e, track, i) }
                                 value={this.state.tableData[i].artist}
+                                className={'trackArtist'}
                             />
                         </td>
                         <td className="text-center">
