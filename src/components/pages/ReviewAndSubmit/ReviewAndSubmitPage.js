@@ -48,9 +48,6 @@ class ReviewAndSubmitPage extends Component {
             {
                 this.setState({project : responseJSON.Project})
                 this.setState({discs : responseJSON.Discs})
-
-                console.log('responseJSON')
-                console.log(responseJSON)
             }
         )
         .catch(

@@ -303,6 +303,26 @@ class ReleaseinformationPage extends Component {
         );
     }
 
+    formatDateToYYYYMMDD(unFormattedDate) {
+        let formattedDate = '';
+
+        if(unFormattedDate) {
+            var d = new Date(unFormattedDate),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+    
+            if (month.length < 2) month = '0' + month;
+            if (day.length < 2) day = '0' + day;
+    
+            formattedDate = [year, month, day].join('-');
+        }
+
+        alert(unFormattedDate + ' : ' + formattedDate)
+
+        return(formattedDate)
+    }
+
     render() {
         return (
             <section className="page-container h-100">
@@ -399,7 +419,7 @@ class ReleaseinformationPage extends Component {
                                         id="projectReleaseDate" 
                                         className='form-control col-3' 
                                         type='date'
-                                        value={this.state.formInputs.projectReleaseDate}
+                                        value={this.formatDateToYYYYMMDD(this.state.formInputs.projectReleaseDate)}
                                         disabled={this.state.projectReleaseDateDisabled}
                                         onChange={
                                             (e) => {
