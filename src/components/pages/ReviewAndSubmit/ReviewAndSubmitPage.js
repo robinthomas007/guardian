@@ -127,7 +127,7 @@ class ReviewAndSubmitPage extends Component {
                     <br />
                     <div className="row no-gutters">
                         <div className="col-2">
-                            <img className="album-art" />
+                            <img className="album-art" src={this.state.project.projectCoverArtBase64Data}/>
                         </div>
                         <div className="col-10">
                             <div className="row no-gutters">

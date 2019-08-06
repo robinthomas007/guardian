@@ -27,7 +27,9 @@ class ReleaseinformationPage extends Component {
                     "projectReleasingLabelID" : '',
                     "projectReleaseDate" : '',
                     "projectReleaseDateTBD" : false,
-                    "projectNotes" : ''
+                    "projectNotes" : '',
+                    "projectCoverArtFileName": '',
+                    "projectCoverArtBase64Data": ''
             },
 
 
@@ -92,10 +94,12 @@ class ReleaseinformationPage extends Component {
         let reader = new FileReader();
             reader.readAsDataURL(file);
             reader.onload = function() {
-                updatedFormInputs['projectCoverArt'] = reader.result;
+                updatedFormInputs['projectCoverArtBase64Data'] = reader.result;
+                updatedFormInputs['projectCoverArtFileName'] = file.name;
             }
             reader.onerror = function() {
-                updatedFormInputs['projectCoverArt'] = '';
+                updatedFormInputs['projectCoverArtBase64Data'] = '';
+                updatedFormInputs['projectCoverArtFileName'] = '';
             }
 
         this.setState({formInputs : updatedFormInputs})
