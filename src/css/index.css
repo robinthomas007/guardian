@@ -44,6 +44,22 @@
 	.dropdown-item:focus, .dropdown-item:hover {color: #fff!important; background-color: #0069d9!important;}
 	.dropdown-toggle::after {margin:0 0 -2px 10px;}
 
+	.invalid-tooltip {
+		position: absolute;
+		z-index: 5;
+		top: 0px;
+		right: 0px;
+		display: none;
+		max-width: 100%;
+		padding: .25rem;
+		margin-top: 0;
+		font-size: .675rem;
+		line-height: 1;
+		color: #fff;
+		background-color: rgba(220,53,69,.8);
+		border-radius: .2rem;
+	}
+
 
 	/* Custom Default Links*/
 	a {color:#01579b; cursor:pointer;}
@@ -198,7 +214,7 @@
 	
 	button.close-project {margin-left:30px;}
 	
-	.required-ind {color:#FF0000;}
+	.required-ind {color:rgba(220,53,69,.8)}
 
 	.save-buttons {text-align:right; padding-right:30px; padding-bottom:30px; background-color:#fff;}
 	.save-buttons .btn {margin-left:10px;}
@@ -309,6 +325,6 @@
 	ul.results-controls .dropdown {margin:auto 6px;}
 	ul.results-controls span {margin-bottom:-60px;}
 
-
-
 	.dropdown.project-security-dropdown {width:290px;}
+
+	.audio-files-table tr td {position:relative;}

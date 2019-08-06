@@ -153,8 +153,8 @@ class AudioVideoDataTable extends Component {
                                 className={'trackIsrcField'}
                                 onBlur={ (e) => this.handleOnBlur(e) }
                             />
-                            <div class="invalid-feedback">
-                                invalid ISRC
+                            <div class="invalid-tooltip">
+                                Invalid ISRC
                             </div>
                         </td>
                         <td>
@@ -166,8 +166,8 @@ class AudioVideoDataTable extends Component {
                                 className={'trackTitleField'}
                                 onBlur={ (e) => this.handleOnBlur(e) }
                             />
-                            <div class="invalid-feedback">
-                                invalid Track Title
+                            <div class="invalid-tooltip">
+                                Invalid Track Title
                             </div>
                         </td>
                         <td>
@@ -205,7 +205,7 @@ class AudioVideoDataTable extends Component {
     render() {
         return (
             <div className="table-responsive">
-                <Table>
+                <Table className="audio-files-table">
                     {this.AudioVideoDataHeader()}
                     {this.AudioVideoDataBody()}
                 </Table>
