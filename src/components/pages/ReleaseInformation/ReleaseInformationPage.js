@@ -317,9 +317,6 @@ class ReleaseinformationPage extends Component {
     
             formattedDate = [year, month, day].join('-');
         }
-
-        alert(unFormattedDate + ' : ' + formattedDate)
-
         return(formattedDate)
     }
 
