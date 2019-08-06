@@ -132,7 +132,8 @@ export default withAuth(class Content extends Component {
             
             <TopNav userObj={this.state.user} updateParentHistory={this.updateHistory}/>
 
-            <SecureRoute path="/releaseInformation" render={ () => ( <ReleaseInformationPage user={this.state.user} />) } />
+            <SecureRoute path="/releaseInformation" exact render={ () => ( <ReleaseInformationPage user={this.state.user} />) } />
+            <SecureRoute path="/releaseInformation/:projectID" render={ () => ( <ReleaseInformationPage user={this.state.user} />) } />
 
             <SecureRoute path="/projectContacts" exact render={ () => ( <ProjectContactsPage user={this.state.user} />) }/>
             <SecureRoute path="/projectContacts/:projectID" render={(props) => (

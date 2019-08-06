@@ -31,8 +31,7 @@ class ReleaseinformationPage extends Component {
                     "projectCoverArtFileName": '',
                     "projectCoverArtBase64Data": ''
             },
-
-
+            project : {},
             projectReleaseDateDisabled : false,
             projectReleaseDateReset : false
         }
@@ -125,7 +124,7 @@ class ReleaseinformationPage extends Component {
 
         const releaseInformationInputs = JSON.parse(localStorage.getItem('projectData'));
         const user = JSON.parse(sessionStorage.getItem('user'));
-        const projectID = this.props.match.params.projectID;
+        const projectID = this.state.projectID;
         const fetchHeaders = new Headers(
             {
                 "Content-Type": "application/json",
@@ -137,42 +136,68 @@ class ReleaseinformationPage extends Component {
             "User" : {
                 "email" : user.email
             },
-            
             "Project" : this.state.formInputs
         })
 
-        fetch ('https://api-dev.umusic.net/guardian/project/validate', {
-            method : 'POST',
-            headers : fetchHeaders,
-            body : fetchBody
-        }).then (response => 
-            {
-                return(response.json());
-            }
-        )
-        .then (responseJSON => 
-            {
-                if(responseJSON.IsValid) {
-                    localStorage.setItem('projectData', JSON.stringify(this.state.formInputs));
-                    this.props.history.push('/projectContacts')
-                } else {
-                    new Noty ({
-                        type: 'error',
-                        id:'duplicateTitle',
-                        text: 'The project title ' + responseJSON.projectTitle + ' by ' + responseJSON.projectArtist +' already exists. Please enter a new title. Click to close.',
-                        theme: 'bootstrap-v4',
-                        layout: 'top',
-                        timeout: false,
-                        onClick: 'Noty.close();'
-                    }).show() 
-                }
-            }
-        )
-        .catch(
-            error => console.log(error)
-        );
+        //if this is an existing project we need to skip validation and save
+        if(this.state.formInputs.projectID !== '') {
 
-    };
+            fetch ('https://api-dev.umusic.net/guardian/project', {
+                method : 'POST',
+                headers : fetchHeaders,
+                body : fetchBody
+            }).then (response => 
+                {
+                    return(response.json());
+                }
+            ).then (responseJSON => 
+                {
+                    if(responseJSON.errorMessage) {
+
+                    } else {
+                        localStorage.setItem('projectData', JSON.stringify(this.state.formInputs));
+                        this.props.history.push('/projectContacts/' + responseJSON.Project.projectID)
+                    }
+                }
+            ).catch(
+                error => console.error(error)
+            );
+        } else {
+            //if this is a new project we need to go the validator path
+
+            fetch ('https://api-dev.umusic.net/guardian/project/validate', {
+                method : 'POST',
+                headers : fetchHeaders,
+                body : fetchBody
+            }).then (response => 
+                {
+                    return(response.json());
+                }
+            )
+            .then (responseJSON => 
+                {
+                    if(responseJSON.IsValid) {
+                        localStorage.setItem('projectData', JSON.stringify(this.state.formInputs));
+                        this.props.history.push('/projectContacts')
+                    } else {
+                        new Noty ({
+                            type: 'error',
+                            id:'duplicateTitle',
+                            text: 'The project title ' + responseJSON.projectTitle + ' by ' + responseJSON.projectArtist +' already exists. Please enter a new title. Click to close.',
+                            theme: 'bootstrap-v4',
+                            layout: 'top',
+                            timeout: false,
+                            onClick: 'Noty.close();'
+                        }).show() 
+                    }
+                }
+            )
+            .catch(
+                error => console.log(error)
+            );
+        }
+
+       };
 
     albumArt(e) {
 
@@ -205,8 +230,13 @@ class ReleaseinformationPage extends Component {
     }
 
     clearCoverArt(e) {
-        const {projectCoverArt} = this.state.formInputs;
-        this.setState({projectCoverArt : ''});
+        const {formInputs} = this.state;
+        let modifiedFormInputs = formInputs;
+            modifiedFormInputs['projectCoverArtFileName'] = '';
+            modifiedFormInputs['projectCoverArtBase64Data'] = '';
+
+        this.setState({formInputs : modifiedFormInputs});
+
         const projectCoverArtImg = document.getElementById('projectCoverArt');
         if(projectCoverArtImg) {
             projectCoverArtImg.remove();
@@ -219,12 +249,13 @@ class ReleaseinformationPage extends Component {
     }
 
     componentDidMount() {
-        if(this.state.formInputs.projectCoverArt !== '') {
-            this.setCoverArt(this.state.formInputs.projectCoverArt)
-        }
 
         if(this.state.formInputs.projectReleaseDateTBD === true) {
             this.setState({projectReleaseDateDisabled : true})
+        }
+
+        if(this.props.match.params && this.props.match.params.projectID) {
+            this.handleDataLoad()
         }
     }
 
@@ -232,11 +263,47 @@ class ReleaseinformationPage extends Component {
         if(this.props.user.ReleasingLabels && (this.state.formInputs.projectReleasingLabelID === '')) {
             this.setState( {formInputs : { ...this.state.formInputs, projectReleasingLabelID : this.props.user.ReleasingLabels[0].id}} )
         }
+
+        if(this.state.formInputs.projectCoverArtBase64Data !== '') {
+            this.setCoverArt(this.state.formInputs.projectCoverArtBase64Data)
+        }
     }
 
+    handleDataLoad() {
+        const user = JSON.parse(sessionStorage.getItem('user'))
+        const fetchHeaders = new Headers(
+            {
+                "Content-Type": "application/json",
+                "Authorization" : sessionStorage.getItem('accessToken')
+            }
+        )
+
+        const fetchBody = JSON.stringify( {
+            "User" : {
+                "email" : user.email
+            },
+            "ProjectID" : this.props.match.params.projectID
+        })
+
+        fetch ('https://api-dev.umusic.net/guardian/project/review', {
+            method : 'POST',
+            headers : fetchHeaders,
+            body : fetchBody
+        }).then (response => 
+            {
+                return(response.json());
+            }
+        ).then (responseJSON => 
+            {
+                this.setState({formInputs : responseJSON.Project})
+            }
+        )
+        .catch(
+            error => console.error(error)
+        );
+    }
 
     render() {
-
         return (
             <section className="page-container h-100">
 
