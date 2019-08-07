@@ -283,6 +283,9 @@ class ReleaseinformationPage extends Component {
     }
 
     handleDataLoad() {
+
+        this.setState({ showloader : true})
+
         const user = JSON.parse(sessionStorage.getItem('user'))
         const fetchHeaders = new Headers(
             {
@@ -309,6 +312,7 @@ class ReleaseinformationPage extends Component {
         ).then (responseJSON => 
             {
                 this.setState({formInputs : responseJSON.Project})
+                this.setState({ showloader : false})
             }
         )
         .catch(
