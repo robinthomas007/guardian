@@ -7,6 +7,7 @@ import { withRouter } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import UUID from 'uuid';
 import Noty from 'noty';
+import LoadingImg from '../../ui/LoadingImg';
 
 import ReleasingLabelsInput from '../ReleaseInformation/pageComponents/ReleasingLabelsInput';
 import ProjectTypesInput from '../ReleaseInformation/pageComponents/ProjectTypesInput';
@@ -31,7 +32,7 @@ class ReleaseinformationPage extends Component {
                     "projectCoverArtFileName": '',
                     "projectCoverArtBase64Data": ''
             },
-            project : {},
+            showloader : false,
             projectReleaseDateDisabled : false,
             projectReleaseDateReset : false
         }
@@ -122,14 +123,13 @@ class ReleaseinformationPage extends Component {
         const preview = document.getElementById('preview')
                 preview.appendChild(img);
         }
-
-
-              
     }
 
     handleSubmit(event) {
 
         event.preventDefault();
+
+        this.setState({ showloader : true})
 
         const releaseInformationInputs = JSON.parse(localStorage.getItem('projectData'));
         const user = JSON.parse(sessionStorage.getItem('user'));
@@ -161,6 +161,8 @@ class ReleaseinformationPage extends Component {
                 }
             ).then (responseJSON => 
                 {
+                    this.setState({ showloader : false})
+
                     if(responseJSON.errorMessage) {
 
                     } else {
@@ -334,6 +336,8 @@ class ReleaseinformationPage extends Component {
     render() {
         return (
             <section className="page-container h-100">
+
+                <LoadingImg show={this.state.showloader} />
 
                 <PageHeader />
 
