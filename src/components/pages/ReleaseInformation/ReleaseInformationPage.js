@@ -105,16 +105,25 @@ class ReleaseinformationPage extends Component {
     };
 
     setCoverArt(imgSrc) {
-        const img = document.createElement("img");
-              img.src = imgSrc;
-              img.height = 188;
-              img.width = 188;
-              img.classList.add("obj");
-              img.id = 'projectCoverArt';
-              //img.file = file;
+
+        const coverImg = document.getElementById('projectCoverArtIMG');
+
+        if(coverImg) {
+            coverImg.src = this.state.formInputs.projectCoverArtBase64Data
+        } else {
+            const img = document.createElement("img");
+            img.src = this.state.formInputs.projectCoverArtBase64Data;
+            img.height = 188;
+            img.width = 188;
+            img.classList.add("obj");
+            img.id = 'projectCoverArtIMG';
+            //img.file = file;
 
         const preview = document.getElementById('preview')
-              preview.appendChild(img);
+                preview.appendChild(img);
+        }
+
+
               
     }
 
@@ -202,6 +211,7 @@ class ReleaseinformationPage extends Component {
     albumArt(e) {
 
         const files = e.target.files
+
         for (let i = 0; i < files.length; i++) {
             const file = files[i];
             
@@ -212,7 +222,7 @@ class ReleaseinformationPage extends Component {
                   img.width = 188;
                   img.classList.add("obj");
                   img.file = file;
-                  img.id = 'projectCoverArt';
+                  img.id = 'projectCoverArtIMG';
 
             const preview = document.getElementById('preview')
                   preview.appendChild(img);
@@ -230,6 +240,7 @@ class ReleaseinformationPage extends Component {
     }
 
     clearCoverArt(e) {
+        
         const {formInputs} = this.state;
         let modifiedFormInputs = formInputs;
             modifiedFormInputs['projectCoverArtFileName'] = '';
@@ -237,7 +248,7 @@ class ReleaseinformationPage extends Component {
 
         this.setState({formInputs : modifiedFormInputs});
 
-        const projectCoverArtImg = document.getElementById('projectCoverArt');
+        const projectCoverArtImg = document.getElementById('projectCoverArtIMG');
         if(projectCoverArtImg) {
             projectCoverArtImg.remove();
         }
