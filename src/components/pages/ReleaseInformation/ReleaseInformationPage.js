@@ -191,6 +191,9 @@ class ReleaseinformationPage extends Component {
                         localStorage.setItem('projectData', JSON.stringify(this.state.formInputs));
                         this.props.history.push('/projectContacts')
                     } else {
+
+                        this.setState({ showloader : false})
+
                         new Noty ({
                             type: 'error',
                             id:'duplicateTitle',
