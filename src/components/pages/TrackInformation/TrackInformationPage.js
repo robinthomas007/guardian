@@ -7,6 +7,7 @@ import TrackInformationDataTable_OLD from '../TrackInformation/pageComponents/Tr
 import ReplaceAudioModal from '../../modals/ReplaceAudioModal';
 import './TrackInformation.css';
 import Noty from 'noty'
+import { listenerCount } from 'events';
 
 class TrackInformationPage extends Component {
 
@@ -19,7 +20,8 @@ class TrackInformationPage extends Component {
             tracksData : [],
             projectReleaseDate : '',
             projectData : {},
-            activeDiscTab : 1
+            activeDiscTab : 1,
+            discs : []
         }
         this.addBlankRow = this.addBlankRow.bind(this);
         this.showTrackModal = this.showTrackModal.bind(this);
@@ -30,6 +32,7 @@ class TrackInformationPage extends Component {
         this.handlePageDataLoad = this.handlePageDataLoad.bind(this);
         this.formatDateToYYYYMMDD = this.formatDateToYYYYMMDD.bind(this);
         this.setActiveDiscTab = this.setActiveDiscTab.bind(this);
+        this.handleDiscUpdate = this.handleDiscUpdate.bind(this);
 
         if(this.props.match.params.projectID) {
             this.handlePageDataLoad()
@@ -58,7 +61,7 @@ class TrackInformationPage extends Component {
 
         return(
             {
-                trackIsrc: '',
+                isrc: '',
                 trackTitle : '',
                 trackSingle : false,
                 trackReleaseDate : formattedDate
@@ -145,6 +148,9 @@ class TrackInformationPage extends Component {
         ).then (responseJSON => 
 
             {
+
+                this.setState( { discs : responseJSON.Discs })
+
                 const hasTracks = (responseJSON && responseJSON.Discs && responseJSON.Discs[0] && responseJSON.Discs[0].Tracks) ? true : false;
                 if(hasTracks) {
                     const { tableRows } = this.state;
@@ -153,11 +159,11 @@ class TrackInformationPage extends Component {
                         const displayDate = this.formatDateToYYYYMMDD((track.trackReleaseDate) ? track.trackReleaseDate : responseJSON.Project.projectReleaseDate)
                         return(
                             {
-                                trackID : track.trackID,
-                                trackIsrc : track.isrc,
-                                trackTitle : track.trackTitle,
-                                trackSingle : track.isSingle,
-                                trackReleaseDate : displayDate
+                                trackID : (track.trackID) ? track.trackID : '',
+                                isrc : (track.isrc) ? track.isrc : '',
+                                trackTitle : (track.trackTitle) ? track.trackTitle : '',
+                                trackSingle : (track.isSingle) ? track.isSingle : '',
+                                trackReleaseDate : (displayDate) ? displayDate : ''
                             }
                         )
                     })
@@ -200,24 +206,34 @@ class TrackInformationPage extends Component {
         }).show()
     };
 
+    handleDiscUpdate(i, updatedDisc) {
+        const {discs} = this.state;
+        let modifiedDiscs = discs;
+            modifiedDiscs[i] = updatedDisc
+
+        this.setState({discs : modifiedDiscs})
+        
+        //alert(JSON.stringify(discs) + ' \n ^^^^ ' + JSON.stringify(updatedDisc))
+    }
+
     handleSubmit(event) {
         const user = JSON.parse(sessionStorage.getItem('user'))
-        let tracksData = this.state.tableRows.map( function (track, i) {
-            let trackCount = i + 1;
-            trackCount = trackCount.toString();
 
-            return(
-                {
-                    trackID : track.trackID,
-                    discNumber : '1',
-                    trackNumber : trackCount,
-                    hasUpload : true,
-                    trackTitle : track.trackTitle,
-                    isrc :  track.trackIsrc,
-                    isSingle : track.trackSingle,
-                    trackReleaseDate : track.trackReleaseDate
-                }
-            )  
+        let discs = this.state.discs.map( function (disc, i) {
+            let tracks = disc.Tracks.map( function (track, j) {
+                return(
+                    {
+                        trackID : (track.trackID) ? track.trackID : '',
+                        discNumber : i,
+                        trackNumber : j+1,
+                        hasUpload : (track.hasUpload) ? track.hasUpload : false,
+                        trackTitle : (track.trackTitle) ? track.trackTitle : '',
+                        isrc :  (track.isrc) ? track.isrc : '',
+                        isSingle : (track.trackSingle) ? track.trackSingle : false,
+                        trackReleaseDate : (track.trackReleaseDate) ? track.trackReleaseDate : ''
+                    }
+                )           
+            })
         }.bind(this));
 
         const fetchHeaders = new Headers(
@@ -226,20 +242,13 @@ class TrackInformationPage extends Component {
                 "Authorization" : sessionStorage.getItem('accessToken')
             }
         )
-
-
         const fetchBody = JSON.stringify( {
             "User" : {
                 "email" : user.email
             },
             "projectID": this.props.match.params.projectID,
-            "Discs" : [
-                {
-                    "discNumber" : "1", 
-                    "Tracks" : tracksData
-                }
-            ]
-        })
+            "Discs" : this.state.discs
+         })
 
 
         fetch ('https://api-dev.umusic.net/guardian/project/track', {
@@ -277,23 +286,14 @@ class TrackInformationPage extends Component {
                     </div>
                 </div>
 
-                   
-                <TrackInformationDataTable_OLD 
-                    data={this.state.tableRows} 
-                    showClick={this.showTrackModal} 
-                    handleChange={this.handleChange}
-                    removeRow={this.removeRow}
-                />
-               
-
                 <TabbedTracks 
                     data={this.state.projectData} 
                     showClick={this.showTrackModal} 
                     activeDiscTab={this.state.activeDiscTab}
                     handleActiveDiscUpdate={this.setActiveDiscTab}
                     handleChange={this.handleChange}
+                    handleDiscUpdate={this.handleDiscUpdate}
                 />
-
 
                 <section className="row save-buttons">
                     <div className="col-9">
