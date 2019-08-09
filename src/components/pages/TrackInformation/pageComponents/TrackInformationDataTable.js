@@ -40,7 +40,7 @@ class TrackInformationDataTable extends Component {
 
     handleChange(event, track, i) {
         const { DataRows } = this.state;
-        const modifiedRows = DataRows;
+        const modifiedDataRows = DataRows;
 
         let inputValue = '';
 
@@ -50,11 +50,11 @@ class TrackInformationDataTable extends Component {
 
         track[event.target.id] = event.target.value;
         
-        this.setState({DataRows : modifiedRows})
+        this.setState({DataRows : modifiedDataRows})
+        this.props.updateDiscData(this.props.discID, modifiedDataRows)
 
-        this.props.updateDiscData(i, modifiedRows)
 
-        //console.log(DataRows)
+        console.log(modifiedDataRows)
     };
 
     formatDateToYYYYMMDD(unFormattedDate) {
@@ -84,19 +84,19 @@ class TrackInformationDataTable extends Component {
     }
 
     componentDidMount() {
-        {this.handleDataLoad(this.props.discID)}
+        this.handleDataLoad(this.props.discID)
     }
 
-    getBlankRow = () => {
+    getBlankRow = (trackNumber) => {
         const {Project} = this.props.data;
         let blankRow = 
             {
                 trackID : '',
-                discNumber : parseInt(this.props.discID) + 1,
-                trackNumber : '',
-                hasUpload : '',
+                discNumber : (this.props.discID + 1).toString(),
+                trackNumber : trackNumber + 1,
+                hasUpload : false,
                 trackTitle : '',
-                trackIsrc :  '',
+                isrc :  '',
                 isSingle : false,
                 tbdReleaseDate : false,
                 trackReleaseDate : this.formatDateToYYYYMMDD(Project.projectReleaseDate)
@@ -107,7 +107,7 @@ class TrackInformationDataTable extends Component {
     addBlankRow() {
         const {DataRows} = this.state;
         var newRow = DataRows
-            newRow.push(this.getBlankRow())
+            newRow.push(this.getBlankRow(DataRows.length + 1))
         this.setState({DataRows : newRow})
     }
 
@@ -120,12 +120,12 @@ class TrackInformationDataTable extends Component {
             dataRows = Tracks.map( function (track, i) {
                 return(
                     {
-                        trackID : track.trackID,
+                        trackID : (track.trackID) ? track.trackID : '',
                         discNumber : parseInt(discID) + 1,
-                        trackNumber : '',
+                        trackNumber : i + 1,
                         hasUpload : true,
                         trackTitle : track.trackTitle,
-                        trackIsrc :  track.isrc,
+                        isrc :  (track.isrc) ? track.isrc : '',
                         isSingle : track.isSingle,
                         tbdReleaseDate : track.tbdReleaseDate,
                         trackReleaseDate : track.trackReleaseDate
@@ -134,7 +134,7 @@ class TrackInformationDataTable extends Component {
 
             })
         } else {
-            dataRows = [this.getBlankRow()];
+            dataRows = [this.getBlankRow(0)];
         }
 
         const {DataRows} = this.state;
@@ -147,7 +147,7 @@ class TrackInformationDataTable extends Component {
 
         const {DataRows} = this.state;
         let tableRows = []
-            tableRows.push(this.getBlankRow())
+            tableRows.push(this.getBlankRow(0))
 
         if(DataRows) {
             tableRows = DataRows.map( (track, i) => {
@@ -167,8 +167,8 @@ class TrackInformationDataTable extends Component {
                         <td>
                             <Form.Control 
                                 type="text" 
-                                id={'trackIsrc'} 
-                                value={track.trackIsrc}
+                                id={'isrc'} 
+                                value={track.isrc}
                                 onChange={(evt) => this.handleChange(evt, track, i)}
                             ></Form.Control>
                         </td>

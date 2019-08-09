@@ -27,17 +27,13 @@ class TabbedTracks extends Component {
     }
 
     updateDiscData(discID, discData) {
-        const  {discs} = this.state;
-        discID = parseInt(discID) + 1;
-        //const disc
 
-        //this.setState({discs : discData})
+        let updatedDiscData = {
+            "discNumber" : JSON.stringify((discID + 1)),
+            "Tracks" : discData
+        }
 
-
-        //console.log(thisDisc)
-        //console.log('------')
-        //console.log(discData)
-        
+        this.props.handleDiscUpdate(discID, updatedDiscData)
     }
 
     componentWillReceiveProps(props) {
@@ -84,7 +80,6 @@ class TabbedTracks extends Component {
                 {this.getDiscTabs()}
                 <div onClick={this.addDisc}>addDisc</div>
             </div>
-
         )
     }
 }
