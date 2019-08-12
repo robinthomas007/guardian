@@ -27,12 +27,10 @@ class TabbedTracks extends Component {
     }
 
     updateDiscData(discID, discData) {
-
         let updatedDiscData = {
             "discNumber" : JSON.stringify((discID + 1)),
             "Tracks" : discData
         }
-
         this.props.handleDiscUpdate(discID, updatedDiscData)
     }
 

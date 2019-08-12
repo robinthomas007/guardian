@@ -10,7 +10,6 @@ class TrackInformationDataTable extends Component {
             DataRows : [],
             tableRows : [],
             projectReleaseDate : '',
-            discID : this.props.discID,
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -52,9 +51,6 @@ class TrackInformationDataTable extends Component {
         
         this.setState({DataRows : modifiedDataRows})
         this.props.updateDiscData(this.props.discID, modifiedDataRows)
-
-
-        console.log(modifiedDataRows)
     };
 
     formatDateToYYYYMMDD(unFormattedDate) {
@@ -78,9 +74,9 @@ class TrackInformationDataTable extends Component {
     removeRow(rowIndex) {
         const {DataRows} = this.state;
         const ModifiedRows = DataRows;
-
-        ModifiedRows.splice(rowIndex, 1);
+              ModifiedRows.splice(rowIndex, 1);
         this.setState({DataRows : ModifiedRows})
+        this.props.updateDiscData(this.props.discID, ModifiedRows)
     }
 
     componentDidMount() {
