@@ -124,7 +124,10 @@ class TrackInformationDataTable extends Component {
                         isrc :  (track.isrc) ? track.isrc : '',
                         isSingle : track.isSingle,
                         tbdReleaseDate : track.tbdReleaseDate,
-                        trackReleaseDate : track.trackReleaseDate
+                        trackReleaseDate : track.trackReleaseDate,
+                        fileName : (track.fileName) ? track.fileName : '',
+                        artist : (track.artist) ? track.artist : ''
+
                     }
                 )
 

@@ -55,8 +55,7 @@ class TrackInformationPage extends Component {
     }
 
     getBlankRow = () => {
-
-        const projectReleaseDate = this.state.projectReleaseDate
+        const projectReleaseDate = this.state.projectData.projectReleaseDate
         let formattedDate = this.formatDateToYYYYMMDD(projectReleaseDate);
 
         return(
@@ -148,35 +147,11 @@ class TrackInformationPage extends Component {
         ).then (responseJSON => 
 
             {
-
+                const { tableRows } = this.state;
                 this.setState( { discs : responseJSON.Discs })
-
-                const hasTracks = (responseJSON && responseJSON.Discs && responseJSON.Discs[0] && responseJSON.Discs[0].Tracks) ? true : false;
-                if(hasTracks) {
-                    const { tableRows } = this.state;
-                    this.setState({projectReleaseDate : responseJSON.Project.projectReleaseDate})
-                    let modifiedRows = responseJSON.Discs[0].Tracks.map((track) => {
-                        const displayDate = this.formatDateToYYYYMMDD((track.trackReleaseDate) ? track.trackReleaseDate : responseJSON.Project.projectReleaseDate)
-                        return(
-                            {
-                                trackID : (track.trackID) ? track.trackID : '',
-                                isrc : (track.isrc) ? track.isrc : '',
-                                trackTitle : (track.trackTitle) ? track.trackTitle : '',
-                                trackSingle : (track.isSingle) ? track.isSingle : '',
-                                trackReleaseDate : (displayDate) ? displayDate : ''
-                            }
-                        )
-                    })
-    
-                    this.setState({ tableRows: modifiedRows });
-                } else {
-                    this.addBlankRow()
-                }
-
+                this.setState({projectReleaseDate : responseJSON.Project.projectReleaseDate})
                 this.setState({projectData : responseJSON})
             }
-
-            
         )
         .catch(
             error => console.error(error)
@@ -230,7 +205,9 @@ class TrackInformationPage extends Component {
                         trackTitle : (track.trackTitle) ? track.trackTitle : '',
                         isrc :  (track.isrc) ? track.isrc : '',
                         isSingle : (track.trackSingle) ? track.trackSingle : false,
-                        trackReleaseDate : (track.trackReleaseDate) ? track.trackReleaseDate : ''
+                        trackReleaseDate : (track.trackReleaseDate) ? track.trackReleaseDate : '',
+                        fileName : (track.fileName) ? track.fileName : '',
+                        artist : (track.artist) ? track.artist : ''
                     }
                 )           
             })
