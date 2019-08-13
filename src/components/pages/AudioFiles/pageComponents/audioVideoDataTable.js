@@ -166,7 +166,7 @@ class AudioVideoDataTable extends Component {
                                 className={'trackTitleField'}
                                 onBlur={ (e) => this.handleOnBlur(e) }
                             />
-                            <div class="invalid-tooltip">
+                            <div className="invalid-tooltip">
                                 Invalid Track Title
                             </div>
                         </td>
