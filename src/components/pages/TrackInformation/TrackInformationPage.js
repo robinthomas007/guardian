@@ -27,7 +27,6 @@ class TrackInformationPage extends Component {
         this.showTrackModal = this.showTrackModal.bind(this);
         this.hideTrackModal = this.hideTrackModal.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleChange = this.handleChange.bind(this);
         this.removeRow = this.removeRow.bind(this);
         this.handlePageDataLoad = this.handlePageDataLoad.bind(this);
         this.formatDateToYYYYMMDD = this.formatDateToYYYYMMDD.bind(this);
@@ -62,7 +61,7 @@ class TrackInformationPage extends Component {
             {
                 isrc: '',
                 trackTitle : '',
-                trackSingle : false,
+                isSingle : false,
                 trackReleaseDate : formattedDate
             }
         )
@@ -85,20 +84,6 @@ class TrackInformationPage extends Component {
     hideTrackModal() {
         this.setState({showReplaceModal : false})
     }
-
-    handleChange(event, track, i) {
-        let inputValue = '';
-
-        if(event.target.type === 'checkbox') {
-            event.target.value = (event.target.checked) ? true : false;
-        }
-
-        const { tableRows } = this.state;
-        const modifiedRows = tableRows;
-              modifiedRows[i][event.target.id] = event.target.value;
-        
-              this.setState({ tableRows: modifiedRows });
-    };
 
     formatDateToYYYYMMDD(unFormattedDate) {
         let formattedDate = '';
@@ -204,7 +189,7 @@ class TrackInformationPage extends Component {
                         hasUpload : (track.hasUpload) ? track.hasUpload : false,
                         trackTitle : (track.trackTitle) ? track.trackTitle : '',
                         isrc :  (track.isrc) ? track.isrc : '',
-                        isSingle : (track.trackSingle) ? track.trackSingle : false,
+                        isSingle : (track.isSingle) ? track.isSingle : false,
                         trackReleaseDate : (track.trackReleaseDate) ? track.trackReleaseDate : '',
                         fileName : (track.fileName) ? track.fileName : '',
                         artist : (track.artist) ? track.artist : ''
@@ -252,7 +237,10 @@ class TrackInformationPage extends Component {
         return (
             <section className="page-container h-100">
             
-                <ReplaceAudioModal showModal={this.state.showReplaceModal} handleClose={this.hideTrackModal}/>
+                <ReplaceAudioModal 
+                    showModal={this.state.showReplaceModal} 
+                    handleClose={this.hideTrackModal}
+                />
 
                 <PageHeader />
 
@@ -268,7 +256,6 @@ class TrackInformationPage extends Component {
                     showClick={this.showTrackModal} 
                     activeDiscTab={this.state.activeDiscTab}
                     handleActiveDiscUpdate={this.setActiveDiscTab}
-                    handleChange={this.handleChange}
                     handleDiscUpdate={this.handleDiscUpdate}
                 />
 

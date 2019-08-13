@@ -122,7 +122,7 @@ class TrackInformationDataTable extends Component {
                         hasUpload : true,
                         trackTitle : track.trackTitle,
                         isrc :  (track.isrc) ? track.isrc : '',
-                        isSingle : track.isSingle,
+                        isSingle : (track.isSingle) ? track.isSingle : false,
                         tbdReleaseDate : track.tbdReleaseDate,
                         trackReleaseDate : track.trackReleaseDate,
                         fileName : (track.fileName) ? track.fileName : '',
@@ -181,17 +181,18 @@ class TrackInformationDataTable extends Component {
                         </td>
                         <td className="text-center">
                             <label className="custom-checkbox">
-                                <input 
+                              <input 
                                     type="checkbox" 
-                                    id={'trackSingle'} 
-                                    defaultChecked={track.isSingle} 
-                                    value={track.isSingle} 
+                                    id={'isSingle'} 
+                                    defaultChecked={track.isSingle}
+                                    value={track.isSingle}
                                     onChange={(evt) => this.handleChange(evt, track, i)}
                                 />
                                 <span className="checkmark"></span>
                             </label>
                         </td>
                         <td className="release-date-col">
+
                             <Form.Control 
                                 type="date" 
                                 id={'trackReleaseDate'}
