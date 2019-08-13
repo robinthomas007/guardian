@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
+import {Table, Grid, Button, Form, Tabs, Tab  } from 'react-bootstrap';
+
 import PageHeader from '../PageHeader/PageHeader';
 import './ReviewAndSubmit.css';
 import Noty from 'noty';
+import AudioFilesTabsContainer from '../ReviewAndSubmit/pageComponents/AudioFileTabsContainer';
 import { withRouter } from 'react-router-dom';
 
 class ReviewAndSubmitPage extends Component {
@@ -11,8 +14,10 @@ class ReviewAndSubmitPage extends Component {
 
         this.state = { 
             projectID : props.projectID,
-            project : {},
-            discs : {}
+            project : {
+                projectCoverArtBase64Data : ''
+            },
+            discs : []
         }
 
         this.handleProjectCategoryClick = this.handleProjectCategoryClick.bind(this);
@@ -33,7 +38,6 @@ class ReviewAndSubmitPage extends Component {
             },
             "ProjectID" : this.props.match.params.projectID
         })
-
 
         fetch ('https://api-dev.umusic.net/guardian/project/review', {
             method : 'POST',
@@ -68,34 +72,6 @@ class ReviewAndSubmitPage extends Component {
             layout: 'top',
             timeout: '3000'
         }).show() 
-    }
-
-    getAudioFilesTableData() {
-        if(this.state.discs.length >= 1) {
-            return this.state.discs.map( (disc, i) => (
-                disc.Tracks.map( (track, i) => (
-                    <tr className="row no-gutters">
-                        <td className="col-1 centered">{track.trackNumber}</td>
-                        <td className="col-2">{track.fileName}</td>
-                        <td className="col-2">{track.trackTitle}</td>
-                        <td className="col-2">{track.isrc}</td>
-                        <td className="col-2">{track.artist}</td>
-                        <td className="col-1 centered">
-                            <label className="custom-checkbox"> 
-                            {track.isSingle
-                                ? <input disabled type="checkbox" checked />
-                                : <input disabled type="checkbox" />
-                            }
-                                <span className="static-checkmark"></span>
-                            </label>
-                        </td>
-                        <td className="col-2 centered">{track.trackReleaseDate}</td>
-                    </tr>
-                )
-            )
-        ))}
-
-
     }
 
     render() {
@@ -188,32 +164,13 @@ class ReviewAndSubmitPage extends Component {
                     </div>
                     <div className="col-12">
                     <br />
-                    <nav>
-                        <div className="nav nav-tabs" id="nav-tab" role="tablist">
-                            <a className="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Disc 1</a>
-                        </div>
-                    </nav>
                     
                     <div className="tab-content" id="nav-tabContent">
                         <div className="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                            <br />
-                            <table className="table">
-                                <thead>
-                                    <tr className="row no-gutters">
-                                        <th className="col-1 centered">#</th>
-                                        <th className="col-2">Audio File</th>
-                                        <th className="col-2">Track Title</th>
-                                        <th className="col-2">ISRC</th>
-                                        <th className="col-2">Artist</th>
-                                        <th className="col-1 centered">Single</th>
-                                        <th className="col-2 centered">Release Date</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {this.getAudioFilesTableData()}
-                                </tbody>
-                            </table>
-                            </div>
+                            <AudioFilesTabsContainer 
+                                discs={this.state.discs}
+                            />
+                        </div>
                         </div>
                     </div>
                 </div>
