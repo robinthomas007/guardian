@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import {Table, Grid, Button, Form, Tabs, Tab  } from 'react-bootstrap'; 
+import { SingleReleaseDateTbd } from '../pageComponents/SingleReleaseDateTbd'
+
 
 class TrackInformationDataTable extends Component {
 
@@ -9,7 +11,6 @@ class TrackInformationDataTable extends Component {
         this.state = {
             DataRows : [],
             tableRows : [],
-            projectReleaseDate : '',
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -85,6 +86,7 @@ class TrackInformationDataTable extends Component {
 
     getBlankRow = (trackNumber) => {
         const {Project} = this.props.data;
+
         let blankRow = 
             {
                 trackID : '',
@@ -95,7 +97,12 @@ class TrackInformationDataTable extends Component {
                 isrc :  '',
                 isSingle : false,
                 tbdReleaseDate : false,
-                trackReleaseDate : this.formatDateToYYYYMMDD(Project.projectReleaseDate)
+                trackReleaseDate : this.formatDateToYYYYMMDD(Project.projectReleaseDate), 
+
+                isSingleDisabled : false, 
+                isReleaseDateDisabled : (Project.projectReleaseDate === '') ? true : false, 
+                isTbdDisabled : false,
+                isTbdChecked : (Project.projectReleaseDate === '') ? true : false
             }
         return(blankRow)
     }
@@ -105,6 +112,52 @@ class TrackInformationDataTable extends Component {
         var newRow = DataRows
             newRow.push(this.getBlankRow(DataRows.length + 1))
         this.setState({DataRows : newRow})
+    }
+
+    resetDatePicker(i) {
+        let datePickers = document.getElementsByClassName('trackReleaseDateInput');
+        if(datePickers[i]) {
+            datePickers[i].value = '';
+        }        
+    }
+
+    setTBD(evt, track, i) {
+        const { Project } = this.props.data;
+        const { DataRows } = this.state;
+        let modifiedDataRows = DataRows;
+
+        if(evt.target.checked) {
+            modifiedDataRows[i].isReleaseDateDisabled = true;
+            modifiedDataRows[i].trackReleaseDate = '';
+            modifiedDataRows[i].isSingle = false;
+            modifiedDataRows[i].isTbdDisabled = false;
+            modifiedDataRows[i].isTbdChecked = true;
+
+            this.resetDatePicker(i);
+        } else {
+            modifiedDataRows[i].isTbdDisabled = false;
+        }
+
+        this.setState({DataRows : modifiedDataRows})
+        this.props.updateDiscData(this.props.discID, modifiedDataRows)
+    }
+
+    setSingle(evt, track, i) {
+        const { Project } = this.props.data;
+        const { DataRows } = this.state;
+        let modifiedDataRows = DataRows;
+
+        if(evt.target.checked) {
+            modifiedDataRows[i].isSingle = true;
+            modifiedDataRows[i].isReleaseDateDisabled = false;
+            modifiedDataRows[i].isTbdChecked = false;
+            modifiedDataRows[i].isTbdDisabled = false;
+        } else {
+            modifiedDataRows[i].isSingle = false;
+        }
+
+        this.setState({DataRows : modifiedDataRows})
+        this.props.updateDiscData(this.props.discID, modifiedDataRows)
     }
 
     handleDataLoad(discID) {
@@ -120,14 +173,18 @@ class TrackInformationDataTable extends Component {
                         discNumber : parseInt(discID) + 1,
                         trackNumber : i + 1,
                         hasUpload : true,
-                        trackTitle : track.trackTitle,
+                        trackTitle : (track.trackTitle) ? track.trackTitle : '',
                         isrc :  (track.isrc) ? track.isrc : '',
                         isSingle : (track.isSingle) ? track.isSingle : false,
-                        tbdReleaseDate : track.tbdReleaseDate,
-                        trackReleaseDate : track.trackReleaseDate,
+                        tbdReleaseDate : (track.tbdReleaseDate) ? track.tbdReleaseDate : '',
+                        trackReleaseDate : (track.trackReleaseDate) ? track.trackReleaseDate : '',
                         fileName : (track.fileName) ? track.fileName : '',
-                        artist : (track.artist) ? track.artist : ''
-
+                        artist : (track.artist) ? track.artist : '',
+                        
+                        isSingleDisabled : false, 
+                        isReleaseDateDisabled : (track.trackReleaseDate !== '' || track.isSingle) ? false : true,
+                        isTbdDisabled : (track.trackReleaseDate !== '' || track.isSingle) ? false : true,
+                        isTbdChecked : (track.trackReleaseDate !== '' || track.isSingle) ? false : true
                     }
                 )
 
@@ -150,6 +207,7 @@ class TrackInformationDataTable extends Component {
 
         if(DataRows) {
             tableRows = DataRows.map( (track, i) => {
+
                 return(
                     <tr draggable>
                         <td className="text-center">
@@ -184,9 +242,9 @@ class TrackInformationDataTable extends Component {
                               <input 
                                     type="checkbox" 
                                     id={'isSingle'} 
-                                    defaultChecked={track.isSingle}
+                                    checked={track.isSingle}
                                     value={track.isSingle}
-                                    onChange={(evt) => this.handleChange(evt, track, i)}
+                                    onChange={(evt) => this.setSingle(evt, track, i)}
                                 />
                                 <span className="checkmark"></span>
                             </label>
@@ -194,19 +252,21 @@ class TrackInformationDataTable extends Component {
                         <td className="release-date-col">
 
                             <Form.Control 
+                                className={'trackReleaseDateInput'}
                                 type="date" 
                                 id={'trackReleaseDate'}
                                 value={this.formatDateToYYYYMMDD(track.trackReleaseDate)}
-                                disabled={null}
+                                disabled={track.isReleaseDateDisabled}
                                 onChange={(evt) => this.handleChange(evt, track, i)}
                             />
                             <label className="custom-checkbox"> 
                                 <input 
                                     type="checkbox" 
                                     id={'tbdReleaseDate'}
-                                    defaultChecked={false} 
-                                    value={false} 
-                                    onChange={(evt) => this.handleChange(evt, track, i)}
+                                    checked={track.isTbdChecked} 
+                                    value={track.isTbdChecked} 
+                                    disabled={track.isTbdDisabled}
+                                    onChange={(evt) => this.setTBD(evt, track, i)}
                                 />
                                 <span className="checkmark"></span>
                             </label>
