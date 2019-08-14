@@ -3,7 +3,6 @@ import {Table, Form, Tabs, Tab } from 'react-bootstrap';
 import PageHeader from '../PageHeader/PageHeader';
 import TabbedTracks from '../TrackInformation/pageComponents/TabbedTracks';
 import TrackInformationDataTable from '../TrackInformation/pageComponents/TrackInformationDataTable';
-import TrackInformationDataTable_OLD from '../TrackInformation/pageComponents/TrackInformationDataTable_OLD';
 import ReplaceAudioModal from '../../modals/ReplaceAudioModal';
 import './TrackInformation.css';
 import Noty from 'noty'

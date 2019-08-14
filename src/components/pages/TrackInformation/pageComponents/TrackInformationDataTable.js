@@ -16,7 +16,6 @@ class TrackInformationDataTable extends Component {
         this.addBlankRow = this.addBlankRow.bind(this);
         this.formatDateToYYYYMMDD = this.formatDateToYYYYMMDD.bind(this);
         this.handleDataLoad = this.handleDataLoad.bind(this);
-
     }
  
     trackInformationDataHeader = () => {
