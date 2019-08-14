@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Table, Grid, Button, Form, Tabs, Tab  } from 'react-bootstrap'; 
+import {Table, Grid, Button, Form, Tabs, Tab, Alert  } from 'react-bootstrap'; 
 import { SingleReleaseDateTbd } from '../pageComponents/SingleReleaseDateTbd'
 
 
@@ -114,11 +114,19 @@ class TrackInformationDataTable extends Component {
         this.setState({DataRows : newRow})
     }
 
-    resetDatePicker(i) {
+    resetDatePicker(trackIndex) {
         let datePickers = document.getElementsByClassName('trackReleaseDateInput');
-        if(datePickers[i]) {
-            datePickers[i].value = '';
-        }        
+        let sortedInputs = [];
+
+        for(var i=0; i<datePickers.length; i++) {
+            let discNumber = parseInt(datePickers[i].getAttribute('discNumber')) - 1;
+
+            if(!sortedInputs[discNumber]) {
+                sortedInputs[discNumber] = []
+            }
+            sortedInputs[discNumber].push(datePickers[i])
+        }
+        sortedInputs[this.props.discID][trackIndex].value = '';
     }
 
     setTBD(evt, track, i) {
@@ -252,7 +260,8 @@ class TrackInformationDataTable extends Component {
                         <td className="release-date-col">
 
                             <Form.Control 
-                                className={'trackReleaseDateInput'}
+                                discNumber={track.discNumber}
+                                className={'trackReleaseDateInput discNumber_' + track.discNumber}
                                 type="date" 
                                 id={'trackReleaseDate'}
                                 value={this.formatDateToYYYYMMDD(track.trackReleaseDate)}
