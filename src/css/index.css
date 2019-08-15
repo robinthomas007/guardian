@@ -69,7 +69,7 @@
 	.btn-primary {background-color:#01579b; color:#fff; border:none;}
 	.btn-secondary {color:#01579b; background-color:#f5f5f5; border:none;}
 	.btn-secondary:hover {color: #01579b; background-color: #ccc; border:none;}
-	.btn-secondary.action {vertical-align:middle; padding:.25rem;}
+	.btn-secondary.action {vertical-align:middle; padding:.25rem; margin: 0 5px;}
 	.btn-primary > i, .btn-secondary > i {font-size:20px;}
 
 	.dropdown {display:inline-block; padding:0px 8px;}
