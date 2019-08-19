@@ -249,7 +249,27 @@ class TrackInformationPage extends Component {
                         <p>In this step, you can upload audio files for filtering by either dragging &amp; dropping or clicking to browse files, e.g. mp3, WAV, etc. Tracks can also be reordered with drag and drop. This section must be completed by clicking on the 'Save &amp; Continue' button below.</p>
                     </div>
                 </div>
-
+             <div class="row no-gutters d-flex">
+                <div class="col-9"></div>
+                <div class="col-3 d-flex justify-content-end">
+                <ul class="disc-track-buttons">
+                   <li>
+                   <button 
+                        type="button" 
+                        className="btn btn-secondary btn-sm" 
+                        onClick=""
+                        ><i class="material-icons">adjust</i>Add Disc</button>
+                   </li>
+                   <li>
+                   <button 
+                        type="button" 
+                        className="btn btn-secondary btn-sm" 
+                        onClick=""
+                        ><i class="material-icons">add</i>Add Track</button>
+                   </li>
+               </ul>
+                </div>
+             </div>
                 <TabbedTracks 
                     data={this.state.projectData} 
                     showClick={this.showTrackModal} 
