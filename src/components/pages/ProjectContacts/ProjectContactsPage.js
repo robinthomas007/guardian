@@ -127,10 +127,7 @@ class ProjectContactsPage extends Component {
     }
 
     handleSubmit(event) {
-
         event.preventDefault();
-
-        alert(isFormValid())
 
         if(isFormValid()) {
             const releaseInformationInputs = JSON.parse(localStorage.getItem('projectData'));
