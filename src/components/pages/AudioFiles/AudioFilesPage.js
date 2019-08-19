@@ -190,16 +190,17 @@ class AudioFilesPage extends Component {
     }
 
     resequencePageTableData(dragSource, dragTarget) {
-        const {pageTableData} = this.state;
-        let modifiedPageTableData = pageTableData;
 
-        let sourceData = modifiedPageTableData[dragSource].fileName;
-        let targetData = modifiedPageTableData[dragTarget].fileName;
+         const { discs } = this.state;
+         let modifiedDiscs = discs;
+
+         let sourceData = modifiedDiscs[this.state.activeTab].Tracks[dragSource].fileName;
+         let targetData = modifiedDiscs[this.state.activeTab].Tracks[dragTarget].fileName;
         
-        modifiedPageTableData[dragTarget].fileName = sourceData;
-        modifiedPageTableData[dragSource].fileName = targetData;
+         modifiedDiscs[this.state.activeTab].Tracks[dragTarget].fileName = sourceData;
+         modifiedDiscs[this.state.activeTab].Tracks[dragSource].fileName = targetData;
 
-        this.setState({pageTableData : modifiedPageTableData})
+         this.setState({discs : modifiedDiscs})
     }
 
     setTrackSequence() {
