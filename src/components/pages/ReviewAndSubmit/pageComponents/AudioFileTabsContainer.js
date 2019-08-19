@@ -23,17 +23,14 @@ class AudioFilesTabsContainer extends Component {
                     </Tab>
                 )
             })
-    
-            return(discs)
+           return(discs)
         }
     }
 
     render() {
         return(
             <Tab.Container defaultActiveKey="1">
-                <Tabs 
-                    onSelect={this.handleTabClick}
-                >
+                <Tabs onSelect={this.handleTabClick} >
                     {this.getDiscs()}
                 </Tabs>
             </Tab.Container>
