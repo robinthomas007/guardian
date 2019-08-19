@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Table, Grid, Button, Form, Dropdown } from 'react-bootstrap'; 
+import {Table, Grid, Button, Form, Dropdown, Alert } from 'react-bootstrap'; 
 import PageHeader from '../PageHeader/PageHeader';
 import ToolTip from '../../ui/Tooltip';
 import BootStrapDropDownInput from '../ProjectContacts/pageComponents/BootStrapDropDownInput';
@@ -7,6 +7,7 @@ import { withRouter } from "react-router";
 import './ProjectContacts.css';
 import LoadingImg from '../../ui/LoadingImg';
 import Noty from 'noty';
+import {isFormValid} from '../../Utils.js';
 
 
 class ProjectContactsPage extends Component {
@@ -126,57 +127,64 @@ class ProjectContactsPage extends Component {
     }
 
     handleSubmit(event) {
-        const releaseInformationInputs = JSON.parse(localStorage.getItem('projectData'));
-        const user = JSON.parse(sessionStorage.getItem('user'));
-        const projectID = this.props.match.params.projectID;
 
-        const projectFields = (projectID) ? this.state.formInputs : {...releaseInformationInputs, ...this.state.formInputs}
+        event.preventDefault();
 
-        const fetchHeaders = new Headers(
-            {
-                "Content-Type": "application/json",
-                "Authorization" : sessionStorage.getItem('accessToken')
-            }
-        )
+        alert(isFormValid())
 
-        const fetchBody = JSON.stringify( {
-            "User" : {
-                "email" : user.email
-            },
-            "Project" : projectFields
-        })
+        if(isFormValid()) {
+            const releaseInformationInputs = JSON.parse(localStorage.getItem('projectData'));
+            const user = JSON.parse(sessionStorage.getItem('user'));
+            const projectID = this.props.match.params.projectID;
 
-        this.setState({ showloader : true})
+            const projectFields = (projectID) ? this.state.formInputs : {...releaseInformationInputs, ...this.state.formInputs}
 
-        fetch ('https://api-dev.umusic.net/guardian/project', {
-            method : 'POST',
-            headers : fetchHeaders,
-            body : fetchBody
-        }).then (response => 
-            {
-                return(response.json());
-            }
-        )
-        .then (responseJSON => 
-            {
-                console.log(responseJSON)
-
-                if(responseJSON.errorMessage) {
-                    this.showNotSavedNotification(event)
-                } else {
-
-                    this.setState({ showloader : false})
-
-                    this.showNotification(event, responseJSON.Project.projectID)
-                    
-                    //clear the local storage
-                    localStorage.removeItem('projectData')
+            const fetchHeaders = new Headers(
+                {
+                    "Content-Type": "application/json",
+                    "Authorization" : sessionStorage.getItem('accessToken')
                 }
-            }
-        )
-        .catch(
-            error => console.error(error)
-        );
+            )
+
+            const fetchBody = JSON.stringify( {
+                "User" : {
+                    "email" : user.email
+                },
+                "Project" : projectFields
+            })
+
+            this.setState({ showloader : true})
+
+            fetch ('https://api-dev.umusic.net/guardian/project', {
+                method : 'POST',
+                headers : fetchHeaders,
+                body : fetchBody
+            }).then (response => 
+                {
+                    return(response.json());
+                }
+            )
+            .then (responseJSON => 
+                {
+                    console.log(responseJSON)
+
+                    if(responseJSON.errorMessage) {
+                        this.showNotSavedNotification(event)
+                    } else {
+
+                        this.setState({ showloader : false})
+
+                        this.showNotification(event, responseJSON.Project.projectID)
+                        
+                        //clear the local storage
+                        localStorage.removeItem('projectData')
+                    }
+                }
+            )
+            .catch(
+                error => console.error(error)
+            );
+        }
     }
 
     render() {
@@ -222,12 +230,15 @@ class ProjectContactsPage extends Component {
                                     <ToolTip tabIndex='-1' message='The originator of the project is by default set to be the primary contact. This can be changed here and the project will be created for that users account as long as they have access to the selected label.' />
                                 </Form.Label>
                                 <Form.Control 
-                                    className='form-control col-5'
+                                    className='form-control col-5 requiredInput'
                                     tabIndex='2+'
                                     id='projectPrimaryContact' 
                                     value={this.state.formInputs.projectPrimaryContact}
                                     onChange={this.handleChange} 
                                 />
+                                <div className="invalid-tooltip">
+                                    Primary Contact is Required
+                                </div>
                             </Form.Group>
 
                             <Form.Group>
@@ -236,12 +247,15 @@ class ProjectContactsPage extends Component {
                                     <ToolTip tabIndex='-1' message='The email address belonging to the primary contact. This may not belong to any user aside from the primary contact.' />
                                 </Form.Label>
                                 <Form.Control 
-                                    className='form-control col-5'
+                                    className='form-control col-5 requiredInput'
                                     tabIndex='3+'
                                     id='projectPrimaryContactEmail' 
                                     value={this.state.formInputs.projectPrimaryContactEmail}
                                     onChange={this.handleChange} 
                                 />
+                                <div className="invalid-tooltip">
+                                    Primary Contact Email is Required
+                                </div>
                             </Form.Group>
 
                             <Form.Group>

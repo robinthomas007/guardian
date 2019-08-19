@@ -8,6 +8,7 @@ import Cookies from 'universal-cookie';
 import UUID from 'uuid';
 import Noty from 'noty';
 import LoadingImg from '../../ui/LoadingImg';
+import {isFormValid} from '../../Utils.js';
 
 import ReleasingLabelsInput from '../ReleaseInformation/pageComponents/ReleasingLabelsInput';
 import ProjectTypesInput from '../ReleaseInformation/pageComponents/ProjectTypesInput';
@@ -20,18 +21,19 @@ class ReleaseinformationPage extends Component {
 
         this.state = {
             formInputs : {
-                    "projectID" : '',
-                    "projectTitle" : '',
-                    "projectCoverArt" : '',
-                    "projectArtistName" : '',
-                    "projectTypeID" : '1',
-                    "projectReleasingLabelID" : '',
-                    "projectReleaseDate" : '',
-                    "projectReleaseDateTBD" : false,
-                    "projectNotes" : '',
-                    "projectCoverArtFileName": '',
-                    "projectCoverArtBase64Data": ''
+                "projectID" : '',
+                "projectTitle" : '',
+                "projectCoverArt" : '',
+                "projectArtistName" : '',
+                "projectTypeID" : '1',
+                "projectReleasingLabelID" : '',
+                "projectReleaseDate" : '',
+                "projectReleaseDateTBD" : false,
+                "projectNotes" : '',
+                "projectCoverArtFileName": '',
+                "projectCoverArtBase64Data": ''
             },
+            releaseDateRequired : true,
             showloader : false,
             projectReleaseDateDisabled : false,
             projectReleaseDateReset : false
@@ -60,6 +62,7 @@ class ReleaseinformationPage extends Component {
 
         if(e.target.checked) {
             this.setState({projectReleaseDateDisabled : true})
+            this.setState({releaseDateRequired : false});
 
             //because datepickers don't have a simple way to reset
             const projectReleaseDatePicker = document.getElementById('projectReleaseDate');
@@ -68,10 +71,9 @@ class ReleaseinformationPage extends Component {
             }
         } else {
             this.setState({projectReleaseDateDisabled : false})
+            this.setState({releaseDateRequired : true});
         }
-
         this.handleChange(e)
-        
     }
 
     handleChange(e) {
@@ -129,89 +131,92 @@ class ReleaseinformationPage extends Component {
 
         event.preventDefault();
 
-        this.setState({ showloader : true})
+        if(isFormValid()) {
 
-        const releaseInformationInputs = JSON.parse(localStorage.getItem('projectData'));
-        const user = JSON.parse(sessionStorage.getItem('user'));
-        const projectID = this.state.projectID;
-        const fetchHeaders = new Headers(
-            {
-                "Content-Type": "application/json",
-                "Authorization" : sessionStorage.getItem('accessToken')
-            }
-        )
+            this.setState({ showloader : true})
 
-        const fetchBody = JSON.stringify( {
-            "User" : {
-                "email" : user.email
-            },
-            "Project" : this.state.formInputs
-        })
-
-        //if this is an existing project we need to skip validation and save
-        if(this.state.formInputs.projectID !== '') {
-
-            fetch ('https://api-dev.umusic.net/guardian/project', {
-                method : 'POST',
-                headers : fetchHeaders,
-                body : fetchBody
-            }).then (response => 
+            const releaseInformationInputs = JSON.parse(localStorage.getItem('projectData'));
+            const user = JSON.parse(sessionStorage.getItem('user'));
+            const projectID = this.state.projectID;
+            const fetchHeaders = new Headers(
                 {
-                    return(response.json());
-                }
-            ).then (responseJSON => 
-                {
-                    this.setState({ showloader : false})
-
-                    if(responseJSON.errorMessage) {
-
-                    } else {
-                        localStorage.setItem('projectData', JSON.stringify(this.state.formInputs));
-                        this.props.history.push('/projectContacts/' + responseJSON.Project.projectID)
-                    }
-                }
-            ).catch(
-                error => console.error(error)
-            );
-        } else {
-            //if this is a new project we need to go the validator path
-
-            fetch ('https://api-dev.umusic.net/guardian/project/validate', {
-                method : 'POST',
-                headers : fetchHeaders,
-                body : fetchBody
-            }).then (response => 
-                {
-                    return(response.json());
+                    "Content-Type": "application/json",
+                    "Authorization" : sessionStorage.getItem('accessToken')
                 }
             )
-            .then (responseJSON => 
-                {
-                    if(responseJSON.IsValid) {
-                        localStorage.setItem('projectData', JSON.stringify(this.state.formInputs));
-                        this.props.history.push('/projectContacts')
-                    } else {
 
+            const fetchBody = JSON.stringify( {
+                "User" : {
+                    "email" : user.email
+                },
+                "Project" : this.state.formInputs
+            })
+
+            //if this is an existing project we need to skip validation and save
+            if(this.state.formInputs.projectID !== '') {
+
+                fetch ('https://api-dev.umusic.net/guardian/project', {
+                    method : 'POST',
+                    headers : fetchHeaders,
+                    body : fetchBody
+                }).then (response => 
+                    {
+                        return(response.json());
+                    }
+                ).then (responseJSON => 
+                    {
                         this.setState({ showloader : false})
 
-                        new Noty ({
-                            type: 'error',
-                            id:'duplicateTitle',
-                            text: 'The project title ' + responseJSON.projectTitle + ' by ' + responseJSON.projectArtist +' already exists. Please enter a new title. Click to close.',
-                            theme: 'bootstrap-v4',
-                            layout: 'top',
-                            timeout: false,
-                            onClick: 'Noty.close();'
-                        }).show() 
+                        if(responseJSON.errorMessage) {
+
+                        } else {
+                            localStorage.setItem('projectData', JSON.stringify(this.state.formInputs));
+                            this.props.history.push('/projectContacts/' + responseJSON.Project.projectID)
+                        }
                     }
-                }
-            )
-            .catch(
-                error => console.log(error)
-            );
+                ).catch(
+                    error => console.error(error)
+                );
+            } else {
+                //if this is a new project we need to go the validator path
+
+                fetch ('https://api-dev.umusic.net/guardian/project/validate', {
+                    method : 'POST',
+                    headers : fetchHeaders,
+                    body : fetchBody
+                }).then (response => 
+                    {
+                        return(response.json());
+                    }
+                )
+                .then (responseJSON => 
+                    {
+                        if(responseJSON.IsValid) {
+                            localStorage.setItem('projectData', JSON.stringify(this.state.formInputs));
+                            this.props.history.push('/projectContacts')
+                        } else {
+
+                            this.setState({ showloader : false})
+
+                            new Noty ({
+                                type: 'error',
+                                id:'duplicateTitle',
+                                text: 'The project title ' + responseJSON.projectTitle + ' by ' + responseJSON.projectArtist +' already exists. Please enter a new title. Click to close.',
+                                theme: 'bootstrap-v4',
+                                layout: 'top',
+                                timeout: false,
+                                onClick: 'Noty.close();'
+                            }).show() 
+                        }
+                    }
+                )
+                .catch(
+                    error => console.log(error)
+                );
+            }
         }
 
-       };
+    };
 
     albumArt(e) {
 
@@ -260,7 +265,6 @@ class ReleaseinformationPage extends Component {
     }
 
     setParentState(e) {
-
         this.handleChange(e)
     }
 
@@ -376,12 +380,15 @@ class ReleaseinformationPage extends Component {
                                 <Form.Control 
                                     tabIndex='1+'
                                     id='projectTitle' 
-                                    className='form-control col-8' 
+                                    className='form-control col-8 requiredInput' 
                                     type='text' 
                                     placeholder='Enter a project title' 
                                     value={this.state.formInputs.projectTitle}
                                     onChange={this.handleChange}
                                   />
+                                <div className="invalid-tooltip">
+                                    Project Title is Required
+                                </div>
                             </Form.Group>
 
                             <Form.Group>
@@ -392,12 +399,15 @@ class ReleaseinformationPage extends Component {
                                 <Form.Control
                                     tabIndex='2+'
                                     id='projectArtistName' 
-                                    className='form-control col-8' 
+                                    className='form-control col-8 requiredInput' 
                                     type='text' 
                                     placeholder='Enter an artist name' 
                                     value={this.state.formInputs.projectArtistName}
                                     onChange={this.handleChange}
                                 />
+                                <div className="invalid-tooltip">
+                                    Artist Name is Required
+                                </div>
                             </Form.Group>
                             
                             <Form.Group>
@@ -436,7 +446,7 @@ class ReleaseinformationPage extends Component {
                                     <input
                                         tabIndex='5+'
                                         id="projectReleaseDate" 
-                                        className='form-control col-3' 
+                                        className={this.state.releaseDateRequired ? 'form-control col-3 requiredInput' : 'form-control col-3'} 
                                         type='date'
                                         value={this.formatDateToYYYYMMDD(this.state.formInputs.projectReleaseDate)}
                                         disabled={this.state.projectReleaseDateDisabled}
@@ -445,25 +455,28 @@ class ReleaseinformationPage extends Component {
                                                 this.handleChange(e)
                                             }
                                         }
-
                                     />
-
-
+                                    <div className="invalid-tooltip">
+                                        Release Date is Required if not TBD
+                                    </div>
 
                                 <Form.Label className="col-form-label col-2 tbd">Release TBD</Form.Label>
-                                <label className="custom-checkbox"> 		
-                                    <input
-                                        tabIndex='6+'
-                                        id='projectReleaseDateTBD' 
-                                        className='form-control col-3' 
-                                        type='checkbox' 
-                                        value={this.state.formInputs.projectReleaseDateTBD}
-                                        onChange={this.handleReleaseTBDChange}
-                                        checked={this.state.formInputs.projectReleaseDateTBD}
-                                    />
-                                    <span className="checkmark "></span>
-                                </label>
-                            </Form.Group>
+                                    <label className="custom-checkbox"> 		
+                                        <input
+                                            tabIndex='6+'
+                                            id='projectReleaseDateTBD' 
+                                            className='form-control col-3' 
+                                            type='checkbox' 
+                                            value={this.state.formInputs.projectReleaseDateTBD}
+                                            onChange={this.handleReleaseTBDChange}
+                                            checked={this.state.formInputs.projectReleaseDateTBD}
+                                        />
+                                        <span className="checkmark "></span>
+                                    </label>
+                                    <div class="invalid-tooltip">
+                                        Invalid Releasing Label
+                                    </div>
+                                </Form.Group>
 
                             <Form.Group className='form-group'>
                                 <Form.Label className="col-3 notes">Notes</Form.Label>
