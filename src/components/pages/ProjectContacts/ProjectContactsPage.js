@@ -7,8 +7,7 @@ import { withRouter } from "react-router";
 import './ProjectContacts.css';
 import LoadingImg from '../../ui/LoadingImg';
 import Noty from 'noty';
-import {isFormValid} from '../../Utils.js';
-
+import { isFormValid, setInputValidStatus } from '../../Utils.js';
 
 class ProjectContactsPage extends Component {
     constructor(props) {
@@ -24,6 +23,7 @@ class ProjectContactsPage extends Component {
                 "projectAdditionalContacts" : '',
                 "projectStatusID" : '1',
             },
+            projectAdditionalContactsValid : '',
             project : {},
             showloader : false
         }
@@ -36,6 +36,7 @@ class ProjectContactsPage extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.showNotification = this.showNotification.bind(this);
         this.handleChangeByID = this.handleChangeByID.bind(this);
+        this.isAdditionalContactsValid = this.isAdditionalContactsValid.bind(this);
     }
     
     handlePageDataLoad() {
@@ -126,10 +127,48 @@ class ProjectContactsPage extends Component {
         return(securityOptions)
     }
 
-    handleSubmit(event) {
-        event.preventDefault();
+    isAdditionalContactsValid() {
+        const user = JSON.parse(sessionStorage.getItem('user'));
+        const fetchHeaders = new Headers(
+            {
+                "Content-Type": "application/json",
+                "Authorization" : sessionStorage.getItem('accessToken')
+            }
+        )
+        const fetchBody = JSON.stringify( {
+            "User" : {
+                "email" : user.email
+            },
+            "emails": this.state.formInputs.projectAdditionalContacts
+        })
+        fetch ('https://api-dev.umusic.net/guardian/project/validate/emails', {
+            method : 'POST',
+            headers : fetchHeaders,
+            body : fetchBody
+        }).then (response => 
+            {
+                return(response.json());
+            }
+        ).then (responseJSON => 
+            {
+                if(responseJSON.IsValid) {
+                    this.handleSubmit(true)
+                    this.setState({projectAdditionalContactsValid : ''})
+                } else {
+                    this.handleSubmit(false)
+                    this.setState({projectAdditionalContactsValid : ' is-invalid'})
+                }
+            }
+        ).catch(
+            error => console.error(error)
+        );
+    }
 
-        if(isFormValid()) {
+    handleSubmit(preValidationError) {
+
+        const isValidForm = isFormValid();
+
+        if(isValidForm) {
             const releaseInformationInputs = JSON.parse(localStorage.getItem('projectData'));
             const user = JSON.parse(sessionStorage.getItem('user'));
             const projectID = this.props.match.params.projectID;
@@ -163,15 +202,13 @@ class ProjectContactsPage extends Component {
             )
             .then (responseJSON => 
                 {
-                    console.log(responseJSON)
-
                     if(responseJSON.errorMessage) {
-                        this.showNotSavedNotification(event)
+                        this.showNotSavedNotification()
                     } else {
 
                         this.setState({ showloader : false})
 
-                        this.showNotification(event, responseJSON.Project.projectID)
+                        this.showNotification('', responseJSON.Project.projectID)
                         
                         //clear the local storage
                         localStorage.removeItem('projectData')
@@ -181,7 +218,7 @@ class ProjectContactsPage extends Component {
             .catch(
                 error => console.error(error)
             );
-        }
+        } 
     }
 
     render() {
@@ -261,13 +298,16 @@ class ProjectContactsPage extends Component {
                                 </Form.Label>
                                 <Form.Control 
                                     id='projectAdditionalContacts'
-                                    className='form-control col-10'
+                                    className={'form-control col-10 additionalContactsInput' + this.state.projectAdditionalContactsValid} 
                                     tabIndex='4+'
                                     as='textarea' 
                                     rows='5' 
                                     value={this.state.formInputs.projectAdditionalContacts}
                                     onChange={this.handleChange}
                                 />
+                                <div className="invalid-tooltip">
+                                    Incorrectly formatted email addresse(s)
+                                </div>
                             </Form.Group>
                         </div>
                     </div>
@@ -276,7 +316,7 @@ class ProjectContactsPage extends Component {
                         <div className="col-9"></div>
                         <div className="col-3">
                             <button tabIndex='5+' id="contactsSaveButton" type="button" className="btn btn-secondary">Save</button>
-                            <button tabIndex='6+' id="contactsSaveContButton" type="button" className="btn btn-primary" onClick={this.handleSubmit}>Save &amp; Continue</button>
+                            <button tabIndex='6+' id="contactsSaveContButton" type="button" className="btn btn-primary" onClick={this.isAdditionalContactsValid}>Save &amp; Continue</button>
                         </div>
                     </div>
                 </Form>
