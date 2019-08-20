@@ -198,7 +198,7 @@ class ProjectContactsPage extends Component {
 
                 <PageHeader />
     
-                <div className="row no-gutters step-description">
+                <div className="row d-flex no-gutters step-description">
                     <div className="col-12">
                         <h2>Step <span className="count-circle">2</span> Project Contacts</h2>
                         <p>In this step, you can choose which contacts will be associated with the project that has recently been created. You can select the level of project security (i.e., who will be able to see the project) and who should be contacted regarding this project if necessary. Required fields are indicated with an <span className="required-ind">*</span>.</p>
@@ -206,14 +206,18 @@ class ProjectContactsPage extends Component {
                 </div>
     
                 <Form>
-                    <div className="row">
+                    <div className="row d-flex">
                         <div className="col-12">
-                            <Form.Group>
-                                <Form.Label className='col-form-label col-2'>Project Security 
-                                    <span className='required-ind'>*</span>
-                                    <ToolTip tabIndex='-1' message='Projects are by default, set to private. This means only you may view or make changes to them. If set to public, projects will be made available to everyone within the label group.' />
-                                </Form.Label>
 
+
+                            <Form.Group className="row d-flex no-gutters">
+                                <div className="col-2">
+                                <Form.Label className='col-form-label'>Project Security 
+                                    <span className='required-ind'>*</span>
+                                </Form.Label>
+                                <ToolTip tabIndex='-1' message='Projects are by default, set to private. This means only you may view or make changes to them. If set to public, projects will be made available to everyone within the label group.' />
+                                </div>
+                                <div className="col-10">
                                 <BootStrapDropDownInput 
                                     tabIndex='1+'
                                     id='projectSecurityID'
@@ -221,14 +225,18 @@ class ProjectContactsPage extends Component {
                                     onChange={this.handleChangeByID}
                                     className={'project-security-dropdown'}
                                 />
-
+                            
+                                </div>
                             </Form.Group>
-
-                            <Form.Group>
-                                <Form.Label className='col-form-label col-2'>Primary Contact 
+    
+                            <Form.Group className="row d-flex no-gutters">
+                                <div className="col-2">
+                                <Form.Label className='col-form-label'>Primary Contact 
                                     <span className='required-ind'>*</span>
-                                    <ToolTip tabIndex='-1' message='The originator of the project is by default set to be the primary contact. This can be changed here and the project will be created for that users account as long as they have access to the selected label.' />
                                 </Form.Label>
+                                <ToolTip tabIndex='-1' message='The originator of the project is by default set to be the primary contact. This can be changed here and the project will be created for that users account as long as they have access to the selected label.' />
+                                </div>
+                                <div className="col-10"> 
                                 <Form.Control 
                                     className='form-control col-5 requiredInput'
                                     tabIndex='2+'
@@ -239,13 +247,17 @@ class ProjectContactsPage extends Component {
                                 <div className="invalid-tooltip">
                                     Primary Contact is Required
                                 </div>
+                                </div>
                             </Form.Group>
 
-                            <Form.Group>
-                                <Form.Label className='col-form-label col-2'>Primary Contact Email
+                            <Form.Group className="row d-flex no-gutters">
+                                <div className="col-2">
+                                <Form.Label className='col-form-label'>Primary Contact Email
                                     <span className='required-ind'>*</span>
-                                    <ToolTip tabIndex='-1' message='The email address belonging to the primary contact. This may not belong to any user aside from the primary contact.' />
                                 </Form.Label>
+                                <ToolTip tabIndex='-1' message='The email address belonging to the primary contact. This may not belong to any user aside from the primary contact.' />
+                                </div>
+                                <div className="col-10">
                                 <Form.Control 
                                     className='form-control col-5 requiredInput'
                                     tabIndex='3+'
@@ -256,28 +268,34 @@ class ProjectContactsPage extends Component {
                                 <div className="invalid-tooltip">
                                     Primary Contact Email is Required
                                 </div>
+                                </div>
                             </Form.Group>
 
-                            <Form.Group>
-                                <Form.Label className='col-form-label col-2 align-top'>Additional Contacts
-                                    <ToolTip tabIndex='-1' message='Additional contacts or users that youd like to share this project with may be added here. You can copy any paste from Outlook,  or separate a list of users to be added by commas, spaces, semi-colons or any combination of these.' />
+                            <Form.Group className="row d-flex no-gutters">
+                                <div className="col-2">
+                                <Form.Label className='col-form-label align-top'>Additional Contacts
                                 </Form.Label>
+                                <ToolTip tabIndex='-1' message='Additional contacts or users that youd like to share this project with may be added here. You can copy any paste from Outlook,  or separate a list of users to be added by commas, spaces, semi-colons or any combination of these.' />
+                                </div>
+                                <div className="col-10">
                                 <Form.Control 
                                     id='projectAdditionalContacts'
-                                    className='form-control col-10'
+                                    className='form-control'
                                     tabIndex='4+'
                                     as='textarea' 
                                     rows='5' 
                                     value={this.state.formInputs.projectAdditionalContacts}
                                     onChange={this.handleChange}
                                 />
+                                </div>
                             </Form.Group>
+
+
+                            </div>
                         </div>
-                    </div>
                
                     <div className="row save-buttons">
-                        <div className="col-9"></div>
-                        <div className="col-3">
+                        <div className="col-12">
                             <button tabIndex='5+' id="contactsSaveButton" type="button" className="btn btn-secondary">Save</button>
                             <button tabIndex='6+' id="contactsSaveContButton" type="button" className="btn btn-primary" onClick={this.handleSubmit}>Save &amp; Continue</button>
                         </div>

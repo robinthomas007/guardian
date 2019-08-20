@@ -45,7 +45,7 @@ class ReleasingLabelsInput extends Component {
             <Form.Control 
                 id="projectReleasingLabelID" 
                 as="select" 
-                className='col-form-label dropdown col-3' 
+                className='col-form-label dropdown col-4' 
                 value={this.props.value}
                 onChange={this.state.onChange}
             >

@@ -431,8 +431,7 @@ class AudioFilesPage extends Component {
                 </Tab.Container>
 
             <section className="row no-gutters save-buttons">
-                <div className="col-9"></div>
-                <div className="col-3">
+                <div className="col-12">
                     <button type="button" className="btn btn-secondary" onClick={this.showNotification}>Save</button>
                     <button type="button" className="btn btn-primary" onClick={this.handleDataSubmit}>Save &amp; Continue</button>
                 </div>

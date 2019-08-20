@@ -60,6 +60,9 @@
 		border-radius: .2rem;
 	}
 
+	button.tooltip-btn {margin-right: 10px; margin-top: 8px;}
+
+/*	.form-group .invalid-tooltip {position:relative; top:-44px; right:-65%; max-width:200px;} */
 
 	/* Custom Default Links*/
 	a {color:#01579b; cursor:pointer;}
@@ -225,7 +228,10 @@
 	.cover-art label {vertical-align:top; padding-top:5px;}
 
 	.notes-row {margin-left:15px;}
-	.notes-row > textarea {vertical-align:top; width:96.5%; height:120px;}	
+	.notes-row > textarea {vertical-align:top; height:120px;}
+
+	.release-date > .invalid-tooltip {width:100%; right:-200%;}
+	label.col-form-label.tbd.text-nowrap.form-label {margin:auto 20px;}
 
 	/* Project Contacts */
 
