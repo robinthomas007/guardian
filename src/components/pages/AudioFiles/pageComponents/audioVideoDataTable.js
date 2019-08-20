@@ -78,8 +78,6 @@ class AudioVideoDataTable extends Component {
     drop(e, i, track) {
         e.preventDefault();
         this.setState({activeDragTarget : i}, () => this.props.resequencePageTableData(this.state.activeDragSource, this.state.activeDragTarget))
-
-        
         var data = e.dataTransfer.getData("text/html");
     }
 
@@ -139,7 +137,7 @@ class AudioVideoDataTable extends Component {
                                 className={'trackIsrcField'}
                                 onBlur={ (e) => this.handleOnBlur(e) }
                             />
-                            <div class="invalid-tooltip">
+                            <div className="invalid-tooltip">
                                 Invalid ISRC
                             </div>
                         </td>

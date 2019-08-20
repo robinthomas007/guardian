@@ -12,10 +12,6 @@ class TerritorialRightsPage extends Component {
             alert('Creating New Rights Set');
         }
     
-        const selectSavedRightsSet = () => {
-            alert('Select Rights Set');
-        }
-    
         const TracksWithNoSetPolicy = mockData.pages.TerritorialRights.tracks.map( function (noPolicyTrack, i) {
             return(
                 <div key={i} draggable className="draggable-track">
