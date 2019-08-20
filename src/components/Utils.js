@@ -6,13 +6,29 @@ export const isFormValid = () => {
         let input = requiredInputs[i];
 
         if(input.value.length <= 0) {
-            input.className = input.className.replace('is-invalid', '') + ' is-invalid';
+            setInputValidStatus(input, 'invalid');
             invalid = false;
         } else {
-            input.className.replace('is-invalid', '');
+            setInputValidStatus(input, 'valid');
             invalid = true;
         }
     }
 
     return(invalid)
+}
+
+export const setInputValidStatus = (input, status) => {
+    if(status === 'invalid') {
+        input.className = input.className.replace('is-invalid', '') + ' is-invalid';
+    } else {
+        input.className.replace('is-invalid', '');
+    }
+}
+
+export const isValidIsrc = (isrc) => {
+    return((isrc.replace(/\W/g, '').length == 12) ? true : false);
+}
+
+export const isValidTitle = (title) => {
+    return((title.length > 0) ? true : false);
 }

@@ -7,7 +7,7 @@ import './AudioFiles.css';
 import Noty from 'noty';
 import { push_uniq } from 'terser';
 
-import AudioVideoDataTable from '../AudioFiles/pageComponents/audioVideoDataTable'
+import AudioFilesTabbedTracks from '../AudioFiles/pageComponents/audioFilesTabbedTracks';
 
 class AudioFilesPage extends Component {
 
@@ -29,6 +29,11 @@ class AudioFilesPage extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleDataSubmit = this.handleDataSubmit.bind(this);
         this.resequencePageTableData = this.resequencePageTableData.bind(this);
+        this.handleTabClick = this.handleTabClick.bind(this);
+
+        this.addTrack = this.addTrack.bind(this);
+        this.addDisc = this.addDisc.bind(this);
+
     }
 
     getTrack(track, trackIndex) {
@@ -105,8 +110,7 @@ class AudioFilesPage extends Component {
     }
 
     updateFiles(e) {
-        const {discs, pageTableData} = this.state;
-        const activeTab = this.state.activeTab;
+        const { discs, pageTableData, activeTab } = this.state;
 
         let newFiles = Array.from(e.target.files);
         let modifiedPageTableData = pageTableData;
@@ -119,15 +123,9 @@ class AudioFilesPage extends Component {
                     fileName : newFiles[i].name,
                     fileUpload : true
                 }
-                
-                modifiedPageTableData.push(this.getTrack(newTrack, i + 1))
-                
-                modifiedDiscs[activeTab] = {
-                    "discNumber" : (activeTab + 1),
-                    "Tracks" : modifiedPageTableData
-                }
+
+                modifiedDiscs[activeTab].Tracks.push(this.getTrack(newTrack, modifiedDiscs[activeTab].Tracks.length))
                 this.setState({discs : modifiedDiscs});
-                
             } else {
                 //remove this from the file stack
                 newFiles.splice(i,1);
@@ -135,17 +133,16 @@ class AudioFilesPage extends Component {
         }
 
         this.handleFileUpload(newFiles)
-        this.setState({pageTableData : modifiedPageTableData});
+        //this.setState({pageTableData : modifiedPageTableData});
     }
 
     deleteRow(rowIndex) {
-        const {pageTableData} = this.state;
-
+        const {discs} = this.state;
+        const modifiedDiscs = discs;
+        
         //remove the data row
-        let modifiedPageTableData = pageTableData;
-            modifiedPageTableData.splice(rowIndex, 1);
-
-        this.setState({pageTableData : modifiedPageTableData});
+        modifiedDiscs[this.state.activeTab].Tracks.splice(rowIndex, 1);
+        this.setState({discs : modifiedDiscs});
     }
 
     hideFileUploadingIndicator(fileName) {
@@ -184,7 +181,6 @@ class AudioFilesPage extends Component {
               .then (responseJSON =>
                   {
                     this.hideFileUploadingIndicator(responseJSON[0].fileName);
-                    //alert(JSON.stringify(responseJSON))
                   }
               )
               .catch(
@@ -194,16 +190,17 @@ class AudioFilesPage extends Component {
     }
 
     resequencePageTableData(dragSource, dragTarget) {
-        const {pageTableData} = this.state;
-        let modifiedPageTableData = pageTableData;
 
-        let sourceData = modifiedPageTableData[dragSource].fileName;
-        let targetData = modifiedPageTableData[dragTarget].fileName;
+         const { discs } = this.state;
+         let modifiedDiscs = discs;
+
+         let sourceData = modifiedDiscs[this.state.activeTab].Tracks[dragSource].fileName;
+         let targetData = modifiedDiscs[this.state.activeTab].Tracks[dragTarget].fileName;
         
-        modifiedPageTableData[dragTarget].fileName = sourceData;
-        modifiedPageTableData[dragSource].fileName = targetData;
+         modifiedDiscs[this.state.activeTab].Tracks[dragTarget].fileName = sourceData;
+         modifiedDiscs[this.state.activeTab].Tracks[dragSource].fileName = targetData;
 
-        this.setState({pageTableData : modifiedPageTableData})
+         this.setState({discs : modifiedDiscs})
     }
 
     setTrackSequence() {
@@ -256,6 +253,8 @@ class AudioFilesPage extends Component {
                     this.setState({projectData : responseJSON.Project})
                     this.setState({discs : responseJSON.Discs})
                     this.setState({pageTableData : responseJSON.Discs[this.state.activeTab].Tracks})
+                } else {
+                    this.addDisc();
                 }
             }
         )
@@ -278,7 +277,6 @@ class AudioFilesPage extends Component {
         } else {
             input.className = input.className.replace('is-invalid', '');
         }
-        
     }
 
     isValidForm() {
@@ -304,34 +302,15 @@ class AudioFilesPage extends Component {
         return(isValidForm)
     }
 
-    handlePreSaveDataValidation() {
-        const {pageTableData} = this.state;
-        
-        let validationErrors = [];
-        
-        pageTableData.map( (track, i) => {
-            (!this.isValidIsrc(track.isrc) || !this.isValidTitle(track.trackTitle)) ? validationErrors.push(i) : alert(234)
-        })
-
-        return(validationErrors)
-    }
-
     handleDataSubmit() {
-
-        const releaseInformationInputs = JSON.parse(localStorage.getItem('projectData'));
         const user = JSON.parse(sessionStorage.getItem('user'));
         const projectID = (this.state.projectID) ? (this.state.projectID) : '';
 
-        const projectFields = (projectID) ? this.state.formInputs : {...releaseInformationInputs, ...this.state.formInputs}
-
         this.setTrackSequence();
-
-        //this.handlePreSaveDataValidation();
 
         let formIsValid = this.isValidForm();
 
         if (formIsValid ) {
-
             const fetchHeaders = new Headers(
                 {
                     "Content-Type": "application/json",
@@ -375,6 +354,41 @@ class AudioFilesPage extends Component {
         }
     }
 
+    handleTabClick(key) {
+        this.setState({activeTab : key})
+    }
+
+    addTrack() {
+        const { discs } = this.state;
+        const { Tracks } = discs[this.state.activeTab];
+        let modifiedTracks = (Tracks) ? Tracks : [];
+
+        let newTrack = {
+            fileName : '',
+            fileUpload : false
+        }
+        modifiedTracks.push(this.getTrack(newTrack, Tracks.length));
+        this.setState( {Tracks : modifiedTracks} )
+    }
+
+    addDisc() {
+        const { discs } = this.state;
+        let modifiedDiscs = discs;
+
+        let newTrack = {
+            fileName : '',
+            fileUpload : false
+        }
+
+        let newDisc = {
+            "discNumber" : (discs.length + 1),
+            "Tracks" : []
+        }
+
+        modifiedDiscs.push(newDisc);
+        this.setState( {discs : modifiedDiscs})
+    }
+
     render() {
 
            return(
@@ -412,23 +426,18 @@ class AudioFilesPage extends Component {
                     </section>
                 </form>
 
-                <Tab.Container defaultActiveKey="Disc1">
-                    <Tabs>
-                        <Tab eventKey="Disc1" title="Disc 1"></Tab>
-                        <Tab eventKey="AddDisc" title="+ Add A Disc"></Tab>
-                    </Tabs>
+                <AudioFilesTabbedTracks 
+                    data={this.state.discs}
+                    handleTabClick={this.handleTabClick}
+                    deleteRow={this.deleteRow}
+                    handleChange={this.handleChange}
+                    resequencePageTableData={this.resequencePageTableData}
+                    isValidIsrc={this.isValidIsrc}
+                    isValidTitle={this.isValidTitle}
+                    addDisc={this.addDisc}
+                />
 
-                    <Tab.Content>
-                        <Tab.Pane eventKey="Disc1">
-                            <AudioVideoDataTable
-                                data={this.state.discs[0]}
-                                deleteRow={this.deleteRow}
-                                handleChange={this.handleChange}
-                                resequencePageTableData={this.resequencePageTableData}
-                            />
-                        </Tab.Pane>
-                    </Tab.Content>
-                </Tab.Container>
+                <div onClick={this.addDisc}>Add Disc</div>
 
             <section className="row no-gutters save-buttons">
                 <div className="col-12">

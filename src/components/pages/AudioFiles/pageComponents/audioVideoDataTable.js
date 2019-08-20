@@ -16,7 +16,6 @@ class AudioVideoDataTable extends Component {
             activeDragTarget : null,
         }
         this.handleChange = this.handleChange.bind(this);
-        this.deleteRow = this.deleteRow.bind(this);
     }
 
     AudioVideoDataHeader() {
@@ -34,16 +33,6 @@ class AudioVideoDataTable extends Component {
         )
     }
 
-    deleteRow(rowIndex) {
-        const {tableData} = this.state;
-        let modifiedTableData = tableData;
-            modifiedTableData.splice(rowIndex, 1);
-
-        this.setState({tableData : modifiedTableData})
-
-        this.props.deleteRow(rowIndex)
-    }
-
     isValidIsrc(isrc) {
         return((isrc.replace(/\W/g, '').length == 12) ? true : false);
     }
@@ -58,7 +47,6 @@ class AudioVideoDataTable extends Component {
         } else {
             input.className = input.className.replace('is-invalid', '');
         }
-        
     }
 
     handleOnBlur(e) {
@@ -90,18 +78,13 @@ class AudioVideoDataTable extends Component {
     drop(e, i, track) {
         e.preventDefault();
         this.setState({activeDragTarget : i}, () => this.props.resequencePageTableData(this.state.activeDragSource, this.state.activeDragTarget))
-
-        
         var data = e.dataTransfer.getData("text/html");
     }
 
     allowDrop(e) {
         e.preventDefault();
-
         //e.target.className = 'audio-drop-area'
-
         //audio-drop-area
-
     }
 
 
@@ -111,7 +94,8 @@ class AudioVideoDataTable extends Component {
         const {tableData} = this.state;
         let modifiedTableData = tableData;
 
-        if(this.props.data) {
+        if(this.props.data.Tracks) {
+
             tableDataRows = this.props.data.Tracks.map( (track, i) => {
 
                 modifiedTableData[i] = {
@@ -153,7 +137,7 @@ class AudioVideoDataTable extends Component {
                                 className={'trackIsrcField'}
                                 onBlur={ (e) => this.handleOnBlur(e) }
                             />
-                            <div class="invalid-tooltip">
+                            <div className="invalid-tooltip">
                                 Invalid ISRC
                             </div>
                         </td>
@@ -181,7 +165,7 @@ class AudioVideoDataTable extends Component {
                         </td>
                         <td className="text-center">
                             <button className="btn btn-secondary action"><i className="material-icons">refresh</i></button>
-                            <button className="btn btn-secondary action" onClick={(evt) => this.deleteRow(i)}><i className="material-icons">delete</i></button>
+                            <button className="btn btn-secondary action" onClick={(evt) => this.props.deleteRow(i)}><i className="material-icons">delete</i></button>
                         </td>
                     </tr>
                 )
@@ -197,9 +181,6 @@ class AudioVideoDataTable extends Component {
                 {tableDataRows}
             </tbody>
         )
-    }
-
-    componentDidUpdate() {
     }
 
     render() {
