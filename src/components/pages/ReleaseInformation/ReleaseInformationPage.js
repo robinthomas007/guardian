@@ -352,11 +352,11 @@ class ReleaseinformationPage extends Component {
 
                 <PageHeader />
 
-                <div className="row no-gutters step-description w-100">
-                    
+                <div className="row d-flex no-gutters step-description">
+                    <div className="col-12">
                         <h2>Step <span className="count-circle">1</span> Release Information</h2>
                         <p>In this step, you can create a new project by submitting basic release information for the system. Required fields are indicated with an <span className='required-ind'>*</span>. This section must be completed by selecting the 'Save &amp; Continue' button below.</p>
-              
+                    </div>
                 </div>
 
                 
