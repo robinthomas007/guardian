@@ -39,6 +39,7 @@ class AudioFilesPage extends Component {
 
     getTrack(track, trackIndex) {
         const {projectData} = this.state;
+
         return (
             {
                 artist : (track.artist) ? (track.artist) : (projectData.projectArtistName) ? projectData.projectArtistName : '',
@@ -105,7 +106,7 @@ class AudioFilesPage extends Component {
     }
 
     updateFiles(e) {
-        const { discs, pageTableData, activeTab } = this.state;
+        const { discs, pageTableData, activeTab, projectData } = this.state;
 
         let newFiles = Array.from(e.target.files);
         let modifiedPageTableData = pageTableData;
@@ -244,8 +245,8 @@ class AudioFilesPage extends Component {
         )
         .then (responseJSON =>
             {
+                this.setState({projectData : responseJSON.Project})
                 if(responseJSON.Discs && responseJSON.Discs.length > 0) {
-                    this.setState({projectData : responseJSON.Project})
                     this.setState({discs : responseJSON.Discs})
                     this.setState({pageTableData : responseJSON.Discs[this.state.activeTab].Tracks})
                 } else {
