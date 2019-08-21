@@ -244,7 +244,7 @@ class AudioFilesPage extends Component {
         )
         .then (responseJSON =>
             {
-                if(responseJSON.Discs) {
+                if(responseJSON.Discs && responseJSON.Discs.length > 0) {
                     this.setState({projectData : responseJSON.Project})
                     this.setState({discs : responseJSON.Discs})
                     this.setState({pageTableData : responseJSON.Discs[this.state.activeTab].Tracks})
