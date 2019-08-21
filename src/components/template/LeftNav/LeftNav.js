@@ -83,7 +83,8 @@ class LeftNav extends Component {
 		this.state = {
 			showSteps : true,
 			activeNav : '',
-			user : this.props.user
+			user : this.props.user,
+			projectID : ''
 		}
 
 		this.handleNavClick = this.handleNavClick.bind(this);
@@ -97,19 +98,17 @@ class LeftNav extends Component {
 	}
 
 	getUserLinks() {
-		
 		const activeStyle = {color: '#333', backgroundColor: '#F5F5F5'}
-
 		const stepLinks = Object.keys(navList.steps).map(
 			function(link, i) { 
+				const fullLink = navList.steps[link].navRoute + '/' + this.state.projectID;
 				return(
 					<li key={i}>
-
 						<NavLink 
 							id={"nav_" + navList.steps[link].navRoute.replace('/', '')}
 							className="steps" 
 							activeStyle={activeStyle} 
-							to={{pathname: navList.steps[link].navRoute}} 
+							to={{pathname: fullLink}} 
 							replace
 							isActive={
 								function(match) {
@@ -174,7 +173,6 @@ class LeftNav extends Component {
 	}
 
 	getNav() {
-
 		return(
 			<section className="fixed-left-nav col-2">
 				<span className="left-nav-logo"></span>
@@ -188,18 +186,13 @@ class LeftNav extends Component {
 		)
 	}
 
-	getProject() {
-		if(this.props.history.location.pathname) {
-
-		} else {
-			return(null)
+	componentDidUpdate() {
+		if(this.state.projectID !== this.props.projectID) {
+			this.setState( {projectID : this.props.projectID} )
 		}
 	}
 
 	render() {
-
-
-		
 		return(
 			<nav className="left-nav col-2">
 				{this.getNav()}

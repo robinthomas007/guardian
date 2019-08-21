@@ -17,7 +17,8 @@ class ReviewAndSubmitPage extends Component {
             project : {
                 projectCoverArtBase64Data : ''
             },
-            discs : []
+            discs : [],
+            projectID : ''
         }
 
         this.handleProjectCategoryClick = this.handleProjectCategoryClick.bind(this);
@@ -36,7 +37,7 @@ class ReviewAndSubmitPage extends Component {
             "User" : {
                 "email" : user.email
             },
-            "ProjectID" : this.props.match.params.projectID
+            "ProjectID" : (this.props.match.params.projectID) ? this.props.match.params.projectID : ''
         })
 
         fetch ('https://api-dev.umusic.net/guardian/project/review', {
@@ -72,6 +73,12 @@ class ReviewAndSubmitPage extends Component {
             layout: 'top',
             timeout: '3000'
         }).show() 
+    }
+
+    componentDidUpdate() {
+        if(this.props.match && this.props.match.params && this.props.match.params.projectID) {
+            this.props.setProjectID(this.props.match.params.projectID)
+        }
     }
 
     render() {
@@ -268,4 +275,4 @@ class ReviewAndSubmitPage extends Component {
     }
 };
 
-export default ReviewAndSubmitPage;
+export default withRouter(ReviewAndSubmitPage);

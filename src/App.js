@@ -7,6 +7,8 @@ import LoginPage from './components/pages/HomePage/HomePage';
 import Content from "./components/content";
 import { Security, SecureRoute, ImplicitCallback } from '@okta/okta-react';
 import config from './config';
+import { withRouter } from "react-router";
+
 
 class App extends Component {
 
@@ -14,6 +16,7 @@ class App extends Component {
 
     //clear the local storage
     localStorage.removeItem('projectData')
+
 
   };
 
@@ -32,10 +35,9 @@ class App extends Component {
               <Route path="/implicit/callback" component={ImplicitCallback} />
               <Route path="/" exact={true} component={LoginPage} />
               <Route path="/login" exact={true} component={LoginPage} />
+              
               <SecureRoute path="/" component={Content} />
-
-
-              <SecureRoute path="/" render={ () => ( <Content  />) }/>
+              <SecureRoute path="/" render={ () => ( <Content props={this.props}/>) } />
 
             </Switch>
           </Security>

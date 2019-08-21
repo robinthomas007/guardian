@@ -287,6 +287,11 @@ class ReleaseinformationPage extends Component {
         if(this.state.formInputs.projectCoverArtBase64Data !== '') {
             this.setCoverArt(this.state.formInputs.projectCoverArtBase64Data)
         }
+
+        if(this.props.match.params.projectID) {
+            this.props.setProjectID(this.props.match.params.projectID)
+        }
+        
     }
 
     handleDataLoad() {

@@ -7,6 +7,7 @@ import ReplaceAudioModal from '../../modals/ReplaceAudioModal';
 import './TrackInformation.css';
 import Noty from 'noty'
 import { listenerCount } from 'events';
+import { withRouter } from "react-router";
 
 class TrackInformationPage extends Component {
 
@@ -31,13 +32,6 @@ class TrackInformationPage extends Component {
         this.formatDateToYYYYMMDD = this.formatDateToYYYYMMDD.bind(this);
         this.setActiveDiscTab = this.setActiveDiscTab.bind(this);
         this.handleDiscUpdate = this.handleDiscUpdate.bind(this);
-
-        if(this.props.match.params.projectID) {
-            this.handlePageDataLoad()
-        } else {
-            this.addBlankRow()
-        }
-
     }
 
     removeRow(rowIndex) {
@@ -232,6 +226,19 @@ class TrackInformationPage extends Component {
         );
     }
 
+    componentDidMount() {
+
+        if(this.props.match.params && this.props.match.params.projectID) {
+            this.handlePageDataLoad()
+        }
+    }
+
+    componentDidUpdate() {
+        if(this.props.match && this.props.match.params && this.props.match.params.projectID) {
+            this.props.setProjectID(this.props.match.params.projectID)
+        }
+    }
+
     render() {
         return (
             <section className="page-container h-100">
@@ -249,25 +256,25 @@ class TrackInformationPage extends Component {
                         <p>In this step, you can upload audio files for filtering by either dragging &amp; dropping or clicking to browse files, e.g. mp3, WAV, etc. Tracks can also be reordered with drag and drop. This section must be completed by clicking on the 'Save &amp; Continue' button below.</p>
                     </div>
                 </div>
-             <div class="row no-gutters d-flex">
-                <div class="col-9"></div>
-                <div class="col-3 d-flex justify-content-end">
-                <ul class="disc-track-buttons">
-                   <li>
-                   <button 
-                        type="button" 
-                        className="btn btn-secondary btn-sm" 
-                        onClick=""
-                        ><i class="material-icons">adjust</i>Add Disc</button>
-                   </li>
-                   <li>
-                   <button 
-                        type="button" 
-                        className="btn btn-secondary btn-sm" 
-                        onClick=""
-                        ><i class="material-icons">add</i>Add Track</button>
-                   </li>
-               </ul>
+             <div className="row no-gutters d-flex">
+                <div className="col-9"></div>
+                <div className="col-3 d-flex justify-content-end">
+                    <ul className="disc-track-buttons">
+                        <li>
+                            <button 
+                                type="button" 
+                                className="btn btn-secondary btn-sm" 
+                                onClick=""
+                            ><i className="material-icons">adjust</i>Add Disc</button>
+                        </li>
+                        <li>
+                            <button 
+                                type="button" 
+                                className="btn btn-secondary btn-sm" 
+                                onClick=""
+                            ><i className="material-icons">add</i>Add Track</button>
+                        </li>
+                    </ul>
                 </div>
              </div>
                 <TabbedTracks 
@@ -303,4 +310,4 @@ class TrackInformationPage extends Component {
     }
 };
 
-export default TrackInformationPage;
+export default withRouter(TrackInformationPage);

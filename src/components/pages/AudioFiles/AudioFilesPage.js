@@ -20,7 +20,8 @@ class AudioFilesPage extends Component {
             files:[],
             discs : [],
             activeTab : 0,
-            pageTableData : []
+            pageTableData : [],
+            projectID : ''
         }
 
         this.showNotification = this.showNotification.bind(this);
@@ -38,6 +39,7 @@ class AudioFilesPage extends Component {
 
     getTrack(track, trackIndex) {
         const {projectData} = this.state;
+
         return (
             {
                 artist : (track.artist) ? (track.artist) : (projectData.projectArtistName) ? projectData.projectArtistName : '',
@@ -89,12 +91,6 @@ class AudioFilesPage extends Component {
         ).show()
     };
 
-    componentDidUpdate() {
-        if(this.props.match && this.props.match.params && this.state.projectID !== this.props.match.params.projectID) {
-            this.setState({projectID : this.props.match.params.projectID});
-        }
-    }
-
     isValidAudioType(fileName) {
         const validFiles = {
             "wav" : 1,
@@ -110,7 +106,7 @@ class AudioFilesPage extends Component {
     }
 
     updateFiles(e) {
-        const { discs, pageTableData, activeTab } = this.state;
+        const { discs, pageTableData, activeTab, projectData } = this.state;
 
         let newFiles = Array.from(e.target.files);
         let modifiedPageTableData = pageTableData;
@@ -249,8 +245,8 @@ class AudioFilesPage extends Component {
         )
         .then (responseJSON =>
             {
-                if(responseJSON.Discs) {
-                    this.setState({projectData : responseJSON.Project})
+                this.setState({projectData : responseJSON.Project})
+                if(responseJSON.Discs && responseJSON.Discs.length > 0) {
                     this.setState({discs : responseJSON.Discs})
                     this.setState({pageTableData : responseJSON.Discs[this.state.activeTab].Tracks})
                 } else {
@@ -349,8 +345,15 @@ class AudioFilesPage extends Component {
     }
 
     componentDidMount() {
-        if(this.props.match) {
-            this.handleDataLoad();
+        if(this.props.match.params && this.props.match.params.projectID) {
+            this.handleDataLoad()
+            this.props.setProjectID(this.props.match.params.projectID)
+        }
+    }
+
+    componentDidUpdate() {
+        if(this.props.match && this.props.match.params && this.state.projectID !== this.props.match.params.projectID) {
+            this.setState({projectID : this.props.match.params.projectID});
         }
     }
 
@@ -390,7 +393,6 @@ class AudioFilesPage extends Component {
     }
 
     render() {
-
            return(
 
             <section className="page-container h-100">
@@ -451,4 +453,4 @@ class AudioFilesPage extends Component {
     }
 }
 
-export default AudioFilesPage;
+export default withRouter(AudioFilesPage);

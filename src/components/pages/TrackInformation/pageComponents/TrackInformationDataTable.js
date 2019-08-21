@@ -117,13 +117,20 @@ class TrackInformationDataTable extends Component {
 
         for(var i=0; i<datePickers.length; i++) {
             let discNumber = parseInt(datePickers[i].getAttribute('discNumber')) - 1;
-
             if(!sortedInputs[discNumber]) {
                 sortedInputs[discNumber] = []
             }
             sortedInputs[discNumber].push(datePickers[i])
         }
-        sortedInputs[this.props.discID][trackIndex].value = '';
+
+        if(sortedInputs[this.props.discID][trackIndex].disabled) {
+            sortedInputs[this.props.discID][trackIndex].disabled = false;
+            sortedInputs[this.props.discID][trackIndex].value = '';
+            sortedInputs[this.props.discID][trackIndex].disabled = true;
+        } else {
+            sortedInputs[this.props.discID][trackIndex].value = '';
+        }
+        
     }
 
     setTBD(evt, track, i) {
@@ -137,7 +144,6 @@ class TrackInformationDataTable extends Component {
             modifiedDataRows[i].isSingle = false;
             modifiedDataRows[i].isTbdDisabled = false;
             modifiedDataRows[i].isTbdChecked = true;
-
             this.resetDatePicker(i);
         } else {
             modifiedDataRows[i].isTbdDisabled = false;
@@ -158,7 +164,9 @@ class TrackInformationDataTable extends Component {
             modifiedDataRows[i].isTbdChecked = false;
             modifiedDataRows[i].isTbdDisabled = false;
         } else {
+            modifiedDataRows[i].trackReleaseDate = (Project.projectReleaseDate) ? Project.projectReleaseDate : this.resetDatePicker(i);
             modifiedDataRows[i].isSingle = false;
+            modifiedDataRows[i].isReleaseDateDisabled = true;
         }
 
         this.setState({DataRows : modifiedDataRows})
@@ -187,7 +195,7 @@ class TrackInformationDataTable extends Component {
                         artist : (track.artist) ? track.artist : '',
                         
                         isSingleDisabled : false, 
-                        isReleaseDateDisabled : (track.trackReleaseDate !== '' || track.isSingle) ? false : true,
+                        isReleaseDateDisabled : (track.isSingle) ? false : true,
                         isTbdDisabled : (track.trackReleaseDate !== '' || track.isSingle) ? false : true,
                         isTbdChecked : (track.trackReleaseDate !== '' || track.isSingle) ? false : true
                     }
