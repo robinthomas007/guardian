@@ -20,7 +20,8 @@ class AudioFilesPage extends Component {
             files:[],
             discs : [],
             activeTab : 0,
-            pageTableData : []
+            pageTableData : [],
+            projectID : ''
         }
 
         this.showNotification = this.showNotification.bind(this);
@@ -88,12 +89,6 @@ class AudioFilesPage extends Component {
             })
         ).show()
     };
-
-    componentDidUpdate() {
-        if(this.props.match && this.props.match.params && this.state.projectID !== this.props.match.params.projectID) {
-            this.setState({projectID : this.props.match.params.projectID});
-        }
-    }
 
     isValidAudioType(fileName) {
         const validFiles = {
@@ -349,8 +344,15 @@ class AudioFilesPage extends Component {
     }
 
     componentDidMount() {
-        if(this.props.match) {
-            this.handleDataLoad();
+        if(this.props.match.params && this.props.match.params.projectID) {
+            this.handleDataLoad()
+            this.props.setProjectID(this.props.match.params.projectID)
+        }
+    }
+
+    componentDidUpdate() {
+        if(this.props.match && this.props.match.params && this.state.projectID !== this.props.match.params.projectID) {
+            this.setState({projectID : this.props.match.params.projectID});
         }
     }
 
@@ -390,7 +392,6 @@ class AudioFilesPage extends Component {
     }
 
     render() {
-
            return(
 
             <section className="page-container h-100">
@@ -451,4 +452,4 @@ class AudioFilesPage extends Component {
     }
 }
 
-export default AudioFilesPage;
+export default withRouter(AudioFilesPage);

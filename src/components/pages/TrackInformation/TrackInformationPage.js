@@ -7,6 +7,7 @@ import ReplaceAudioModal from '../../modals/ReplaceAudioModal';
 import './TrackInformation.css';
 import Noty from 'noty'
 import { listenerCount } from 'events';
+import { withRouter } from "react-router";
 
 class TrackInformationPage extends Component {
 
@@ -31,13 +32,6 @@ class TrackInformationPage extends Component {
         this.formatDateToYYYYMMDD = this.formatDateToYYYYMMDD.bind(this);
         this.setActiveDiscTab = this.setActiveDiscTab.bind(this);
         this.handleDiscUpdate = this.handleDiscUpdate.bind(this);
-
-        if(this.props.match.params.projectID) {
-            this.handlePageDataLoad()
-        } else {
-            this.addBlankRow()
-        }
-
     }
 
     removeRow(rowIndex) {
@@ -232,6 +226,19 @@ class TrackInformationPage extends Component {
         );
     }
 
+    componentDidMount() {
+
+        if(this.props.match.params && this.props.match.params.projectID) {
+            this.handlePageDataLoad()
+        }
+    }
+
+    componentDidUpdate() {
+        if(this.props.match && this.props.match.params && this.props.match.params.projectID) {
+            this.props.setProjectID(this.props.match.params.projectID)
+        }
+    }
+
     render() {
         return (
             <section className="page-container h-100">
@@ -303,4 +310,4 @@ class TrackInformationPage extends Component {
     }
 };
 
-export default TrackInformationPage;
+export default withRouter(TrackInformationPage);

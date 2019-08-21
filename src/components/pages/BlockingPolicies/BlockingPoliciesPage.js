@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Table, Grid, Button, Form } from 'react-bootstrap'; 
 import PageHeader from '../PageHeader/PageHeader';
 import './BlockingPolicies.css';
+import { withRouter } from 'react-router-dom';
 
 const mockData = require('../../../mockData.json');
 
@@ -190,4 +191,4 @@ class BlockingPoliciesPage extends Component {
     }
 };
 
-export default BlockingPoliciesPage;
+export default withRouter(BlockingPoliciesPage);
