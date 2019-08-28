@@ -1,10 +1,63 @@
 import React, { Component } from 'react';
 import PageHeader from '../PageHeader/PageHeader';
+import MultiSelectDropDown from '../../SharedPageComponents/multiSelectDropdown'
 import './TerritorialRights.css'
+import { withRouter } from "react-router";
 
 const mockData = require('../../../mockData.json');
 
 class TerritorialRightsPage extends Component {
+
+    constructor(props) {
+		super(props);
+		this.state = {
+            countries : []
+        }
+        this.handleChange = this.handleChange.bind(this);
+        this.handlePageDataLoad = this.handlePageDataLoad.bind(this);
+    }
+
+    handlePageDataLoad = () => {
+        const user = JSON.parse(sessionStorage.getItem('user'))
+        const fetchHeaders = new Headers(
+            {
+                "Content-Type": "application/json",
+                "Authorization" : sessionStorage.getItem('accessToken')
+            }
+		)
+
+		const fetchBody = JSON.stringify( {
+            "User" : {
+				"email" : user.email
+			},
+		})
+
+        fetch ('https://api-dev.umusic.net/guardian/countries', {
+            method : 'POST',
+            headers : fetchHeaders,
+            body : fetchBody
+        }).then (response => 
+            {
+                return(response.json());
+            }
+        )
+        .then (responseJSON => 
+            {
+                this.setState( {countries : responseJSON.Countries} )
+            }
+        )
+        .catch(
+            error => console.error(error)
+		);
+    }
+
+    handleChange = (e) => {
+
+    }
+
+    componentDidMount() {
+        this.handlePageDataLoad()
+    }
 
     render() {
 
@@ -86,15 +139,60 @@ class TerritorialRightsPage extends Component {
                                     className="btn btn-primary"
                                 >Create a New Rights Set</button>
                                 <div className="dropdown">
-												<button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-													Custom Rights Sets
-												</button>
-												<div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-													<a className="dropdown-item" href="#">Custom Rights Set 1</a>
-													<a className="dropdown-item" href="#">Custom Rights Set 2</a>
-													<a className="dropdown-item" href="#">Custom Rights Set 3</a>
-												</div>
-											</div>
+                                    <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Custom Rights Sets
+                                    </button>
+                                    <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a className="dropdown-item" href="#">Custom Rights Set 1</a>
+                                        <a className="dropdown-item" href="#">Custom Rights Set 2</a>
+                                        <a className="dropdown-item" href="#">Custom Rights Set 3</a>
+                                        <a className="dropdown-item" href="#">Custom Rights Set 1</a>
+                                        <a className="dropdown-item" href="#">Custom Rights Set 2</a>
+                                        <a className="dropdown-item" href="#">Custom Rights Set 3</a>
+                                        <a className="dropdown-item" href="#">Custom Rights Set 1</a>
+                                        <a className="dropdown-item" href="#">Custom Rights Set 2</a>
+                                        <a className="dropdown-item" href="#">Custom Rights Set 3</a>
+                                        <a className="dropdown-item" href="#">Custom Rights Set 1</a>
+                                        <a className="dropdown-item" href="#">Custom Rights Set 2</a>
+                                        <a className="dropdown-item" href="#">Custom Rights Set 3</a>
+                                        <a className="dropdown-item" href="#">Custom Rights Set 1</a>
+                                        <a className="dropdown-item" href="#">Custom Rights Set 2</a>
+                                        <a className="dropdown-item" href="#">Custom Rights Set 3</a>
+                                        <a className="dropdown-item" href="#">Custom Rights Set 1</a>
+                                        <a className="dropdown-item" href="#">Custom Rights Set 2</a>
+                                        <a className="dropdown-item" href="#">Custom Rights Set 3</a>
+                                        <a className="dropdown-item" href="#">Custom Rights Set 1</a>
+                                        <a className="dropdown-item" href="#">Custom Rights Set 2</a>
+                                        <a className="dropdown-item" href="#">Custom Rights Set 3</a>
+                                        <a className="dropdown-item" href="#">Custom Rights Set 1</a>
+                                        <a className="dropdown-item" href="#">Custom Rights Set 2</a>
+                                        <a className="dropdown-item" href="#">Custom Rights Set 3</a>
+                                        <a className="dropdown-item" href="#">Custom Rights Set 1</a>
+                                        <a className="dropdown-item" href="#">Custom Rights Set 2</a>
+                                        <a className="dropdown-item" href="#">Custom Rights Set 3</a>
+                                        <a className="dropdown-item" href="#">Custom Rights Set 1</a>
+                                        <a className="dropdown-item" href="#">Custom Rights Set 2</a>
+                                        <a className="dropdown-item" href="#">Custom Rights Set 3</a>
+                                        <a className="dropdown-item" href="#">Custom Rights Set 1</a>
+                                        <a className="dropdown-item" href="#">Custom Rights Set 2</a>
+                                        <a className="dropdown-item" href="#">Custom Rights Set 3</a>
+                                        <a className="dropdown-item" href="#">Custom Rights Set 1</a>
+                                        <a className="dropdown-item" href="#">Custom Rights Set 2</a>
+                                        <a className="dropdown-item" href="#">Custom Rights Set 3</a>
+                                        <a className="dropdown-item" href="#">Custom Rights Set 1</a>
+                                        <a className="dropdown-item" href="#">Custom Rights Set 2</a>
+                                        <a className="dropdown-item" href="#">Custom Rights Set 3</a>
+                                        <a className="dropdown-item" href="#">Custom Rights Set 1</a>
+                                        <a className="dropdown-item" href="#">Custom Rights Set 2</a>
+                                        <a className="dropdown-item" href="#">Custom Rights Set 3</a>
+                                        <a className="dropdown-item" href="#">Custom Rights Set 1</a>
+                                        <a className="dropdown-item" href="#">Custom Rights Set 2</a>
+                                        <a className="dropdown-item" href="#">Custom Rights Set 3</a>
+                                        <a className="dropdown-item" href="#">Custom Rights Set 1</a>
+                                        <a className="dropdown-item" href="#">Custom Rights Set 2</a>
+                                        <a className="dropdown-item" href="#">Custom Rights Set 3</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -150,12 +248,14 @@ class TerritorialRightsPage extends Component {
                                             </td>
                                             <td className="col-4">
                                                 <div className="dropdown">
-                                                    <button type="button" id="includedCountriesDropdown" className="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        Select Countries
-                                                    </button>
-                                                    <ul className="dropdown-menu countries" aria-labelledby="includedCountriesDropdown">
-                                                        {CountriesWithRights}
-                                                    </ul>
+                                                    <MultiSelectDropDown 
+                                                        placeHolder={'Select Country'}
+                                                        data={this.state.countries}
+                                                        id={'territorialRightsCountry'}
+                                                        onChange={this.handleChange()}
+                                                        buttonClass={null}
+                                                        dropClass={null}
+                                                    />
                                                 </div>
                                             </td>
                                         </tr>
@@ -170,4 +270,4 @@ class TerritorialRightsPage extends Component {
     }
 };
 
-export default TerritorialRightsPage;
+export default withRouter(TerritorialRightsPage);
