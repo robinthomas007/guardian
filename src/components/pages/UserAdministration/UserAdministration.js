@@ -147,7 +147,7 @@ render() {
 			<div className="table-responsive">
 				<Table>
 					<thead>
-						<tr className='row'>
+						<tr className="d-flex">
 							<th className="col-1">Request Date</th>
                             <th className="col-2">First Name</th>
                             <th className="col-2">Last Name</th>
@@ -158,13 +158,15 @@ render() {
 						</tr>
 					</thead>
 					<tbody>
-						    <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                        <tr className="d-flex">
+                            <td className="col-1"></td>
+                            <td className="col-2"></td>
+                            <td className="col-2"></td>
+                            <td className="col-2"></td>
+                            <td className="col-2"></td>
+                            <td className="col-2"></td>
+                            <td className="col-1"></td>
+                        </tr>   
 					</tbody>
 				</Table>
 				</div>
