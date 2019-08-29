@@ -76,7 +76,7 @@
 	.btn-primary > i, .btn-secondary > i {font-size:20px;}
 
 	.dropdown {display:inline-block; padding:0px 8px;}
-	.dropdown-menu {box-shadow:2px 3px 8px #8c9396; min-width:.10rem;}
+	.dropdown-menu {box-shadow:2px 3px 8px #8c9396; max-height:30rem; overflow-y:scroll; overflow-x: visible;}
 	.dropdown-menu > a.dropdown-item {font-size:.9em;}
 
 	.multi-select.dropdown > .dropdown-menu > a.dropdown-item {font-size:.9em; line-height:2em;}
@@ -262,6 +262,7 @@
 	.table-section .tab-pane {background-color:#FFF; padding:30px;}
 
 	/* Territorial Rights & Blocking Polcies */
+	div.table-responsive.d-flex.row.no-gutters {overflow:inherit;}
 
 	.card-nav {text-align:right; margin-bottom:10px;}
 	.card-nav .dropdown {margin-left:10px;}
