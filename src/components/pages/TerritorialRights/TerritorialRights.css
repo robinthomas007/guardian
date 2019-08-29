@@ -3,8 +3,8 @@
 .card-nav {text-align:right; margin-bottom:10px;}
 .card-nav .dropdown {margin-left:10px;}
 
-.set-card {margin-left:-20px; padding:1rem; background-color:#F5F5F5; }
-.set-card btn.dropdown {background-color:#fff;}
+.set-card {margin-left:-20px; margin-bottom:10px; padding:1rem; background-color:#F5F5F5; }
+.btn.btn-secondary.dropdown-toggle {background-color:#fff; border:solid 1px #CCC;}
 .set-card table.table td {vertical-align:top; border-bottom:none;}
 .set-card .track-draggable-area {max-height:400px; overflow-y: auto; overflow-x:hidden;}
 .set-card h3 {margin-top:8px; margin-right:8px;}
@@ -19,6 +19,7 @@ ul.countries li .dropdown-item, ul.tracks li .dropdown-item {margin:0rem 0rem;}
 ul.countries li:last-child, ul.tracks li:last-child  {padding-bottom:0;}
 ul.countries li span, ul.tracks li span {vertical-align:middle;}
 ul.countries li label.dropdown-item, ul.tracks li label.dropdown-item {padding:.50rem 1.1rem;}
+.track-draggable-area.territory-tracks {min-height:100px!important;}
 
 .dropdown .custom-checkbox {display:inline-block; }
 .territory-tracks {width:260px;}
