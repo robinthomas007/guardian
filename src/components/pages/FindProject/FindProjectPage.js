@@ -526,23 +526,17 @@ class FindProjectPage extends Component {
 				
 				<IntroModal />
 
-				<section className="page-container">
-					<div className="row">
-						<div className="col 4">
-							<h1>Find A Project</h1>
-						</div>
-						<div className="col-7">
-						</div> 
-					</div>
-				
-					<div className="row no-gutters step-description">
-						<div className="col-12">
-							<p>Search for an existing project or release in the search bar below. Projects can be located by Artist, Track, ISRC or Project Title (Album, Compilation, EP, or Single name). <br />
+				<section className="page-container h-100">
+				<div className="row d-flex no-gutters">
+                    <div className="col-12">
+                        <h1>Find A Project</h1>
+						<p>Search for an existing project or release in the search bar below. Projects can be located by Artist, Track, ISRC or Project Title (Album, Compilation, EP, or Single name). <br />
 							Can't find what you're looking for? Email us at <a href="mailto:guardian-support@umusic.com">guardian-support@umusic.com</a>.
 							</p>
-						</div> 
-					</div>
-
+                    </div>
+                </div>
+				<br />
+				<br />
 					<ul className="row search-row">
 						<li className="col-2 d-flex"></li>
 						<li className="col-8 d-flex justify-content-center">
@@ -703,7 +697,7 @@ class FindProjectPage extends Component {
 				</ul>
 
 			<div className="table-responsive">
-				<Table className="find-project-table">
+				<Table>
 					<thead>
 						<tr className='d-flex'>
 							<th className="col-2 text-nowrap">Project Title</th>

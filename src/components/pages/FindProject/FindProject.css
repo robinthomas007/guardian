@@ -17,14 +17,14 @@
 	ul.results-controls {list-style:none; margin:0; padding:0; margin-bottom:30px;}
 	ul.results-controls .dropdown {margin:auto 6px; }
 	ul.results-controls .dropdown .dropdown-toggle, ul.results-controls .dropdown .dropdown-menu {color:#01578B; font-size:.9rem;}
-	ul.results-controls span.viewing {padding-top: 7px; margin-left:-8px; margin-right:-8px;}
+	ul.results-controls span.viewing {padding-top: 7px; }
 
-	.page-link {position: relative; display: block; padding: .5rem .75rem; margin-left: -1px; line-height: 1.25; color:#01578B; background-color: #fff; border: 1px solid #dee2e6;}
+	.page-link {position: relative; display: block; padding: .5rem .75rem; margin-left: 4px; margin-right: 4px; line-height: 1.25; color:#01578B; background-color: #f5f5f5; border: none;}
 	.page-item.active .page-link {background-color:#01578B; border-color:#01578B;}
 
 	.btn-secondary:not(:disabled):not(.disabled).active,
 	.btn-secondary:not(:disabled):not(.disabled):active,
-	.show>.btn-secondary.dropdown-toggle {color: #333; background-color:#fff; border-color: #ccc;}
+	.show>.btn-secondary.dropdown-toggle {color: #333; background-color:#f5f5f5; }
 
 	table.table.find-project-table tbody tr:hover, table.table.find-project-table tbody tr:hover td {cursor:pointer; background-color: #d9f3fe!important; transition: background-color 0.3s linear; }
 	

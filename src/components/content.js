@@ -11,6 +11,7 @@ import TerritorialRightsPage from './pages/TerritorialRights/TerritorialRightsPa
 import ReleaseInformationPage from './pages/ReleaseInformation/ReleaseInformationPage';
 import FindProject from './pages/FindProject/FindProjectPage';
 import HelpGuide from './pages/HelpGuide/HelpGuidePage';
+import UserAdmin from './pages/UserAdministration/UserAdministration';
 import { withAuth } from '@okta/okta-react';
 import UUID from 'uuid';
 import { Alert } from 'react-bootstrap';
@@ -150,6 +151,7 @@ export default withAuth(class Content extends Component {
             <SecureRoute path="/newProject"  render={ () => ( <ReleaseInformationPage user={this.state.user} setProjectID={this.setProjectID}/>) } />
             <SecureRoute path="/findProject" component={FindProject}/>
             <SecureRoute path="/helpGuide" component={HelpGuide}/>
+            <SecureRoute path="/userAdmin" component={UserAdmin}/>
           </div>
         </div>
       );
