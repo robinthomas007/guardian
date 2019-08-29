@@ -138,13 +138,12 @@ export default withAuth(class Content extends Component {
           <LeftNav isAdmin={this.state.isAdmin} projectID={this.state.projectID}/>
 
           <div className="content col-10">
-            
             <TopNav userObj={this.state.user} updateParentHistory={this.updateHistory}/>
-
+            
             <SecureRoute path="/releaseInformation/:projectID?" render={ () => ( <ReleaseInformationPage user={this.state.user} setProjectID={this.setProjectID} />) } />
             <SecureRoute path="/projectContacts/:projectID?" render={ () => ( <ProjectContactsPage user={this.state.user} setProjectID={this.setProjectID} />) }/>
             <SecureRoute path="/trackInformation/:projectID?" render={ () => ( <TrackInformationPage user={this.state.user} setProjectID={this.setProjectID} />) }/>
-            <SecureRoute path="/territorialRights" render={ () => ( <TerritorialRightsPage user={this.state.user} setProjectID={this.setProjectID} />) }/>
+            <SecureRoute path="/territorialRights/:projectID?" render={ () => ( <TerritorialRightsPage user={this.state.user} setProjectID={this.setProjectID} />) }/>
             <SecureRoute path="/blockingPolicies/:projectID?" render={ () => ( <BlockingPoliciesPage user={this.state.user} setProjectID={this.setProjectID} />) }/>
             <SecureRoute path="/audioFiles/:projectID?" render={ () => ( <AudioFilesPage user={this.state.user} setProjectID={this.setProjectID} />) } />
             <SecureRoute path="/reviewSubmit/:projectID?" render={ () => ( <ReviewAndSubmitPage user={this.state.user} setProjectID={this.setProjectID} />) } />

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import PageHeader from '../PageHeader/PageHeader';
-import MultiSelectDropDown from '../../SharedPageComponents/multiSelectDropdown'
-import './TerritorialRights.css'
+import MultiSelectDropDown from '../../SharedPageComponents/multiSelectDropdown';
+import TracksWithoutRights from '../TerritorialRights/pageComponents/TracksWithoutRights';
+import TracksRightsSets from '../TerritorialRights/pageComponents/TracksRightsSets';
+import './TerritorialRights.css';
 import { withRouter } from "react-router";
 
 const mockData = require('../../../mockData.json');
@@ -11,13 +13,16 @@ class TerritorialRightsPage extends Component {
     constructor(props) {
 		super(props);
 		this.state = {
-            countries : []
+            project : {
+                Countries : []
+            }
         }
         this.handleChange = this.handleChange.bind(this);
         this.handlePageDataLoad = this.handlePageDataLoad.bind(this);
     }
 
     handlePageDataLoad = () => {
+
         const user = JSON.parse(sessionStorage.getItem('user'))
         const fetchHeaders = new Headers(
             {
@@ -29,10 +34,11 @@ class TerritorialRightsPage extends Component {
 		const fetchBody = JSON.stringify( {
             "User" : {
 				"email" : user.email
-			},
+            },
+            "ProjectID": this.props.match.params.projectID,
 		})
 
-        fetch ('https://api-dev.umusic.net/guardian/countries', {
+        fetch ('https://api-dev.umusic.net/guardian/project/review', {
             method : 'POST',
             headers : fetchHeaders,
             body : fetchBody
@@ -43,7 +49,7 @@ class TerritorialRightsPage extends Component {
         )
         .then (responseJSON => 
             {
-                this.setState( {countries : responseJSON.Countries} )
+                this.setState( {project : responseJSON} )
             }
         )
         .catch(
@@ -56,7 +62,35 @@ class TerritorialRightsPage extends Component {
     }
 
     componentDidMount() {
-        this.handlePageDataLoad()
+        if(this.props.match.params.projectID) {
+            this.handlePageDataLoad()
+        }        
+    }
+
+    getBlankRightsSet() {
+        return(
+            {
+                "territorialRightsSetID": "",
+                "sequence": "",
+                "description": "",
+                "countries": [
+                    {
+                        "id": "",
+                        "name": ""
+                    }
+                ],
+                "tracks": [
+                    {
+                        "trackID": "",
+                        "trackTitle": ""
+                    }
+                ],
+                "hasRights": false
+            }
+        )
+    }
+
+    addBlankRightsSet = () => {
     }
 
     render() {
@@ -64,50 +98,6 @@ class TerritorialRightsPage extends Component {
         const createNewRightsSet = () => {
             alert('Creating New Rights Set');
         }
-    
-        const TracksWithNoSetPolicy = mockData.pages.TerritorialRights.tracks.map( function (noPolicyTrack, i) {
-            return(
-                <div key={i} draggable className="draggable-track">
-                    <i className="material-icons">dehaze</i>{noPolicyTrack.trackAudioFile}
-                </div>
-            )
-        });
-    
-        const TracksWithNoSetPolicyDrop = mockData.pages.TerritorialRights.tracks.map( function (noPolicyTrack, i) {
-            return(
-                <li key={i}>
-                    <label className="dropdown-item custom-checkbox">
-                        <input type="checkbox" />
-                        <span className="checkmark"></span>
-                    </label>
-                    <span>{noPolicyTrack.trackAudioFile}</span>
-                </li>
-            )
-        });
-    
-        const CountriesWithRights = mockData.pages.TerritorialRights.countriesWithRights.map( function (country, i) {
-            return(
-                <li key={i}>
-                    <label className="dropdown-item custom-checkbox">
-                        <input type="checkbox" />
-                        <span className="checkmark"></span>
-                    </label>
-                    <span>{country.countryName}</span>
-                </li>
-            )
-        });
-    
-        const CountriesWithOutRights = mockData.pages.TerritorialRights.countriesWithOutRights.map( function (country, i) {
-            return(
-                <li key={i}>
-                    <label className="dropdown-item custom-checkbox">
-                        <input type="checkbox" />
-                        <span className="checkmark"></span>
-                    </label>
-                    <span>{country.countryName}</span>
-                </li>
-            )
-        });
 
         return(
         
@@ -146,51 +136,6 @@ class TerritorialRightsPage extends Component {
                                         <a className="dropdown-item" href="#">Custom Rights Set 1</a>
                                         <a className="dropdown-item" href="#">Custom Rights Set 2</a>
                                         <a className="dropdown-item" href="#">Custom Rights Set 3</a>
-                                        <a className="dropdown-item" href="#">Custom Rights Set 1</a>
-                                        <a className="dropdown-item" href="#">Custom Rights Set 2</a>
-                                        <a className="dropdown-item" href="#">Custom Rights Set 3</a>
-                                        <a className="dropdown-item" href="#">Custom Rights Set 1</a>
-                                        <a className="dropdown-item" href="#">Custom Rights Set 2</a>
-                                        <a className="dropdown-item" href="#">Custom Rights Set 3</a>
-                                        <a className="dropdown-item" href="#">Custom Rights Set 1</a>
-                                        <a className="dropdown-item" href="#">Custom Rights Set 2</a>
-                                        <a className="dropdown-item" href="#">Custom Rights Set 3</a>
-                                        <a className="dropdown-item" href="#">Custom Rights Set 1</a>
-                                        <a className="dropdown-item" href="#">Custom Rights Set 2</a>
-                                        <a className="dropdown-item" href="#">Custom Rights Set 3</a>
-                                        <a className="dropdown-item" href="#">Custom Rights Set 1</a>
-                                        <a className="dropdown-item" href="#">Custom Rights Set 2</a>
-                                        <a className="dropdown-item" href="#">Custom Rights Set 3</a>
-                                        <a className="dropdown-item" href="#">Custom Rights Set 1</a>
-                                        <a className="dropdown-item" href="#">Custom Rights Set 2</a>
-                                        <a className="dropdown-item" href="#">Custom Rights Set 3</a>
-                                        <a className="dropdown-item" href="#">Custom Rights Set 1</a>
-                                        <a className="dropdown-item" href="#">Custom Rights Set 2</a>
-                                        <a className="dropdown-item" href="#">Custom Rights Set 3</a>
-                                        <a className="dropdown-item" href="#">Custom Rights Set 1</a>
-                                        <a className="dropdown-item" href="#">Custom Rights Set 2</a>
-                                        <a className="dropdown-item" href="#">Custom Rights Set 3</a>
-                                        <a className="dropdown-item" href="#">Custom Rights Set 1</a>
-                                        <a className="dropdown-item" href="#">Custom Rights Set 2</a>
-                                        <a className="dropdown-item" href="#">Custom Rights Set 3</a>
-                                        <a className="dropdown-item" href="#">Custom Rights Set 1</a>
-                                        <a className="dropdown-item" href="#">Custom Rights Set 2</a>
-                                        <a className="dropdown-item" href="#">Custom Rights Set 3</a>
-                                        <a className="dropdown-item" href="#">Custom Rights Set 1</a>
-                                        <a className="dropdown-item" href="#">Custom Rights Set 2</a>
-                                        <a className="dropdown-item" href="#">Custom Rights Set 3</a>
-                                        <a className="dropdown-item" href="#">Custom Rights Set 1</a>
-                                        <a className="dropdown-item" href="#">Custom Rights Set 2</a>
-                                        <a className="dropdown-item" href="#">Custom Rights Set 3</a>
-                                        <a className="dropdown-item" href="#">Custom Rights Set 1</a>
-                                        <a className="dropdown-item" href="#">Custom Rights Set 2</a>
-                                        <a className="dropdown-item" href="#">Custom Rights Set 3</a>
-                                        <a className="dropdown-item" href="#">Custom Rights Set 1</a>
-                                        <a className="dropdown-item" href="#">Custom Rights Set 2</a>
-                                        <a className="dropdown-item" href="#">Custom Rights Set 3</a>
-                                        <a className="dropdown-item" href="#">Custom Rights Set 1</a>
-                                        <a className="dropdown-item" href="#">Custom Rights Set 2</a>
-                                        <a className="dropdown-item" href="#">Custom Rights Set 3</a>
                                     </div>
                                 </div>
                             </div>
@@ -199,70 +144,55 @@ class TerritorialRightsPage extends Component {
                 </div>
                 <div className="row">
                     <div className="col-3">
-                        <div className="track-draggable-area h-100" droppable>
-                            {TracksWithNoSetPolicy}
-                        </div>
+                        <TracksWithoutRights 
+                            //data={this.state.project.UnassignedTracks}
+                            data={[{trackID : '01', trackTitle : "Track #1"}]}
+                        />
                     </div>
                     <div className="col-9">
-                        <div className="set-card">
-                                <div className="row d-flex col-12 no-gutters">
-                                     
-                                    <h3>Territorial Rights Set 1 </h3>
-                                        
-                                    <button className="btn btn-secondary action align-middle">
-                                            <i className="material-icons" data-toggle="tooltip" title="Edit Rights Set Name">edit</i>
-                                        </button>
-                                        <button className="btn btn-secondary action align-middle">
-                                        <i className="material-icons" data-toggle="tooltip" title="Save Rights Set">save</i>
-                                        </button>
-                                       
-                                </div>
-                           
-                            <div className="table-responsive d-flex row no-gutters">
-                                <table className="territorial-rights-table col-12">
-                                    <thead>
-                                        <tr className="d-flex row no-gutters">
-                                            <th className="col-4" nowrap>Tracks with this Rights Set</th>
-                                            <th className="col-4" nowrap>Rights Rule</th>
-                                            <th className="col-4" nowrap>Select Countries</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr className="d-flex row no-gutters">
-                                            <td className="col-4">
-                                                <div className="dropdown tracks-dropdown">
-                                                    <button type="button" id="selectTracksDropdown" className="btn btn-secondary dropdown-toggle territory-tracks" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        Select Tracks or Drag Below
-                                                    </button>
-                                                    <ul className="dropdown-menu tracks" aria-labelledby="selectTracksDropdown">
-                                                        {TracksWithNoSetPolicyDrop}
-                                                    </ul>
-                                                </div>
-                                                <div droppable className="track-draggable-area territory-tracks">
-
-                                                </div>
-                                            </td>
-                                            <td className="col-4">
-                                            <input type="radio" /> <label>Only Has Rights In</label><br />
-                                            <input type="radio" /> <label>Has Rights Everywhere Except</label>
-                                            </td>
-                                            <td className="col-4">
-                                                <div className="dropdown">
-                                                    <MultiSelectDropDown 
-                                                        placeHolder={'Select Country'}
-                                                        data={this.state.countries}
-                                                        id={'territorialRightsCountry'}
-                                                        onChange={this.handleChange()}
-                                                        buttonClass={null}
-                                                        dropClass={null}
-                                                    />
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                        <TracksRightsSets 
+                            //data={this.state.project.TerritorialRightsSets}
+                            data={[
+                                {
+                                    "territorialRightsSetID": "string",
+                                    "sequence": "string",
+                                    "description": "Rights Set #1",
+                                    "countries": [
+                                    {
+                                        "id": "string",
+                                        "name": "string"
+                                    }
+                                    ],
+                                    "tracks": [
+                                    {
+                                        "trackID": "string",
+                                        "trackTitle": "string"
+                                    }
+                                    ],
+                                    "hasRights": true
+                                },
+                                {
+                                    "territorialRightsSetID": "string",
+                                    "sequence": "string",
+                                    "description": "Rights Set #2",
+                                    "countries": [
+                                    {
+                                        "id": "string",
+                                        "name": "string"
+                                    }
+                                    ],
+                                    "tracks": [
+                                    {
+                                        "trackID": "string",
+                                        "trackTitle": "string"
+                                    }
+                                    ],
+                                    "hasRights": true
+                                }
+                            ]}
+                            countries={this.state.project.Countries}
+                            onChange={this.handleChange()}
+                        />
                     </div>
                 </div>
             </section>

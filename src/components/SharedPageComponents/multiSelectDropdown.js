@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 
 class MultiSelectDropDown extends Component {
@@ -9,13 +8,26 @@ class MultiSelectDropDown extends Component {
 			show : false
         }
 		this.handleChange = this.handleChange.bind(this);
+		this.toggleShow = this.toggleShow.bind(this);
+		this.hide = this.hide.bind(this);
     }
 
-	toggleShow = () => {
-		this.setState( {show : true} )
+	toggleShow(){
+		this.setState({show: !this.state.show});
 	}
 
+
+	hide(e){
+		if(e && e.relatedTarget){
+		  e.relatedTarget.click();
+		}
+		this.setState({show: false});
+	  }
+
 	handleChange(e) {
+
+		e.stopPropagation();
+
         const { value } = this.state;
         let modifiedValue = value;
         let inputValue = e.target.value;
@@ -32,7 +44,7 @@ class MultiSelectDropDown extends Component {
         this.setState( {value : modifiedValue} )
         if(this.props.onChange) {
             this.props.onChange(e, modifiedValue) 
-        }
+		}
 	}
 
     getInputOptions = () => {
@@ -40,7 +52,7 @@ class MultiSelectDropDown extends Component {
         if(this.props.data) {
 			labelOptions = this.props.data.map( (option, i) => {
 				return(
-					<a className="dropdown-item" key={i}>
+					<a className="dropdown-item" key={i} onClick={null}>
 						<label className="custom-checkbox"> 		
 							<input   
 								onChange={(e) => this.handleChange(e)}
@@ -55,7 +67,7 @@ class MultiSelectDropDown extends Component {
 							{option.name}
 						</label>
 					</a>
-				   )
+				)
             })
             return(labelOptions)
         } else {
@@ -73,6 +85,8 @@ class MultiSelectDropDown extends Component {
 					data-toggle="dropdown" 
 					aria-haspopup="true" 
 					aria-expanded="false"
+					onClick={this.toggleShow}
+					onBlur={this.hide}
 				>
 					{this.props.placeHolder}
 				</button>
