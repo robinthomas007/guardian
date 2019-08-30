@@ -526,7 +526,7 @@ class FindProjectPage extends Component {
 				
 				<IntroModal />
 
-				<section className="page-container h-100">
+				<section className="page-container">
 				<div className="row d-flex no-gutters">
                     <div className="col-12">
                         <h1>Find A Project</h1>
