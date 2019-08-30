@@ -15,7 +15,7 @@ class TrackSelectDropDown extends Component {
     getTracksOptions = () => {
         const tracksList = this.props.data.map( (track, i) => {
             return(
-                <a key={i} className="dropdown-item" onClick={ (e) => this.handleTrackSelect(e, i) } setindex={this.props.setIndex} tracktitle={track.trackTitle} trackid={track.trackID}>
+                <a key={i} className="dropdown-item" onClick={ (e) => this.handleTrackSelect(e, i) } optionindex={i} setindex={this.props.setIndex} tracktitle={track.trackTitle} trackid={track.trackID}>
                     {track.trackTitle}
                 </a>
             )
