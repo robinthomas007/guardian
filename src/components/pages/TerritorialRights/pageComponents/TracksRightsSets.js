@@ -25,9 +25,14 @@ class TracksRightsSets extends Component {
         return(tracksList)
     }
 
-    handleTrackSelect = (e, i) => {
+    handleTrackSelect = (e) => {
+        const setIndex = parseInt(e.target.getAttribute('setindex'));
         const { TerritorialRightsSets } = this.props.data;
         let modifiedTerritorialRightsSets = TerritorialRightsSets;
+            modifiedTerritorialRightsSets[setIndex].tracks.push( {trackID : e.target.getAttribute('trackid'), trackTitle : e.target.getAttribute('tracktitle')} )
+
+        this.props.handleChange(modifiedTerritorialRightsSets);
+        this.props.handleChildDrop(e.target.getAttribute('optionindex'));
      }
 
     handleDrop(e, i) {
@@ -37,9 +42,9 @@ class TracksRightsSets extends Component {
             modifiedTerritorialRightsSets[i].tracks.push( {trackID : this.props.dragSource.getAttribute('trackid'), trackTitle : this.props.dragSource.getAttribute('tracktitle')} )
 
         this.props.handleChange(modifiedTerritorialRightsSets);
-        var data = e.dataTransfer.getData("text/html");
+        this.props.handleChildDrop(i);
 
-        this.props.handleChildDrop();
+        var data = e.dataTransfer.getData("text/html");
     }
 
     getSetsList = () => {
@@ -71,11 +76,9 @@ class TracksRightsSets extends Component {
   
                                         <TracksSelectDropDown 
                                             data={this.props.data.UnassignedTracks}
+                                            onChange={ (e) => this.handleTrackSelect(e)}
+                                            setIndex={i}
                                         />
-
-                                        {/* <div droppable className="track-draggable-area territory-tracks" onDrop={(e) => this.drop(e, i)} onDragOver={this.allowDrop}>
-                                            {this.getTracksList(rightsSet.tracks)}
-                                        </div> */}
 
                                         <TracksDropArea 
                                             data={rightsSet.tracks}
