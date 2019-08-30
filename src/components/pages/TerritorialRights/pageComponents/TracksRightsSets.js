@@ -1,17 +1,23 @@
 import React, { Component } from 'react';
-import MultiSelectDropDown from '../../../SharedPageComponents/multiSelectDropdown'
+import MultiSelectDropDown from '../../../SharedPageComponents/multiSelectDropdown';
+import TracksRightsRule from '../../TerritorialRights/pageComponents/TracksRightsRule';
+import TracksSelectDropDown from '../../TerritorialRights/pageComponents/TracksSelectDropDown';
+import TracksDropArea from '../../TerritorialRights/pageComponents/TracksDropArea';
 
 class TracksRightsSets extends Component {
     constructor(props) {
 		super(props);
 		this.state = {
+            TerritorialRightsSets : []
         }
+
+        this.handleDrop = this.handleDrop.bind(this);
     }
 
     getTracksList = (tracks) => {
         const tracksList = tracks.map( (track, i) => {
             return(
-                <div draggable="true" class="draggable-track">
+                <div key={i} draggable="true" class="draggable-track">
                     <i class="material-icons">dehaze</i>{track.trackTitle}
                 </div>
             )
@@ -19,21 +25,27 @@ class TracksRightsSets extends Component {
         return(tracksList)
     }
 
-    getTracksOptions = (tracks) => {
-        const tracksList = tracks.map( (track, i) => {
-            return(
-                <a className="dropdown-item" key={i} onClick={null}>
-                    {track.trackTitle}
-                </a>
-            )
-        })
-        return(tracksList)
+    handleTrackSelect = (e, i) => {
+        const { TerritorialRightsSets } = this.props.data;
+        let modifiedTerritorialRightsSets = TerritorialRightsSets;
+     }
+
+    handleDrop(e, i) {
+
+        const { TerritorialRightsSets } = this.props.data;
+        let modifiedTerritorialRightsSets = TerritorialRightsSets;
+            modifiedTerritorialRightsSets[i].tracks.push( {trackID : this.props.dragSource.getAttribute('trackid'), trackTitle : this.props.dragSource.getAttribute('tracktitle')} )
+
+        this.props.handleChange(modifiedTerritorialRightsSets);
+        var data = e.dataTransfer.getData("text/html");
+
+        this.props.handleChildDrop();
     }
 
     getSetsList = () => {
         const rightsSets = this.props.data.TerritorialRightsSets.map( (rightsSet, i) => {
             return(
-                <div className="set-card">
+                <div key={i} className="set-card">
                     <div className="row d-flex col-12 no-gutters">
                         <h3>{rightsSet.description}</h3>
                         <button className="btn btn-secondary action align-middle">
@@ -56,21 +68,26 @@ class TracksRightsSets extends Component {
                             <tbody>
                                 <tr className="d-flex row no-gutters">
                                     <td className="col-4">
-                                        <div className="dropdown tracks-dropdown">
-                                            <button type="button" id="selectTracksDropdown" className="btn btn-secondary dropdown-toggle territory-tracks" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                Select Tracks or Drag Below
-                                            </button>
-                                            <ul className="dropdown-menu tracks" aria-labelledby="selectTracksDropdown">
-                                                {this.getTracksOptions(this.props.data.UnassignedTracks)}
-                                            </ul>
-                                        </div>
-                                        <div droppable className="track-draggable-area territory-tracks">
+  
+                                        <TracksSelectDropDown 
+                                            data={this.props.data.UnassignedTracks}
+                                        />
+
+                                        {/* <div droppable className="track-draggable-area territory-tracks" onDrop={(e) => this.drop(e, i)} onDragOver={this.allowDrop}>
                                             {this.getTracksList(rightsSet.tracks)}
-                                        </div>
+                                        </div> */}
+
+                                        <TracksDropArea 
+                                            data={rightsSet.tracks}
+                                            handleDrop={this.handleDrop}
+                                            setIndex={i}
+
+                                        />
                                     </td>
                                     <td className="col-4">
-                                        <input type="radio" /> <label>Only Has Rights In</label><br />
-                                        <input type="radio" /> <label>Has Rights Everywhere Except</label>
+                                        <TracksRightsRule 
+                                            data={rightsSet.hasRights}
+                                        />
                                     </td>
                                     <td className="col-4">
                                         <div className="dropdown">
@@ -78,7 +95,7 @@ class TracksRightsSets extends Component {
                                                 placeHolder={'Select Country'}
                                                 data={this.props.data.Countries}
                                                 id={'territorialRightsCountry'}
-                                                onChange={this.props.onChange}
+                                                onChange={this.props.handleChange}
                                                 buttonClass={null}
                                                 dropClass={null}
                                             />
@@ -93,7 +110,7 @@ class TracksRightsSets extends Component {
         })
         return(rightsSets)
     };
-
+    
     render() {
         return(
             this.getSetsList()

@@ -3,6 +3,8 @@ import PageHeader from '../PageHeader/PageHeader';
 import MultiSelectDropDown from '../../SharedPageComponents/multiSelectDropdown';
 import TracksWithoutRights from '../TerritorialRights/pageComponents/TracksWithoutRights';
 import TracksRightsSets from '../TerritorialRights/pageComponents/TracksRightsSets';
+import TracksCustomeRightsSet from '../TerritorialRights/pageComponents/TracksCustomRightsSet';
+
 import './TerritorialRights.css';
 import { withRouter } from "react-router";
 
@@ -15,10 +17,12 @@ class TerritorialRightsPage extends Component {
                 Countries : [],
                 UnassignedTracks : [],
                 TerritorialRightsSets : []
-            }
+            },
+            dragSource : {}
         }
         this.handleChange = this.handleChange.bind(this);
         this.handlePageDataLoad = this.handlePageDataLoad.bind(this);
+        this.handleNoRightsTracksRemove = this.handleNoRightsTracksRemove.bind(this);
     }
 
     handlePageDataLoad = () => {
@@ -57,40 +61,92 @@ class TerritorialRightsPage extends Component {
 		);
     }
 
-    handleChange = (e) => {
+    handleChange = (modifiedTerritorialRightsSets) => {
+        const {TerritorialRightsSets} = this.state.project;
+        this.setState( { TerritorialRightsSets :  modifiedTerritorialRightsSets} )
+    }
 
+    getRightsSet(set, index) {
+        return(
+            {
+                "territorialRightsSetID": (set.id) ? set.id : '',
+                "sequence": (set.sequence) ? set.sequence : index,
+                "description":  (set.description) ? set.description : "Set # " + (index + 1),
+                "countries": [
+                    {
+                        "id": "WW",
+                        "name": "Worldwide"
+                    }
+                ],
+                "tracks": [],
+                "hasRights": true
+            }
+        )
+    }
+
+    addRightsSet = () => {
+        const { TerritorialRightsSets } = this.state.project;
+        let modifiedTerritorialRightsSets = TerritorialRightsSets;
+            modifiedTerritorialRightsSets.push(this.getRightsSet({}, TerritorialRightsSets.length));
+        this.setState({TerritorialRightsSets : modifiedTerritorialRightsSets});
+    }
+
+    handleNoRightsTracksRemove = (i) => {
+        const { UnassignedTracks } = this.state.project;
+        let modifiedUnassignedTracks = UnassignedTracks;
+            modifiedUnassignedTracks.splice(i,1);
+        this.setState( {UnassignedTracks : modifiedUnassignedTracks} )
+    }
+
+    handleChildDrag = (e) => {
+        this.setState( {dragSource : e.target} )
+    }
+
+    handleChildDrop = (e) => {
+        this.handleNoRightsTracksRemove(this.state.dragSource.getAttribute('trackindex'));
+        this.setState( {dragSource : null} )
+    }
+
+    handleSubmit = (e) => {
+        e.preventDefault();
+        const user = JSON.parse(sessionStorage.getItem('user'))
+        const fetchHeaders = new Headers(
+            {
+                "Content-Type": "application/json",
+                "Authorization" : sessionStorage.getItem('accessToken')
+            }
+		)
+
+		const fetchBody = JSON.stringify( {
+            "User" : {
+				"email" : user.email
+            },
+            "TerritorialRightsSets": this.state.project.TerritorialRightsSets,
+		})
+
+        fetch ('https://api-dev.umusic.net/guardian/project/territorialrights', {
+            method : 'POST',
+            headers : fetchHeaders,
+            body : fetchBody
+        }).then (response => 
+            {
+                return(response.json());
+            }
+        )
+        .then (responseJSON => 
+            {
+                this.setState( {project : responseJSON} )
+            }
+        )
+        .catch(
+            error => console.error(error)
+		);
     }
 
     componentDidMount() {
         if(this.props.match.params.projectID) {
             this.handlePageDataLoad()
         }        
-    }
-
-    getBlankRightsSet() {
-        return(
-            {
-                "territorialRightsSetID": "",
-                "sequence": "",
-                "description": "",
-                "countries": [
-                    {
-                        "id": "",
-                        "name": ""
-                    }
-                ],
-                "tracks": [],
-                "hasRights": false
-            }
-        )
-    }
-
-    addBlankRightsSet = () => {
-        const { TerritorialRightsSets } = this.state.project;
-        let modifiedTerritorialRightsSets = TerritorialRightsSets;
-            modifiedTerritorialRightsSets.push(this.getBlankRightsSet());
-        
-        this.setState({TerritorialRightsSets : modifiedTerritorialRightsSets});
     }
 
     render() {
@@ -108,6 +164,8 @@ class TerritorialRightsPage extends Component {
                     </div>
                 </div>
     
+                {/* <div onClick={this.handleSubmit}>test</div> */}
+
                 <div className="row no-gutters align-items-center">
                     <div className="col-3">
                         <h3>Tracks With No Rights Applied</h3>
@@ -116,25 +174,17 @@ class TerritorialRightsPage extends Component {
                         <div className="row no-gutters align-items-center card-nav">
                             <div className="col-4">
                                 <span className="drag-drop-arrow float-left">
-                                    <span nowrap>Drag Audio Files To The Rights Set</span>
+                                    <span nowrap="true">Drag Audio Files To The Rights Set</span>
                                 </span>
                             </div>
                             <div className="col-8">
                                 <button 
-                                    onClick={this.addBlankRightsSet}
+                                    onClick={this.addRightsSet}
                                     className="btn btn-primary"
                                 >Create a New Rights Set</button>
 
-                                <div className="dropdown">
-                                    <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Custom Rights Sets
-                                    </button>
-                                    <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a className="dropdown-item" href="#">Custom Rights Set 1</a>
-                                        <a className="dropdown-item" href="#">Custom Rights Set 2</a>
-                                        <a className="dropdown-item" href="#">Custom Rights Set 3</a>
-                                    </div>
-                                </div>
+                                <TracksCustomeRightsSet />
+
                             </div>
                         </div>
                     </div>
@@ -143,12 +193,15 @@ class TerritorialRightsPage extends Component {
                     <div className="col-3">
                         <TracksWithoutRights 
                             data={this.state.project.UnassignedTracks}
+                            handleChildDrag={this.handleChildDrag}
                         />
                     </div>
                     <div className="col-9">
                         <TracksRightsSets 
                             data={this.state.project}
-                            onChange={this.handleChange()}
+                            handleChange={this.handleChange}
+                            dragSource={this.state.dragSource}
+                            handleChildDrop={this.handleChildDrop}
                         />
                     </div>
                 </div>
