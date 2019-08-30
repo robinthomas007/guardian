@@ -3,7 +3,7 @@ import PageHeader from '../PageHeader/PageHeader';
 import MultiSelectDropDown from '../../SharedPageComponents/multiSelectDropdown';
 import TracksWithoutRights from '../TerritorialRights/pageComponents/TracksWithoutRights';
 import TracksRightsSets from '../TerritorialRights/pageComponents/TracksRightsSets';
-import TracksCustomeRightsSet from '../TerritorialRights/pageComponents/TracksCustomRightsSet';
+import TracksCustomRightsSet from '../TerritorialRights/pageComponents/TracksCustomRightsSet';
 
 import './TerritorialRights.css';
 import { withRouter } from "react-router";
@@ -183,7 +183,7 @@ class TerritorialRightsPage extends Component {
                                     className="btn btn-primary"
                                 >Create a New Rights Set</button>
 
-                                <TracksCustomeRightsSet />
+                                <TracksCustomRightsSet />
 
                             </div>
                         </div>
