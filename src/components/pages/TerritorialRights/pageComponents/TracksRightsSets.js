@@ -31,7 +31,7 @@ class TracksRightsSets extends Component {
     }
 
     getSetsList = () => {
-        const rightsSets = this.props.data.map( (rightsSet, i) => {
+        const rightsSets = this.props.data.TerritorialRightsSets.map( (rightsSet, i) => {
             return(
                 <div className="set-card">
                     <div className="row d-flex col-12 no-gutters">
@@ -61,7 +61,7 @@ class TracksRightsSets extends Component {
                                                 Select Tracks or Drag Below
                                             </button>
                                             <ul className="dropdown-menu tracks" aria-labelledby="selectTracksDropdown">
-                                                {this.getTracksOptions(rightsSet.tracks)}
+                                                {this.getTracksOptions(this.props.data.UnassignedTracks)}
                                             </ul>
                                         </div>
                                         <div droppable className="track-draggable-area territory-tracks">
@@ -76,7 +76,7 @@ class TracksRightsSets extends Component {
                                         <div className="dropdown">
                                             <MultiSelectDropDown 
                                                 placeHolder={'Select Country'}
-                                                data={this.props.countries}
+                                                data={this.props.data.Countries}
                                                 id={'territorialRightsCountry'}
                                                 onChange={this.props.onChange}
                                                 buttonClass={null}

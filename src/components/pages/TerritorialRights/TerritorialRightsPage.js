@@ -6,15 +6,15 @@ import TracksRightsSets from '../TerritorialRights/pageComponents/TracksRightsSe
 import './TerritorialRights.css';
 import { withRouter } from "react-router";
 
-const mockData = require('../../../mockData.json');
-
 class TerritorialRightsPage extends Component {
 
     constructor(props) {
 		super(props);
 		this.state = {
             project : {
-                Countries : []
+                Countries : [],
+                UnassignedTracks : [],
+                TerritorialRightsSets : []
             }
         }
         this.handleChange = this.handleChange.bind(this);
@@ -79,25 +79,21 @@ class TerritorialRightsPage extends Component {
                         "name": ""
                     }
                 ],
-                "tracks": [
-                    {
-                        "trackID": "",
-                        "trackTitle": ""
-                    }
-                ],
+                "tracks": [],
                 "hasRights": false
             }
         )
     }
 
     addBlankRightsSet = () => {
+        const { TerritorialRightsSets } = this.state.project;
+        let modifiedTerritorialRightsSets = TerritorialRightsSets;
+            modifiedTerritorialRightsSets.push(this.getBlankRightsSet());
+        
+        this.setState({TerritorialRightsSets : modifiedTerritorialRightsSets});
     }
 
     render() {
-
-        const createNewRightsSet = () => {
-            alert('Creating New Rights Set');
-        }
 
         return(
         
@@ -125,9 +121,10 @@ class TerritorialRightsPage extends Component {
                             </div>
                             <div className="col-8">
                                 <button 
-                                    onClick={createNewRightsSet}
+                                    onClick={this.addBlankRightsSet}
                                     className="btn btn-primary"
                                 >Create a New Rights Set</button>
+
                                 <div className="dropdown">
                                     <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Custom Rights Sets
@@ -145,52 +142,12 @@ class TerritorialRightsPage extends Component {
                 <div className="row">
                     <div className="col-3">
                         <TracksWithoutRights 
-                            //data={this.state.project.UnassignedTracks}
-                            data={[{trackID : '01', trackTitle : "Track #1"}]}
+                            data={this.state.project.UnassignedTracks}
                         />
                     </div>
                     <div className="col-9">
                         <TracksRightsSets 
-                            //data={this.state.project.TerritorialRightsSets}
-                            data={[
-                                {
-                                    "territorialRightsSetID": "string",
-                                    "sequence": "string",
-                                    "description": "Rights Set #1",
-                                    "countries": [
-                                    {
-                                        "id": "string",
-                                        "name": "string"
-                                    }
-                                    ],
-                                    "tracks": [
-                                    {
-                                        "trackID": "string",
-                                        "trackTitle": "string"
-                                    }
-                                    ],
-                                    "hasRights": true
-                                },
-                                {
-                                    "territorialRightsSetID": "string",
-                                    "sequence": "string",
-                                    "description": "Rights Set #2",
-                                    "countries": [
-                                    {
-                                        "id": "string",
-                                        "name": "string"
-                                    }
-                                    ],
-                                    "tracks": [
-                                    {
-                                        "trackID": "string",
-                                        "trackTitle": "string"
-                                    }
-                                    ],
-                                    "hasRights": true
-                                }
-                            ]}
-                            countries={this.state.project.Countries}
+                            data={this.state.project}
                             onChange={this.handleChange()}
                         />
                     </div>
