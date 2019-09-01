@@ -7,7 +7,15 @@ class TracksWithoutRights extends Component {
         }
     }
 
-    drag(e, i, track) {
+    handleAllowDrop(e) {
+        e.preventDefault();
+    }
+
+    handleDrop = () => {
+        alert(123)
+    }
+
+    handleDrag(e, i, track) {
         this.props.handleChildDrag(e);
         e.dataTransfer.setData("text/html", e.target);
     }
@@ -15,7 +23,17 @@ class TracksWithoutRights extends Component {
     getTracksList = () => {
         const unassignedTracks = this.props.data.map( (track, i) => {
             return(
-                <div key={i} draggable="true" className="draggable-track" trackindex={i} trackid={track.trackID} tracktitle={track.trackTitle} onDragStart={(e) => this.drag(e, i, track)} >
+                <div 
+                    key={i} 
+                    draggable="true" 
+                    className="draggable-track" 
+                    trackindex={i} 
+                    trackid={track.trackID} 
+                    tracktitle={track.trackTitle} 
+                    onDrop={this.handleDrop} 
+                    onDragStart={(e) => this.handleDrag(e, i, track)} 
+                    onDragOver={this.handleAllowDrop}
+                    >
                     <i className="material-icons">dehaze</i>{track.trackTitle}
                 </div>
             )

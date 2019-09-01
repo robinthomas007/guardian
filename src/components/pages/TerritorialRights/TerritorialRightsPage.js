@@ -108,6 +108,9 @@ class TerritorialRightsPage extends Component {
     }
 
     handleSubmit = (e) => {
+
+        alert(JSON.stringify(this.state.project.TerritorialRightsSets));
+
         e.preventDefault();
         const user = JSON.parse(sessionStorage.getItem('user'))
         const fetchHeaders = new Headers(

@@ -10,7 +10,10 @@ class TracksRightsRule extends Component {
     }
 
     handleChange(e) {
-        this.setState( {hasRights : e.currentTarget.value === 'true' ? true : false } )
+        const { hasRights } = this.state;
+        let modifiedHasRights = e.currentTarget.value === 'true' ? true : false;
+        this.setState( {hasRights : modifiedHasRights });
+        this.props.onChange(modifiedHasRights);
     }
 
     componentDidMount() {
@@ -20,8 +23,23 @@ class TracksRightsRule extends Component {
     render() {
         return(
             <div>
-                <input type="radio" value="true" checked={this.state.hasRights} onChange={this.handleChange} /> <label>Only Has Rights In</label><br />
-                <input type="radio" value="false" checked={!this.state.hasRights} onChange={this.handleChange} /> <label>Has Rights Everywhere Except</label>
+                <input 
+                    id={'hasRightsTrue_' + this.props.setIndex} 
+                    name={"hasRights_"  + this.props.setIndex} 
+                    type="radio" 
+                    value="true" 
+                    checked={this.state.hasRights} 
+                    onChange={this.handleChange} 
+                /> <label 
+                    htmlFor={'hasRightsTrue_' + this.props.setIndex}>Only Has Rights In</label><br />
+                <input 
+                    id={'hasRightsFalse_' + this.props.setIndex} 
+                    name={"hasRights_"  + this.props.setIndex} 
+                    type="radio" 
+                    value="false" 
+                    checked={!this.state.hasRights} 
+                    onChange={this.handleChange} 
+                /> <label  htmlFor={'hasRightsFalse_' + this.props.setIndex}>Has Rights Everywhere Except</label>
             </div>
         )
     }

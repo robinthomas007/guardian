@@ -48,6 +48,32 @@ class TracksRightsSets extends Component {
         var data = e.dataTransfer.getData("text/html");
     }
 
+    getCountryNameByID(countryID) {
+        const countrys = this.props.data.Countries.filter ( (country) => {
+             return (!countryID.indexOf(country.id))
+        })
+
+        return( { id : countrys[0].id, name : countrys[0].name })
+    }
+
+    handleCountryChange = (inputValue, setIndex) => {
+        const { TerritorialRightsSets } = this.props.data;
+        const modifiedCountries = inputValue.map( (countryID, i) => {
+            return(this.getCountryNameByID(countryID))
+        })
+
+        let modifiedTerritorialRightsSets = TerritorialRightsSets;
+            modifiedTerritorialRightsSets[setIndex].countries = modifiedCountries;
+        this.setState( {TerritorialRightsSets : modifiedTerritorialRightsSets} )
+    }
+
+    handleRightsRuleChange = (inputValue, setIndex) => {
+        const { TerritorialRightsSets } = this.props.data;
+        let modifiedTerritorialRightsSets = TerritorialRightsSets;
+            modifiedTerritorialRightsSets[setIndex].hasRights = inputValue;
+        this.setState( {TerritorialRightsSets : modifiedTerritorialRightsSets} )
+    }
+
     getSetsList = () => {
         const rightsSets = this.props.data.TerritorialRightsSets.map( (rightsSet, i) => {
             return(
@@ -91,6 +117,8 @@ class TracksRightsSets extends Component {
                                     <td className="col-4">
                                         <TracksRightsRule 
                                             data={rightsSet.hasRights}
+                                            setIndex={i}
+                                            onChange={(value) => this.handleRightsRuleChange(value, i)}
                                         />
                                     </td>
                                     <td className="col-4">
@@ -98,10 +126,9 @@ class TracksRightsSets extends Component {
                                             <MultiSelectDropDown 
                                                 placeHolder={'Select Country'}
                                                 data={this.props.data.Countries}
-                                                id={'territorialRightsCountry'}
-                                                onChange={this.props.handleChange}
-                                                buttonClass={null}
-                                                dropClass={null}
+                                                id={'territorialRightsCountry_' + i}
+                                                onChange={(value) => this.handleCountryChange(value, i)}
+                                                selectedValues={null}
                                             />
                                         </div>
                                     </td>

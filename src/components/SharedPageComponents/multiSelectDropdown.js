@@ -33,19 +33,17 @@ class MultiSelectDropDown extends Component {
         let inputValue = e.target.value;
 
         if(e.target.checked) {
-            modifiedValue.push(inputValue)
+            modifiedValue.push(inputValue);
         } else {
-            let index = modifiedValue.indexOf(inputValue) 
+            let index = modifiedValue.indexOf(inputValue);
             if(index !== -1) {
-                modifiedValue.splice(index, 1) 
+                modifiedValue.splice(index, 1);
             }
         }
-
-        this.setState( {value : modifiedValue} )
-        if(this.props.onChange) {
-            this.props.onChange(e, modifiedValue) 
-		}
+        this.setState( {value : modifiedValue} );
+		this.props.onChange(modifiedValue);
 	}
+
 
     getInputOptions = () => {
         let labelOptions = ''
@@ -53,7 +51,8 @@ class MultiSelectDropDown extends Component {
 			labelOptions = this.props.data.map( (option, i) => {
 				return(
 					<a className="dropdown-item" key={i} onClick={null}>
-						<label className="custom-checkbox"> 		
+						<label className="custom-checkbox">
+							
 							<input   
 								onChange={(e) => this.handleChange(e)}
 								type='checkbox'
