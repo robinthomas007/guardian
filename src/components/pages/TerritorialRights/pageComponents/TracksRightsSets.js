@@ -76,6 +76,8 @@ class TracksRightsSets extends Component {
 
     getSetsList = () => {
         const rightsSets = this.props.data.TerritorialRightsSets.map( (rightsSet, i) => {
+
+
             return(
                 <div key={i} className="set-card">
                     <div className="row d-flex col-12 no-gutters">
@@ -125,10 +127,10 @@ class TracksRightsSets extends Component {
                                         <div className="dropdown">
                                             <MultiSelectDropDown 
                                                 placeHolder={'Select Country'}
-                                                data={this.props.data.Countries}
+                                                optionList={this.props.data.Countries}
+                                                value={rightsSet.countries}
                                                 id={'territorialRightsCountry_' + i}
                                                 onChange={(value) => this.handleCountryChange(value, i)}
-                                                selectedValues={null}
                                             />
                                         </div>
                                     </td>

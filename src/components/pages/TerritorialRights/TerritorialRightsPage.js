@@ -71,7 +71,7 @@ class TerritorialRightsPage extends Component {
             {
                 "territorialRightsSetID": (set.id) ? set.id : '',
                 "sequence": (set.sequence) ? set.sequence : index,
-                "description":  (set.description) ? set.description : "Set # " + (index + 1),
+                "description":  (set.description) ? set.description : "Set # " + index,
                 "countries": [
                     {
                         "id": "WW",
@@ -87,7 +87,7 @@ class TerritorialRightsPage extends Component {
     addRightsSet = () => {
         const { TerritorialRightsSets } = this.state.project;
         let modifiedTerritorialRightsSets = TerritorialRightsSets;
-            modifiedTerritorialRightsSets.push(this.getRightsSet({}, TerritorialRightsSets.length));
+            modifiedTerritorialRightsSets.push(this.getRightsSet({}, TerritorialRightsSets.length + 1));
         this.setState({TerritorialRightsSets : modifiedTerritorialRightsSets});
     }
 
@@ -108,9 +108,6 @@ class TerritorialRightsPage extends Component {
     }
 
     handleSubmit = (e) => {
-
-        alert(JSON.stringify(this.state.project.TerritorialRightsSets));
-
         e.preventDefault();
         const user = JSON.parse(sessionStorage.getItem('user'))
         const fetchHeaders = new Headers(
@@ -124,6 +121,7 @@ class TerritorialRightsPage extends Component {
             "User" : {
 				"email" : user.email
             },
+            "projectID": this.props.match.params.projectID,
             "TerritorialRightsSets": this.state.project.TerritorialRightsSets,
 		})
 
@@ -138,7 +136,8 @@ class TerritorialRightsPage extends Component {
         )
         .then (responseJSON => 
             {
-                this.setState( {project : responseJSON} )
+                alert('saved')
+                //this.setState( {project : responseJSON} )
             }
         )
         .catch(
@@ -167,7 +166,7 @@ class TerritorialRightsPage extends Component {
                     </div>
                 </div>
     
-                {/* <div onClick={this.handleSubmit}>test</div> */}
+                <div onClick={this.handleSubmit}>SAVE RIGHTS SETS</div>
 
                 <div className="row no-gutters align-items-center">
                     <div className="col-3">
@@ -204,7 +203,7 @@ class TerritorialRightsPage extends Component {
                             data={this.state.project}
                             handleChange={this.handleChange}
                             dragSource={this.state.dragSource}
-                            handleChildDrop={this.handleChildDrop}
+                            handleChildDrop={(e,i) => this.handleChildDrop() }
                         />
                     </div>
                 </div>

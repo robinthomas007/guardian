@@ -21,24 +21,26 @@ class TracksWithoutRights extends Component {
     }
 
     getTracksList = () => {
-        const unassignedTracks = this.props.data.map( (track, i) => {
-            return(
-                <div 
-                    key={i} 
-                    draggable="true" 
-                    className="draggable-track" 
-                    trackindex={i} 
-                    trackid={track.trackID} 
-                    tracktitle={track.trackTitle} 
-                    onDrop={this.handleDrop} 
-                    onDragStart={(e) => this.handleDrag(e, i, track)} 
-                    onDragOver={this.handleAllowDrop}
-                    >
-                    <i className="material-icons">dehaze</i>{track.trackTitle}
-                </div>
-            )
-        })
-        return(unassignedTracks)
+        if(this.props.data) {
+            const unassignedTracks = this.props.data.map( (track, i) => {
+                return(
+                    <div 
+                        key={i} 
+                        draggable="true" 
+                        className="draggable-track" 
+                        trackindex={i} 
+                        trackid={track.trackID} 
+                        tracktitle={track.trackTitle} 
+                        onDrop={this.handleDrop} 
+                        onDragStart={(e) => this.handleDrag(e, i, track)} 
+                        onDragOver={this.handleAllowDrop}
+                        >
+                        <i className="material-icons">dehaze</i>{track.trackTitle}
+                    </div>
+                )
+            })
+            return(unassignedTracks)
+        }
     };
 
     render() {
