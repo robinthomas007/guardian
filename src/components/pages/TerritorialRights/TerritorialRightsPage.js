@@ -26,7 +26,6 @@ class TerritorialRightsPage extends Component {
     }
 
     handlePageDataLoad = () => {
-
         const user = JSON.parse(sessionStorage.getItem('user'))
         const fetchHeaders = new Headers(
             {
@@ -54,6 +53,9 @@ class TerritorialRightsPage extends Component {
         .then (responseJSON => 
             {
                 this.setState( {project : responseJSON} )
+                if(!responseJSON.TerritorialRightsSets || !responseJSON.TerritorialRightsSets.length) {
+                    this.addRightsSet();
+                }
             }
         )
         .catch(
