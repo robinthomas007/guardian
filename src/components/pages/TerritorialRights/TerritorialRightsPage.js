@@ -214,7 +214,7 @@ class TerritorialRightsPage extends Component {
                                     className="btn btn-primary"
                                 >Create a New Rights Set</button>
 
-                                <TracksCustomRightsSet />
+                                {/* <TracksCustomRightsSet /> */}
 
                             </div>
                         </div>
