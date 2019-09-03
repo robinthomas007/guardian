@@ -11,8 +11,8 @@ class TracksWithoutRights extends Component {
         e.preventDefault();
     }
 
-    handleDrop = () => {
-        alert(123)
+    handleDrop = (e) => {
+        this.props.handleDropAdd(e)
     }
 
     handleDrag(e, i, track) {
@@ -31,9 +31,7 @@ class TracksWithoutRights extends Component {
                         trackindex={i} 
                         trackid={track.trackID} 
                         tracktitle={track.trackTitle} 
-                        onDrop={this.handleDrop} 
                         onDragStart={(e) => this.handleDrag(e, i, track)} 
-                        onDragOver={this.handleAllowDrop}
                         >
                         <i className="material-icons">dehaze</i>{track.trackTitle}
                     </div>
@@ -45,7 +43,7 @@ class TracksWithoutRights extends Component {
 
     render() {
         return(
-            <div className="track-draggable-area h-100">
+            <div className="track-draggable-area h-100" onDrop={ (e) => this.handleDrop(e)} onDragOver={this.handleAllowDrop}>
                 {this.getTracksList()}
             </div>
         )

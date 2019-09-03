@@ -11,10 +11,24 @@ class TracksDropArea extends Component {
         e.preventDefault();
     }
 
+    handleDrag(e, i, track) {
+        this.props.handleChildDrag(e);
+        e.dataTransfer.setData("text/html", e.target);
+    }
+
     getTracksList = (tracks) => {
         const tracksList = this.props.data.map( (track, i) => {
             return(
-                <div key={i} draggable="true" class="draggable-track">
+                <div 
+                    key={i} 
+                    draggable="true" 
+                    class="draggable-track" 
+                    onDragStart={ (e) => this.handleDrag(e)}
+                    setindex={this.props.setIndex}
+                    trackindex={i} 
+                    trackid={track.trackID} 
+                    tracktitle={track.trackTitle} 
+                >
                     <i class="material-icons">dehaze</i>{track.trackTitle}
                 </div>
             )

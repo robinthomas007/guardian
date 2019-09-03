@@ -98,6 +98,25 @@ class TerritorialRightsPage extends Component {
         this.setState( {UnassignedTracks : modifiedUnassignedTracks} )
     }
 
+    handleDropAdd = (e) => {
+        const setIndex = this.state.dragSource.getAttribute('setindex');
+        const trackId = this.state.dragSource.getAttribute('trackid');
+        const trackTitle = this.state.dragSource.getAttribute('trackTitle');
+        const trackIndex = this.state.dragSource.getAttribute('trackindex');
+
+        //add the selection to the unassigned tracks
+        const { UnassignedTracks } = this.state.project;
+        let modifiedUnassignedTracks = UnassignedTracks;
+            modifiedUnassignedTracks.push({trackID : trackId, trackTitle : trackTitle})
+        this.setState({UnassignedTracks : modifiedUnassignedTracks})
+
+        //remove the selection from the set's assigned tracks
+         const { TerritorialRightsSets } = this.state.project;
+         let modifiedTerritorialRightsSets = TerritorialRightsSets;
+             modifiedTerritorialRightsSets[setIndex].tracks.splice(trackIndex, 1)
+         this.setState({TerritorialRightsSets : modifiedTerritorialRightsSets})
+    }
+
     handleChildDrag = (e) => {
         this.setState( {dragSource : e.target} )
     }
@@ -152,9 +171,7 @@ class TerritorialRightsPage extends Component {
     }
 
     render() {
-
         return(
-        
             <section className="page-container h-100">
                 
                 <PageHeader />
@@ -196,6 +213,8 @@ class TerritorialRightsPage extends Component {
                         <TracksWithoutRights 
                             data={this.state.project.UnassignedTracks}
                             handleChildDrag={this.handleChildDrag}
+                            dragSource={this.state.dragSource}
+                            handleDropAdd={this.handleDropAdd}
                         />
                     </div>
                     <div className="col-9">
@@ -204,6 +223,7 @@ class TerritorialRightsPage extends Component {
                             handleChange={this.handleChange}
                             dragSource={this.state.dragSource}
                             handleChildDrop={(e,i) => this.handleChildDrop() }
+                            handleChildDrag={ (e) => this.handleChildDrag (e)}
                         />
                     </div>
                 </div>

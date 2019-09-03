@@ -113,7 +113,8 @@ class TracksRightsSets extends Component {
                                             data={rightsSet.tracks}
                                             handleDrop={this.handleDrop}
                                             setIndex={i}
-
+                                            handleChildDrop={(e,i) => this.handleDrop() }
+                                            handleChildDrag={(e) => this.props.handleChildDrag(e)}
                                         />
                                     </td>
                                     <td className="col-4">
