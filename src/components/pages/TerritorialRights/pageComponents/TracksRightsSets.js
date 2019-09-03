@@ -74,6 +74,18 @@ class TracksRightsSets extends Component {
         this.setState( {TerritorialRightsSets : modifiedTerritorialRightsSets} )
     }
 
+    handleDeleteButton = (i) => {
+        if(this.props.data.TerritorialRightsSets.length > 1 ) {
+            return (
+                <button className="btn btn-secondary action align-middle" onClick={ () => this.props.handleSetDelete(i)}>
+                    <i className="material-icons" data-toggle="tooltip" title="Save Rights Set">delete</i>
+                </button>
+            )
+        } else {
+            return('')
+        }
+    }
+
     getSetsList = () => {
         const rightsSets = this.props.data.TerritorialRightsSets.map( (rightsSet, i) => {
 
@@ -82,10 +94,9 @@ class TracksRightsSets extends Component {
                     <div className="row d-flex col-12 no-gutters">
                         <h3>{rightsSet.description}</h3>
                       
+                        
                         <div className="delete-rights-set">
-                            <button className="btn btn-secondary action align-middle" onClick={ () => this.props.handleSetDelete(i)}>
-                                <i className="material-icons" data-toggle="tooltip" title="Save Rights Set">delete</i>
-                            </button>
+                            {this.handleDeleteButton(i)}
                         </div>
                     </div>
                     
