@@ -271,6 +271,7 @@
 	.set-card btn.dropdown {background-color:#fff;}
 	.set-card table.table td {vertical-align:top; border-bottom:none;}
 	.set-card .track-draggable-area {max-height:400px; overflow-y: auto; overflow-x:hidden;}
+	.set-card .delete-rights-set {position:absolute; right:0px;}
 
 	span.drag-drop-arrow {display:block; height:33px; position:absolute; padding-left:50px; left:-38px; bottom:-44px; background-image:url(../images/drag-over-arrow.png); background-repeat:no-repeat;  z-index:10;}
 	span.drag-drop-arrow > span {position:absolute; top:-20px; left:-10px; width:160px; font-size: .7em; font-weight:700;}
