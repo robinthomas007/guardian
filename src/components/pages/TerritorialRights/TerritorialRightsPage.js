@@ -93,6 +93,16 @@ class TerritorialRightsPage extends Component {
         this.setState({TerritorialRightsSets : modifiedTerritorialRightsSets});
     }
 
+    handleSetDelete = (i) => {
+        const { TerritorialRightsSets } = this.state.project;
+
+        if(TerritorialRightsSets.length > 1) {
+            let modifiedTerritorialRightsSets = TerritorialRightsSets;
+                modifiedTerritorialRightsSets.splice(i,1);
+            this.setState({TerritorialRightsSets : modifiedTerritorialRightsSets});
+        }
+    }
+
     handleNoRightsTracksRemove = (i) => {
         const { UnassignedTracks } = this.state.project;
         let modifiedUnassignedTracks = UnassignedTracks;
@@ -224,8 +234,9 @@ class TerritorialRightsPage extends Component {
                             data={this.state.project}
                             handleChange={this.handleChange}
                             dragSource={this.state.dragSource}
-                            handleChildDrop={(e,i) => this.handleChildDrop() }
-                            handleChildDrag={ (e) => this.handleChildDrag (e)}
+                            handleChildDrop={ (e,i) => this.handleChildDrop() }
+                            handleChildDrag={ (e) => this.handleChildDrag (e) }
+                            handleSetDelete={this.handleSetDelete}
                         />
                     </div>
                 </div>

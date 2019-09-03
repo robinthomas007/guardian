@@ -77,16 +77,15 @@ class TracksRightsSets extends Component {
     getSetsList = () => {
         const rightsSets = this.props.data.TerritorialRightsSets.map( (rightsSet, i) => {
 
-
             return(
                 <div key={i} className="set-card">
                     <div className="row d-flex col-12 no-gutters">
                         <h3>{rightsSet.description}</h3>
                       
                         <div className="delete-rights-set">
-                        <button className="btn btn-secondary action align-middle">
-                            <i className="material-icons" data-toggle="tooltip" title="Save Rights Set">delete</i>
-                        </button>
+                            <button className="btn btn-secondary action align-middle" onClick={ () => this.props.handleSetDelete(i)}>
+                                <i className="material-icons" data-toggle="tooltip" title="Save Rights Set">delete</i>
+                            </button>
                         </div>
                     </div>
                     
