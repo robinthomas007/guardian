@@ -1,17 +1,23 @@
 import React, { Component } from 'react';
-import MultiSelectDropDown from '../../../SharedPageComponents/multiSelectDropdown'
+import MultiSelectDropDown from '../../../SharedPageComponents/multiSelectDropdown';
+import TracksRightsRule from '../../TerritorialRights/pageComponents/TracksRightsRule';
+import TracksSelectDropDown from '../../TerritorialRights/pageComponents/TracksSelectDropDown';
+import TracksDropArea from '../../TerritorialRights/pageComponents/TracksDropArea';
 
 class TracksRightsSets extends Component {
     constructor(props) {
 		super(props);
 		this.state = {
+            TerritorialRightsSets : []
         }
+
+        this.handleDrop = this.handleDrop.bind(this);
     }
 
     getTracksList = (tracks) => {
         const tracksList = tracks.map( (track, i) => {
             return(
-                <div draggable="true" class="draggable-track">
+                <div key={i} draggable="true" class="draggable-track">
                     <i class="material-icons">dehaze</i>{track.trackTitle}
                 </div>
             )
@@ -19,21 +25,61 @@ class TracksRightsSets extends Component {
         return(tracksList)
     }
 
-    getTracksOptions = (tracks) => {
-        const tracksList = tracks.map( (track, i) => {
-            return(
-                <a className="dropdown-item" key={i} onClick={null}>
-                    {track.trackTitle}
-                </a>
-            )
+    handleTrackSelect = (e) => {
+        const setIndex = parseInt(e.target.getAttribute('setindex'));
+        const trackIndex = parseInt(e.target.getAttribute('optionindex'));
+        const { TerritorialRightsSets } = this.props.data;
+        let modifiedTerritorialRightsSets = TerritorialRightsSets;
+            modifiedTerritorialRightsSets[setIndex].tracks.push( {trackID : e.target.getAttribute('trackid'), trackTitle : e.target.getAttribute('tracktitle')} )
+
+        this.props.handleChange(modifiedTerritorialRightsSets);
+        this.props.handleChildDrop(e, trackIndex);
+     }
+
+    handleDrop(e, i) {
+
+        const { TerritorialRightsSets } = this.props.data;
+        let modifiedTerritorialRightsSets = TerritorialRightsSets;
+            modifiedTerritorialRightsSets[i].tracks.push( {trackID : this.props.dragSource.getAttribute('trackid'), trackTitle : this.props.dragSource.getAttribute('tracktitle')} )
+
+        this.props.handleChange(modifiedTerritorialRightsSets);
+        this.props.handleChildDrop(i);
+
+        var data = e.dataTransfer.getData("text/html");
+    }
+
+    getCountryNameByID(countryID) {
+        const countrys = this.props.data.Countries.filter ( (country) => {
+             return (!countryID.indexOf(country.id))
         })
-        return(tracksList)
+
+        return( { id : countrys[0].id, name : countrys[0].name })
+    }
+
+    handleCountryChange = (inputValue, setIndex) => {
+        const { TerritorialRightsSets } = this.props.data;
+        const modifiedCountries = inputValue.map( (countryID, i) => {
+            return(this.getCountryNameByID(countryID))
+        })
+
+        let modifiedTerritorialRightsSets = TerritorialRightsSets;
+            modifiedTerritorialRightsSets[setIndex].countries = modifiedCountries;
+        this.setState( {TerritorialRightsSets : modifiedTerritorialRightsSets} )
+    }
+
+    handleRightsRuleChange = (inputValue, setIndex) => {
+        const { TerritorialRightsSets } = this.props.data;
+        let modifiedTerritorialRightsSets = TerritorialRightsSets;
+            modifiedTerritorialRightsSets[setIndex].hasRights = inputValue;
+        this.setState( {TerritorialRightsSets : modifiedTerritorialRightsSets} )
     }
 
     getSetsList = () => {
         const rightsSets = this.props.data.TerritorialRightsSets.map( (rightsSet, i) => {
+
+
             return(
-                <div className="set-card">
+                <div key={i} className="set-card">
                     <div className="row d-flex col-12 no-gutters">
                         <h3>{rightsSet.description}</h3>
                       
@@ -56,31 +102,36 @@ class TracksRightsSets extends Component {
                             <tbody>
                                 <tr className="d-flex row no-gutters">
                                     <td className="col-4">
-                                        <div className="dropdown tracks-dropdown">
-                                            <button type="button" id="selectTracksDropdown" className="btn btn-secondary dropdown-toggle territory-tracks" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                Select Tracks or Drag Below
-                                            </button>
-                                            <ul className="dropdown-menu tracks" aria-labelledby="selectTracksDropdown">
-                                                {this.getTracksOptions(this.props.data.UnassignedTracks)}
-                                            </ul>
-                                        </div>
-                                        <div droppable className="track-draggable-area territory-tracks">
-                                            {this.getTracksList(rightsSet.tracks)}
-                                        </div>
+  
+                                        <TracksSelectDropDown 
+                                            data={this.props.data.UnassignedTracks}
+                                            onChange={ (e) => this.handleTrackSelect(e)}
+                                            setIndex={i}
+                                        />
+
+                                        <TracksDropArea 
+                                            data={rightsSet.tracks}
+                                            handleDrop={this.handleDrop}
+                                            setIndex={i}
+                                            handleChildDrop={(e,i) => this.handleDrop() }
+                                            handleChildDrag={(e) => this.props.handleChildDrag(e)}
+                                        />
                                     </td>
                                     <td className="col-4">
-                                        <input type="radio" /> <label>Only Has Rights In</label><br />
-                                        <input type="radio" /> <label>Has Rights Everywhere Except</label>
+                                        <TracksRightsRule 
+                                            data={rightsSet.hasRights}
+                                            setIndex={i}
+                                            onChange={(value) => this.handleRightsRuleChange(value, i)}
+                                        />
                                     </td>
                                     <td className="col-4">
                                         <div className="dropdown">
                                             <MultiSelectDropDown 
                                                 placeHolder={'Select Country'}
-                                                data={this.props.data.Countries}
-                                                id={'territorialRightsCountry'}
-                                                onChange={this.props.onChange}
-                                                buttonClass={null}
-                                                dropClass={null}
+                                                optionList={this.props.data.Countries}
+                                                value={rightsSet.countries}
+                                                id={'territorialRightsCountry_' + i}
+                                                onChange={(value) => this.handleCountryChange(value, i)}
                                             />
                                         </div>
                                     </td>
@@ -93,7 +144,7 @@ class TracksRightsSets extends Component {
         })
         return(rightsSets)
     };
-
+    
     render() {
         return(
             this.getSetsList()

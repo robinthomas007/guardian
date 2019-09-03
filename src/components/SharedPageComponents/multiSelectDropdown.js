@@ -33,32 +33,41 @@ class MultiSelectDropDown extends Component {
         let inputValue = e.target.value;
 
         if(e.target.checked) {
-            modifiedValue.push(inputValue)
+            modifiedValue.push(inputValue);
         } else {
-            let index = modifiedValue.indexOf(inputValue) 
+            let index = modifiedValue.indexOf(inputValue);
             if(index !== -1) {
-                modifiedValue.splice(index, 1) 
+                modifiedValue.splice(index, 1);
             }
         }
+        this.setState( {value : modifiedValue} );
+		this.props.onChange(modifiedValue);
+	}
 
-        this.setState( {value : modifiedValue} )
-        if(this.props.onChange) {
-            this.props.onChange(e, modifiedValue) 
+	handleSelectedValues(optionID){
+		let match = false;
+		for(var i=0; i<this.props.value.length; i++) {
+			if(optionID.trim() == this.props.value[i].id.trim()) {
+				match = true;
+			}
 		}
+		return(match)
 	}
 
     getInputOptions = () => {
         let labelOptions = ''
-        if(this.props.data) {
-			labelOptions = this.props.data.map( (option, i) => {
+        if(this.props.optionList) {
+			labelOptions = this.props.optionList.map( (option, i) => {
+				console.log(option.id + ' : ' + option.name + ' : ' + this.handleSelectedValues(option.id))
 				return(
 					<a className="dropdown-item" key={i} onClick={null}>
-						<label className="custom-checkbox"> 		
+						<label className="custom-checkbox">
 							<input   
 								onChange={(e) => this.handleChange(e)}
 								type='checkbox'
 								id={this.props.id + '_check_' + i}
-								value={option.id}
+								value={option.id} 
+								checked={ this.handleSelectedValues(option.id)}
 							/>
 							<span className="checkmark "></span>
 						</label>
@@ -74,6 +83,10 @@ class MultiSelectDropDown extends Component {
             return(null)
         }
     }
+
+	componentDidMount() {
+		this.setState( {value : this.props.value} )
+	}
 
     render() {
         return(
