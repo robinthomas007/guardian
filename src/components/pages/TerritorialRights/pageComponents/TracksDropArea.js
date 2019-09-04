@@ -44,7 +44,7 @@ class TracksDropArea extends Component {
 
     render() {
         return(
-            <div droppable className="track-draggable-area territory-tracks rightsSetTracks" onDrop={(e) => this.handleDrop(e, this.props.setIndex)} onDragOver={this.handleAllowDrop}>
+            <div droppable="true" className="track-draggable-area territory-tracks rightsSetTracks" onDrop={(e) => this.handleDrop(e, this.props.setIndex)} onDragOver={this.handleAllowDrop}>
                 {this.getTracksList()}
             </div>
         )

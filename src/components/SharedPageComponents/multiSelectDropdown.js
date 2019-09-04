@@ -39,26 +39,15 @@ class MultiSelectDropDown extends Component {
             if(index !== -1) {
                 modifiedValue.splice(index, 1);
             }
-        }
+		}
         this.setState( {value : modifiedValue} );
 		this.props.onChange(modifiedValue);
-	}
-
-	handleSelectedValues(optionID){
-		let match = false;
-		for(var i=0; i<this.props.value.length; i++) {
-			if(optionID.trim() == this.props.value[i].id.trim()) {
-				match = true;
-			}
-		}
-		return(match)
 	}
 
     getInputOptions = () => {
         let labelOptions = ''
         if(this.props.optionList) {
 			labelOptions = this.props.optionList.map( (option, i) => {
-				console.log(option.id + ' : ' + option.name + ' : ' + this.handleSelectedValues(option.id))
 				return(
 					<a className="dropdown-item" key={i} onClick={null}>
 						<label className="custom-checkbox">
@@ -67,7 +56,7 @@ class MultiSelectDropDown extends Component {
 								type='checkbox'
 								id={this.props.id + '_check_' + i}
 								value={option.id} 
-								checked={ this.handleSelectedValues(option.id)}
+								checked={ this.props.value.includes(option.id)}
 							/>
 							<span className="checkmark "></span>
 						</label>
