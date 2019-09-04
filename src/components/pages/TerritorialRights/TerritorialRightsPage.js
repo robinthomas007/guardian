@@ -237,6 +237,7 @@ class TerritorialRightsPage extends Component {
                             handleChildDrop={ (e,i) => this.handleChildDrop() }
                             handleChildDrag={ (e) => this.handleChildDrag (e) }
                             handleSetDelete={this.handleSetDelete}
+                            dragSource={this.state.dragSource}
                         />
                     </div>
                 </div>

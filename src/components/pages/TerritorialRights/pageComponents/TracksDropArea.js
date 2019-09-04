@@ -16,13 +16,19 @@ class TracksDropArea extends Component {
         e.dataTransfer.setData("text/html", e.target);
     }
 
+    handleDrop(e,setIndex) {
+        if(!this.props.dragSource.classList.contains('rightsSetTracks') || !e.target.classList.contains('rightsSetTracks')) {
+            this.props.handleDrop(e, setIndex)
+        }
+    }
+
     getTracksList = (tracks) => {
         const tracksList = this.props.data.map( (track, i) => {
             return(
                 <div 
                     key={i} 
                     draggable="true" 
-                    class="draggable-track" 
+                    class="draggable-track rightsSetTracks" 
                     onDragStart={ (e) => this.handleDrag(e)}
                     setindex={this.props.setIndex}
                     trackindex={i} 
@@ -38,7 +44,7 @@ class TracksDropArea extends Component {
 
     render() {
         return(
-            <div droppable className="track-draggable-area territory-tracks" onDrop={(e) => this.props.handleDrop(e, this.props.setIndex)} onDragOver={this.handleAllowDrop}>
+            <div droppable className="track-draggable-area territory-tracks rightsSetTracks" onDrop={(e) => this.handleDrop(e, this.props.setIndex)} onDragOver={this.handleAllowDrop}>
                 {this.getTracksList()}
             </div>
         )
