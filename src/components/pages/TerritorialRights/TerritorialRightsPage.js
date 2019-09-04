@@ -147,7 +147,7 @@ class TerritorialRightsPage extends Component {
     }
 
     handleChildDrop = (e, i) => {
-        this.handleNoRightsTracksRemove(i);
+        this.handleNoRightsTracksRemove(this.state.dragSource.getAttribute('trackindex'));
         this.setState( {dragSource : null} )
     }
 
@@ -247,7 +247,7 @@ class TerritorialRightsPage extends Component {
                             data={this.state.project}
                             handleChange={this.handleChange}
                             dragSource={this.state.dragSource}
-                            handleChildDrop={ (e,i) => this.handleChildDrop() }
+                            handleChildDrop={ (e,i) => this.handleChildDrop(e,i) }
                             handleChildDrag={ (e) => this.handleChildDrag (e) }
                             handleSetDelete={this.handleSetDelete}
                             dragSource={this.state.dragSource}

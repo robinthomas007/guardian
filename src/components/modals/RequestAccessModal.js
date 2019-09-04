@@ -3,12 +3,12 @@ import {Button, Modal, Form } from 'react-bootstrap';
 import './RequestAccessModal.css';
 
 class RequestAccessModal extends Component {
-  constructor(props, context) {
-    super(props, context);
+    constructor(props, context) {
+      super(props, context);
 
-    this.state = {
-      show: false
-    };
+      this.state = {
+        show: false
+      };
 
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -21,6 +21,38 @@ class RequestAccessModal extends Component {
 
   handleShow() {
     this.setState({ show: true });
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    const user = JSON.parse(sessionStorage.getItem('user'))
+    const fetchHeaders = new Headers(
+        {
+            "Content-Type": "application/json",
+        }
+    )
+
+    const fetchBody = JSON.stringify( {
+    })
+
+    fetch ('https://api-dev.umusic.net/guardian/project/territorialrights', {
+        method : 'POST',
+        headers : fetchHeaders,
+        body : fetchBody
+    }).then (response => 
+        {
+            return(response.json());
+        }
+    )
+    .then (responseJSON => 
+        {
+            alert('saved')
+            //this.setState( {project : responseJSON} )
+        }
+    )
+    .catch(
+        error => console.error(error)
+  );
   }
 
   render() {
