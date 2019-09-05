@@ -28,7 +28,7 @@ class TracksDropArea extends Component {
                 <div 
                     key={i} 
                     draggable="true" 
-                    class="draggable-track rightsSetTracks" 
+                    className="draggable-track rightsSetTracks" 
                     onDragStart={ (e) => this.handleDrag(e)}
                     setindex={this.props.setIndex}
                     trackindex={i} 
