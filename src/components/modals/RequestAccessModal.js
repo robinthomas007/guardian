@@ -49,7 +49,7 @@ class RequestAccessModal extends Component {
               "Content-Type": "application/json",
           }
       )
- 
+
       fetch ('https://api-dev.umusic.net/guardian/access', {
           method : 'POST',
           headers : fetchHeaders,
@@ -81,7 +81,7 @@ class RequestAccessModal extends Component {
     )
     
     fetch ('https://api-dev.umusic.net/guardian/labels', {
-        method : 'POST',
+        method : 'GET',
         headers : fetchHeaders,
     }).then (response => {
         return(response.json());
