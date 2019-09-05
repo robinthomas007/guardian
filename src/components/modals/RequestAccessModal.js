@@ -42,9 +42,6 @@ class RequestAccessModal extends Component {
   }
 
   handleSubmit = (e) => {
-
-    alert(isFormValid())
-
     e.preventDefault();
     if(isFormValid()) {
       const fetchHeaders = new Headers(
