@@ -4,6 +4,7 @@ import MultiSelectDropDown from '../../SharedPageComponents/multiSelectDropdown'
 import TracksWithoutRights from '../TerritorialRights/pageComponents/TracksWithoutRights';
 import TracksRightsSets from '../TerritorialRights/pageComponents/TracksRightsSets';
 import TracksCustomRightsSet from '../TerritorialRights/pageComponents/TracksCustomRightsSet';
+import LoadingImg from '../../ui/LoadingImg';
 
 import './TerritorialRights.css';
 import { withRouter } from "react-router";
@@ -18,7 +19,8 @@ class TerritorialRightsPage extends Component {
                 UnassignedTracks : [],
                 TerritorialRightsSets : []
             },
-            dragSource : null
+            dragSource : null,
+            showloader : false
         }
         this.handleChange = this.handleChange.bind(this);
         this.handlePageDataLoad = this.handlePageDataLoad.bind(this);
@@ -26,6 +28,9 @@ class TerritorialRightsPage extends Component {
     }
 
     handlePageDataLoad = () => {
+
+        this.setState( { showLoader : true } )
+
         const user = JSON.parse(sessionStorage.getItem('user'))
         const fetchHeaders = new Headers(
             {
@@ -56,6 +61,7 @@ class TerritorialRightsPage extends Component {
                 if(!responseJSON.TerritorialRightsSets || !responseJSON.TerritorialRightsSets.length) {
                     this.addRightsSet();
                 }
+                this.setState( { showLoader : false } )
             }
         )
         .catch(
@@ -156,6 +162,10 @@ class TerritorialRightsPage extends Component {
     };
 
     handleSubmit = (e) => {
+
+
+        this.setState( { showLoader : true } )
+
         e.preventDefault();
         const user = JSON.parse(sessionStorage.getItem('user'))
         const fetchHeaders = new Headers(
@@ -184,7 +194,7 @@ class TerritorialRightsPage extends Component {
         )
         .then (responseJSON => 
             {
-                alert('saved')
+                this.setState( { showLoader : false } )
                 //this.setState( {project : responseJSON} )
             }
         )
@@ -200,9 +210,12 @@ class TerritorialRightsPage extends Component {
     };
 
     render() {
+
         return(
             <section className="page-container h-100">
                 
+                <LoadingImg show={this.state.showLoader} />
+
                 <PageHeader />
     
                 <div className="row no-gutters step-description">
