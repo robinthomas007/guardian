@@ -211,7 +211,7 @@ class TerritorialRightsPage extends Component {
                     </div>
                 </div>
     
-                <div onClick={this.handleSubmit}>SAVE RIGHTS SETS</div>
+        
 
                 <div className="row no-gutters align-items-center">
                     <div className="col-3">
@@ -258,6 +258,12 @@ class TerritorialRightsPage extends Component {
                         />
                     </div>
                 </div>
+                <div className="row save-buttons">
+                        <div className="col-12">
+                            <button tabIndex='5+' id="contactsSaveButton" type="button" className="btn btn-secondary">Save</button>
+                            <button tabIndex='6+' id="contactsSaveContButton" type="button" className="btn btn-primary" onClick={this.handleSubmit}>Save &amp; Continue</button>
+                        </div>
+                    </div>
             </section>
         )
     }
