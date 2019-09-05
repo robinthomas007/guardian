@@ -99,26 +99,21 @@ class TerritorialRightsPage extends Component {
         this.setState({TerritorialRightsSets : modifiedTerritorialRightsSets});
     }
 
-    handleResequenceRighstSets = (sets) => {
+    handleResequenceRighstSets = () => {
         const { TerritorialRightsSets } = this.state.project;
         let modifiedTerritorialRightsSets = TerritorialRightsSets;
         for(let i=0; i<modifiedTerritorialRightsSets.length; i++) {
-            modifiedTerritorialRightsSets[i].description = 'Set # ' + (i);
+            modifiedTerritorialRightsSets[i].description = 'Set # ' + (i + 1);
         }
         this.setState( {TerritorialRightsSets : modifiedTerritorialRightsSets })
-
     }
 
     handleSetDelete = (i) => {
         const { TerritorialRightsSets } = this.state.project;
-
         if(TerritorialRightsSets.length > 1) {
-
-            this.handleResequenceRighstSets();
-
             let modifiedTerritorialRightsSets = TerritorialRightsSets;
                 modifiedTerritorialRightsSets.splice(i,1);
-            this.setState({TerritorialRightsSets : modifiedTerritorialRightsSets});
+            this.setState({TerritorialRightsSets : modifiedTerritorialRightsSets}, this.handleResequenceRighstSets());
         }
     };
 
