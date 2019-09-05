@@ -4,10 +4,17 @@ export const isFormValid = () => {
 
     for(var i=0; i<requiredInputs.length; i++) {
         let input = requiredInputs[i];
-
         if(input.value.length <= 0) {
             setInputValidStatus(input, 'invalid');
             invalid = false;
+        } else if (input.type == 'email') {
+            if(isValidEmail(input.value)) {
+                setInputValidStatus(input, 'valid');
+                invalid = false;
+            } else {
+                setInputValidStatus(input, 'invalid');
+                invalid = true;
+            }
         } else {
             setInputValidStatus(input, 'valid');
             invalid = true;
@@ -31,4 +38,8 @@ export const isValidIsrc = (isrc) => {
 
 export const isValidTitle = (title) => {
     return((title.length > 0) ? true : false);
+}
+
+export const isValidEmail = (email) => {
+    return ( /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,64})+$/.test(email) )
 }
