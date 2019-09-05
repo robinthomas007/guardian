@@ -61,12 +61,12 @@ class TerritorialRightsPage extends Component {
         .catch(
             error => console.error(error)
 		);
-    }
+    };
 
     handleChange = (modifiedTerritorialRightsSets) => {
         const {TerritorialRightsSets} = this.state.project;
         this.setState( { TerritorialRightsSets :  modifiedTerritorialRightsSets} )
-    }
+    };
 
     getRightsSet(set, index) {
         return(
@@ -84,14 +84,14 @@ class TerritorialRightsPage extends Component {
                 "hasRights": true
             }
         )
-    }
+    };
 
     addRightsSet = () => {
         const { TerritorialRightsSets } = this.state.project;
         let modifiedTerritorialRightsSets = TerritorialRightsSets;
             modifiedTerritorialRightsSets.push(this.getRightsSet({}, TerritorialRightsSets.length + 1));
         this.setState({TerritorialRightsSets : modifiedTerritorialRightsSets});
-    }
+    };
 
     handleResequenceRighstSets = (sets) => {
         const { TerritorialRightsSets } = this.state.project;
@@ -101,7 +101,7 @@ class TerritorialRightsPage extends Component {
         }
         this.setState( {TerritorialRightsSets : modifiedTerritorialRightsSets })
 
-    }
+    };
 
     handleSetDelete = (i) => {
         const { TerritorialRightsSets } = this.state.project;
@@ -114,14 +114,14 @@ class TerritorialRightsPage extends Component {
                 modifiedTerritorialRightsSets.splice(i,1);
             this.setState({TerritorialRightsSets : modifiedTerritorialRightsSets});
         }
-    }
+    };
 
     handleNoRightsTracksRemove = (i) => {
         const { UnassignedTracks } = this.state.project;
         let modifiedUnassignedTracks = UnassignedTracks;
             modifiedUnassignedTracks.splice(i,1);
         this.setState( {UnassignedTracks : modifiedUnassignedTracks} )
-    }
+    };
 
     handleDropAdd = (e) => {
         const setIndex = this.state.dragSource.getAttribute('setindex');
@@ -129,22 +129,25 @@ class TerritorialRightsPage extends Component {
         const trackTitle = this.state.dragSource.getAttribute('trackTitle');
         const trackIndex = this.state.dragSource.getAttribute('trackindex');
 
-        //add the selection to the unassigned tracks
-        const { UnassignedTracks } = this.state.project;
-        let modifiedUnassignedTracks = UnassignedTracks;
-            modifiedUnassignedTracks.push({trackID : trackId, trackTitle : trackTitle})
-        this.setState({UnassignedTracks : modifiedUnassignedTracks})
+        //restrict dropping to just the set tracks
+        if( ((this.state.dragSource) && !this.state.dragSource.classList.contains('unassignedTrack')) || !e.target.classList.contains('unassignedTrack')) {
+            //add the selection to the unassigned tracks
+            const { UnassignedTracks } = this.state.project;
+            let modifiedUnassignedTracks = UnassignedTracks;
+                modifiedUnassignedTracks.push({trackID : trackId, trackTitle : trackTitle})
+            this.setState({UnassignedTracks : modifiedUnassignedTracks})
 
-        //remove the selection from the set's assigned tracks
-         const { TerritorialRightsSets } = this.state.project;
-         let modifiedTerritorialRightsSets = TerritorialRightsSets;
-             modifiedTerritorialRightsSets[setIndex].tracks.splice(trackIndex, 1)
-         this.setState({TerritorialRightsSets : modifiedTerritorialRightsSets})
-    }
+            //remove the selection from the set's assigned tracks
+            const { TerritorialRightsSets } = this.state.project;
+            let modifiedTerritorialRightsSets = TerritorialRightsSets;
+                modifiedTerritorialRightsSets[setIndex].tracks.splice(trackIndex, 1)
+            this.setState({TerritorialRightsSets : modifiedTerritorialRightsSets})
+        }
+    };
 
     handleChildDrag = (e) => {
         this.setState( {dragSource : e.target} )
-    }
+    };
 
     handleChildDrop = (e, i) => {
 
@@ -152,7 +155,7 @@ class TerritorialRightsPage extends Component {
 
         this.handleNoRightsTracksRemove( (i) ? i : dragTrackIndex );
         this.setState( {dragSource : null} )
-    }
+    };
 
     handleSubmit = (e) => {
         e.preventDefault();
@@ -190,13 +193,13 @@ class TerritorialRightsPage extends Component {
         .catch(
             error => console.error(error)
 		);
-    }
+    };
 
     componentDidMount() {
         if(this.props.match.params.projectID) {
             this.handlePageDataLoad()
         }        
-    }
+    };
 
     render() {
         return(

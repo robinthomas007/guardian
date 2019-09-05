@@ -27,7 +27,7 @@ class TracksWithoutRights extends Component {
                     <div 
                         key={i} 
                         draggable="true" 
-                        className="draggable-track" 
+                        className="draggable-track unassignedTrack" 
                         trackindex={i} 
                         trackid={track.trackID} 
                         tracktitle={track.trackTitle} 

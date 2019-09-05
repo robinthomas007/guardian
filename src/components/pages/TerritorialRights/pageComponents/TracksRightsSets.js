@@ -37,41 +37,56 @@ class TracksRightsSets extends Component {
      }
 
     handleDrop(e, i) {
-
         const { TerritorialRightsSets } = this.props.data;
+        var data = e.dataTransfer.getData("text/html");
         let modifiedTerritorialRightsSets = TerritorialRightsSets;
             modifiedTerritorialRightsSets[i].tracks.push( {trackID : this.props.dragSource.getAttribute('trackid'), trackTitle : this.props.dragSource.getAttribute('tracktitle')} )
 
         this.props.handleChange(modifiedTerritorialRightsSets);
         this.props.handleChildDrop(i);
-
-        var data = e.dataTransfer.getData("text/html");
     }
 
     getCountryNameByID(countryID) {
         const countrys = this.props.data.Countries.filter ( (country) => {
              return (!countryID.indexOf(country.id))
         })
-
         return( { id : countrys[0].id, name : countrys[0].name })
+    }
+
+    handleCountrySelect = (inputValue) => {
+        let hasWW = inputValue.indexOf('WW');
+        if(hasWW > 0) {
+            return(['WW'])
+        } else if (hasWW == 0) {
+            return(inputValue.splice(0, 1))
+        } else {
+            return(inputValue)
+        }
     }
 
     handleCountryChange = (inputValue, setIndex) => {
         const { TerritorialRightsSets } = this.props.data;
-        const modifiedCountries = inputValue.map( (countryID, i) => {
+        const stateContainsWW = TerritorialRightsSets[setIndex].countries.includes('WW');
+        const inputContainsWW = inputValue.includes('WW');
+        const sortedCountries = this.handleCountrySelect(inputValue);
+
+        let inputValues = sortedCountries.map( (countryID) => {
             return(this.getCountryNameByID(countryID))
         })
 
+        alert(JSON.stringify(sortedCountries))
+
         let modifiedTerritorialRightsSets = TerritorialRightsSets;
-            modifiedTerritorialRightsSets[setIndex].countries = modifiedCountries;
-        this.setState( {TerritorialRightsSets : modifiedTerritorialRightsSets} )
+            modifiedTerritorialRightsSets[setIndex].countries = inputValues;
+
+        this.props.handleChange(modifiedTerritorialRightsSets)
     }
 
     handleRightsRuleChange = (inputValue, setIndex) => {
         const { TerritorialRightsSets } = this.props.data;
         let modifiedTerritorialRightsSets = TerritorialRightsSets;
             modifiedTerritorialRightsSets[setIndex].hasRights = inputValue;
-        this.setState( {TerritorialRightsSets : modifiedTerritorialRightsSets} )
+        this.props.handleChange(modifiedTerritorialRightsSets)
     }
 
     handleDeleteButton = (i) => {
@@ -86,9 +101,15 @@ class TracksRightsSets extends Component {
         }
     }
 
+    getCountryIDs = (countries) => {
+        let countryIDs = countries.map( (country, i) => {
+            return(country.id)
+        })
+        return(countryIDs)
+    }
+
     getSetsList = () => {
         const rightsSets = this.props.data.TerritorialRightsSets.map( (rightsSet, i) => {
-
             return(
                 <div key={i} className="set-card">
                     <div className="row d-flex col-12 no-gutters">
@@ -104,9 +125,9 @@ class TracksRightsSets extends Component {
                         <table className="territorial-rights-table col-12">
                             <thead>
                                 <tr className="d-flex row no-gutters">
-                                    <th className="col-4" nowrap>Tracks with this Rights Set</th>
-                                    <th className="col-4" nowrap>Rights Rule</th>
-                                    <th className="col-4" nowrap>Select Countries</th>
+                                    <th className="col-4" nowrap="true">Tracks with this Rights Set</th>
+                                    <th className="col-4" nowrap="true">Rights Rule</th>
+                                    <th className="col-4" nowrap="true">Select Countries</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -125,6 +146,7 @@ class TracksRightsSets extends Component {
                                             setIndex={i}
                                             handleChildDrop={(e,i) => this.handleDrop() }
                                             handleChildDrag={(e) => this.props.handleChildDrag(e)}
+                                            dragSource={this.props.dragSource}
                                         />
                                     </td>
                                     <td className="col-4">
@@ -139,7 +161,7 @@ class TracksRightsSets extends Component {
                                             <MultiSelectDropDown 
                                                 placeHolder={'Select Country'}
                                                 optionList={this.props.data.Countries}
-                                                value={rightsSet.countries}
+                                                value={this.getCountryIDs(rightsSet.countries)}
                                                 id={'territorialRightsCountry_' + i}
                                                 onChange={(value) => this.handleCountryChange(value, i)}
                                             />
