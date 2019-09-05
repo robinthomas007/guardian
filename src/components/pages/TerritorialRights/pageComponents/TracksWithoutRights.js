@@ -43,7 +43,7 @@ class TracksWithoutRights extends Component {
 
     render() {
         return(
-            <div className="track-draggable-area h-100" onDrop={ (e) => this.handleDrop(e)} onDragOver={this.handleAllowDrop}>
+            <div className="track-draggable-area h-100 unassignedTrack" onDrop={ (e) => this.handleDrop(e)} onDragOver={this.handleAllowDrop}>
                 {this.getTracksList()}
             </div>
         )
