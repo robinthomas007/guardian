@@ -161,12 +161,12 @@ class TerritorialRightsPage extends Component {
         this.setState( {dragSource : null} )
     };
 
+    
+
     handleSubmit = (e) => {
-
-
-        this.setState( { showLoader : true } )
-
         e.preventDefault();
+        this.setState( { showLoader : true } )
+        const saveAndContinue = (e.target.id === 'contactsSaveContButton') ? true : false;
         const user = JSON.parse(sessionStorage.getItem('user'))
         const fetchHeaders = new Headers(
             {
@@ -191,14 +191,14 @@ class TerritorialRightsPage extends Component {
             {
                 return(response.json());
             }
-        )
-        .then (responseJSON => 
+        ).then (responseJSON => 
             {
-                this.setState( { showLoader : false } )
-                //this.setState( {project : responseJSON} )
+                this.setState( { showLoader : false })
+                if(saveAndContinue) {
+                    this.props.history.push('/blockingPolicies/' + this.props.match.params.projectID )
+                }
             }
-        )
-        .catch(
+        ).catch(
             error => console.error(error)
 		);
     };
@@ -208,6 +208,12 @@ class TerritorialRightsPage extends Component {
             this.handlePageDataLoad()
         }        
     };
+
+    componentDidUpdate() {
+        if(this.props.match.params.projectID) {
+            this.props.setProjectID(this.props.match.params.projectID)
+        }
+    }
 
     render() {
 
@@ -274,7 +280,7 @@ class TerritorialRightsPage extends Component {
                 </div>
                 <div className="row save-buttons">
                         <div className="col-12">
-                            <button tabIndex='5+' id="contactsSaveButton" type="button" className="btn btn-secondary">Save</button>
+                            <button tabIndex='5+' id="contactsSaveButton" type="button" className="btn btn-secondary" onClick={this.handleSubmit}>Save</button>
                             <button tabIndex='6+' id="contactsSaveContButton" type="button" className="btn btn-primary" onClick={this.handleSubmit}>Save &amp; Continue</button>
                         </div>
                     </div>
