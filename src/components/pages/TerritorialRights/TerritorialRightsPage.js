@@ -8,6 +8,7 @@ import LoadingImg from '../../ui/LoadingImg';
 
 import './TerritorialRights.css';
 import { withRouter } from "react-router";
+import { Alert } from 'react-bootstrap';
 
 class TerritorialRightsPage extends Component {
 
@@ -20,7 +21,8 @@ class TerritorialRightsPage extends Component {
                 TerritorialRightsSets : []
             },
             dragSource : null,
-            showloader : false
+            showloader : false,
+            combinedTracks : []
         }
         this.handleChange = this.handleChange.bind(this);
         this.handlePageDataLoad = this.handlePageDataLoad.bind(this);
@@ -110,11 +112,24 @@ class TerritorialRightsPage extends Component {
 
     handleSetDelete = (i) => {
         const { TerritorialRightsSets } = this.state.project;
+        const { UnassignedTracks } = this.state.project;
+        const deletedTracks = (TerritorialRightsSets[i].tracks) ? TerritorialRightsSets[i].tracks : [];
+        const combinedTracks = [...UnassignedTracks, ...deletedTracks];
+
         if(TerritorialRightsSets.length > 1) {
             let modifiedTerritorialRightsSets = TerritorialRightsSets;
                 modifiedTerritorialRightsSets.splice(i,1);
-            this.setState({TerritorialRightsSets : modifiedTerritorialRightsSets}, this.handleResequenceRighstSets());
+            this.setState({
+                TerritorialRightsSets : modifiedTerritorialRightsSets, 
+            }, this.handleResequenceRighstSets());
+
+            //TODO : do this correctly
+            this.state.project.UnassignedTracks = combinedTracks;
         }
+
+        // this.setState({
+        //     UnassignedTracks : combinedTracks
+        // }, () => alert(this.state.project.UnassignedTracks));
     };
 
     handleNoRightsTracksRemove = (i) => {
@@ -155,8 +170,6 @@ class TerritorialRightsPage extends Component {
         this.handleNoRightsTracksRemove( (i) ? i : dragTrackIndex );
         this.setState( {dragSource : null} )
     };
-
-    
 
     handleSubmit = (e) => {
         e.preventDefault();
@@ -208,7 +221,7 @@ class TerritorialRightsPage extends Component {
         if(this.props.match.params.projectID) {
             this.props.setProjectID(this.props.match.params.projectID)
         }
-    }
+    };
 
     render() {
 
@@ -226,8 +239,6 @@ class TerritorialRightsPage extends Component {
                     </div>
                 </div>
     
-        
-
                 <div className="row no-gutters align-items-center">
                     <div className="col-3">
                         <h3>Tracks With No Rights Applied</h3>
@@ -267,7 +278,7 @@ class TerritorialRightsPage extends Component {
                             dragSource={this.state.dragSource}
                             handleChildDrop={ (e,i) => this.handleChildDrop(e,i) }
                             handleChildDrag={ (e) => this.handleChildDrag (e) }
-                            handleSetDelete={this.handleSetDelete}
+                            handleSetDelete={ (i) => this.handleSetDelete(i) }
                             dragSource={this.state.dragSource}
                             addRightsSet={this.addRightsSet}
                         />
