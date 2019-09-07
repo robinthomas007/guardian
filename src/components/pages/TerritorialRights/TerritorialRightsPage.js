@@ -17,7 +17,7 @@ class TerritorialRightsPage extends Component {
 		this.state = {
             project : {
                 Countries : [],
-                UnassignedTracks : [],
+                UnassignedTerritorialRighsSetTracks : [],
                 TerritorialRightsSets : []
             },
             dragSource : null,
@@ -112,9 +112,9 @@ class TerritorialRightsPage extends Component {
 
     handleSetDelete = (i) => {
         const { TerritorialRightsSets } = this.state.project;
-        const { UnassignedTracks } = this.state.project;
+        const { UnassignedTerritorialRighsSetTracks  } = this.state.project;
         const deletedTracks = (TerritorialRightsSets[i].tracks) ? TerritorialRightsSets[i].tracks : [];
-        const combinedTracks = [...UnassignedTracks, ...deletedTracks];
+        const combinedTracks = [...UnassignedTerritorialRighsSetTracks, ...deletedTracks];
 
         if(TerritorialRightsSets.length > 1) {
             let modifiedTerritorialRightsSets = TerritorialRightsSets;
@@ -124,7 +124,7 @@ class TerritorialRightsPage extends Component {
             }, this.handleResequenceRighstSets());
 
             //TODO : do this correctly
-            this.state.project.UnassignedTracks = combinedTracks;
+            this.state.project.UnassignedTerritorialRighsSetTracks = combinedTracks;
         }
 
         // this.setState({
@@ -133,10 +133,10 @@ class TerritorialRightsPage extends Component {
     };
 
     handleNoRightsTracksRemove = (i) => {
-        const { UnassignedTracks } = this.state.project;
-        let modifiedUnassignedTracks = UnassignedTracks;
+        const { UnassignedTerritorialRighsSetTracks } = this.state.project;
+        let modifiedUnassignedTracks = UnassignedTerritorialRighsSetTracks;
             modifiedUnassignedTracks.splice(i,1);
-        this.setState( {UnassignedTracks : modifiedUnassignedTracks} )
+        this.setState( {UnassignedTerritorialRighsSetTracks : modifiedUnassignedTracks} )
     };
 
     handleDropAdd = (e) => {
@@ -148,10 +148,10 @@ class TerritorialRightsPage extends Component {
         //restrict dropping to just the set tracks
         if( ((this.state.dragSource) && !this.state.dragSource.classList.contains('unassignedTrack')) || !e.target.classList.contains('unassignedTrack')) {
             //add the selection to the unassigned tracks
-            const { UnassignedTracks } = this.state.project;
-            let modifiedUnassignedTracks = UnassignedTracks;
+            const { UnassignedTerritorialRighsSetTracks } = this.state.project;
+            let modifiedUnassignedTracks = UnassignedTerritorialRighsSetTracks;
                 modifiedUnassignedTracks.push({trackID : trackId, trackTitle : trackTitle})
-            this.setState({UnassignedTracks : modifiedUnassignedTracks})
+            this.setState({UnassignedTerritorialRighsSetTracks : modifiedUnassignedTracks})
 
             //remove the selection from the set's assigned tracks
             const { TerritorialRightsSets } = this.state.project;
@@ -265,7 +265,7 @@ class TerritorialRightsPage extends Component {
                 <div className="row">
                     <div className="col-3">
                         <TracksWithoutRights 
-                            data={this.state.project.UnassignedTracks}
+                            data={this.state.project.UnassignedTerritorialRighsSetTracks}
                             handleChildDrag={this.handleChildDrag}
                             dragSource={this.state.dragSource}
                             handleDropAdd={this.handleDropAdd}

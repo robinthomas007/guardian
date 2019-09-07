@@ -53,32 +53,31 @@ class TracksRightsSets extends Component {
         return( { id : countrys[0].id, name : countrys[0].name })
     }
 
-    handleCountrySelect = (inputValue) => {
-        let hasWW = inputValue.indexOf('WW');
-        if(hasWW > 0) {
-            return(['WW'])
-        } else if (hasWW == 0) {
-            return(inputValue.splice(0, 1))
+    handleCountrySelect = (inputValue, wwIndex) => {
+        if (wwIndex == (inputValue.length - 1)) {
+            return([inputValue[wwIndex]]);
         } else {
-            return(inputValue)
+            inputValue.splice(wwIndex, 1)
+            return(inputValue);
         }
     }
 
     handleCountryChange = (inputValue, setIndex) => {
         const { TerritorialRightsSets } = this.props.data;
         const stateContainsWW = TerritorialRightsSets[setIndex].countries.includes('WW');
-        const inputContainsWW = inputValue.includes('WW');
+        const wwIndex = inputValue.indexOf('WW');
 
-        //const sortedCountries = this.handleCountrySelect(inputValue);
+        // if(wwIndex >= 0) {
+        //     inputValue = this.handleCountrySelect(inputValue, wwIndex);
+        // }
 
-         let inputValues = inputValue.map( (countryID) => {
-             return(this.getCountryNameByID(countryID))
-         })
 
-        // alert(JSON.stringify(sortedCountries))
+        let formattedInputValues = inputValue.map( (countryID) => {
+            return(this.getCountryNameByID(countryID))
+        })
 
         let modifiedTerritorialRightsSets = TerritorialRightsSets;
-            modifiedTerritorialRightsSets[setIndex].countries = inputValues;
+            modifiedTerritorialRightsSets[setIndex].countries = formattedInputValues;
 
         this.props.handleChange(modifiedTerritorialRightsSets)
     }
@@ -136,7 +135,7 @@ class TracksRightsSets extends Component {
                                     <td className="col-4">
   
                                         <TracksSelectDropDown 
-                                            data={this.props.data.UnassignedTracks}
+                                            data={this.props.data.UnassignedTerritorialRighsSetTracks }
                                             onChange={ (e) => this.handleTrackSelect(e)}
                                             setIndex={i}
                                         />

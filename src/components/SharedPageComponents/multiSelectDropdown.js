@@ -40,8 +40,7 @@ class MultiSelectDropDown extends Component {
                 modifiedValue.splice(index, 1);
             }
 		}
-        this.setState( {value : modifiedValue} );
-		this.props.onChange(modifiedValue);
+        this.setState( {value : modifiedValue},  () => this.props.onChange(modifiedValue));
 	}
 
     getInputOptions = () => {
