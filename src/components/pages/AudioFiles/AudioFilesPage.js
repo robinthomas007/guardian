@@ -278,6 +278,7 @@ class AudioFilesPage extends Component {
     isValidForm() {
         let isrcs = document.getElementsByClassName('trackIsrcField');
         let trackTitles = document.getElementsByClassName('trackTitleField');
+        let trackArtists = document.getElementsByClassName('trackArtistField');
         let isValidForm = true;
 
         for(var i=0; i<isrcs.length; i++) {
@@ -293,6 +294,13 @@ class AudioFilesPage extends Component {
                 isValidForm = false;
             } else {
                 this.setFieldValidation(trackTitles[i], 'is-valid');
+            }
+
+            if(!this.isValidTitle(trackArtists[i].value)) {
+                this.setFieldValidation(trackArtists[i], 'is-invalid');
+                isValidForm = false;
+            } else {
+                this.setFieldValidation(trackArtists[i], 'is-valid');
             }
         }
         return(isValidForm)

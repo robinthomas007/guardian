@@ -41,6 +41,10 @@ class AudioVideoDataTable extends Component {
         return((title.length > 0) ? true : false);
     }
 
+    isValidArtist(artist) {
+        return((artist.length > 0) ? true : false);
+    }
+
     setFieldValidation(input, status) {
         if(status === 'is-invalid') {
             input.className = input.className.replace('is-invalid', '') + ' is-invalid';
@@ -54,6 +58,8 @@ class AudioVideoDataTable extends Component {
             (this.isValidIsrc(e.target.value)) ? this.setFieldValidation(e.target, 'is-Valid') : this.setFieldValidation(e.target, 'is-invalid')
         } else if (e.target.className.match('trackTitleField')) {
             (this.isValidTitle(e.target.value)) ? this.setFieldValidation(e.target, 'is-Valid') : this.setFieldValidation(e.target, 'is-invalid')
+        } else if (e.target.className.match('trackArtistField')) {
+            (this.isValidArtist(e.target.value)) ? this.setFieldValidation(e.target, 'is-Valid') : this.setFieldValidation(e.target, 'is-invalid')
         }
     }
 
@@ -160,8 +166,12 @@ class AudioVideoDataTable extends Component {
                                 id='artist'
                                 onChange={ (e) => this.handleChange(e, track, i) }
                                 value={this.state.tableData[i].artist}
-                                className={'trackArtist'}
+                                className={'trackArtistField'}
+                                onBlur={ (e) => this.handleOnBlur(e) }
                             />
+                              <div className="invalid-tooltip">
+                                Invalid Artist
+                            </div>
                         </td>
                         <td className="text-center">
                             <button className="btn btn-secondary action"><i className="material-icons">refresh</i></button>
