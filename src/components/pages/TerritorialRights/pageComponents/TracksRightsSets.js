@@ -135,7 +135,7 @@ class TracksRightsSets extends Component {
                                     <td className="col-4">
   
                                         <TracksSelectDropDown 
-                                            data={this.props.data.UnassignedTerritorialRighsSetTracks }
+                                            data={this.props.data.UnassignedTerritorialRightsSetTracks }
                                             onChange={ (e) => this.handleTrackSelect(e)}
                                             setIndex={i}
                                         />
