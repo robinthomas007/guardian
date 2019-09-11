@@ -31,18 +31,19 @@ class BlockingPoliciesPage extends Component {
         const BlockingPolicySite = () => {
     
             return(
-                <Table>
+            <div className="table-repsonsive">
+            <Table>
                     <thead >
-                        <tr className="row no-gutters">
-                            <th className="col-4 " nowrap>Site</th>
+                        <tr className="d-flex no-gutters">
+                            <th className="col-4" nowrap>Platform</th>
                             <th className="col-2 text-center" nowrap>Monetize</th>
                             <th className="col-2 text-center" nowrap>Block</th>
-                            <th className="col-2 text-self-center" nowrap>Duration</th>
+                            <th className="col-2 text-self-center" nowrap>Allowance</th>
                             <th className="col-2 text-self-center" nowrap>Block Until</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr className="row no-gutters">
+                        <tr className="d-flex no-gutters">
                             <td className="col-4 align-self-center" nowrap>
                                 <span className="platform-sprite youtube"></span>
                             </td>
@@ -55,7 +56,7 @@ class BlockingPoliciesPage extends Component {
                             <td className="col-2 centered align-self-center" nowrap>Duration</td>
                             <td className="col-2 centered align-self-center" nowrap>Block Until</td>
                         </tr>
-                        <tr className="row no-gutters">
+                        <tr className="d-flex no-gutters">
                             <td className="col-4 centered align-self-center" nowrap>
                                 <span className="platform-sprite soundcloud"></span>
                             </td>
@@ -68,7 +69,7 @@ class BlockingPoliciesPage extends Component {
                             <td className="col-2 centered align-self-center" nowrap>Duration</td>
                             <td className="col-2 centered align-self-center" nowrap>Block Until</td>
                         </tr>
-                        <tr className="row no-gutters">
+                        <tr className="d-flex no-gutters">
                             <td className="col-4 centered align-self-center" nowrap>
                                 <span className="platform-sprite facebook"></span>
                             </td>
@@ -81,7 +82,7 @@ class BlockingPoliciesPage extends Component {
                             <td className="col-2 centered align-self-center" nowrap>Duration</td>
                             <td className="col-2 centered align-self-center" nowrap>Block Until</td>
                         </tr>
-                        <tr className="row no-gutters">
+                        <tr className="d-flex no-gutters">
                             <td className="col-4 centered align-self-center" nowrap>
                                 <span className="platform-sprite instagram"></span>
                             </td>
@@ -92,10 +93,13 @@ class BlockingPoliciesPage extends Component {
                                 <Form.Control type="radio" />
                             </td>
                             <td className="col-2 centered align-self-center" nowrap>Duration</td>
-                            <td className="col-2 centered align-self-center" nowrap>Block Until</td>
+                            <td className="col-2 centered align-self-center" nowrap>
+                                <input type="date" />
+                            </td>
                         </tr>
                     </tbody>
                 </Table>
+                </div>
             )
         }
     
