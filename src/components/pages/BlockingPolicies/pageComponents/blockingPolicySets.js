@@ -43,7 +43,7 @@ class BlockingPolicySets extends Component {
 
                                             <TracksDropArea 
                                                 data={blockingSet.tracks}
-                                                />
+                                            />
                                         </td>
                                     </tr>
                                 </tbody>

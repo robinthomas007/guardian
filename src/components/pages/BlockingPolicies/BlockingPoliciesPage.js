@@ -20,10 +20,48 @@ class BlockingPoliciesPage extends Component {
         }
         this.handleChange = this.handleChange.bind(this);
     }
-
+  
     handleChange = (e) => {
-        // alert(e.target.getAttribute('setIndex'))
-        // alert(e.target.getAttribute('siteName'))
+        const setIndex = e.target.getAttribute('setIndex');
+        const siteIndex = e.target.getAttribute('siteIndex');
+        const inputTarget = e.target.getAttribute('inputTarget');
+        const { BlockingPolicySets } = this.state.project;
+        let modifiedBlockingPolicySets = BlockingPolicySets;
+            modifiedBlockingPolicySets[setIndex].platformPolicies[siteIndex][inputTarget] = e.target.value;
+
+        this.setState( {BlockingPolicySets : modifiedBlockingPolicySets} )
+    }
+
+    getPlatforms = () => {
+        return(
+            [
+                {
+                    platformName : 'YouTube',
+                    block : true,
+                    duration : '',
+                    expirationDate : ''
+                },
+                {
+                    platformName : 'SoundCloud',
+                    block : true,
+                    duration : '',
+                    expirationDate : ''
+                },
+                {
+                    platformName : 'Facebook',
+                    block : true,
+                    duration : '',
+                    expirationDate : ''
+                },
+                {
+                    platformName : 'Instagram',
+                    block : true,
+                    duration : '',
+                    expirationDate : ''
+                },
+
+            ]
+        )
     }
 
     getBlockingSet = (set, i) => {
@@ -32,15 +70,7 @@ class BlockingPoliciesPage extends Component {
                 blockingPolicySetID : (set.blockingPolicySetID) ? set.blockingPolicySetID : '',
                 sequence :  (set.sequence) ? set.sequence : i,
                 description : 'Set #' + i,
-                platformPolicies :
-                    [
-                        {
-                            platformName : '',
-                            block : true,
-                            duration : '',
-                            expirationDate : ''
-                        }
-                    ],
+                platformPolicies : this.getPlatforms(),
                 tracks : []
             }
         )
@@ -92,6 +122,9 @@ class BlockingPoliciesPage extends Component {
 		);
     };
     
+    handleSubmit = () => {
+        alert(JSON.stringify(this.state.project.BlockingPolicySets))
+    }
 
     componentDidMount() {
         this.handlePageDataLoad()
@@ -147,6 +180,13 @@ class BlockingPoliciesPage extends Component {
                             data={this.state.project}
                             onChange={(e) => this.handleChange(e)}
                         />
+                    </div>
+                </div>
+
+                <div className="row save-buttons">
+                    <div className="col-12">
+                        <button tabIndex='5+' id="contactsSaveButton" type="button" className="btn btn-secondary" onClick={this.handleSubmit}>Save</button>
+                        <button tabIndex='6+' id="contactsSaveContButton" type="button" className="btn btn-primary" onClick={this.handleSubmit}>Save &amp; Continue</button>
                     </div>
                 </div>
             </section>
