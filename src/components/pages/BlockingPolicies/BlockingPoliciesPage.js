@@ -2,146 +2,102 @@ import React, { Component } from 'react';
 import {Table, Grid, Button, Form } from 'react-bootstrap'; 
 import PageHeader from '../PageHeader/PageHeader';
 import './BlockingPolicies.css';
+import TracksWithoutRights from '../TerritorialRights/pageComponents/TracksWithoutRights';
+import BlockingPolicySets from '../BlockingPolicies/pageComponents/blockingPolicySets';
 import { withRouter } from 'react-router-dom';
 
 const mockData = require('../../../mockData.json');
 
 class BlockingPoliciesPage extends Component {
 
-    render() {
-
-        const TracksWithNoSetPolicy = mockData.pages.BlockingPolicies.tracks.map( function (noPolicyTrack, i) {
-            return(
-                <div key={i} className="draggable-track">{noPolicyTrack.trackAudioFile}</div>
-            )
-        });
-    
-        const TracksWithNoSetPolicyDrop = mockData.pages.BlockingPolicies.tracks.map( function (noPolicyTrack, i) {
-            return(
-                <li key={i}>
-                    <label className="dropdown-item custom-checkbox">
-                        <input type="checkbox" />
-                        <span className="checkmark"></span>
-                    </label>
-                    <span>{noPolicyTrack.trackAudioFile}</span>
-                </li>
-            )
-        });
-    
-        const BlockingPolicySite = () => {
-    
-            return(
-                <Table>
-                    <thead >
-                        <tr className="row no-gutters">
-                            <th className="col-4 " nowrap>Site</th>
-                            <th className="col-2 text-center" nowrap>Monetize</th>
-                            <th className="col-2 text-center" nowrap>Block</th>
-                            <th className="col-2 text-self-center" nowrap>Duration</th>
-                            <th className="col-2 text-self-center" nowrap>Block Until</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr className="row no-gutters">
-                            <td className="col-4 align-self-center" nowrap>
-                                <span className="platform-sprite youtube"></span>
-                            </td>
-                            <td className="col-2 centered align-self-center" nowrap>
-                                <Form.Control type="radio" />
-                            </td>
-                            <td className="col-2 centered align-self-center" nowrap>
-                                <Form.Control type="radio" />
-                            </td>
-                            <td className="col-2 centered align-self-center" nowrap>Duration</td>
-                            <td className="col-2 centered align-self-center" nowrap>Block Until</td>
-                        </tr>
-                        <tr className="row no-gutters">
-                            <td className="col-4 centered align-self-center" nowrap>
-                                <span className="platform-sprite soundcloud"></span>
-                            </td>
-                            <td className="col-2 centered align-self-center" nowrap>
-                                <Form.Control type="radio" />
-                            </td>
-                            <td className="col-2 centered align-self-center" nowrap>
-                                <Form.Control type="radio" />
-                            </td>
-                            <td className="col-2 centered align-self-center" nowrap>Duration</td>
-                            <td className="col-2 centered align-self-center" nowrap>Block Until</td>
-                        </tr>
-                        <tr className="row no-gutters">
-                            <td className="col-4 centered align-self-center" nowrap>
-                                <span className="platform-sprite facebook"></span>
-                            </td>
-                            <td className="col-2 centered align-self-center" nowrap>
-                                <Form.Control type="radio" />
-                            </td>
-                            <td className="col-2 centered align-self-center" nowrap>
-                                <Form.Control type="radio" />
-                            </td>
-                            <td className="col-2 centered align-self-center" nowrap>Duration</td>
-                            <td className="col-2 centered align-self-center" nowrap>Block Until</td>
-                        </tr>
-                        <tr className="row no-gutters">
-                            <td className="col-4 centered align-self-center" nowrap>
-                                <span className="platform-sprite instagram"></span>
-                            </td>
-                            <td className="col-2 centered align-self-center" nowrap>
-                                <Form.Control type="radio" />
-                            </td>
-                            <td className="col-2 centered align-self-center" nowrap>
-                                <Form.Control type="radio" />
-                            </td>
-                            <td className="col-2 centered align-self-center" nowrap>Duration</td>
-                            <td className="col-2 centered align-self-center" nowrap>Block Until</td>
-                        </tr>
-                    </tbody>
-                </Table>
-            )
+    constructor(props) {
+		super(props);
+		this.state = {
+            project : {
+                BlockingPolicySets : [],
+                UnassignedTerritorialRightsSetTracks : []
+            }
         }
-    
-        const BlockingPolicySets = mockData.pages.BlockingPolicies.blockingPolicySets.map( function (set, i) {
-            return(
-                <div className="set-card">
-                    <div className="row">
-                        <div className="col-8">
-                            <h3>{set.setTitle} </h3>
-                        </div>
-                        <div className="col-2"></div>
-                        <div className="col-2"></div>
-                    </div>
-                    <div className="row no-gutters">
-                        <div className="col-4">
-                            <table>
-                                <thead>
-                                    <tr className="row no-gutters">
-                                        <th nowrap>Tracks to Block</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td nowrap>
-                                            <div className="dropdown tracks-dropdown">
-                                                <button type="button" id="selectTracksDropdown" className="btn btn-secondary dropdown-toggle territory-tracks" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    Select Tracks or Drag Below
-                                                </button>
-                                                <ul className="dropdown-menu tracks" aria-labelledby="selectTracksDropdown">
-                                                    {TracksWithNoSetPolicyDrop}
-                                                </ul>
-                                            </div>
-                                            <div className="track-draggable-area territory-tracks h-100"></div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div className="col-8">
-                            <BlockingPolicySite set={set}/>
-                        </div>
-                    </div>
-                </div>
-            )
-        });
+        this.handleChange = this.handleChange.bind(this);
+    }
 
+    handleChange = (e) => {
+        alert(e.target.getAttribute('setIndex'))
+        alert(e.target.getAttribute('siteName'))
+    }
+
+    getBlockingSet = (set, i) => {
+        return(
+            {
+                blockingPolicySetID : (set.blockingPolicySetID) ? set.blockingPolicySetID : '',
+                sequence :  (set.sequence) ? set.sequence : i,
+                description : 'Set #' + i,
+                platformPolicies :
+                    [
+                        {
+                            platformName : '',
+                            block : true,
+                            duration : '',
+                            expirationDate : ''
+                        }
+                    ],
+                tracks : []
+            }
+        )
+    };
+
+    addBlockingSet = () => {
+        const { BlockingPolicySets } = this.state.project;
+        let modifiedBlockingPolicySets = BlockingPolicySets;
+            modifiedBlockingPolicySets.push(this.getBlockingSet({}, BlockingPolicySets.length + 1));
+        this.setState({BlockingPolicySets : modifiedBlockingPolicySets});
+    }
+
+    handlePageDataLoad = () => {
+        const user = JSON.parse(sessionStorage.getItem('user'))
+        const fetchHeaders = new Headers(
+            {
+                "Content-Type": "application/json",
+                "Authorization" : sessionStorage.getItem('accessToken')
+            }
+		)
+
+		const fetchBody = JSON.stringify( {
+            "User" : {
+				"email" : user.email
+            },
+            "ProjectID": this.props.match.params.projectID,
+		})
+
+        fetch ('https://api-dev.umusic.net/guardian/project/review', {
+            method : 'POST',
+            headers : fetchHeaders,
+            body : fetchBody
+        }).then (response => 
+            {
+                return(response.json());
+            }
+        )
+        .then (responseJSON => 
+            {
+                this.setState( {project : responseJSON} )
+                if(!responseJSON.BlockingPolicySets || !responseJSON.BlockingPolicySets.length) {
+                    this.addBlockingSet();
+                }
+                // this.setState( { showLoader : false } )
+            }
+        )
+        .catch(
+            error => console.error(error)
+		);
+    };
+    
+
+    componentDidMount() {
+        this.handlePageDataLoad()
+    };
+
+    render() {
         return(
             <section className="page-container h-100">
     
@@ -170,7 +126,8 @@ class BlockingPoliciesPage extends Component {
                             </div>
                             <div className="col-8">
                                 <button
-                                    className="btn btn-primary"
+                                    className="btn btn-primary" 
+                                    onClick={this.addBlockingSet}
                                 >Create a New Blocking Policy</button>
                             </div>
                         </div>
@@ -178,12 +135,18 @@ class BlockingPoliciesPage extends Component {
                 </div>
                 <div className="row">
                     <div className="col-3">
-                        <div className="track-draggable-area h-100">
-                            {TracksWithNoSetPolicy}
-                        </div>
+                        <TracksWithoutRights 
+                            data={this.state.project.UnassignedTerritorialRightsSetTracks}
+                            handleChildDrag={null}
+                            dragSource={null}
+                            handleDropAdd={null}
+                        />
                     </div>
                     <div className="col-9">
-                        {BlockingPolicySets}
+                        <BlockingPolicySets 
+                            data={this.state.project}
+                            onChange={(e) => this.handleChange(e)}
+                        />
                     </div>
                 </div>
             </section>
