@@ -10,7 +10,6 @@ const mockData = require('../../../mockData.json');
 
 class BlockingPoliciesPage extends Component {
 
-<<<<<<< HEAD
     constructor(props) {
 		super(props);
 		this.state = {
@@ -18,108 +17,13 @@ class BlockingPoliciesPage extends Component {
                 BlockingPolicySets : [],
                 UnassignedTerritorialRightsSetTracks : []
             }
-=======
-    render() {
-
-        const TracksWithNoSetPolicy = mockData.pages.BlockingPolicies.tracks.map( function (noPolicyTrack, i) {
-            return(
-                <div key={i} className="draggable-track">{noPolicyTrack.trackAudioFile}</div>
-            )
-        });
-    
-        const TracksWithNoSetPolicyDrop = mockData.pages.BlockingPolicies.tracks.map( function (noPolicyTrack, i) {
-            return(
-                <li key={i}>
-                    <label className="dropdown-item custom-checkbox">
-                        <input type="checkbox" />
-                        <span className="checkmark"></span>
-                    </label>
-                    <span>{noPolicyTrack.trackAudioFile}</span>
-                </li>
-            )
-        });
-    
-        const BlockingPolicySite = () => {
-    
-            return(
-            <div className="table-repsonsive">
-            <Table>
-                    <thead >
-                        <tr className="d-flex no-gutters">
-                            <th className="col-4" nowrap>Platform</th>
-                            <th className="col-2 text-center" nowrap>Monetize</th>
-                            <th className="col-2 text-center" nowrap>Block</th>
-                            <th className="col-2 text-self-center" nowrap>Allowance</th>
-                            <th className="col-2 text-self-center" nowrap>Block Until</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr className="d-flex no-gutters">
-                            <td className="col-4 align-self-center" nowrap>
-                                <span className="platform-sprite youtube"></span>
-                            </td>
-                            <td className="col-2 centered align-self-center" nowrap>
-                                <Form.Control type="radio" />
-                            </td>
-                            <td className="col-2 centered align-self-center" nowrap>
-                                <Form.Control type="radio" />
-                            </td>
-                            <td className="col-2 centered align-self-center" nowrap>Duration</td>
-                            <td className="col-2 centered align-self-center" nowrap>Block Until</td>
-                        </tr>
-                        <tr className="d-flex no-gutters">
-                            <td className="col-4 centered align-self-center" nowrap>
-                                <span className="platform-sprite soundcloud"></span>
-                            </td>
-                            <td className="col-2 centered align-self-center" nowrap>
-                                <Form.Control type="radio" />
-                            </td>
-                            <td className="col-2 centered align-self-center" nowrap>
-                                <Form.Control type="radio" />
-                            </td>
-                            <td className="col-2 centered align-self-center" nowrap>Duration</td>
-                            <td className="col-2 centered align-self-center" nowrap>Block Until</td>
-                        </tr>
-                        <tr className="d-flex no-gutters">
-                            <td className="col-4 centered align-self-center" nowrap>
-                                <span className="platform-sprite facebook"></span>
-                            </td>
-                            <td className="col-2 centered align-self-center" nowrap>
-                                <Form.Control type="radio" />
-                            </td>
-                            <td className="col-2 centered align-self-center" nowrap>
-                                <Form.Control type="radio" />
-                            </td>
-                            <td className="col-2 centered align-self-center" nowrap>Duration</td>
-                            <td className="col-2 centered align-self-center" nowrap>Block Until</td>
-                        </tr>
-                        <tr className="d-flex no-gutters">
-                            <td className="col-4 centered align-self-center" nowrap>
-                                <span className="platform-sprite instagram"></span>
-                            </td>
-                            <td className="col-2 centered align-self-center" nowrap>
-                                <Form.Control type="radio" />
-                            </td>
-                            <td className="col-2 centered align-self-center" nowrap>
-                                <Form.Control type="radio" />
-                            </td>
-                            <td className="col-2 centered align-self-center" nowrap>Duration</td>
-                            <td className="col-2 centered align-self-center" nowrap>
-                                <input type="date" />
-                            </td>
-                        </tr>
-                    </tbody>
-                </Table>
-                </div>
-            )
->>>>>>> 0a2289f98efbad6857eb46015062400709f3b45c
         }
         this.handleChange = this.handleChange.bind(this);
     }
 
     handleChange = (e) => {
-        alert(e.target.getAttribute('setIndex'))
-        alert(e.target.getAttribute('siteName'))
+        // alert(e.target.getAttribute('setIndex'))
+        // alert(e.target.getAttribute('siteName'))
     }
 
     getBlockingSet = (set, i) => {
