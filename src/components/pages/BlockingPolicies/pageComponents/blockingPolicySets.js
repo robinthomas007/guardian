@@ -56,7 +56,7 @@ class BlockingPolicySets extends Component {
                                         <th className="col-4 " nowrap>Site</th>
                                         <th className="col-2 text-center" nowrap>Monetize</th>
                                         <th className="col-2 text-center" nowrap>Block</th>
-                                        <th className="col-2 text-self-center" nowrap>Duration</th>
+                                        <th className="col-2 text-self-center" nowrap>Allowance</th>
                                         <th className="col-2 text-self-center" nowrap>Block Until</th>
                                     </tr>
                                 </thead>
