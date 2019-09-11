@@ -297,6 +297,8 @@
 	.platform-sprite.instagram {background-position:0px -111px;}
 	.platform-sprite.twitter {background-position:0px -148px;}
 
+	.dropdown.allowance { min-width: 100px;} 
+
 	/* Review & Submit */
 	.page-container.review-section {cursor:pointer; border: 3px solid #FFF; outline-offset:-3px; padding:27px; transition: border-color 0.6s linear;}
 	.page-container.review-section:hover{cursor:pointer; border: 3px solid #15B6DF; outline-offset:-3px; padding:27px;}
