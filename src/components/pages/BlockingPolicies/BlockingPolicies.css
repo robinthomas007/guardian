@@ -27,13 +27,6 @@ ul.countries li label.dropdown-item, ul.tracks li label.dropdown-item {padding:.
 .option-text {color:#999; font-style:italic;}
 .required-text {color:#FF0000; font-style:italic;}
 
-.platform-sprite {display:block; height:50px; width:140px; background-image:url(../../../images/platforms-sprite.png); background-repeat:no-repeat;}
-.platform-sprite.youtube {background-position:0px 0px;}
-.platform-sprite.soundcloud {background-position:0px -50px;}
-.platform-sprite.facebook {background-position:0px -100px;}
-.platform-sprite.instagram {background-position:0px -150px;}
-.platform-sprite.twitter {background-position:0px -200px;}
-
 .platform-sprite.small {display:block; height:28px; width:80px; background-image:url(../../../images/platforms-sprite.png); background-repeat:no-repeat;}
 .platform-sprite.small.youtube {background-position:0px -250px;}
 .platform-sprite.small.soundcloud {background-position:0px -278px;}
