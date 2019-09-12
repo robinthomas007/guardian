@@ -13,21 +13,10 @@ class BlockingPolicySets extends Component {
     }
 
     handleTrackSelect = (e) => {
-
-        alert(e.target.getAttribute('trackid') + e.target.getAttribute('tracktitle'))
-        // const setIndex = parseInt(e.target.getAttribute('setindex'));
-        // const trackIndex = parseInt(e.target.getAttribute('optionindex'));
-        // const { TerritorialRightsSets } = this.props.data;
-        // let modifiedTerritorialRightsSets = TerritorialRightsSets;
-        //     modifiedTerritorialRightsSets[setIndex].tracks.push( {trackID : e.target.getAttribute('trackid'), trackTitle : e.target.getAttribute('tracktitle')} )
-
-        // this.props.handleChange(modifiedTerritorialRightsSets);
-        // this.props.handleChildDrop(e, trackIndex);
-     }
+        this.props.handleTrackSelect(e);
+    }
 
      handleDrop(e, i) {
-
-        alert(123)
 
         // const { TerritorialRightsSets } = this.props.data;
         // var data = e.dataTransfer.getData("text/html");
@@ -62,7 +51,7 @@ class BlockingPolicySets extends Component {
                                     <tr>
                                         <td  nowrap="true">
                                            <TracksSelectDropDown 
-                                                data={this.props.data.UnassignedTerritorialRightsSetTracks}
+                                                data={this.props.data.UnassignedBlockingPolicySetTracks}
                                                 onChange={ (e) => this.handleTrackSelect(e)}
                                                 setIndex={i}
                                             />
