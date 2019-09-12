@@ -335,3 +335,4 @@
 	ul.disc-track-buttons {list-style:none; display:inline-block; margin:0 30px -36px 0; padding:0;}
 	ul.disc-track-buttons li {display:inline-block; float:right; margin: 0 5px;}
 	
+	table.search-table tr:hover td {cursor:pointer; background-color:#d9f3fe!important;}

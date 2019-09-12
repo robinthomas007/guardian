@@ -698,7 +698,7 @@ class FindProjectPage extends Component {
 				</ul>
 
 			<div className="table-responsive">
-				<Table>
+				<Table className="search-table">
 					<thead>
 						<tr className='d-flex'>
 							<th className="col-1 text-center">Download</th>
