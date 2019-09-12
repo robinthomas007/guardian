@@ -431,10 +431,11 @@ class FindProjectPage extends Component {
 			return Object.keys(projects).map(function(project, i) {
 				return(
 					<tr className="d-flex" key={i} onClick={() => this.handleRowClick(projects[project].projectID)}>
+						<td className="col-1 text-center"><button className="btn btn-secondary"><i class="material-icons">cloud_download</i></button></td>
 						<td className="col-2">{projects[project].projectTitle}</td>
-						<td className="col-2">{projects[project].projectArtistName}</td>
+						<td className="col-1">{projects[project].projectArtistName}</td>
 						<td className="col-1">{projects[project].projectReleasingLabel}</td>
-						<td className="col-2 text-center">{this.convertToLocaleTime(projects[project].projectLastModified)}</td>
+						<td className="col-1 text-center">{this.convertToLocaleTime(projects[project].projectLastModified)}</td>
 						<td className="col-1 status text-nowrap"><span>In Progress</span></td>
 						<td className="status text-center">{checkStepStatus(projects[project].isStep1Complete)}</td>
 						<td className="status text-center">{checkStepStatus(projects[project].isStep2Complete)}</td>
@@ -700,10 +701,11 @@ class FindProjectPage extends Component {
 				<Table>
 					<thead>
 						<tr className='d-flex'>
+							<th className="col-1 text-center">Download</th>
 							<th className="col-2 text-nowrap">Project Title</th>
-							<th className="col-2">Artist</th>
+							<th className="col-1">Artist</th>
 							<th className="col-1">Label</th>
-							<th className="col-2 text-center">Last Update</th>
+							<th className="col-1 text-center">Last Update</th>
 							<th className="col-1">Status</th>
 							<th className="status text-center">Project</th>
 							<th className="status text-center">Contacts</th>
