@@ -25,11 +25,11 @@ class BlockingSites extends Component {
         return (
             this.state.sites.map( (site, i) => {
                 return(
-                    <tr className="row no-g utters">
-                        <td className="col-4 align-self-center" nowrap>
+                    <tr className="row no-g utters" key={i}>
+                        <td className="col-4 align-self-center"  nowrap="true">
                             <span className={"platform-sprite " + site }></span>
                         </td>
-                        <td className="col-2 centered align-self-center" nowrap>
+                        <td className="col-2 centered align-self-center"  nowrap="true">
                             <Form.Control 
                                 type="radio" 
                                 name={'monetizeBlock_' + site + '_' + this.props.setIndex}
@@ -42,7 +42,7 @@ class BlockingSites extends Component {
                                 checked={false}
                             />
                         </td>
-                        <td className="col-2 centered align-self-center" nowrap>
+                        <td className="col-2 centered align-self-center"  nowrap="true">
                             <Form.Control 
                                 type="radio" 
                                 name={'monetizeBlock_' + site + '_' + this.props.setIndex}
@@ -55,7 +55,7 @@ class BlockingSites extends Component {
                                 checked={true}
                             />
                         </td>
-                        <td className="col-2 centered align-self-center" nowrap>
+                        <td className="col-2 centered align-self-center"  nowrap="true">
                             <BlockingPolicDurationInput 
                                 data={null}
                                 onChange={(e) => this.props.onChange(e,i)}
@@ -65,7 +65,7 @@ class BlockingSites extends Component {
                                 inputTarget={'duration'}
                             />
                         </td>
-                        <td className="col-2 centered align-self-center" nowrap>
+                        <td className="col-2 centered align-self-center"  nowrap="true">
                             <BlockingPolicyAllowanceInput 
                                 data={null}
                                 onChange={(e) => this.props.onChange(e,i)}

@@ -12,11 +12,37 @@ class BlockingPolicySets extends Component {
         }
     }
 
+    handleTrackSelect = (e) => {
+
+        alert(e.target.getAttribute('trackid') + e.target.getAttribute('tracktitle'))
+        // const setIndex = parseInt(e.target.getAttribute('setindex'));
+        // const trackIndex = parseInt(e.target.getAttribute('optionindex'));
+        // const { TerritorialRightsSets } = this.props.data;
+        // let modifiedTerritorialRightsSets = TerritorialRightsSets;
+        //     modifiedTerritorialRightsSets[setIndex].tracks.push( {trackID : e.target.getAttribute('trackid'), trackTitle : e.target.getAttribute('tracktitle')} )
+
+        // this.props.handleChange(modifiedTerritorialRightsSets);
+        // this.props.handleChildDrop(e, trackIndex);
+     }
+
+     handleDrop(e, i) {
+
+        alert(123)
+
+        // const { TerritorialRightsSets } = this.props.data;
+        // var data = e.dataTransfer.getData("text/html");
+        // let modifiedTerritorialRightsSets = TerritorialRightsSets;
+        //     modifiedTerritorialRightsSets[i].tracks.push( {trackID : this.props.dragSource.getAttribute('trackid'), trackTitle : this.props.dragSource.getAttribute('tracktitle')} )
+
+        // this.props.handleChange(modifiedTerritorialRightsSets);
+        // this.props.handleChildDrop(i);
+    }
+
     getBlockingPolicySets = () => {
 
         const policySets = this.props.data.BlockingPolicySets.map ( (blockingSet, i)  => {
             return (
-                <div className="set-card">
+                <div className="set-card" key={i}>
                     <div className="row">
                         <div className="col-8">
                             <h3>{blockingSet.description}</h3>
@@ -29,15 +55,15 @@ class BlockingPolicySets extends Component {
                             <table>
                                 <thead>
                                     <tr className="row no-gutters">
-                                        <th nowrap>Tracks to Block</th>
+                                        <th nowrap="true">Tracks to Block</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td nowrap>
+                                        <td  nowrap="true">
                                            <TracksSelectDropDown 
                                                 data={this.props.data.UnassignedTerritorialRightsSetTracks}
-                                                onChange={null}
+                                                onChange={ (e) => this.handleTrackSelect(e)}
                                                 setIndex={i}
                                             />
 
@@ -46,6 +72,8 @@ class BlockingPolicySets extends Component {
                                                 dragSource={this.props.dragSource}
                                                 handleDrop={(e,i) => this.props.handleDrop(e, i)}
                                                 setIndex={i}
+                                                handleChildDrop={(e,i) => this.handleDrop() }
+                                                handleChildDrag={(e) => this.props.handleChildDrag(e)}
                                             />
                                         </td>
                                     </tr>
@@ -56,11 +84,11 @@ class BlockingPolicySets extends Component {
                             <Table>
                                 <thead >
                                     <tr className="row no-gutters">
-                                        <th className="col-4 " nowrap>Site</th>
-                                        <th className="col-2 text-center" nowrap>Monetize</th>
-                                        <th className="col-2 text-center" nowrap>Block</th>
-                                        <th className="col-2 text-self-center" nowrap>Allowance</th>
-                                        <th className="col-2 text-self-center" nowrap>Block Until</th>
+                                        <th className="col-4 "  nowrap="true">Site</th>
+                                        <th className="col-2 text-center"  nowrap="true">Monetize</th>
+                                        <th className="col-2 text-center"  nowrap="true">Block</th>
+                                        <th className="col-2 text-self-center"  nowrap="true">Allowance</th>
+                                        <th className="col-2 text-self-center"  nowrap="true">Block Until</th>
                                     </tr>
                                 </thead>
                                 <tbody>
