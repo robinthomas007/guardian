@@ -17,10 +17,6 @@ class BlockingSites extends Component {
         }
     }
 
-    getSitesValues = (site) => {
-        const { platformPolicies } = this.props.data;
-    };
-
     handleMonetizeBlock = (e) => {
         this.props.handleMonetizeBlock(e);
     }
@@ -35,34 +31,34 @@ class BlockingSites extends Component {
                         </td>
                         <td className="col-2 centered align-self-center" nowrap>
                             <Form.Control 
-                                id={'block'}
                                 type="radio" 
                                 name={'monetizeBlock_' + site + '_' + this.props.setIndex}
                                 siteName={site}
                                 siteIndex={i}
                                 setIndex={this.props.setIndex}
                                 inputTarget={'block'}
-                                onChange={(e) => this.props.onChange(e,i)}
+                                onChange={(e) => this.handleMonetizeBlock(e)}
                                 value={false}
+                                checked={false}
                             />
                         </td>
                         <td className="col-2 centered align-self-center" nowrap>
                             <Form.Control 
-                                id={'block'}
                                 type="radio" 
                                 name={'monetizeBlock_' + site + '_' + this.props.setIndex}
                                 siteName={site}
                                 siteIndex={i}
                                 setIndex={this.props.setIndex}
                                 inputTarget={'block'}
-                                onChange={(e) => this.props.onChange(e,i)}
+                                onChange={(e) => this.handleMonetizeBlock(e)}
                                 value={true}
+                                checked={true}
                             />
                         </td>
                         <td className="col-2 centered align-self-center" nowrap>
                             <BlockingPolicDurationInput 
                                 data={null}
-                                onChange={(e) => this.props.onChange(e)}
+                                onChange={(e) => this.props.onChange(e,i)}
                                 siteName={site}
                                 siteIndex={i}
                                 setIndex={this.props.setIndex}
@@ -72,7 +68,7 @@ class BlockingSites extends Component {
                         <td className="col-2 centered align-self-center" nowrap>
                             <BlockingPolicyAllowanceInput 
                                 data={null}
-                                onChange={(e) => this.props.onChange(e)}
+                                onChange={(e) => this.props.onChange(e,i)}
                                 siteName={site}
                                 siteIndex={i}
                                 setIndex={this.props.setIndex}

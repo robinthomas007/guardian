@@ -15,19 +15,41 @@ class BlockingPoliciesPage extends Component {
 		this.state = {
             project : {
                 BlockingPolicySets : [],
-                UnassignedTerritorialRightsSetTracks : []
-            }
+                UnassignedBlockingPolicySetTracks : []
+            },
+            dragSource : null
         }
         this.handleChange = this.handleChange.bind(this);
+        this.handleChildDrag = this.handleChildDrag.bind(this);
     }
   
     handleChange = (e) => {
         const setIndex = e.target.getAttribute('setIndex');
+        const siteName = e.target.getAttribute('siteName');
+        const siteIndex = e.target.getAttribute('siteIndex');
+
+        const { BlockingPolicySets } = this.state.project;
+        let { modifiedBlockingPolicySets } = BlockingPolicySets;
+
+            alert(JSON.stringify(BlockingPolicySets[setIndex].platformPolicies[siteIndex][e.target.id] = e.target.value))
+
+              //modifiedBlockingPolicySets[setIndex].platformPolicies[e.target.id] = e.target.value;
+
+        //this.setState( {BlockingPolicySets : modifiedBlockingPolicySets} )
+        alert(setIndex + " : " + siteName + ' : ' + siteIndex + ' : ' + e.target.id)
+    }
+
+    handleMonetizeBlock = (e) => {
+        const setIndex = e.target.getAttribute('setIndex');
+        const siteName = e.target.getAttribute('siteName');
         const siteIndex = e.target.getAttribute('siteIndex');
         const inputTarget = e.target.getAttribute('inputTarget');
+
         const { BlockingPolicySets } = this.state.project;
         let modifiedBlockingPolicySets = BlockingPolicySets;
-            modifiedBlockingPolicySets[setIndex].platformPolicies[siteIndex][inputTarget] = e.target.value;
+            modifiedBlockingPolicySets[setIndex].platformPolicies[siteIndex][inputTarget] = e.target.value
+
+        alert(JSON.stringify(modifiedBlockingPolicySets))
 
         this.setState( {BlockingPolicySets : modifiedBlockingPolicySets} )
     }
@@ -130,6 +152,30 @@ class BlockingPoliciesPage extends Component {
         this.handlePageDataLoad()
     };
 
+    handleChildDrag = (e) => {
+        this.setState( {dragSource : e.target} )
+    };
+
+    handleChildDrop = (e, i) => {
+        let dragTrackIndex = (this.state.dragSource) ? this.state.dragSource.getAttribute('trackindex') : null;
+
+        const { UnassignedBlockingPolicySetTracks } = this.state.project;
+        const { tracks } = this.state.project.BlockingPolicySets[i];
+
+
+        let modifiedUnassignedBlockingPolicySetTracks = UnassignedBlockingPolicySetTracks;
+            modifiedUnassignedBlockingPolicySetTracks.splice(dragTrackIndex,1);
+
+        let modifiedTracks = tracks;
+            modifiedTracks.push({trackID : this.state.dragSource.getAttribute('trackid'), trackTitle : this.state.dragSource.getAttribute('tracktitle')})
+
+        this.setState( {
+                UnassignedBlockingPolicySetTracks : modifiedUnassignedBlockingPolicySetTracks,
+                tracks : modifiedTracks,
+                dragSource : null
+         })
+    }
+
     render() {
         return(
             <section className="page-container h-100">
@@ -169,16 +215,20 @@ class BlockingPoliciesPage extends Component {
                 <div className="row">
                     <div className="col-3">
                         <TracksWithoutRights 
-                            data={this.state.project.UnassignedTerritorialRightsSetTracks}
+                            data={this.state.project.UnassignedBlockingPolicySetTracks}
                             handleChildDrag={null}
-                            dragSource={null}
+                            dragSource={this.state.dragSource}
                             handleDropAdd={null}
+                            handleChildDrag={this.handleChildDrag}
                         />
                     </div>
                     <div className="col-9">
                         <BlockingPolicySets 
                             data={this.state.project}
                             onChange={(e) => this.handleChange(e)}
+                            handleMonetizeBlock = { (e) => this.handleMonetizeBlock(e)}
+                            dragSource={this.state.dragSource}
+                            handleDrop={(e,i) => this.handleChildDrop(e, i)}
                         />
                     </div>
                 </div>

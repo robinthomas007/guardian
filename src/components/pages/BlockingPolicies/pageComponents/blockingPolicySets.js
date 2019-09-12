@@ -38,11 +38,14 @@ class BlockingPolicySets extends Component {
                                            <TracksSelectDropDown 
                                                 data={this.props.data.UnassignedTerritorialRightsSetTracks}
                                                 onChange={null}
-                                                setIndex={null}
+                                                setIndex={i}
                                             />
 
                                             <TracksDropArea 
                                                 data={blockingSet.tracks}
+                                                dragSource={this.props.dragSource}
+                                                handleDrop={(e,i) => this.props.handleDrop(e, i)}
+                                                setIndex={i}
                                             />
                                         </td>
                                     </tr>
@@ -65,6 +68,7 @@ class BlockingPolicySets extends Component {
                                         data={blockingSet.platformPolicies}
                                         onChange={(e) => this.props.onChange(e)}
                                         setIndex={i}
+                                        handleMonetizeBlock={ (e) => this.props.handleMonetizeBlock(e)}
                                     />
                                 </tbody>
                             </Table>
