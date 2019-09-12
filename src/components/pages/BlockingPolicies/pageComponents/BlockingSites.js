@@ -13,7 +13,9 @@ class BlockingSites extends Component {
                 'soundcloud',
                 'facebook',
                 'instagram'
-            ]
+            ],
+            monetized : false,
+            blocked : false,
         }
     }
 
@@ -21,7 +23,7 @@ class BlockingSites extends Component {
         this.props.handleMonetizeBlock(e);
     }
 
-    render() {
+    getSites = () => {
         return (
             this.state.sites.map( (site, i) => {
                 return(
@@ -39,7 +41,7 @@ class BlockingSites extends Component {
                                 inputTarget={'block'}
                                 onChange={(e) => this.handleMonetizeBlock(e)}
                                 value={false}
-                                checked={false}
+                                checked={this.state.monetized}
                             />
                         </td>
                         <td className="col-2 centered align-self-center"  nowrap="true">
@@ -52,7 +54,7 @@ class BlockingSites extends Component {
                                 inputTarget={'block'}
                                 onChange={(e) => this.handleMonetizeBlock(e)}
                                 value={true}
-                                checked={true}
+                                checked={this.state.blocked}
                             />
                         </td>
                         <td className="col-2 centered align-self-center"  nowrap="true">
@@ -77,9 +79,28 @@ class BlockingSites extends Component {
                         </td>
                     </tr>
                 )
-            }
+            })
         )
-    )}
+    }
+
+    render() {
+        return (
+            <Table>
+                <thead >
+                    <tr className="row no-gutters">
+                        <th className="col-4 "  nowrap="true">Site</th>
+                        <th className="col-2 text-center"  nowrap="true">Monetize</th>
+                        <th className="col-2 text-center"  nowrap="true">Block</th>
+                        <th className="col-2 text-self-center"  nowrap="true">Allowance</th>
+                        <th className="col-2 text-self-center"  nowrap="true">Block Until</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {this.getSites()}
+                </tbody>
+            </Table>
+        )
+    }
 };
 
 export default BlockingSites;

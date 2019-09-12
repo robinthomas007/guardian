@@ -70,25 +70,12 @@ class BlockingPolicySets extends Component {
                             </table>
                         </div>
                         <div className="col-8">
-                            <Table>
-                                <thead >
-                                    <tr className="row no-gutters">
-                                        <th className="col-4 "  nowrap="true">Site</th>
-                                        <th className="col-2 text-center"  nowrap="true">Monetize</th>
-                                        <th className="col-2 text-center"  nowrap="true">Block</th>
-                                        <th className="col-2 text-self-center"  nowrap="true">Allowance</th>
-                                        <th className="col-2 text-self-center"  nowrap="true">Block Until</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <BlockingSites
-                                        data={blockingSet.platformPolicies}
-                                        onChange={(e) => this.props.onChange(e)}
-                                        setIndex={i}
-                                        handleMonetizeBlock={ (e) => this.props.handleMonetizeBlock(e)}
-                                    />
-                                </tbody>
-                            </Table>
+                            <BlockingSites
+                                data={blockingSet.platformPolicies}
+                                onChange={(e) => this.props.onChange(e)}
+                                setIndex={i}
+                                handleMonetizeBlock={ (e) => this.props.handleMonetizeBlock(e)}
+                            />
                         </div>
                     </div>
                 </div>
