@@ -110,26 +110,17 @@ class TerritorialRightsPage extends Component {
         this.setState( {TerritorialRightsSets : modifiedTerritorialRightsSets })
     }
 
-    handleSetDelete = (i) => {
-        const { TerritorialRightsSets } = this.state.project;
-        const { UnassignedTerritorialRightsSetTracks  } = this.state.project;
-        const deletedTracks = (TerritorialRightsSets[i].tracks) ? TerritorialRightsSets[i].tracks : [];
-        const combinedTracks = [...UnassignedTerritorialRightsSetTracks, ...deletedTracks];
-
-        if(TerritorialRightsSets.length > 1) {
-            let modifiedTerritorialRightsSets = TerritorialRightsSets;
-                modifiedTerritorialRightsSets.splice(i,1);
-            this.setState({
-                TerritorialRightsSets : modifiedTerritorialRightsSets, 
-            }, this.handleResequenceRighstSets());
-
-            //TODO : do this correctly
-            this.state.project.UnassignedTerritorialRightsSetTracks = combinedTracks;
+    handleSetDelete(i) {
+        const {project} = this.state;
+        const deletedTracks = this.state.project.TerritorialRightsSets[i].tracks;
+        const combinedTracks = [...this.state.project.UnassignedTerritorialRightsSetTracks, ...deletedTracks];
+        
+        if(this.state.project.TerritorialRightsSets.length > 1) {
+            let modifiedProject = project;
+                modifiedProject.UnassignedTerritorialRightsSetTracks = combinedTracks;
+                modifiedProject.TerritorialRightsSets.splice(i,1);
+            this.setState( { project : modifiedProject }, this.handleResequenceRighstSets());
         }
-
-        // this.setState({
-        //     UnassignedTracks : combinedTracks
-        // }, () => alert(this.state.project.UnassignedTracks));
     };
 
     handleNoRightsTracksRemove = (i) => {
@@ -285,11 +276,11 @@ class TerritorialRightsPage extends Component {
                     </div>
                 </div>
                 <div className="row save-buttons">
-                        <div className="col-12">
-                            <button tabIndex='5+' id="contactsSaveButton" type="button" className="btn btn-secondary" onClick={this.handleSubmit}>Save</button>
-                            <button tabIndex='6+' id="contactsSaveContButton" type="button" className="btn btn-primary" onClick={this.handleSubmit}>Save &amp; Continue</button>
-                        </div>
+                    <div className="col-12">
+                        <button tabIndex='5+' id="contactsSaveButton" type="button" className="btn btn-secondary" onClick={this.handleSubmit}>Save</button>
+                        <button tabIndex='6+' id="contactsSaveContButton" type="button" className="btn btn-primary" onClick={this.handleSubmit}>Save &amp; Continue</button>
                     </div>
+                </div>
             </section>
         )
     }

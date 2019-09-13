@@ -258,6 +258,33 @@ class BlockingPoliciesPage extends Component {
          }
     };
 
+    handleResequenceRighstSets = () => {
+
+
+        const { BlockingPolicySets } = this.state.project;
+        let modifiedBlockingPolicySets = BlockingPolicySets;
+        for(let i=0; i<modifiedBlockingPolicySets.length; i++) {
+            modifiedBlockingPolicySets[i].description = 'Set # ' + (i + 1);
+        }
+        this.setState( {BlockingPolicySets : modifiedBlockingPolicySets })
+    }
+
+    handleSetDelete(i) {
+        const {project} = this.state;
+        const deletedTracks = this.state.project.BlockingPolicySets[i].tracks;
+        const combinedTracks = [...this.state.project.UnassignedBlockingPolicySetTracks, ...deletedTracks];
+
+        
+
+        if(this.state.project.BlockingPolicySets.length > 1) {
+            let modifiedProject = project;
+                modifiedProject.UnassignedBlockingPolicySetTracks = combinedTracks;
+                modifiedProject.BlockingPolicySets.splice(i,1);
+
+            this.setState( { project : modifiedProject } , this.handleResequenceRighstSets());
+        }
+    };
+
     componentDidMount() {
         this.handlePageDataLoad()
     };
@@ -326,6 +353,7 @@ class BlockingPoliciesPage extends Component {
                             handleChildDrop={(e,i) => this.handleDrop() }
                             handleChildDrag={(e,i) => this.handleChildDrag(e) }
                             handleTrackSelect={(e,i) => this.handleTrackSelect(e, i)}
+                            handleSetDelete={(i) => this.handleSetDelete(i)}
                         />
                     </div>
                 </div>
