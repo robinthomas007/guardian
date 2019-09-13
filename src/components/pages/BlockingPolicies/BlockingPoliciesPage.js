@@ -4,9 +4,8 @@ import PageHeader from '../PageHeader/PageHeader';
 import './BlockingPolicies.css';
 import TracksWithoutRights from '../TerritorialRights/pageComponents/TracksWithoutRights';
 import BlockingPolicySets from '../BlockingPolicies/pageComponents/blockingPolicySets';
+import LoadingImg from '../../ui/LoadingImg';
 import { withRouter } from 'react-router-dom';
-
-const mockData = require('../../../mockData.json');
 
 class BlockingPoliciesPage extends Component {
 
@@ -48,8 +47,6 @@ class BlockingPoliciesPage extends Component {
         const { BlockingPolicySets } = this.state.project;
         let modifiedBlockingPolicySets = BlockingPolicySets;
             modifiedBlockingPolicySets[setIndex].platformPolicies[siteIndex][inputTarget] = e.target.value
-
-        alert(JSON.stringify(modifiedBlockingPolicySets))
 
         this.setState( {BlockingPolicySets : modifiedBlockingPolicySets} )
     }
@@ -106,6 +103,9 @@ class BlockingPoliciesPage extends Component {
     }
 
     handlePageDataLoad = () => {
+
+        this.setState( { showLoader : true } )
+
         const user = JSON.parse(sessionStorage.getItem('user'))
         const fetchHeaders = new Headers(
             {
@@ -136,20 +136,56 @@ class BlockingPoliciesPage extends Component {
                 if(!responseJSON.BlockingPolicySets || !responseJSON.BlockingPolicySets.length) {
                     this.addBlockingSet();
                 }
-                // this.setState( { showLoader : false } )
+                this.setState( { showLoader : false } )
             }
         )
         .catch(
-            error => console.error(error)
+
+            error =>  {
+                console.error(error)
+                this.setState( { showLoader : false } )
+            }
 		);
     };
     
-    handleSubmit = () => {
-        alert(JSON.stringify(this.state.project.BlockingPolicySets))
-    }
+    handleSubmit = (e) => {
+        e.preventDefault();
+        this.setState( { showLoader : true } )
+        const saveAndContinue = (e.target.id === 'contactsSaveContButton') ? true : false;
+        const user = JSON.parse(sessionStorage.getItem('user'))
+        const fetchHeaders = new Headers(
+            {
+                "Content-Type": "application/json",
+                "Authorization" : sessionStorage.getItem('accessToken')
+            }
+		)
 
-    componentDidMount() {
-        this.handlePageDataLoad()
+		const fetchBody = JSON.stringify( {
+            "User" : {
+				"email" : user.email
+            },
+            "projectID": this.props.match.params.projectID,
+            "BlockingPolicySets": this.state.project.BlockingPolicySets
+		})
+
+        fetch ('https://api-dev.umusic.net/guardian/project/blockingpolicies', {
+            method : 'POST',
+            headers : fetchHeaders,
+            body : fetchBody
+        }).then (response => 
+            {
+                return(response.json());
+            }
+        ).then (responseJSON => 
+            {
+                this.setState( { showLoader : false } )
+            }
+        ).catch(
+            error => {
+                console.error(error);
+                this.setState( { showLoader : false } )
+            }
+		);
     };
 
     handleChildDrag = (e) => {
@@ -222,10 +258,22 @@ class BlockingPoliciesPage extends Component {
          }
     };
 
+    componentDidMount() {
+        this.handlePageDataLoad()
+    };
+
+    componentDidUpdate() {
+        if(this.props.match.params.projectID) {
+            this.props.setProjectID(this.props.match.params.projectID)
+        }
+    };
+
     render() {
         return(
             <section className="page-container h-100">
     
+                <LoadingImg show={this.state.showLoader} />
+
                 <PageHeader />
     
                 <div className="row no-gutters step-description">
