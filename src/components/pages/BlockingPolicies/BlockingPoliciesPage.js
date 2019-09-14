@@ -78,7 +78,6 @@ class BlockingPoliciesPage extends Component {
                     duration : '',
                     expirationDate : ''
                 },
-
             ]
         )
     }
@@ -193,6 +192,7 @@ class BlockingPoliciesPage extends Component {
     };
 
     handleChildDrop = (e, i) => {
+
         const { UnassignedBlockingPolicySetTracks } = this.state.project;
         const { tracks } = this.state.project.BlockingPolicySets[i];
         let dragTrackIndex = (this.state.dragSource) ? this.state.dragSource.getAttribute('trackindex') : null;
@@ -259,13 +259,13 @@ class BlockingPoliciesPage extends Component {
     };
 
     handleResequenceRighstSets = () => {
-
-
         const { BlockingPolicySets } = this.state.project;
         let modifiedBlockingPolicySets = BlockingPolicySets;
+
         for(let i=0; i<modifiedBlockingPolicySets.length; i++) {
             modifiedBlockingPolicySets[i].description = 'Set # ' + (i + 1);
         }
+
         this.setState( {BlockingPolicySets : modifiedBlockingPolicySets })
     }
 
@@ -273,8 +273,6 @@ class BlockingPoliciesPage extends Component {
         const {project} = this.state;
         const deletedTracks = this.state.project.BlockingPolicySets[i].tracks;
         const combinedTracks = [...this.state.project.UnassignedBlockingPolicySetTracks, ...deletedTracks];
-
-        
 
         if(this.state.project.BlockingPolicySets.length > 1) {
             let modifiedProject = project;

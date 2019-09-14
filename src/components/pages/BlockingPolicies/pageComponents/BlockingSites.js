@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import {Table, Grid, Button, Form } from 'react-bootstrap'; 
 import BlockingPolicDurationInput from '../pageComponents/blockingPolicyDurationInput'
 import BlockingPolicyAllowanceInput from '../pageComponents/BlockingPolicyAllowanceInput'
+import TracksDropArea from '../../TerritorialRights/pageComponents/TracksDropArea';
+import TracksSelectDropDown from '../../TerritorialRights/pageComponents/TracksSelectDropDown';
 
 class BlockingSites extends Component {
 
@@ -25,11 +27,11 @@ class BlockingSites extends Component {
 
     getSites = () => {
         return (
-            this.state.sites.map( (site, i) => {
+            this.props.blockingSet.platformPolicies.map( (site, i) => {
                 return(
                     <tr className="row no-g utters" key={i}>
-                        <td className="col-4 align-self-center"  nowrap="true">
-                            <span className={"platform-sprite " + site }></span>
+                        <td className="col-2 align-self-center"  nowrap="true">
+                            <span className={"platform-sprite " + site.platformName.toLowerCase() }></span>
                         </td>
                         <td className="col-2 centered align-self-center"  nowrap="true">
                             <Form.Control 
@@ -85,20 +87,40 @@ class BlockingSites extends Component {
 
     render() {
         return (
-            <Table>
-                <thead >
-                    <tr className="row no-gutters">
-                        <th className="col-4 "  nowrap="true">Site</th>
+            <table>
+                <thead>
+                    <tr className="d-flex row no-gutters">
+                        <th className="col-2" nowrap="true">Tracks to Block</th>
+                        <th className="col-2" nowrap="true">Site</th>
                         <th className="col-2 text-center"  nowrap="true">Monetize</th>
                         <th className="col-2 text-center"  nowrap="true">Block</th>
                         <th className="col-2 text-self-center"  nowrap="true">Allowance</th>
                         <th className="col-2 text-self-center"  nowrap="true">Block Until</th>
                     </tr>
                 </thead>
+
                 <tbody>
+                    <tr>
+                        <td className="col-2" nowrap="true" rowspan="4">
+                            <TracksSelectDropDown 
+                                data={this.props.UnassignedBlockingPolicySetTracks}
+                                onChange={ (e) => this.props.handleTrackSelect(e)}
+                                setIndex={this.props.setIndex}
+                            />
+
+                            <TracksDropArea 
+                                data={this.props.blockingSet.tracks}
+                                dragSource={this.props.dragSource}
+                                handleDrop={null}
+                                setIndex={this.props.setIndex}
+                                handleChildDrag={ (e) => this.props.handleChildDrag(e)}
+                                handleDrop={ (e) => this.props.handleChildDrop(e, this.props.setIndex)}
+                            />
+                        </td>
+                    </tr>
                     {this.getSites()}
                 </tbody>
-            </Table>
+            </table>
         )
     }
 };
