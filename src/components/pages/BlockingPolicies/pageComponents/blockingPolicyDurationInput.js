@@ -36,7 +36,7 @@ class BlockingPolicDurationInput extends Component {
     render() {
         return(
             <Form.Control 
-                id="projectTypeID" 
+                id="duration" 
                 as="select" 
                 className='col-form-label dropdown col-4 allowance' 
                 value={this.state.value}

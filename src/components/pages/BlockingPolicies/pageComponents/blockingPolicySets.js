@@ -27,18 +27,6 @@ class BlockingPolicySets extends Component {
         // this.props.handleChildDrop(i);
     }
 
-    handleDeleteButton = (i) => {
-        if(this.props.data.BlockingPolicySets.length > 1 ) {
-            return (
-                <button className="btn btn-secondary action align-middle" onClick={ () => this.props.handleSetDelete(i)}>
-                    <i className="material-icons" data-toggle="tooltip" title="Save Rights Set">delete</i>
-                </button>
-            )
-        } else {
-            return('')
-        }
-    }
-
     getBlockingPolicySets = () => {
 
         const policySets = this.props.data.BlockingPolicySets.map ( (blockingSet, i)  => {
@@ -48,23 +36,23 @@ class BlockingPolicySets extends Component {
                         <div className="col-8">
                             <h3>{blockingSet.description}</h3>
                         </div>
-
-                        <div className="delete-rights-set">
-                            {this.handleDeleteButton(i)}
-                        </div>
+                        <div className="col-2"></div>
+                        <div className="col-2"></div>
                     </div>
-                    <div className="row no-gutters col-12">
-                        <BlockingSites
-                            blockingSet={blockingSet}
-                            UnassignedBlockingPolicySetTracks = {this.props.data.UnassignedBlockingPolicySetTracks}
-                            onChange={(e) => this.props.onChange(e)}
-                            setIndex={i}
-                            handleMonetizeBlock={ (e) => this.props.handleMonetizeBlock(e)}
-                            dragSource={this.props.dragSource}
-                            handleChildDrag={ (e) => this.props.handleChildDrag(e)}
-                            handleChildDrop={(e,i) => this.props.handleDrop(e,i) }
-                            handleTrackSelect={ (e) => this.props.handleTrackSelect(e)}
-                        />
+                    <div className="row no-gutters">
+                        <div className="col-12">
+                            <BlockingSites
+                                blockingSet={blockingSet}
+                                UnassignedBlockingPolicySetTracks = {this.props.data.UnassignedBlockingPolicySetTracks}
+                                onChange={(e) => this.props.onChange(e)}
+                                setIndex={i}
+                                handleMonetizeBlock={ (e) => this.props.handleMonetizeBlock(e)}
+                                dragSource={this.props.dragSource}
+                                handleChildDrag={ (e) => this.props.handleChildDrag(e)}
+                                handleChildDrop={(e,i) => this.props.handleDrop(e,i) }
+                                handleTrackSelect={ (e) => this.props.handleTrackSelect(e)}
+                            />
+                        </div>
                     </div>
                 </div>
             )

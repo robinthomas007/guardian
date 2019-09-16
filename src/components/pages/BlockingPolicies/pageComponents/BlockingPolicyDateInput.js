@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Form } from 'react-bootstrap'; 
 
-class BlockingPolicyAllowanceInput extends Component {
+class BlockingPolicyDateInput extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -21,7 +21,7 @@ class BlockingPolicyAllowanceInput extends Component {
     render() {
         return(
             <input
-                id="projectReleaseDate" 
+                id="expirationDate" 
                 className={'form-control'} 
                 type='date'
                 value={this.state.value}
@@ -36,4 +36,4 @@ class BlockingPolicyAllowanceInput extends Component {
     }
 };
 
-export default BlockingPolicyAllowanceInput;
+export default BlockingPolicyDateInput;

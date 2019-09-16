@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Table, Grid, Button, Form } from 'react-bootstrap'; 
 import BlockingPolicDurationInput from '../pageComponents/blockingPolicyDurationInput'
-import BlockingPolicyAllowanceInput from '../pageComponents/BlockingPolicyAllowanceInput'
+import BlockingPolicyDateInput from '../pageComponents/BlockingPolicyDateInput'
 import TracksDropArea from '../../TerritorialRights/pageComponents/TracksDropArea';
 import TracksSelectDropDown from '../../TerritorialRights/pageComponents/TracksSelectDropDown';
 
@@ -38,12 +38,8 @@ class BlockingSites extends Component {
     };
 
     getSites = () => {
-
-
-
         return (
             this.state.blockingSet.platformPolicies.map( (site, i) => {
-
                 return(
                     <tr className="row no-g utters" key={i}>
                         <td className="col-2 align-self-center"  nowrap="true">
@@ -77,7 +73,7 @@ class BlockingSites extends Component {
                         </td>
                         <td className="col-2 centered align-self-center"  nowrap="true">
                             <BlockingPolicDurationInput 
-                                data={null}
+                                data={site.duration}
                                 onChange={(e) => this.props.onChange(e,i)}
                                 siteName={site}
                                 siteIndex={i}
@@ -86,8 +82,8 @@ class BlockingSites extends Component {
                             />
                         </td>
                         <td className="col-2 centered align-self-center"  nowrap="true">
-                            <BlockingPolicyAllowanceInput 
-                                data={null}
+                            <BlockingPolicyDateInput 
+                                data={site.expirationDate}
                                 onChange={(e) => this.props.onChange(e,i)}
                                 siteName={site}
                                 siteIndex={i}
