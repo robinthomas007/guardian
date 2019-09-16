@@ -41,11 +41,11 @@ class BlockingSites extends Component {
         return (
             this.state.blockingSet.platformPolicies.map( (site, i) => {
                 return(
-                    <tr className="row no-g utters" key={i}>
-                        <td className="col-2 align-self-center"  nowrap="true">
+                    <tr key={i}>
+                        <td>
                             <span className={"platform-sprite " + site.platformName.toLowerCase() }></span>
                         </td>
-                        <td className="col-2 centered align-self-center"  nowrap="true">
+                        <td>
                             <Form.Control 
                                 type="radio" 
                                 name={'monetizeBlock_' + site.platformName + '_' + this.props.setIndex}
@@ -58,7 +58,7 @@ class BlockingSites extends Component {
                                 checked={(site.block) ? false : true}
                             />
                         </td>
-                        <td className="col-2 centered align-self-center"  nowrap="true">
+                        <td>
                             <Form.Control 
                                 type="radio" 
                                 name={'monetizeBlock_' + site.platformName + '_' + this.props.setIndex}
@@ -71,7 +71,7 @@ class BlockingSites extends Component {
                                 checked={(site.block) ? true : false}
                             />
                         </td>
-                        <td className="col-2 centered align-self-center"  nowrap="true">
+                        <td>
                             <BlockingPolicDurationInput 
                                 data={site.duration}
                                 onChange={(e) => this.props.onChange(e,i)}
@@ -81,7 +81,7 @@ class BlockingSites extends Component {
                                 inputTarget={'duration'}
                             />
                         </td>
-                        <td className="col-2 centered align-self-center"  nowrap="true">
+                        <td>
                             <BlockingPolicyDateInput 
                                 data={site.expirationDate}
                                 onChange={(e) => this.props.onChange(e,i)}
@@ -99,21 +99,21 @@ class BlockingSites extends Component {
 
     render() {
         return (
-            <table>
+            <Table>
                 <thead>
-                    <tr className="d-flex row no-gutters">
-                        <th className="col-2" nowrap="true">Tracks to Block</th>
-                        <th className="col-2" nowrap="true">Site</th>
-                        <th className="col-2 text-center" nowrap="true">Monetize</th>
-                        <th className="col-2 text-center" nowrap="true">Block</th>
-                        <th className="col-2 text-self-center" nowrap="true">Allowance</th>
-                        <th className="col-2 text-self-center" nowrap="true">Block Until</th>
+                    <tr>
+                        <th>Tracks to Block</th>
+                        <th>Site</th>
+                        <th>Monetize</th>
+                        <th>Block</th>
+                        <th>Allowance</th>
+                        <th>Block Until</th>
                     </tr>
                 </thead>
 
                 <tbody>
                     <tr>
-                        <td className="col-2" nowrap="true" rowspan="4">
+                        <td rowspan="5">
                             <TracksSelectDropDown 
                                 data={this.props.UnassignedBlockingPolicySetTracks}
                                 onChange={ (e) => this.props.handleTrackSelect(e)}
@@ -131,7 +131,7 @@ class BlockingSites extends Component {
                     </tr>
                     {this.getSites()}
                 </tbody>
-            </table>
+            </Table>
         )
     }
 };
