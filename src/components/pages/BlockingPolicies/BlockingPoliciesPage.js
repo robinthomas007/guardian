@@ -28,16 +28,9 @@ class BlockingPoliciesPage extends Component {
         const siteIndex = e.target.getAttribute('siteIndex');
 
         const { BlockingPolicySets } = this.state.project;
-        let { modifiedBlockingPolicySets } = BlockingPolicySets;
-
-
-
-            alert(JSON.stringify(BlockingPolicySets[setIndex]))
-
-              //modifiedBlockingPolicySets[setIndex].platformPolicies[e.target.id] = e.target.value;
-
-        //this.setState( {BlockingPolicySets : modifiedBlockingPolicySets} )
-        alert(setIndex + " : " + siteName + ' : ' + siteIndex + ' : ' + e.target.id)
+        let modifiedBlockingPolicySets = BlockingPolicySets;
+            modifiedBlockingPolicySets[setIndex].platformPolicies[siteIndex][e.target.id] = e.target.value;
+        this.setState( {BlockingPolicySets : modifiedBlockingPolicySets} )
     }
 
     handleMonetizeBlock = (e) => {
@@ -141,7 +134,6 @@ class BlockingPoliciesPage extends Component {
             }
         )
         .catch(
-
             error =>  {
                 console.error(error)
                 this.setState( { showLoader : false } )
