@@ -18,6 +18,14 @@ class BlockingSites extends Component {
             ],
             monetized : false,
             blocked : false,
+            blockingSet : {
+                platformPolicies : [
+                    { 
+                        block : true,
+                        platformName : ''
+                    }
+                ]
+            }
         }
     }
 
@@ -25,9 +33,17 @@ class BlockingSites extends Component {
         this.props.handleMonetizeBlock(e);
     }
 
+    componentDidMount() {
+        this.setState( {blockingSet : this.props.blockingSet} )
+    };
+
     getSites = () => {
+
+
+
         return (
-            this.props.blockingSet.platformPolicies.map( (site, i) => {
+            this.state.blockingSet.platformPolicies.map( (site, i) => {
+
                 return(
                     <tr className="row no-g utters" key={i}>
                         <td className="col-2 align-self-center"  nowrap="true">
@@ -36,27 +52,27 @@ class BlockingSites extends Component {
                         <td className="col-2 centered align-self-center"  nowrap="true">
                             <Form.Control 
                                 type="radio" 
-                                name={'monetizeBlock_' + site + '_' + this.props.setIndex}
-                                siteName={site}
+                                name={'monetizeBlock_' + site.platformName + '_' + this.props.setIndex}
+                                siteName={site.platformName}
                                 siteIndex={i}
                                 setIndex={this.props.setIndex}
                                 inputTarget={'block'}
                                 onChange={(e) => this.handleMonetizeBlock(e)}
                                 value={false}
-                                checked={this.state.monetized}
+                                checked={(site.block) ? false : true}
                             />
                         </td>
                         <td className="col-2 centered align-self-center"  nowrap="true">
                             <Form.Control 
                                 type="radio" 
-                                name={'monetizeBlock_' + site + '_' + this.props.setIndex}
-                                siteName={site}
+                                name={'monetizeBlock_' + site.platformName + '_' + this.props.setIndex}
+                                siteName={site.platformName}
                                 siteIndex={i}
                                 setIndex={this.props.setIndex}
                                 inputTarget={'block'}
                                 onChange={(e) => this.handleMonetizeBlock(e)}
                                 value={true}
-                                checked={this.state.blocked}
+                                checked={(site.block) ? true : false}
                             />
                         </td>
                         <td className="col-2 centered align-self-center"  nowrap="true">
@@ -92,10 +108,10 @@ class BlockingSites extends Component {
                     <tr className="d-flex row no-gutters">
                         <th className="col-2" nowrap="true">Tracks to Block</th>
                         <th className="col-2" nowrap="true">Site</th>
-                        <th className="col-2 text-center"  nowrap="true">Monetize</th>
-                        <th className="col-2 text-center"  nowrap="true">Block</th>
-                        <th className="col-2 text-self-center"  nowrap="true">Allowance</th>
-                        <th className="col-2 text-self-center"  nowrap="true">Block Until</th>
+                        <th className="col-2 text-center" nowrap="true">Monetize</th>
+                        <th className="col-2 text-center" nowrap="true">Block</th>
+                        <th className="col-2 text-self-center" nowrap="true">Allowance</th>
+                        <th className="col-2 text-self-center" nowrap="true">Block Until</th>
                     </tr>
                 </thead>
 
@@ -111,7 +127,6 @@ class BlockingSites extends Component {
                             <TracksDropArea 
                                 data={this.props.blockingSet.tracks}
                                 dragSource={this.props.dragSource}
-                                handleDrop={null}
                                 setIndex={this.props.setIndex}
                                 handleChildDrag={ (e) => this.props.handleChildDrag(e)}
                                 handleDrop={ (e) => this.props.handleChildDrop(e, this.props.setIndex)}

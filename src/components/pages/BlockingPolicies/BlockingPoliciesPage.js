@@ -45,10 +45,20 @@ class BlockingPoliciesPage extends Component {
         const inputTarget = e.target.getAttribute('inputTarget');
 
         const { BlockingPolicySets } = this.state.project;
+
         let modifiedBlockingPolicySets = BlockingPolicySets;
-            modifiedBlockingPolicySets[setIndex].platformPolicies[siteIndex][inputTarget] = e.target.value
+            modifiedBlockingPolicySets[setIndex].platformPolicies[siteIndex].block = (e.target.value === "true" ? true : false)
+
+
+
+        //alert(JSON.stringify(modifiedBlockingPolicySets[setIndex].platformPolicies[siteIndex].block))
 
         this.setState( {BlockingPolicySets : modifiedBlockingPolicySets} )
+        //e.target.value = e.target.value;
+
+        //e.target.checked = true;
+
+
     }
 
     getPlatforms = () => {
