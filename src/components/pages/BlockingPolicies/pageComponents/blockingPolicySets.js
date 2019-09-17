@@ -27,6 +27,18 @@ class BlockingPolicySets extends Component {
         // this.props.handleChildDrop(i);
     }
 
+    handleDeleteButton = (i) => {
+        if(this.props.data.BlockingPolicySets.length > 1 ) {
+            return (
+                <button className="btn btn-secondary action align-middle" onClick={ () => this.props.handleSetDelete(i)}>
+                    <i className="material-icons" data-toggle="tooltip" title="Save Rights Set">delete</i>
+                </button>
+            )
+        } else {
+            return('')
+        }
+    }
+
     getBlockingPolicySets = () => {
 
         const policySets = this.props.data.BlockingPolicySets.map ( (blockingSet, i)  => {
@@ -36,8 +48,11 @@ class BlockingPolicySets extends Component {
                         <div className="col-8">
                             <h3>{blockingSet.description}</h3>
                         </div>
-                        <div className="col-2"></div>
-                        <div className="col-2"></div>
+
+                        <div className="delete-rights-set">
+                            {this.handleDeleteButton(i)}
+                        </div>
+
                     </div>
                     <div className="row no-gutters">
                         <div className="col-12">

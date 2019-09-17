@@ -7,47 +7,51 @@ class BlockingPolicDurationInput extends Component {
 		super(props);
 		this.state = {
             options : [
-                {value : '', text : 'Select One'},
-                {value : '', text : '> 30 sec'},
-                {value : '', text : '> 1:00'},
-                {value : '', text : '> 1:30'},
-                {value : '', text : '> 2:00'},
-                {value : '', text : '> 2:30'}
+                {value : '', text : 'Select One', selected : true},
+                {value : '> 30 sec', text : '> 30 sec', selected : false},
+                {value : '> 1:00', text : '> 1:00', selected : false},
+                {value : '> 1:30', text : '> 1:30', selected : false},
+                {value : '> 2:00', text : '> 2:00', selected : false},
+                {value : '> 2:30', text : '> 2:30', selected : false}
             ],
-            value : this.props.data
+            value : ''
         }
     }
 
     onChange = (e) => {
+        this.setState( {value : e.target.value} )
         this.props.onChange(e);
     }
 
     getOptions = () => {
         return(
             this.state.options.map( (option, i) => {
-                const selectedOption = (option.text === this.props.data) ? 'selected' : ''
                 return(
-                    <option key={i} value={option.text} selectedOption>{option.text}</option>
+                    <option key={i} selected={option.value == this.state.value} value={option.value}>{option.text}</option>
                 )
             })
         )
     };
 
+    componentDidMount() {
+        this.setState( {value : this.props.data} )
+    }
+
     render() {
         return(
             <Form.Control 
-                id="duration" 
+                id={this.props.id} 
                 as="select" 
                 className='col-form-label dropdown col-4 allowance' 
-                value={this.state.value}
+                value={this.props.data}
                 onChange={this.onChange}
                 siteName={this.props.siteName}
                 siteIndex={this.props.siteIndex}
                 setIndex={this.props.setIndex}
                 inputTarget={this.props.inputTarget}
             >
-            {this.getOptions()}
-        </Form.Control>
+                {this.getOptions()}
+            </Form.Control>
         )
     }
 }

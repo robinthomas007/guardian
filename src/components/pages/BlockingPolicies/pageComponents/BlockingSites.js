@@ -4,6 +4,7 @@ import BlockingPolicDurationInput from '../pageComponents/blockingPolicyDuration
 import BlockingPolicyDateInput from '../pageComponents/BlockingPolicyDateInput'
 import TracksDropArea from '../../TerritorialRights/pageComponents/TracksDropArea';
 import TracksSelectDropDown from '../../TerritorialRights/pageComponents/TracksSelectDropDown';
+import {formatDateToYYYYMMDD} from '../../../Utils';
 
 class BlockingSites extends Component {
 
@@ -16,12 +17,10 @@ class BlockingSites extends Component {
                 'facebook',
                 'instagram'
             ],
-            monetized : false,
-            blocked : false,
             blockingSet : {
                 platformPolicies : [
                     { 
-                        block : true,
+                        block : false,
                         platformName : ''
                     }
                 ]
@@ -75,17 +74,18 @@ class BlockingSites extends Component {
                             <BlockingPolicDurationInput 
                                 data={site.duration}
                                 onChange={(e) => this.props.onChange(e,i)}
-                                siteName={site}
+                                siteName={site.platformName}
                                 siteIndex={i}
                                 setIndex={this.props.setIndex}
                                 inputTarget={'duration'}
+                                id={'duration'}
                             />
                         </td>
                         <td>
                             <BlockingPolicyDateInput 
                                 data={site.expirationDate}
                                 onChange={(e) => this.props.onChange(e,i)}
-                                siteName={site}
+                                siteName={site.platformName}
                                 siteIndex={i}
                                 setIndex={this.props.setIndex}
                                 inputTarget={'expirationDate'}
