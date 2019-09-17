@@ -51,25 +51,25 @@ class BlockingPoliciesPage extends Component {
             [
                 {
                     platformName : 'YouTube',
-                    block : true,
+                    block : false,
                     duration : '',
                     expirationDate : ''
                 },
                 {
                     platformName : 'SoundCloud',
-                    block : true,
+                    block : false,
                     duration : '',
                     expirationDate : ''
                 },
                 {
                     platformName : 'Facebook',
-                    block : true,
+                    block : false,
                     duration : '',
                     expirationDate : ''
                 },
                 {
                     platformName : 'Instagram',
-                    block : true,
+                    block : false,
                     duration : '',
                     expirationDate : ''
                 },
