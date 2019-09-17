@@ -7,7 +7,7 @@ export const isFormValid = () => {
         if(input.value.length <= 0) {
             setInputValidStatus(input, 'invalid');
             invalid = false;
-        } else if (input.type == 'email') {
+        } else if (input.type === 'email') {
             if(isValidEmail(input.value)) {
                 setInputValidStatus(input, 'valid');
                 invalid = false;

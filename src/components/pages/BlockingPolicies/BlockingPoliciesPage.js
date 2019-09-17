@@ -270,10 +270,13 @@ class BlockingPoliciesPage extends Component {
 
         if(this.state.project.BlockingPolicySets.length > 1) {
             let modifiedProject = project;
-                modifiedProject.UnassignedBlockingPolicySetTracks = combinedTracks;
                 modifiedProject.BlockingPolicySets.splice(i,1);
+                modifiedProject.UnassignedBlockingPolicySetTracks = combinedTracks;
 
-            this.setState( { project : modifiedProject } , this.handleResequenceRighstSets());
+            this.handleResequenceRighstSets()
+            this.setState( { 
+                project : modifiedProject,
+            });
         }
     };
 

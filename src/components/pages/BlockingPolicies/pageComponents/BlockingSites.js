@@ -113,7 +113,7 @@ class BlockingSites extends Component {
 
                 <tbody>
                     <tr>
-                        <td rowspan="5">
+                        <td rowSpan="5">
                             <TracksSelectDropDown 
                                 data={this.props.UnassignedBlockingPolicySetTracks}
                                 onChange={ (e) => this.props.handleTrackSelect(e)}

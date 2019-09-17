@@ -27,7 +27,7 @@ class BlockingPolicDurationInput extends Component {
         return(
             this.state.options.map( (option, i) => {
                 return(
-                    <option key={i} selected={option.value == this.state.value} value={option.value}>{option.text}</option>
+                    <option key={i} value={option.value}>{option.text}</option>
                 )
             })
         )

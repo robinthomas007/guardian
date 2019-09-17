@@ -44,16 +44,15 @@ class BlockingPolicySets extends Component {
         const policySets = this.props.data.BlockingPolicySets.map ( (blockingSet, i)  => {
             return (
                 <div className="set-card" key={i}>
-                    <div className="row">
-                        <div className="col-8">
-                            <h3>{blockingSet.description}</h3>
-                        </div>
+
+                    <div className="row d-flex col-12 no-gutters">
+                        <h3>{blockingSet.description}</h3>
 
                         <div className="delete-rights-set">
                             {this.handleDeleteButton(i)}
                         </div>
-
                     </div>
+
                     <div className="row no-gutters">
                         <div className="col-12">
                             <BlockingSites

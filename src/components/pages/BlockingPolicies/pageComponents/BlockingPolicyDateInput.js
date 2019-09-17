@@ -13,15 +13,13 @@ class BlockingPolicyDateInput extends Component {
     }
 
     handleChange(e) {
-        const { value } = this.state;
-        let modifiedValue = formatDateToYYYYMMDD(e.target.value);
-        this.setState( {value : modifiedValue} );
+        this.setState( {value : e.target.value} );
         this.props.onChange(e);
     };
 
     componentDidMount() {
         this.setState( {value : this.props.data} )
-    }
+    };
 
     render() {
         return(
