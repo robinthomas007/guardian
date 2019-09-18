@@ -23,6 +23,10 @@ class ReplaceAudioModal extends Component {
     this.setState({ show: true });
   }
 
+  handleChange = (e, ) => {
+    this.props.onChange(e)
+  }
+
   render() {
     
     return (
@@ -38,6 +42,13 @@ class ReplaceAudioModal extends Component {
             <li>
               <div class="audio-drop-area d-flex justify-content-center">
               <span class="align-self-center">Drag and Drop Audio Files or Click Here To Browse</span>
+              <input 
+                  type="file" 
+                  id="audioFiles" 
+                  multiple={false} 
+                  onChange={this.handleChange} 
+                  accept=".wav, .mp3"
+              />
               </div>
             </li>
           </ul>

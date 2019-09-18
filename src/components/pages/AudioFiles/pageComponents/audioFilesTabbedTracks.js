@@ -20,6 +20,8 @@ class AudioFilesTabbedTracks extends Component {
                             deleteRow={this.props.deleteRow}
                             handleChange={this.props.handleChange}
                             resequencePageTableData={this.props.resequencePageTableData}
+                            showReplaceModal={ (track, i) => this.props.showReplaceModal(track, i)}
+                            hideReplaceAudioModal={ (track, i) => this.props.hideReplaceAudioModal(track, i)}
                         />
                     </Tab>
                 )
