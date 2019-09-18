@@ -44,6 +44,21 @@ export const isValidEmail = (email) => {
     return ( /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,64})+$/.test(email) )
 }
 
+export const convertToLocaleTime = (dateString) => {
+
+    const utcDate = new Date(dateString);
+          utcDate.setSeconds(0,0);
+    const localTime = utcDate.toLocaleString();
+        
+    let dateArr = localTime.split(' ')
+    let date = dateArr[0].replace(',', '')
+    let timeArr =  dateArr[1].split(':')
+    let amPm = (dateArr[2]) ? dateArr[2] : ''
+    let dateStr = date + ' ' + timeArr[0] + ':' + timeArr[1] + ' ' + amPm
+
+    return (dateStr)
+}
+
 export const formatDateToYYYYMMDD = (unFormattedDate) => {
     let formattedDate = '';
     if(unFormattedDate) {

@@ -165,8 +165,8 @@ class AudioVideoDataTable extends Component {
                             />
                         </td>
                         <td className="text-center">
-                            <button className="btn btn-secondary action" onClick={this.showReplaceAudioModal}><i className="material-icons">refresh</i></button>
-                            <button className="btn btn-secondary action" onClick={(evt) => this.props.deleteRow(i)}><i className="material-icons">delete</i></button>
+                            <button className="btn btn-secondary action" onClick={() => this.props.showReplaceModal(track, i)}><i className="material-icons">refresh</i></button>
+                            <button className="btn btn-secondary action" onClick={(evt) => this.props.deleteRow(track, i)}><i className="material-icons">delete</i></button>
                         </td>
                     </tr>
                 )

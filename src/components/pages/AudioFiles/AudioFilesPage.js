@@ -7,8 +7,9 @@ import { withRouter } from "react-router";
 import './AudioFiles.css';
 import Noty from 'noty';
 import { push_uniq } from 'terser';
-
+import LoadingImg from '../../ui/LoadingImg';
 import AudioFilesTabbedTracks from '../AudioFiles/pageComponents/audioFilesTabbedTracks';
+
 
 class AudioFilesPage extends Component {
 
@@ -23,10 +24,12 @@ class AudioFilesPage extends Component {
             activeTab : 0,
             pageTableData : [],
             projectID : '',
-            showReplaceAudioModal : false
+            showReplaceAudioModal : false,
+            replaceTrackIndex : null,
+            showLoader : false
         }
 
-        this.showReplaceAudioModal = this.showReplaceAudioModal.bind(this);
+        this.showReplaceAudioModal = this.showReplaceModal.bind(this);
         this.hideReplaceAudioModal = this.hideReplaceAudioModal.bind(this);
 
         this.showNotification = this.showNotification.bind(this);
@@ -42,8 +45,11 @@ class AudioFilesPage extends Component {
 
     }
 
-    showReplaceAudioModal() {
-        this.setState({showReplaceAudioModal : true})
+    showReplaceModal(track, i) {
+        this.setState({
+            showReplaceAudioModal : true,
+            replaceTrackIndex : i
+        })
     }
 
     hideReplaceAudioModal() {
@@ -116,6 +122,23 @@ class AudioFilesPage extends Component {
         } else {
             return(false)
         }        
+    }
+
+    updateFile = (e) => {
+        let newFiles = Array.from(e.target.files);
+        const { discs } = this.state;
+
+        let updatedDiscs = discs;
+            updatedDiscs[this.state.activeTab].Tracks[this.state.replaceTrackIndex].fileName = newFiles[0].name;
+            updatedDiscs[this.state.activeTab].Tracks[this.state.replaceTrackIndex].hasUpload = false;
+            updatedDiscs[this.state.activeTab].Tracks[this.state.replaceTrackIndex].fileUpload = true;
+
+        this.handleFileUpload(newFiles)
+        this.setState( {
+            discs : updatedDiscs,
+            replaceTrackIndex : null
+        })
+        this.hideReplaceAudioModal();
     }
 
     updateFiles(e) {
@@ -312,6 +335,9 @@ class AudioFilesPage extends Component {
     }
 
     handleDataSubmit() {
+
+        this.setState( {showLoader : true } )
+
         const user = JSON.parse(sessionStorage.getItem('user'));
         const projectID = (this.state.projectID) ? (this.state.projectID) : '';
 
@@ -347,10 +373,15 @@ class AudioFilesPage extends Component {
             .then (responseJSON => 
                 {
                     this.showNotification();
+                    this.setState( {showLoader : false } )
                 }
             )
             .catch(
-                error => console.error(error)
+                error => {
+                    this.setState( {showLoader : false } )
+                    console.error(error)
+                }
+
             );
         } else {
 
@@ -412,7 +443,15 @@ class AudioFilesPage extends Component {
 
                 <HaveAudioModal projectID={this.props.projectID}/>
 
-                <ReplaceAudioModal showModal={this.state.showReplaceAudioModal} handleClose={this.hideReplaceAudioModal} />
+                <LoadingImg show={this.state.showLoader} />
+
+                <ReplaceAudioModal 
+                    showModal={this.state.showReplaceAudioModal} 
+                    handleClose={this.hideReplaceAudioModal}
+                    onChange={(e) => this.updateFile(e)}
+                />
+
+                <div onClick={this.showReplaceAudioModal}>test</div>
 
                 <PageHeader />
 
@@ -452,13 +491,15 @@ class AudioFilesPage extends Component {
                     isValidIsrc={this.isValidIsrc}
                     isValidTitle={this.isValidTitle}
                     addDisc={this.addDisc}
+                    showReplaceModal={ (track, i) => this.showReplaceModal(track, i)}
+                    hideReplaceAudioModal={ (track, i) => this.hideReplaceAudioModal(track, i)}
                 />
 
                 <div onClick={this.addDisc}>Add Disc</div>
 
             <section className="row no-gutters save-buttons">
                 <div className="col-12">
-                    <button type="button" className="btn btn-secondary" onClick={this.showNotification}>Save</button>
+                    <button type="button" className="btn btn-secondary" onClick={this.handleDataSubmit}>Save</button>
                     <button type="button" className="btn btn-primary" onClick={this.handleDataSubmit}>Save &amp; Continue</button>
                 </div>
             </section>
