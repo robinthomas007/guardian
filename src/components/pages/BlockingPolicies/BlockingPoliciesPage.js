@@ -257,7 +257,7 @@ class BlockingPoliciesPage extends Component {
         let modifiedBlockingPolicySets = BlockingPolicySets;
 
         for(let i=0; i<modifiedBlockingPolicySets.length; i++) {
-            modifiedBlockingPolicySets[i].description = 'Set # ' + (i + 1);
+            modifiedBlockingPolicySets[i].description = 'Set #' + (i + 1);
         }
 
         this.setState( {BlockingPolicySets : modifiedBlockingPolicySets })
