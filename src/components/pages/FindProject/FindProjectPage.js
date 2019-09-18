@@ -3,6 +3,10 @@ import {Table, Grid, Button, Form, Pagination, Dropdown, DropdownButton, Alert }
 import './FindProject.css';
 import { AST_This } from 'terser';
 import IntroModal from '../../modals/IntroModal';
+import FilterDropdown from './pageComponents/FilterDropdown';
+import FindProjectDataTable from './pageComponents/FindProjectDataTable';
+
+import { convertToLocaleTime } from '../../Utils';
 
 class TablePager extends Component {
 	constructor(props) {
@@ -15,7 +19,7 @@ class TablePager extends Component {
 			totalItems : this.props.totalItems,
 			itemsPerPage : this.props.itemsPerPage,
 			pagerStart : 0,
-			pagerEnd : 5
+			pagerEnd : 5,
 		}
 
 		this.handlePageClick = this.handlePageClick.bind(this);
@@ -249,6 +253,10 @@ class FindProjectPage extends Component {
 				},
 			},
 
+			project : {
+				Projects : []
+			},
+
 			labelFacets : [],
 			hasAudioFacets : [],
 			hasBlockingFacets : [],
@@ -301,12 +309,14 @@ class FindProjectPage extends Component {
         )
         .then (responseJSON => 
             {
-				this.setState( {searchResults : responseJSON.Projects })
+				this.setState( { 
+					searchResults : responseJSON.Projects,
+					project : responseJSON 
+				}) 
 
 				if(this.state.labelFacets.length <= 0 ) {
 					this.setState( {labelFacets : responseJSON.LabelFacets })
 				}
-				
 
 				if(this.state.statusFacets.length <= 0 ) {
 					this.setState( {statusFacets : responseJSON.StatusFacets })
@@ -319,9 +329,7 @@ class FindProjectPage extends Component {
 				if(this.state.hasAudioFacets.length <= 0 ) {
 					this.setState( {hasAudioFacets : responseJSON.HasAudioFacets })
 				}
-				
 				this.updateSearchCount(responseJSON)
-
 				console.log(responseJSON)
             }
         )
@@ -386,29 +394,9 @@ class FindProjectPage extends Component {
 		this.setState({searchResultsCount : responseJSON.TotalItems})
 	}
 
-
-	handleRowClick = (projectID) => {
-		this.props.history.push('/reviewSubmit/' + projectID)
-	}
-
     handleChange(event) {
         this.setState( {searchCriteria : { ...this.state.searchCriteria, "searchTerm" : event.target.value}} )
     }
-
-	convertToLocaleTime(dateString) {
-
-		const utcDate = new Date(dateString);
-			  utcDate.setSeconds(0,0);
-		const localTime = utcDate.toLocaleString();
-			
-		let dateArr = localTime.split(' ')
-		let date = dateArr[0].replace(',', '')
-		let timeArr =  dateArr[1].split(':')
-		let amPm = (dateArr[2]) ? dateArr[2] : ''
-		let dateStr = date + ' ' + timeArr[0] + ':' + timeArr[1] + ' ' + amPm
-
-		return (dateStr)
-	}
 
 	renderProjects(projects) {
 
@@ -435,7 +423,7 @@ class FindProjectPage extends Component {
 						<td className="col-2">{projects[project].projectTitle}</td>
 						<td className="col-1">{projects[project].projectArtistName}</td>
 						<td className="col-1">{projects[project].projectReleasingLabel}</td>
-						<td className="col-1 text-center">{this.convertToLocaleTime(projects[project].projectLastModified)}</td>
+						<td className="col-1 text-center">{convertToLocaleTime(projects[project].projectLastModified)}</td>
 						<td className="col-1 status text-nowrap"><span>In Progress</span></td>
 						<td className="status text-center">{checkStepStatus(projects[project].isStep1Complete)}</td>
 						<td className="status text-center">{checkStepStatus(projects[project].isStep2Complete)}</td>
@@ -513,14 +501,15 @@ class FindProjectPage extends Component {
 		});
 	}
 
+	saveAndContinue = () => {
+		alert('Save Contacts and Continue')
+	}
 	
     render() {
 
 		console.log(sessionStorage.getItem('user'))
 
-        const saveAndContinue = () => {
-            alert('Save Contacts and Continue')
-        }
+
 
 		return(
             <div>
@@ -576,7 +565,7 @@ class FindProjectPage extends Component {
 							
 										<div className="col-4">
 											<NameIdDropdown 
-												data={this.state.statusFacets} 
+												data={this.state.statusFacets}
 												onChange={this.handleStatusFacetsChange} 
 												defaultText="Select Option"
 											/>		
@@ -696,29 +685,11 @@ class FindProjectPage extends Component {
 					</li>
 					<li className="col-4 d-flex"></li>
 				</ul>
-
-			<div className="table-responsive">
-				<Table className="search-table">
-					<thead>
-						<tr className='d-flex'>
-							<th className="col-1 text-center">Download</th>
-							<th className="col-2 text-nowrap">Project Title</th>
-							<th className="col-1">Artist</th>
-							<th className="col-1">Label</th>
-							<th className="col-1 text-center">Last Update</th>
-							<th className="col-1">Status</th>
-							<th className="status text-center">Project</th>
-							<th className="status text-center">Contacts</th>
-							<th className="status text-center">Audio</th>
-							<th className="status text-center">Tracks</th>
-							<th className="status text-center">Territories</th>
-							<th className="status text-center">Blocking</th>
-						</tr>
-					</thead>
-					<tbody>
-						{this.renderProjects(this.state.searchResults)}
-					</tbody>
-				</Table>
+				<div className="table-responsive">
+					<FindProjectDataTable 
+						data={this.state.project.Projects}
+						handleRowClick={ (projectID) => this.handleRowClick(projectID) }
+					/>
 				</div>
 			</section>
     	</div>
