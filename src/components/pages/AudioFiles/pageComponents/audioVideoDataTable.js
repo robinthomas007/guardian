@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Form, Table, Tabs, Tab, Alert } from 'react-bootstrap';
 import LoadingImgSm from '../../../ui/LoadingImgSm';
 
+
 class AudioVideoDataTable extends Component {
     constructor(props) {
         super(props);
@@ -164,7 +165,7 @@ class AudioVideoDataTable extends Component {
                             />
                         </td>
                         <td className="text-center">
-                            <button className="btn btn-secondary action"><i className="material-icons">refresh</i></button>
+                            <button className="btn btn-secondary action" onClick={this.showReplaceAudioModal}><i className="material-icons">refresh</i></button>
                             <button className="btn btn-secondary action" onClick={(evt) => this.props.deleteRow(i)}><i className="material-icons">delete</i></button>
                         </td>
                     </tr>

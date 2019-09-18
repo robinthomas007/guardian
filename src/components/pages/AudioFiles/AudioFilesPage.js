@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PageHeader from '../PageHeader/PageHeader';
 import {Form, Table, Tabs, Tab, Alert } from 'react-bootstrap';
 import HaveAudioModal from '../../modals/HaveAudioModal';
+import ReplaceAudioModal from '../../modals/ReplaceAudioModal';
 import { withRouter } from "react-router";
 import './AudioFiles.css';
 import Noty from 'noty';
@@ -21,8 +22,12 @@ class AudioFilesPage extends Component {
             discs : [],
             activeTab : 0,
             pageTableData : [],
-            projectID : ''
+            projectID : '',
+            showReplaceAudioModal : false
         }
+
+        this.showReplaceAudioModal = this.showReplaceAudioModal.bind(this);
+        this.hideReplaceAudioModal = this.hideReplaceAudioModal.bind(this);
 
         this.showNotification = this.showNotification.bind(this);
         this.updateFiles = this.updateFiles.bind(this);
@@ -35,6 +40,14 @@ class AudioFilesPage extends Component {
         this.addTrack = this.addTrack.bind(this);
         this.addDisc = this.addDisc.bind(this);
 
+    }
+
+    showReplaceAudioModal() {
+        this.setState({showReplaceAudioModal : true})
+    }
+
+    hideReplaceAudioModal() {
+        this.setState({showReplaceAudioModal : false})
     }
 
     getTrack(track, trackIndex) {
@@ -398,6 +411,8 @@ class AudioFilesPage extends Component {
             <section className="page-container h-100">
 
                 <HaveAudioModal projectID={this.props.projectID}/>
+
+                <ReplaceAudioModal showModal={this.state.showReplaceAudioModal} handleClose={this.hideReplaceAudioModal} />
 
                 <PageHeader />
 
