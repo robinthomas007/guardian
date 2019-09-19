@@ -481,6 +481,21 @@ class AudioFilesPage extends Component {
                         </div>
                     </section>
                 </form>
+    
+                <div className="row no-gutters d-flex">
+                    <div className="col-9"></div>
+                    <div className="col-3 d-flex justify-content-end">
+                        <ul className="disc-track-buttons">
+                            <li>
+                                <button 
+                                    type="button" 
+                                    className="btn btn-secondary btn-sm float-right" 
+                                    onClick={this.addDisc}
+                                ><i className="material-icons">adjust</i> Add Disc</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
 
                 <AudioFilesTabbedTracks 
                     data={this.state.discs}
@@ -495,16 +510,13 @@ class AudioFilesPage extends Component {
                     hideReplaceAudioModal={ (track, i) => this.hideReplaceAudioModal(track, i)}
                 />
 
-                <div onClick={this.addDisc}>Add Disc</div>
-
-            <section className="row no-gutters save-buttons">
-                <div className="col-12">
-                    <button type="button" className="btn btn-secondary" onClick={this.handleDataSubmit}>Save</button>
-                    <button type="button" className="btn btn-primary" onClick={this.handleDataSubmit}>Save &amp; Continue</button>
-                </div>
+                <section className="row no-gutters save-buttons">
+                    <div className="col-12">
+                        <button type="button" className="btn btn-secondary" onClick={this.handleDataSubmit}>Save</button>
+                        <button type="button" className="btn btn-primary" onClick={this.handleDataSubmit}>Save &amp; Continue</button>
+                    </div>
+                </section>
             </section>
-        </section>
-
         )
     }
 }

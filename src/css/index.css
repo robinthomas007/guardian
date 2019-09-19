@@ -113,7 +113,7 @@
 	.td-90 {max-width:90%;}
 
 	h3 .material-icons {font-size:1.2em; margin-left:10px; cursor:pointer;}
-	.material-icons {display:inline-flex; vertical-align:middle;}
+	.material-icons {display:inline-flex; vertical-align:top;}
 	.purple-icon {color:#c208bb;}
 
 	.modal-header {border-bottom:none;}
@@ -332,7 +332,7 @@
 
 	.audio-files-table tr td {position:relative;}
 
-	ul.disc-track-buttons {list-style:none; display:inline-block; margin:0 30px -36px 0; padding:0;}
+	ul.disc-track-buttons {list-style:none; display:inline-block; margin:0 0 -36px 0; padding:0;}
 	ul.disc-track-buttons li {display:inline-block; float:right; margin: 0 5px;}
 	
 	table.search-table tr:hover td {cursor:pointer; background-color:#d9f3fe!important;}
