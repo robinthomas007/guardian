@@ -14,10 +14,7 @@ class FindProjectDataTable extends Component {
     checkProjectStepStatus = (stepStatus) => {
         if(stepStatus) {
             return(
-                <label className="custom-checkbox">
-                    <input disabled type="checkbox" checked/>
-                    <span className="static-checkmark"></span>
-                </label> 
+                <i className="material-icons">check</i>
             )
         } else {
             return(
@@ -40,16 +37,15 @@ class FindProjectDataTable extends Component {
                     <td className="col-1">{project.projectReleasingLabel}</td>
                     <td className="col-1 text-center">{convertToLocaleTime(project.projectLastModified)}</td>
                     <td className="col-1 status text-nowrap"><span>In Progress</span></td>
-                    <td className="status text-center">{this.checkProjectStepStatus(project.isStep1Complete)}</td>
-                    <td className="status text-center">{this.checkProjectStepStatus(project.isStep2Complete)}</td>
-                    <td className="status text-center">{this.checkProjectStepStatus(project.isStep3Complete)}</td>
-                    <td className="status text-center">{this.checkProjectStepStatus(project.isStep4Complete)}</td>
-                    <td className="status text-center">{this.checkProjectStepStatus(project.isStep5Complete)}</td>
-                    <td className="status text-center">{this.checkProjectStepStatus(project.isStep6Complete)}</td>
+                    <td className="status text-center">{this.checkProjectStepStatus(project.isReleaseInfoComplete)}</td>
+                    <td className="status text-center">{this.checkProjectStepStatus(project.isProjectContactsComplete)}</td>
+                    <td className="status text-center">{this.checkProjectStepStatus(project.isAudioFilesComplete)}</td>
+                    <td className="status text-center">{this.checkProjectStepStatus(project.isTrackInfoComplete)}</td>
+                    <td className="status text-center">{this.checkProjectStepStatus(project.isTerritorialRightsComplete)}</td>
+                    <td className="status text-center">{this.checkProjectStepStatus(project.isBlockingPoliciesComplete)}</td>
                 </tr>
             )
         })
-
         return(tableRows)
     }
 
