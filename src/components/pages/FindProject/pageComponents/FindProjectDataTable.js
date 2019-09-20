@@ -14,7 +14,7 @@ class FindProjectDataTable extends Component {
     checkProjectStepStatus = (stepStatus) => {
         if(stepStatus) {
             return(
-                <i className="material-icons">check</i>
+                <i className="material-icons">verified_user</i>
             )
         } else {
             return(
