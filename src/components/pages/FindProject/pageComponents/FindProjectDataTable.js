@@ -7,20 +7,7 @@ class FindProjectDataTable extends Component {
 	constructor(props) {
         super(props);
         this.state = {
-            data : []
-		}
-    }
-
-    checkProjectStepStatus = (stepStatus) => {
-        if(stepStatus) {
-            return(
-                <i className="material-icons">verified_user</i>
-            )
-        } else {
-            return(
-                <i className="material-icons">block</i>
-            )
-        }
+    	}
     }
 
 	handleRowClick = (projectID) => {
@@ -30,48 +17,54 @@ class FindProjectDataTable extends Component {
     renderProjects() {
         const tableRows = this.props.data.map( (project, i) => {
             return(
-                <tr className="d-flex" key={i} onClick={ () => this.handleRowClick(project.projectID) }>
+                <tr className="row d-flex w-100" key={i} onClick={ () => this.handleRowClick(project.projectID) }>
                     <td className="col-1 text-center"><button className="btn btn-secondary"><i class="material-icons">cloud_download</i></button></td>
+                    <td className="col-1 text-center">{convertToLocaleTime(project.projectLastModified)}</td>
                     <td className="col-2">{project.projectTitle}</td>
                     <td className="col-1">{project.projectArtistName}</td>
                     <td className="col-1">{project.projectReleasingLabel}</td>
-                    <td className="col-1 text-center">{convertToLocaleTime(project.projectLastModified)}</td>
-                    <td className="col-1 status text-nowrap"><span>In Progress</span></td>
-                    <td className="status text-center">{this.checkProjectStepStatus(project.isReleaseInfoComplete)}</td>
-                    <td className="status text-center">{this.checkProjectStepStatus(project.isProjectContactsComplete)}</td>
-                    <td className="status text-center">{this.checkProjectStepStatus(project.isAudioFilesComplete)}</td>
-                    <td className="status text-center">{this.checkProjectStepStatus(project.isTrackInfoComplete)}</td>
-                    <td className="status text-center">{this.checkProjectStepStatus(project.isTerritorialRightsComplete)}</td>
-                    <td className="status text-center">{this.checkProjectStepStatus(project.isBlockingPoliciesComplete)}</td>
+                    <td className="col-1 status text-nowrap"><span>{project.status}</span></td>
+                    <td className="status text-center"><i className="material-icons">{(project.isReleaseInfoComplete) ? 'verified_user' : 'block'}</i></td>
+                    <td className="status text-center"><i className="material-icons">{(project.isProjectContactsComplete) ? 'verified_user' : 'block'}</i></td>
+                    <td className="status text-center"><i className="material-icons">{(project.isAudioFilesComplete) ? 'verified_user' : 'block'}</i></td>
+                    <td className="status text-center"><i className="material-icons">{(project.isTrackInfoComplete) ? 'verified_user' : 'block'}</i></td>
+                    <td className="status text-center"><i className="material-icons">{(project.isTerritorialRightsComplete) ? 'verified_user' : 'block'}</i></td>
+                    <td className="status text-center"><i className="material-icons">{(project.isBlockingPoliciesComplete) ? 'verified_user' : 'block'}</i></td>
                 </tr>
             )
         })
         return(tableRows)
     }
 
+    sortTable = (columnID) => {
+        this.props.handleColumnSort(columnID)
+    }
+
     getDataTable = () => {
         return(
-            <Table className="search-table">
-                <thead>
-                    <tr className='d-flex'>
-                        <th className="col-1 text-center">Download</th>
-                        <th className="col-2 text-nowrap">Project Title</th>
-                        <th className="col-1">Artist</th>
-                        <th className="col-1">Label</th>
-                        <th className="col-1 text-center">Last Update</th>
-                        <th className="col-1">Status</th>
-                        <th className="status text-center">Project</th>
-                        <th className="status text-center">Contacts</th>
-                        <th className="status text-center">Audio</th>
-                        <th className="status text-center">Tracks</th>
-                        <th className="status text-center">Territories</th>
-                        <th className="status text-center">Blocking</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {this.renderProjects()}
-                </tbody>
-            </Table>
+            <div className={'table-responsive'}>
+                <Table className="search-table">
+                    <thead>
+                        <tr className='row d-flex w-100'>
+                            <th className="col-1 text-center">Download</th>
+                            <th className="col-1 text-center" onClick={(id) => this.sortTable('last_updated')}>Last Update</th>
+                            <th className="col-2 text-nowrap" id="projectTitleHeader" onClick={(id) => this.sortTable('title')}>Project Title</th>
+                            <th className="col-1" onClick={(id) => this.sortTable('artist')}>Artist</th>
+                            <th className="col-1" onClick={(id) => this.sortTable('label')}>Label</th>
+                            <th className="col-1" onClick={(id) => this.sortTable('')}>Status</th>
+                            <th className="status text-center">Project</th>
+                            <th className="status text-center">Contacts</th>
+                            <th className="status text-center">Audio</th>
+                            <th className="status text-center">Tracks</th>
+                            <th className="status text-center">Territories</th>
+                            <th className="status text-center">Blocking</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.renderProjects()}
+                    </tbody>
+                </Table>
+            </div>
         )
     };
 
