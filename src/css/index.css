@@ -322,8 +322,9 @@
 	ul.search-row.filters li i {font-size:18px; margin-right:-5px;}
 
 	td.status {width:80px; background-color:#f5f5f5;}
-	td.status i {font-size:20px; color:#ff0000;}
-	
+	td.status i {font-size:20px; color: rgba(220,53,69,.8)!important;}
+	td.status i.material-icons.success {color:#004D40 !important;}
+
 	ul.results-controls {list-style:none; margin:0; padding:0; margin-bottom:30px;}
 	ul.results-controls .dropdown {margin:auto 6px;}
 	ul.results-controls span {margin-bottom:-60px;}

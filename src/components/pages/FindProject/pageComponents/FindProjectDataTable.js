@@ -7,7 +7,20 @@ class FindProjectDataTable extends Component {
 	constructor(props) {
         super(props);
         this.state = {
-    	}
+            data : []
+		}
+    }
+
+    checkProjectStepStatus = (stepStatus) => {
+        if(stepStatus) {
+            return(
+                <i className="material-icons success">verified_user</i>
+            )
+        } else {
+            return(
+                <i className="material-icons">block</i>
+            )
+        }
     }
 
 	handleRowClick = (projectID) => {
