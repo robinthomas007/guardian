@@ -37,12 +37,12 @@ class FindProjectDataTable extends Component {
                     <td className="col-1">{project.projectArtistName}</td>
                     <td className="col-1">{project.projectReleasingLabel}</td>
                     <td className="col-1 status text-nowrap"><span>{project.status}</span></td>
-                    <td className="status text-center"><i className="material-icons">{(project.isReleaseInfoComplete) ? 'verified_user' : 'block'}</i></td>
-                    <td className="status text-center"><i className="material-icons">{(project.isProjectContactsComplete) ? 'verified_user' : 'block'}</i></td>
-                    <td className="status text-center"><i className="material-icons">{(project.isAudioFilesComplete) ? 'verified_user' : 'block'}</i></td>
-                    <td className="status text-center"><i className="material-icons">{(project.isTrackInfoComplete) ? 'verified_user' : 'block'}</i></td>
-                    <td className="status text-center"><i className="material-icons">{(project.isTerritorialRightsComplete) ? 'verified_user' : 'block'}</i></td>
-                    <td className="status text-center"><i className="material-icons">{(project.isBlockingPoliciesComplete) ? 'verified_user' : 'block'}</i></td>
+                    <td className="status text-center"><i className="material-icons">{this.checkProjectStepStatus(project.isReleaseInfoComplete)}</i></td>
+                    <td className="status text-center"><i className="material-icons">{this.checkProjectStepStatus(project.isProjectContactsComplete)}</i></td>
+                    <td className="status text-center"><i className="material-icons">{this.checkProjectStepStatus(project.isAudioFilesComplete)}</i></td>
+                    <td className="status text-center"><i className="material-icons">{this.checkProjectStepStatus(project.isTrackInfoComplete)}</i></td>
+                    <td className="status text-center"><i className="material-icons">{this.checkProjectStepStatus(project.isTerritorialRightsComplete)}</i></td>
+                    <td className="status text-center"><i className="material-icons">{this.checkProjectStepStatus(project.isBlockingPoliciesComplete)}</i></td>
                 </tr>
             )
         })
