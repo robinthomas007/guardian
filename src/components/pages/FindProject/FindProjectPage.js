@@ -88,14 +88,18 @@ class TablePager extends Component {
 	}
 
 	render() {
+
 		const buttonCount = Math.ceil( parseInt(this.props.totalItems) / parseInt(this.props.itemsPerPage))
 		const paginationItems = []
 		let pagerStart = this.state.pagerStart
 		let pagerEnd = (buttonCount > this.state.pagerEnd) ? this.state.pagerEnd : buttonCount
 
+
 		for (var i = pagerStart; i < pagerEnd; i++) {
 			paginationItems.push(<Pagination.Item key={i + 1} className={this.state.activePage === i+1 ? 'active' : ''} onClick={this.handlePageClick}>{i + 1}</Pagination.Item>);
 		}
+
+
 
 		return(
 			<Pagination activepage={this.state.activePage} items={5} limit={5}>
@@ -267,7 +271,6 @@ class FindProjectPage extends Component {
 			currentPageNumber : 1
 		}
 
-		this.renderProjects = this.renderProjects.bind(this);
 		this.handleChange = this.handleChange.bind(this);
 		this.handleProjectSearch = this.handleProjectSearch.bind(this);
 		this.handleKeyUp = this.handleKeyUp.bind(this);
@@ -309,6 +312,7 @@ class FindProjectPage extends Component {
         )
         .then (responseJSON => 
             {
+
 				this.setState( { 
 					searchResults : responseJSON.Projects,
 					project : responseJSON 
@@ -318,19 +322,18 @@ class FindProjectPage extends Component {
 					this.setState( {labelFacets : responseJSON.LabelFacets })
 				}
 
-				if(this.state.statusFacets.length <= 0 ) {
-					this.setState( {statusFacets : responseJSON.StatusFacets })
-				}
+				// if(this.state.statusFacets.length <= 0 ) {
+				// 	//this.setState( {statusFacets : responseJSON.StatusFacets })
+				// }
 				
-				if(this.state.hasBlockingFacets.length <= 0 ) {
-					this.setState( {hasBlockingFacets : responseJSON.HasBlockingFacets })
-				}
+				// if(this.state.hasBlockingFacets.length <= 0 ) {
+				// 	this.setState( {hasBlockingFacets : responseJSON.HasBlockingFacets })
+				// }
 				
-				if(this.state.hasAudioFacets.length <= 0 ) {
-					this.setState( {hasAudioFacets : responseJSON.HasAudioFacets })
-				}
-				this.updateSearchCount(responseJSON)
-				console.log(responseJSON)
+				// if(this.state.hasAudioFacets.length <= 0 ) {
+				// 	this.setState( {hasAudioFacets : responseJSON.HasAudioFacets })
+				// }
+
             }
         )
         .catch(
@@ -351,6 +354,7 @@ class FindProjectPage extends Component {
 
 	handleLabelFacetsChange(e){
 
+		
 		const { labelIds } = this.state.searchCriteria.filter;
 		let modifiedLabelFacets = [];
 
@@ -390,52 +394,9 @@ class FindProjectPage extends Component {
 		this.handleProjectSearch()
     }
 
-	updateSearchCount(responseJSON) {
-		this.setState({searchResultsCount : responseJSON.TotalItems})
-	}
-
     handleChange(event) {
         this.setState( {searchCriteria : { ...this.state.searchCriteria, "searchTerm" : event.target.value}} )
     }
-
-	renderProjects(projects) {
-
-		const checkStepStatus = (stepStatus) => {
-			if(stepStatus) {
-				return(
-					<label className="custom-checkbox">
-						<input disabled type="checkbox" checked/>
-						<span className="static-checkmark"></span>
-					</label> 
-				)
-			} else {
-				return(
-					<i className="material-icons">block</i>
-				)
-			}
-		}
-
-		if(projects) {
-			return Object.keys(projects).map(function(project, i) {
-				return(
-					<tr className="d-flex" key={i} onClick={() => this.handleRowClick(projects[project].projectID)}>
-						<td className="col-1 text-center"><button className="btn btn-secondary"><i class="material-icons">cloud_download</i></button></td>
-						<td className="col-2">{projects[project].projectTitle}</td>
-						<td className="col-1">{projects[project].projectArtistName}</td>
-						<td className="col-1">{projects[project].projectReleasingLabel}</td>
-						<td className="col-1 text-center">{convertToLocaleTime(projects[project].projectLastModified)}</td>
-						<td className="col-1 status text-nowrap"><span>In Progress</span></td>
-						<td className="status text-center">{checkStepStatus(projects[project].isStep1Complete)}</td>
-						<td className="status text-center">{checkStepStatus(projects[project].isStep2Complete)}</td>
-						<td className="status text-center">{checkStepStatus(projects[project].isStep3Complete)}</td>
-						<td className="status text-center">{checkStepStatus(projects[project].isStep4Complete)}</td>
-						<td className="status text-center">{checkStepStatus(projects[project].isStep5Complete)}</td>
-						<td className="status text-center">{checkStepStatus(projects[project].isStep6Complete)}</td>
-					</tr>
-				)
-			}.bind(this))
-		}
-	}
 
 	handleKeyUp(e) {
 		if(e.key === 'Enter') {
@@ -455,6 +416,8 @@ class FindProjectPage extends Component {
 		this.setState(currentState => ({searchCriteria : { ...this.state.searchCriteria, 'pageNumber' : newPage}}), () => {
 			this.handleProjectSearch()
 		});
+
+		this.setState({activePage : newPage })
 	}
 
 	setFilter(e) {
@@ -505,28 +468,32 @@ class FindProjectPage extends Component {
 		alert('Save Contacts and Continue')
 	}
 	
+	handleColumnSort = (columnID, columnSortOrder) => {
+		const { searchCriteria } = this.state;
+		let modifiedSearchCriteria = searchCriteria;
+			modifiedSearchCriteria.sortOrder = columnSortOrder;
+			modifiedSearchCriteria.sortColumn = columnID;
+		this.setState( {searchCriteria : modifiedSearchCriteria}, () => {this.handleProjectSearch()} )
+	}
+	
     render() {
-
-		console.log(sessionStorage.getItem('user'))
-
-
-
 		return(
             <div>
 				
 				<IntroModal />
 
 				<section className="page-container">
-				<div className="row d-flex no-gutters">
-                    <div className="col-12">
-                        <h1>Find A Project</h1>
-						<p>Search for an existing project or release in the search bar below. Projects can be located by Artist, Track, ISRC or Project Title (Album, Compilation, EP, or Single name). <br />
-							Can't find what you're looking for? Email us at <a href="mailto:guardian-support@umusic.com">guardian-support@umusic.com</a>.
+					<div className="row d-flex no-gutters">
+						<div className="col-12">
+							<h1>Find A Project</h1>
+							<p>
+								Search for an existing project or release in the search bar below. Projects can be located by Artist, Track, ISRC or Project Title (Album, Compilation, EP, or Single name). <br />
+								Can't find what you're looking for? Email us at <a href="mailto:guardian-support@umusic.com">guardian-support@umusic.com</a>.
 							</p>
-                    </div>
-                </div>
-				<br />
-				<br />
+						</div>
+					</div>
+					<br />
+					<br />
 					<ul className="row search-row">
 						<li className="col-2 d-flex"></li>
 						<li className="col-8 d-flex justify-content-center">
@@ -573,9 +540,9 @@ class FindProjectPage extends Component {
 
 										<div className="col-2">
 											<label>Has Audio</label>
-											</div>
+										</div>
 										<div className="col-4">
-										<NameIdDropdown 
+											<NameIdDropdown 
 												data={this.state.hasAudioFacets} 
 												onChange={this.handleAudioFacetsChange} 
 												defaultText="Select Option"
@@ -583,10 +550,10 @@ class FindProjectPage extends Component {
 										</div>
 
 										<div className="col-2">
-										<label>Has Blocking</label>
+											<label>Has Blocking</label>
 										</div>
 										<div className="col-4">
-										<NameIdDropdown 
+											<NameIdDropdown 
 												data={this.state.hasBlockingFacets} 
 												onChange={this.handleHasBlockingFacetsChange} 
 												defaultText="Select Option"
@@ -645,39 +612,36 @@ class FindProjectPage extends Component {
 			</section>
 			
 			<section className="page-container">
-			
-			
 				<ul className="row results-controls">
 					<li className="col-4 d-flex">
-					<span className="viewing">Viewing</span>
+						<span className="viewing">Viewing</span>
 					
-					<div className="dropdown show">
-						<a 
-							className="btn btn-secondary dropdown-toggle" 
-							href="#" 
-							role="button" 
-							id="viewCountdropdown" 
-							data-toggle="dropdown" 
-							aria-haspopup="true" 
-							aria-expanded="false"
-						>
-							{this.state.searchCriteria.itemsPerPage}
-						</a>
-						<div className="dropdown-menu" aria-labelledby="viewCountdropdown">
-							<a className="dropdown-item" onClick={this.setProjectsView}>10</a>
-							<a className="dropdown-item" onClick={this.setProjectsView}>25</a>
-							<a className="dropdown-item" onClick={this.setProjectsView}>50</a>
+						<div className="dropdown show">
+							<a 
+								className="btn btn-secondary dropdown-toggle" 
+								href="#" 
+								role="button" 
+								id="viewCountdropdown" 
+								data-toggle="dropdown" 
+								aria-haspopup="true" 
+								aria-expanded="false"
+							>
+								{this.state.searchCriteria.itemsPerPage}
+							</a>
+							<div className="dropdown-menu" aria-labelledby="viewCountdropdown">
+								<a className="dropdown-item" onClick={this.setProjectsView}>10</a>
+								<a className="dropdown-item" onClick={this.setProjectsView}>25</a>
+								<a className="dropdown-item" onClick={this.setProjectsView}>50</a>
+							</div>
 						</div>
-					</div>
-					
-					<span className="viewing">of {this.state.searchResultsCount} Results</span>
+						<span className="viewing">of {this.state.project.TotalItems} Results</span>
 					</li>
 					<li className="col-4 d-flex justify-content-center">
 						<nav aria-label="Page navigation example">
 							<TablePager 
 								activePage={this.state.searchCriteria.pageNumber} 
-								totalItems={this.state.searchResultsCount} 
-								itemsPerPage={this.state.searchCriteria.itemsPerPage}
+								totalItems={this.state.project.TotalItems} 
+								itemsPerPage={this.state.project.ItemsPerPage}
 								handlePaginationChange={this.handlePaginationChange}
 								projectViewCount={this.state.searchCriteria.itemsPerPage}
 							/>
@@ -688,7 +652,7 @@ class FindProjectPage extends Component {
 				<div className="table-responsive">
 					<FindProjectDataTable 
 						data={this.state.project.Projects}
-						handleRowClick={ (projectID) => this.handleRowClick(projectID) }
+						handleColumnSort={ (columnID, columnSortOrder) => this.handleColumnSort(columnID, columnSortOrder)}
 					/>
 				</div>
 			</section>

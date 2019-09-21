@@ -7,25 +7,41 @@ class FindProjectDataTable extends Component {
 	constructor(props) {
         super(props);
         this.state = {
-            data : []
+            data : [],
+            activeSortColumn : 'last_updated',
+            activeSortDesc : true
 		}
     }
 
     checkProjectStepStatus = (stepStatus) => {
-        if(stepStatus) {
-            return(
-                <i className="material-icons success">verified_user</i>
-            )
-        } else {
-            return(
-                <i className="material-icons">block</i>
-            )
-        }
+        return ( (stepStatus) ? <i className="material-icons success">verified_user</i> : <i className="material-icons">block</i>)
     }
 
 	handleRowClick = (projectID) => {
 		this.props.history.push('/reviewSubmit/' + projectID)
 	}
+
+    handleTableSort = (columnID) => {
+        let sortDesc = this.state.activeSortDesc;
+        if(this.state.activeSortColumn === columnID) {
+            sortDesc = !sortDesc;
+        } else if (columnID === 'last_updated') {
+            sortDesc = true;
+        } else {
+            sortDesc = false;
+        }
+
+        this.setState( {
+            activeSortColumn : columnID,
+            activeSortDesc : sortDesc
+        }, () => { this.props.handleColumnSort(columnID, (sortDesc) ? 'desc' : 'asc') })
+    }
+
+    handleSortDisplay = (columnID) => {
+        return(
+            (this.state.activeSortColumn === columnID) ? ((this.state.activeSortDesc) ? <i class="material-icons">arrow_drop_down</i> : <i class="material-icons">arrow_drop_up</i>) : ''
+        )
+    }
 
     renderProjects() {
         const tableRows = this.props.data.map( (project, i) => {
@@ -37,20 +53,16 @@ class FindProjectDataTable extends Component {
                     <td className="col-1">{project.projectArtistName}</td>
                     <td className="col-1">{project.projectReleasingLabel}</td>
                     <td className="col-1 status text-nowrap"><span>{project.status}</span></td>
-                    <td className="status text-center"><i className="material-icons">{this.checkProjectStepStatus(project.isReleaseInfoComplete)}</i></td>
-                    <td className="status text-center"><i className="material-icons">{this.checkProjectStepStatus(project.isProjectContactsComplete)}</i></td>
-                    <td className="status text-center"><i className="material-icons">{this.checkProjectStepStatus(project.isAudioFilesComplete)}</i></td>
-                    <td className="status text-center"><i className="material-icons">{this.checkProjectStepStatus(project.isTrackInfoComplete)}</i></td>
-                    <td className="status text-center"><i className="material-icons">{this.checkProjectStepStatus(project.isTerritorialRightsComplete)}</i></td>
-                    <td className="status text-center"><i className="material-icons">{this.checkProjectStepStatus(project.isBlockingPoliciesComplete)}</i></td>
+                    <td className="status text-center">{this.checkProjectStepStatus(project.isReleaseInfoComplete)}</td>
+                    <td className="status text-center">{this.checkProjectStepStatus(project.isProjectContactsComplete)}</td>
+                    <td className="status text-center">{this.checkProjectStepStatus(project.isAudioFilesComplete)}</td>
+                    <td className="status text-center">{this.checkProjectStepStatus(project.isTrackInfoComplete)}</td>
+                    <td className="status text-center">{this.checkProjectStepStatus(project.isTerritorialRightsComplete)}</td>
+                    <td className="status text-center">{this.checkProjectStepStatus(project.isBlockingPoliciesComplete)}</td>
                 </tr>
             )
         })
         return(tableRows)
-    }
-
-    sortTable = (columnID) => {
-        this.props.handleColumnSort(columnID)
     }
 
     getDataTable = () => {
@@ -60,11 +72,11 @@ class FindProjectDataTable extends Component {
                     <thead>
                         <tr className='row d-flex w-100'>
                             <th className="col-1 text-center">Download</th>
-                            <th className="col-1 text-center" onClick={(id) => this.sortTable('last_updated')}>Last Update</th>
-                            <th className="col-2 text-nowrap" id="projectTitleHeader" onClick={(id) => this.sortTable('title')}>Project Title</th>
-                            <th className="col-1" onClick={(id) => this.sortTable('artist')}>Artist</th>
-                            <th className="col-1" onClick={(id) => this.sortTable('label')}>Label</th>
-                            <th className="col-1" onClick={(id) => this.sortTable('')}>Status</th>
+                            <th className="col-1 text-center" onClick={(id) => this.handleTableSort('last_updated')}>Last Update{this.handleSortDisplay('last_updated')}</th>
+                            <th className="col-2 text-nowrap" id="projectTitleHeader" onClick={(id) => this.handleTableSort('title')}>Project Title{this.handleSortDisplay('title')}</th>
+                            <th className="col-1" onClick={(id) => this.handleTableSort('artist')}>Artist{this.handleSortDisplay('artist')}</th>
+                            <th className="col-1" onClick={(id) => this.handleTableSort('label')}>Label{this.handleSortDisplay('label')}</th>
+                            <th className="col-1" onClick={(id) => this.handleTableSort('status')}>Status{this.handleSortDisplay('status')}</th>
                             <th className="status text-center">Project</th>
                             <th className="status text-center">Contacts</th>
                             <th className="status text-center">Audio</th>
