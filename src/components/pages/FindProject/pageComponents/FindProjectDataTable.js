@@ -50,7 +50,7 @@ class FindProjectDataTable extends Component {
                     <td className="col-1 text-center"><button className="btn btn-secondary"><i class="material-icons">cloud_download</i></button></td>
                     <td className="col-1 text-center">{convertToLocaleTime(project.projectLastModified)}</td>
                     <td className="col-2">{project.projectTitle}</td>
-                    <td className="col-1">{project.projectArtistName}</td>
+                    <td className="col-2">{project.projectArtistName}</td>
                     <td className="col-1">{project.projectReleasingLabel}</td>
                     <td className="col-1 status text-nowrap"><span>{project.status}</span></td>
                     <td className="status text-center">{this.checkProjectStepStatus(project.isReleaseInfoComplete)}</td>
@@ -67,14 +67,14 @@ class FindProjectDataTable extends Component {
 
     getDataTable = () => {
         return(
-            <div className='table-responsive'>
+            
                 <Table className="search-table">
                     <thead>
                         <tr className='d-flex w-100'>
                             <th className="col-1 text-center">Download</th>
                             <th className="col-1 text-center" onClick={(id) => this.handleTableSort('last_updated')}>Last Update{this.handleSortDisplay('last_updated')}</th>
                             <th className="col-2 text-nowrap" id="projectTitleHeader" onClick={(id) => this.handleTableSort('title')}>Project Title{this.handleSortDisplay('title')}</th>
-                            <th className="col-1" onClick={(id) => this.handleTableSort('artist')}>Artist{this.handleSortDisplay('artist')}</th>
+                            <th className="col-2" onClick={(id) => this.handleTableSort('artist')}>Artist{this.handleSortDisplay('artist')}</th>
                             <th className="col-1" onClick={(id) => this.handleTableSort('label')}>Label{this.handleSortDisplay('label')}</th>
                             <th className="col-1" onClick={(id) => this.handleTableSort('status')}>Status{this.handleSortDisplay('status')}</th>
                             <th className="status text-center">Project</th>
@@ -89,7 +89,7 @@ class FindProjectDataTable extends Component {
                         {this.renderProjects()}
                     </tbody>
                 </Table>
-            </div>
+           
         )
     };
 
