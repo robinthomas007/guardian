@@ -132,8 +132,9 @@ class AudioFilesPage extends Component {
             updatedDiscs[this.state.activeTab].Tracks[this.state.replaceTrackIndex].fileName = newFiles[0].name;
             updatedDiscs[this.state.activeTab].Tracks[this.state.replaceTrackIndex].hasUpload = false;
             updatedDiscs[this.state.activeTab].Tracks[this.state.replaceTrackIndex].fileUpload = true;
-
-        this.handleFileUpload(newFiles)
+        
+        const trackID = updatedDiscs[this.state.activeTab].Tracks[this.state.replaceTrackIndex].trackID;
+        this.handleFileUpload(newFiles, trackID)
         this.setState( {
             discs : updatedDiscs,
             replaceTrackIndex : null
@@ -185,7 +186,7 @@ class AudioFilesPage extends Component {
         }
     }
 
-    handleFileUpload(files) {
+    handleFileUpload(files, trackID) {
         const user = JSON.parse(sessionStorage.getItem('user'));
         const projectID = (this.state.projectID) ? (this.state.projectID) : '';
         const fetchHeaders = new Headers(
@@ -193,6 +194,7 @@ class AudioFilesPage extends Component {
                 "Authorization" : sessionStorage.getItem('accessToken'),
                 "User-Email" : user.email,
                 "Project-Id" : projectID,
+                "Track-Id" : (trackID) ? trackID : ''
             }
         )
 
@@ -222,15 +224,13 @@ class AudioFilesPage extends Component {
     }
 
     resequencePageTableData(dragSource, dragTarget) {
-
          const { discs } = this.state;
-         let modifiedDiscs = discs;
-
          let sourceData = modifiedDiscs[this.state.activeTab].Tracks[dragSource].fileName;
          let targetData = modifiedDiscs[this.state.activeTab].Tracks[dragTarget].fileName;
-        
-         modifiedDiscs[this.state.activeTab].Tracks[dragTarget].fileName = sourceData;
-         modifiedDiscs[this.state.activeTab].Tracks[dragSource].fileName = targetData;
+
+         let modifiedDiscs = discs;
+             modifiedDiscs[this.state.activeTab].Tracks[dragTarget].fileName = sourceData;
+             modifiedDiscs[this.state.activeTab].Tracks[dragSource].fileName = targetData;
 
          this.setState({discs : modifiedDiscs})
     }
@@ -358,6 +358,7 @@ class AudioFilesPage extends Component {
                     "email" : user.email
                 },
                 "projectID" : projectID,
+                "isAudioPage" : true,
                 "Discs" : this.state.discs
             })
 
@@ -450,8 +451,6 @@ class AudioFilesPage extends Component {
                     handleClose={this.hideReplaceAudioModal}
                     onChange={(e) => this.updateFile(e)}
                 />
-
-                <div onClick={this.showReplaceAudioModal}>test</div>
 
                 <PageHeader />
 

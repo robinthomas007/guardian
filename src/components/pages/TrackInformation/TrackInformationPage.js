@@ -32,6 +32,7 @@ class TrackInformationPage extends Component {
         this.formatDateToYYYYMMDD = this.formatDateToYYYYMMDD.bind(this);
         this.setActiveDiscTab = this.setActiveDiscTab.bind(this);
         this.handleDiscUpdate = this.handleDiscUpdate.bind(this);
+        this.addTrack = this.addTrack.bind(this);
     }
 
     removeRow(rowIndex) {
@@ -52,10 +53,15 @@ class TrackInformationPage extends Component {
 
         return(
             {
-                isrc: '',
-                trackTitle : '',
-                isSingle : false,
-                trackReleaseDate : formattedDate
+                artist: "",
+                fileName: "",
+                hasUpload: true,
+                isSingle: false,
+                isrc: "",
+                trackID: "",
+                trackNumber: "",
+                trackReleaseDate: formattedDate,
+                trackTitle: ""
             }
         )
     }
@@ -165,8 +171,21 @@ class TrackInformationPage extends Component {
             modifiedDiscs[i] = updatedDisc
 
         this.setState({discs : modifiedDiscs})
-        
-        //alert(JSON.stringify(discs) + ' \n ^^^^ ' + JSON.stringify(updatedDisc))
+    }
+
+    getTrack = (track, discNumber, trackNumber) => {
+        return {
+            trackID : (track.trackID) ? track.trackID : '',
+            discNumber : (track.discNumber) ? track.discNumber : '',
+            trackNumber : (track.trackNumber) ? track.trackNumber : '',
+            hasUpload : (track.hasUpload) ? track.hasUpload : false,
+            trackTitle : (track.trackTitle) ? track.trackTitle : '',
+            isrc :  (track.isrc) ? track.isrc : '',
+            isSingle : (track.isSingle) ? track.isSingle : false,
+            trackReleaseDate : (track.trackReleaseDate) ? track.trackReleaseDate : '',
+            fileName : (track.fileName) ? track.fileName : '',
+            artist : (track.artist) ? track.artist : ''
+        }
     }
 
     handleSubmit(event) {
@@ -202,6 +221,7 @@ class TrackInformationPage extends Component {
                 "email" : user.email
             },
             "projectID": this.props.match.params.projectID,
+            "isAudioPage" : false,
             "Discs" : this.state.discs
          })
 
@@ -238,6 +258,28 @@ class TrackInformationPage extends Component {
             this.props.setProjectID(this.props.match.params.projectID)
         }
     }
+    
+    addTrack() {
+        const { projectData } = this.state;
+        const { discs } = this.state;
+         let modifiedProjectData = projectData;
+             modifiedProjectData.Discs[this.state.activeDiscTab - 1].Tracks.push()
+        
+        let modifiedDiscs = discs;
+            modifiedDiscs[this.state.activeDiscTab - 1].Tracks.push(this.getTrack({}))
+
+        alert(JSON.stringify(modifiedDiscs))
+
+        this.setState( {
+            projectData : modifiedProjectData,
+            // discs : modifiedDiscs
+        } )
+
+        // this.setState( {projectData : modifiedProjectData} )
+        // this.setState( {discs : modifiedProjectData.Discs[this.state.activeDiscTab - 1]} )
+        console.log(projectData);
+        console.log(discs);
+    }
 
     render() {
         return (
@@ -265,14 +307,14 @@ class TrackInformationPage extends Component {
                                 type="button" 
                                 className="btn btn-secondary btn-sm" 
                                 onClick=""
-                            ><i className="material-icons">adjust</i>Add Disc</button>
+                            ><i className="material-icons">adjust</i> Add Disc</button>
                         </li>
                         <li>
                             <button 
                                 type="button" 
                                 className="btn btn-secondary btn-sm" 
-                                onClick=""
-                            ><i className="material-icons">add</i>Add Track</button>
+                                onClick={this.addTrack}
+                            ><i className="material-icons">add</i> Add Track</button>
                         </li>
                     </ul>
                 </div>
@@ -283,6 +325,7 @@ class TrackInformationPage extends Component {
                     activeDiscTab={this.state.activeDiscTab}
                     handleActiveDiscUpdate={this.setActiveDiscTab}
                     handleDiscUpdate={this.handleDiscUpdate}
+                    
                 />
 
                 <section className="row save-buttons">
