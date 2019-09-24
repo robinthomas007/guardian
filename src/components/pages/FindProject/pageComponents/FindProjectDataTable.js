@@ -93,7 +93,7 @@ class FindProjectDataTable extends Component {
         const tableRows = this.props.data.map( (project, i) => {
             return(
                 <tr className="d-flex w-100" key={i}>
-                    { (this.props.userData.IsAdmin) ? <td onClick={ () => this.handleProjectDownload(project.projectID, project.projectTitle)} className="col-1 text-center"> {project.status !== 'In Progress' ? <button className="btn btn-secondary"><i class="material-icons">cloud_download</i></button> : null} </td> : ''} 
+                    { (this.props.userData.IsAdmin) ? <td className="col-1 text-center"> {project.status !== 'In Progress' ? <button onClick={ () => this.handleProjectDownload(project.projectID, project.projectTitle)} className="btn btn-secondary"><i class="material-icons">cloud_download</i></button> : null} </td> : ''} 
                     <td onClick={ () => this.handleRowClick(project.projectID) } className="col-1 text-center">{convertToLocaleTime(project.projectLastModified)}</td>
                     <td onClick={ () => this.handleRowClick(project.projectID) }className="col-2">{project.projectTitle}</td>
                     <td onClick={ () => this.handleRowClick(project.projectID) }className="col-2">{project.projectArtistName}</td>
