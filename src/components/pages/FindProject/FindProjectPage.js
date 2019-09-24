@@ -94,13 +94,9 @@ class TablePager extends Component {
 		let pagerStart = this.state.pagerStart
 		let pagerEnd = (buttonCount > this.state.pagerEnd) ? this.state.pagerEnd : buttonCount
 
-
 		for (var i = pagerStart; i < pagerEnd; i++) {
 			paginationItems.push(<Pagination.Item key={i + 1} className={this.state.activePage === i+1 ? 'active' : ''} onClick={this.handlePageClick}>{i + 1}</Pagination.Item>);
 		}
-
-
-
 		return(
 			<Pagination activepage={this.state.activePage} items={5} limit={5}>
 				<Pagination.Prev onClick={this.handlePagePreviousClick} />
@@ -651,6 +647,7 @@ class FindProjectPage extends Component {
 				</ul>
 				<div className="table-responsive">
 					<FindProjectDataTable 
+						userData={JSON.parse(sessionStorage.getItem('user'))}
 						data={this.state.project.Projects}
 						handleColumnSort={ (columnID, columnSortOrder) => this.handleColumnSort(columnID, columnSortOrder)}
 					/>
