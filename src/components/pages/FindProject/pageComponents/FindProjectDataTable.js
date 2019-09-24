@@ -63,22 +63,48 @@ class FindProjectDataTable extends Component {
         )        
     }
 
+    handleProjectDownload = (projectID, projectTitle) => {
+        const user = JSON.parse(sessionStorage.getItem('user'))
+        
+        fetch("https://api-dev.umusic.net/guardian-media/api/Submit?projectid=" + projectID, {
+            method: 'GET',
+            headers: new Headers({
+                "Authorization" : sessionStorage.getItem('accessToken'),
+                "User-Email" : user.email
+            })
+        })
+        
+        .then (response => 
+            {
+                return(response.blob());
+            }
+        ).then(blob => {
+            var url = window.URL.createObjectURL(blob);
+            var a = document.createElement('a');
+                a.href = url;
+                a.download = projectTitle + '_' + projectID + ".zip";
+                document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
+                a.click();    
+                a.remove();  //afterwards we remove the element again         
+        });
+    };
+
     renderProjects() {
         const tableRows = this.props.data.map( (project, i) => {
             return(
-                <tr className="d-flex w-100" key={i} onClick={ () => this.handleRowClick(project.projectID) }>
-                    { (this.props.userData.IsAdmin) ? <td className="col-1 text-center"><button className="btn btn-secondary"><i class="material-icons">cloud_download</i></button></td> : ''} 
-                    <td className="col-1 text-center">{convertToLocaleTime(project.projectLastModified)}</td>
-                    <td className="col-2">{project.projectTitle}</td>
-                    <td className="col-2">{project.projectArtistName}</td>
-                    <td className="col-1">{project.projectReleasingLabel}</td>
-                    <td className="col-1 status text-nowrap"><span>{project.status}</span></td>
-                    <td className="status text-center">{this.checkProjectStepStatus(project.isReleaseInfoComplete)}</td>
-                    <td className="status text-center">{this.checkProjectStepStatus(project.isProjectContactsComplete)}</td>
-                    <td className="status text-center">{this.checkProjectStepStatus(project.isAudioFilesComplete)}</td>
-                    <td className="status text-center">{this.checkProjectStepStatus(project.isTrackInfoComplete)}</td>
-                    <td className="status text-center">{this.checkProjectStepStatus(project.isTerritorialRightsComplete)}</td>
-                    <td className="status text-center">{this.checkProjectStepStatus(project.isBlockingPoliciesComplete)}</td>
+                <tr className="d-flex w-100" key={i}>
+                    { (this.props.userData.IsAdmin) ? <td onClick={ () => this.handleProjectDownload(project.projectID, project.projectTitle)} className="col-1 text-center"> {project.status !== 'In Progress' ? <button className="btn btn-secondary"><i class="material-icons">cloud_download</i></button> : null} </td> : ''} 
+                    <td onClick={ () => this.handleRowClick(project.projectID) } className="col-1 text-center">{convertToLocaleTime(project.projectLastModified)}</td>
+                    <td onClick={ () => this.handleRowClick(project.projectID) }className="col-2">{project.projectTitle}</td>
+                    <td onClick={ () => this.handleRowClick(project.projectID) }className="col-2">{project.projectArtistName}</td>
+                    <td onClick={ () => this.handleRowClick(project.projectID) }className="col-1">{project.projectReleasingLabel}</td>
+                    <td onClick={ () => this.handleRowClick(project.projectID) }className="col-1 status text-nowrap"><span>{project.status}</span></td>
+                    <td onClick={ () => this.handleRowClick(project.projectID) }className="status text-center">{this.checkProjectStepStatus(project.isReleaseInfoComplete)}</td>
+                    <td onClick={ () => this.handleRowClick(project.projectID) }className="status text-center">{this.checkProjectStepStatus(project.isProjectContactsComplete)}</td>
+                    <td onClick={ () => this.handleRowClick(project.projectID) }className="status text-center">{this.checkProjectStepStatus(project.isAudioFilesComplete)}</td>
+                    <td onClick={ () => this.handleRowClick(project.projectID) }className="status text-center">{this.checkProjectStepStatus(project.isTrackInfoComplete)}</td>
+                    <td onClick={ () => this.handleRowClick(project.projectID) }className="status text-center">{this.checkProjectStepStatus(project.isTerritorialRightsComplete)}</td>
+                    <td onClick={ () => this.handleRowClick(project.projectID) }className="status text-center">{this.checkProjectStepStatus(project.isBlockingPoliciesComplete)}</td>
                 </tr>
             )
         })
