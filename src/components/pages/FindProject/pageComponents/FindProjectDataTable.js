@@ -117,28 +117,28 @@ class FindProjectDataTable extends Component {
                     <tr className='d-flex w-100'>
                         { (this.props.userData.IsAdmin) ? <th className="col-1 text-center">Download</th> : null} 
                         <th 
-                            className="col-1 text-nowrap" 
+                            className="col-1 text-nowrap sortable" 
                             onMouseOver={ (e, columnID) => this.handleMouseOver(e, 'last_updated')} 
                             onMouseOut={ (e, columnID) => this.handleMouseOut(e, 'last_updated')}
                             onClick={(id) => this.handleTableSort('last_updated')}
                             >Last Update{this.handleSortDisplay('last_updated')}<i className={(this.state.activeHover === 'last_updated') ? "material-icons" : "material-icons d-none"}>arrow_drop_down</i></th>
                         <th 
-                            className="col-2 text-nowrap" 
+                            className="col-2 text-nowrap sortable" 
                             onMouseOver={ (e, columnID) => this.handleMouseOver(e, 'title')} 
                             onMouseOut={ (e, columnID) => this.handleMouseOut(e, 'title')} 
                             onClick={(id) => this.handleTableSort('title')}
                         >Project Title{this.handleSortDisplay('title')}<i className={(this.state.activeHover === 'title') ? "material-icons" : "material-icons d-none"}>arrow_drop_up</i></th>
-                        <th className="col-2" 
+                        <th className="col-2 sortable" 
                             onMouseOver={ (e, columnID) => this.handleMouseOver(e, 'artist')} 
                             onMouseOut={ (e, columnID) => this.handleMouseOut(e, 'artist')} 
                             onClick={(id) => this.handleTableSort('artist')}
                         >Artist{this.handleSortDisplay('artist')}<i className={(this.state.activeHover === 'artist') ? "material-icons" : "material-icons d-none"}>arrow_drop_up</i></th>
-                        <th className="col-1" 
+                        <th className="col-1 sortable" 
                             onMouseOver={ (e, columnID) => this.handleMouseOver(e, 'label')} 
                             onMouseOut={ (e, columnID) => this.handleMouseOut(e, 'label')}
                             onClick={(id) => this.handleTableSort('label')}
                         >Label{this.handleSortDisplay('label')}<i className={(this.state.activeHover === 'label') ? "material-icons" : "material-icons d-none"}>arrow_drop_up</i></th>
-                        <th className="col-1" 
+                        <th className="col-1 sortable" 
                             onMouseOver={ (e, columnID) => this.handleMouseOver(e, 'status')} 
                             onMouseOut={ (e, columnID) => this.handleMouseOut(e, 'status')}
                             onClick={(id) => this.handleTableSort('status')}

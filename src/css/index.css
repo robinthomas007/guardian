@@ -337,3 +337,5 @@
 	ul.disc-track-buttons li {display:inline-block; float:right; margin: 0 5px;}
 	
 	table.search-table tr:hover td {cursor:pointer; background-color:#d9f3fe!important;}
+	th.sortable {cursor:pointer;}
+	
