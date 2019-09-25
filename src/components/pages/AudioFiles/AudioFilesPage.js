@@ -172,9 +172,7 @@ class AudioFilesPage extends Component {
     deleteRow(rowIndex) {
         const {discs} = this.state;
         const modifiedDiscs = discs;
-        
-        //remove the data row
-        modifiedDiscs[this.state.activeTab].Tracks.splice(rowIndex, 1);
+              modifiedDiscs[this.state.activeTab].Tracks.splice(rowIndex, 1);
         this.setState({discs : modifiedDiscs});
     }
 
@@ -186,7 +184,7 @@ class AudioFilesPage extends Component {
         }
     }
 
-    handleFileUpload(files, trackID) {
+ handleFileUpload(files, trackID) {
         const user = JSON.parse(sessionStorage.getItem('user'));
         const projectID = (this.state.projectID) ? (this.state.projectID) : '';
         const fetchHeaders = new Headers(
@@ -224,15 +222,17 @@ class AudioFilesPage extends Component {
     }
 
     resequencePageTableData(dragSource, dragTarget) {
-         const { discs } = this.state;
-         let sourceData = modifiedDiscs[this.state.activeTab].Tracks[dragSource].fileName;
-         let targetData = modifiedDiscs[this.state.activeTab].Tracks[dragTarget].fileName;
+        const { discs } = this.state;
 
-         let modifiedDiscs = discs;
-             modifiedDiscs[this.state.activeTab].Tracks[dragTarget].fileName = sourceData;
-             modifiedDiscs[this.state.activeTab].Tracks[dragSource].fileName = targetData;
+        let modifiedDiscs = discs;
+        
+        let sourceData = modifiedDiscs[this.state.activeTab].Tracks[dragSource].fileName;
+        let targetData = modifiedDiscs[this.state.activeTab].Tracks[dragTarget].fileName;
 
-         this.setState({discs : modifiedDiscs})
+            modifiedDiscs[this.state.activeTab].Tracks[dragTarget].fileName = sourceData;
+            modifiedDiscs[this.state.activeTab].Tracks[dragSource].fileName = targetData;
+
+        this.setState({discs : modifiedDiscs})
     }
 
     setTrackSequence() {
