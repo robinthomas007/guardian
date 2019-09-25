@@ -43,7 +43,7 @@ class FindProjectDataTable extends Component {
 
     handleSortDisplay = (columnID) => {
         return(
-            (this.state.activeSortColumn === columnID) ? ((this.state.activeSortDesc) ? <i className={"material-icons"}>arrow_drop_down</i> : <i class={"material-icons"}>arrow_drop_up</i>) : ''
+            (this.state.activeSortColumn === columnID) ? ((this.state.activeSortDesc) ? <i className={"material-icons"}>arrow_drop_down</i> : <i className={"material-icons"}>arrow_drop_up</i>) : ''
         )
     }
 
@@ -59,30 +59,28 @@ class FindProjectDataTable extends Component {
 
     handleHoverDisplay = (columnID) => {
         return(
-            <i class={(this.state.activeHover === columnID) ? "material-icons" : "material-icons d-none"}>arrow_drop_up</i>
+            <i className={(this.state.activeHover === columnID) ? "material-icons" : "material-icons d-none"}>arrow_drop_up</i>
         )        
     }
 
-    handleProjectDownload = (projectID, projectTitle) => {
+    handleProjectDownload = (projectID, projectFileName) => {
         const user = JSON.parse(sessionStorage.getItem('user'))
-        
+
         fetch("https://api-dev.umusic.net/guardian-media/api/Submit?projectid=" + projectID, {
             method: 'GET',
             headers: new Headers({
                 "Authorization" : sessionStorage.getItem('accessToken'),
-                "User-Email" : user.email
+                "User-Email" : user.email,
             })
-        })
-        
-        .then (response => 
+        }).then (response => 
             {
-                return(response.blob());
+                return(response.blob())
             }
-        ).then(blob => {
+       ).then(blob => {
             var url = window.URL.createObjectURL(blob);
             var a = document.createElement('a');
                 a.href = url;
-                a.download = projectTitle + '_' + projectID + ".zip";
+                a.download = projectFileName;
                 document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
                 a.click();    
                 a.remove();  //afterwards we remove the element again         
@@ -93,7 +91,7 @@ class FindProjectDataTable extends Component {
         const tableRows = this.props.data.map( (project, i) => {
             return(
                 <tr className="d-flex w-100" key={i}>
-                    { (this.props.userData.IsAdmin) ? <td className="col-1 text-center"> {project.status !== 'In Progress' ? <button onClick={ () => this.handleProjectDownload(project.projectID, project.projectTitle)} className="btn btn-secondary"><i class="material-icons">cloud_download</i></button> : null} </td> : ''} 
+                    { (this.props.userData.IsAdmin) ? <td className="col-1 text-center">{parseInt(project.statusID) !== 1 ? <button onClick={ () => this.handleProjectDownload(project.projectID, project.submissionFileName)} className="btn btn-secondary"><i className="material-icons">cloud_download</i></button> : null} </td> : ''} 
                     <td onClick={ () => this.handleRowClick(project.projectID) } className="col-1 text-center">{convertToLocaleTime(project.projectLastModified)}</td>
                     <td onClick={ () => this.handleRowClick(project.projectID) }className="col-2">{project.projectTitle}</td>
                     <td onClick={ () => this.handleRowClick(project.projectID) }className="col-2">{project.projectArtistName}</td>
@@ -117,34 +115,34 @@ class FindProjectDataTable extends Component {
             <Table className="search-table">
                 <thead>
                     <tr className='d-flex w-100'>
-                        { (this.props.userData.IsAdmin) ? <th className="col-1 text-center">Download</th> : ''} 
+                        { (this.props.userData.IsAdmin) ? <th className="col-1 text-center">Download</th> : null} 
                         <th 
                             className="col-1 text-nowrap" 
                             onMouseOver={ (e, columnID) => this.handleMouseOver(e, 'last_updated')} 
                             onMouseOut={ (e, columnID) => this.handleMouseOut(e, 'last_updated')}
                             onClick={(id) => this.handleTableSort('last_updated')}
-                            >Last Update{this.handleSortDisplay('last_updated')}<i class={(this.state.activeHover === 'last_updated') ? "material-icons" : "material-icons d-none"}>arrow_drop_down</i></th>
+                            >Last Update{this.handleSortDisplay('last_updated')}<i className={(this.state.activeHover === 'last_updated') ? "material-icons" : "material-icons d-none"}>arrow_drop_down</i></th>
                         <th 
                             className="col-2 text-nowrap" 
                             onMouseOver={ (e, columnID) => this.handleMouseOver(e, 'title')} 
                             onMouseOut={ (e, columnID) => this.handleMouseOut(e, 'title')} 
                             onClick={(id) => this.handleTableSort('title')}
-                        >Project Title{this.handleSortDisplay('title')}<i class={(this.state.activeHover === 'title') ? "material-icons" : "material-icons d-none"}>arrow_drop_up</i></th>
+                        >Project Title{this.handleSortDisplay('title')}<i className={(this.state.activeHover === 'title') ? "material-icons" : "material-icons d-none"}>arrow_drop_up</i></th>
                         <th className="col-2" 
                             onMouseOver={ (e, columnID) => this.handleMouseOver(e, 'artist')} 
                             onMouseOut={ (e, columnID) => this.handleMouseOut(e, 'artist')} 
                             onClick={(id) => this.handleTableSort('artist')}
-                        >Artist{this.handleSortDisplay('artist')}<i class={(this.state.activeHover === 'artist') ? "material-icons" : "material-icons d-none"}>arrow_drop_up</i></th>
+                        >Artist{this.handleSortDisplay('artist')}<i className={(this.state.activeHover === 'artist') ? "material-icons" : "material-icons d-none"}>arrow_drop_up</i></th>
                         <th className="col-1" 
                             onMouseOver={ (e, columnID) => this.handleMouseOver(e, 'label')} 
                             onMouseOut={ (e, columnID) => this.handleMouseOut(e, 'label')}
                             onClick={(id) => this.handleTableSort('label')}
-                        >Label{this.handleSortDisplay('label')}<i class={(this.state.activeHover === 'label') ? "material-icons" : "material-icons d-none"}>arrow_drop_up</i></th>
+                        >Label{this.handleSortDisplay('label')}<i className={(this.state.activeHover === 'label') ? "material-icons" : "material-icons d-none"}>arrow_drop_up</i></th>
                         <th className="col-1" 
                             onMouseOver={ (e, columnID) => this.handleMouseOver(e, 'status')} 
                             onMouseOut={ (e, columnID) => this.handleMouseOut(e, 'status')}
                             onClick={(id) => this.handleTableSort('status')}
-                        >Status{this.handleSortDisplay('status')}<i class={(this.state.activeHover === 'status') ? "material-icons" : "material-icons d-none"}>arrow_drop_up</i></th>
+                        >Status{this.handleSortDisplay('status')}<i className={(this.state.activeHover === 'status') ? "material-icons" : "material-icons d-none"}>arrow_drop_up</i></th>
                         <th className="status text-center">Project</th>
                         <th className="status text-center">Contacts</th>
                         <th className="status text-center">Audio</th>
