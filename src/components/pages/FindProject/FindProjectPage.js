@@ -9,6 +9,7 @@ import LabelsInput from './pageComponents/LabelsInput';
 import NameIdDropdown from './pageComponents/NameIdDropdown';
 import SearchFilterModal from './pageComponents/SearchFiltersModal';
 import ProjectsViewDropDown from './pageComponents/ProjectsViewDropDown';
+import SelectedFilters from './pageComponents/SelectedFilters';
 
 import { convertToLocaleTime } from '../../Utils';
 
@@ -235,7 +236,7 @@ class FindProjectPage extends Component {
 		let modifiedLabelFacets = [];
 
 		if(e.target.checked) {
-			labelIds.push(e.target.value)
+			labelIds.push(e.target.value);
 		} else {
 			var index = labelIds.indexOf(e.target.value)
 			labelIds.splice(index, 1)
@@ -351,6 +352,13 @@ class FindProjectPage extends Component {
 		this.setState( {searchCriteria : modifiedSearchCriteria}, () => {this.handleProjectSearch()} )
 	}
 	
+	removeLabelsFilter = (filterIndex) => {
+		const { labelIds } = this.state.searchCriteria.filter;
+		let modifiedLabelIds = labelIds;
+			modifiedLabelIds.splice(filterIndex, 1);
+		this.setState( {labelIds : modifiedLabelIds}, () => {this.handleProjectSearch()})
+	};
+
     render() {
 		return(
             <div>
@@ -405,15 +413,12 @@ class FindProjectPage extends Component {
 						</li>
 						<li className="col-2 d-flex"></li>
 					</ul>
-					<ul className="row search-row filters">
-						<li className="col-2 d-flex"></li>
-						<li className="col-8 d-flex">
-							Selected Filters:
-							<span><label>Label: </label> <button className="btn btn-sm btn-secondary">Label Name <i className="material-icons">close</i></button></span>
-							<span><label>Last Update: </label> <button className="btn btn-sm btn-secondary">12/28/2018 <i className="material-icons">close</i></button></span>
-						</li>
-						<li className="col-2 d-flex"></li>
-					</ul>
+
+					<SelectedFilters
+						data = {this.state.searchCriteria.filter}
+						removeLabelsFilter = {this.removeLabelsFilter}
+					/>
+
 				</section>
 			
 				<section className="page-container">
