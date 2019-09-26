@@ -28,7 +28,7 @@
 
 	table.table.find-project-table tbody tr:hover, table.table.find-project-table tbody tr:hover td {cursor:pointer; background-color: #d9f3fe!important; transition: background-color 0.3s linear; }
 	
-	div.dropdown-menu.search-filters { padding:20px; font-size:.9rem; width:600px;}
+	div.dropdown-menu.search-filters { padding:20px; font-size:.9rem; width:600px; overflow:visible; top:0px; margin-top:0px !important;}
 	div.dropdown-menu.search-filters .dropdown-toggle {width:160px; margin-bottom:20px; text-align:left;}
 	div.dropdown-menu.search-filters .dropdown-toggle::after {float:right; margin-top: 8px;}
 	div.dropdown-menu.search-filters input[type="date"] {margin:0px 8px;}
