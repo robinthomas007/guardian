@@ -5,6 +5,10 @@ import { AST_This } from 'terser';
 import IntroModal from '../../modals/IntroModal';
 import FilterDropdown from './pageComponents/FilterDropdown';
 import FindProjectDataTable from './pageComponents/FindProjectDataTable';
+import LabelsInput from './pageComponents/LabelsInput';
+import NameIdDropdown from './pageComponents/NameIdDropdown';
+import SearchFilterModal from './pageComponents/SearchFiltersModal';
+import ProjectsViewDropDown from './pageComponents/ProjectsViewDropDown';
 
 import { convertToLocaleTime } from '../../Utils';
 
@@ -105,129 +109,6 @@ class TablePager extends Component {
 			</Pagination>
 		)
 	}
-}
-
-class LabelsInput extends Component {
-    constructor(props) {
-		super(props);
-		this.state = {}
-		this.handleChange = this.handleChange.bind(this);
-    }
-
-	handleChange(e) {
-		this.props.onChange(e);
-	}
-
-    render() {
-        let labelOptions = ''
-        if(this.props.pageState.labelFacets) {
-
-			labelOptions = this.props.pageState.labelFacets.map( (label, i) => {
-				const isChecked = (this.props.pageState.searchCriteria.filter.labelIds.indexOf(label.id) >= 0) ? true : false;
-				return(
-					<a className="dropdown-item" key={i}>
-						<label className="custom-checkbox"> 		
-							<input   
-								onClick={(e) => this.props.onChange(e)}
-								type='checkbox'
-								id={label.id}
-								value={label.id}
-								checked={isChecked}
-							/>
-							<span className="checkmark "></span>
-						</label>
-						
-						<label htmlFor={label.id}>
-							{label.name}
-						</label>
-					</a>
-				   )
-			})
-        }
-        return(
-			<div className="multi-select dropdown">
-				<button 
-					className="btn btn-secondary dropdown-toggle" 
-					type="button" 
-					id="dropdownMenuButton" 
-					data-toggle="dropdown" 
-					aria-haspopup="true" 
-					aria-expanded="false">
-					Select Option
-				</button>
-
-				<div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-					{labelOptions}
-				</div>
-			</div>
-        )
-    }
-}
-
-class NameIdDropdown extends Component {
-    constructor(props) {
-		super(props);
-		this.state = {
-			selectedID : '',
-			selectedText : this.props.defaultText
-		}
-		this.handleChange = this.handleChange.bind(this);
-    }
-
-	handleChange(data) {
-
-        const currentState = this.state;
-		const modifiedState = currentState;
-			  modifiedState.selectedID = data.id;
-			  modifiedState.selectedText = data.name;
-
-		this.setState({currentState : modifiedState})
-		this.props.onChange(data);
-	}
-
-	getDefaultOption(defaultText) {
-		const data = {}
-			  data.name = defaultText;
-			  data.id = '';
-
-		if(defaultText && defaultText !== '') {
-			return(
-				<a className="dropdown-item selected" onClick={() => this.handleChange(data)}>{defaultText}</a>
-			)
-		} else {
-			return(null)
-		}
-	}
-
-    render() {
-        let inputOptions = []
-
-
-		if(this.props.data) {
-			inputOptions = this.props.data.map( (data, i) =>
-				<a className="dropdown-item selected" onClick={() => this.handleChange(data)}>{data.name}</a>
-			)
-		}
-		
-        return(
-			<div className="dropdown">
-				<button 
-					className="btn btn-secondary dropdown-toggle" 
-					type="button" 
-					id="dropdownMenuButton" 
-					data-toggle="dropdown" 
-					aria-haspopup="true" 
-					aria-expanded="false">
-					{this.state.selectedText}
-				</button>
-
-				<div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-					{this.getDefaultOption(this.props.defaultText)}
-					{inputOptions}
-				</div>
-			</div>
-        )
-    }
 }
 
 class FindProjectPage extends Component {
@@ -349,8 +230,7 @@ class FindProjectPage extends Component {
 	}
 
 	handleLabelFacetsChange(e){
-
-		
+	
 		const { labelIds } = this.state.searchCriteria.filter;
 		let modifiedLabelFacets = [];
 
@@ -400,9 +280,8 @@ class FindProjectPage extends Component {
 		}		
 	}
 
-	setProjectsView(e) {
-		const itemCount = parseInt(e.target.innerHTML)
-		this.setState(currentState => ({searchCriteria : { ...this.state.searchCriteria, 'itemsPerPage' : itemCount}}), () => {
+	setProjectsView(count) {
+		this.setState(currentState => ({searchCriteria : { ...this.state.searchCriteria, 'itemsPerPage' : count}}), () => {
 			this.handleProjectSearch()
 		});
 	}
@@ -504,157 +383,73 @@ class FindProjectPage extends Component {
 									<i className="material-icons">settings</i> Filters
 								</button>
 						
-								<div className={this.state.showFilterModal ? "dropdown-menu search-filters d-block" : "dropdown-menu search-filters d-none"} aria-labelledby="dropdownMenuButton">
-									<h5>Search Filters</h5>
-
-									<br />
-						
-									<div className="row no-gutters">
-										<div className="col-2">
-											<label>By Label</label>	
-										</div>
-							
-										<div className="col-4">
-											<LabelsInput 
-												pageState={this.state} 
-												onChange={this.handleLabelFacetsChange}
-												defaultText="Select Option"
-											/>
-										</div>
-							
-										<div className="col-2">
-											<label>By Status</label>
-										</div>
-							
-										<div className="col-4">
-											<NameIdDropdown 
-												data={this.state.statusFacets}
-												onChange={this.handleStatusFacetsChange} 
-												defaultText="Select Option"
-											/>		
-										</div>
-
-										<div className="col-2">
-											<label>Has Audio</label>
-										</div>
-										<div className="col-4">
-											<NameIdDropdown 
-												data={this.state.hasAudioFacets} 
-												onChange={this.handleAudioFacetsChange} 
-												defaultText="Select Option"
-											/>
-										</div>
-
-										<div className="col-2">
-											<label>Has Blocking</label>
-										</div>
-										<div className="col-4">
-											<NameIdDropdown 
-												data={this.state.hasBlockingFacets} 
-												onChange={this.handleHasBlockingFacetsChange} 
-												defaultText="Select Option"
-											/>
-										</div>
-
-									<div className="col-2">
-										<label>Last Updated</label>
-									</div>
-							
-									<div className="col-10">
-										<Form.Control 
-											id="filterStartDate"
-											type="date" 
-											onChange={this.setDateFilter} 
-										/>
-										
-										<label> to</label>
-										
-										<Form.Control 
-											id="filterEndDate"
-											type="date" 
-											onChange={this.setDateFilter} 
-										/>
-									</div>
-								</div>
+								<SearchFilterModal 
+									showFilterModal = {this.state.showFilterModal}
+									data = {this.state} 
+									onChange = {this.handleLabelFacetsChange}
+								/>
 							</div>
-						</div>
-						
-						
-						<input 
-							id="projectSearchInput" 
-							className="form-control" 
-							type="search" 
-							onChange={this.handleChange}
-							onKeyUp={this.handleKeyUp}
-						/>
-						<button 
-							id="projectSearchButton" 
-							className="btn btn-primary" 
-							type="button" 
-							onClick={this.handleProjectSearch}
-						><i className="material-icons">search</i> Search</button>
-					</li>
-					<li className="col-2 d-flex"></li>
-				</ul>
-				<ul className="row search-row filters">
-					<li className="col-2 d-flex"></li>
-					<li className="col-8 d-flex">
-						Selected Filters:
-						<span><label>Label: </label> <button className="btn btn-sm btn-secondary">Label Name <i className="material-icons">close</i></button></span>
-						<span><label>Last Update: </label> <button className="btn btn-sm btn-secondary">12/28/2018 <i className="material-icons">close</i></button></span>
-					</li>
-					<li className="col-2 d-flex"></li>
-				</ul>
-			</section>
-			
-			<section className="page-container">
-				<ul className="row results-controls">
-					<li className="col-4 d-flex">
-						<span className="viewing">Viewing</span>
-					
-						<div className="dropdown show">
-							<a 
-								className="btn btn-secondary dropdown-toggle" 
-								href="#" 
-								role="button" 
-								id="viewCountdropdown" 
-								data-toggle="dropdown" 
-								aria-haspopup="true" 
-								aria-expanded="false"
-							>
-								{this.state.searchCriteria.itemsPerPage}
-							</a>
-							<div className="dropdown-menu" aria-labelledby="viewCountdropdown">
-								<a className="dropdown-item" onClick={this.setProjectsView}>10</a>
-								<a className="dropdown-item" onClick={this.setProjectsView}>25</a>
-								<a className="dropdown-item" onClick={this.setProjectsView}>50</a>
-							</div>
-						</div>
-						<span className="viewing">of {this.state.project.TotalItems} Results</span>
-					</li>
-					<li className="col-4 d-flex justify-content-center">
-						<nav aria-label="Page navigation example">
-							<TablePager 
-								activePage={this.state.searchCriteria.pageNumber} 
-								totalItems={this.state.project.TotalItems} 
-								itemsPerPage={this.state.project.ItemsPerPage}
-								handlePaginationChange={this.handlePaginationChange}
-								projectViewCount={this.state.searchCriteria.itemsPerPage}
+							<input 
+								id="projectSearchInput" 
+								className="form-control" 
+								type="search" 
+								onChange={this.handleChange}
+								onKeyUp={this.handleKeyUp}
 							/>
-						</nav>
-					</li>
-					<li className="col-4 d-flex"></li>
-				</ul>
-				<div className="table-responsive">
-					<FindProjectDataTable 
-						userData={JSON.parse(sessionStorage.getItem('user'))}
-						data={this.state.project.Projects}
-						handleColumnSort={ (columnID, columnSortOrder) => this.handleColumnSort(columnID, columnSortOrder)}
-					/>
-				</div>
-			</section>
-    	</div>
+							<button 
+								id="projectSearchButton" 
+								className="btn btn-primary" 
+								type="button" 
+								onClick={this.handleProjectSearch}
+							><i className="material-icons">search</i> Search</button>
+						</li>
+						<li className="col-2 d-flex"></li>
+					</ul>
+					<ul className="row search-row filters">
+						<li className="col-2 d-flex"></li>
+						<li className="col-8 d-flex">
+							Selected Filters:
+							<span><label>Label: </label> <button className="btn btn-sm btn-secondary">Label Name <i className="material-icons">close</i></button></span>
+							<span><label>Last Update: </label> <button className="btn btn-sm btn-secondary">12/28/2018 <i className="material-icons">close</i></button></span>
+						</li>
+						<li className="col-2 d-flex"></li>
+					</ul>
+				</section>
+			
+				<section className="page-container">
+					<ul className="row results-controls">
+						<li className="col-4 d-flex">
+							<span className="viewing">Viewing</span>
 
+
+							<ProjectsViewDropDown 
+								itemsPerPage={this.state.searchCriteria.itemsPerPage}
+								onChange={this.setProjectsView}
+							/>
+							<span className="viewing">of {this.state.project.TotalItems} Results</span>
+						</li>
+						<li className="col-4 d-flex justify-content-center">
+							<nav aria-label="Page navigation example">
+								<TablePager 
+									activePage={this.state.searchCriteria.pageNumber} 
+									totalItems={this.state.project.TotalItems} 
+									itemsPerPage={this.state.project.ItemsPerPage}
+									handlePaginationChange={this.handlePaginationChange}
+									projectViewCount={this.state.searchCriteria.itemsPerPage}
+								/>
+							</nav>
+						</li>
+						<li className="col-4 d-flex"></li>
+					</ul>
+					<div className="table-responsive">
+						<FindProjectDataTable 
+							userData={JSON.parse(sessionStorage.getItem('user'))}
+							data={this.state.project.Projects}
+							handleColumnSort={ (columnID, columnSortOrder) => this.handleColumnSort(columnID, columnSortOrder)}
+						/>
+					</div>
+				</section>
+			</div>
 		)
 	}
 }

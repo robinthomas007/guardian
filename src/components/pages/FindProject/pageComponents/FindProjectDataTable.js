@@ -10,7 +10,8 @@ class FindProjectDataTable extends Component {
             data : [],
             activeSortColumn : 'last_updated',
             activeSortDesc : true,
-            activeHover : null
+            activeHover : null,
+            
         }
         
         this.handleSortDisplay = this.handleSortDisplay.bind(this);
