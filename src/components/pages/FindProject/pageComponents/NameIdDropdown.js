@@ -38,10 +38,9 @@ class NameIdDropdown extends Component {
     render() {
         let inputOptions = []
 
-
 		if(this.props.data) {
 			inputOptions = this.props.data.map( (data, i) =>
-				<a className="dropdown-item selected" onClick={() => this.handleChange(data)}>{data.name}</a>
+				<a className="dropdown-item selected" onClick={() => this.handleChange(data)}>{data.name} { (data.count) ? '(' + data.count + ')' : '' }</a>
 			)
 		}
 		

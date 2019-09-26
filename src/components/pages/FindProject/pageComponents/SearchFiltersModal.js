@@ -8,7 +8,6 @@ class SearchFilterModal extends Component {
         super(props);
         this.state = {
         }
-
     }
 
     render() {
@@ -25,8 +24,8 @@ class SearchFilterModal extends Component {
 
                     <div className="col-4">
                         <LabelsInput 
-                            data={this.props.data} 
-                            onChange={this.props.onChange}
+                            data={this.props.data.Facets.LabelFacets} 
+                            onChange={this.props.handleLabelFacetsChange}
                             defaultText="Select Option"
                         />
                     </div>
@@ -37,8 +36,8 @@ class SearchFilterModal extends Component {
 
                     <div className="col-4">
                         <NameIdDropdown 
-                            data={this.state.statusFacets}
-                            onChange={this.handleStatusFacetsChange} 
+                            data={this.props.data.Facets.StatusFacets}
+                            onChange={this.props.handleStatusFacetsChange}
                             defaultText="Select Option"
                         />		
                     </div>
@@ -48,8 +47,8 @@ class SearchFilterModal extends Component {
                     </div>
                     <div className="col-4">
                         <NameIdDropdown 
-                            data={this.state.hasAudioFacets} 
-                            onChange={this.handleAudioFacetsChange} 
+                            data={this.props.data.Facets.HasAudioFacets}
+                            onChange={this.props.handleHasAudioFacetsChange}
                             defaultText="Select Option"
                         />
                     </div>
@@ -59,8 +58,8 @@ class SearchFilterModal extends Component {
                     </div>
                     <div className="col-4">
                         <NameIdDropdown 
-                            data={this.state.hasBlockingFacets} 
-                            onChange={this.handleHasBlockingFacetsChange} 
+                            data={this.props.data.Facets.HasBlockingFacets}
+                            onChange={this.props.handleHasBlockingFacetsChange}
                             defaultText="Select Option"
                         />
                     </div>
@@ -73,7 +72,7 @@ class SearchFilterModal extends Component {
                         <Form.Control 
                             id="filterStartDate"
                             type="date" 
-                            onChange={this.setDateFilter} 
+                            onChange={this.props.setDateFilter} 
                         />
                         
                         <label> to</label>
@@ -81,7 +80,7 @@ class SearchFilterModal extends Component {
                         <Form.Control 
                             id="filterEndDate"
                             type="date" 
-                            onChange={this.setDateFilter} 
+                            onChange={this.props.setDateFilter} 
                         />
                     </div>
                 </div>

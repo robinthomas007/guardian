@@ -3,40 +3,63 @@ import React, { Component } from 'react';
 class LabelsInput extends Component {
     constructor(props) {
 		super(props);
-		this.state = {}
+		this.state = {
+            selectedLabels : [],
+            data : [],
+            labelList : [],
+            defaultLabels : []
+        }
 		this.handleChange = this.handleChange.bind(this);
     }
 
 	handleChange(e) {
+        const { selectedLabels } = this.state;
+        let modifiedSelectedLabels = selectedLabels;
+
+        (e.target.checked) ? modifiedSelectedLabels.push(e.target.value) : modifiedSelectedLabels.splice(modifiedSelectedLabels.indexOf(e.target.value), 1);
+        e.target.checked = e.target.checked
+
+        this.setState( {
+            selectedLabels : modifiedSelectedLabels,
+        } )
+
 		this.props.onChange(e);
 	}
 
-    render() {
-        let labelOptions = ''
-        if(this.props.data.labelFacets) {
+    getLabelOptions = () => {
 
-			labelOptions = this.props.data.labelFacets.map( (label, i) => {
-				const isChecked = (this.props.data.searchCriteria.filter.labelIds.indexOf(label.id) >= 0) ? true : false;
-				return(
-					<a className="dropdown-item" key={i}>
-						<label className="custom-checkbox"> 		
-							<input   
-								onChange={(e) => this.props.onChange(e, label.name)}
-								type='checkbox'
-								id={label.id}
-								value={label.id}
-								checked={isChecked}
-							/>
-							<span className="checkmark "></span>
-						</label>
-						
-						<label htmlFor={label.id}>
-							{label.name}
-						</label>
-					</a>
-				   )
-			})
+        if(this.state.defaultLabels !== this.props.data && this.state.defaultLabels.length <= 0) {
+            this.setState( {defaultLabels : this.props.data} )
         }
+        
+        const labelOptions = this.state.defaultLabels.map( (label, i) => {
+
+            const isChecked = (this.state.selectedLabels.indexOf(label.id) >= 0) ? true : false;
+
+            return(
+                <a className="dropdown-item" key={i}>
+                    <label className="custom-checkbox"> 		
+                        <input   
+                            onClick={(e) => this.handleChange(e)}
+                            type='checkbox'
+                            id={label.id}
+                            value={label.id}
+                            checked={isChecked}
+                        />
+                        <span className="checkmark "></span>
+                    </label>
+                    
+                    <label htmlFor={label.id}>
+                        {label.name}
+                    </label>
+                </a>
+            )
+        })
+        
+        return(labelOptions)
+    };
+
+    render() {
         return(
 			<div className="multi-select dropdown">
 				<button 
@@ -46,11 +69,11 @@ class LabelsInput extends Component {
 					data-toggle="dropdown" 
 					aria-haspopup="true" 
 					aria-expanded="false">
-					Select Option
+					{this.props.defaultText}
 				</button>
 
 				<div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-					{labelOptions}
+					{this.getLabelOptions()}
 				</div>
 			</div>
         )

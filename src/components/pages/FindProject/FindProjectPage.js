@@ -37,16 +37,20 @@ class FindProjectPage extends Component {
 			},
 
 			project : {
-				Projects : []
+				Projects : [
+					
+				],
+
+				"Facets" : {
+					"LabelFacets" : []
+				}
 			},
 
 			labelFacets : [],
 			hasAudioFacets : [],
 			hasBlockingFacets : [],
 			statusFacets : [],
-
 			showFilterModal : false,
-			searchResultsCount : 0,
 			currentPageNumber : 1
 		}
 
@@ -91,28 +95,9 @@ class FindProjectPage extends Component {
         )
         .then (responseJSON => 
             {
-
 				this.setState( { 
-					searchResults : responseJSON.Projects,
 					project : responseJSON 
 				}) 
-
-				if(this.state.labelFacets.length <= 0 ) {
-					this.setState( {labelFacets : responseJSON.LabelFacets })
-				}
-
-				// if(this.state.statusFacets.length <= 0 ) {
-				// 	//this.setState( {statusFacets : responseJSON.StatusFacets })
-				// }
-				
-				// if(this.state.hasBlockingFacets.length <= 0 ) {
-				// 	this.setState( {hasBlockingFacets : responseJSON.HasBlockingFacets })
-				// }
-				
-				// if(this.state.hasAudioFacets.length <= 0 ) {
-				// 	this.setState( {hasAudioFacets : responseJSON.HasAudioFacets })
-				// }
-
             }
         )
         .catch(
@@ -168,6 +153,36 @@ class FindProjectPage extends Component {
 		});
 	}
 
+	handleStatusFacetsChange = (data) => {
+		const { filter } = this.state.searchCriteria;
+		let modifiedFilter = filter;
+			modifiedFilter.statusID = data.id;
+
+		this.setState(currentState => ({filter : modifiedFilter}), () => {
+			this.handleProjectSearch()
+		});
+	}
+
+	handleHasAudioFacetsChange = (data) => {
+		const { filter } = this.state.searchCriteria;
+		let modifiedFilter = filter;
+			modifiedFilter.hasAudio = data.id;
+
+		this.setState(currentState => ({filter : modifiedFilter}), () => {
+			this.handleProjectSearch()
+		});
+	}
+
+	handleHasBlockingFacetsChange = (data) => {
+		const { filter } = this.state.searchCriteria;
+		let modifiedFilter = filter;
+			modifiedFilter.hasBlocking = data.id;
+
+		this.setState(currentState => ({filter : modifiedFilter}), () => {
+			this.handleProjectSearch()
+		});
+	}
+
 	componentDidMount(props) {
 		this.handleProjectSearch()
     }
@@ -195,14 +210,6 @@ class FindProjectPage extends Component {
 		});
 
 		this.setState({activePage : newPage })
-	}
-
-	setFilter(e) {
-		e.preventDefault();
-	}
-
-	handleSearchModalClick(e) {
-		e.stopPropagation();
 	}
 
 	handleFilterModalView() {
@@ -241,10 +248,6 @@ class FindProjectPage extends Component {
 		});
 	}
 
-	saveAndContinue = () => {
-		alert('Save Contacts and Continue')
-	}
-	
 	handleColumnSort = (columnID, columnSortOrder) => {
 		const { searchCriteria } = this.state;
 		let modifiedSearchCriteria = searchCriteria;
@@ -293,10 +296,14 @@ class FindProjectPage extends Component {
 								</button>
 						
 								<SearchFilterModal 
-									showFilterModal = {this.state.showFilterModal}
-									data = {this.state} 
-									onChange = {this.handleLabelFacetsChange}
-								/>
+									showFilterModal={this.state.showFilterModal}
+									data={this.state.project} 
+									handleLabelFacetsChange={this.handleLabelFacetsChange}
+									handleStatusFacetsChange={this.handleStatusFacetsChange}
+									handleHasAudioFacetsChange={this.handleHasAudioFacetsChange}
+									handleHasBlockingFacetsChange={this.handleHasBlockingFacetsChange}
+									setDateFilter={this.setDateFilter}
+								/> 
 							</div>
 							<input 
 								id="projectSearchInput" 
@@ -326,8 +333,6 @@ class FindProjectPage extends Component {
 					<ul className="row results-controls">
 						<li className="col-4 d-flex">
 							<span className="viewing">Viewing</span>
-
-
 							<ProjectsViewDropDown 
 								itemsPerPage={this.state.searchCriteria.itemsPerPage}
 								onChange={this.setProjectsView}
