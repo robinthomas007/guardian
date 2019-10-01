@@ -339,3 +339,5 @@
 	table.search-table tr:hover td {cursor:pointer; background-color:#d9f3fe!important;}
 	th.sortable {cursor:pointer;}
 	
+
+	.page-container.review-section .tab-content {z-index:10000;}

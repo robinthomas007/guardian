@@ -95,13 +95,15 @@ class ReviewAndSubmitPage extends Component {
                         </div>
                     </div>
                 </section>
-                <section className="page-container review-section" onClick={() => this.handleProjectCategoryClick('/releaseInformation/')}>
+                <section className="page-container review-section">
                     <div className="row no-gutters">
                         <div className="col-10 justify-content-start">
                             <h2>Release Information</h2>
                         </div>
                         <div className="col-2 justify-content-end">
-                            <i className="material-icons align-content-end float-right">edit</i>
+                        <button className="btn btn-secondary align-content-end float-right" onClick={() => this.handleProjectCategoryClick('/releaseInformation/')}>
+                             <i className="material-icons">edit</i>  Edit
+                            </button>
                         </div>
                     </div>
                     <br />
@@ -140,7 +142,10 @@ class ReviewAndSubmitPage extends Component {
                             <h2>Project Contacts</h2>
                         </div>
                         <div className="col-2 justify-content-end">
-                            <i className="material-icons align-content-end float-right">edit</i>
+                            <button className="btn btn-secondary align-content-end float-right">
+                             <i className="material-icons">edit</i>  Edit
+                            </button>
+                           
                         </div>
                     </div>
                     <br />
@@ -167,7 +172,9 @@ class ReviewAndSubmitPage extends Component {
                     </div>
                 
                     <div className="col-2 justify-content-end">
-                        <i className="material-icons align-content-end float-right">edit</i>
+                    <button className="btn btn-secondary align-content-end float-right">
+                             <i className="material-icons">edit</i>  Edit
+                            </button>
                     </div>
                     <div className="col-12">
                     <br />
@@ -189,7 +196,9 @@ class ReviewAndSubmitPage extends Component {
                     <h2>Territorial Rights</h2>
                 </div>
                 <div className="col-2 justify-content-end">
-                    <i className="material-icons align-content-end float-right">edit</i>
+                <button className="btn btn-secondary align-content-end float-right">
+                             <i className="material-icons">edit</i>  Edit
+                            </button>
                 </div>
                 <div className="col-12">
                     <br />
@@ -227,7 +236,9 @@ class ReviewAndSubmitPage extends Component {
                     <h2>Blocking Polices</h2>
                 </div>
                 <div className="col-2 justify-content-end">
-                    <i className="material-icons align-content-end float-right">edit</i>
+                <button className="btn btn-secondary align-content-end float-right">
+                             <i className="material-icons">edit</i>  Edit
+                            </button>
                 </div>
                 <div className="col-12">
                     <br />
