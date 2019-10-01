@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {Table, Grid, Button, Form, Tabs, Tab  } from 'react-bootstrap';
 
 import PageHeader from '../PageHeader/PageHeader';
-import './ReviewAndSubmit.css';
 import Noty from 'noty';
 import AudioFilesTabsContainer from '../ReviewAndSubmit/pageComponents/AudioFileTabsContainer';
 import { withRouter } from 'react-router-dom';
@@ -166,13 +165,13 @@ class ReviewAndSubmitPage extends Component {
                     </div>
                 </section>
             
-                <section className="page-container review-section" onClick={() => this.handleProjectCategoryClick('/projectContacts/')}>
+                <section className="page-container review-section">
                     <div className="row no-gutters">
                         <div className="col-10 justify-content-start">
                             <h2>Project Contacts</h2>
                         </div>
                         <div className="col-2 justify-content-end">
-                            <button className="btn btn-secondary align-content-end float-right">
+                            <button className="btn btn-secondary align-content-end float-right" onClick={() => this.handleProjectCategoryClick('/projectContacts/')}>
                              <i className="material-icons">edit</i>  Edit
                             </button>
                            
@@ -195,14 +194,14 @@ class ReviewAndSubmitPage extends Component {
                     </div>
                 </section>
             
-                <section className="page-container review-section" onClick={() => this.handleProjectCategoryClick('/audioFiles/')}>
+                <section className="page-container review-section">
                     <div className="row no-gutters">
                         <div className="col-10 justify-content-start">
                         <h2>Audio Files &amp; Track Information</h2>
                     </div>
                 
                     <div className="col-2 justify-content-end">
-                    <button className="btn btn-secondary align-content-end float-right">
+                    <button className="btn btn-secondary align-content-end float-right" onClick={() => this.handleProjectCategoryClick('/audioFiles/')}>
                              <i className="material-icons">edit</i>  Edit
                             </button>
                     </div>
@@ -220,13 +219,13 @@ class ReviewAndSubmitPage extends Component {
                 </div>
             </section>
             
-            <section className="page-container review-section" onClick={() => this.handleProjectCategoryClick('/territorialRights/')}>
+            <section className="page-container review-section">
                 <div className="row no-gutters">
                     <div className="col-10 justify-content-start">
                     <h2>Territorial Rights</h2>
                 </div>
                 <div className="col-2 justify-content-end">
-                <button className="btn btn-secondary align-content-end float-right">
+                <button className="btn btn-secondary align-content-end float-right" onClick={() => this.handleProjectCategoryClick('/territorialRights/')}>
                              <i className="material-icons">edit</i>  Edit
                             </button>
                 </div>
@@ -260,13 +259,13 @@ class ReviewAndSubmitPage extends Component {
                 </div>
             </section>
             
-            <section className="page-container review-section" onClick={() => this.handleProjectCategoryClick('/blockingPolicies/')}>
+            <section className="page-container review-section">
                 <div className="row no-gutters">
                     <div className="col-10 justify-content-start">
                     <h2>Blocking Polices</h2>
                 </div>
                 <div className="col-2 justify-content-end">
-                <button className="btn btn-secondary align-content-end float-right">
+                <button className="btn btn-secondary align-content-end float-right" onClick={() => this.handleProjectCategoryClick('/blockingPolicies/')}>
                              <i className="material-icons">edit</i>  Edit
                             </button>
                 </div>
@@ -303,11 +302,13 @@ class ReviewAndSubmitPage extends Component {
                     </div>
                 </div>
             </section>
-            <section className="row save-buttons">
+            <section className="page-container">
+            <div className="col-12 row">
                 <div className="col-9"></div>
                 <div className="col-3 align-content-end">
-                    <button type="button" className="btn btn-primary" onClick={this.handleSubmitProjectClick}>Submit Project</button>
+                    <button type="button" className="btn btn-primary float-right" onClick={this.handleSubmitProjectClick}>Submit Project</button>
                 </div>
+            </div>
             </section>
         </div>
         )

@@ -300,8 +300,7 @@
 	.dropdown.allowance { min-width: 100px;} 
 
 	/* Review & Submit */
-	.page-container.review-section {cursor:pointer; border: 3px solid #FFF; outline-offset:-3px; padding:27px; transition: border-color 0.6s linear;}
-	.page-container.review-section:hover{cursor:pointer; border: 3px solid #15B6DF; outline-offset:-3px; padding:27px;}
+	.page-container.review-section {padding:27px;}
 	.page-container.review-section label {font-weight:700;}
 
 	img.album-art {height:160px; width:160px; background-color:#f5f5f5;}
