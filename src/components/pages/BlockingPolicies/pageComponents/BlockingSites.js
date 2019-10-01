@@ -103,7 +103,7 @@ class BlockingSites extends Component {
                 <thead>
                     <tr>
                         <th>Tracks to Block</th>
-                        <th>Site</th>
+                        <th>Platform</th>
                         <th>Monetize</th>
                         <th>Block</th>
                         <th>Allowance</th>
