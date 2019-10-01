@@ -20,7 +20,7 @@ class ReviewAndSubmitPage extends Component {
             discs : [],
             projectID : ''
         }
-
+        this.handleSubmitProjectClick = this.handleSubmitProjectClick.bind(this);
         this.handleProjectCategoryClick = this.handleProjectCategoryClick.bind(this);
     };
 
@@ -65,14 +65,44 @@ class ReviewAndSubmitPage extends Component {
     }
 
     handleSubmitProjectClick() {
-        new Noty ({
-            type: 'success',
-            id:'tracksSaved',
-            text: 'Your project has been successfully saved and submitted for review.',
-            theme: 'bootstrap-v4',
-            layout: 'top',
-            timeout: '3000'
-        }).show() 
+        const user = JSON.parse(sessionStorage.getItem('user'))
+        const fetchHeaders = new Headers(
+            {
+                "Content-Type": "application/json",
+                "Authorization" : sessionStorage.getItem('accessToken')
+            }
+        )
+
+        const fetchBody = JSON.stringify( {
+            "User" : {
+                "email" : user.email
+            },
+            "ProjectID" : (this.props.match.params.projectID) ? this.props.match.params.projectID : ''
+        })
+
+        fetch ('https://api-dev.umusic.net/guardian/project/submit', {
+            method : 'POST',
+            headers : fetchHeaders,
+            body : fetchBody
+        }).then (response => 
+            {
+                return(response.json());
+            }
+        ).then (responseJSON => 
+            {
+                new Noty ({
+                    type: 'success',
+                    id:'tracksSaved',
+                    text: 'Your project has been successfully saved and submitted for review.',
+                    theme: 'bootstrap-v4',
+                    layout: 'top',
+                    timeout: '3000'
+                }).show() 
+            }
+        )
+        .catch(
+            error => console.error(error)
+        );
     }
 
     componentDidUpdate() {
@@ -272,16 +302,14 @@ class ReviewAndSubmitPage extends Component {
                         </div>
                     </div>
                 </div>
-                
-                <section className="row save-buttons">
-                    <div className="col-9"></div>
-                    <div className="col-3 align-content-end">
-                        <button type="button" className="btn btn-primary" onClick={this.handleSubmitProjectClick}>Submit Project</button>
-                    </div>
-                </section>
+            </section>
+            <section className="row save-buttons">
+                <div className="col-9"></div>
+                <div className="col-3 align-content-end">
+                    <button type="button" className="btn btn-primary" onClick={this.handleSubmitProjectClick}>Submit Project</button>
+                </div>
             </section>
         </div>
-
         )
     }
 };
