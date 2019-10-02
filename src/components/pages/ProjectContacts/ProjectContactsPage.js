@@ -40,6 +40,9 @@ class ProjectContactsPage extends Component {
     }
     
     handlePageDataLoad() {
+
+        this.setState({ showloader : true})
+
         const user = JSON.parse(sessionStorage.getItem('user'))
         const projectID = this.props.match.params.projectID
         const fetchHeaders = new Headers(
@@ -68,11 +71,20 @@ class ProjectContactsPage extends Component {
             {
                 const { formInputs } = this.state;
                 let modifiedFormInputs = responseJSON.Project;
-                this.setState({ formInputs: modifiedFormInputs });
+                this.setState({ 
+                    formInputs: modifiedFormInputs,
+                    project: responseJSON
+                });
+
+                this.setState({ showloader : false})
+
             }
         )
         .catch(
-            error => console.error(error)
+            error => {
+                console.error(error)
+                this.setState({ showloader : false})
+            }
         );
     }
 
@@ -169,6 +181,9 @@ class ProjectContactsPage extends Component {
         const isValidForm = isFormValid();
 
         if(isValidForm) {
+
+            this.setState({ showloader : true})
+
             const releaseInformationInputs = JSON.parse(localStorage.getItem('projectData'));
             const user = JSON.parse(sessionStorage.getItem('user'));
             const projectID = this.props.match.params.projectID;
@@ -188,8 +203,6 @@ class ProjectContactsPage extends Component {
                 },
                 "Project" : projectFields
             })
-
-            this.setState({ showloader : true})
 
             fetch ('https://api-dev.umusic.net/guardian/project', {
                 method : 'POST',
@@ -225,12 +238,16 @@ class ProjectContactsPage extends Component {
 
         const user = JSON.parse(sessionStorage.getItem('user'))
 
+
+
         return(
             <section className="page-container h-100">
 
                 <LoadingImg show={this.state.showloader} />
 
-                <PageHeader />
+                <PageHeader 
+                    data={this.state.project}
+                />
     
                 <div className="row d-flex no-gutters step-description">
                     <div className="col-12">

@@ -26,7 +26,30 @@ class AudioFilesPage extends Component {
             projectID : '',
             showReplaceAudioModal : false,
             replaceTrackIndex : null,
-            showLoader : false
+            showLoader : false,
+            project : {
+                Project : {
+                    projectID : '',
+                    projectTitle : '',
+                    projectTypeID : '',
+                    projectType : '',
+                    projectArtistName : '',
+                    projectReleasingLabelID : '',
+                    projectReleasingLabel : '',
+                    projectReleaseDate : '',
+                    projectReleaseDateTBD : false,
+                    projectPrimaryContact : '',
+                    projectPrimaryContactEmail : '',
+                    projectAdditionalContacts : '',
+                    projectNotes : '',
+                    projectSecurityID : '',
+                    projectSecurity : '',
+                    projectStatusID : '',
+                    projectStatus : '',
+                    projectCoverArtFileName : '',
+                    projectCoverArtBase64Data : ''
+                }
+            }
         }
 
         this.showReplaceAudioModal = this.showReplaceModal.bind(this);
@@ -281,10 +304,15 @@ class AudioFilesPage extends Component {
         )
         .then (responseJSON =>
             {
-                this.setState({projectData : responseJSON.Project})
+                this.setState({
+                    project : responseJSON,
+                    projectData : responseJSON.Project
+                })
                 if(responseJSON.Discs && responseJSON.Discs.length > 0) {
-                    this.setState({discs : responseJSON.Discs})
-                    this.setState({pageTableData : responseJSON.Discs[this.state.activeTab].Tracks})
+                    this.setState({
+                        discs : responseJSON.Discs, 
+                        pageTableData : responseJSON.Discs[this.state.activeTab].Tracks
+                    })
                 } else {
                     this.addDisc();
                 }
@@ -452,7 +480,9 @@ class AudioFilesPage extends Component {
                     onChange={(e) => this.updateFile(e)}
                 />
 
-                <PageHeader />
+                <PageHeader 
+                    data={this.state.project}
+                />
 
                 <div className="row no-gutters step-description">
                     <div className="col-12">

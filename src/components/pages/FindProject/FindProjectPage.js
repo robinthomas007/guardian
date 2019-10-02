@@ -14,7 +14,6 @@ import TablePager from './pageComponents/TablePager';
 import { convertToLocaleTime } from '../../Utils';
 
 class FindProjectPage extends Component {
-  
 	constructor(props) {
         super(props);
         this.state = {
@@ -46,10 +45,6 @@ class FindProjectPage extends Component {
 				}
 			},
 
-			labelFacets : [],
-			hasAudioFacets : [],
-			hasBlockingFacets : [],
-			statusFacets : [],
 			showFilterModal : false,
 			currentPageNumber : 1
 		}
@@ -95,9 +90,7 @@ class FindProjectPage extends Component {
         )
         .then (responseJSON => 
             {
-				this.setState( { 
-					project : responseJSON 
-				}) 
+				this.setState( { project : responseJSON }) 
             }
         )
         .catch(
@@ -208,7 +201,6 @@ class FindProjectPage extends Component {
 		this.setState(currentState => ({searchCriteria : { ...this.state.searchCriteria, 'pageNumber' : newPage}}), () => {
 			this.handleProjectSearch()
 		});
-
 		this.setState({activePage : newPage })
 	}
 

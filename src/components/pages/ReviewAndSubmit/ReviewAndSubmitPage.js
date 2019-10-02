@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Table, Grid, Button, Form, Tabs, Tab  } from 'react-bootstrap';
-
+import LoadingImg from '../../ui/LoadingImg';
 import PageHeader from '../PageHeader/PageHeader';
 import Noty from 'noty';
 import AudioFilesTabsContainer from '../ReviewAndSubmit/pageComponents/AudioFileTabsContainer';
@@ -14,16 +14,40 @@ class ReviewAndSubmitPage extends Component {
         this.state = { 
             projectID : props.projectID,
             project : {
-                projectCoverArtBase64Data : ''
+                Project : {
+                    projectID : '',
+                    projectTitle : '',
+                    projectTypeID : '',
+                    projectType : '',
+                    projectArtistName : '',
+                    projectReleasingLabelID : '',
+                    projectReleasingLabel : '',
+                    projectReleaseDate : '',
+                    projectReleaseDateTBD : false,
+                    projectPrimaryContact : '',
+                    projectPrimaryContactEmail : '',
+                    projectAdditionalContacts : '',
+                    projectNotes : '',
+                    projectSecurityID : '',
+                    projectSecurity : '',
+                    projectStatusID : '',
+                    projectStatus : '',
+                    projectCoverArtFileName : '',
+                    projectCoverArtBase64Data : '',
+                }
             },
             discs : [],
-            projectID : ''
+            projectID : '',
+            showloader : false
         }
         this.handleSubmitProjectClick = this.handleSubmitProjectClick.bind(this);
         this.handleProjectCategoryClick = this.handleProjectCategoryClick.bind(this);
     };
 
     componentDidMount() {
+
+        this.setState( {showloader : true} )
+
         const user = JSON.parse(sessionStorage.getItem('user'))
         const fetchHeaders = new Headers(
             {
@@ -50,12 +74,18 @@ class ReviewAndSubmitPage extends Component {
         ).then (responseJSON => 
 
             {
-                this.setState({project : responseJSON.Project})
-                this.setState({discs : responseJSON.Discs})
+                this.setState({
+                    project : responseJSON,
+                    discs : responseJSON.Discs
+                })
+                this.setState( {showloader : false} )
             }
         )
         .catch(
-            error => console.error(error)
+            error => {
+                console.error(error);
+                this.setState( {showloader : false} )
+            }
         );
     }
 
@@ -115,7 +145,13 @@ class ReviewAndSubmitPage extends Component {
             <div>		
                 <section className="page-container">
 
-                   <PageHeader projectTitle={this.state.projectTitle}/>
+                    <LoadingImg
+                        show={this.state.showloader}
+                    />
+
+                   <PageHeader 
+                        data={this.state.project}
+                    />
 
                     <div className="row no-gutters step-description review">
                         <div className="col-12">
@@ -138,27 +174,27 @@ class ReviewAndSubmitPage extends Component {
                     <br />
                     <div className="row no-gutters">
                         <div className="col-2">
-                            <img className="album-art" src={this.state.project.projectCoverArtBase64Data}/>
+                            <img className="album-art" src={this.state.project.Project.projectCoverArtBase64Data}/>
                         </div>
                         <div className="col-10">
                             <div className="row no-gutters">
                                 <div className="col-6">
-                                    <label>Project Title:</label><span> {this.state.project.projectTitle}</span>
+                                    <label>Project Title:</label><span> {this.state.project.Project.projectTitle}</span>
                                 </div>
                                 <div className="col-6">
-                                    <label>Artist:</label><span> {this.state.project.projectArtistName}</span>
+                                    <label>Artist:</label><span> {this.state.project.Project.projectArtistName}</span>
                                 </div>
                                 <div className="col-6">
-                                    <label>Project Type:</label><span> {this.state.project.projectType}</span>
+                                    <label>Project Type:</label><span> {this.state.project.Project.projectType}</span>
                                 </div>
                                 <div className="col-6">
-                                    <label>Label:</label><span> {this.state.project.projectReleasingLabel}</span>
+                                    <label>Label:</label><span> {this.state.project.Project.projectReleasingLabel}</span>
                                 </div>
                                 <div className="col-12">
-                                    <label>Release Date:</label><span> {this.state.project.projectReleaseDate}</span>
+                                    <label>Release Date:</label><span> {this.state.project.Project.projectReleaseDate}</span>
                                 </div>
                                 <div className="col-12">
-                                    <label>Notes:</label><span> {this.state.project.projectNotes}</span>
+                                    <label>Notes:</label><span> {this.state.project.Project.projectNotes}</span>
                                 </div>
                             </div>
                         </div>
@@ -180,16 +216,16 @@ class ReviewAndSubmitPage extends Component {
                     <br />
                     <div className="row no-gutters">
                         <div className="col-6">
-                            <label>Primary Contact:</label><span> {this.state.project.projectPrimaryContact}</span>
+                            <label>Primary Contact:</label><span> {this.state.project.Project.projectPrimaryContact}</span>
                         </div>
                         <div className="col-6">
-                            <label>Project Security:</label><span> {this.state.project.projectSecurity}</span>
+                            <label>Project Security:</label><span> {this.state.project.Project.projectSecurity}</span>
                         </div>
                         <div className="col-12">
-                            <label>Primary Email:</label><span> {this.state.project.projectPrimaryContactEmail}</span>
+                            <label>Primary Email:</label><span> {this.state.project.Project.projectPrimaryContactEmail}</span>
                         </div>
                         <div className="col-12">
-                            <label>Additional Contacts:</label><span> {this.state.project.projectAdditionalContacts}</span>
+                            <label>Additional Contacts:</label><span> {this.state.project.Project.projectAdditionalContacts}</span>
                         </div>
                     </div>
                 </section>
