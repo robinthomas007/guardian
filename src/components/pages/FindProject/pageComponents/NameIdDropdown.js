@@ -11,7 +11,6 @@ class NameIdDropdown extends Component {
     }
 
 	handleChange(data) {
-
         const currentState = this.state;
 		const modifiedState = currentState;
 			  modifiedState.selectedID = data.id;
@@ -40,7 +39,7 @@ class NameIdDropdown extends Component {
 
 		if(this.props.data) {
 			inputOptions = this.props.data.map( (data, i) =>
-				<a className="dropdown-item selected" onClick={() => this.handleChange(data)}>{data.name} { (data.count) ? '(' + data.count + ')' : '' }</a>
+				<a className="dropdown-item selected" onClick={() => this.handleChange(data)}>{data.name}</a>
 			)
 		}
 		

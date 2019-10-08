@@ -296,7 +296,9 @@ class BlockingPoliciesPage extends Component {
     
                 <LoadingImg show={this.state.showLoader} />
 
-                <PageHeader />
+                <PageHeader 
+                    data={this.state.project}
+                />
     
                 <div className="row no-gutters step-description">
                     <div className="col-12">

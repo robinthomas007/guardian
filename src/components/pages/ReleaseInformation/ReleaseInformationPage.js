@@ -33,6 +33,29 @@ class ReleaseinformationPage extends Component {
                 "projectCoverArtFileName": '',
                 "projectCoverArtBase64Data": ''
             },
+            project : {
+                Project : {
+                    projectID : '',
+                    projectTitle : '',
+                    projectTypeID : '',
+                    projectType : '',
+                    projectArtistName : '',
+                    projectReleasingLabelID : '',
+                    projectReleasingLabel : '',
+                    projectReleaseDate : '',
+                    projectReleaseDateTBD : false,
+                    projectPrimaryContact : '',
+                    projectPrimaryContactEmail : '',
+                    projectAdditionalContacts : '',
+                    projectNotes : '',
+                    projectSecurityID : '',
+                    projectSecurity : '',
+                    projectStatusID : '',
+                    projectStatus : '',
+                    projectCoverArtFileName : '',
+                    projectCoverArtBase64Data : ''
+                }
+            },
             releaseDateRequired : true,
             showloader : false,
             projectReleaseDateDisabled : false,
@@ -323,12 +346,18 @@ class ReleaseinformationPage extends Component {
             }
         ).then (responseJSON => 
             {
-                this.setState({formInputs : responseJSON.Project})
-                this.setState({ showloader : false})
+                this.setState({
+                    project : responseJSON,
+                    formInputs : responseJSON.Project,
+                    showloader : false
+                })
             }
         )
         .catch(
-            error => console.error(error)
+            error => {
+                console.error(error)
+                this.setState( {showloader : false} )
+            }
         );
     }
 
@@ -355,7 +384,9 @@ class ReleaseinformationPage extends Component {
 
                 <LoadingImg show={this.state.showloader} />
 
-                <PageHeader />
+                <PageHeader 
+                    data={this.state.project}
+                />
 
                 <div className="row d-flex no-gutters step-description">
                     <div className="col-12">
@@ -363,8 +394,7 @@ class ReleaseinformationPage extends Component {
                         <p>In this step, you can create a new project by submitting basic release information for the system. Required fields are indicated with an <span className='required-ind'>*</span>. This section must be completed by selecting the 'Save &amp; Continue' button below.</p>
                     </div>
                 </div>
-
-                
+              
 
                 <Form>
                     <div className="row d-flex">

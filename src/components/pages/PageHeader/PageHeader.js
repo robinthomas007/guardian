@@ -11,7 +11,7 @@ class PageHeader extends Component {
 
         this.state = {
             user : {},
-            projectTitle : props.projectTitle
+            
 
         };
     }
@@ -27,29 +27,20 @@ class PageHeader extends Component {
 
     }
 
-    getProjectTitle = () => {
-        if(this.props.projectTitle) {
-            return(
-                <h1>{this.props.projectTitle}</h1>
-            )
-        } else {
-            return(
-                <h1>New Project</h1>
-            )
-        }
-    }
+
 
     render() {
+
 
         return(
             <div className="row">
                 <div className="col 4">
-                    {this.getProjectTitle()}
+                    <h1>{ (this.props.data.Project) ?  this.props.data.Project.projectTitle : "New Project"}</h1>
                 </div>
                 <div className="col-7">
                     <span className="project-right">
                         <span className="project-status">
-                            <label>STATUS:</label>{mockData.project.projectStatus}
+                            <label>STATUS:</label> { ((this.props.data.Project) ?  this.props.data.Project.projectStatus : "In Progress").toUpperCase()}
                         </span>
                         <button 
                             id="closeProjectButton"

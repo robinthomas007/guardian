@@ -4,19 +4,23 @@ class SelectedFilters extends Component {
 	constructor(props) {
         super(props);
         this.state = {
-            labels : [
-
-            ]
+            labels : []
         }
     }
 
     getLabels = () => {
-        const labels = this.props.data.labelIds.map( (label, i) => {
+        const labels = this.state.labels.map( (label, i) => {
             return (
                 <button className="btn btn-sm btn-secondary" onClick={ () => this.props.removeLabelsFilter(i)}>{label}<i className="material-icons">close</i></button>    
             )           
         })
         return(labels)
+    }
+
+    componentDidMount() {
+        if(this.state.labels !== this.props.data.labelIds) {
+            this.setState( {labels : this.props.data.labelIds} )
+        }
     }
 
     render() {

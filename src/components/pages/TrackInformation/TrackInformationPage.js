@@ -4,6 +4,7 @@ import PageHeader from '../PageHeader/PageHeader';
 import TabbedTracks from '../TrackInformation/pageComponents/TabbedTracks';
 import TrackInformationDataTable from '../TrackInformation/pageComponents/TrackInformationDataTable';
 import ReplaceAudioModal from '../../modals/ReplaceAudioModal';
+import LoadingImg from '../../ui/LoadingImg';
 import './TrackInformation.css';
 import Noty from 'noty'
 import { listenerCount } from 'events';
@@ -21,7 +22,32 @@ class TrackInformationPage extends Component {
             projectReleaseDate : '',
             projectData : {},
             activeDiscTab : 1,
-            discs : []
+            discs : [],
+
+            project : {
+                Project : {
+                    projectID : '',
+                    projectTitle : '',
+                    projectTypeID : '',
+                    projectType : '',
+                    projectArtistName : '',
+                    projectReleasingLabelID : '',
+                    projectReleasingLabel : '',
+                    projectReleaseDate : '',
+                    projectReleaseDateTBD : false,
+                    projectPrimaryContact : '',
+                    projectPrimaryContactEmail : '',
+                    projectAdditionalContacts : '',
+                    projectNotes : '',
+                    projectSecurityID : '',
+                    projectSecurity : '',
+                    projectStatusID : '',
+                    projectStatus : '',
+                    projectCoverArtFileName : '',
+                    projectCoverArtBase64Data : ''
+                }
+            },
+            showloader : false
         }
         this.addBlankRow = this.addBlankRow.bind(this);
         this.showTrackModal = this.showTrackModal.bind(this);
@@ -103,6 +129,9 @@ class TrackInformationPage extends Component {
     }
 
     handlePageDataLoad() {
+
+        this.setState({ showloader : true})
+
         const user = JSON.parse(sessionStorage.getItem('user'))
         const projectID = this.props.match.params.projectID
         const fetchHeaders = new Headers(
@@ -131,14 +160,21 @@ class TrackInformationPage extends Component {
         ).then (responseJSON => 
 
             {
-                const { tableRows } = this.state;
-                this.setState( { discs : responseJSON.Discs })
-                this.setState({projectReleaseDate : responseJSON.Project.projectReleaseDate})
-                this.setState({projectData : responseJSON})
+                this.setState({ 
+                    project : responseJSON,
+                    discs : responseJSON.Discs,
+                    projectReleaseDate : responseJSON.Project.projectReleaseDate, 
+                    projectData : responseJSON
+                })
+
+                this.setState({ showloader : false})
             }
         )
         .catch(
-            error => console.error(error)
+            error => {
+                console.error(error);
+                this.setState({ showloader : false})
+            }
         );
     }
 
@@ -268,8 +304,6 @@ class TrackInformationPage extends Component {
         let modifiedDiscs = discs;
             modifiedDiscs[this.state.activeDiscTab - 1].Tracks.push(this.getTrack({}))
 
-        alert(JSON.stringify(modifiedDiscs))
-
         this.setState( {
             projectData : modifiedProjectData,
             // discs : modifiedDiscs
@@ -277,20 +311,23 @@ class TrackInformationPage extends Component {
 
         // this.setState( {projectData : modifiedProjectData} )
         // this.setState( {discs : modifiedProjectData.Discs[this.state.activeDiscTab - 1]} )
-        console.log(projectData);
-        console.log(discs);
+
     }
 
     render() {
         return (
             <section className="page-container h-100">
             
+                <LoadingImg show={this.state.showloader} />
+
                 <ReplaceAudioModal 
                     showModal={this.state.showReplaceModal} 
                     handleClose={this.hideTrackModal}
                 />
 
-                <PageHeader />
+                <PageHeader 
+                    data={this.state.project}
+                />
 
                 <div className="row no-gutters step-description">
                     <div className="col-12">

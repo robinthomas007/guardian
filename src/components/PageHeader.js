@@ -8,7 +8,10 @@ class PageHeader extends Component {
         super(props);
 
         this.state = {
-            user : {}
+            user : {},
+            project : {
+
+            }
         };
     };
    
@@ -20,18 +23,21 @@ class PageHeader extends Component {
         localStorage.removeItem('projectData')
     };
 
+    componentDidMount() {
+        this.setState({ project : this.props.data})
+    }
     
     render() {
 
         return(
             <div className="row">
                 <div className="col 4">
-                    <h1>{mockData.project.projectTitle}</h1>
+                    <h1>123{mockData.project.projectTitle}</h1>
                 </div>
                 <div className="col-7">
                     <span className="project-right">
                         <span className="project-status">
-                            <label>STATUS:</label>{mockData.project.projectStatus}
+                            <label>STATUS:</label>111{mockData.project.projectStatus}
                         </span>
                         <button 
                             className="close-project btn" 
