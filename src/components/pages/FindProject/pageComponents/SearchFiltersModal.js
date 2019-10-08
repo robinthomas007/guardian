@@ -12,7 +12,7 @@ class SearchFilterModal extends Component {
 
     render() {
         return(
-            <div className="search-filters" id="collapseExample">
+            <div className="search-filters collapse" id="collapseExample">
                 <div className="card card-body">
                     <h5>Search Filters</h5>
 
