@@ -48,7 +48,8 @@ class NameIdDropdown extends Component {
 				<button 
 					className="btn btn-secondary dropdown-toggle" 
 					type="button" 
-					id="dropdownMenuButton" 
+					id={this.props.id}
+					ref={this.props.id}
 					data-toggle="dropdown" 
 					aria-haspopup="true" 
 					aria-expanded="false">
