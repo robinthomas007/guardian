@@ -40,6 +40,7 @@ class SearchFilterModal extends Component {
                                 data={this.props.data.Facets.StatusFacets}
                                 onChange={this.props.handleStatusFacetsChange}
                                 defaultText="Select Option"
+                                id={'filterStatus'}
                             />		
                         </div>
 
@@ -51,6 +52,7 @@ class SearchFilterModal extends Component {
                                 data={this.props.data.Facets.HasAudioFacets}
                                 onChange={this.props.handleHasAudioFacetsChange}
                                 defaultText="Select Option"
+                                id={'filterHasAudio'}
                             />
                         </div>
 
@@ -62,6 +64,7 @@ class SearchFilterModal extends Component {
                                 data={this.props.data.Facets.HasBlockingFacets}
                                 onChange={this.props.handleHasBlockingFacetsChange}
                                 defaultText="Select Option"
+                                id={'filterHasBlocking'}
                             />
                         </div>
 
@@ -76,7 +79,7 @@ class SearchFilterModal extends Component {
                                 onChange={this.props.setDateFilter} 
                             />
                             
-                            <label> to</label>
+                            <label> to </label>
                             
                             <Form.Control 
                                 id="filterEndDate"

@@ -14,6 +14,7 @@ import TablePager from './pageComponents/TablePager';
 import { convertToLocaleTime } from '../../Utils';
 import { timingSafeEqual } from 'crypto';
 import { AlertHeading } from 'react-bootstrap/Alert';
+import { resetDatePicker } from '../../Utils'
 
 class FindProjectPage extends Component {
 	constructor(props) {
@@ -163,6 +164,7 @@ class FindProjectPage extends Component {
 			modifiedFilter.statusID = data.id;
 			modifiedFilter.statusName = (data.id !== '') ? data.name : '';
 
+
 		this.setState(currentState => ({filter : modifiedFilter}), () => {
 			this.handleProjectSearch()
 		});
@@ -192,7 +194,7 @@ class FindProjectPage extends Component {
 	}
 
 	componentDidMount(props) {
-		this.handleProjectSearch()
+		this.handleProjectSearch();
     }
 
     handleChange(event) {
@@ -284,6 +286,9 @@ class FindProjectPage extends Component {
 			modifiedFilter.hasAudio = '';
 			modifiedFilter.hasAudioName = '';
 
+		var filterInputObj = document.getElementById('filterHasAudio');
+			filterInputObj.innerHTML = 'Select Option';
+
 		this.setState( {
 			filter : modifiedFilter,
 		}, () => {this.handleProjectSearch()} )
@@ -294,6 +299,9 @@ class FindProjectPage extends Component {
 		let modifiedFilter = filter;
 			modifiedFilter.hasBlocking = '';
 			modifiedFilter.hasBlockingName = '';
+
+		var filterInputObj = document.getElementById('filterHasBlocking');
+			filterInputObj.innerHTML = 'Select Option';
 
 		this.setState( {
 			filter : modifiedFilter,
@@ -306,6 +314,9 @@ class FindProjectPage extends Component {
 			modifiedFilter.statusID = '';
 			modifiedFilter.statusName = '';
 
+		var filterInputObj = document.getElementById('filterStatus');
+			filterInputObj.innerHTML = 'Select Option';
+
 		this.setState( {
 			filter : modifiedFilter,
 		}, () => {this.handleProjectSearch()} )
@@ -315,6 +326,8 @@ class FindProjectPage extends Component {
 		const { filter } = this.state.searchCriteria;
 		let modifiedFilter = filter;
 			modifiedFilter.to = '';
+
+		resetDatePicker('filterEndDate');
 
 		this.setState( {
 			filter : modifiedFilter,
@@ -326,11 +339,12 @@ class FindProjectPage extends Component {
 		let modifiedFilter = filter;
 			modifiedFilter.from = '';
 
+		resetDatePicker('filterStartDate');
+
 		this.setState( {
 			filter : modifiedFilter,
 		}, () => {this.handleProjectSearch()} )
 	};
-
 
     render() {
 		return(

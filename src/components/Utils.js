@@ -22,7 +22,7 @@ export const isFormValid = () => {
     }
 
     return(invalid)
-}
+};
 
 export const setInputValidStatus = (input, status) => {
     if(status === 'invalid') {
@@ -30,19 +30,19 @@ export const setInputValidStatus = (input, status) => {
     } else {
         input.className.replace('is-invalid', '');
     }
-}
+};
 
 export const isValidIsrc = (isrc) => {
     return((isrc.replace(/\W/g, '').length == 12) ? true : false);
-}
+};
 
 export const isValidTitle = (title) => {
     return((title.length > 0) ? true : false);
-}
+};
 
 export const isValidEmail = (email) => {
     return ( /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,64})+$/.test(email) )
-}
+};
 
 export const convertToLocaleTime = (dateString) => {
 
@@ -57,7 +57,7 @@ export const convertToLocaleTime = (dateString) => {
     let dateStr = date + ' ' + timeArr[0] + ':' + timeArr[1] + ' ' + amPm
 
     return (dateStr)
-}
+};
 
 export const formatDateToYYYYMMDD = (unFormattedDate) => {
     let formattedDate = '';
@@ -73,4 +73,12 @@ export const formatDateToYYYYMMDD = (unFormattedDate) => {
         formattedDate = [year, month, day].join('-');
     }
     return(formattedDate)
-}
+};
+
+export const resetDatePicker = (inputID) => {
+    //because datepickers don't have a simple way to reset
+    const projectReleaseDatePicker = document.getElementById(inputID);
+    if(projectReleaseDatePicker) {
+        projectReleaseDatePicker.value = '';
+    }
+};
