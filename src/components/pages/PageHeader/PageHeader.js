@@ -34,10 +34,10 @@ class PageHeader extends Component {
 
         return(
             <div className="row">
-                <div className="col 4">
+                <div className="col 8">
                     <h1>{ (this.props.data.Project) ?  this.props.data.Project.projectTitle : "New Project"}</h1>
                 </div>
-                <div className="col-7">
+                <div className="col-4">
                     <span className="project-right">
                         <span className="project-status">
                             <label>STATUS:</label> { ((this.props.data.Project) ?  this.props.data.Project.projectStatus : "In Progress").toUpperCase()}
