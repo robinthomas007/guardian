@@ -12,6 +12,8 @@ import ProjectsViewDropDown from './pageComponents/ProjectsViewDropDown';
 import SelectedFilters from './pageComponents/SelectedFilters';
 import TablePager from './pageComponents/TablePager';
 import { convertToLocaleTime } from '../../Utils';
+import { timingSafeEqual } from 'crypto';
+import { AlertHeading } from 'react-bootstrap/Alert';
 
 class FindProjectPage extends Component {
 	constructor(props) {
@@ -26,10 +28,14 @@ class FindProjectPage extends Component {
 				sortColumn : '',
 				sortOrder : '',
 				filter : {
+					labels : [],
 					labelIds : [],
 					hasAudio : '',
+					hasAudioName : '',
 					hasBlocking : '',
+					hasBlockingName : '',
 					statusID : '',
+					statusName : '',
 					from : '',
 					to : ''
 				},
@@ -40,11 +46,14 @@ class FindProjectPage extends Component {
 					
 				],
 
-				"Facets" : {
-					"LabelFacets" : []
-				}
+				Facets : {
+					LabelFacets : []
+				},
+
 			},
 
+			labels : [],
+			defaultLabels : [],
 			showFilterModal : false,
 			currentPageNumber : 1
 		}
@@ -56,12 +65,19 @@ class FindProjectPage extends Component {
 		this.handlePaginationChange = this.handlePaginationChange.bind(this);
 		this.handleFilterModalView = this.handleFilterModalView.bind(this);
 		this.setDateFilter = this.setDateFilter.bind(this);
-		this.handleAudioFacetsChange = this.handleAudioFacetsChange.bind(this);
 		this.handleLabelFacetsChange = this.handleLabelFacetsChange.bind(this);
 		this.handleStatusFacetsChange = this.handleStatusFacetsChange.bind(this);
 		this.handleHasBlockingFacetsChange = this.handleHasBlockingFacetsChange.bind(this);
 		
 	}
+
+	formatDefaultLabelList = (list) => {
+		return(
+			list.map( (label, i) => { 
+				return ( {id: label.id, name : label.name, checked : false})
+			})
+		)
+	};
 
 	handleProjectSearch() {
 		const user = JSON.parse(sessionStorage.getItem('user'))
@@ -90,7 +106,15 @@ class FindProjectPage extends Component {
         )
         .then (responseJSON => 
             {
-				this.setState( { project : responseJSON }) 
+				if(this.state.defaultLabels.length <= 0){
+					this.setState( { 
+						defaultLabels : this.formatDefaultLabelList(responseJSON.Facets.LabelFacets)
+					})
+				}
+
+				this.setState( { 
+					project : responseJSON 
+				}) 
             }
         )
         .catch(
@@ -99,57 +123,45 @@ class FindProjectPage extends Component {
 
 	}
 
-	handleAudioFacetsChange(data){
-		const { filter } = this.state.searchCriteria;
-		let modifiedHasAudio = filter;
-			modifiedHasAudio.hasAudio = data.id;
-
-		this.setState(currentState => ({filter : modifiedHasAudio}), () => {
-			this.handleProjectSearch()
-		});
-	}
-
-	handleLabelFacetsChange(e){
-	
+	handleLabelFacetsChange = (e, i) => {
 		const { labelIds } = this.state.searchCriteria.filter;
 		let modifiedLabelFacets = [];
+		let labelName = e.target.getAttribute('labelname') ? e.target.getAttribute('labelname') : '';
+
+		const { defaultLabels } = this.state;
+		let modifiedDefaultLabels = defaultLabels;
+
+		const { labels } = this.state.searchCriteria.filter;
+		let modifiedLabels = labels;
 
 		if(e.target.checked) {
 			labelIds.push(e.target.value);
+			modifiedLabels.push(labelName);
+			modifiedDefaultLabels[i].checked = true;
 		} else {
-			var index = labelIds.indexOf(e.target.value)
-			labelIds.splice(index, 1)
+			var index = labelIds.indexOf(e.target.value);
+			labelIds.splice(index, 1);
+			modifiedLabels.splice(index, 1);
+			modifiedDefaultLabels[i].checked = false;
 		}
 
-		this.setState(currentState => ({ labelIds }), () => {
-			this.handleProjectSearch()
-		});
-	}
+		this.setState(
+			currentState => ({ labelIds }), () => { this.handleProjectSearch()}
+		);
 
-	handleStatusFacetsChange(data) {
-		const { filter } = this.state.searchCriteria;
-		let modifiedStatus = filter;
-			modifiedStatus.statusID = data.id;
-
-		this.setState(currentState => ({filter : modifiedStatus}), () => {
-			this.handleProjectSearch()
-		});
-	}
-
-	handleHasBlockingFacetsChange(data) {
-		const { filter } = this.state.searchCriteria;
-		let modifiedHasBlocking = filter;
-			modifiedHasBlocking.hasBlocking = data.id;
-
-		this.setState(currentState => ({filter : modifiedHasBlocking}), () => {
-			this.handleProjectSearch()
-		});
+		this.setState(
+			{ 
+				labels : modifiedLabels,
+				defaultLabels : modifiedDefaultLabels
+			}
+		)
 	}
 
 	handleStatusFacetsChange = (data) => {
 		const { filter } = this.state.searchCriteria;
 		let modifiedFilter = filter;
 			modifiedFilter.statusID = data.id;
+			modifiedFilter.statusName = (data.id !== '') ? data.name : '';
 
 		this.setState(currentState => ({filter : modifiedFilter}), () => {
 			this.handleProjectSearch()
@@ -160,6 +172,7 @@ class FindProjectPage extends Component {
 		const { filter } = this.state.searchCriteria;
 		let modifiedFilter = filter;
 			modifiedFilter.hasAudio = data.id;
+			modifiedFilter.hasAudioName = (data.id !== '') ? data.name : '';
 
 		this.setState(currentState => ({filter : modifiedFilter}), () => {
 			this.handleProjectSearch()
@@ -168,8 +181,10 @@ class FindProjectPage extends Component {
 
 	handleHasBlockingFacetsChange = (data) => {
 		const { filter } = this.state.searchCriteria;
+
 		let modifiedFilter = filter;
 			modifiedFilter.hasBlocking = data.id;
+			modifiedFilter.hasBlockingName = (data.id !== '') ? data.name : '';
 
 		this.setState(currentState => ({filter : modifiedFilter}), () => {
 			this.handleProjectSearch()
@@ -248,12 +263,74 @@ class FindProjectPage extends Component {
 		this.setState( {searchCriteria : modifiedSearchCriteria}, () => {this.handleProjectSearch()} )
 	}
 	
-	removeLabelsFilter = (filterIndex) => {
+	removeLabelsFilter = (labelID) => {
+		const { defaultLabels } = this.state;
+		const modifiedDefaultLabels = defaultLabels;
+			  modifiedDefaultLabels[defaultLabels.map(function(label) { return label.id; }).indexOf(labelID)].checked = false;
+		
 		const { labelIds } = this.state.searchCriteria.filter;
 		let modifiedLabelIds = labelIds;
-			modifiedLabelIds.splice(filterIndex, 1);
-		this.setState( {labelIds : modifiedLabelIds}, () => {this.handleProjectSearch()})
+			modifiedLabelIds.splice(labelIds.indexOf(labelID), 1);
+
+		this.setState( {
+			defaultLabels : modifiedDefaultLabels,
+			labelIds : modifiedLabelIds
+		}, () => {this.handleProjectSearch()} )
 	};
+
+	removeAudioFilter = () => {
+		const { filter } = this.state.searchCriteria;
+		let modifiedFilter = filter;
+			modifiedFilter.hasAudio = '';
+			modifiedFilter.hasAudioName = '';
+
+		this.setState( {
+			filter : modifiedFilter,
+		}, () => {this.handleProjectSearch()} )
+	};
+
+	removeBlockingFilter = () => {
+		const { filter } = this.state.searchCriteria;
+		let modifiedFilter = filter;
+			modifiedFilter.hasBlocking = '';
+			modifiedFilter.hasBlockingName = '';
+
+		this.setState( {
+			filter : modifiedFilter,
+		}, () => {this.handleProjectSearch()} )
+	};
+
+	removeStatusFilter = () => {
+		const { filter } = this.state.searchCriteria;
+		let modifiedFilter = filter;
+			modifiedFilter.statusID = '';
+			modifiedFilter.statusName = '';
+
+		this.setState( {
+			filter : modifiedFilter,
+		}, () => {this.handleProjectSearch()} )
+	};
+
+	removeToDateFilter = () => {
+		const { filter } = this.state.searchCriteria;
+		let modifiedFilter = filter;
+			modifiedFilter.to = '';
+
+		this.setState( {
+			filter : modifiedFilter,
+		}, () => {this.handleProjectSearch()} )
+	};
+
+	removeFromDateFilter = () => {
+		const { filter } = this.state.searchCriteria;
+		let modifiedFilter = filter;
+			modifiedFilter.from = '';
+
+		this.setState( {
+			filter : modifiedFilter,
+		}, () => {this.handleProjectSearch()} )
+	};
+
 
     render() {
 		return(
@@ -276,27 +353,20 @@ class FindProjectPage extends Component {
 					<ul className="row search-row">
 						<li className="col-2 d-flex"></li>
 						<li className="col-8 d-flex justify-content-center">
-							<div className="dropdown">
-								<button 
-									onClick={this.handleFilterModalView}
-									className="btn btn-secondary " 
-									type="button" 
-									id="dropdownMenuButton" 
-									aria-haspopup="true" 
-									aria-expanded="false">
-									<i className="material-icons">settings</i> Filters
-								</button>
-						
-								<SearchFilterModal 
-									showFilterModal={this.state.showFilterModal}
-									data={this.state.project} 
-									handleLabelFacetsChange={this.handleLabelFacetsChange}
-									handleStatusFacetsChange={this.handleStatusFacetsChange}
-									handleHasAudioFacetsChange={this.handleHasAudioFacetsChange}
-									handleHasBlockingFacetsChange={this.handleHasBlockingFacetsChange}
-									setDateFilter={this.setDateFilter}
-								/> 
-							</div>
+
+							<button 
+								onClick={this.handleFilterModalView}
+								className="btn btn-secondary " 
+								type="button" 
+								id="dropdownMenuButton" 
+								data-toggle="collapse" 
+								data-target="#collapseExample" 
+								aria-expanded="false" 
+								aria-controls="collapseExample"
+							>
+								<i className="material-icons">settings</i> Filters
+							</button>
+
 							<input 
 								id="projectSearchInput" 
 								className="form-control" 
@@ -314,9 +384,26 @@ class FindProjectPage extends Component {
 						<li className="col-2 d-flex"></li>
 					</ul>
 
+					<SearchFilterModal 
+						showFilterModal={this.state.showFilterModal}
+						data={this.state.project} 
+						labels={this.state.defaultLabels}
+						handleLabelFacetsChange={ (e,i)=> this.handleLabelFacetsChange(e,i)}
+						handleStatusFacetsChange={this.handleStatusFacetsChange}
+						handleHasAudioFacetsChange={this.handleHasAudioFacetsChange}
+						handleHasBlockingFacetsChange={this.handleHasBlockingFacetsChange}
+						setDateFilter={this.setDateFilter}
+					/>
+
 					<SelectedFilters
-						data = {this.state.searchCriteria.filter}
-						removeLabelsFilter = {this.removeLabelsFilter}
+						labelFilters={this.state.defaultLabels}
+						filters={this.state.searchCriteria.filter}
+						removeLabelsFilter={this.removeLabelsFilter}
+						removeAudioFilter={this.removeAudioFilter}
+						removeBlockingFilter={this.removeBlockingFilter}
+						removeStatusFilter={this.removeStatusFilter}
+						removeToDateFilter={this.removeToDateFilter}
+						removeFromDateFilter={this.removeFromDateFilter}
 					/>
 
 				</section>
