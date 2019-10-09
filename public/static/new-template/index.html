@@ -17,7 +17,7 @@
 	header{
 		display:block;
 		color:#fff;
-		height:50vh;
+		height:30vh;
 		background-color: #333;
     	background-image: url(images/new-header-bg.png);
     	background-size: cover;
@@ -28,6 +28,8 @@
 	header nav ul li {color:#fff; display:inline-block; margin:14px 40px auto auto; font-family:'Roboto Condensed', sans-serif;}
 	header nav ul li:last-child {margin-right:0px;}
 	header nav ul li a {display:block; color:#fff; text-decoration:none; font-family:'Roboto Condensed', sans-serif;}
+	
+	span.guardian-logo {height:200px; width:200px; background:url(images/new-logo-sm.png) no-repeat cover;}
 	
 	div.row.d-flex.project-title {margin-top:40px;}
 	div.row.d-flex.project-title div.col-10.align-self-start h1 {margin-left:40px;}
@@ -59,7 +61,9 @@
 	
 	<div class="row d-flex no-gutters">
 	<div class="col-1"></div>
-	<div class="guardian-logo col-2"></div>
+	<div class="col-2">
+		<span class="guardian-logo"></span>
+	</div>
 	<div class="nav-bg"></div>
 		<nav class="col-8 d-flex no-gutters justify-content-end">
 			<ul>
@@ -80,21 +84,23 @@
 		<div class="col-2"></div>
 		<div class="col-9">
 		<div class="row d-flex no-gutters">
-		<div class="col-10 align-self-start">
+		<div class="col-12 align-self-start">
 			<h1>Project Title</h1>
 		</div>
+		<!--
 		<div class="col-2 align-self-start">
+		
 			STATUS: IN PROGRESS
-		</div>
+		</div> -->
 		</div>
 		<div class="col-1"></div>
 	</div>
 	
-	
+	<!--
 	<div class="row d-flex no-gutters steps-bar">
 		<div class="col-1"></div>
 		<div class="col-10">
-		<!-- Pre-release Workflow -->
+		<!-- Pre-release Workflow 
 		<ul class="d-flex justify-content-center align-items-stretch">
 			<li id="step-1">
 				<a href="#" class="active">
@@ -214,10 +220,10 @@
 					<span class="step-arrow"></span>
 				</a>
 			</li>
-		</ul> -->
+		</ul> 
 		</div>
 		<div class="col-1"></div>
-	</div>
+	</div>-->
 	
 	</div>
 		</header>
