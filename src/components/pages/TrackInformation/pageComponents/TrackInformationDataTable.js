@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import {Table, Grid, Button, Form, Tabs, Tab, Alert  } from 'react-bootstrap'; 
+import {Table, Form } from 'react-bootstrap';
+import { formatDateToYYYYMMDD } from '../../../Utils';
 
 class TrackInformationDataTable extends Component {
 
@@ -14,7 +15,6 @@ class TrackInformationDataTable extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.removeRow = this.removeRow.bind(this);
         this.addBlankRow = this.addBlankRow.bind(this);
-        this.formatDateToYYYYMMDD = this.formatDateToYYYYMMDD.bind(this);
         this.handleDataLoad = this.handleDataLoad.bind(this);
     }
  
@@ -38,37 +38,16 @@ class TrackInformationDataTable extends Component {
     handleChange(event, track, i) {
         const { DataRows } = this.state;
         const modifiedDataRows = DataRows;
-
-        let inputValue = '';
-
         if(event.target.type === 'checkbox') {
              event.target.value = (event.target.checked) ? true : false;
         }
-
         track[event.target.id] = event.target.value;
-        
+       
         this.setState({DataRows : modifiedDataRows})
         this.props.updateDiscData(this.props.discID, modifiedDataRows)
     };
 
-    formatDateToYYYYMMDD(unFormattedDate) {
-        let formattedDate = '';
-
-        if(unFormattedDate) {
-            var d = new Date(unFormattedDate),
-            month = '' + (d.getMonth() + 1),
-            day = '' + d.getDate(),
-            year = d.getFullYear();
-    
-            if (month.length < 2) month = '0' + month;
-            if (day.length < 2) day = '0' + day;
-    
-            formattedDate = [year, month, day].join('-');
-        }
-
-        return(formattedDate)
-    }
-
+   
     removeRow(rowIndex) {
         const {DataRows} = this.state;
         const ModifiedRows = DataRows;
@@ -94,7 +73,7 @@ class TrackInformationDataTable extends Component {
                 isrc :  '',
                 isSingle : false,
                 tbdReleaseDate : false,
-                trackReleaseDate : this.formatDateToYYYYMMDD(Project.projectReleaseDate), 
+                trackReleaseDate : formatDateToYYYYMMDD(Project.projectReleaseDate), 
 
                 isSingleDisabled : false, 
                 isReleaseDateDisabled : (Project.projectReleaseDate === '') ? true : false, 
@@ -134,7 +113,6 @@ class TrackInformationDataTable extends Component {
     }
 
     setTBD(evt, track, i) {
-        const { Project } = this.props.data;
         const { DataRows } = this.state;
         let modifiedDataRows = DataRows;
 
@@ -206,6 +184,7 @@ class TrackInformationDataTable extends Component {
             dataRows = [this.getBlankRow(0)];
         }
 
+        // eslint-disable-next-line no-unused-vars
         const {DataRows} = this.state;
         const modifiedDataRows = dataRows;
 
@@ -269,7 +248,7 @@ class TrackInformationDataTable extends Component {
                                 className={'trackReleaseDateInput discNumber_' + track.discNumber}
                                 type="date" 
                                 id={'trackReleaseDate'}
-                                value={this.formatDateToYYYYMMDD(track.trackReleaseDate)}
+                                value={formatDateToYYYYMMDD(track.trackReleaseDate)}
                                 disabled={track.isReleaseDateDisabled}
                                 onChange={(evt) => this.handleChange(evt, track, i)}
                             />

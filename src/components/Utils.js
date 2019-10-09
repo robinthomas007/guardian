@@ -33,7 +33,7 @@ export const setInputValidStatus = (input, status) => {
 };
 
 export const isValidIsrc = (isrc) => {
-    return((isrc.replace(/\W/g, '').length == 12) ? true : false);
+    return((isrc.replace(/\W/g, '').length === 12) ? true : false);
 };
 
 export const isValidTitle = (title) => {

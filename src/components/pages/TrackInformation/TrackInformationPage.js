@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
-import {Table, Form, Tabs, Tab } from 'react-bootstrap'; 
 import PageHeader from '../PageHeader/PageHeader';
 import TabbedTracks from '../TrackInformation/pageComponents/TabbedTracks';
-import TrackInformationDataTable from '../TrackInformation/pageComponents/TrackInformationDataTable';
 import ReplaceAudioModal from '../../modals/ReplaceAudioModal';
 import LoadingImg from '../../ui/LoadingImg';
 import './TrackInformation.css';
 import Noty from 'noty'
-import { listenerCount } from 'events';
 import { withRouter } from "react-router";
 
 class TrackInformationPage extends Component {
@@ -62,12 +59,10 @@ class TrackInformationPage extends Component {
     }
 
     removeRow(rowIndex) {
-        const origRows = [...this.state.tableRows]
         let newTableRows = this.state.tableRows;
+            newTableRows.splice(rowIndex, 1)
 
-        newTableRows.splice(rowIndex, 1)
-
-        if(rowIndex <= 0 && newTableRows.length == 0) {
+        if(rowIndex <= 0 && newTableRows.length === 0) {
             this.addBlankRow();
         }
         this.setState({tableRows : newTableRows});
@@ -244,7 +239,7 @@ class TrackInformationPage extends Component {
                     }
                 )           
             })
-        }.bind(this));
+        });
 
         const fetchHeaders = new Headers(
             {
@@ -344,7 +339,7 @@ class TrackInformationPage extends Component {
                                 type="button" 
                                 className="btn btn-secondary btn-sm" 
                                 onClick=""
-                            ><i className="material-icons">adjust</i> Add Disc</button>
+                            ><i className="material-icons">adjust</i> 111Add Disc</button>
                         </li>
                         <li>
                             <button 
