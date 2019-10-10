@@ -119,9 +119,13 @@ export default withAuth(class Content extends Component {
     if(this.state.userLoaded) {
 
       return (
-        <div className="row d-flex h-100 no-gutters">
+        <div className="row d-flex no-gutters">
           <div className="col-12">
             <Header userData={this.state.user}/>
+
+            <div className="row d-flex no-gutters">
+              <div className="col-1"></div>
+            
             <SecureRoute path="/releaseInformation/:projectID?" render={ () => ( <ReleaseInformationPage user={this.state.user} setProjectID={this.setProjectID} />) } />
             <SecureRoute path="/projectContacts/:projectID?" render={ () => ( <ProjectContactsPage user={this.state.user} setProjectID={this.setProjectID} />) }/>
             <SecureRoute path="/trackInformation/:projectID?" render={ () => ( <TrackInformationPage user={this.state.user} setProjectID={this.setProjectID} />) }/>
@@ -133,12 +137,16 @@ export default withAuth(class Content extends Component {
             <SecureRoute path="/findProject" component={FindProject}/>
             <SecureRoute path="/helpGuide" component={HelpGuide}/>
             <SecureRoute path="/userAdmin" component={UserAdmin}/>
+
+               <div className="col-1"></div>
+            </div>
+
           </div>
         </div>
       );
     } else {
       return (
-        <div className="row h-100 no-gutters"></div>
+        <div className="row d-flex no-gutters"></div>
       )
     }
   }

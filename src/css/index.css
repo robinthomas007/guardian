@@ -112,6 +112,10 @@
 	.td-80 {max-width:80%;}
 	.td-90 {max-width:90%;}
 
+	h1 {font-size:2.2em;}
+    h2 {font-size:1.4em;}
+	h3 {font-size:1.2em;}
+
 	h3 .material-icons {font-size:1.2em; margin-left:10px; cursor:pointer;}
 	.material-icons {display:inline-flex; vertical-align:top;}
 	.purple-icon {color:#c208bb;}
@@ -198,12 +202,6 @@
 	nav.top-nav.int ul li a {display:block; margin-right:30px; padding:8px; color:#333; text-decoration:none;}
 	nav.top-nav.int ul li a:hover {color:#01579b;}
 	nav.top-nav.int ul li a.help {background-color:#01579b; color:#fff;}
-
-	/* Page Formats */
-	section.page-container {display: flex; flex-direction: column; margin:0px 40px 40px 40px; padding:30px; background-color:#fff;}
- 	section.page-container h1 {font-size:2.2em;}
-	section.page-container h2 {font-size:1.4em;}
-	section.page-container h3 {font-size:1.2em;}
 
 	.artist-label-name {font-size:1.4em;}
 
