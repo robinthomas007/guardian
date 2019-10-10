@@ -6,7 +6,10 @@ export default withAuth(class Header extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            projectID : ''
+            Project : {
+                projectTitle : '',
+                projectStatus : '',
+            }
         }
     }
 
@@ -18,9 +21,52 @@ export default withAuth(class Header extends Component {
 
 	componentDidUpdate = () => {
 		if(this.state.projectID !== this.props.projectID) {
-			this.setState( {projectID : this.props.projectID} )
+			this.setState( {
+                projectID : this.props.projectID
+            }, ()=> this.handleProjectDataLoad() )
 		}
-	};
+    };
+    
+    handleProjectDataLoad = () => {
+        const user = JSON.parse(sessionStorage.getItem('user'))
+        const fetchHeaders = new Headers(
+            {
+                "Content-Type": "application/json",
+                "Authorization" : sessionStorage.getItem('accessToken')
+            }
+        )
+
+        const fetchBody = JSON.stringify( {
+            "User" : {
+                "email" : user.email
+            },
+            "ProjectID" : (this.props.projectID) ? this.props.projectID : ''
+        })
+
+        fetch ('https://api-dev.umusic.net/guardian/project/review', {
+            method : 'POST',
+            headers : fetchHeaders,
+            body : fetchBody
+        }).then (response => 
+            {
+                return(response.json());
+            }
+        ).then (responseJSON => 
+            {
+
+                console.log(responseJSON)
+                this.setState({
+                    Project : responseJSON.Project,
+                })
+            }
+        )
+        .catch(
+            error => {
+                console.error(error);
+                this.setState( {showloader : false} )
+            }
+        );
+    };
 
     render() {
         return(
@@ -50,10 +96,10 @@ export default withAuth(class Header extends Component {
                         <div className="col-9">
                             <div className="row d-flex no-gutters">
                                 <div className="col-10 align-self-start">
-                                    <h1>Project Title</h1>
+                                    <h1>{this.state.Project.projectTitle}</h1>
                                 </div>
                                 <div className="col-2 align-self-start">
-                                    STATUS: IN PROGRESS
+                                    STATUS: {this.state.Project.projectStatus}
                                 </div> 
                             </div>
                         <div className="col-1"></div>
