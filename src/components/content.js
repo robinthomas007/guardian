@@ -120,10 +120,8 @@ export default withAuth(class Content extends Component {
 
       return (
         <div className="row d-flex h-100 no-gutters">
-          <div className="col-1"></div>
-          <div className="col-10">
+          <div className="col-12">
             <Header userData={this.state.user}/>
-
             <SecureRoute path="/releaseInformation/:projectID?" render={ () => ( <ReleaseInformationPage user={this.state.user} setProjectID={this.setProjectID} />) } />
             <SecureRoute path="/projectContacts/:projectID?" render={ () => ( <ProjectContactsPage user={this.state.user} setProjectID={this.setProjectID} />) }/>
             <SecureRoute path="/trackInformation/:projectID?" render={ () => ( <TrackInformationPage user={this.state.user} setProjectID={this.setProjectID} />) }/>
@@ -136,7 +134,6 @@ export default withAuth(class Content extends Component {
             <SecureRoute path="/helpGuide" component={HelpGuide}/>
             <SecureRoute path="/userAdmin" component={UserAdmin}/>
           </div>
-          <div className="col-1"></div>
         </div>
       );
     } else {
