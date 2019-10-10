@@ -142,8 +142,8 @@ class ReviewAndSubmitPage extends Component {
 
     render() {
         return(
-            <div>		
-                <section className="page-container">
+            <div className="col-10">		
+                <div className="page-container">
 
                     <LoadingImg
                         show={this.state.showloader}
@@ -159,8 +159,9 @@ class ReviewAndSubmitPage extends Component {
                             <p>Take some time to review the project before submitting. Click on any of the sections in order to return the corresponding step to make changes.</p>
                         </div>
                     </div>
-                </section>
-                <section className="page-container review-section">
+                </div>
+
+                <div className="page-container review-section">
                     <div className="row no-gutters">
                         <div className="col-10 justify-content-start">
                             <h2>Release Information</h2>
@@ -199,9 +200,9 @@ class ReviewAndSubmitPage extends Component {
                             </div>
                         </div>
                     </div>
-                </section>
+                </div>
             
-                <section className="page-container review-section">
+                <div className="page-container review-section">
                     <div className="row no-gutters">
                         <div className="col-10 justify-content-start">
                             <h2>Project Contacts</h2>
@@ -228,9 +229,9 @@ class ReviewAndSubmitPage extends Component {
                             <label>Additional Contacts:</label><span> {this.state.project.Project.projectAdditionalContacts}</span>
                         </div>
                     </div>
-                </section>
+                </div>
             
-                <section className="page-container review-section">
+                <div className="page-container review-section">
                     <div className="row no-gutters">
                         <div className="col-10 justify-content-start">
                         <h2>Audio Files &amp; Track Information</h2>
@@ -253,9 +254,9 @@ class ReviewAndSubmitPage extends Component {
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
             
-            <section className="page-container review-section">
+            <div className="page-container review-section">
                 <div className="row no-gutters">
                     <div className="col-10 justify-content-start">
                     <h2>Territorial Rights</h2>
@@ -293,9 +294,9 @@ class ReviewAndSubmitPage extends Component {
                     </div>
                     </div>
                 </div>
-            </section>
+            </div>
             
-            <section className="page-container review-section">
+            <div className="page-container review-section">
                 <div className="row no-gutters">
                     <div className="col-10 justify-content-start">
                     <h2>Blocking Polices</h2>
@@ -337,15 +338,15 @@ class ReviewAndSubmitPage extends Component {
                         </div>
                     </div>
                 </div>
-            </section>
-            <section className="page-container">
+            </div>
+          
             <div className="col-12 row">
                 <div className="col-9"></div>
                 <div className="col-3 align-content-end">
                     <button type="button" className="btn btn-primary float-right" onClick={this.handleSubmitProjectClick}>Submit Project</button>
                 </div>
             </div>
-            </section>
+    
         </div>
         )
     }
