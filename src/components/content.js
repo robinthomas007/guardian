@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
-import TopNav from './template/TopNav/TopNav';
-import TitleBar from './template/Header/TitleBar/TitleBar';
-import ProgressNav from './template/Header/ProgressNav/ProgressNav';
-
-import LeftNav from './template/LeftNav/LeftNav';
+import Header from './template/Header/Header';
 import { SecureRoute } from "@okta/okta-react";
 import TrackInformationPage from './pages/TrackInformation/TrackInformationPage';
 import ProjectContactsPage from './pages/ProjectContacts/ProjectContactsPage';
@@ -16,11 +12,6 @@ import FindProject from './pages/FindProject/FindProjectPage';
 import HelpGuide from './pages/HelpGuide/HelpGuidePage';
 import UserAdmin from './pages/UserAdministration/UserAdministration';
 import { withAuth } from '@okta/okta-react';
-import UUID from 'uuid';
-import { Alert } from 'react-bootstrap';
-import { withRouter } from 'react-router-dom';
-
-
 
 export default withAuth(class Content extends Component {
 
@@ -30,8 +21,6 @@ export default withAuth(class Content extends Component {
 
     super(props)
     this.state = {
-        loading : true,
-        messages: null,
         accesstoken: '',
         idtoken: '',
         user : {},
@@ -48,7 +37,6 @@ export default withAuth(class Content extends Component {
     this.checkAuthentication();
   };
 
-
   async checkAuthentication() {
       const accesstoken = await this.props.auth.getAccessToken();
       const idtoken = await this.props.auth.getIdToken();
@@ -56,12 +44,10 @@ export default withAuth(class Content extends Component {
 
       if (accesstoken !== this.state.accesstoken) {
         this.setState({ accesstoken });
-
       }
 
       if (idtoken !== this.state.idtoken) {
         this.setState({ idtoken });
-
       }
 
       if (user !== this.state.user) {
@@ -77,11 +63,7 @@ export default withAuth(class Content extends Component {
       }
       
       if(!this.state.userLoaded) {
-        this.setState( {userLoaded : true } );
-      }
-
-      if(this.state.userLoaded) {
-        const userData = this.getUserData();
+        this.getUserData();
       }
   }
   
@@ -110,12 +92,12 @@ export default withAuth(class Content extends Component {
           }
       ).then (userJSON => 
           {
-            const newUserObj = {...userJSON, ...user};
-
-            this.setState({isAdmin : userJSON.IsAdmin})
-            this.setState({user : newUserObj})
+            const newUserObj = Object.assign(userJSON, user);
+            this.setState({
+              user : newUserObj,
+              userLoaded : true
+            })
             sessionStorage.setItem('user', JSON.stringify(newUserObj))
-
           }
       ).catch(
           error => console.error(error)
@@ -127,7 +109,6 @@ export default withAuth(class Content extends Component {
   }
 
   setProjectID(pid) {
-
     if(this.state.projectID !== pid) {
       this.setState( {projectID : pid} )
     }
@@ -139,14 +120,9 @@ export default withAuth(class Content extends Component {
 
       return (
         <div className="row d-flex h-100 no-gutters">
-          {/* <LeftNav isAdmin={this.state.isAdmin} projectID={this.state.projectID}/> */}
           <div className="col-1"></div>
           <div className="col-10">
-            {/* <TopNav userObj={this.state.user} updateParentHistory={this.updateHistory}/> */}
-
-            <TitleBar />
-
-            <ProgressNav />
+            <Header userData={this.state.user}/>
 
             <SecureRoute path="/releaseInformation/:projectID?" render={ () => ( <ReleaseInformationPage user={this.state.user} setProjectID={this.setProjectID} />) } />
             <SecureRoute path="/projectContacts/:projectID?" render={ () => ( <ProjectContactsPage user={this.state.user} setProjectID={this.setProjectID} />) }/>
