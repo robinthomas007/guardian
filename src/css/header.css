@@ -8,8 +8,8 @@
 	header nav ul {list-style:none; }	
 	header nav ul li {color:#fff; display:inline-block; margin:14px 40px auto auto; font-family:'Roboto Condensed', sans-serif;}
 	header nav ul li:last-child {margin-right:0px;}
-	header nav ul li a {display:block; color:#fff; text-decoration:none; font-family:'Roboto Condensed', sans-serif;}
-	
+	header nav ul li a, header nav ul li a:visited {display:block; color:#fff; text-decoration:none; font-family:'Roboto Condensed', sans-serif;}
+	header nav ul li a:hover {color:#dc2c46; text-decoration:none;}
 	span.guardian-logo {display: block; position: absolute; z-index: 10; height:120px; width:120px; top:18px; left:-3%; background-image:url(../images/new-logo-sm.png); background-size:contain;}
 	
 	div.row.d-flex.project-title {display:block; margin:20px auto;}
