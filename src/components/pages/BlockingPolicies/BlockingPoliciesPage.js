@@ -292,7 +292,7 @@ class BlockingPoliciesPage extends Component {
 
     render() {
         return(
-            <section className="page-container h-100">
+            <div className="col-10">
     
                 <LoadingImg show={this.state.showLoader} />
 
@@ -361,7 +361,7 @@ class BlockingPoliciesPage extends Component {
                         <button tabIndex='6+' id="contactsSaveContButton" type="button" className="btn btn-primary" onClick={this.handleSubmit}>Save &amp; Continue</button>
                     </div>
                 </div>
-            </section>
+            </div>
         )
     }
 };

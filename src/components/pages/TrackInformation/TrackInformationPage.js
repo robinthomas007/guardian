@@ -311,7 +311,7 @@ class TrackInformationPage extends Component {
 
     render() {
         return (
-            <section className="page-container h-100">
+            <div className="col-10">
             
                 <LoadingImg show={this.state.showloader} />
 
@@ -380,7 +380,7 @@ class TrackInformationPage extends Component {
                         >Save &amp; Continue</button>
                     </div>
                 </section>
-            </section>
+            </div>
         )
     }
 };

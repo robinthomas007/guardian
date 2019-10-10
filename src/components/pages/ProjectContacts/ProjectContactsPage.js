@@ -241,14 +241,12 @@ class ProjectContactsPage extends Component {
 
 
         return(
-            <section className="page-container h-100">
+            <div className="col-10">
+            <LoadingImg show={this.state.showloader} />
 
-                <LoadingImg show={this.state.showloader} />
-
-                <PageHeader 
-                    data={this.state.project}
-                />
-    
+            <PageHeader 
+                data={this.state.project}
+            />
                 <div className="row d-flex no-gutters step-description">
                     <div className="col-12">
                         <h2>Step <span className="count-circle">2</span> Project Contacts</h2>
@@ -357,7 +355,7 @@ class ProjectContactsPage extends Component {
                         </div>
                     </div>
                 </Form>
-            </section>
+                </div>
         )
     }
 };
