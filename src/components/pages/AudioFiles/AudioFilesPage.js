@@ -468,7 +468,7 @@ class AudioFilesPage extends Component {
     render() {
            return(
 
-            <section className="page-container h-100">
+            <div className="col-10">
 
                 <HaveAudioModal projectID={this.props.projectID}/>
 
@@ -545,7 +545,7 @@ class AudioFilesPage extends Component {
                         <button type="button" className="btn btn-primary" onClick={this.handleDataSubmit}>Save &amp; Continue</button>
                     </div>
                 </section>
-            </section>
+            </div>
         )
     }
 }

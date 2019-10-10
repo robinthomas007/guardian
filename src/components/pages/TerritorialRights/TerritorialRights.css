@@ -4,7 +4,7 @@
 .card-nav .dropdown {margin-left:10px;}
 
 .set-card {margin-left:-20px; margin-bottom:10px; padding:1rem; background-color:#F5F5F5; }
-.btn.btn-secondary.dropdown-toggle {background-color:#fff; border:solid 1px #CCC;}
+.btn.btn-secondary.dropdown-toggle {background-color:#fff;}
 .set-card table.table td {vertical-align:top; border-bottom:none;}
 .set-card .track-draggable-area {max-height:400px; overflow-y: auto; overflow-x:hidden;}
 .set-card h3 {margin-top:8px; margin-right:8px;}

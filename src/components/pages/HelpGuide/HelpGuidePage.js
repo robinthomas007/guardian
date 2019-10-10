@@ -5,7 +5,7 @@ import './HelpGuide.css';
 class faqs extends Component {
 render() {
     return (
-        <section className="page-container h-100">
+        <div className="col-10">
         <h1>Help Guide</h1>
         <div className="row no-gutters">
             If you can't locate an answer to your support question below please feel free to email us at <a href="mailto:guardian-support@theguardian.umusic.com">guardian-support@theguardian.umusic.com</a>
@@ -127,7 +127,7 @@ If the territorial rights are specific to only that track, select “No” when 
 
                 
 
-        </section>
+        </div>
         )
     }
 };

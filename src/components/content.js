@@ -124,7 +124,7 @@ export default withAuth(class Content extends Component {
 
             <Header userData={this.state.user}/>
 
-            <div className="row d-flex no-gutters">
+            <div className="row d-flex no-gutters content">
               <div className="col-1"></div>
 
                 <SecureRoute path="/releaseInformation/:projectID?" render={ () => ( <ReleaseInformationPage user={this.state.user} setProjectID={this.setProjectID} />) } />

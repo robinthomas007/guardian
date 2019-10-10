@@ -348,11 +348,9 @@ class FindProjectPage extends Component {
 
     render() {
 		return(
-            <div>
-				
+			<div className="col-10">
 				<IntroModal />
 
-				<section className="page-container">
 					<div className="row d-flex no-gutters">
 						<div className="col-12">
 							<h1>Find A Project</h1>
@@ -420,9 +418,7 @@ class FindProjectPage extends Component {
 						removeFromDateFilter={this.removeFromDateFilter}
 					/>
 
-				</section>
 			
-				<section className="page-container">
 					<ul className="row results-controls">
 						<li className="col-4 d-flex">
 							<span className="viewing">Viewing</span>
@@ -452,7 +448,7 @@ class FindProjectPage extends Component {
 							handleColumnSort={ (columnID, columnSortOrder) => this.handleColumnSort(columnID, columnSortOrder)}
 						/>
 					</div>
-				</section>
+
 			</div>
 		)
 	}
