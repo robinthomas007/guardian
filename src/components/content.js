@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import TopNav from './template/TopNav/TopNav';
+import TitleBar from './template/Header/TitleBar/TitleBar';
+import ProgressNav from './template/Header/ProgressNav/ProgressNav';
+
 import LeftNav from './template/LeftNav/LeftNav';
 import { SecureRoute } from "@okta/okta-react";
 import TrackInformationPage from './pages/TrackInformation/TrackInformationPage';
@@ -16,6 +19,8 @@ import { withAuth } from '@okta/okta-react';
 import UUID from 'uuid';
 import { Alert } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
+
+
 
 export default withAuth(class Content extends Component {
 
@@ -133,13 +138,16 @@ export default withAuth(class Content extends Component {
     if(this.state.userLoaded) {
 
       return (
-        <div className="row h-100 no-gutters">
+        <div className="row d-flex h-100 no-gutters">
+          {/* <LeftNav isAdmin={this.state.isAdmin} projectID={this.state.projectID}/> */}
+          <div className="col-1"></div>
+          <div className="col-10">
+            {/* <TopNav userObj={this.state.user} updateParentHistory={this.updateHistory}/> */}
 
-          <LeftNav isAdmin={this.state.isAdmin} projectID={this.state.projectID}/>
+            <TitleBar />
 
-          <div className="content col-10">
-            <TopNav userObj={this.state.user} updateParentHistory={this.updateHistory}/>
-            
+            <ProgressNav />
+
             <SecureRoute path="/releaseInformation/:projectID?" render={ () => ( <ReleaseInformationPage user={this.state.user} setProjectID={this.setProjectID} />) } />
             <SecureRoute path="/projectContacts/:projectID?" render={ () => ( <ProjectContactsPage user={this.state.user} setProjectID={this.setProjectID} />) }/>
             <SecureRoute path="/trackInformation/:projectID?" render={ () => ( <TrackInformationPage user={this.state.user} setProjectID={this.setProjectID} />) }/>
@@ -152,6 +160,7 @@ export default withAuth(class Content extends Component {
             <SecureRoute path="/helpGuide" component={HelpGuide}/>
             <SecureRoute path="/userAdmin" component={UserAdmin}/>
           </div>
+          <div className="col-1"></div>
         </div>
       );
     } else {
