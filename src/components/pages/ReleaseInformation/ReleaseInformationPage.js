@@ -300,6 +300,10 @@ class ReleaseinformationPage extends Component {
         if(this.props.match.params && this.props.match.params.projectID) {
             this.handleDataLoad()
         }
+
+        if(this.props.match.params.projectID) {
+            this.props.setProjectID(this.props.match.params.projectID)
+        }
     }
 
     componentDidUpdate() {
@@ -380,21 +384,15 @@ class ReleaseinformationPage extends Component {
 
     render() {
         return (
-            
-          
-<div className="col-10">
-<LoadingImg show={this.state.showloader} />
+            <div className="col-10">
+                <LoadingImg show={this.state.showloader} />
 
-<PageHeader 
-    data={this.state.project}
-/> 
                 <div className="row d-flex no-gutters step-description">
                     <div className="col-12">
                         <h2>Step <span className="count-circle">1</span> Release Information</h2>
                         <p>In this step, you can create a new project by submitting basic release information for the system. Required fields are indicated with an <span className='required-ind'>*</span>. This section must be completed by selecting the 'Save &amp; Continue' button below.</p>
                     </div>
                 </div>
-              
 
                 <Form>
                     <div className="row d-flex">

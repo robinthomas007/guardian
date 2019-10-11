@@ -9,9 +9,73 @@ export default withAuth(class Header extends Component {
             Project : {
                 projectTitle : '',
                 projectStatus : '',
+                projectID : '',
+            },
+            projectID : '',
+            pageViewCompact : false,
+            navSteps  : {
+                preRelease : [
+                    {
+                        description : 'Release Info',
+                        path : '/releaseInformation/',
+                        complete : false
+                    },
+                    {
+                        description : 'Project Contacts',
+                        path : '/projectContacts/',
+                        complete : false
+                    },
+                    {
+                        description : 'Audio Files',
+                        path : '/audioFiles/',
+                        complete : false
+                    },
+                    {
+                        description : 'Track Information',
+                        path : '/trackInformation/',
+                        complete : false
+                    },
+                    {
+                        description : 'Territorial Rights',
+                        path : '/territorialRights/',
+                        complete : false
+                    },
+                    {
+                        description : 'Blocking Policies',
+                        path : '/blockingPolicies/',
+                        complete : false
+                    },
+                    {
+                        description : 'Review & Submit',
+                        path : '/reviewSubmit/',
+                        complete : false
+                    }
+                ],
+                postRelease : []
             }
         }
     }
+
+    getNavLinks = () => {
+        return(
+            <ul className="d-flex justify-content-center align-items-stretch">
+                {this.state.navSteps.preRelease.map( (navLink, i) => {
+                    return(
+                        <>
+                            <li key={i} id={"step-" + (i + 1)}>
+                                <NavLink className="" to={{pathname: navLink.path + this.props.projectID}}>
+                                    <span className="step-description text-nowrap">{navLink.description}</span>
+                                    <span className="step">{i + 1}</span>
+                                    <span className="step-arrow"></span>
+                                </NavLink>
+                            </li>
+                            { (i < this.state.navSteps.preRelease.length - 1) ? <li className="step-bar"><span></span></li> : null}
+                        </>
+                    )
+                })}
+            </ul>
+        )
+    };
 
     handleLogoutClick = (e) => {
         e.preventDefault();
@@ -19,19 +83,12 @@ export default withAuth(class Header extends Component {
         localStorage.clear()
     };
 
-	componentDidUpdate = () => {
-		if(this.state.projectID !== this.props.projectID) {
-			this.setState( {
-                projectID : this.props.projectID
-            }, this.handleProjectDataLoad())
-		}
-    };
-
     handleSetProjectData = (projectData) => {
         this.setState( { Project : projectData} )
     };
 
     handleProjectDataLoad = () => {
+
         const fetchHeaders = new Headers(
             {
                 "Content-Type": "application/json",
@@ -43,7 +100,7 @@ export default withAuth(class Header extends Component {
             "User" : {
                 "email" : this.props.userData.email
             },
-            "ProjectID" : (this.props.projectID) ? this.props.projectID : ''
+            "ProjectID" : (this.state.projectID) ? this.state.projectID : ''
         })
 
         fetch ('https://api-dev.umusic.net/guardian/project/review', {
@@ -70,9 +127,51 @@ export default withAuth(class Header extends Component {
         );
     }
 
+	componentDidUpdate = () => {
+		if(this.state.projectID !== this.props.projectID) {
+			this.setState( {
+                projectID : this.props.projectID
+            })
+        }
+
+        if(this.state.projectID !== '') {
+            //TODO: this needs to be optimized - we should not be calling the API from the header every page load.
+            this.handleProjectDataLoad()
+        } else {
+            console.log('empty projectID')
+        }
+    };
+
+    getHeaderContent = () => {
+        return(
+            <div className="row d-flex no-gutters project-title">
+                <div className="col-2"></div>
+                <div className="col-9">
+                    <div className="row d-flex no-gutters">
+                        <div className="col-10 align-self-start">
+                            <h1>{ (this.state.Project && this.state.Project.projectTitle) ? this.state.Project.projectTitle : 'New Project'}</h1>
+                        </div>
+                        <div className="col-2 align-self-start">
+                            STATUS: { (this.state.Project && this.state.Project.projectStatus) ? this.state.Project.projectStatus : 'In Progress'}
+                        </div> 
+                    </div>
+                    <div className="col-1"></div>
+                </div>
+        
+                <div className="row d-flex no-gutters steps-bar">
+                    <div className="col-1"></div>
+                    <div className="col-10">
+                        {this.getNavLinks()}
+                    </div>
+                    <div className="col-1"></div> 
+                </div>
+            </div>
+        )
+    }
+
     render() {
         return(
-            <header className="row d-flex no-gutters">
+            <header className={ (this.state.pageViewCompact) ? "row d-flex no-gutters compact" : "row d-flex no-gutters" }>
                 <div className="col-12 align-items-end flex-column flex-grow-1">
                     <div className="row d-flex no-gutters">
                         <div className="col-1"></div>
@@ -80,109 +179,20 @@ export default withAuth(class Header extends Component {
                             <span className="guardian-logo"></span>
                         </div>
                         <div className="nav-bg"></div>
-                            <nav className="col-8 d-flex no-gutters justify-content-end">
-                                <ul>
-                                    <li><NavLink className="steps" to={{pathname: '/releaseInformation'}}>New Project</NavLink></li>
-                                    <li><NavLink className="steps" to={{pathname: '/findProject'}}>Find A Project</NavLink></li>
-                                    <li><NavLink className="steps" to={{pathname: '/recentProjects'}}>Recent Projects</NavLink></li>
-                                    { (this.props.userData.IsAdmin) ? <li><NavLink className="steps" to={{pathname: '/admin'}}>Admin</NavLink></li> : null}
-                                    <li> | </li>
-                                    <li>Welcome, {this.props.userData.name}</li>
-                                    <li><span onClick={this.handleLogoutClick}>Log Out</span></li>
-                                </ul>
-                            </nav>
-                        <div className="col-1"></div>
-                    </div>
-                    <div className="row d-flex no-gutters project-title">
-                        <div className="col-2"></div>
-                        <div className="col-9">
-                            <div className="row d-flex no-gutters">
-                                <div className="col-10 align-self-start">
-                                    <h1>{this.state.Project.projectTitle}</h1>
-                                </div>
-                                <div className="col-2 align-self-start">
-                                    STATUS: {this.state.Project.projectStatus}
-                                </div> 
-                            </div>
-                        <div className="col-1"></div>
-                    </div>
-            
-                    <div className="row d-flex no-gutters steps-bar">
-                        <div className="col-1"></div>
-                        <div className="col-10">
-                            <ul className="d-flex justify-content-center align-items-stretch">
-                                <li id="step-1">
-                                    <NavLink className="" to={{pathname: '/releaseInformation/' + this.props.projectID}}>
-                                        <span className="step-description text-nowrap">Release Info</span>
-                                        <span className="step">1</span>
-                                        <span className="step-arrow"></span>
-                                    </NavLink>
-                                </li>
-                                <li className="step-bar">
-                                    <span></span>
-                                </li>
-                                <li id="step-2">
-                                    <NavLink className="" to={{pathname: '/projectContacts/' + this.props.projectID}}>
-                                        <span className="step-description text-nowrap">Project Contacts</span>
-                                        <span className="step">2</span>
-                                        <span className="step-arrow"></span>
-                                    </NavLink>
-                                </li>
-                                <li className="step-bar">
-                                    <span></span>
-                                </li>
-                                <li id="step-3">
-                                    <NavLink className="" to={{pathname: '/audioFiles/' + this.props.projectID}}>
-                                        <span className="step-description text-nowrap">Audio Files</span>
-                                        <span className="step">3</span>
-                                        <span className="step-arrow"></span>
-                                    </NavLink>
-                                </li>
-                                <li className="step-bar">
-                                    <span></span>
-                                </li>
-                                <li id="step-4">
-                                    <NavLink className="" to={{pathname: '/trackInformation/' + this.props.projectID}}>
-                                        <span className="step-description text-nowrap">Track Information</span>
-                                        <span className="step">4</span>
-                                        <span className="step-arrow"></span>
-                                    </NavLink>
-                                </li>
-                                <li className="step-bar">
-                                    <span></span>
-                                </li>
-                                <li id="step-5">
-                                    <NavLink className="" to={{pathname: '/territorialRights/' + this.props.projectID}}>
-                                        <span className="step-description text-nowrap">Territorial Rights</span>
-                                        <span className="step">5</span>
-                                        <span className="step-arrow"></span>
-                                    </NavLink>
-                                </li>
-                                <li className="step-bar">
-                                        <span></span>
-                                </li>
-                                <li id="step-6">
-                                    <NavLink className="" to={{pathname: '/blockingPolicies/' + this.props.projectID}}>
-                                        <span className="step-description text-nowrap">Blocking Policies</span>
-                                        <span className="step">6</span>
-                                        <span className="step-arrow"></span>
-                                    </NavLink>
-                                </li>
-                                <li className="step-bar">
-                                    <span></span>
-                                </li>
-                                <li id="step-7">
-                                    <NavLink className="" to={{pathname: '/reviewSubmit/' + this.props.projectID}}>
-                                        <span className="step-description text-nowrap">Review &amp; Submit</span>
-                                        <span className="step">7</span>
-                                        <span className="step-arrow"></span>
-                                    </NavLink>
-                                </li>
-                            </ul> 
-                        </div>
-                        <div className="col-1"></div> 
-                    </div>
+                        <nav className="col-8 d-flex no-gutters justify-content-end">
+                            <ul>
+                                <li><NavLink className="steps" to={{pathname: '/releaseInformation'}}>New Project</NavLink></li>
+                                <li><NavLink className="steps" to={{pathname: '/findProject'}}>Find A Project</NavLink></li>
+                                <li><NavLink className="steps" to={{pathname: '/recentProjects'}}>Recent Projects</NavLink></li>
+                                { (this.props.userData.IsAdmin) ? <li><NavLink className="steps" to={{pathname: '/admin'}}>Admin</NavLink></li> : null}
+                                <li> | </li>
+                                <li>Welcome, {this.props.userData.name}</li>
+                                <li><span onClick={this.handleLogoutClick}>Log Out</span></li>
+                            </ul>
+                        </nav>
+                    <div className="col-1"></div>
                 </div>
+                { (!this.state.pageViewCompact) ? this.getHeaderContent() : null}
             </div>
         </header>
         )

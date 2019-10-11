@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Table, Grid, Button, Form, Dropdown, Alert } from 'react-bootstrap'; 
+import { Form } from 'react-bootstrap'; 
 import PageHeader from '../PageHeader/PageHeader';
 import ToolTip from '../../ui/Tooltip';
 import BootStrapDropDownInput from '../ProjectContacts/pageComponents/BootStrapDropDownInput';
@@ -7,7 +7,7 @@ import { withRouter } from "react-router";
 import './ProjectContacts.css';
 import LoadingImg from '../../ui/LoadingImg';
 import Noty from 'noty';
-import { isFormValid, setInputValidStatus } from '../../Utils.js';
+import { isFormValid } from '../../Utils.js';
 
 class ProjectContactsPage extends Component {
     constructor(props) {
@@ -128,9 +128,7 @@ class ProjectContactsPage extends Component {
     }
 
     getProjectSecurityOptions() {
-
-        let securityOptions = ''
-        let defaultLabelID = ''
+        let securityOptions = '';
         if(this.props.user && this.props.user.ProjectSecurities) {
             securityOptions = this.props.user.ProjectSecurities.map( (security, i) =>
                 <option key={i} value={security.id}>{(security.id === 1) ? 'lock' : '' + 1111 + security.name}</option>
@@ -234,19 +232,22 @@ class ProjectContactsPage extends Component {
         } 
     }
 
+    componentDidUpdate = () => {
+        if(this.props.match.params.projectID) {
+            this.props.setProjectID(this.props.match.params.projectID)
+        }
+    }
+
+    componentDidMount = () => {
+        if(this.props.match.params.projectID) {
+            this.props.setProjectID(this.props.match.params.projectID)
+        }
+    }
+
     render() {
-
-        const user = JSON.parse(sessionStorage.getItem('user'))
-
-
-
         return(
             <div className="col-10">
             <LoadingImg show={this.state.showloader} />
-
-            <PageHeader 
-                data={this.state.project}
-            />
                 <div className="row d-flex no-gutters step-description">
                     <div className="col-12">
                         <h2>Step <span className="count-circle">2</span> Project Contacts</h2>
@@ -257,8 +258,6 @@ class ProjectContactsPage extends Component {
                 <Form>
                     <div className="row d-flex">
                         <div className="col-12">
-
-
                             <Form.Group className="row d-flex no-gutters">
                                 <div className="col-2">
                                 <Form.Label className='col-form-label'>Project Security 
