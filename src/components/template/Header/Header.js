@@ -23,12 +23,15 @@ export default withAuth(class Header extends Component {
 		if(this.state.projectID !== this.props.projectID) {
 			this.setState( {
                 projectID : this.props.projectID
-            }, ()=> this.handleProjectDataLoad() )
+            }, this.handleProjectDataLoad())
 		}
     };
-    
+
+    handleSetProjectData = (projectData) => {
+        this.setState( { Project : projectData} )
+    };
+
     handleProjectDataLoad = () => {
-        const user = JSON.parse(sessionStorage.getItem('user'))
         const fetchHeaders = new Headers(
             {
                 "Content-Type": "application/json",
@@ -38,7 +41,7 @@ export default withAuth(class Header extends Component {
 
         const fetchBody = JSON.stringify( {
             "User" : {
-                "email" : user.email
+                "email" : this.props.userData.email
             },
             "ProjectID" : (this.props.projectID) ? this.props.projectID : ''
         })
@@ -53,10 +56,9 @@ export default withAuth(class Header extends Component {
             }
         ).then (responseJSON => 
             {
-
-                console.log(responseJSON)
                 this.setState({
-                    Project : responseJSON.Project,
+                    Project : responseJSON.Project, 
+                    showloader : false
                 })
             }
         )
@@ -66,7 +68,7 @@ export default withAuth(class Header extends Component {
                 this.setState( {showloader : false} )
             }
         );
-    };
+    }
 
     render() {
         return(
@@ -110,7 +112,7 @@ export default withAuth(class Header extends Component {
                         <div className="col-10">
                             <ul className="d-flex justify-content-center align-items-stretch">
                                 <li id="step-1">
-                                    <NavLink className="" to={{pathname: '/releaseInformation/' + this.state.projectID}}>
+                                    <NavLink className="" to={{pathname: '/releaseInformation/' + this.props.projectID}}>
                                         <span className="step-description text-nowrap">Release Info</span>
                                         <span className="step">1</span>
                                         <span className="step-arrow"></span>
@@ -120,7 +122,7 @@ export default withAuth(class Header extends Component {
                                     <span></span>
                                 </li>
                                 <li id="step-2">
-                                    <NavLink className="" to={{pathname: '/projectContacts/' + this.state.projectID}}>
+                                    <NavLink className="" to={{pathname: '/projectContacts/' + this.props.projectID}}>
                                         <span className="step-description text-nowrap">Project Contacts</span>
                                         <span className="step">2</span>
                                         <span className="step-arrow"></span>
@@ -130,7 +132,7 @@ export default withAuth(class Header extends Component {
                                     <span></span>
                                 </li>
                                 <li id="step-3">
-                                    <NavLink className="" to={{pathname: '/audioFiles/' + this.state.projectID}}>
+                                    <NavLink className="" to={{pathname: '/audioFiles/' + this.props.projectID}}>
                                         <span className="step-description text-nowrap">Audio Files</span>
                                         <span className="step">3</span>
                                         <span className="step-arrow"></span>
@@ -140,7 +142,7 @@ export default withAuth(class Header extends Component {
                                     <span></span>
                                 </li>
                                 <li id="step-4">
-                                    <NavLink className="" to={{pathname: '/trackInformation/' + this.state.projectID}}>
+                                    <NavLink className="" to={{pathname: '/trackInformation/' + this.props.projectID}}>
                                         <span className="step-description text-nowrap">Track Information</span>
                                         <span className="step">4</span>
                                         <span className="step-arrow"></span>
@@ -150,7 +152,7 @@ export default withAuth(class Header extends Component {
                                     <span></span>
                                 </li>
                                 <li id="step-5">
-                                    <NavLink className="" to={{pathname: '/territorialRights/' + this.state.projectID}}>
+                                    <NavLink className="" to={{pathname: '/territorialRights/' + this.props.projectID}}>
                                         <span className="step-description text-nowrap">Territorial Rights</span>
                                         <span className="step">5</span>
                                         <span className="step-arrow"></span>
@@ -160,7 +162,7 @@ export default withAuth(class Header extends Component {
                                         <span></span>
                                 </li>
                                 <li id="step-6">
-                                    <NavLink className="" to={{pathname: '/blockingPolicies/' + this.state.projectID}}>
+                                    <NavLink className="" to={{pathname: '/blockingPolicies/' + this.props.projectID}}>
                                         <span className="step-description text-nowrap">Blocking Policies</span>
                                         <span className="step">6</span>
                                         <span className="step-arrow"></span>
@@ -170,7 +172,7 @@ export default withAuth(class Header extends Component {
                                     <span></span>
                                 </li>
                                 <li id="step-7">
-                                    <NavLink className="" to={{pathname: '/reviewSubmit/' + this.state.projectID}}>
+                                    <NavLink className="" to={{pathname: '/reviewSubmit/' + this.props.projectID}}>
                                         <span className="step-description text-nowrap">Review &amp; Submit</span>
                                         <span className="step">7</span>
                                         <span className="step-arrow"></span>
