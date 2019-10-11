@@ -12,7 +12,6 @@ import FindProject from './pages/FindProject/FindProjectPage';
 import HelpGuide from './pages/HelpGuide/HelpGuidePage';
 import UserAdmin from './pages/UserAdministration/UserAdministration';
 import { withAuth } from '@okta/okta-react';
-import { Alert } from 'react-bootstrap';
 
 export default withAuth(class Content extends Component {
 
@@ -111,23 +110,21 @@ export default withAuth(class Content extends Component {
 
   setProjectID(pid) {
     if(this.state.projectID !== pid) {
-      this.setState( {
-        projectID : pid
-      } )
+      this.setState( {projectID : pid} )
     }
   }
 
   render() {
 
     if(this.state.userLoaded) {
-      return (
 
+      return (
         <div className="row d-flex no-gutters">
           <div className="col-12">
 
-            <Header userData={this.state.user} projectID={this.state.projectID} />
+            <Header userData={this.state.user} projectID={this.state.projectID}/>
 
-            <div className="row d-flex no-gutters">
+            <div className="row d-flex no-gutters content">
               <div className="col-1"></div>
 
                 <SecureRoute path="/releaseInformation/:projectID?" render={ () => ( <ReleaseInformationPage user={this.state.user} setProjectID={this.setProjectID} />) } />
@@ -155,3 +152,4 @@ export default withAuth(class Content extends Component {
     }
   }
 });
+
