@@ -374,9 +374,9 @@ class FindProjectPage extends Component {
 								type="button" 
 								id="dropdownMenuButton" 
 								data-toggle="collapse" 
-								data-target="#collapseExample" 
+								data-target="#collapsePanel" 
 								aria-expanded="false" 
-								aria-controls="collapseExample"
+								aria-controls="collapsePanel"
 							>
 								<i className="material-icons">settings</i> Filters
 							</button>
