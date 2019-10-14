@@ -93,10 +93,12 @@ export default withAuth(class Content extends Component {
       ).then (userJSON => 
           {
             const newUserObj = Object.assign(userJSON, user);
-            this.setState({
-              user : newUserObj,
-              userLoaded : true
-            })
+            this.setState({userLoaded : true })
+            
+            // this.setState({
+            //   user : newUserObj,
+            //   userLoaded : true
+            // })
             sessionStorage.setItem('user', JSON.stringify(newUserObj))
           }
       ).catch(

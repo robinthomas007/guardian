@@ -61,7 +61,7 @@ export default withAuth(class Header extends Component {
             <ul className="d-flex justify-content-center align-items-stretch">
                 {this.state.navSteps.preRelease.map( (navLink, i) => {
                     return(
-                        <>
+                        <React.Fragment key={i}>
                             <li key={i} id={"step-" + (i + 1)}>
                                 <NavLink className="" to={{pathname: navLink.path + this.props.projectID}}>
                                     <span className="step-description text-nowrap">{navLink.description}</span>
@@ -70,7 +70,7 @@ export default withAuth(class Header extends Component {
                                 </NavLink>
                             </li>
                             { (i < this.state.navSteps.preRelease.length - 1) ? <li className="step-bar"><span></span></li> : null}
-                        </>
+                        </React.Fragment>
                     )
                 })}
             </ul>
@@ -168,6 +168,12 @@ export default withAuth(class Header extends Component {
             </div>
         )
     }
+
+    handleHeaderLinkRoute = (route, viewType) => {
+        alert(123)
+        this.props.history.push(route)
+        this.setState( {pageViewCompact : true} )
+    };
 
     render() {
         return(
