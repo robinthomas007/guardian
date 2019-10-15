@@ -12,7 +12,6 @@ import {isFormValid} from '../../Utils.js';
 
 import ReleasingLabelsInput from '../ReleaseInformation/pageComponents/ReleasingLabelsInput';
 import ProjectTypesInput from '../ReleaseInformation/pageComponents/ProjectTypesInput';
-import { AST_SymbolExportForeign } from 'terser';
 
 class ReleaseinformationPage extends Component {
 
@@ -397,101 +396,115 @@ class ReleaseinformationPage extends Component {
                 <Form>
                     <div className="row d-flex">
                         <div className="col-8">
-                            
-                    <Form.Group className="row d-flex no-gutters">
-                            <div className="col-3">
-                            <Form.Control 
-                                type = 'hidden'
-                                id='projectID'
-                                value={this.state.formInputs.projectID}
-                            />
+                            <Form.Group className="row d-flex no-gutters">
+                                <div className="col-3">
+                                    <Form.Control 
+                                        type = 'hidden'
+                                        id='projectID'
+                                        value={this.state.formInputs.projectID}
+                                    />
 
-                            <Form.Label className='col-form-label'>Project Title
-                                    <span className="required-ind">*</span>
-                              </Form.Label>
-                              <ToolTip tabIndex='-1' message='Enter a title for your project here. It may consist of any letter, number or symbol from 0-255 characters in length.' />
-                            </div>
-                            <div className="col-9">
-                            <Form.Control 
-                                    tabIndex='1+'
-                                    id='projectTitle' 
-                                    className='form-control requiredInput' 
-                                    type='text' 
-                                    placeholder='Enter a project title' 
-                                    value={this.state.formInputs.projectTitle}
-                                    onChange={this.handleChange}
-                                  />
-                                <div className="invalid-tooltip">
-                                    Project Title is Required
+                                    <Form.Label className='col-form-label'>Project Title
+                                        <span className="required-ind">*</span>
+                                    </Form.Label>
+                                    <ToolTip 
+                                        tabIndex='-1' 
+                                        message='Enter a title for your project here. It may consist of any letter, number or symbol from 0-255 characters in length.'
+                                    />
                                 </div>
-                            </div>
+                                <div className="col-9">
+                                    <Form.Control 
+                                        tabIndex='1+'
+                                        id='projectTitle' 
+                                        className='form-control requiredInput' 
+                                        type='text' 
+                                        placeholder='Enter a project title' 
+                                        value={this.state.formInputs.projectTitle}
+                                        onChange={this.handleChange}
+                                    />
+                                    <div className="invalid-tooltip">
+                                        Project Title is Required
+                                    </div>
+                                </div>
                             </Form.Group>
 
                             <Form.Group className="row d-flex no-gutters">
                                 <div className="col-3">
-                                <Form.Label className='col-form-label'>Artist
-                                    <span className="required-ind">*</span>
-                                </Form.Label>
-                                <ToolTip tabIndex='-1' message='Enter the artist for your project here. It ay consist of any letter, number or symbol from 0-255 characters in length.' />
+                                    <Form.Label className='col-form-label'>Artist
+                                        <span className="required-ind">*</span>
+                                    </Form.Label>
+                                    <ToolTip 
+                                        tabIndex='-1' 
+                                        message='Enter the artist for your project here. It ay consist of any letter, number or symbol from 0-255 characters in length.'
+                                    />
                                 </div>
                                <div className="col-9">
-                               <Form.Control
-                                    tabIndex='2+'
-                                    id='projectArtistName' 
-                                    className='form-control requiredInput' 
-                                    type='text' 
-                                    placeholder='Enter an artist name' 
-                                    value={this.state.formInputs.projectArtistName}
-                                    onChange={this.handleChange}
-                                />
-                                <div className="invalid-tooltip">
-                                    Artist Name is Required
-                                </div>
+                                <Form.Control
+                                        tabIndex='2+'
+                                        id='projectArtistName' 
+                                        className='form-control requiredInput' 
+                                        type='text' 
+                                        placeholder='Enter an artist name' 
+                                        value={this.state.formInputs.projectArtistName}
+                                        onChange={this.handleChange}
+                                    />
+                                    <div className="invalid-tooltip">
+                                        Artist Name is Required
+                                    </div>
                                </div>  
                             </Form.Group>
                             
                             <Form.Group className="row d-flex no-gutters">
-                            <div className="col-3">
-                                <Form.Label className='col-form-label'>Project Type
-                                    <span className="required-ind">*</span>
-                                </Form.Label>
-                                <ToolTip tabIndex='-1' message='Select a project type for your project. This can help you differentiate and identify projects with similar titles.' />
+                                <div className="col-3">
+                                    <Form.Label className='col-form-label'>Project Type
+                                        <span className="required-ind">*</span>
+                                    </Form.Label>
+                                    <ToolTip 
+                                        tabIndex='-1' 
+                                        message='Select a project type for your project. This can help you differentiate and identify projects with similar titles.'
+                                    />
                                 </div>
-                             <div className="col-9">       
-                                <ProjectTypesInput
-                                    tabIndex='3+'
-                                    id='projectType'
-                                    user={this.props.user}
-                                    value={this.state.formInputs.projectTypeID} 
-                                    onChange={this.handleChange}
-                                />
+                                <div className="col-9">       
+                                    <ProjectTypesInput
+                                        tabIndex='3+'
+                                        id='projectType'
+                                        user={this.props.user}
+                                        value={this.state.formInputs.projectTypeID} 
+                                        onChange={this.handleChange}
+                                    />
                                 </div>
                             </Form.Group>
 
                             <Form.Group className="row d-flex no-gutters">
                                 <div className="col-3">
-                                <Form.Label className='col-form-label'>Releasing Label
-                                    <span className="required-ind">*</span>
-                                </Form.Label>
-                                <ToolTip tabIndex='-1' message='Please select the releasing labe for your project. If you only have access to a single label, your label will be pre-loaded and not require a selection.' />
+                                    <Form.Label className='col-form-label'>Releasing Label
+                                        <span className="required-ind">*</span>
+                                    </Form.Label>
+                                    <ToolTip 
+                                        tabIndex='-1' 
+                                        message='Please select the releasing labe for your project. If you only have access to a single label, your label will be pre-loaded and not require a selection.'
+                                    />
                                 </div>
                                 <div className="col-9">
-                                <ReleasingLabelsInput
-                                    tabIndex='4+'
-                                    id='projectReleasingLabelID'
-                                    user={this.props.user} 
-                                    value={this.state.formInputs.projectReleasingLabelID} 
-                                    onChange={this.setParentState}
-                                />
+                                    <ReleasingLabelsInput
+                                        tabIndex='4+'
+                                        id='projectReleasingLabelID'
+                                        user={this.props.user} 
+                                        value={this.state.formInputs.projectReleasingLabelID} 
+                                        onChange={this.setParentState}
+                                    />
                                 </div>
                             </Form.Group>
 
                             <Form.Group className="row d-flex no-gutters">
                                 <div className="col-3">
-                                <Form.Label className="col-form-label">Release Date
-                                    <span className="required-ind">*</span>
-                                </Form.Label>
-                                <ToolTip tabIndex='-1' message='Projects with a release date prior to todays date will be considered post-release entries. If the projects release date is to be determined, select the TBD option.' />
+                                    <Form.Label className="col-form-label">Release Date
+                                        <span className="required-ind">*</span>
+                                    </Form.Label>
+                                    <ToolTip 
+                                        tabIndex='-1' 
+                                        message='Projects with a release date prior to todays date will be considered post-release entries. If the projects release date is to be determined, select the TBD option.'
+                                    />
                                 </div>
                                <div className="col-3 release-date">
                                     <input

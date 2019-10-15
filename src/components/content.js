@@ -12,6 +12,7 @@ import FindProject from './pages/FindProject/FindProjectPage';
 import HelpGuide from './pages/HelpGuide/HelpGuidePage';
 import UserAdmin from './pages/UserAdministration/UserAdministration';
 import { withAuth } from '@okta/okta-react';
+import { Alert } from 'react-bootstrap';
 
 export default withAuth(class Content extends Component {
 
@@ -28,7 +29,8 @@ export default withAuth(class Content extends Component {
         userLoaded : false,
         sessionId : uuidv4(),
 
-        projectID : ''
+        projectID : '',
+        Project : {}
 
     }
     this.setProjectID = this.setProjectID.bind(this);
@@ -93,12 +95,10 @@ export default withAuth(class Content extends Component {
       ).then (userJSON => 
           {
             const newUserObj = Object.assign(userJSON, user);
-            this.setState({userLoaded : true })
-            
-            // this.setState({
-            //   user : newUserObj,
-            //   userLoaded : true
-            // })
+            this.setState({
+              user : newUserObj,
+              userLoaded : true
+            })
             sessionStorage.setItem('user', JSON.stringify(newUserObj))
           }
       ).catch(
@@ -106,13 +106,54 @@ export default withAuth(class Content extends Component {
       );
   }
 
+  handleProjectDataLoad = () => {
+
+    const user = JSON.parse(sessionStorage.getItem('user'))
+
+    const fetchHeaders = new Headers(
+        {
+            "Content-Type": "application/json",
+            "Authorization" : sessionStorage.getItem('accessToken')
+        }
+    )
+
+    const fetchBody = JSON.stringify( {
+        "User" : {
+            "email" : user.email
+        },
+        "ProjectID" : (this.state.projectID) ? this.state.projectID : ''
+    })
+
+    fetch ('https://api-dev.umusic.net/guardian/project/review', {
+        method : 'POST',
+        headers : fetchHeaders,
+        body : fetchBody
+    }).then (response => 
+        {
+            return(response.json());
+        }
+    ).then (responseJSON => 
+        {
+          this.setState({
+                Project : responseJSON.Project,
+            })
+        }
+    )
+    .catch(
+        error => {
+            console.error(error);
+            this.setState( {showloader : false} )
+        }
+    );
+}
+
   updateHistory(historyValue) {
       this.props.history.push(historyValue)
   }
 
   setProjectID(pid) {
     if(this.state.projectID !== pid) {
-      this.setState( {projectID : pid} )
+        this.setState( {projectID : pid}, ()=> {this.handleProjectDataLoad();})
     }
   }
 
@@ -124,7 +165,7 @@ export default withAuth(class Content extends Component {
         <div className="row d-flex no-gutters">
           <div className="col-12">
 
-            <Header userData={this.state.user} projectID={this.state.projectID}/>
+            <Header userData={this.state.user} projectData={this.state.Project} />
 
             <div className="row d-flex no-gutters content">
               <div className="col-1"></div>
@@ -136,7 +177,6 @@ export default withAuth(class Content extends Component {
                 <SecureRoute path="/blockingPolicies/:projectID?" render={ () => ( <BlockingPoliciesPage user={this.state.user} setProjectID={this.setProjectID} />) }/>
                 <SecureRoute path="/audioFiles/:projectID?" render={ () => ( <AudioFilesPage user={this.state.user} setProjectID={this.setProjectID} />) } />
                 <SecureRoute path="/reviewSubmit/:projectID?" render={ () => ( <ReviewAndSubmitPage user={this.state.user} setProjectID={this.setProjectID} />) } />
-                <SecureRoute path="/newProject"  render={ () => ( <ReleaseInformationPage user={this.state.user} setProjectID={this.setProjectID}/>) } />
                 <SecureRoute path="/findProject" component={FindProject}/>
                 <SecureRoute path="/helpGuide" component={HelpGuide}/>
                 <SecureRoute path="/userAdmin" component={UserAdmin}/>

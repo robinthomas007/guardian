@@ -11,44 +11,54 @@ export default withAuth(class Header extends Component {
                 projectStatus : '',
                 projectID : '',
             },
+            navLoaded : false,
+            headerDataLoaded : false,
             projectID : '',
+            pagePath : '',
             pageViewCompact : false,
             navSteps  : {
                 preRelease : [
                     {
                         description : 'Release Info',
                         path : '/releaseInformation/',
-                        complete : false
+                        complete : false,
+                        stepComplete : true
                     },
                     {
                         description : 'Project Contacts',
                         path : '/projectContacts/',
-                        complete : false
+                        complete : false,
+                        stepComplete : false
                     },
                     {
                         description : 'Audio Files',
                         path : '/audioFiles/',
-                        complete : false
+                        complete : false,
+                        stepComplete : false
                     },
                     {
                         description : 'Track Information',
                         path : '/trackInformation/',
-                        complete : false
+                        complete : false,
+                        stepComplete : false
                     },
                     {
                         description : 'Territorial Rights',
                         path : '/territorialRights/',
-                        complete : false
+                        complete : false,
+                        stepComplete : false
                     },
                     {
                         description : 'Blocking Policies',
                         path : '/blockingPolicies/',
-                        complete : false
+                        complete : false,
+                        stepComplete : false
                     },
                     {
                         description : 'Review & Submit',
                         path : '/reviewSubmit/',
-                        complete : false
+                        complete : false,
+                        stepComplete : false
                     }
                 ],
                 postRelease : []
@@ -63,17 +73,21 @@ export default withAuth(class Header extends Component {
                     return(
                         <React.Fragment key={i}>
                             <li key={i} id={"step-" + (i + 1)}>
-                                <NavLink className="" to={{pathname: navLink.path + this.props.projectID}}>
+                                <NavLink 
+                                    className="" 
+                                    to={{pathname: navLink.path + this.props.projectData.projectID}}
+                                    >
                                     <span className="step-description text-nowrap">{navLink.description}</span>
                                     <span className="step">{i + 1}</span>
                                     <span className="step-arrow"></span>
                                 </NavLink>
                             </li>
                             { (i < this.state.navSteps.preRelease.length - 1) ? <li className="step-bar"><span></span></li> : null}
+                            {console.log(123)}
                         </React.Fragment>
                     )
                 })}
-            </ul>
+            </ul>            
         )
     };
 
@@ -87,60 +101,16 @@ export default withAuth(class Header extends Component {
         this.setState( { Project : projectData} )
     };
 
-    handleProjectDataLoad = () => {
-
-        const fetchHeaders = new Headers(
-            {
-                "Content-Type": "application/json",
-                "Authorization" : sessionStorage.getItem('accessToken')
-            }
-        )
-
-        const fetchBody = JSON.stringify( {
-            "User" : {
-                "email" : this.props.userData.email
-            },
-            "ProjectID" : (this.state.projectID) ? this.state.projectID : ''
-        })
-
-        fetch ('https://api-dev.umusic.net/guardian/project/review', {
-            method : 'POST',
-            headers : fetchHeaders,
-            body : fetchBody
-        }).then (response => 
-            {
-                return(response.json());
-            }
-        ).then (responseJSON => 
-            {
-                this.setState({
-                    Project : responseJSON.Project, 
-                    showloader : false
-                })
-            }
-        )
-        .catch(
-            error => {
-                console.error(error);
-                this.setState( {showloader : false} )
-            }
-        );
+    setPageDisplay = (pagePath) => {
+        console.log(pagePath)
     }
 
-	componentDidUpdate = () => {
-		if(this.state.projectID !== this.props.projectID) {
-			this.setState( {
-                projectID : this.props.projectID
-            })
-        }
+    handlePagePath = (pagePath) => {
+        
+    }
 
-        if(this.state.projectID !== '') {
-            //TODO: this needs to be optimized - we should not be calling the API from the header every page load.
-            this.handleProjectDataLoad()
-        } else {
-            console.log('empty projectID')
-        }
-    };
+    componentDidUpdate = () => {
+    }
 
     getHeaderContent = () => {
         return(
@@ -149,10 +119,10 @@ export default withAuth(class Header extends Component {
                 <div className="col-9">
                     <div className="row d-flex no-gutters">
                         <div className="col-10 align-self-start">
-                            <h1>{ (this.state.Project && this.state.Project.projectTitle) ? this.state.Project.projectTitle : 'New Project'}</h1>
+                            <h1>{ (this.props.projectData && this.props.projectData.projectTitle) ? this.props.projectData.projectTitle : 'New Project'}</h1>
                         </div>
                         <div className="col-2 align-self-start">
-                            STATUS: { (this.state.Project && this.state.Project.projectStatus) ? this.state.Project.projectStatus : 'In Progress'}
+                            STATUS: { (this.props.projectData && this.props.projectData.projectStatus) ?this.props.projectData.projectStatus : 'In Progress'}
                         </div> 
                     </div>
                     <div className="col-1"></div>
@@ -169,13 +139,11 @@ export default withAuth(class Header extends Component {
         )
     }
 
-    handleHeaderLinkRoute = (route, viewType) => {
-        alert(123)
-        this.props.history.push(route)
-        this.setState( {pageViewCompact : true} )
-    };
+
+
 
     render() {
+
         return(
             <header className={ (this.state.pageViewCompact) ? "row d-flex no-gutters compact" : "row d-flex no-gutters" }>
                 <div className="col-12 align-items-end flex-column flex-grow-1">
@@ -198,6 +166,7 @@ export default withAuth(class Header extends Component {
                         </nav>
                     <div className="col-1"></div>
                 </div>
+
                 { (!this.state.pageViewCompact) ? this.getHeaderContent() : null}
             </div>
         </header>
