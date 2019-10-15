@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
+
+import '../src/google-analytics';
 import '../src/css/index.css'
 import '../src/css/noty.css'
 import '../src/css/bootstrap-v4.css'
 import '../src/css/header.css'
+
 import LoginPage from './components/pages/HomePage/HomePage';
 import Content from "./components/content";
 import { Security, SecureRoute, ImplicitCallback } from '@okta/okta-react';
@@ -24,7 +27,7 @@ class App extends Component {
   render() {
     return (
       <Router>
-          <Security 
+          <Security
             issuer={config.okta.issuer}
             client_id={config.okta.client_id}
             redirect_uri={config.okta.redirect_uri}
@@ -33,7 +36,7 @@ class App extends Component {
               <Route path="/implicit/callback" component={ImplicitCallback} />
               <Route path="/" exact={true} component={LoginPage} />
               <Route path="/login" exact={true} component={LoginPage} />
-              
+
               <SecureRoute path="/" component={Content} />
               <SecureRoute path="/" render={ () => ( <Content props={this.props}/>) } />
 
