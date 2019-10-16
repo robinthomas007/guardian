@@ -25,7 +25,7 @@ class LabelsInput extends Component {
                 <a className="dropdown-item" key={i}>
                     <label className="custom-checkbox"> 		
                         <input   
-                            onClick={(e, i) => this.handleChange(e, index)}
+                            onChange={(e, i) => this.handleChange(e, index)}
                             type='checkbox'
                             id={label.id}
                             value={label.id}
