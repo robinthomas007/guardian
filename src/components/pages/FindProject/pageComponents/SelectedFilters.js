@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {formatDateToYYYYMMDD} from '../../../Utils'
+import { Alert } from 'react-bootstrap';
 
 class SelectedFilters extends Component {
 	constructor(props) {
@@ -65,18 +66,33 @@ class SelectedFilters extends Component {
         }
     }
 
+    getSelectedFilters = () => {
+
+        const labelFilters = this.getLabelFilters();
+        const audioFilters = this.getAudioFilters();
+        const statusFilters = this.getStatusFilters();
+        const blockingFilters = this.getBlockingFilters();
+
+        if(labelFilters || audioFilters || statusFilters || blockingFilters) {
+            return(
+                <div>
+                    Selected Filters:
+                    {labelFilters}
+                    {audioFilters}
+                    {statusFilters}
+                    {blockingFilters}
+                </div>
+            )
+        } else {
+            return(null)
+        }
+    };
+
     render() {
         return(
             <ul className="row search-row filters">
                 <li className="col-2 d-flex"></li>
-                <li className="col-8 d-flex">
-                    Selected Filters:
-                    {this.getLabelFilters()}
-                    {this.getDatebubbles()}
-                    {this.getAudioFilters()}
-                    {this.getStatusFilters()}
-                    {this.getBlockingFilters()}
-                </li>
+                <li className="col-8 d-flex">{this.getSelectedFilters()}</li>
                 <li className="col-2 d-flex"></li>
             </ul>
         )
