@@ -73,7 +73,7 @@ export default withAuth(class Header extends Component {
                     return(
                         <React.Fragment key={i}>
                             <li key={i} id={"step-" + (i + 1)}>
-                                <NavLink className="" to={{pathname: navLink.path + ((this.props.projectData && this.props.projectData.projectID) ? this.props.projectData.projectID : '')}}>
+                                <NavLink className="" to={{pathname: navLink.path + ((this.state.Project && this.state.Project.projectID) ? this.state.Project.projectID : '')}}>
                                     <span className="step-description text-nowrap">{navLink.description}</span>
                                     <span className="step">{i + 1}</span>
                                     <span className="step-arrow"></span>
@@ -101,16 +101,19 @@ export default withAuth(class Header extends Component {
         console.log(pagePath)
     }
 
-    handlePagePath = (pagePath) => {
-        
-    }
-
     componentDidUpdate() {
         if(this.props.pagePath !== this.state.pagePath) {
             const pageView = (this.props.pagePath.indexOf('findProject') >= 0) ? true : false;
+            
             this.setState( {
                 pagePath : this.props.pagePath,
-                pageViewCompact : pageView
+                pageViewCompact : pageView,
+            })
+        }
+
+        if(this.props.projectData !== this.state.Project) {
+            this.setState( {
+                Project : this.props.projectData
             })
         }
     }
@@ -121,6 +124,12 @@ export default withAuth(class Header extends Component {
             this.setState( {
                 pagePath : this.props.pagePath,
                 pageViewCompact : pageView
+            })
+        }
+
+        if(this.props.projectData !== this.state.Project) {
+            this.setState( {
+                Project : this.props.projectData
             })
         }
 

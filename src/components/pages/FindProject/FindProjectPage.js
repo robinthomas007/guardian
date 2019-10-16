@@ -1,19 +1,11 @@
 import React, { Component } from 'react';
-import {Table, Grid, Button, Form, Pagination, Dropdown, DropdownButton, Alert } from 'react-bootstrap'; 
 import './FindProject.css';
-import { AST_This } from 'terser';
 import IntroModal from '../../modals/IntroModal';
-import FilterDropdown from './pageComponents/FilterDropdown';
 import FindProjectDataTable from './pageComponents/FindProjectDataTable';
-import LabelsInput from './pageComponents/LabelsInput';
-import NameIdDropdown from './pageComponents/NameIdDropdown';
 import SearchFilterModal from './pageComponents/SearchFiltersModal';
 import ProjectsViewDropDown from './pageComponents/ProjectsViewDropDown';
 import SelectedFilters from './pageComponents/SelectedFilters';
 import TablePager from './pageComponents/TablePager';
-import { convertToLocaleTime } from '../../Utils';
-import { timingSafeEqual } from 'crypto';
-import { AlertHeading } from 'react-bootstrap/Alert';
 import { resetDatePicker } from '../../Utils'
 import { withRouter } from "react-router";
 
@@ -127,7 +119,6 @@ class FindProjectPage extends Component {
 
 	handleLabelFacetsChange = (e, i) => {
 		const { labelIds } = this.state.searchCriteria.filter;
-		let modifiedLabelFacets = [];
 		let labelName = e.target.getAttribute('labelname') ? e.target.getAttribute('labelname') : '';
 
 		const { defaultLabels } = this.state;
@@ -219,7 +210,6 @@ class FindProjectPage extends Component {
 	}
 
 	handlePaginationChange(newPage) {
-		const page = (parseInt(newPage) -1 )
 		this.setState(currentState => ({searchCriteria : { ...this.state.searchCriteria, 'pageNumber' : newPage}}), () => {
 			this.handleProjectSearch()
 		});
@@ -250,10 +240,10 @@ class FindProjectPage extends Component {
 		let targetDate = (e.target.value) ?  e.target.value : ''
 		let filterState = this.state.searchCriteria.filter
 
-		if(e.target.id == 'filterStartDate') {
-			filterState.from = (targetDate != '') ? this.getFromDate(targetDate) : ''
+		if(e.target.id === 'filterStartDate') {
+			filterState.from = (targetDate !== '') ? this.getFromDate(targetDate) : ''
 		} else {
-			filterState.to = (targetDate != '') ? this.getToDate(targetDate) : ''
+			filterState.to = (targetDate !== '') ? this.getToDate(targetDate) : ''
 		}
 
 		this.setState(currentState => ({filterState}), () => {

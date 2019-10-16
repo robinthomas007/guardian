@@ -12,7 +12,6 @@ import FindProjectPage from './pages/FindProject/FindProjectPage';
 import HelpGuide from './pages/HelpGuide/HelpGuidePage';
 import UserAdmin from './pages/UserAdministration/UserAdministration';
 import { withAuth } from '@okta/okta-react';
-import { Alert } from 'react-bootstrap';
 
 export default withAuth(class Content extends Component {
 
@@ -153,11 +152,8 @@ export default withAuth(class Content extends Component {
 
 
   setProjectID(pid) {
-
     if(this.state.projectID !== pid) {
         this.setState( {projectID : pid}, ()=> {this.handleProjectDataLoad();})
-    } else if(!pid || pid == '') {
-
     }
   }
 
