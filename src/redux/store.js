@@ -1,5 +1,6 @@
 import { createStore, applyMiddleware } from 'redux';
 import { createLogger } from 'redux-logger';
+import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 
 import createReducer from './reducers';
@@ -7,7 +8,7 @@ import createReducer from './reducers';
 const configureStore = (initialState = {}) => {
     const rootReducer = createReducer();
 
-    const middlewares = [];
+    const middlewares = [thunk];
 
     if (!['production', 'test'].includes(process.env.NODE_ENV)) {
         middlewares.push(createLogger({ collapsed: true }));
