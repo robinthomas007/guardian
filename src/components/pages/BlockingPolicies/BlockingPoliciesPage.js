@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import {Table, Grid, Button, Form } from 'react-bootstrap'; 
 import PageHeader from '../PageHeader/PageHeader';
 import './BlockingPolicies.css';
 import TracksWithoutRights from '../TerritorialRights/pageComponents/TracksWithoutRights';
@@ -16,7 +15,8 @@ class BlockingPoliciesPage extends Component {
                 BlockingPolicySets : [],
                 UnassignedBlockingPolicySetTracks : []
             },
-            dragSource : null
+            dragSource : null,
+            showLoader : false
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleChildDrag = this.handleChildDrag.bind(this);
@@ -24,7 +24,6 @@ class BlockingPoliciesPage extends Component {
   
     handleChange = (e) => {
         const setIndex = e.target.getAttribute('setIndex');
-        const siteName = e.target.getAttribute('siteName');
         const siteIndex = e.target.getAttribute('siteIndex');
 
         const { BlockingPolicySets } = this.state.project;
@@ -35,12 +34,8 @@ class BlockingPoliciesPage extends Component {
 
     handleMonetizeBlock = (e) => {
         const setIndex = e.target.getAttribute('setIndex');
-        const siteName = e.target.getAttribute('siteName');
         const siteIndex = e.target.getAttribute('siteIndex');
-        const inputTarget = e.target.getAttribute('inputTarget');
-
         const { BlockingPolicySets } = this.state.project;
-
         let modifiedBlockingPolicySets = BlockingPolicySets;
             modifiedBlockingPolicySets[setIndex].platformPolicies[siteIndex].block = (e.target.value === "true" ? true : false)
         this.setState( {BlockingPolicySets : modifiedBlockingPolicySets} )
@@ -144,7 +139,6 @@ class BlockingPoliciesPage extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         this.setState( { showLoader : true } )
-        const saveAndContinue = (e.target.id === 'contactsSaveContButton') ? true : false;
         const user = JSON.parse(sessionStorage.getItem('user'))
         const fetchHeaders = new Headers(
             {
@@ -172,6 +166,9 @@ class BlockingPoliciesPage extends Component {
         ).then (responseJSON => 
             {
                 this.setState( { showLoader : false } )
+                this.props.history.push({
+                    pathname : '/reviewSubmit/' + this.props.match.params.projectID
+                })
             }
         ).catch(
             error => {
@@ -334,7 +331,6 @@ class BlockingPoliciesPage extends Component {
                     <div className="col-3">
                         <TracksWithoutRights 
                             data={this.state.project.UnassignedBlockingPolicySetTracks}
-                            handleChildDrag={null}
                             dragSource={this.state.dragSource}
                             handleDropAdd={this.handleDropAdd}
                             handleChildDrag={this.handleChildDrag}

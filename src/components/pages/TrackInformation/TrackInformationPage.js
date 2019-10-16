@@ -173,7 +173,7 @@ class TrackInformationPage extends Component {
         );
     }
 
-    showNotification(){
+    showNotification(e, projectID){
 
         new Noty ({
             type: 'success',
@@ -182,7 +182,11 @@ class TrackInformationPage extends Component {
             theme: 'bootstrap-v4',
             layout: 'top',
             timeout: '3000'
-        }).show() 
+        }).on('afterClose', ()  =>
+            this.props.history.push({
+                pathname : '/territorialRights/' + this.props.match.params.projectID
+            })
+        ).show()
     };
 
     showNotSavedNotification(e){
@@ -220,6 +224,9 @@ class TrackInformationPage extends Component {
     }
 
     handleSubmit(event) {
+
+        this.setState({ showloader : true})
+
         const user = JSON.parse(sessionStorage.getItem('user'))
 
         let discs = this.state.discs.map( function (disc, i) {
@@ -268,12 +275,15 @@ class TrackInformationPage extends Component {
         )
         .then (responseJSON => 
             {
+                this.setState({ showloader : false})
                 this.showNotification()
             }
         )
         .catch(
-            error => 
+            error => {
+                this.setState({ showloader : false})
                 console.error('fail: ' + error)
+            }                
         );
     }
 

@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import {Table, Grid, Button, Form } from 'react-bootstrap'; 
-import TracksDropArea from '../../TerritorialRights/pageComponents/TracksDropArea';
-import TracksSelectDropDown from '../../TerritorialRights/pageComponents/TracksSelectDropDown';
 import BlockingSites from '../pageComponents/BlockingSites';
 
 class BlockingPolicySets extends Component {
