@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Table, Grid, Button, Form, Pagination, Dropdown, DropdownButton, Alert } from 'react-bootstrap'; 
+import {Form} from 'react-bootstrap'; 
 import LabelsInput from '../pageComponents/LabelsInput';
 import NameIdDropdown from '../pageComponents/NameIdDropdown';
 

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {formatDateToYYYYMMDD} from '../../../Utils'
-import { Alert } from 'react-bootstrap';
 
 class SelectedFilters extends Component {
 	constructor(props) {
