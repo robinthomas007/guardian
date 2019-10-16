@@ -15,6 +15,7 @@ import { convertToLocaleTime } from '../../Utils';
 import { timingSafeEqual } from 'crypto';
 import { AlertHeading } from 'react-bootstrap/Alert';
 import { resetDatePicker } from '../../Utils'
+import { withRouter } from "react-router";
 
 class FindProjectPage extends Component {
 	constructor(props) {
@@ -195,6 +196,10 @@ class FindProjectPage extends Component {
 
 	componentDidMount(props) {
 		this.handleProjectSearch();
+	}
+	
+	componentDidUpdate(props) {
+        this.props.setProjectID('')
     }
 
     handleChange(event) {
@@ -452,6 +457,6 @@ class FindProjectPage extends Component {
 			</div>
 		)
 	}
-}
+};
 
-export default FindProjectPage;
+export default withRouter(FindProjectPage);

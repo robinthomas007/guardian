@@ -39,7 +39,7 @@ class NameIdDropdown extends Component {
 
 		if(this.props.data) {
 			inputOptions = this.props.data.map( (data, i) =>
-				<a className="dropdown-item selected" onClick={() => this.handleChange(data)}>{data.name}</a>
+				<a key={i} className="dropdown-item selected" onClick={() => this.handleChange(data)}>{data.name}</a>
 			)
 		}
 		

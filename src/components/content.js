@@ -8,7 +8,7 @@ import ReviewAndSubmitPage from './pages/ReviewAndSubmit/ReviewAndSubmitPage';
 import BlockingPoliciesPage from './pages/BlockingPolicies/BlockingPoliciesPage';
 import TerritorialRightsPage from './pages/TerritorialRights/TerritorialRightsPage';
 import ReleaseInformationPage from './pages/ReleaseInformation/ReleaseInformationPage';
-import FindProject from './pages/FindProject/FindProjectPage';
+import FindProjectPage from './pages/FindProject/FindProjectPage';
 import HelpGuide from './pages/HelpGuide/HelpGuidePage';
 import UserAdmin from './pages/UserAdministration/UserAdministration';
 import { withAuth } from '@okta/okta-react';
@@ -151,9 +151,13 @@ export default withAuth(class Content extends Component {
       this.props.history.push(historyValue)
   }
 
+
   setProjectID(pid) {
+
     if(this.state.projectID !== pid) {
         this.setState( {projectID : pid}, ()=> {this.handleProjectDataLoad();})
+    } else if(!pid || pid == '') {
+
     }
   }
 
@@ -165,7 +169,7 @@ export default withAuth(class Content extends Component {
         <div className="row d-flex no-gutters">
           <div className="col-12">
 
-            <Header userData={this.state.user} projectData={this.state.Project} />
+            <Header userData={this.state.user} projectData={this.state.Project} pagePath={this.props.location.pathname}/>
 
             <div className="row d-flex no-gutters content">
               <div className="col-1"></div>
@@ -177,7 +181,7 @@ export default withAuth(class Content extends Component {
                 <SecureRoute path="/blockingPolicies/:projectID?" render={ () => ( <BlockingPoliciesPage user={this.state.user} setProjectID={this.setProjectID} />) }/>
                 <SecureRoute path="/audioFiles/:projectID?" render={ () => ( <AudioFilesPage user={this.state.user} setProjectID={this.setProjectID} />) } />
                 <SecureRoute path="/reviewSubmit/:projectID?" render={ () => ( <ReviewAndSubmitPage user={this.state.user} setProjectID={this.setProjectID} />) } />
-                <SecureRoute path="/findProject" component={FindProject}/>
+                <SecureRoute path="/findProject" render={ () => ( <FindProjectPage user={this.state.user} setProjectID={this.setProjectID} />) } />
                 <SecureRoute path="/helpGuide" component={HelpGuide}/>
                 <SecureRoute path="/userAdmin" component={UserAdmin}/>
 

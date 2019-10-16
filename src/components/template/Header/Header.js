@@ -15,7 +15,7 @@ export default withAuth(class Header extends Component {
             headerDataLoaded : false,
             projectID : '',
             pagePath : '',
-            pageViewCompact : false,
+            pageViewCompact : true,
             navSteps  : {
                 preRelease : [
                     {
@@ -73,17 +73,13 @@ export default withAuth(class Header extends Component {
                     return(
                         <React.Fragment key={i}>
                             <li key={i} id={"step-" + (i + 1)}>
-                                <NavLink 
-                                    className="" 
-                                    to={{pathname: navLink.path + this.props.projectData.projectID}}
-                                    >
+                                <NavLink className="" to={{pathname: navLink.path + ((this.props.projectData && this.props.projectData.projectID) ? this.props.projectData.projectID : '')}}>
                                     <span className="step-description text-nowrap">{navLink.description}</span>
                                     <span className="step">{i + 1}</span>
                                     <span className="step-arrow"></span>
                                 </NavLink>
                             </li>
                             { (i < this.state.navSteps.preRelease.length - 1) ? <li className="step-bar"><span></span></li> : null}
-                            {console.log(123)}
                         </React.Fragment>
                     )
                 })}
@@ -109,7 +105,25 @@ export default withAuth(class Header extends Component {
         
     }
 
-    componentDidUpdate = () => {
+    componentDidUpdate() {
+        if(this.props.pagePath !== this.state.pagePath) {
+            const pageView = (this.props.pagePath.indexOf('findProject') >= 0) ? true : false;
+            this.setState( {
+                pagePath : this.props.pagePath,
+                pageViewCompact : pageView
+            })
+        }
+    }
+
+    componentDidMount = () => {
+        if(this.props.pagePath !== this.state.pagePath) {
+            const pageView = (this.props.pagePath.indexOf('findProject') >= 0) ? true : false;
+            this.setState( {
+                pagePath : this.props.pagePath,
+                pageViewCompact : pageView
+            })
+        }
+
     }
 
     getHeaderContent = () => {
@@ -140,8 +154,6 @@ export default withAuth(class Header extends Component {
     }
 
 
-
-
     render() {
 
         return(
@@ -166,7 +178,6 @@ export default withAuth(class Header extends Component {
                         </nav>
                     <div className="col-1"></div>
                 </div>
-
                 { (!this.state.pageViewCompact) ? this.getHeaderContent() : null}
             </div>
         </header>
