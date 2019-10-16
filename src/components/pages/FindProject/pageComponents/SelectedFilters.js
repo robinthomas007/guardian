@@ -34,7 +34,7 @@ class SelectedFilters extends Component {
             if(label.checked) {
                 count++ 
             }
-            return ( label.checked ? <button className="btn btn-sm btn-secondary" onClick={ () => this.props.removeLabelsFilter(label.id)}>{label.name}<i className="material-icons">close</i></button> : '')
+            return ( label.checked ? <button key={i} className="btn btn-sm btn-secondary" onClick={ () => this.props.removeLabelsFilter(label.id)}>{label.name}<i className="material-icons">close</i></button> : '')
         })
         return( (count > 0) ? this.getFilterBubbles('Labels', labels) : null)
     }
