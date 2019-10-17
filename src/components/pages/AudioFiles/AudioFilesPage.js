@@ -374,7 +374,7 @@ class AudioFilesPage extends Component {
         if (formIsValid ) {
 
             this.setState( {showLoader : true } )
-            
+
             const fetchHeaders = new Headers(
                 {
                     "Content-Type": "application/json",
@@ -479,10 +479,6 @@ class AudioFilesPage extends Component {
                     showModal={this.state.showReplaceAudioModal} 
                     handleClose={this.hideReplaceAudioModal}
                     onChange={(e) => this.updateFile(e)}
-                />
-
-                <PageHeader 
-                    data={this.state.project}
                 />
 
                 <div className="row no-gutters step-description">
