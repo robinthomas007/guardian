@@ -98,7 +98,7 @@ class UserSearchDataTable extends Component {
                     <td>{user.lastName}</td>
                     <td>{user.email}</td>
                     <td><span>{user.primaryLabel}</span></td>
-                    <td>{
+                    <td className="text-center">{
                         this.props.type === 'requesting' ?
                         (<><Button variant="light">Deny</Button><Button>Approve</Button></>) :
                         (<><Button variant="light">Edit</Button><Button>Revoke</Button></>)
@@ -162,7 +162,7 @@ class UserSearchDataTable extends Component {
                             {this.handleSortDisplay('label')}
                             <i className={(this.state.activeHover === 'label') ? "material-icons" : "material-icons d-none"}>arrow_drop_up</i>
                         </th>
-                        <th>
+                        <th className="text-center">
                             Actions
                         </th>
                     </tr>

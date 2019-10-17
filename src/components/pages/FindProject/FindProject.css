@@ -1,5 +1,5 @@
 	/* Find A Project */
-	ul.search-row {list-style:none; margin:0; padding:0;}
+	ul.search-row {list-style:none; margin:0 auto 40px auto; padding:0;}
 	ul.search-row li {display:inline-block; padding:0;}
 	ul.search-row li > input {margin:auto 10px; width:100%;}
 	ul.search-row li i {font-size:20px;}

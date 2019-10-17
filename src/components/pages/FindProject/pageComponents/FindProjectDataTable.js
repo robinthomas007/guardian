@@ -93,10 +93,10 @@ class FindProjectDataTable extends Component {
             return(
                 <tr className="d-flex w-100" key={i}>
                     { (this.props.userData.IsAdmin) ? <td className="col-1 text-center">{parseInt(project.statusID) !== 1 ? <button onClick={ () => this.handleProjectDownload(project.projectID, project.submissionFileName)} className="btn btn-secondary"><i className="material-icons">cloud_download</i></button> : null} </td> : ''} 
-                    <td onClick={ () => this.handleRowClick(project.projectID) } className="col-1 text-center">{convertToLocaleTime(project.projectLastModified)}</td>
+                    <td onClick={ () => this.handleRowClick(project.projectID) } className="col-1 text-center text-nowrap">{convertToLocaleTime(project.projectLastModified)}</td>
                     <td onClick={ () => this.handleRowClick(project.projectID) }className="col-2">{project.projectTitle}</td>
                     <td onClick={ () => this.handleRowClick(project.projectID) }className="col-2">{project.projectArtistName}</td>
-                    <td onClick={ () => this.handleRowClick(project.projectID) }className="col-1">{project.projectReleasingLabel}</td>
+                    <td onClick={ () => this.handleRowClick(project.projectID) }className="col-2">{project.projectReleasingLabel}</td>
                     <td onClick={ () => this.handleRowClick(project.projectID) }className="col-1 status text-nowrap"><span>{project.status}</span></td>
                     <td onClick={ () => this.handleRowClick(project.projectID) }className="status text-center">{this.checkProjectStepStatus(project.isReleaseInfoComplete)}</td>
                     <td onClick={ () => this.handleRowClick(project.projectID) }className="status text-center">{this.checkProjectStepStatus(project.isProjectContactsComplete)}</td>
@@ -134,7 +134,7 @@ class FindProjectDataTable extends Component {
                             onMouseOut={ (e, columnID) => this.handleMouseOut(e, 'artist')} 
                             onClick={(id) => this.handleTableSort('artist')}
                         >Artist{this.handleSortDisplay('artist')}<i className={(this.state.activeHover === 'artist') ? "material-icons" : "material-icons d-none"}>arrow_drop_up</i></th>
-                        <th className="col-1 sortable" 
+                        <th className="col-2 sortable" 
                             onMouseOver={ (e, columnID) => this.handleMouseOver(e, 'label')} 
                             onMouseOut={ (e, columnID) => this.handleMouseOut(e, 'label')}
                             onClick={(id) => this.handleTableSort('label')}
