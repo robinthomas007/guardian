@@ -10,7 +10,7 @@ import TerritorialRightsPage from './pages/TerritorialRights/TerritorialRightsPa
 import ReleaseInformationPage from './pages/ReleaseInformation/ReleaseInformationPage';
 import FindProjectPage from './pages/FindProject/FindProjectPage';
 import HelpGuide from './pages/HelpGuide/HelpGuidePage';
-import UserAdmin from './pages/UserAdministration/UserAdministration';
+import UserAdministration from './pages/UserAdministration/UserAdministration';
 import { withAuth } from '@okta/okta-react';
 
 export default withAuth(class Content extends Component {
@@ -179,8 +179,7 @@ export default withAuth(class Content extends Component {
                 <SecureRoute path="/reviewSubmit/:projectID?" render={ () => ( <ReviewAndSubmitPage user={this.state.user} setProjectID={this.setProjectID} />) } />
                 <SecureRoute path="/findProject" render={ () => ( <FindProjectPage user={this.state.user} setProjectID={this.setProjectID} />) } />
                 <SecureRoute path="/helpGuide" component={HelpGuide}/>
-                <SecureRoute path="/userAdmin" component={UserAdmin}/>
-
+                <SecureRoute path="/admin" render={ () => ( <UserAdministration user={this.state.user} setProjectID={this.setProjectID} />) } />
                <div className="col-1"></div>
             </div>
 

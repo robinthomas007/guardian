@@ -71,8 +71,9 @@ class SelectedFilters extends Component {
         const audioFilters = this.getAudioFilters();
         const statusFilters = this.getStatusFilters();
         const blockingFilters = this.getBlockingFilters();
+        const dateFilters = this.getDatebubbles();
 
-        if(labelFilters || audioFilters || statusFilters || blockingFilters) {
+        if(labelFilters || audioFilters || statusFilters || blockingFilters || dateFilters) {
             return(
                 <div>
                     Selected Filters:
@@ -80,6 +81,7 @@ class SelectedFilters extends Component {
                     {audioFilters}
                     {statusFilters}
                     {blockingFilters}
+                    {dateFilters}
                 </div>
             )
         } else {

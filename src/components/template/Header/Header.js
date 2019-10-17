@@ -11,6 +11,7 @@ export default withAuth(class Header extends Component {
                 projectStatus : '',
                 projectID : '',
             },
+            compactViewPages : ['findProject', 'admin'],
             navLoaded : false,
             headerDataLoaded : false,
             projectID : '',
@@ -101,13 +102,15 @@ export default withAuth(class Header extends Component {
         console.log(pagePath)
     }
 
+    handleHeaderViewType = () => {
+        return( (this.state.compactViewPages.indexOf(this.props.pagePath.split('/')[1]) >= 0 ) ? true : false)
+    }
+
     componentDidUpdate() {
         if(this.props.pagePath !== this.state.pagePath) {
-            const pageView = (this.props.pagePath.indexOf('findProject') >= 0) ? true : false;
-            
             this.setState( {
                 pagePath : this.props.pagePath,
-                pageViewCompact : pageView,
+                pageViewCompact : this.handleHeaderViewType(),
             })
         }
 
