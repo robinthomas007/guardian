@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
-
-import '../src/google-analytics';
+import ReactGA from 'react-ga';
 import '../src/css/index.css'
 import '../src/css/noty.css'
 import '../src/css/bootstrap-v4.css'
@@ -21,8 +20,12 @@ class App extends Component {
     //clear the local storage
     localStorage.removeItem('projectData')
 
-
   };
+
+  initializeReactGA() {
+    ReactGA.initialize('UA-150085816-1');
+    ReactGA.pageview('/');
+};
 
   render() {
     return (
