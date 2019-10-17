@@ -60,19 +60,16 @@ export const convertToLocaleTime = (dateString) => {
 };
 
 export const formatDateToYYYYMMDD = (unFormattedDate) => {
-    let formattedDate = '';
     if(unFormattedDate) {
-        var d = new Date(unFormattedDate),
+        var d = new Date(unFormattedDate.replace(/-/g, '\/')),
         month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
+        day = '' + (d.getDate()),
         year = d.getFullYear();
 
         if (month.length < 2) month = '0' + month;
         if (day.length < 2) day = '0' + day;
-
-        formattedDate = [year, month, day].join('-');
     }
-    return(formattedDate)
+    return([year, month, day].join('-'))
 };
 
 export const resetDatePicker = (inputID) => {

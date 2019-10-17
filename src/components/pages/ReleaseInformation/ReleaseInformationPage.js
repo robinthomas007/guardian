@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
-import {Table, Grid, Button, Form, Alert } from 'react-bootstrap'; 
-import PageHeader from '../PageHeader/PageHeader';
+import { Button, Form } from 'react-bootstrap'; 
 import ToolTip from '../../ui/Tooltip';
 import './ReleaseInformation.css';
 import { withRouter } from 'react-router-dom';
-import Cookies from 'universal-cookie';
-import UUID from 'uuid';
 import Noty from 'noty';
 import LoadingImg from '../../ui/LoadingImg';
-import {isFormValid} from '../../Utils.js';
+import {resetDatePicker, isFormValid, formatDateToYYYYMMDD} from '../../Utils.js';
+
 
 import ReleasingLabelsInput from '../ReleaseInformation/pageComponents/ReleasingLabelsInput';
 import ProjectTypesInput from '../ReleaseInformation/pageComponents/ProjectTypesInput';
@@ -86,11 +84,8 @@ class ReleaseinformationPage extends Component {
             this.setState({projectReleaseDateDisabled : true})
             this.setState({releaseDateRequired : false});
 
-            //because datepickers don't have a simple way to reset
-            const projectReleaseDatePicker = document.getElementById('projectReleaseDate');
-            if(projectReleaseDatePicker) {
-                projectReleaseDatePicker.value = '';
-            }
+            resetDatePicker('projectReleaseDate');
+
         } else {
             this.setState({projectReleaseDateDisabled : false})
             this.setState({releaseDateRequired : true});
@@ -362,23 +357,6 @@ class ReleaseinformationPage extends Component {
         );
     }
 
-    formatDateToYYYYMMDD(unFormattedDate) {
-        let formattedDate = '';
-
-        if(unFormattedDate) {
-            var d = new Date(unFormattedDate),
-            month = '' + (d.getMonth() + 1),
-            day = '' + d.getDate(),
-            year = d.getFullYear();
-    
-            if (month.length < 2) month = '0' + month;
-            if (day.length < 2) day = '0' + day;
-    
-            formattedDate = [year, month, day].join('-');
-        }
-        return(formattedDate)
-    }
-
     render() {
         return (
             <div className="col-10">
@@ -510,7 +488,7 @@ class ReleaseinformationPage extends Component {
                                         id="projectReleaseDate" 
                                         className={this.state.releaseDateRequired ? 'form-control requiredInput' : 'form-control'} 
                                         type='date'
-                                        value={this.formatDateToYYYYMMDD(this.state.formInputs.projectReleaseDate)}
+                                        value={formatDateToYYYYMMDD(this.state.formInputs.projectReleaseDate)}
                                         disabled={this.state.projectReleaseDateDisabled}
                                         onChange={
                                             (e) => {
