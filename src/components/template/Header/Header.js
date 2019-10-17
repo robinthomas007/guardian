@@ -26,7 +26,7 @@ export default withAuth(class Header extends Component {
                         stepComplete : true
                     },
                     {
-                        description : 'Project Contacts',
+                        description : 'Contacts',
                         path : '/projectContacts/',
                         complete : false,
                         stepComplete : false
@@ -38,25 +38,25 @@ export default withAuth(class Header extends Component {
                         stepComplete : false
                     },
                     {
-                        description : 'Track Information',
+                        description : 'Track Info',
                         path : '/trackInformation/',
                         complete : false,
                         stepComplete : false
                     },
                     {
-                        description : 'Territorial Rights',
+                        description : 'Rights',
                         path : '/territorialRights/',
                         complete : false,
                         stepComplete : false
                     },
                     {
-                        description : 'Blocking Policies',
+                        description : 'Blocking',
                         path : '/blockingPolicies/',
                         complete : false,
                         stepComplete : false
                     },
                     {
-                        description : 'Review & Submit',
+                        description : 'Review',
                         path : '/reviewSubmit/',
                         complete : false,
                         stepComplete : false

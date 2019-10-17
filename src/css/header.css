@@ -1,16 +1,20 @@
 @charset "utf-8";
 /* CSS Document */
 
-	header{display:block; position:fixed; z-index:1000; width:100%; color:#fff; height:37.5vh; background-color: #333; background-image:url(../images/new-header-bg.png); background-size: cover;}
-	header.compact{height:25vh;}
+	header{display:block; position:fixed; z-index:1000; width:100%; color:#fff; height:33vh; background-color: #333; background-image:url(../images/new-header-bg.png); background-size: cover;}
+	.content {margin-top:43vh;}
+
+	header.compact{height:16.5vh;}
+	.content.compact {margin-top:26.5vh;}
+
 	.nav-bg {display:block; height:50px; width:100%; background-color:#000; opacity:0.7; position:absolute; top:0px;}
 	header nav {display:block; height:50px; font-size:15px;}
 	header nav ul {list-style:none; }	
 	header nav ul li {color:#fff; display:inline-block; margin:14px 40px auto auto; font-family:'Roboto Condensed', sans-serif;}
 	header nav ul li:last-child {margin-right:0px;}
-	header nav ul li a, header nav ul li a:visited {display:block; color:#fff; text-decoration:none; font-family:'Roboto Condensed', sans-serif;}
+	header nav ul li a, header nav ul li a:visited {display:block; color:#fff; text-align: center; text-decoration:none; font-family:'Roboto Condensed', sans-serif;}
 	header nav ul li a:hover {color:#dc2c46; text-decoration:none;}
-	span.guardian-logo {display: block; position: absolute; z-index: 10; height:120px; width:120px; top:18px; left:-3%; background-image:url(../images/new-logo-sm.png); background-size:contain;}
+	span.guardian-logo {display: block; position: absolute; z-index: 10; width:134px; height:122px; top:18px; left:-3%; background-image:url(../images/guardian-logo.png); background-size:contain;}
 	
 	div.row.d-flex.project-title {display:block; margin:20px auto;}
 	div.row.d-flex.project-title div.col-10.align-self-start h1 {margin-left:40px;}
@@ -18,7 +22,7 @@
 
 	div.row.d-flex.steps-bar {display:block; position:absolute; bottom:0; width: 100%; overflow:hidden;}
 	div.row.d-flex.steps-bar ul {list-style:none; width:100%; margin:0; padding:0; }
-	div.row.d-flex.steps-bar ul li {display:inline-block; align-content:center;}
+	div.row.d-flex.steps-bar ul li {display:inline-block; text-align:center; width:80px;}
 	div.row.d-flex.steps-bar ul li a {display:block; color:#fff!important;}
 
 @keyframes slideUpFromBottom {
@@ -41,14 +45,14 @@
 }
 
 	div.row.d-flex.steps-bar ul li a:hover {text-decoration:none!important;}
-	div.row.d-flex.steps-bar ul li a:hover span.step-description {text-decoration:none!important; color:#fff!important;}
+	div.row.d-flex.steps-bar ul li a:hover span.step-description {font-size:1.2em; text-decoration:none!important; color:#fff!important;}
 	div.row.d-flex.steps-bar ul li span{text-align:center; vertical-align: center;}
-	div.row.d-flex.steps-bar ul li span.step-description {margin:auto auto 20px auto;}
+	div.row.d-flex.steps-bar ul li span.step-description {font-size:1.2em; margin:auto auto 20px auto;}
 
 	div.row.d-flex.steps-bar ul li a span.step {display:block; position:relative; z-index:10; margin:20px auto auto auto; padding-top:2px; border-radius:100%; height:40px; width:40px; background-color:#01579b; color:#fff;  font-size:22px;}
 	div.row.d-flex.steps-bar ul li a.active span.step {background-color:#fff; color:#01579b;}
 	div.row.d-flex.steps-bar ul li a:hover span.step {background-color:#fff; color:#01579b;}
-	div.row.d-flex.steps-bar ul li.step-bar {display:inline-block; width:10%; height:10px; margin:55px -35px auto -35px; background-color:#01579b;}
+	div.row.d-flex.steps-bar ul li.step-bar {display:inline-block; width:10%; height:10px; margin:60px -35px auto -35px; background-color:#01579b;}
 
 	div.row.d-flex.steps-bar ul li a span.step-arrow {display:none;}
 	div.row.d-flex.steps-bar ul li a.active span.step-arrow {display: block; margin: 40px auto 0px auto; width: 0; height: 0; border-left: 15px solid transparent; border-right: 15px solid transparent; border-bottom: 15px solid #fff;}
