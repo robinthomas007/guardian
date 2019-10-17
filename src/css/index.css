@@ -191,7 +191,7 @@
 
 	nav.left-nav span.count-circle {color:#333; font-weight:700; padding: 3px 8px; margin:auto 6px auto 3px;}
 	
-	nav.left-nav span.left-nav-logo {display:block; margin:20px auto 10px auto; background-image:url(../images/guardian-logo.png); background-repeat:no-repeat; height:133px; width:144px;}
+	nav.left-nav span.left-nav-logo {display:block; margin:20px auto 10px auto; background-image:url(../images/guardian-logo-sm.png); background-repeat:no-repeat; height:130px; width:134px;}
 	
 	nav.left-nav .fixed-left-nav {position:fixed; width:100%; top:0; left:0; padding: 0px 0px 0px 0px; background-image:url(../images/gradient-logo-bg.png); background-repeat:no-repeat; background-size:auto; overflow: hidden; background-color:#000;}
 
