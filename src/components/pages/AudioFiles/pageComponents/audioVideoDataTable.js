@@ -35,7 +35,7 @@ class AudioVideoDataTable extends Component {
     }
 
     isValidIsrc(isrc) {
-        return((isrc.replace(/\W/g, '').length == 12) ? true : false);
+        return( (isrc.replace(/\W/g, '').length === 12 || isrc.replace(/\W/g, '').length === 0) ? true : false);
     }
 
     isValidTitle(title) {
