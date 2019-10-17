@@ -97,8 +97,8 @@ class UserSearchDataTable extends Component {
                     <td>{user.firstName}</td>
                     <td>{user.lastName}</td>
                     <td>{user.email}</td>
-                    <td className="status text-nowrap"><span>{user.primaryLabel}</span></td>
-                    <td className="status text-nowrap">{
+                    <td><span>{user.primaryLabel}</span></td>
+                    <td>{
                         this.props.type === 'requesting' ?
                         (<><Button variant="light">Deny</Button><Button>Approve</Button></>) :
                         (<><Button variant="light">Edit</Button><Button>Revoke</Button></>)

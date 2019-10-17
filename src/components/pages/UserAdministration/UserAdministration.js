@@ -175,8 +175,7 @@ class UserAdministration extends Component {
 
 	render() {
 		return (
-		<div>
-			<section className="page-container">
+		<div className="col-10">
 				<div className="row d-flex no-gutters">
 					<div className="col-12">
 						<h1>User Administration</h1>
@@ -276,9 +275,8 @@ class UserAdministration extends Component {
 						</li>
 						<li className="col-2 d-flex"></li>
 					</ul>
-				</section>
-				
-				<section className="page-container">
+
+				<div>
 					<Tabs id="requesting-existing-users-tabs">
 					<Tab eventKey="req-users" title="Requesting Access">
 						<UserResultView
@@ -307,7 +305,7 @@ class UserAdministration extends Component {
 						/>
 					</Tab>
 				</Tabs>
-			</section>
+			</div>
 		</div>
         )
     }
