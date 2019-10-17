@@ -93,7 +93,7 @@ class FindProjectDataTable extends Component {
             return(
                 <tr className="d-flex w-100" key={i}>
                     { (this.props.userData.IsAdmin) ? <td className="col-1 text-center">{parseInt(project.statusID) !== 1 ? <button onClick={ () => this.handleProjectDownload(project.projectID, project.submissionFileName)} className="btn btn-secondary"><i className="material-icons">cloud_download</i></button> : null} </td> : ''} 
-                    <td onClick={ () => this.handleRowClick(project.projectID) } className="col-1 text-center text-nowrap">{convertToLocaleTime(project.projectLastModified)}</td>
+                    <td onClick={ () => this.handleRowClick(project.projectID) } className="col-1 text-center">{convertToLocaleTime(project.projectLastModified)}</td>
                     <td onClick={ () => this.handleRowClick(project.projectID) }className="col-2">{project.projectTitle}</td>
                     <td onClick={ () => this.handleRowClick(project.projectID) }className="col-2">{project.projectArtistName}</td>
                     <td onClick={ () => this.handleRowClick(project.projectID) }className="col-2">{project.projectReleasingLabel}</td>
@@ -118,7 +118,7 @@ class FindProjectDataTable extends Component {
                     <tr className='d-flex w-100'>
                         { (this.props.userData.IsAdmin) ? <th className="col-1 text-center">Download</th> : null} 
                         <th 
-                            className="col-1 text-nowrap sortable" 
+                            className="col-1 sortable" 
                             onMouseOver={ (e, columnID) => this.handleMouseOver(e, 'last_updated')} 
                             onMouseOut={ (e, columnID) => this.handleMouseOut(e, 'last_updated')}
                             onClick={(id) => this.handleTableSort('last_updated')}
