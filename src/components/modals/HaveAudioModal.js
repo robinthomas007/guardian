@@ -66,7 +66,7 @@ class HaveAudioModal extends Component {
               No
             </Button>
           </span>
-          <div class="alert alert-danger clearfix" role="alert">
+          <div class="alert alert-primary clearfix" role="alert">
               If you do not have audio files the project cannot be submitted for full protection until audio files have been provided.
               In the meantime you can submit track information for initial protection in the next step, which will immedietly provide inital protection.
             </div>
