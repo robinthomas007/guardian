@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
-import PageHeader from '../PageHeader/PageHeader';
-import {Form, Table, Tabs, Tab, Alert } from 'react-bootstrap';
 import HaveAudioModal from '../../modals/HaveAudioModal';
 import ReplaceAudioModal from '../../modals/ReplaceAudioModal';
 import { withRouter } from "react-router";
 import './AudioFiles.css';
 import Noty from 'noty';
-import { push_uniq } from 'terser';
 import LoadingImg from '../../ui/LoadingImg';
 import AudioFilesTabbedTracks from '../AudioFiles/pageComponents/audioFilesTabbedTracks';
 
@@ -166,10 +163,8 @@ class AudioFilesPage extends Component {
     }
 
     updateFiles(e) {
-        const { discs, pageTableData, activeTab, projectData } = this.state;
-
+        const { discs, activeTab } = this.state;
         let newFiles = Array.from(e.target.files);
-        let modifiedPageTableData = pageTableData;
         let modifiedDiscs = discs;
 
         for(var i=0; i<newFiles.length; i++) {
@@ -187,9 +182,7 @@ class AudioFilesPage extends Component {
                 newFiles.splice(i,1);
             }
         }
-
         this.handleFileUpload(newFiles)
-        //this.setState({pageTableData : modifiedPageTableData});
     }
 
     deleteRow(rowIndex) {
@@ -275,10 +268,7 @@ class AudioFilesPage extends Component {
 
     handleDataLoad() {
         const user = JSON.parse(sessionStorage.getItem('user'));
-        const projectID = (this.state.projectID) ? (this.state.projectID) : '';
         const {pageTableData} = this.state;
-        const modifiedPageTableData = pageTableData;
-
         const fetchHeaders = new Headers(
             {
                 "Authorization" : sessionStorage.getItem('accessToken')
@@ -324,7 +314,7 @@ class AudioFilesPage extends Component {
     }
 
     isValidIsrc(isrc) {
-        return((isrc.replace(/\W/g, '').length == 12 || isrc.replace(/\W/g, '').length == 0) ? true : false);
+        return((isrc.replace(/\W/g, '').length === 12 || isrc.replace(/\W/g, '').length === 0) ? true : false);
     }
 
     isValidTitle(title) {
@@ -451,12 +441,6 @@ class AudioFilesPage extends Component {
     addDisc() {
         const { discs } = this.state;
         let modifiedDiscs = discs;
-
-        let newTrack = {
-            fileName : '',
-            fileUpload : false
-        }
-
         let newDisc = {
             "discNumber" : (discs.length + 1),
             "Tracks" : []

@@ -27,7 +27,7 @@ export default withAuth(class Content extends Component {
         isAdmin : false,
         userLoaded : false,
         sessionId : uuidv4(),
-
+        pageViewCompact : true,
         projectID : '',
         Project : {}
 
@@ -157,6 +157,10 @@ export default withAuth(class Content extends Component {
     }
   }
 
+  setPageViewType = (isCompactView) => {
+    return ( (this.state.pageViewCompact !== isCompactView) ? this.setState( {pageViewCompact : isCompactView} ) : null)
+  }
+
   render() {
 
     if(this.state.userLoaded) {
@@ -165,9 +169,14 @@ export default withAuth(class Content extends Component {
         <div className="row d-flex no-gutters">
           <div className="col-12">
 
-            <Header userData={this.state.user} projectData={this.state.Project} pagePath={this.props.location.pathname}/>
+            <Header 
+              userData={this.state.user} 
+              projectData={this.state.Project} 
+              pagePath={this.props.location.pathname}
+              setPageViewType={this.setPageViewType}
+            />
 
-            <div className="row d-flex no-gutters content">
+            <div className={this.state.pageViewCompact ? "row d-flex no-gutters content compact" : "row d-flex no-gutters content"} >
               <div className="col-1"></div>
 
                 <SecureRoute path="/releaseInformation/:projectID?" render={ () => ( <ReleaseInformationPage user={this.state.user} setProjectID={this.setProjectID} />) } />
