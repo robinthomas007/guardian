@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import {formatDateToYYYYMMDD} from '../../../Utils'
 
 class SelectedFilters extends Component {
 	constructor(props) {
@@ -20,6 +19,20 @@ class SelectedFilters extends Component {
                 {bubbles}
             </span>
         )
+    }
+
+    formatToDateText = (date) => {
+		let toDate = new Date(date);
+			toDate.setHours(0,0,0);	
+			toDate.setDate(toDate.getDate() - 1);
+		return((toDate.getMonth() + 1).toString().padStart(2, '0') + ' / ' + toDate.getDate().toString().padStart(2, '0') + ' / ' + toDate.getFullYear())
+    }
+
+    formatFromDateText = (date) => {
+		let toDate = new Date(date)
+			toDate.setHours(0,0,0);	
+            toDate.setDate(toDate.getDate() + 1)
+		return((toDate.getMonth() + 1).toString().padStart(2, '0') + ' / ' + toDate.getDate().toString().padStart(2, '0') + ' / ' + toDate.getFullYear())
     }
 
     getDatebubbles = () => {
@@ -52,11 +65,11 @@ class SelectedFilters extends Component {
     }
 
     getToDateFilters = () => {
-        return ( this.props.filters.to ? this.getFilterBubbles('To', <button className="btn btn-sm btn-secondary" onClick={ () => this.props.removeToDateFilter()}>{formatDateToYYYYMMDD(this.props.filters.to)}<i className="material-icons">close</i></button>) : '')
+        return ( this.props.filters.to ? this.getFilterBubbles('To', <button className="btn btn-sm btn-secondary" onClick={ () => this.props.removeToDateFilter()}>{this.formatToDateText(this.props.filters.to)}<i className="material-icons">close</i></button>) : '')
     }
 
     getFromDateFilters = () => {
-        return ( this.props.filters.from ? this.getFilterBubbles('From', <button className="btn btn-sm btn-secondary" onClick={ () => this.props.removeFromDateFilter()}>{formatDateToYYYYMMDD(this.props.filters.from)}<i className="material-icons">close</i></button>) : '')
+        return ( this.props.filters.from ? this.getFilterBubbles('From', <button className="btn btn-sm btn-secondary" onClick={ () => this.props.removeFromDateFilter()}>{this.formatFromDateText(this.props.filters.from)}<i className="material-icons">close</i></button>) : '')
     }
 
     componentDidMount() {
@@ -76,12 +89,7 @@ class SelectedFilters extends Component {
         if(labelFilters || audioFilters || statusFilters || blockingFilters || dateFilters) {
             return(
                 <div>
-                    Selected Filters:
-                    {labelFilters}
-                    {audioFilters}
-                    {statusFilters}
-                    {blockingFilters}
-                    {dateFilters}
+                    Selected Filters: {labelFilters} {audioFilters} {statusFilters} {blockingFilters} {dateFilters}
                 </div>
             )
         } else {
