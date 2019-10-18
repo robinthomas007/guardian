@@ -75,7 +75,7 @@ class SelectedFilters extends Component {
     componentDidMount() {
         if(this.state.labels !== this.props.data) {
             this.setState( {labels : this.props.data} )
-        }
+        } 
     }
 
     getSelectedFilters = () => {
@@ -88,7 +88,7 @@ class SelectedFilters extends Component {
 
         if(labelFilters || audioFilters || statusFilters || blockingFilters || dateFilters) {
             return(
-                <div className="selected-filters row d-flex no-gutters">
+                <div className="selected-filters row d-flex flex-nowrap no-gutters">
                     <div className="col-auto">
                     Selected Filters:
                     </div>
