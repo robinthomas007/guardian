@@ -324,7 +324,7 @@ class AudioFilesPage extends Component {
     }
 
     isValidIsrc(isrc) {
-        return((isrc.replace(/\W/g, '').length == 12) ? true : false);
+        return((isrc.replace(/\W/g, '').length == 12 || isrc.replace(/\W/g, '').length == 0) ? true : false);
     }
 
     isValidTitle(title) {
@@ -364,8 +364,6 @@ class AudioFilesPage extends Component {
 
     handleDataSubmit() {
 
-        this.setState( {showLoader : true } )
-
         const user = JSON.parse(sessionStorage.getItem('user'));
         const projectID = (this.state.projectID) ? (this.state.projectID) : '';
 
@@ -374,6 +372,9 @@ class AudioFilesPage extends Component {
         let formIsValid = this.isValidForm();
 
         if (formIsValid ) {
+
+            this.setState( {showLoader : true } )
+
             const fetchHeaders = new Headers(
                 {
                     "Content-Type": "application/json",
@@ -478,10 +479,6 @@ class AudioFilesPage extends Component {
                     showModal={this.state.showReplaceAudioModal} 
                     handleClose={this.hideReplaceAudioModal}
                     onChange={(e) => this.updateFile(e)}
-                />
-
-                <PageHeader 
-                    data={this.state.project}
                 />
 
                 <div className="row no-gutters step-description">
