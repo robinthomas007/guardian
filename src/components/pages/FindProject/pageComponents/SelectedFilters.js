@@ -38,7 +38,7 @@ class SelectedFilters extends Component {
     getDatebubbles = () => {
         const toDate = this.getToDateFilters();
         const fromDate = this.getFromDateFilters();
-        return( (toDate || fromDate) ? <span><label>Last Update: </label><div>{fromDate}</div><div>{toDate}</div></span> : null)
+        return( (toDate || fromDate) ? <span className="date-bubbles"><label>Last Update: </label><div>{fromDate}</div><div>{toDate}</div></span> : null)
     }
 
     getLabelFilters = () => {
@@ -88,8 +88,17 @@ class SelectedFilters extends Component {
 
         if(labelFilters || audioFilters || statusFilters || blockingFilters || dateFilters) {
             return(
-                <div>
-                    Selected Filters: {labelFilters} {audioFilters} {statusFilters} {blockingFilters} {dateFilters}
+                <div className="selected-filters row d-flex no-gutters">
+                    <div className="col-auto">
+                    Selected Filters:
+                    </div>
+                    <div className="col-10">
+                    {labelFilters}
+                    {audioFilters}
+                    {statusFilters}
+                    {blockingFilters}
+                    {dateFilters}
+                    </div>
                 </div>
             )
         } else {

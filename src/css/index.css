@@ -122,6 +122,9 @@
 
 	.modal-header {border-bottom:none;}
 	.modal-footer {border-top:none;}
+	.modal-body .clearfix {font-size:.5em;}
+	.modal-body span button {font-size:.7em;  margin:20px 3px; width:100px;}
+
 
 /*** End Bootstrap Theming ***/
 
@@ -322,6 +325,10 @@
 	#collapsePanel.search-filters .dropdown {margin-bottom:20px;}
 	#collapsePanel.search-filters input[type="date"] {margin-left:6px; background-color:#fff;}
 	#collapsePanel.search-filters i {font-size:18px; margin-right:-5px;}
+
+	div.selected-filters {line-height:2.7em;}
+	div.selected-filters div.col-auto {width:100px!important;}
+	span.date-bubbles {display:inline-flex; white-space:nowrap;}
 
 	.search-filters .card {border:none; background-color:#f5f5f5;}
 
