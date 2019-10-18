@@ -56,15 +56,21 @@ class HaveAudioModal extends Component {
           <Modal.Header>
             <Modal.Title></Modal.Title>
           </Modal.Header>
-          <Modal.Body>Do you have audio files to upload?</Modal.Body>
-          <Modal.Footer>
-            <Button variant="primary" id="yesButton" onClick={this.handleClose}>
+          <Modal.Body>Do you have audio files to upload?
+          <span>
+            <br />
+          <Button variant="primary" id="yesButton" onClick={this.handleClose}>
               Yes
             </Button>
             <Button variant="primary" id="noButton" onClick={this.handleNoAudioClick}>
               No
             </Button>
-          </Modal.Footer>
+          </span>
+          <div class="alert alert-danger clearfix" role="alert">
+              If you do not have audio files the project cannot be submitted for full protection until audio files have been provided.
+              In the meantime you can submit track information for initial protection in the next step, which will immedietly provide inital protection.
+            </div>
+          </Modal.Body>
         </Modal>
       </>
     );
