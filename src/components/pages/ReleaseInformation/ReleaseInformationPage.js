@@ -81,14 +81,16 @@ class ReleaseinformationPage extends Component {
         this.state.formInputs.projectReleaseDate = null;
 
         if(e.target.checked) {
-            this.setState({projectReleaseDateDisabled : true})
-            this.setState({releaseDateRequired : false});
-
+            this.setState({
+                projectReleaseDateDisabled : true,
+                releaseDateRequired : false
+            });
             resetDatePicker('projectReleaseDate');
-
         } else {
-            this.setState({projectReleaseDateDisabled : false})
-            this.setState({releaseDateRequired : true});
+            this.setState({
+                projectReleaseDateDisabled : false, 
+                releaseDateRequired : true
+            });
         }
         this.handleChange(e)
     }

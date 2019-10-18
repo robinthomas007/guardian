@@ -98,10 +98,6 @@ export default withAuth(class Header extends Component {
         this.setState( { Project : projectData} )
     };
 
-    setPageDisplay = (pagePath) => {
-        console.log(pagePath)
-    }
-
     handleHeaderViewType = () => {
         return( (this.state.compactViewPages.indexOf(this.props.pagePath.split('/')[1]) >= 0 ) ? true : false)
     }
@@ -119,6 +115,8 @@ export default withAuth(class Header extends Component {
                 Project : this.props.projectData
             })
         }
+
+        this.props.setPageViewType(this.state.pageViewCompact)
     }
 
     componentDidMount = () => {
@@ -135,6 +133,8 @@ export default withAuth(class Header extends Component {
                 Project : this.props.projectData
             })
         }
+
+        this.props.setPageViewType(this.state.pageViewCompact)
 
     }
 
