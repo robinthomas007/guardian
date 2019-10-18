@@ -1,11 +1,11 @@
 @charset "utf-8";
 /* CSS Document */
 
-	header{display:block; position:fixed; z-index:1000; width:100%; color:#fff; height:33vh; background-color: #333; background-image:url(../images/new-header-bg.png); background-size: cover;}
-	.content {margin-top:43vh;}
+	header{display:block; position:fixed; z-index:1000; width:100%; color:#fff; height:38vh; background-color: #333; background-image:url(../images/new-header-bg.png); background-size: cover;}
+	.content {margin-top:48vh;}
 
-	header.compact{height:16.5vh;}
-	.content.compact {margin-top:26.5vh;}
+	header.compact{height:25vh;}
+	.content.compact {margin-top:35vh;}
 
 	.nav-bg {display:block; height:50px; width:100%; background-color:#000; opacity:0.7; position:absolute; top:0px;}
 	header nav {display:block; height:50px; font-size:15px;}
