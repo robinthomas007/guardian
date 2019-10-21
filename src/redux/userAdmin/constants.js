@@ -8,3 +8,6 @@ export const UPDATE_REQ_SORT = '@userAdmin/UPDATE_REQ_SORT';
 export const UPDATE_EXT_ITEMS = '@userAdmin/UPDATE_EXT_ITEMS';
 export const UPDATE_EXT_PAGINATION = '@userAdmin/UPDATE_EXT_PAGINATION';
 export const UPDATE_EXT_SORT = '@userAdmin/UPDATE_EXT_SORT';
+export const CHANGE_TAB = '@userAdmin/CHANGE_TAB';
+export const REQUESTING = 'requesting';
+export const EXISTING = 'existing';

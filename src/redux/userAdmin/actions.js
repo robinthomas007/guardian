@@ -9,6 +9,7 @@ import {
     UPDATE_EXT_ITEMS,
     UPDATE_EXT_PAGINATION,
     UPDATE_EXT_SORT,
+    CHANGE_TAB,
 } from './constants';
 
 export const userSearchRequest = payload => ({
@@ -69,7 +70,7 @@ export const fetchUsers = () => {
 };
 
 export const updateSearchTerm = payload => {
-    return (dispatch, getState) => {
+    return dispatch => {
         dispatch({
             type: UPDATE_SEARCH_TERM,
             payload,
@@ -79,7 +80,7 @@ export const updateSearchTerm = payload => {
 };
 
 export const updateReqItems = payload => {
-    return (dispatch, getState) => {
+    return dispatch => {
         dispatch({
             type: UPDATE_REQ_ITEMS,
             payload,
@@ -89,7 +90,7 @@ export const updateReqItems = payload => {
 };
 
 export const updateReqPagination = payload => {
-    return (dispatch, getState) => {
+    return dispatch => {
         dispatch({
             type: UPDATE_REQ_PAGINATION,
             payload,
@@ -99,7 +100,7 @@ export const updateReqPagination = payload => {
 };
 
 export const updateReqSort = payload => {
-    return (dispatch, getState) => {
+    return dispatch => {
         dispatch({
             type: UPDATE_REQ_SORT,
             payload,
@@ -109,7 +110,7 @@ export const updateReqSort = payload => {
 };
 
 export const updateExtItems = payload => {
-    return (dispatch, getState) => {
+    return dispatch => {
         dispatch({
             type: UPDATE_EXT_ITEMS,
             payload,
@@ -119,7 +120,7 @@ export const updateExtItems = payload => {
 };
 
 export const updateExtPagination = payload => {
-    return (dispatch, getState) => {
+    return dispatch => {
         dispatch({
             type: UPDATE_EXT_PAGINATION,
             payload,
@@ -129,7 +130,7 @@ export const updateExtPagination = payload => {
 };
 
 export const updateExtSort = payload => {
-    return (dispatch, getState) => {
+    return dispatch => {
         dispatch({
             type: UPDATE_EXT_SORT,
             payload,
@@ -137,3 +138,8 @@ export const updateExtSort = payload => {
         dispatch(fetchUsers());
     };
 };
+
+export const changeTab = payload => ({
+    type: CHANGE_TAB,
+    payload,
+});

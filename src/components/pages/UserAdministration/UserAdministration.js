@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Tab, Tabs } from 'react-bootstrap';
+import { Redirect, NavLink } from 'react-router-dom';
+import { Nav } from 'react-bootstrap';
+import { REQUESTING, EXISTING } from 'redux/userAdmin/constants';
 import {
     fetchUsers,
     updateSearchTerm,
@@ -10,10 +12,9 @@ import {
     updateExtItems,
     updateExtPagination,
     updateExtSort,
+    changeTab,
 } from 'redux/userAdmin/actions';
 import UserResultView from './pageComponents/UserResultView';
-import UserSearchDataTable from './pageComponents/UserSearchDataTable';
-import TablePager from '../FindProject/pageComponents/TablePager';
 //import ResultsPerPageDropDown from './pageComponents/ResultsPerPageDropDown.js';
 
 class UserAdministration extends Component {
@@ -23,13 +24,18 @@ class UserAdministration extends Component {
             viewCount: [10, 25, 50],
             searchTerm: '',
             filters: [],
+            activeKey: 'requesting',
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleUserSearch = this.handleUserSearch.bind(this);
+        this.setRequesting = this.setRequesting.bind(this);
+        this.setExisting = this.setExisting.bind(this);
     }
 
     componentDidMount(props) {
+        this.props.changeTab(this.props.match.params.userType); // Note route for this page is /userAdmin/:userType which is "requesting" or "existing"
+        this.setState({ activeKey: this.props.match.params.userType });
         this.handleUserSearch();
     }
 
@@ -42,9 +48,55 @@ class UserAdministration extends Component {
         this.props.fetchUsers();
     }
 
+    setRequesting() {
+        this.setState({ activeKey: REQUESTING });
+        this.props.changeTab(REQUESTING); // Note route for this page is /userAdmin/:userType which is "requesting" or "existing"
+    }
+
+    setExisting() {
+        this.setState({ activeKey: EXISTING });
+        this.props.changeTab(EXISTING); // Note route for this page is /userAdmin/:userType which is "requesting" or "existing"
+    }
+
+    renderEmptyRedirect() {
+        if (!this.props.match.params.userType) return <Redirect to="/userAdmin/requesting" />;
+    }
+
+    renderResultView() {
+        if (this.props.tab === EXISTING) {
+            return (
+                <UserResultView
+                    type={'existing'}
+                    viewCount={this.state.viewCount}
+                    pageNumber={this.props.existingUserState.pageNumber}
+                    totalItems={this.props.existingUserState.totalItems}
+                    itemsPerPage={this.props.existingUserState.itemsPerPage}
+                    userList={this.props.existingUserState.userList}
+                    handlePaginationChange={this.props.updateExtPagination}
+                    setItemsPerPage={this.props.updateExtItems}
+                    handleColumnSort={this.props.updateExtSort}
+                />
+            );
+        }
+        return (
+            <UserResultView
+                type={'requesting'}
+                viewCount={this.state.viewCount}
+                pageNumber={this.props.requestingUserState.pageNumber}
+                totalItems={this.props.requestingUserState.totalItems}
+                itemsPerPage={this.props.requestingUserState.itemsPerPage}
+                userList={this.props.requestingUserState.userList}
+                handlePaginationChange={this.props.updateReqPagination}
+                setItemsPerPage={this.props.updateReqItems}
+                handleColumnSort={this.props.updateReqSort}
+            />
+        );
+    }
+
     render() {
         return (
             <div>
+                {this.renderEmptyRedirect()}
                 <section className="page-container">
                     <div className="row d-flex no-gutters">
                         <div className="col-12">
@@ -147,34 +199,19 @@ class UserAdministration extends Component {
                 </section>
 
                 <section className="page-container">
-                    <Tabs id="requesting-existing-users-tabs">
-                        <Tab eventKey="req-users" title="Requesting Access">
-                            <UserResultView
-                                type={'requesting'}
-                                viewCount={this.state.viewCount}
-                                pageNumber={this.props.requestingUserState.pageNumber}
-                                totalItems={this.props.requestingUserState.totalItems}
-                                itemsPerPage={this.props.requestingUserState.itemsPerPage}
-                                userList={this.props.requestingUserState.userList}
-                                handlePaginationChange={this.props.updateReqPagination}
-                                setItemsPerPage={this.props.updateReqItems}
-                                handleColumnSort={this.props.updateReqSort}
-                            />
-                        </Tab>
-                        <Tab eventKey="exist-users" title="Existing Users">
-                            <UserResultView
-                                type={'existing'}
-                                viewCount={this.state.viewCount}
-                                pageNumber={this.props.existingUserState.pageNumber}
-                                totalItems={this.props.existingUserState.totalItems}
-                                itemsPerPage={this.props.existingUserState.itemsPerPage}
-                                userList={this.props.existingUserState.userList}
-                                handlePaginationChange={this.props.updateExtPagination}
-                                setItemsPerPage={this.props.updateExtItems}
-                                handleColumnSort={this.props.updateExtSort}
-                            />
-                        </Tab>
-                    </Tabs>
+                    <Nav variant="tabs" defaultActiveKey="requesting" activeKey={this.state.activeKey}>
+                        <Nav.Item>
+                            <Nav.Link eventKey="requesting" onSelect={this.setRequesting}>
+                                <NavLink to="/userAdmin/requesting">Requesting Access</NavLink>
+                            </Nav.Link>
+                        </Nav.Item>
+                        <Nav.Item>
+                            <Nav.Link eventKey="existing" onSelect={this.setExisting}>
+                                <NavLink to="/userAdmin/existing">Existing</NavLink>
+                            </Nav.Link>
+                        </Nav.Item>
+                    </Nav>
+                    {this.renderResultView()}
                 </section>
             </div>
         );
@@ -182,9 +219,9 @@ class UserAdministration extends Component {
 }
 
 function mapStateToProps(state) {
-    const { requestingUserState, existingUserState } = state.userAdmin;
-
+    const { tab, requestingUserState, existingUserState } = state.userAdmin;
     return {
+        tab,
         requestingUserState,
         existingUserState,
     };
@@ -198,6 +235,7 @@ const actionCreators = {
     updateExtItems,
     updateExtPagination,
     updateExtSort,
+    changeTab,
 };
 
 export default connect(
