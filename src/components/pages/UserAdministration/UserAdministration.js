@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect, NavLink } from 'react-router-dom';
-import { Nav } from 'react-bootstrap';
+import { Nav, Alert } from 'react-bootstrap';
 import { REQUESTING, EXISTING } from 'redux/userAdmin/constants';
 import {
+    showError,
+    hideError,
     fetchUsers,
     updateSearchTerm,
     updateReqItems,
@@ -13,6 +15,7 @@ import {
     updateExtPagination,
     updateExtSort,
     changeTab,
+    approveDenyUser,
 } from 'redux/userAdmin/actions';
 import UserResultView from './pageComponents/UserResultView';
 //import ResultsPerPageDropDown from './pageComponents/ResultsPerPageDropDown.js';
@@ -41,7 +44,7 @@ class UserAdministration extends Component {
 
     handleChange(event) {
         this.setState({ searchTerm: event.target.value });
-        updateSearchTerm(event.target.value);
+        this.props.updateSearchTerm(event.target.value);
     }
 
     handleUserSearch() {
@@ -75,6 +78,7 @@ class UserAdministration extends Component {
                     handlePaginationChange={this.props.updateExtPagination}
                     setItemsPerPage={this.props.updateExtItems}
                     handleColumnSort={this.props.updateExtSort}
+                    approveDenyUser={this.props.approveDenyUser}
                 />
             );
         }
@@ -89,21 +93,32 @@ class UserAdministration extends Component {
                 handlePaginationChange={this.props.updateReqPagination}
                 setItemsPerPage={this.props.updateReqItems}
                 handleColumnSort={this.props.updateReqSort}
+                approveDenyUser={this.props.approveDenyUser}
             />
         );
+    }
+
+    renderError() {
+        if (this.props.error) {
+            return (
+                <Alert variant="danger" onClose={this.props.hideError} dismissible>
+                    <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
+                    <p>{this.props.error}</p>
+                </Alert>
+            );
+        }
     }
 
     render() {
         return (
             <div>
                 {this.renderEmptyRedirect()}
+
                 <section className="page-container">
                     <div className="row d-flex no-gutters">
                         <div className="col-12">
                             <h1>User Administration</h1>
-                            <p>
-                                Search for an existing <a href="mailto:guardian-support@umusic.com">guardian-support@umusic.com</a>.
-                            </p>
+                            <p>Search for an existing user or a user that is requesting access.</p>
                         </div>
                     </div>
 
@@ -199,6 +214,8 @@ class UserAdministration extends Component {
                 </section>
 
                 <section className="page-container">
+                    {this.renderError()}
+
                     <Nav variant="tabs" defaultActiveKey="requesting" activeKey={this.state.activeKey}>
                         <Nav.Item>
                             <Nav.Link eventKey="requesting" onSelect={this.setRequesting}>
@@ -219,15 +236,19 @@ class UserAdministration extends Component {
 }
 
 function mapStateToProps(state) {
-    const { tab, requestingUserState, existingUserState } = state.userAdmin;
+    const { tab, requestingUserState, existingUserState, error } = state.userAdmin;
     return {
         tab,
         requestingUserState,
         existingUserState,
+        error,
     };
 }
 
 const actionCreators = {
+    showError,
+    hideError,
+    updateSearchTerm,
     fetchUsers,
     updateReqItems,
     updateReqPagination,
@@ -236,6 +257,7 @@ const actionCreators = {
     updateExtPagination,
     updateExtSort,
     changeTab,
+    approveDenyUser,
 };
 
 export default connect(

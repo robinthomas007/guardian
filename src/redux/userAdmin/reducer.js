@@ -13,11 +13,17 @@ import {
     CHANGE_TAB,
     REQUESTING,
     EXISTING,
+    USER_ACCESS_REQUEST,
+    USER_ACCESS_SUCCESS,
+    USER_ACCESS_FAIL,
+    SHOW_ERROR,
+    HIDE_ERROR,
 } from './constants';
 
 export const initialState = {
     searchTerm: '',
     tab: 'requesting',
+    error: '',
     requestingUserState: {
         pageNumber: 1,
         itemsPerPage: 10,
@@ -41,16 +47,24 @@ export const initialState = {
 };
 
 export default createReducer(initialState, {
+    [SHOW_ERROR]: (state, action) => {
+        state.error = action.payload;
+    },
+    [HIDE_ERROR]: state => {
+        state.error = '';
+    },
     [USER_SEARCH_REQUEST]: state => {
         state.submitting = true;
     },
     [USER_SEARCH_FAIL]: (state, action) => {
-        state.error = action.payload;
+        if (!state.error && action.payload) state.error = action.payload;
         state.submitting = false;
         state.requestingUserState = initialState.requestingUserState;
         state.existingUserState = initialState.existingUserState;
     },
     [USER_SEARCH_SUCCESS]: (state, action) => {
+        state.submitting = false;
+
         let requestingData = action.payload.AccessRequestSearchResponse;
         let existingData = action.payload.UserSearchResponse;
 
@@ -66,8 +80,17 @@ export default createReducer(initialState, {
         state.existingUserState.userList = existingData.Users;
         state.existingUserState.labelFacets = existingData.LabelFacets;
         state.existingUserState.pageNumber = extPageNumber;
-
+    },
+    [USER_ACCESS_REQUEST]: state => {
+        state.submitting = true;
+    },
+    [USER_ACCESS_FAIL]: (state, action) => {
+        if (!state.error && action.payload) state.error = action.payload;
         state.submitting = false;
+    },
+    [USER_ACCESS_SUCCESS]: (state, action) => {
+        state.submitting = false;
+        debugger;
     },
     [UPDATE_SEARCH_TERM]: (state, action) => {
         state.searchTerm = action.payload;

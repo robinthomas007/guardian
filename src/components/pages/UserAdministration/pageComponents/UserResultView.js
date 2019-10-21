@@ -64,6 +64,7 @@ class UserResultView extends Component {
                         userData={JSON.parse(sessionStorage.getItem('user'))}
                         data={this.props.userList}
                         handleColumnSort={this.props.handleColumnSort}
+                        approveDenyUser={this.props.approveDenyUser}
                     />
                 </div>
             </>

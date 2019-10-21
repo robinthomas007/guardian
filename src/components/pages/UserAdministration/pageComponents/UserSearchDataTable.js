@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { convertToLocaleTime } from '../../../Utils';
-import { Table, Grid, Button, Form, Pagination, Dropdown, DropdownButton, Alert } from 'react-bootstrap';
+import { Table, Button } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
+import { APPROVE, DENY } from 'redux/userAdmin/constants';
 
 class UserSearchDataTable extends Component {
     constructor(props) {
@@ -76,7 +77,6 @@ class UserSearchDataTable extends Component {
             });
     };
 
-    //onClick={() => this.handleRowClick(user.userID)}
     renderProjects() {
         const tableRows = this.props.data.map((user, i) => {
             return (
@@ -91,8 +91,10 @@ class UserSearchDataTable extends Component {
                     <td className="status text-nowrap">
                         {this.props.type === 'requesting' ? (
                             <>
-                                <Button variant="light">Deny</Button>
-                                <Button>Approve</Button>
+                                <Button variant="light" onClick={() => this.props.approveDenyUser(user.accessRequestID, DENY)}>
+                                    Deny
+                                </Button>
+                                <Button onClick={() => this.props.approveDenyUser(user.accessRequestID, APPROVE)}>Approve</Button>
                             </>
                         ) : (
                             <>

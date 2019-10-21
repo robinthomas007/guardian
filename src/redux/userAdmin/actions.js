@@ -10,7 +10,35 @@ import {
     UPDATE_EXT_PAGINATION,
     UPDATE_EXT_SORT,
     CHANGE_TAB,
+    USER_ACCESS_REQUEST,
+    USER_ACCESS_SUCCESS,
+    USER_ACCESS_FAIL,
+    SHOW_ERROR,
+    HIDE_ERROR,
 } from './constants';
+
+const getSearchCriteria = (searchTerm, searchState) => {
+    const searchCriteria = (({ pageNumber, itemsPerPage, sortColumn, sortOrder }) => ({
+        pageNumber,
+        itemsPerPage,
+        sortColumn,
+        sortOrder,
+    }))(searchState);
+
+    searchCriteria.searchTerm = searchTerm;
+
+    return searchCriteria;
+};
+
+export const showError = payload => ({
+    type: SHOW_ERROR,
+    payload,
+});
+
+export const hideError = payload => ({
+    type: HIDE_ERROR,
+    payload,
+});
 
 export const userSearchRequest = payload => ({
     type: USER_SEARCH_REQUEST,
@@ -29,20 +57,14 @@ export const userSearchFail = payload => ({
 
 export const fetchUsers = () => {
     return (dispatch, getState) => {
+        // Clear Existing Errors First
+        dispatch(hideError());
+
         const user = JSON.parse(sessionStorage.getItem('user'));
+        const UserSearchCriteria = getSearchCriteria(getState().userAdmin.searchTerm, getState().userAdmin.existingUserState);
+        const AccessRequestSearchCriteria = getSearchCriteria(getState().userAdmin.searchTerm, getState().userAdmin.requestingUserState);
 
-        const UserSearchCriteria = (({ pageNumber, itemsPerPage, sortColumn, sortOrder }) => ({ pageNumber, itemsPerPage, sortColumn, sortOrder }))(
-            getState().userAdmin.existingUserState
-        );
-        const AccessRequestSearchCriteria = (({ pageNumber, itemsPerPage, sortColumn, sortOrder }) => ({ pageNumber, itemsPerPage, sortColumn, sortOrder }))(
-            getState().userAdmin.requestingUserState
-        );
-
-        // Both requesting and existing search use the same term right now
-        UserSearchCriteria.searchTerm = getState().userAdmin.searchTerm;
-        AccessRequestSearchCriteria.searchTerm = getState().userAdmin.searchTerm;
-
-        const searchCriteria = JSON.stringify({
+        const body = JSON.stringify({
             User: { email: user.email },
             UserSearchCriteria,
             AccessRequestSearchCriteria,
@@ -50,21 +72,83 @@ export const fetchUsers = () => {
 
         dispatch(userSearchRequest());
 
-        const fetchHeaders = new Headers({
+        const headers = new Headers({
             'Content-Type': 'application/json',
             Authorization: sessionStorage.getItem('accessToken'),
         });
 
         return fetch('https://api-dev.umusic.net/guardian/admin/search', {
             method: 'POST',
-            headers: fetchHeaders,
-            body: searchCriteria,
+            headers,
+            body,
         })
             .then(response => response.json())
             .then(json => dispatch(userSearchSuccess(json)))
             .catch(error => {
                 console.error(error);
+                dispatch(showError(error));
                 dispatch(userSearchFail());
+            });
+    };
+};
+
+export const userAccessRequest = payload => ({
+    type: USER_ACCESS_REQUEST,
+    payload,
+});
+
+export const userAccessSuccess = payload => ({
+    type: USER_ACCESS_SUCCESS,
+    payload,
+});
+
+export const userAccessFail = payload => ({
+    type: USER_ACCESS_FAIL,
+    payload,
+});
+
+export const approveDenyUser = (accessRequestID, action) => {
+    return (dispatch, getState) => {
+        debugger;
+        // Clear Existing Errors First
+        dispatch(hideError());
+
+        const user = JSON.parse(sessionStorage.getItem('user'));
+        const UserSearchCriteria = getSearchCriteria(getState().userAdmin.searchTerm, getState().userAdmin.existingUserState);
+        const AccessRequestSearchCriteria = getSearchCriteria(getState().userAdmin.searchTerm, getState().userAdmin.requestingUserState);
+
+        const body = JSON.stringify({
+            User: { email: user.email },
+            AccessRequestID: accessRequestID,
+            Action: action,
+            UserSearchCriteria,
+            AccessRequestSearchCriteria,
+        });
+
+        dispatch(userAccessRequest());
+
+        const headers = new Headers({
+            'Content-Type': 'application/json',
+            Authorization: sessionStorage.getItem('accessToken'),
+        });
+
+        return fetch('https://api-dev.umusic.net/guardian/admin/access', {
+            method: 'POST',
+            headers,
+            body,
+        })
+            .then(response => response.json())
+            .then(json => {
+                if (json.errorMessage) {
+                    console.error(json.errorMessage);
+                    dispatch(showError(json.errorMessage));
+                    dispatch(userAccessFail());
+                } else dispatch(userAccessSuccess(json));
+            })
+            .catch(error => {
+                console.error(error);
+                dispatch(showError(error));
+                dispatch(userAccessFail());
             });
     };
 };
