@@ -57,12 +57,12 @@ async function vaultGetSecret(token, secret) {
       case "userpass":
         token = await vaultUserPassLogin(process.env.VAULT_USER, process.env.VAULT_PASS)
       default:
-        token = await vaultUserPassLogin(process.env.VAULT_USER, process.env.VAULT_PASS)
+        token = await vaultLdapLogin(process.env.VAULT_USER, process.env.VAULT_PASS)
     }
     process.env.NODE_ENV = process.env.NODE_ENV.toLowerCase()
     let data = await vaultGetSecret(token, 'guardian-ui/' + process.env.NODE_ENV)
     fs.writeFileSync("src/config/index.json", JSON.stringify(data))
   } catch(e) {
-    console.log(e)
+    console.log(e.message)
   }
 })();
