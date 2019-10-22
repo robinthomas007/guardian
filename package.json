@@ -23,7 +23,7 @@
   },
   "scripts": {
     "config": "node config.js",
-    "start": "./config && react-scripts start",
+    "start": "bash ./config && react-scripts start",
     "build": "npm run config && react-scripts build",
     "test": "npm run config && react-scripts test",
     "eject": "npm run config && react-scripts eject"
