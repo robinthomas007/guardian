@@ -16,8 +16,14 @@ import {
     updateExtSort,
     changeTab,
     approveDenyUser,
+    showUserModal,
+    hideUserModal,
+    setUserToEdit,
+    editUser,
+    revokeReinstnateUser,
 } from 'redux/userAdmin/actions';
 import UserResultView from './pageComponents/UserResultView';
+import UserEditModal from './pageComponents/UserEditModal';
 //import ResultsPerPageDropDown from './pageComponents/ResultsPerPageDropDown.js';
 
 class UserAdministration extends Component {
@@ -79,6 +85,9 @@ class UserAdministration extends Component {
                     setItemsPerPage={this.props.updateExtItems}
                     handleColumnSort={this.props.updateExtSort}
                     approveDenyUser={this.props.approveDenyUser}
+                    showUserModal={this.props.showUserModal}
+                    setUserToEdit={this.props.setUserToEdit}
+                    revokeReinstnateUser={this.props.revokeReinstnateUser}
                 />
             );
         }
@@ -94,6 +103,9 @@ class UserAdministration extends Component {
                 setItemsPerPage={this.props.updateReqItems}
                 handleColumnSort={this.props.updateReqSort}
                 approveDenyUser={this.props.approveDenyUser}
+                showUserModal={this.props.showUserModal}
+                setUserToEdit={this.props.setUserToEdit}
+                revokeReinstnateUser={this.props.revokeReinstnateUser}
             />
         );
     }
@@ -113,6 +125,13 @@ class UserAdministration extends Component {
         return (
             <div>
                 {this.renderEmptyRedirect()}
+
+                <UserEditModal
+                    show={this.props.isShowingModal}
+                    onHide={this.props.hideUserModal}
+                    user={this.props.userToEdit}
+                    editUser={this.props.editUser}
+                ></UserEditModal>
 
                 <section className="page-container">
                     <div className="row d-flex no-gutters">
@@ -236,11 +255,13 @@ class UserAdministration extends Component {
 }
 
 function mapStateToProps(state) {
-    const { tab, requestingUserState, existingUserState, error } = state.userAdmin;
+    const { tab, requestingUserState, existingUserState, isShowingModal, userToEdit, error } = state.userAdmin;
     return {
         tab,
         requestingUserState,
         existingUserState,
+        isShowingModal,
+        userToEdit,
         error,
     };
 }
@@ -258,6 +279,11 @@ const actionCreators = {
     updateExtSort,
     changeTab,
     approveDenyUser,
+    showUserModal,
+    hideUserModal,
+    setUserToEdit,
+    editUser,
+    revokeReinstnateUser,
 };
 
 export default connect(

@@ -15,6 +15,18 @@ import {
     USER_ACCESS_FAIL,
     SHOW_ERROR,
     HIDE_ERROR,
+    SHOW_USER_MODAL,
+    HIDE_USER_MODAL,
+    SET_USER_TO_EDIT,
+    USER_EDIT_REQUEST,
+    USER_EDIT_SUCCESS,
+    USER_REVOKE_REQUEST,
+    USER_REVOKE_SUCCESS,
+    USER_REINSTATE_REQUEST,
+    USER_REINSTATE_SUCCESS,
+    MODIFY,
+    REVOKE,
+    REINSTATE,
 } from './constants';
 
 const getSearchCriteria = (searchTerm, searchState) => {
@@ -37,6 +49,21 @@ export const showError = payload => ({
 
 export const hideError = payload => ({
     type: HIDE_ERROR,
+    payload,
+});
+
+export const showUserModal = payload => ({
+    type: SHOW_USER_MODAL,
+    payload,
+});
+
+export const hideUserModal = payload => ({
+    type: HIDE_USER_MODAL,
+    payload,
+});
+
+export const setUserToEdit = payload => ({
+    type: SET_USER_TO_EDIT,
     payload,
 });
 
@@ -109,7 +136,6 @@ export const userAccessFail = payload => ({
 
 export const approveDenyUser = (accessRequestID, action) => {
     return (dispatch, getState) => {
-        debugger;
         // Clear Existing Errors First
         dispatch(hideError());
 
@@ -143,7 +169,10 @@ export const approveDenyUser = (accessRequestID, action) => {
                     console.error(json.errorMessage);
                     dispatch(showError(json.errorMessage));
                     dispatch(userAccessFail());
-                } else dispatch(userAccessSuccess(json));
+                } else {
+                    dispatch(userAccessSuccess(json));
+                    dispatch(userSearchSuccess(json));
+                }
             })
             .catch(error => {
                 console.error(error);
@@ -227,3 +256,135 @@ export const changeTab = payload => ({
     type: CHANGE_TAB,
     payload,
 });
+
+export const userEditRequest = payload => ({
+    type: USER_EDIT_REQUEST,
+    payload,
+});
+
+export const userEditSuccess = payload => ({
+    type: USER_EDIT_SUCCESS,
+    payload,
+});
+
+export const editUser = userToEdit => {
+    return (dispatch, getState) => {
+        // Clear Existing Errors First
+        dispatch(hideError());
+        const user = JSON.parse(sessionStorage.getItem('user'));
+        const UserSearchCriteria = getSearchCriteria(getState().userAdmin.searchTerm, getState().userAdmin.existingUserState);
+        const AccessRequestSearchCriteria = getSearchCriteria(getState().userAdmin.searchTerm, getState().userAdmin.requestingUserState);
+
+        // const userToEdit = getState().userAdmin.userToEdit;
+
+        const body = JSON.stringify({
+            User: { email: user.email },
+            ExistingUserID: userToEdit.userID,
+            Action: MODIFY,
+            FirstName: userToEdit.firstName,
+            LastName: userToEdit.lastName,
+            LabelID: userToEdit.primaryLabelID,
+            PhoneNumber: userToEdit.phoneNumber,
+            UserSearchCriteria,
+            AccessRequestSearchCriteria,
+        });
+
+        dispatch(userEditRequest());
+
+        const headers = new Headers({
+            'Content-Type': 'application/json',
+            Authorization: sessionStorage.getItem('accessToken'),
+        });
+
+        return fetch('https://api-dev.umusic.net/guardian/admin/user', {
+            method: 'POST',
+            headers,
+            body,
+        })
+            .then(response => response.json())
+            .then(json => {
+                if (json.errorMessage) {
+                    console.error(json.errorMessage);
+                    dispatch(showError(json.errorMessage));
+                } else {
+                    dispatch(userEditSuccess(json));
+                    dispatch(userSearchSuccess(json));
+                }
+            })
+            .catch(error => {
+                console.error(error);
+                dispatch(showError(error));
+                // Show edit error?
+            });
+    };
+};
+
+export const userRevokeRequest = payload => ({
+    type: USER_REVOKE_REQUEST,
+    payload,
+});
+
+export const userRevokeSuccess = payload => ({
+    type: USER_REVOKE_SUCCESS,
+    payload,
+});
+
+export const userReinstateRequest = payload => ({
+    type: USER_REINSTATE_REQUEST,
+    payload,
+});
+
+export const userReinstateSuccess = payload => ({
+    type: USER_REINSTATE_SUCCESS,
+    payload,
+});
+
+export const revokeReinstnateUser = (ExistingUserID, action) => {
+    return (dispatch, getState) => {
+        // Clear Existing Errors First
+        dispatch(hideError());
+        const user = JSON.parse(sessionStorage.getItem('user'));
+        const UserSearchCriteria = getSearchCriteria(getState().userAdmin.searchTerm, getState().userAdmin.existingUserState);
+        const AccessRequestSearchCriteria = getSearchCriteria(getState().userAdmin.searchTerm, getState().userAdmin.requestingUserState);
+
+        const body = JSON.stringify({
+            User: { email: user.email },
+            ExistingUserID,
+            Action: action,
+            UserSearchCriteria,
+            AccessRequestSearchCriteria,
+        });
+
+        if (action === REVOKE) dispatch(userRevokeRequest());
+        else if (action === REINSTATE) dispatch(userReinstateRequest());
+
+        const headers = new Headers({
+            'Content-Type': 'application/json',
+            Authorization: sessionStorage.getItem('accessToken'),
+        });
+
+        return fetch('https://api-dev.umusic.net/guardian/admin/user', {
+            method: 'POST',
+            headers,
+            body,
+        })
+            .then(response => response.json())
+            .then(json => {
+                if (json.errorMessage) {
+                    console.error(json.errorMessage);
+                    dispatch(showError(json.errorMessage));
+                } else {
+                    if (action === REVOKE) dispatch(userRevokeSuccess(json));
+                    else if (action === REINSTATE) dispatch(userReinstateSuccess(json));
+                    dispatch(userSearchSuccess(json));
+                }
+            })
+            .catch(error => {
+                console.error(error);
+                dispatch(showError(error));
+                // Dispatch specific action failure?
+                // if (action === REVOKE)
+                // else if (action === REINSTATE)
+            });
+    };
+};

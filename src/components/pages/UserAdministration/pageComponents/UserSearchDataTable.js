@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { convertToLocaleTime } from '../../../Utils';
 import { Table, Button } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
-import { APPROVE, DENY } from 'redux/userAdmin/constants';
+import { APPROVE, DENY, REVOKE, REINSTATE, ACTIVE } from 'redux/userAdmin/constants';
 
 class UserSearchDataTable extends Component {
     constructor(props) {
@@ -77,6 +77,23 @@ class UserSearchDataTable extends Component {
             });
     };
 
+    renderRevokeReinstateButton(user) {
+        if (user.status === ACTIVE) {
+            return (
+                <Button variant="light" onClick={() => this.props.revokeReinstnateUser(user.userID, REVOKE)}>
+                    Revoke
+                </Button>
+            );
+        } else {
+            // TODO: Hard match on status?
+            return (
+                <Button variant="light" onClick={() => this.props.revokeReinstnateUser(user.userID, REINSTATE)}>
+                    Reinstate
+                </Button>
+            );
+        }
+    }
+
     renderProjects() {
         const tableRows = this.props.data.map((user, i) => {
             return (
@@ -98,8 +115,15 @@ class UserSearchDataTable extends Component {
                             </>
                         ) : (
                             <>
-                                <Button variant="light">Edit</Button>
-                                <Button>Revoke</Button>
+                                <Button
+                                    onClick={() => {
+                                        this.props.setUserToEdit(user);
+                                        this.props.showUserModal();
+                                    }}
+                                >
+                                    Edit
+                                </Button>
+                                {this.renderRevokeReinstateButton(user)}
                             </>
                         )}
                     </td>

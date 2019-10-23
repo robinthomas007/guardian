@@ -65,6 +65,9 @@ class UserResultView extends Component {
                         data={this.props.userList}
                         handleColumnSort={this.props.handleColumnSort}
                         approveDenyUser={this.props.approveDenyUser}
+                        showUserModal={this.props.showUserModal}
+                        setUserToEdit={this.props.setUserToEdit}
+                        revokeReinstnateUser={this.props.revokeReinstnateUser}
                     />
                 </div>
             </>

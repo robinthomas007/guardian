@@ -18,12 +18,30 @@ import {
     USER_ACCESS_FAIL,
     SHOW_ERROR,
     HIDE_ERROR,
+    SHOW_USER_MODAL,
+    HIDE_USER_MODAL,
+    SET_USER_TO_EDIT,
+    USER_EDIT_REQUEST,
+    USER_EDIT_SUCCESS,
+    USER_REVOKE_REQUEST,
+    USER_REVOKE_SUCCESS,
+    USER_REINSTATE_REQUEST,
+    USER_REINSTATE_SUCCESS,
 } from './constants';
 
 export const initialState = {
     searchTerm: '',
     tab: 'requesting',
     error: '',
+    isShowingModal: false,
+    userToEdit: {
+        userID: '',
+        firstName: '',
+        lastName: '',
+        phoneNumber: '',
+        primaryLabel: '',
+        action: '',
+    },
     requestingUserState: {
         pageNumber: 1,
         itemsPerPage: 10,
@@ -52,6 +70,15 @@ export default createReducer(initialState, {
     },
     [HIDE_ERROR]: state => {
         state.error = '';
+    },
+    [SHOW_USER_MODAL]: state => {
+        state.isShowingModal = true;
+    },
+    [HIDE_USER_MODAL]: state => {
+        state.isShowingModal = false;
+    },
+    [SET_USER_TO_EDIT]: (state, action) => {
+        state.userToEdit = action.payload;
     },
     [USER_SEARCH_REQUEST]: state => {
         state.submitting = true;
@@ -90,7 +117,6 @@ export default createReducer(initialState, {
     },
     [USER_ACCESS_SUCCESS]: (state, action) => {
         state.submitting = false;
-        debugger;
     },
     [UPDATE_SEARCH_TERM]: (state, action) => {
         state.searchTerm = action.payload;
@@ -129,5 +155,23 @@ export default createReducer(initialState, {
     },
     [CHANGE_TAB]: (state, action) => {
         if (action.payload === REQUESTING || action.payload === EXISTING) state.tab = action.payload;
+    },
+    [USER_EDIT_REQUEST]: state => {
+        state.submitting = true;
+    },
+    [USER_EDIT_SUCCESS]: state => {
+        state.submitting = false;
+    },
+    [USER_REVOKE_REQUEST]: state => {
+        state.submitting = true;
+    },
+    [USER_REVOKE_SUCCESS]: state => {
+        state.submitting = false;
+    },
+    [USER_REINSTATE_REQUEST]: state => {
+        state.submitting = true;
+    },
+    [USER_REINSTATE_SUCCESS]: state => {
+        state.submitting = false;
     },
 });
