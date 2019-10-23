@@ -23,7 +23,7 @@ ul.countries li label.dropdown-item, ul.tracks li label.dropdown-item {padding:.
 
 .dropdown .custom-checkbox {display:inline-block; }
 .territory-tracks {width:260px;}
-.dropdown.tracks-dropdown {padding-left:0px;}
+.dropdown.tracks-dropdown {padding-left:0px; width:100%;}
 table.territorial-rights-table th {padding:20px 0 10px 0;}
 table.territorial-rights-table td {border-top:solid 1px #CCC; padding-top:10px;}
 

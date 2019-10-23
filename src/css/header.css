@@ -2,7 +2,7 @@
 /* CSS Document */
 
 	header{display:block; position:fixed; z-index:1000; width:100%; color:#fff; height:38vh; background-color: #333; background-image:url(../images/new-header-bg.png); background-size: cover;}
-	.content {margin-top:48vh;}
+	.content {margin-top:38vh;}
 
 	header.compact{height:25vh;}
 	.content.compact {margin-top:35vh;}

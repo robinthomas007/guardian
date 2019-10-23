@@ -220,12 +220,13 @@
 	
 	.required-ind {color:rgba(220,53,69,.8)}
 
-	.save-buttons {text-align:right; padding-right:30px; padding-bottom:30px; background-color:#fff;}
+	.save-buttons {text-align:right; padding-right:0px; padding-top:10px; padding-bottom:60px; background-color:#fff;}
 	.save-buttons .btn {margin-left:10px;}
 
 	/* Release Information */
 
-	.album-art-drop {border:solid 1px #CCC; background-color:#ff0000; height:190px;}
+	.album-art-drop {position:absolute; border:solid 1px #CCC; background-color:#ff0000; height:190px;}
+	input#projectCoverArt {width:190px; height:190px;}
 	.cover-art label {vertical-align:top; padding-top:5px;}
 
 	.notes-row {margin-left:15px;}
@@ -268,7 +269,7 @@
 	.card-nav {text-align:right; margin-bottom:10px;}
 	.card-nav .dropdown {margin-left:10px;}
 
-	.set-card {margin-left:-20px; padding:1rem; background-color:#F5F5F5; }
+	.set-card {margin-left:-20px;margin-bottom:0px!important; padding:1rem; background-color:#F5F5F5; }
 	.set-card btn.dropdown {background-color:#fff;}
 	.set-card table.table td {vertical-align:top; border-bottom:none;}
 	.set-card .track-draggable-area {max-height:400px; overflow-y: auto; overflow-x:hidden;}
@@ -286,7 +287,7 @@
 	ul.countries li label.dropdown-item, ul.tracks li label.dropdown-item {padding:.50rem 1.1rem;}
 
 	.dropdown .custom-checkbox {display:inline-block; }
-	.territory-tracks {width:260px;}
+	.territory-tracks {width:95%!important;}
 	
 	.option-text {color:#999; font-style:italic;}
 	.required-text {color:#FF0000; font-style:italic;}

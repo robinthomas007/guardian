@@ -247,8 +247,8 @@ class ReleaseinformationPage extends Component {
             if (!file.type.startsWith('image/')){ continue }
             const img = document.createElement("img");
                   img.src = window.URL.createObjectURL(files[i]);
-                  img.height = 188;
-                  img.width = 188;
+                  img.height = 190;
+                  img.width = 190;
                   img.classList.add("obj");
                   img.file = file;
                   img.id = 'projectCoverArtIMG';
@@ -373,7 +373,7 @@ class ReleaseinformationPage extends Component {
 
                 <Form>
                     <div className="row d-flex">
-                        <div className="col-8">
+                        <div className="col-9">
                             <Form.Group className="row d-flex no-gutters">
                                 <div className="col-3">
                                     <Form.Control 
@@ -538,10 +538,10 @@ class ReleaseinformationPage extends Component {
                             </Form.Group>
                         </div>
                             
-                        <div className="col-4">
-                            <Form.Group className="form-group cover-art">
+                        <div className="col-3 d-flex justify-content-end">
+                         
                                 <Form.Label className="col-form-label col-3 text-nowrap">Cover Art</Form.Label>
-                                <div id="preview" dropppable="true" className="form-control album-art-drop col-8">
+                                <div id="preview" dropppable="true" className="form-control album-art-drop">
                                     <Button 
                                         id="removeAlbumArt"
                                         className="btn btn-secondary action remove-art" 
@@ -567,7 +567,7 @@ class ReleaseinformationPage extends Component {
                                         />
                                     </div>
                                 </div>
-                            </Form.Group>
+                           
                         </div> 
                     </div>
                 

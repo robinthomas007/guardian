@@ -17,6 +17,6 @@ div.browse-btn {display:block; width:100px; border:1px solid #CCC; border-radius
 div.browse-btn span {position:absolute; width:180px; padding:8px; cursor:pointer;}
 div.browse-btn input {position:relative; height:36px!important; width:84px!important; padding:8px; cursor:pointer;}
 
-button.btn.btn-secondary.action.remove-art {position:absolute; right:6px; z-index:1000; opacity:.7; border:solid 1px #ced4da; }
+button.btn.btn-secondary.action.remove-art {position:absolute; right:2px; z-index:1000; opacity:.9; border:solid 1px #ced4da; }
 
 #duplicateTitle .noty_body {text-align:center; font-weight:700; background-color:#7f1b2e; color:#fff;}
