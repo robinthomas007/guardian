@@ -22,6 +22,7 @@ import {
     editUser,
     revokeReinstnateUser,
 } from 'redux/userAdmin/actions';
+import { fetchLabels } from 'redux/labels/actions';
 import UserResultView from './pageComponents/UserResultView';
 import UserEditModal from './pageComponents/UserEditModal';
 //import ResultsPerPageDropDown from './pageComponents/ResultsPerPageDropDown.js';
@@ -35,7 +36,6 @@ class UserAdministration extends Component {
             filters: [],
             activeKey: 'requesting',
         };
-
         this.handleChange = this.handleChange.bind(this);
         this.handleUserSearch = this.handleUserSearch.bind(this);
         this.setRequesting = this.setRequesting.bind(this);
@@ -46,6 +46,7 @@ class UserAdministration extends Component {
         this.props.changeTab(this.props.match.params.userType); // Note route for this page is /userAdmin/:userType which is "requesting" or "existing"
         this.setState({ activeKey: this.props.match.params.userType });
         this.handleUserSearch();
+        this.props.fetchLabels();
     }
 
     handleChange(event) {
@@ -131,6 +132,7 @@ class UserAdministration extends Component {
                     onHide={this.props.hideUserModal}
                     user={this.props.userToEdit}
                     editUser={this.props.editUser}
+                    labels={this.props.lables}
                 ></UserEditModal>
 
                 <section className="page-container">
@@ -256,6 +258,7 @@ class UserAdministration extends Component {
 
 function mapStateToProps(state) {
     const { tab, requestingUserState, existingUserState, isShowingModal, userToEdit, error } = state.userAdmin;
+    const { labels } = state.labels;
     return {
         tab,
         requestingUserState,
@@ -263,6 +266,7 @@ function mapStateToProps(state) {
         isShowingModal,
         userToEdit,
         error,
+        labels,
     };
 }
 
@@ -284,6 +288,7 @@ const actionCreators = {
     setUserToEdit,
     editUser,
     revokeReinstnateUser,
+    fetchLabels,
 };
 
 export default connect(

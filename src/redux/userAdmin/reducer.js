@@ -161,6 +161,7 @@ export default createReducer(initialState, {
     },
     [USER_EDIT_SUCCESS]: state => {
         state.submitting = false;
+        state.isShowingModal = false;
     },
     [USER_REVOKE_REQUEST]: state => {
         state.submitting = true;

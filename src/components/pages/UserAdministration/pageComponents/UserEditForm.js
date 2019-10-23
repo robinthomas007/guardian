@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm, formValueSelector } from 'redux-form';
 import { Form, Button, Col } from 'react-bootstrap';
+import LabelsDropDown from 'components/modals/pageComponents/LabelsDropDown';
 
 let UserEditForm = props => {
     const handleSubmit = event => {
@@ -14,26 +15,25 @@ let UserEditForm = props => {
             <Form.Row>
                 <Form.Group as={Col} controlId="formFirstName">
                     <Form.Label>First Name</Form.Label>
-                    <Field component="input" type="text" placeholder="John" name="firstName" />
+                    <Field component="input" type="text" placeholder="John" name="firstName" className="form-control" />
                 </Form.Group>
 
                 <Form.Group as={Col} controlId="formLastName">
                     <Form.Label>Last Name</Form.Label>
-                    <Field component="input" type="text" placeholder="Doe" name="lastName" />
+                    <Field component="input" type="text" placeholder="Doe" name="lastName" className="form-control" />
                 </Form.Group>
             </Form.Row>
             <Form.Row>
                 <Form.Group as={Col} controlId="formLabel">
-                    <Form.Label>Label</Form.Label>
-                    <Field component="input" type="text" placeholder="Universal Music Group" name="primaryLabelID" />
+                    <LabelsDropDown id="primaryLabelID" className="form-control" name="primaryLabelID" selected={props.userValues.primaryLabelID} />
                 </Form.Group>
 
                 <Form.Group as={Col} controlId="formPhoneNumber">
                     <Form.Label>Phone Number</Form.Label>
-                    <Field component="input" type="text" placeholder="123-456-7890" name="phoneNumber" />
+                    <Field component="input" type="text" placeholder="123-456-7890" name="phoneNumber" className="form-control" />
                 </Form.Group>
             </Form.Row>
-            <Form.Row>
+            <Form.Row className="float-right">
                 <Button variant="light" onClick={props.onHide}>
                     Cancel
                 </Button>
@@ -45,7 +45,6 @@ let UserEditForm = props => {
 };
 
 UserEditForm = reduxForm({
-    // a unique name for the form
     form: 'userEditForm',
     enableReinitialize: true,
 })(UserEditForm);
@@ -53,13 +52,15 @@ UserEditForm = reduxForm({
 const selector = formValueSelector('userEditForm');
 UserEditForm = connect(
     state => {
+        const initialValues = state.userAdmin.userToEdit;
         const userValues = selector(state, 'userID', 'firstName', 'lastName', 'primaryLabelID', 'phoneNumber');
+        if (!userValues.primaryLabelID) userValues.primaryLabelID = initialValues.primaryLabelID;
         return {
-            initialValues: state.userAdmin.userToEdit, // pull initial values from account reducer
+            initialValues,
             userValues,
         };
     },
-    {} // bind account loading action creator
+    {}
 )(UserEditForm);
 
 export default UserEditForm;

@@ -275,8 +275,6 @@ export const editUser = userToEdit => {
         const UserSearchCriteria = getSearchCriteria(getState().userAdmin.searchTerm, getState().userAdmin.existingUserState);
         const AccessRequestSearchCriteria = getSearchCriteria(getState().userAdmin.searchTerm, getState().userAdmin.requestingUserState);
 
-        // const userToEdit = getState().userAdmin.userToEdit;
-
         const body = JSON.stringify({
             User: { email: user.email },
             ExistingUserID: userToEdit.userID,
