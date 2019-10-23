@@ -6,6 +6,7 @@
     "@okta/okta-react": "^1.2.2",
     "@okta/okta-signin-widget": "^2.21.0",
     "dotenv": "^6.2.0",
+    "fs": "0.0.1-security",
     "noty": "^3.2.0-beta",
     "npm": "^6.11.2",
     "react": "^16.9.0",
@@ -22,11 +23,11 @@
     "uuid": "^3.3.3"
   },
   "scripts": {
-    "config": "node config.js",
-    "start": "bash ./config && react-scripts start",
-    "build": "npm run config && react-scripts build",
-    "test": "npm run config && react-scripts test",
-    "eject": "npm run config && react-scripts eject"
+    "make": "node make.js",
+    "start": "npm run make && react-scripts start",
+    "build": "npm run make && react-scripts build",
+    "test": "npm run make && react-scripts test",
+    "eject": "npm run make && react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -38,8 +39,6 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "axios": "^0.19.0",
-    "fs": "0.0.1-security",
     "terser": "^3.17.0"
   }
 }
