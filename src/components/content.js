@@ -188,7 +188,7 @@ export default withAuth(class Content extends Component {
                 <SecureRoute path="/reviewSubmit/:projectID?" render={ () => ( <ReviewAndSubmitPage user={this.state.user} setProjectID={this.setProjectID} />) } />
                 <SecureRoute path="/findProject" render={ () => ( <FindProjectPage user={this.state.user} setProjectID={this.setProjectID} />) } />
                 <SecureRoute path="/helpGuide" component={HelpGuide}/>
-                <SecureRoute path="/admin" render={ () => ( <UserAdministration user={this.state.user} setProjectID={this.setProjectID} />) } />
+                <SecureRoute path="/admin/:userType?" render={ () => ( <UserAdministration user={this.state.user} setProjectID={this.setProjectID} />) } />
                <div className="col-1"></div>
             </div>
 

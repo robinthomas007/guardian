@@ -1,34 +1,32 @@
 export const isFormValid = () => {
     let requiredInputs = document.getElementsByClassName('requiredInput');
-    let invalid = false;
 
-    for(var i=0; i<requiredInputs.length; i++) {
-        let input = requiredInputs[i];
-        if(input.value.length <= 0) {
-            setInputValidStatus(input, 'invalid');
-            invalid = false;
-        } else if (input.type === 'email') {
-            if(isValidEmail(input.value)) {
-                setInputValidStatus(input, 'valid');
-                invalid = false;
-            } else {
+    return Array.prototype.map
+        .call(requiredInputs, input => {
+            if (input.value.length <= 0) {
                 setInputValidStatus(input, 'invalid');
-                invalid = true;
+                return false;
+            } else if (input.type === 'email') {
+                if (isValidEmail(input.value)) {
+                    setInputValidStatus(input, 'valid');
+                    return true;
+                } else {
+                    setInputValidStatus(input, 'invalid');
+                    return false;
+                }
+            } else {
+                setInputValidStatus(input, 'valid');
+                return true;
             }
-        } else {
-            setInputValidStatus(input, 'valid');
-            invalid = true;
-        }
-    }
-
-    return(invalid)
+        })
+        .every(isValid => isValid === true); // Check if all fields are valid
 };
 
 export const setInputValidStatus = (input, status) => {
-    if(status === 'invalid') {
+    if (status === 'invalid') {
         input.className = input.className.replace('is-invalid', '') + ' is-invalid';
     } else {
-        input.className.replace('is-invalid', '');
+        input.className = input.className.replace('is-invalid', '');
     }
 };
 

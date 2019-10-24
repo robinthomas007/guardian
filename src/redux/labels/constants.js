@@ -1,0 +1,3 @@
+export const LABELS_REQUEST = '@labels/LABELS_REQUEST';
+export const LABELS_REQUEST_SUCCESS = '@labels/LABELS_REQUEST_SUCCESS';
+export const LABELS_REQUEST_FAIL = '@labels/LABELS_REQUEST_FAIL';
