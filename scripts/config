@@ -2,22 +2,24 @@
 
 set -e
 
+if [[ -f ~/.vault-token ]]; then
+  node scripts/config.js
+  exit 0
+fi
+
 if [[ -z "$NODE_ENV" ]]; then
-  echo enter NODE_ENV
-  read NODE_ENV
+  read -p "enter NODE_ENV: " NODE_ENV
   export NODE_ENV=$NODE_ENV
 fi
 
 if [[ -z "$VAULT_USER" ]]; then
-  echo enter VAULT_USER
-  read VAULT_USER
+  read -p "enter VAULT_USER: " VAULT_USER
   export VAULT_USER=$VAULT_USER
 fi
 
 if [[ -z "$VAULT_PASS" ]]; then
-  echo enter VAULT_PASS
-  read -s VAULT_PASS
+  read -p "enter VAULT_PASS: " -s VAULT_PASS
   export VAULT_PASS=$VAULT_PASS
 fi
 
-node config.js
+node scripts/config.js
