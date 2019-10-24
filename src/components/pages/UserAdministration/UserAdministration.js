@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import { Redirect, NavLink } from 'react-router-dom';
 import { Nav, Alert } from 'react-bootstrap';
 import { REQUESTING, EXISTING } from 'redux/userAdmin/constants';
@@ -42,8 +43,8 @@ class UserAdministration extends Component {
         this.setExisting = this.setExisting.bind(this);
     }
 
-    componentDidMount(props) {
-        this.props.changeTab(this.props.match.params.userType); // Note route for this page is /userAdmin/:userType which is "requesting" or "existing"
+    componentDidMount() {
+        this.props.changeTab(this.props.match.params.userType); // Note route for this page is /admin/:userType which is "requesting" or "existing"
         this.setState({ activeKey: this.props.match.params.userType });
         this.handleUserSearch();
         this.props.fetchLabels();
@@ -60,16 +61,16 @@ class UserAdministration extends Component {
 
     setRequesting() {
         this.setState({ activeKey: REQUESTING });
-        this.props.changeTab(REQUESTING); // Note route for this page is /userAdmin/:userType which is "requesting" or "existing"
+        this.props.changeTab(REQUESTING); // Note route for this page is /admin/:userType which is "requesting" or "existing"
     }
 
     setExisting() {
         this.setState({ activeKey: EXISTING });
-        this.props.changeTab(EXISTING); // Note route for this page is /userAdmin/:userType which is "requesting" or "existing"
+        this.props.changeTab(EXISTING); // Note route for this page is /admin/:userType which is "requesting" or "existing"
     }
 
     renderEmptyRedirect() {
-        if (!this.props.match.params.userType) return <Redirect to="/userAdmin/requesting" />;
+        if (!this.props.match.params.userType) return <Redirect to="/admin/requesting" />;
     }
 
     renderResultView() {
@@ -124,7 +125,7 @@ class UserAdministration extends Component {
 
     render() {
         return (
-            <div>
+            <div className="col-10">
                 {this.renderEmptyRedirect()}
 
                 <UserEditModal
@@ -135,8 +136,7 @@ class UserAdministration extends Component {
                     labels={this.props.lables}
                 ></UserEditModal>
 
-                {/* <section className="page-container"> */}
-                <div className="col-10">
+                <div>
                     <div className="row d-flex no-gutters">
                         <div className="col-12">
                             <h1>User Administration</h1>
@@ -234,27 +234,24 @@ class UserAdministration extends Component {
                         <li className="col-2 d-flex"></li>
                     </ul>
                 </div>
-                {/* </section> */}
 
-                {/* <section className="page-container"> */}
-                <div className="col-10">
+                <div>
                     {this.renderError()}
 
                     <Nav variant="tabs" defaultActiveKey="requesting" activeKey={this.state.activeKey}>
                         <Nav.Item>
                             <Nav.Link eventKey="requesting" onSelect={this.setRequesting}>
-                                <NavLink to="/userAdmin/requesting">Requesting Access</NavLink>
+                                <NavLink to="/admin/requesting">Requesting Access</NavLink>
                             </Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
                             <Nav.Link eventKey="existing" onSelect={this.setExisting}>
-                                <NavLink to="/userAdmin/existing">Existing</NavLink>
+                                <NavLink to="/admin/existing">Existing</NavLink>
                             </Nav.Link>
                         </Nav.Item>
                     </Nav>
                     {this.renderResultView()}
                 </div>
-                {/* </section> */}
             </div>
         );
     }
@@ -295,7 +292,9 @@ const actionCreators = {
     fetchLabels,
 };
 
-export default connect(
-    mapStateToProps,
-    actionCreators
-)(UserAdministration);
+export default withRouter(
+    connect(
+        mapStateToProps,
+        actionCreators
+    )(UserAdministration)
+);
