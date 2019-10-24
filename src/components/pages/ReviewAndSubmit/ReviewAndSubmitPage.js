@@ -154,9 +154,12 @@ class ReviewAndSubmitPage extends Component {
                     />
 
                     <div className="row no-gutters step-description review">
-                        <div className="col-12">
+                        <div className="col-11">
                             <h2>Step <span className="count-circle">7</span> Review and Submit</h2>
                             <p>Take some time to review the project before submitting. Click on any of the sections in order to return the corresponding step to make changes.</p>
+                        </div>
+                        <div className="col-1">
+                        <button type="button" className="btn btn-primary float-right" onClick={this.handleSubmitProjectClick}>Submit Project</button>
                         </div>
                     </div>
                 </div>
@@ -173,6 +176,7 @@ class ReviewAndSubmitPage extends Component {
                         </div>
                     </div>
                     <br />
+                    <div className="review-card">      
                     <div className="row no-gutters">
                         <div className="col-2">
                             <img className="album-art" src={this.state.project.Project.projectCoverArtBase64Data}/>
@@ -198,6 +202,7 @@ class ReviewAndSubmitPage extends Component {
                                     <label>Notes:</label><span> {this.state.project.Project.projectNotes}</span>
                                 </div>
                             </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -215,6 +220,8 @@ class ReviewAndSubmitPage extends Component {
                         </div>
                     </div>
                     <br />
+                    <div className="review-card">
+                    
                     <div className="row no-gutters">
                         <div className="col-6">
                             <label>Primary Contact:</label><span> {this.state.project.Project.projectPrimaryContact}</span>
@@ -228,6 +235,7 @@ class ReviewAndSubmitPage extends Component {
                         <div className="col-12">
                             <label>Additional Contacts:</label><span> {this.state.project.Project.projectAdditionalContacts}</span>
                         </div>
+                    </div>
                     </div>
                 </div>
             
@@ -244,12 +252,13 @@ class ReviewAndSubmitPage extends Component {
                     </div>
                     <div className="col-12">
                     <br />
-                    
+                    <div className="review-card">
                     <div className="tab-content" id="nav-tabContent">
                         <div className="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                             <AudioFilesTabsContainer 
                                 discs={this.state.discs}
                             />
+                        </div>
                         </div>
                         </div>
                     </div>
@@ -318,7 +327,6 @@ class ReviewAndSubmitPage extends Component {
                                     <th className="align-items-center"><span className="platform-sprite small soundcloud"></span></th>
                                     <th className="align-items-center"><span className="platform-sprite small facebook"></span></th>
                                     <th className="align-items-center"><span className="platform-sprite small instagram"></span></th>
-                                    <th className="align-items-center"><span className="platform-sprite small twitter"></span></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -331,7 +339,6 @@ class ReviewAndSubmitPage extends Component {
                                     <span className="block-date">Until 12/28/2019</span>
                                     </td>
                                     <td className="align-items-center" nowrap="nowrap">Leave Up All</td>
-                                    <td className="align-items-center" nowrap="nowrap">Leave Up All</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -340,9 +347,8 @@ class ReviewAndSubmitPage extends Component {
                 </div>
             </div>
           
-            <div className="col-12 row">
-                <div className="col-9"></div>
-                <div className="col-3 align-content-end">
+            <div className="row d-flex no-gutters">
+                <div className="col-12 align-content-end submit-project">
                     <button type="button" className="btn btn-primary float-right" onClick={this.handleSubmitProjectClick}>Submit Project</button>
                 </div>
             </div>
