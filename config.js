@@ -56,10 +56,10 @@ async function vaultGetSecret(token, secret) {
         break;
       case "userpass":
         token = await vaultUserPassLogin(process.env.VAULT_USER, process.env.VAULT_PASS)
-	break;
+        break;
       default:
         token = await vaultLdapLogin(process.env.VAULT_USER, process.env.VAULT_PASS)
-	break;
+	      break;
     }
     process.env.NODE_ENV = process.env.NODE_ENV.toLowerCase()
     let data = await vaultGetSecret(token, 'guardian-ui/' + process.env.NODE_ENV)
