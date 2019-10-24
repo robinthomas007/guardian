@@ -18,7 +18,11 @@ class UserSearchDataTable extends Component {
     }
 
     checkProjectStepStatus = stepStatus => {
-        return stepStatus ? <i className="material-icons success">verified_user</i> : <i className="material-icons">block</i>;
+        return stepStatus ? (
+            <i className="material-icons success">verified_user</i>
+        ) : (
+            <i className="material-icons">block</i>
+        );
     };
 
     handleRowClick = projectID => {
@@ -50,7 +54,11 @@ class UserSearchDataTable extends Component {
     };
 
     handleHoverDisplay = columnID => {
-        return <i className={this.state.activeHover === columnID ? 'material-icons' : 'material-icons d-none'}>arrow_drop_up</i>;
+        return (
+            <i className={this.state.activeHover === columnID ? 'material-icons' : 'material-icons d-none'}>
+                arrow_drop_up
+            </i>
+        );
     };
 
     handleProjectDownload = (projectID, projectFileName) => {
@@ -108,10 +116,15 @@ class UserSearchDataTable extends Component {
                     <td className="text-center">
                         {this.props.type === 'requesting' ? (
                             <>
-                                <Button variant="light" onClick={() => this.props.approveDenyUser(user.accessRequestID, DENY)}>
+                                <Button
+                                    variant="light"
+                                    onClick={() => this.props.approveDenyUser(user.accessRequestID, DENY)}
+                                >
                                     Deny
                                 </Button>
-                                <Button onClick={() => this.props.approveDenyUser(user.accessRequestID, APPROVE)}>Approve</Button>
+                                <Button onClick={() => this.props.approveDenyUser(user.accessRequestID, APPROVE)}>
+                                    Approve
+                                </Button>
                             </>
                         ) : (
                             <>
@@ -147,7 +160,15 @@ class UserSearchDataTable extends Component {
                         >
                             Request Date
                             {this.handleSortDisplay('date_created')}
-                            <i className={this.state.activeHover === 'date_created' ? 'material-icons' : 'material-icons d-none'}>arrow_drop_down</i>
+                            <i
+                                className={
+                                    this.state.activeHover === 'date_created'
+                                        ? 'material-icons'
+                                        : 'material-icons d-none'
+                                }
+                            >
+                                arrow_drop_down
+                            </i>
                         </th>
                         <th
                             className="text-nowrap sortable"
@@ -157,7 +178,13 @@ class UserSearchDataTable extends Component {
                         >
                             First Name
                             {this.handleSortDisplay('first_name')}
-                            <i className={this.state.activeHover === 'first_name' ? 'material-icons' : 'material-icons d-none'}>arrow_drop_up</i>
+                            <i
+                                className={
+                                    this.state.activeHover === 'first_name' ? 'material-icons' : 'material-icons d-none'
+                                }
+                            >
+                                arrow_drop_up
+                            </i>
                         </th>
                         <th
                             className="sortable"
@@ -167,7 +194,13 @@ class UserSearchDataTable extends Component {
                         >
                             Last Name
                             {this.handleSortDisplay('last_name')}
-                            <i className={this.state.activeHover === 'last_name' ? 'material-icons' : 'material-icons d-none'}>arrow_drop_up</i>
+                            <i
+                                className={
+                                    this.state.activeHover === 'last_name' ? 'material-icons' : 'material-icons d-none'
+                                }
+                            >
+                                arrow_drop_up
+                            </i>
                         </th>
                         <th
                             className="sortable"
@@ -177,7 +210,13 @@ class UserSearchDataTable extends Component {
                         >
                             Email
                             {this.handleSortDisplay('email')}
-                            <i className={this.state.activeHover === 'email' ? 'material-icons' : 'material-icons d-none'}>arrow_drop_up</i>
+                            <i
+                                className={
+                                    this.state.activeHover === 'email' ? 'material-icons' : 'material-icons d-none'
+                                }
+                            >
+                                arrow_drop_up
+                            </i>
                         </th>
                         <th
                             className="sortable"
@@ -187,7 +226,13 @@ class UserSearchDataTable extends Component {
                         >
                             Label/Co.
                             {this.handleSortDisplay('label')}
-                            <i className={this.state.activeHover === 'label' ? 'material-icons' : 'material-icons d-none'}>arrow_drop_up</i>
+                            <i
+                                className={
+                                    this.state.activeHover === 'label' ? 'material-icons' : 'material-icons d-none'
+                                }
+                            >
+                                arrow_drop_up
+                            </i>
                         </th>
                         <th className="text-center">Actions</th>
                     </tr>

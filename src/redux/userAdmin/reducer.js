@@ -95,8 +95,15 @@ export default createReducer(initialState, {
         let requestingData = action.payload.AccessRequestSearchResponse;
         let existingData = action.payload.UserSearchResponse;
 
-        let reqPageNumber = requestingData.totalPages > state.requestingUserState.pageNumber ? state.requestingUserState.pageNumber : requestingData.totalPages;
-        let extPageNumber = existingData.totalPages > state.existingUserState.pageNumber ? state.existingUserState.pageNumber : existingData.totalPages;
+        // If the new pages are less than the current biggest page, wrap it over
+        let reqPageNumber =
+            state.requestingUserState.pageNumber > requestingData.totalPages
+                ? requestingData.totalPages
+                : state.requestingUserState.pageNumber;
+        let extPageNumber =
+            state.existingUserState.pageNumber > existingData.totalPages
+                ? existingData.totalPages
+                : state.existingUserState.pageNumber;
 
         state.requestingUserState.totalItems = requestingData.TotalItems;
         state.requestingUserState.userList = requestingData.AccessRequests;
