@@ -1,5 +1,6 @@
 const axios = require('axios');
 const fs = require('fs');
+const path = require('path');
 const vaultAddr = process.env.VAULT_ADDR || 'https://cellar.umusic.com';
 
 async function vaultUserPassLogin(user, pass) {
@@ -45,23 +46,37 @@ async function vaultGetSecret(token, secret) {
 
 (async () => {
   try {
+    if (!process.env.NODE_ENV) {
+      console.error("NODE_ENV required")
+      process.exit(1)
+    }
     let token = ""
-    if (!process.env.VAULT_USER || !process.env.VAULT_PASS) {
+    let vaultTokenPath = path.join(require('os').homedir(), ".vault-token")
+    if (fs.existsSync(vaultTokenPath)) {
+      tokenFile = fs.readFileSync(vaultTokenPath)
+      token = tokenFile.toString()
+    } else if (!process.env.VAULT_USER || !process.env.VAULT_PASS) {
       console.log("VAULT_USER and VAULT_PASS required")
       process.exit(1)
     }
-    switch (process.env.VAULT_METHOD) {
-      case "ldap":
-        token = await vaultLdapLogin(process.env.VAULT_USER, process.env.VAULT_PASS)
-        break;
-      case "userpass":
-        token = await vaultUserPassLogin(process.env.VAULT_USER, process.env.VAULT_PASS)
-        break;
-      default:
-        token = await vaultLdapLogin(process.env.VAULT_USER, process.env.VAULT_PASS)
-	      break;
+    if (process.env.VAULT_USER && process.env.VAULT_PASS) {
+      switch (process.env.VAULT_METHOD) {
+        case "ldap":
+          console.log("Login to vault with ldap")
+          token = await vaultLdapLogin(process.env.VAULT_USER, process.env.VAULT_PASS)
+          break;
+        case "userpass":
+          console.log("Login to vault with userpass")
+          token = await vaultUserPassLogin(process.env.VAULT_USER, process.env.VAULT_PASS)
+          break;
+        default:
+          console.log("Login to vault with ldap")
+          token = await vaultLdapLogin(process.env.VAULT_USER, process.env.VAULT_PASS)
+  	      break;
+      }
     }
     process.env.NODE_ENV = process.env.NODE_ENV.toLowerCase()
+    console.log("Get secret for env", process.env.NODE_ENV)
     let data = await vaultGetSecret(token, 'guardian-ui/' + process.env.NODE_ENV)
     fs.writeFileSync("src/config/index.json", JSON.stringify(data))
   } catch(e) {

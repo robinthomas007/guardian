@@ -134,7 +134,7 @@ class FindProjectDataTable extends Component {
                             onMouseOut={ (e, columnID) => this.handleMouseOut(e, 'artist')} 
                             onClick={(id) => this.handleTableSort('artist')}
                         >Artist{this.handleSortDisplay('artist')}<i className={(this.state.activeHover === 'artist') ? "material-icons" : "material-icons d-none"}>arrow_drop_up</i></th>
-                        <th className="col-2 sortable" 
+                        <th className="col-1 sortable" 
                             onMouseOver={ (e, columnID) => this.handleMouseOver(e, 'label')} 
                             onMouseOut={ (e, columnID) => this.handleMouseOut(e, 'label')}
                             onClick={(id) => this.handleTableSort('label')}

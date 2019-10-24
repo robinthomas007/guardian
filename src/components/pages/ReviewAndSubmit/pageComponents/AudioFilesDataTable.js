@@ -16,12 +16,12 @@ class AudioFilesDataTable extends Component {
                 this.props.data.map( (track, i) => {
                     return ( 
                         <tr className="row no-gutters">
-                            <td className="col-1 centered">{track.trackNumber}</td>
+                            <td className="col-1 text-center">{track.trackNumber}</td>
                             <td className="col-2">{track.fileName}</td>
                             <td className="col-2">{track.trackTitle}</td>
                             <td className="col-2">{track.isrc}</td>
                             <td className="col-2">{track.artist}</td>
-                            <td className="col-1 centered">
+                            <td className="col-1 text-center">
                                 <label className="custom-checkbox"> 
                                 
                                 {track.isSingle
@@ -31,7 +31,7 @@ class AudioFilesDataTable extends Component {
                                     <span className="static-checkmark"></span>
                                 </label>
                             </td>
-                            <td className="col-2 centered">{track.trackReleaseDate}</td>
+                            <td className="col-2 text-center">{track.trackReleaseDate}</td>
                         </tr>
                     )
                 })
@@ -44,13 +44,13 @@ class AudioFilesDataTable extends Component {
             <table className="table">
                 <thead>
                     <tr className="row no-gutters">
-                        <th className="col-1 centered">#</th>
+                        <th className="col-1 text-center">#</th>
                         <th className="col-2">Audio File</th>
                         <th className="col-2">Track Title</th>
                         <th className="col-2">ISRC</th>
                         <th className="col-2">Artist</th>
-                        <th className="col-1 centered">Single</th>
-                        <th className="col-2 centered">Release Date</th>
+                        <th className="col-1 text-center">Single</th>
+                        <th className="col-2 text-center">Release Date</th>
                     </tr>
                 </thead>
                 <tbody>
