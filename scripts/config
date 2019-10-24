@@ -20,4 +20,4 @@ if [[ -z "$VAULT_PASS" ]]; then
   export VAULT_PASS=$VAULT_PASS
 fi
 
-node config.js
+node scripts/config.js
