@@ -74,6 +74,7 @@ class TrackInformationDataTable extends Component {
                 isSingle : false,
                 tbdReleaseDate : false,
                 trackReleaseDate : formatDateToYYYYMMDD(Project.projectReleaseDate), 
+                artist : Project.projectArtistName,
 
                 isSingleDisabled : false, 
                 isReleaseDateDisabled : (Project.projectReleaseDate === '') ? true : false, 
@@ -201,7 +202,7 @@ class TrackInformationDataTable extends Component {
             tableRows = DataRows.map( (track, i) => {
 
                 return(
-                    <tr draggable>
+                    <tr draggable key={i}>
                         <td className="text-center">
                             <Form.Control 
                                 type="hidden" 
@@ -286,7 +287,9 @@ class TrackInformationDataTable extends Component {
             <div className="table-responsive">
                 <Table droppable="true">
                     {this.trackInformationDataHeader()}
-                    {this.getTrackRows()}
+                    <tbody>
+                        {this.getTrackRows()}
+                    </tbody>
                 </Table>
 
                 <div onClick={this.addBlankRow}>add track</div>
