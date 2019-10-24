@@ -25,7 +25,7 @@ class AudioVideoDataTable extends Component {
                 <tr>
                     <th className="text-center">#</th>
                     <th>Audio File</th>
-                    <th>ISRC <i><span className="required-ind">(Required)</span></i></th>
+                    <th>ISRC <i><span className="required-ind"></span></i></th>
                     <th>Track Title <i><span className="required-ind">(Required)</span></i></th>
                     <th>Artist</th>
                     <th className="text-center">Actions</th>
