@@ -96,7 +96,7 @@ class FindProjectDataTable extends Component {
                     <td onClick={ () => this.handleRowClick(project.projectID) } className="col-1 text-center">{convertToLocaleTime(project.projectLastModified)}</td>
                     <td onClick={ () => this.handleRowClick(project.projectID) }className="col-2">{project.projectTitle}</td>
                     <td onClick={ () => this.handleRowClick(project.projectID) }className="col-2">{project.projectArtistName}</td>
-                    <td onClick={ () => this.handleRowClick(project.projectID) }className="col-2">{project.projectReleasingLabel}</td>
+                    <td onClick={ () => this.handleRowClick(project.projectID) }className="col-1">{project.projectReleasingLabel}</td>
                     <td onClick={ () => this.handleRowClick(project.projectID) }className="col-1 status text-nowrap"><span>{project.status}</span></td>
                     <td onClick={ () => this.handleRowClick(project.projectID) }className="status text-center">{this.checkProjectStepStatus(project.isReleaseInfoComplete)}</td>
                     <td onClick={ () => this.handleRowClick(project.projectID) }className="status text-center">{this.checkProjectStepStatus(project.isProjectContactsComplete)}</td>
