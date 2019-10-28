@@ -44,55 +44,30 @@ class TrackInformationPage extends Component {
                     projectCoverArtBase64Data : ''
                 }
             },
-            showloader : false
+            showloader : false,
+            showReplaceAudioModal : false
         }
         this.addBlankRow = this.addBlankRow.bind(this);
         this.showTrackModal = this.showTrackModal.bind(this);
         this.hideTrackModal = this.hideTrackModal.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.removeRow = this.removeRow.bind(this);
         this.handlePageDataLoad = this.handlePageDataLoad.bind(this);
-        this.formatDateToYYYYMMDD = this.formatDateToYYYYMMDD.bind(this);
         this.setActiveDiscTab = this.setActiveDiscTab.bind(this);
         this.handleDiscUpdate = this.handleDiscUpdate.bind(this);
         this.addTrack = this.addTrack.bind(this);
-    }
+        this.addDisc = this.addDisc.bind(this);
+        this.removeTrack = this.removeTrack.bind(this);
+        this.hideReplaceAudioModal = this.hideReplaceAudioModal.bind(this);
+        this.showReplaceModal = this.showReplaceModal.bind(this);
 
-    removeRow(rowIndex) {
-        let newTableRows = this.state.tableRows;
-            newTableRows.splice(rowIndex, 1)
-
-        if(rowIndex <= 0 && newTableRows.length === 0) {
-            this.addBlankRow();
-        }
-        this.setState({tableRows : newTableRows});
-    }
-
-    getBlankRow = () => {
-        const projectReleaseDate = this.state.projectData.projectReleaseDate
-        let formattedDate = this.formatDateToYYYYMMDD(projectReleaseDate);
-
-        return(
-            {
-                artist: "",
-                fileName: "",
-                hasUpload: true,
-                isSingle: false,
-                isrc: "",
-                trackID: "",
-                trackNumber: "",
-                trackReleaseDate: formattedDate,
-                trackTitle: ""
-            }
-        )
     }
 
     setActiveDiscTab(tabID) {
-        this.setState({activeDiscTab : tabID})        
+        this.setState({activeDiscTab : tabID})
     }
 
     addBlankRow() {
-        var newRow = this.state.tableRows   
+        var newRow = this.state.tableRows
             newRow.push(this.getBlankRow())
         this.setState({tableRows : newRow})
     }
@@ -105,28 +80,8 @@ class TrackInformationPage extends Component {
         this.setState({showReplaceModal : false})
     }
 
-    formatDateToYYYYMMDD(unFormattedDate) {
-        let formattedDate = '';
-
-        if(unFormattedDate) {
-            var d = new Date(unFormattedDate),
-            month = '' + (d.getMonth() + 1),
-            day = '' + d.getDate(),
-            year = d.getFullYear();
-    
-            if (month.length < 2) month = '0' + month;
-            if (day.length < 2) day = '0' + day;
-    
-            formattedDate = [year, month, day].join('-');
-        }
-
-        return(formattedDate)
-    }
-
     handlePageDataLoad() {
-
         this.setState({ showloader : true})
-
         const user = JSON.parse(sessionStorage.getItem('user'))
         const projectID = this.props.match.params.projectID
         const fetchHeaders = new Headers(
@@ -135,7 +90,6 @@ class TrackInformationPage extends Component {
                 "Authorization" : sessionStorage.getItem('accessToken')
             }
         )
-
         const fetchBody = JSON.stringify( {
             "User" : {
                 "email" : user.email
@@ -148,18 +102,15 @@ class TrackInformationPage extends Component {
             method : 'POST',
             headers : fetchHeaders,
             body : fetchBody
-        }).then (response => 
+        }).then (response =>
             {
                 return(response.json());
             }
-        ).then (responseJSON => 
+        ).then (responseJSON =>
 
             {
-                this.setState({ 
+                this.setState({
                     project : responseJSON,
-                    discs : responseJSON.Discs,
-                    projectReleaseDate : responseJSON.Project.projectReleaseDate, 
-                    projectData : responseJSON
                 })
 
                 this.setState({ showloader : false})
@@ -173,8 +124,7 @@ class TrackInformationPage extends Component {
         );
     }
 
-    showNotification(e, projectID){
-
+    showNotification(forward){
         new Noty ({
             type: 'success',
             id:'tracksSaved',
@@ -182,11 +132,9 @@ class TrackInformationPage extends Component {
             theme: 'bootstrap-v4',
             layout: 'top',
             timeout: '3000'
-        }).on('afterClose', ()  =>
-            this.props.history.push({
-                pathname : '/territorialRights/' + this.props.match.params.projectID
-            })
-        ).show()
+        }).on('afterClose', ()  => {
+            return( (forward) ? this.props.history.push({pathname : '/territorialRights/' + this.props.match.params.projectID}) : null)
+        }).show()
     };
 
     showNotSavedNotification(e){
@@ -206,47 +154,34 @@ class TrackInformationPage extends Component {
             modifiedDiscs[i] = updatedDisc
 
         this.setState({discs : modifiedDiscs})
-    }
+    };
 
     getTrack = (track, discNumber, trackNumber) => {
         return {
             trackID : (track.trackID) ? track.trackID : '',
-            discNumber : (track.discNumber) ? track.discNumber : '',
             trackNumber : (track.trackNumber) ? track.trackNumber : '',
             hasUpload : (track.hasUpload) ? track.hasUpload : false,
             trackTitle : (track.trackTitle) ? track.trackTitle : '',
             isrc :  (track.isrc) ? track.isrc : '',
             isSingle : (track.isSingle) ? track.isSingle : false,
-            trackReleaseDate : (track.trackReleaseDate) ? track.trackReleaseDate : '',
+            tbdReleaseDate : (track.tbdReleaseDate) ? track.tbdReleaseDate : '',
+            trackReleaseDate : (track.trackReleaseDate) ? track.trackReleaseDate : (this.state.project.Project.projectReleaseDate) ? this.state.project.Project.projectReleaseDate : '',
             fileName : (track.fileName) ? track.fileName : '',
-            artist : (track.artist) ? track.artist : ''
-        }
-    }
+            artist : (track.artist) ? track.artist : this.state.project.Project.projectArtistName,
 
-    handleSubmit(event) {
+            isSingleDisabled : false,
+            isReleaseDateDisabled : (track.isSingle) ? false : true,
+            isTbdDisabled : (track.trackReleaseDate !== '' || track.isSingle) ? false : true,
+            isTbdChecked : (track.trackReleaseDate !== '' || track.isSingle) ? false : true
+        }
+    };
+
+    handleSubmit(e) {
 
         this.setState({ showloader : true})
 
         const user = JSON.parse(sessionStorage.getItem('user'))
-
-        let discs = this.state.discs.map( function (disc, i) {
-            let tracks = disc.Tracks.map( function (track, j) {
-                return(
-                    {
-                        trackID : (track.trackID) ? track.trackID : '',
-                        discNumber : i,
-                        trackNumber : j+1,
-                        hasUpload : (track.hasUpload) ? track.hasUpload : false,
-                        trackTitle : (track.trackTitle) ? track.trackTitle : '',
-                        isrc :  (track.isrc) ? track.isrc : '',
-                        isSingle : (track.isSingle) ? track.isSingle : false,
-                        trackReleaseDate : (track.trackReleaseDate) ? track.trackReleaseDate : '',
-                        fileName : (track.fileName) ? track.fileName : '',
-                        artist : (track.artist) ? track.artist : ''
-                    }
-                )           
-            })
-        });
+        const forward = (e.target.classList.contains('saveContinueButton')) ? true : false;
 
         const fetchHeaders = new Headers(
             {
@@ -258,9 +193,9 @@ class TrackInformationPage extends Component {
             "User" : {
                 "email" : user.email
             },
-            "projectID": this.props.match.params.projectID,
+            "projectID": this.props.match.params.projectID,
             "isAudioPage" : false,
-            "Discs" : this.state.discs
+            "Discs" : this.state.project.Discs
          })
 
 
@@ -268,69 +203,88 @@ class TrackInformationPage extends Component {
             method : 'POST',
             headers : fetchHeaders,
             body : fetchBody
-        }).then (response => 
+        }).then (response =>
             {
                 return(response.json());
             }
         )
-        .then (responseJSON => 
+        .then (responseJSON =>
             {
-                this.setState({ showloader : false})
-                this.showNotification()
+                this.setState({ showloader : false});
+                this.showNotification(forward);
             }
         )
         .catch(
             error => {
                 this.setState({ showloader : false})
                 console.error('fail: ' + error)
-            }                
+            }
         );
-    }
+    };
 
     componentDidMount() {
-
         if(this.props.match.params && this.props.match.params.projectID) {
             this.handlePageDataLoad()
         }
-    }
+    };
 
     componentDidUpdate() {
         if(this.props.match && this.props.match.params && this.props.match.params.projectID) {
             this.props.setProjectID(this.props.match.params.projectID)
         }
-    }
-    
+    };
+
     addTrack() {
-        const { projectData } = this.state;
-        const { discs } = this.state;
-         let modifiedProjectData = projectData;
-             modifiedProjectData.Discs[this.state.activeDiscTab - 1].Tracks.push()
-        
-        let modifiedDiscs = discs;
-            modifiedDiscs[this.state.activeDiscTab - 1].Tracks.push(this.getTrack({}))
+        const { project } = this.state;
+        let modifiedProject = project;
+            modifiedProject.Discs[this.state.activeDiscTab - 1].Tracks.push(this.getTrack({trackNumber : modifiedProject.Discs[this.state.activeDiscTab - 1].Tracks.length + 1}))
+
+        this.setState( {project : modifiedProject} )
+    };
+
+    addDisc = () => {
+        const { Discs } = this.state.project;
+        let modifiedDiscs = Discs;
+            modifiedDiscs.push( {discNumber : (Discs.length + 1).toString(), Tracks : [this.getTrack({trackNumber : "0"})]});
 
         this.setState( {
-            projectData : modifiedProjectData,
-            // discs : modifiedDiscs
+            Discs : modifiedDiscs
         } )
+    };
 
-        // this.setState( {projectData : modifiedProjectData} )
-        // this.setState( {discs : modifiedProjectData.Discs[this.state.activeDiscTab - 1]} )
+    removeTrack = (rowIndex) => {
+        const { Discs } = this.state.project;
+        const ModifiedDiscs = Discs[this.state.activeDiscTab - 1];
+              ModifiedDiscs.Tracks.splice(rowIndex, 1);
+        this.setState({Discs : ModifiedDiscs})
+    }
 
+    hideReplaceAudioModal() {
+        this.setState({showReplaceAudioModal : false})
+    }
+
+    showReplaceModal() {
+        this.setState({showReplaceAudioModal : true})
+    }
+
+    updateFile = (e) => {
+        alert(123)
+        this.hideReplaceAudioModal();
     }
 
     render() {
         return (
             <div className="col-10">
-            
+
                 <LoadingImg show={this.state.showloader} />
 
-                <ReplaceAudioModal 
-                    showModal={this.state.showReplaceModal} 
-                    handleClose={this.hideTrackModal}
+                <ReplaceAudioModal
+                    showModal={this.state.showReplaceAudioModal}
+                    handleClose={this.hideReplaceAudioModal}
+                    onChange={(e) => this.updateFile(e)}
                 />
 
-                <PageHeader 
+                <PageHeader
                     data={this.state.project}
                 />
 
@@ -340,52 +294,33 @@ class TrackInformationPage extends Component {
                         <p>In this step, you can upload audio files for filtering by either dragging &amp; dropping or clicking to browse files, e.g. mp3, WAV, etc. Tracks can also be reordered with drag and drop. This section must be completed by clicking on the 'Save &amp; Continue' button below.</p>
                     </div>
                 </div>
-             <div className="row no-gutters d-flex">
-                <div className="col-9"></div>
-                <div className="col-3 d-flex justify-content-end">
-                    <ul className="disc-track-buttons">
-                        <li>
-                            <button 
-                                type="button" 
-                                className="btn btn-secondary btn-sm" 
-                                onClick=""
-                            ><i className="material-icons">adjust</i> 111Add Disc</button>
-                        </li>
-                        <li>
-                            <button 
-                                type="button" 
-                                className="btn btn-secondary btn-sm" 
-                                onClick={this.addTrack}
-                            ><i className="material-icons">add</i> Add Track</button>
-                        </li>
-                    </ul>
-                </div>
-             </div>
-                <TabbedTracks 
-                    data={this.state.projectData} 
-                    showClick={this.showTrackModal} 
+
+                <TabbedTracks
+                    data={this.state.project}
+                    showClick={this.showTrackModal}
                     activeDiscTab={this.state.activeDiscTab}
                     handleActiveDiscUpdate={this.setActiveDiscTab}
                     handleDiscUpdate={this.handleDiscUpdate}
-                    
+                    addTrack={this.addTrack}
+                    addDisc={this.addDisc}
+                    removeTrack={this.removeTrack}
+                    setTBD={this.setTBD}
+                    setSingle={this.setSingle}
+                    showReplaceModal={ (track, i) => this.showReplaceModal(track, i)}
+                    hideReplaceAudioModal={ (track, i) => this.hideReplaceAudioModal(track, i)}
                 />
 
                 <section className="row save-buttons">
-                    <div className="col-9">
-                        <button 
-                            type="button" 
-                            className="btn btn-primary float-left" 
-                            onClick={this.addBlankRow}
-                        >Add Track</button>
-                    </div>
+                    <div className="col-9"></div>
                     <div className="col-3">
-                        <button 
-                            type="button" 
-                            className="btn btn-secondary"
+                        <button
+                            type="button"
+                            className="btn btn-secondary saveButton"
+                            onClick={this.handleSubmit}
                         >Save</button>
-                        <button 
-                            type="button" 
-                            className="btn btn-primary" 
+                        <button
+                            type="button"
+                            className="btn btn-primary saveContinueButton"
                             onClick={this.handleSubmit}
                         >Save &amp; Continue</button>
                     </div>

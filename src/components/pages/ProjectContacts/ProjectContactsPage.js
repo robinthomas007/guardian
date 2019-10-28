@@ -209,8 +209,7 @@ class ProjectContactsPage extends Component {
                 {
                     return(response.json());
                 }
-            )
-            .then (responseJSON => 
+            ).then (responseJSON => 
                 {
                     if(responseJSON.errorMessage) {
                         this.showNotSavedNotification()
@@ -226,7 +225,10 @@ class ProjectContactsPage extends Component {
                 }
             )
             .catch(
-                error => console.error(error)
+                error => {
+                    console.error(error)
+                    this.setState({ showloader : false})
+                }
             );
         } 
     }

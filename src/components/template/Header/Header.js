@@ -84,7 +84,7 @@ export default withAuth(class Header extends Component {
                         </React.Fragment>
                     )
                 })}
-            </ul>            
+            </ul>
         )
     };
 
@@ -149,17 +149,17 @@ export default withAuth(class Header extends Component {
                         </div>
                         <div className="col-2 align-self-start">
                             STATUS: { (this.props.projectData && this.props.projectData.projectStatus) ?this.props.projectData.projectStatus : 'In Progress'}
-                        </div> 
+                        </div>
                     </div>
                     <div className="col-1"></div>
                 </div>
-        
+
                 <div className="row d-flex no-gutters steps-bar">
                     <div className="col-1"></div>
                     <div className="col-10">
                         {this.getNavLinks()}
                     </div>
-                    <div className="col-1"></div> 
+                    <div className="col-1"></div>
                 </div>
             </div>
         )

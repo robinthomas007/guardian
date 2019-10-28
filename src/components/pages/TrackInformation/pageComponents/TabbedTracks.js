@@ -1,29 +1,18 @@
 import React, { Component } from 'react';
-import {Table, Grid, Button, Form, Tabs, Tab  } from 'react-bootstrap'; 
+import { Tabs, Tab  } from 'react-bootstrap'; 
 import TrackInformationDataTable from '../pageComponents/TrackInformationDataTable';
-import TrackInformationDataTable_OLD from '../pageComponents/TrackInformationDataTable_OLD';
 
 class TabbedTracks extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            discs : []
+            data : {
+                Discs : []
+            }
         }
 
         this.handleTabClick = this.handleTabClick.bind(this);
-        this.addDisc = this.addDisc.bind(this);
         this.updateDiscData = this.updateDiscData.bind(this);
-    }
-
-    addDisc = () => {
-        const {discs} = this.state;
-        let updatedDiscs = [];
-
-        if(discs) {
-            updatedDiscs = discs;
-            updatedDiscs.push("");
-        } 
-        this.setState({discs : updatedDiscs})
     }
 
     updateDiscData(discID, discData) {
@@ -34,8 +23,12 @@ class TabbedTracks extends Component {
         this.props.handleDiscUpdate(discID, updatedDiscData)
     }
 
-    componentWillReceiveProps(props) {
-        this.setState({discs: props.data.Discs});
+    componentWillReceiveProps() {
+        if(this.props.data !== this.state.data) {
+            this.setState({
+                data : this.props.data, 
+            });
+        }
     }
 
     handleTabClick(key) {
@@ -43,16 +36,20 @@ class TabbedTracks extends Component {
     }
 
     getDiscTabs = () => {
-        if(this.state.discs) {
-            let discs = this.state.discs.map((disc, i) => { 
+        if(this.state.data.Discs) {
+            let discs = this.state.data.Discs.map((disc, i) => { 
                 const count = (i + 1);
 
                 return(
                     <Tab key={i} eventKey={count} title={"Disc " + count}>
                         <TrackInformationDataTable 
-                            data={this.props.data} 
+                            data={this.state.data} 
                             discID={i}
                             updateDiscData={this.updateDiscData}
+                            removeTrack={(e,i) => this.props.removeTrack(e,i)}
+                            setSingle={(e,track,i) => this.props.setSingle.bind(e, track, i)}
+                            showReplaceModal={ (track, i) => this.props.showReplaceModal(track, i)}
+                            hideReplaceAudioModal={ (track, i) => this.props.hideReplaceAudioModal(track, i)}
                         />
                     </Tab>
                 )
@@ -67,16 +64,34 @@ class TabbedTracks extends Component {
                     </Tabs>
                 </Tab.Container>
             )
-        } else {
-            this.addDisc();
         } 
     }
 
     render() {
         return(
             <div>
-                {this.getDiscTabs()}
-                <div onClick={this.addDisc}>addDisc</div>
+                <div className="row no-gutters d-flex">
+                    <div className="col-9"></div>
+                    <div className="col-3 d-flex justify-content-end">
+                        <ul className="disc-track-buttons">
+                            <li>
+                                <button 
+                                    type="button" 
+                                    className="btn btn-secondary btn-sm" 
+                                    onClick={this.props.addDisc}
+                                ><i className="material-icons">adjust</i>Add Disc</button>
+                            </li>
+                            <li>
+                                <button 
+                                    type="button" 
+                                    className="btn btn-secondary btn-sm" 
+                                    onClick={this.props.addTrack}
+                                ><i className="material-icons">add</i> Add Track</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                {(this.props.data.Discs) ? this.getDiscTabs() : null}
             </div>
         )
     }

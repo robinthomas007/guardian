@@ -28,7 +28,7 @@
   },
   "scripts": {
     "config": "node scripts/config.js",
-    "start": "bash ./scripts/config && react-scripts start",
+    "start": "react-scripts start",
     "build": "npm run config && react-scripts build",
     "test": "npm run config && react-scripts test",
     "eject": "npm run config && react-scripts eject"

@@ -62,12 +62,12 @@ export default withAuth(class Content extends Component {
       if(this.state.user !== user) {
         this.setState( {user : user } );
       }
-      
+
       if(!this.state.userLoaded) {
         this.getUserData();
       }
   }
-  
+
   getUserData() {
       const user = JSON.parse(sessionStorage.getItem('user'))
       const fetchHeaders = new Headers(
@@ -76,22 +76,22 @@ export default withAuth(class Content extends Component {
             "Authorization" : sessionStorage.getItem('accessToken')
         }
       )
-  
+
       const fetchBody = JSON.stringify( {
           "User" : {
             "email" : this.state.user.email
-          } 
+          }
       })
-      
+
       fetch ('https://api-dev.umusic.net/guardian/login', {
           method : 'POST',
           headers : fetchHeaders,
           body : fetchBody
-      }).then (response => 
+      }).then (response =>
           {
             return(response.json());
           }
-      ).then (userJSON => 
+      ).then (userJSON =>
           {
             const newUserObj = Object.assign(userJSON, user);
             this.setState({
@@ -127,11 +127,11 @@ export default withAuth(class Content extends Component {
         method : 'POST',
         headers : fetchHeaders,
         body : fetchBody
-    }).then (response => 
+    }).then (response =>
         {
             return(response.json());
         }
-    ).then (responseJSON => 
+    ).then (responseJSON =>
         {
           this.setState({
                 Project : responseJSON.Project,
@@ -169,9 +169,9 @@ export default withAuth(class Content extends Component {
         <div className="row d-flex no-gutters">
           <div className="col-12">
 
-            <Header 
-              userData={this.state.user} 
-              projectData={this.state.Project} 
+            <Header
+              userData={this.state.user}
+              projectData={this.state.Project}
               pagePath={this.props.location.pathname}
               setPageViewType={this.setPageViewType}
             />
@@ -188,7 +188,7 @@ export default withAuth(class Content extends Component {
                 <SecureRoute path="/reviewSubmit/:projectID?" render={ () => ( <ReviewAndSubmitPage user={this.state.user} setProjectID={this.setProjectID} />) } />
                 <SecureRoute path="/findProject" render={ () => ( <FindProjectPage user={this.state.user} setProjectID={this.setProjectID} />) } />
                 <SecureRoute path="/helpGuide" component={HelpGuide}/>
-                <SecureRoute path="/admin/:userType?" render={ () => ( <UserAdministration user={this.state.user} setProjectID={this.setProjectID} />) } />
+                <SecureRoute path="/admin" render={ () => ( <UserAdministration user={this.state.user} setProjectID={this.setProjectID} />) } />
                <div className="col-1"></div>
             </div>
 
@@ -202,4 +202,3 @@ export default withAuth(class Content extends Component {
     }
   }
 });
-
