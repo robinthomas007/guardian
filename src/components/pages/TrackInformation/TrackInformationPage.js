@@ -82,7 +82,6 @@ class TrackInformationPage extends Component {
     }
 
     handlePageDataLoad() {
-
         this.setState({ showloader : true})
         const user = JSON.parse(sessionStorage.getItem('user'))
         const projectID = this.props.match.params.projectID
@@ -109,15 +108,17 @@ class TrackInformationPage extends Component {
             }
         ).then (responseJSON =>
             {
-                return (this.state.project !== responseJSON) ? this.setState({ project : responseJSON }) : null
+                this.setState({ 
+                    project : responseJSON, 
+                    showloader : false
+                 })
             }
         ).catch(
             error => {
                 console.error(error);
+                this.setState({ showloader : false})
             }
         );
-
-        this.setState({ showloader : false})
     }
 
     showNotification(forward){
