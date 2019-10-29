@@ -42,7 +42,8 @@ class TrackInformationPage extends Component {
                     projectStatus : '',
                     projectCoverArtFileName : '',
                     projectCoverArtBase64Data : ''
-                }
+                },
+                Discs : []
             },
             showloader : false,
             showReplaceAudioModal : false
@@ -81,6 +82,7 @@ class TrackInformationPage extends Component {
     }
 
     handlePageDataLoad() {
+
         this.setState({ showloader : true})
         const user = JSON.parse(sessionStorage.getItem('user'))
         const projectID = this.props.match.params.projectID
@@ -107,17 +109,15 @@ class TrackInformationPage extends Component {
             }
         ).then (responseJSON =>
             {
-                this.setState({
-                    project : responseJSON,
-                    showloader : false
-                })
+                return (this.state.project !== responseJSON) ? this.setState({ project : responseJSON }) : null
             }
         ).catch(
             error => {
                 console.error(error);
-                this.setState({ showloader : false})
             }
         );
+
+        this.setState({ showloader : false})
     }
 
     showNotification(forward){
@@ -203,17 +203,14 @@ class TrackInformationPage extends Component {
             {
                 return(response.json());
             }
-        )
-        .then (responseJSON =>
+        ).then (responseJSON =>
             {
                 this.setState({ showloader : false});
                 this.showNotification(forward);
             }
-        )
-        .catch(
+        ).catch(
             error => {
                 this.setState({ showloader : false})
-                console.error('fail: ' + error)
             }
         );
     };
@@ -242,10 +239,7 @@ class TrackInformationPage extends Component {
         const { Discs } = this.state.project;
         let modifiedDiscs = Discs;
             modifiedDiscs.push( {discNumber : (Discs.length + 1).toString(), Tracks : [this.getTrack({trackNumber : "0"})]});
-
-        this.setState( {
-            Discs : modifiedDiscs
-        } )
+        this.setState( { Discs : modifiedDiscs } )
     };
 
     removeTrack = (rowIndex) => {
@@ -264,7 +258,8 @@ class TrackInformationPage extends Component {
     }
 
     updateFile = (e) => {
-        this.hideReplaceAudioModal();
+
+
     }
 
     handleTrackResequence = (discs) => {

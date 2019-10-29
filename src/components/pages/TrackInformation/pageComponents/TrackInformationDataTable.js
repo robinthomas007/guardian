@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Table, Form } from 'react-bootstrap';
+import {Table, Form, Alert } from 'react-bootstrap';
 import { formatDateToYYYYMMDD } from '../../../Utils';
 
 class TrackInformationDataTable extends Component {
@@ -22,18 +22,16 @@ class TrackInformationDataTable extends Component {
  
     trackInformationDataHeader = () => {
         return(
-            <thead>
-                <tr>
-                    <th className="text-center">#</th>
-                    <th className="text-center"></th>
-                    <th className="text-center"></th>
-                    <th>ISRC <i>(Optional)</i></th>
-                    <th>Track Title</th>
-                    <th className="text-center">Single</th>
-                    <th className="release-date-col">Release Date <span>TBD</span></th>
-                    <th className="text-center">Actions</th>
-                </tr> 
-            </thead>
+            <tr>
+                <th className="text-center">#</th>
+                <th className="text-center"></th>
+                <th className="text-center"></th>
+                <th>Track Title</th>
+                <th>ISRC <i>(Optional)</i></th>
+                <th className="text-center">Single</th>
+                <th className="release-date-col">Release Date <span>TBD</span></th>
+                <th className="text-center">Actions</th>
+            </tr> 
         )
     }
 
@@ -116,11 +114,11 @@ class TrackInformationDataTable extends Component {
 
 
     getTrackRows() {
-        if(this.props.data.Discs && this.props.data.Discs[this.props.discID].Tracks) {
+        if(this.props.data.Discs.length > 0 && this.props.data.Discs[this.props.discID].Tracks) {
             let tableRows = this.props.data.Discs[this.props.discID].Tracks.map( (track, i) => {
 
                 return(
-                    <tr draggable>
+                    <tr draggable key={i}>
                         <td className="text-center">
                             <Form.Control 
                                 type="hidden" 
@@ -131,20 +129,20 @@ class TrackInformationDataTable extends Component {
                             {i+1}
                         </td>
                         <td className="text-center"><i className="material-icons">format_line_spacing</i></td>
-                        <td className="text-center"><i className="material-icons purple-icon">audiotrack</i></td>
+                        <td className="text-center">{ (track.hasUpload) ? <i className="material-icons purple-icon">audiotrack</i> : ''}</td>
                         <td>
                             <Form.Control 
                                 type="text" 
-                                id={'isrc'} 
-                                value={track.isrc}
+                                id={'trackTitle'} 
+                                value={track.trackTitle} 
                                 onChange={(evt) => this.handleChange(evt, track, i)}
                             ></Form.Control>
                         </td>
                         <td>
                             <Form.Control 
                                 type="text" 
-                                id={'trackTitle'} 
-                                value={track.trackTitle} 
+                                id={'isrc'} 
+                                value={track.isrc}
                                 onChange={(evt) => this.handleChange(evt, track, i)}
                             ></Form.Control>
                         </td>
@@ -197,15 +195,19 @@ class TrackInformationDataTable extends Component {
                 )}
             )
             return(tableRows)
-        }
+        } 
     }
 
     render() {
         return (
             <div className="table-responsive">
                 <Table droppable="true">
-                    {this.trackInformationDataHeader()}
-                    {this.getTrackRows()}
+                    <thead>
+                        {this.trackInformationDataHeader()}
+                    </thead>
+                    <tbody>
+                        {this.getTrackRows()}
+                    </tbody>
                 </Table>
             </div>
         )

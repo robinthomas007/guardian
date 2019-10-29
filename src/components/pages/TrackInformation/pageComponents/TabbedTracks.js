@@ -23,33 +23,26 @@ class TabbedTracks extends Component {
         this.props.handleDiscUpdate(discID, updatedDiscData)
     }
 
-    componentWillReceiveProps() {
-        if(this.props.data !== this.state.data) {
-            this.setState({
-                data : this.props.data, 
-            });
-        }
-    }
-
     handleTabClick(key) {
         this.props.handleActiveDiscUpdate(key)
     }
 
     getDiscTabs = () => {
-        if(this.state.data.Discs) {
-            let discs = this.state.data.Discs.map((disc, i) => { 
+        if(this.props.data.Discs) {
+            let discs = this.props.data.Discs.map((disc, i) => { 
                 const count = (i + 1);
 
                 return(
                     <Tab key={i} eventKey={count} title={"Disc " + count}>
                         <TrackInformationDataTable 
-                            data={this.state.data} 
+                            data={this.props.data} 
                             discID={i}
                             updateDiscData={this.updateDiscData}
                             removeTrack={(e,i) => this.props.removeTrack(e,i)}
                             setSingle={(e,track,i) => this.props.setSingle.bind(e, track, i)}
                             showReplaceModal={ (track, i) => this.props.showReplaceModal(track, i)}
                             hideReplaceAudioModal={ (track, i) => this.props.hideReplaceAudioModal(track, i)}
+                            addDisc={this.props.addDisc}
                         />
                     </Tab>
                 )
@@ -91,7 +84,7 @@ class TabbedTracks extends Component {
                         </ul>
                     </div>
                 </div>
-                {(this.props.data.Discs) ? this.getDiscTabs() : null}
+                {(this.props.data.Discs && this.props.data.Discs.length > 0) ? this.getDiscTabs() : this.props.addDisc()}
             </div>
         )
     }

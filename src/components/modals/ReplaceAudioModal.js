@@ -40,8 +40,8 @@ class ReplaceAudioModal extends Component {
               Use the area below to replace the corresponding audio file.
             </li>
             <li>
-              <div class="audio-drop-area d-flex justify-content-center">
-              <span class="align-self-center">Drag and Drop Audio Files or Click Here To Browse</span>
+              <div className="audio-drop-area d-flex justify-content-center">
+              <span className="align-self-center">Drag and Drop Audio Files or Click Here To Browse</span>
               <input 
                   type="file" 
                   id="audioFiles" 
