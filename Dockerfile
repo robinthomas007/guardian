@@ -2,8 +2,6 @@ FROM node:9 as builder
 
 WORKDIR /src
 
-COPY . .
-
 ARG NODE_ENV
 ARG NODE_PATH
 ARG VAULT_USER
@@ -18,6 +16,8 @@ ENV VAULT_PASS=$VAULT_PASS
 ENV VAULT_ADDR=$VAULT_ADDR
 ENV VAULT_METHOD=$VAULT_METHOD
 
+COPY . .
+
 RUN ./scripts/build.sh
 
 FROM nginx:1 as app
@@ -26,7 +26,8 @@ WORKDIR /usr/share/nginx/html
 
 COPY nginx.conf /etc/nginx/nginx.conf
 
-COPY /src/mockData.json /usr/share/nginx/html/
+COPY --from=builder /src/app-dist /tmp
 
-COPY --from=builder /src/build /usr/share/nginx/html/
+COPY --from=builder /src/scripts/deploy-env.sh deploy-env.sh
 
+ENTRYPOINT ["./deploy-env.sh"]
