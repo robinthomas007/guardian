@@ -97,7 +97,6 @@ class TrackInformationPage extends Component {
             "ProjectID" : projectID
         })
 
-
         fetch ('https://api-dev.umusic.net/guardian/project/review', {
             method : 'POST',
             headers : fetchHeaders,
@@ -107,16 +106,13 @@ class TrackInformationPage extends Component {
                 return(response.json());
             }
         ).then (responseJSON =>
-
             {
                 this.setState({
                     project : responseJSON,
+                    showloader : false
                 })
-
-                this.setState({ showloader : false})
             }
-        )
-        .catch(
+        ).catch(
             error => {
                 console.error(error);
                 this.setState({ showloader : false})
@@ -254,9 +250,9 @@ class TrackInformationPage extends Component {
 
     removeTrack = (rowIndex) => {
         const { Discs } = this.state.project;
-        const ModifiedDiscs = Discs[this.state.activeDiscTab - 1];
-              ModifiedDiscs.Tracks.splice(rowIndex, 1);
-        this.setState({Discs : ModifiedDiscs})
+        const ModifiedDiscs = Discs;
+              ModifiedDiscs[this.state.activeDiscTab - 1].Tracks.splice(rowIndex, 1);
+        this.setState({Discs : this.handleTrackResequence(ModifiedDiscs)})
     }
 
     hideReplaceAudioModal() {
@@ -268,9 +264,22 @@ class TrackInformationPage extends Component {
     }
 
     updateFile = (e) => {
-        alert(123)
         this.hideReplaceAudioModal();
     }
+
+    handleTrackResequence = (discs) => {
+        let modifiedDiscs = discs;
+            modifiedDiscs.map((disc, i) => {
+                return(
+                    disc.Tracks.map( (track, i) => {
+                        return(
+                            track.trackNumber = i + 1
+                        )
+                    })
+                )
+            })
+        return(modifiedDiscs)
+    };
 
     render() {
         return (
