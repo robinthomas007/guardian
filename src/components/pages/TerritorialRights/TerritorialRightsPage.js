@@ -5,7 +5,7 @@ import TracksWithoutRights from '../TerritorialRights/pageComponents/TracksWitho
 import TracksRightsSets from '../TerritorialRights/pageComponents/TracksRightsSets';
 import TracksCustomRightsSet from '../TerritorialRights/pageComponents/TracksCustomRightsSet';
 import LoadingImg from '../../ui/LoadingImg';
-
+import Noty from 'noty';
 import './TerritorialRights.css';
 import { withRouter } from "react-router";
 import { Alert } from 'react-bootstrap';
@@ -174,6 +174,33 @@ class TerritorialRightsPage extends Component {
         this.setState( {dragSource : null} )
     };
 
+    showNotification(e, projectID){
+        new Noty ({
+            type: 'success',
+            id:'rightsSaved',
+            text: 'Your rights policies have been successfully saved',
+            theme: 'bootstrap-v4',
+            layout: 'top',
+            timeout: '3000'
+        }).on('afterClose', ()  =>
+            this.props.history.push({
+                pathname : '/blockingPolicies/' + projectID
+            })
+        ).show()
+    };
+
+    showNotSavedNotification(e){
+        new Noty ({
+            type: 'error',
+            id:'rightsnotSaved',
+            text: 'Your rights policies have NOT been successfully saved',
+            theme: 'bootstrap-v4',
+            layout: 'top',
+            timeout: '3000'
+        }).show()
+    };
+
+
     handleSubmit = (e) => {
         e.preventDefault();
         this.setState( { showLoader : true } )
@@ -202,17 +229,23 @@ class TerritorialRightsPage extends Component {
             {
                 return(response.json());
             }
-        ).then (responseJSON => 
-            {
-                this.setState( { showLoader : false })
-                if(saveAndContinue) {
-                    this.props.history.push('/blockingPolicies/' + this.props.match.params.projectID )
-                }
+        ).then (responseJSON => {
+            if(responseJSON.errorMessage) {
+                this.showNotSavedNotification()
+            } else {
+                this.showNotification(null, this.props.match.params.projectID)
             }
-        ).catch(
-            error => console.error(error)
-		);
+            this.setState( { showLoader : false } )
+        }).catch(
+            error => {
+                console.error(error)
+                this.showNotSavedNotification()
+                this.setState( { showLoader : false } )
+            }
+        );
     };
+
+       
 
     componentDidMount() {
         if(this.props.match.params.projectID) {

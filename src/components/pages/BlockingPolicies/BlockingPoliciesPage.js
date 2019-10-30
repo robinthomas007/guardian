@@ -5,6 +5,7 @@ import TracksWithoutRights from '../TerritorialRights/pageComponents/TracksWitho
 import BlockingPolicySets from '../BlockingPolicies/pageComponents/blockingPolicySets';
 import LoadingImg from '../../ui/LoadingImg';
 import { withRouter } from 'react-router-dom';
+import Noty from 'noty';
 
 class BlockingPoliciesPage extends Component {
 
@@ -118,8 +119,7 @@ class BlockingPoliciesPage extends Component {
             {
                 return(response.json());
             }
-        )
-        .then (responseJSON => 
+        ).then (responseJSON => 
             {
                 this.setState( {project : responseJSON} )
                 if(!responseJSON.BlockingPolicySets || !responseJSON.BlockingPolicySets.length) {
@@ -127,8 +127,7 @@ class BlockingPoliciesPage extends Component {
                 }
                 this.setState( { showLoader : false } )
             }
-        )
-        .catch(
+        ).catch(
             error =>  {
                 console.error(error)
                 this.setState( { showLoader : false } )
@@ -165,14 +164,17 @@ class BlockingPoliciesPage extends Component {
             }
         ).then (responseJSON => 
             {
+                if(responseJSON.errorMessage) {
+                    this.showNotSavedNotification()
+                } else {
+                    this.showNotification(null, this.props.match.params.projectID)
+                }
                 this.setState( { showLoader : false } )
-                this.props.history.push({
-                    pathname : '/reviewSubmit/' + this.props.match.params.projectID
-                })
             }
         ).catch(
             error => {
                 console.error(error);
+                this.showNotSavedNotification()
                 this.setState( { showLoader : false } )
             }
 		);
@@ -275,6 +277,32 @@ class BlockingPoliciesPage extends Component {
                 project : modifiedProject,
             });
         }
+    };
+
+    showNotification(e, projectID){
+        new Noty ({
+            type: 'success',
+            id:'blockingSaved',
+            text: 'Your blocking policies have been successfully saved',
+            theme: 'bootstrap-v4',
+            layout: 'top',
+            timeout: '3000'
+        }).on('afterClose', ()  =>
+            this.props.history.push({
+                pathname : '/reviewSubmit/' + projectID
+            })
+        ).show()
+    };
+
+    showNotSavedNotification(e){
+        new Noty ({
+            type: 'error',
+            id:'blockingnotSaved',
+            text: 'Your blocking policies have NOT been successfully saved',
+            theme: 'bootstrap-v4',
+            layout: 'top',
+            timeout: '3000'
+        }).show()
     };
 
     componentDidMount() {
