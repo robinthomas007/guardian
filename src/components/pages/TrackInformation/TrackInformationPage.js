@@ -6,6 +6,7 @@ import LoadingImg from '../../ui/LoadingImg';
 import './TrackInformation.css';
 import Noty from 'noty'
 import { withRouter } from "react-router";
+import AudioFilesTabbedTracks from '../AudioFiles/pageComponents/audioFilesTabbedTracks';
 
 class TrackInformationPage extends Component {
 
@@ -46,7 +47,12 @@ class TrackInformationPage extends Component {
                 Discs : []
             },
             showloader : false,
-            showReplaceAudioModal : false
+            showReplaceAudioModal : false,
+            activeFileUploads : {
+
+            }
+
+            
         }
         this.addBlankRow = this.addBlankRow.bind(this);
         this.showTrackModal = this.showTrackModal.bind(this);
@@ -73,7 +79,7 @@ class TrackInformationPage extends Component {
         this.setState({tableRows : newRow})
     }
 
-    showTrackModal() {
+    showTrackModal(track, i) {
         this.setState({showReplaceModal : true})
     }
 
@@ -251,17 +257,74 @@ class TrackInformationPage extends Component {
     }
 
     hideReplaceAudioModal() {
-        this.setState({showReplaceAudioModal : false})
+        this.setState({
+            showReplaceAudioModal : false,
+        })
     }
 
-    showReplaceModal() {
-        this.setState({showReplaceAudioModal : true})
+    showReplaceModal(track, i) {
+        this.setState({
+            showReplaceAudioModal : true,
+            replaceTrack : track,
+            replaceTrackIndex : i
+        })
     }
 
     updateFile = (e) => {
-
-
+        let newFiles = Array.from(e.target.files);
+        let { replaceTrack }  = this.state;
+        let modifiedReplaceTrack = replaceTrack;
+            modifiedReplaceTrack.fileName = newFiles[0].name;
+        
+        this.setState( {replaceTrack : modifiedReplaceTrack}, () => {
+            this.handleFileUpload(newFiles, replaceTrack);
+            this.hideReplaceAudioModal()
+        })
     }
+    
+    showTrackUploadIconVisibilty = (track) => {
+        track.fileUpload = false;
+    };
+
+    handleFileUpload(files, track) {
+
+
+        track.fileUpload = true;
+
+        const user = JSON.parse(sessionStorage.getItem('user'));
+        const projectID = (this.state.project.Project.projectID) ? (this.state.project.Project.projectID) : '';
+        const fetchHeaders = new Headers(
+            {
+                "Authorization" : sessionStorage.getItem('accessToken'),
+                "User-Email" : user.email,
+                "Project-Id" : projectID,
+                "Track-Id" : (track.trackID) ? track.trackID : ''
+            }
+        )
+
+        for (var i = 0; i < files.length; i++) {
+
+            var targetTrack = track;
+
+            var formData = new FormData();
+                formData.append('file', files[0]);
+
+            fetch('https://api-dev.umusic.net/guardian-media/api/Upload', {
+                method: 'POST',
+                headers : fetchHeaders,
+                body: formData
+              }).then (response => {
+                return(response.json());
+              }).then (responseJSON => {
+                this.showTrackUploadIconVisibilty(targetTrack);
+              }).catch(
+                  error => {
+                    console.error(error)
+                  }
+              );
+        }
+    };
+
 
     handleTrackResequence = (discs) => {
         let modifiedDiscs = discs;

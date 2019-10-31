@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import {Table, Form, Alert } from 'react-bootstrap';
+import {Table, Form } from 'react-bootstrap';
 import { formatDateToYYYYMMDD } from '../../../Utils';
+import LoadingImgSm from '../../../ui/LoadingImgSm';
 
 class TrackInformationDataTable extends Component {
 
@@ -129,7 +130,12 @@ class TrackInformationDataTable extends Component {
                             {i+1}
                         </td>
                         <td className="text-center"><i className="material-icons">format_line_spacing</i></td>
-                        <td className="text-center">{ (track.hasUpload) ? <i className="material-icons purple-icon">audiotrack</i> : ''}</td>
+                        <td className="text-center">
+                            { (track.hasUpload) ? <i className="material-icons purple-icon">audiotrack</i> : ''}
+                            <span className="loading-sm" id={track.fileName + "_ico"}>
+                                <LoadingImgSm show={track.fileUpload}/>
+                            </span>
+                        </td>
                         <td>
                             <Form.Control 
                                 type="text" 
