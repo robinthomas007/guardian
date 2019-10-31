@@ -7,7 +7,7 @@ if [[ -f ~/.vault-token ]]; then
   exit 0
 fi
 
-export NODE_PATH=src
+# export NODE_PATH=.src
 
 if [[ -z "$NODE_ENV" ]]; then
   read -p "enter NODE_ENV: " NODE_ENV
