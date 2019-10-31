@@ -70,6 +70,23 @@ header nav ul li a:hover {
 	text-decoration: none;
 }
 
+header nav ul li div.dropdown button.btn.btn-secondary.dropdown-toggle {
+	margin-top: -3px;
+	padding: 0px 6px;
+	background-color: transparent;
+	color: #fff;
+}
+
+header nav ul li div.dropdown .dropdown-menu {
+	margin-top: 0px;
+	box-shadow: 2px 3px 8px #000;
+	background-color: #000;
+}
+
+header nav ul li div.dropdown .dropdown-item {
+	color: #fff;
+}
+
 span.guardian-logo {
 	display: block;
 	position: absolute;
