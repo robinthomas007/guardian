@@ -7,22 +7,22 @@ header {
 	z-index: 1000;
 	width: 100%;
 	color: #fff;
-	height: 42vh;
+	height: 28vh;
 	background-color: #333;
 	background-image: url(../images/new-header-bg.png);
 	background-size: cover;
 }
 
 .content {
-	margin-top: 42vh;
+	margin-top: 28vh;
 }
 
 header.compact {
-	height: 25vh;
+	height: 16.5vh;
 }
 
 .content.compact {
-	margin-top: 35vh;
+	margin-top: 20.5vh;
 }
 
 .nav-bg {
