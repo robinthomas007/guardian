@@ -31,7 +31,9 @@ class AudioFilesDataTable extends Component {
                                     <span className="static-checkmark"></span>
                                 </label>
                             </td>
-                            <td className="col-2 text-center">{track.trackReleaseDate}</td>
+                            <td className="col-2 text-center">
+                                { track.isSingle || track.trackReleaseDate !== '' ? track.trackReleaseDate : 'TBD' }
+                            </td>
                         </tr>
                     )
                 })

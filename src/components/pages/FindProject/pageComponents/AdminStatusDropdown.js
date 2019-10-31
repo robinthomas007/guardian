@@ -12,13 +12,8 @@ class AdminStatusDropdown extends Component {
 
 	handleChange(data) {
 
-        if(this.state.selectedID !== data.id) {
-            this.setState({
-                selectedID : data.id,
-                selectedText : data.name,
-            }, () => {
-                this.props.onChange(data, this.props.project)
-            })
+        if(this.props.selectedID !== data.id) {
+            this.props.onChange(data, this.props.project)
         }
 	}
 
