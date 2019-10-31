@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { convertToLocaleTime } from '../../../Utils';
 import {Table, Grid, Button, Form, Pagination, Dropdown, DropdownButton, Alert } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
+import AdminStatusDropdown from '../pageComponents/AdminStatusDropdown';
 
 class FindProjectDataTable extends Component {
 	constructor(props) {
@@ -88,32 +89,50 @@ class FindProjectDataTable extends Component {
         });
     };
 
-    renderProjects() {
-        const tableRows = this.props.data.map( (project, i) => {
-            return(
-                <tr className="d-flex w-100" key={i}>
-                    { (this.props.userData.IsAdmin) ? <td className="col-1 text-center">{parseInt(project.statusID) !== 1 ? <button onClick={ () => this.handleProjectDownload(project.projectID, project.submissionFileName)} className="btn btn-secondary"><i className="material-icons">cloud_download</i></button> : null} </td> : ''}
-                    <td onClick={ () => this.handleRowClick(project.projectID) } className="col-1 text-center">{convertToLocaleTime(project.projectLastModified)}</td>
-                    <td onClick={ () => this.handleRowClick(project.projectID) }className="col-2">{project.projectTitle}</td>
-                    <td onClick={ () => this.handleRowClick(project.projectID) }className="col-2">{project.projectArtistName}</td>
-                    <td onClick={ () => this.handleRowClick(project.projectID) }className="col-1">{project.projectReleasingLabel}</td>
-                    <td onClick={ () => this.handleRowClick(project.projectID) }className="col-1 status text-nowrap"><span>{project.status}</span></td>
-                    <td onClick={ () => this.handleRowClick(project.projectID) }className="status text-center">{this.checkProjectStepStatus(project.isReleaseInfoComplete)}</td>
-                    <td onClick={ () => this.handleRowClick(project.projectID) }className="status text-center">{this.checkProjectStepStatus(project.isProjectContactsComplete)}</td>
-                    <td onClick={ () => this.handleRowClick(project.projectID) }className="status text-center">{this.checkProjectStepStatus(project.isAudioFilesComplete)}</td>
-                    <td onClick={ () => this.handleRowClick(project.projectID) }className="status text-center">{this.checkProjectStepStatus(project.isTrackInfoComplete)}</td>
-                    <td onClick={ () => this.handleRowClick(project.projectID) }className="status text-center">{this.checkProjectStepStatus(project.isTerritorialRightsComplete)}</td>
-                    <td onClick={ () => this.handleRowClick(project.projectID) }className="status text-center">{this.checkProjectStepStatus(project.isBlockingPoliciesComplete)}</td>
-                </tr>
-            )
-        })
+    handleAdminStatusChange = (data, project) => {
+        this.props.handleAdminStatusChange(data, project)
+    };
 
-        return(tableRows)
+    renderProjects() {
+        if(this.props.data.Projects) {
+            const tableRows = this.props.data.Projects.map( (project, i) => {
+                return(
+                    <tr className="d-flex w-100" key={i}>
+                        { (this.props.userData.IsAdmin) ? <td className="col-1 text-center">{parseInt(project.statusID) !== 1 ? <button onClick={ () => this.handleProjectDownload(project.projectID, project.submissionFileName)} className="btn btn-secondary"><i className="material-icons">cloud_download</i></button> : null} </td> : ''}
+                        <td onClick={ () => this.handleRowClick(project.projectID) } className="col-1 text-center">{convertToLocaleTime(project.projectLastModified)}</td>
+                        <td onClick={ () => this.handleRowClick(project.projectID) } className="col-2">{project.projectTitle}</td>
+                        <td onClick={ () => this.handleRowClick(project.projectID) } className="col-2">{project.projectArtistName}</td>
+                        <td onClick={ () => this.handleRowClick(project.projectID) } className="col-1">{project.projectReleasingLabel}</td>
+                        
+                        <td onClick={ () => (!this.props.userData.IsAdmin) ? this.handleRowClick(project.projectID) : null } className="col-1 status text-nowrap"><span>
+                        { 
+                            (this.props.userData.IsAdmin) ? 
+                                <AdminStatusDropdown 
+                                    onChange={this.handleAdminStatusChange} 
+                                    project={project} 
+                                    selectedText={project.status} 
+                                    selectedID={project.statusID} 
+                                    options={this.props.data.Facets.StatusFacets}
+                                /> 
+                            : 
+                                project.status
+                        }
+                        </span></td>
+                        <td onClick={ () => this.handleRowClick(project.projectID) } className="status text-center">{this.checkProjectStepStatus(project.isReleaseInfoComplete)}</td>
+                        <td onClick={ () => this.handleRowClick(project.projectID) } className="status text-center">{this.checkProjectStepStatus(project.isProjectContactsComplete)}</td>
+                        <td onClick={ () => this.handleRowClick(project.projectID) } className="status text-center">{this.checkProjectStepStatus(project.isAudioFilesComplete)}</td>
+                        <td onClick={ () => this.handleRowClick(project.projectID) } className="status text-center">{this.checkProjectStepStatus(project.isTrackInfoComplete)}</td>
+                        <td onClick={ () => this.handleRowClick(project.projectID) } className="status text-center">{this.checkProjectStepStatus(project.isTerritorialRightsComplete)}</td>
+                        <td onClick={ () => this.handleRowClick(project.projectID) } className="status text-center">{this.checkProjectStepStatus(project.isBlockingPoliciesComplete)}</td>
+                    </tr>
+                )
+            })
+            return(tableRows)
+        }
     }
 
     getDataTable = () => {
         return(
-            <Table className="search-table">
                 <thead>
                     <tr className='d-flex w-100'>
                         { (this.props.userData.IsAdmin) ? <th className="col-1 text-center">Download</th> : null}
@@ -152,23 +171,23 @@ class FindProjectDataTable extends Component {
                         <th className="status text-center">Blocking</th>
                     </tr>
                 </thead>
-                <tbody>
-                    {this.renderProjects()}
-                </tbody>
-            </Table>
+
         )
     };
 
     componentDidMount() {
         this.setState( {
-            data : this.props.data,
+            data : this.props.data.Projects,
             userData : this.props.userData
         } )
     }
 
     render() {
         return(
-            this.getDataTable()
+            <Table className="search-table">
+                {this.getDataTable()}
+                <tbody>{this.renderProjects()}</tbody>
+            </Table>
         )
     }
 }
