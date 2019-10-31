@@ -94,6 +94,9 @@ class ReviewAndSubmitPage extends Component {
     }
 
     handleSubmitProjectClick() {
+
+        this.setState( {showloader : true} )
+
         const user = JSON.parse(sessionStorage.getItem('user'))
         const fetchHeaders = new Headers(
             {
@@ -119,18 +122,24 @@ class ReviewAndSubmitPage extends Component {
             }
         ).then (responseJSON => 
             {
+                this.setState( {showloader : false} )
                 new Noty ({
                     type: 'success',
                     id:'tracksSaved',
                     text: 'Your project has been successfully saved and submitted for review.',
                     theme: 'bootstrap-v4',
                     layout: 'top',
-                    timeout: '3000'
-                }).show() 
+                    timeout: '5000'
+                }).on('afterClose', ()  => {
+                    return( this.props.history.push({pathname : '/findProject/'}))
+                }).show()
             }
         )
         .catch(
-            error => console.error(error)
+            error => {
+                console.error(error)
+                this.setState( {showloader : false} )
+            }
         );
     }
 
