@@ -8,6 +8,7 @@ import SelectedFilters from './pageComponents/SelectedFilters';
 import TablePager from './pageComponents/TablePager';
 import { resetDatePicker } from '../../Utils'
 import { withRouter } from "react-router";
+import LoadingImg from '../../ui/LoadingImg';
 
 class FindProjectPage extends Component {
 	constructor(props) {
@@ -49,7 +50,8 @@ class FindProjectPage extends Component {
 			labels : [],
 			defaultLabels : [],
 			showFilterModal : false,
-			currentPageNumber : 1
+			currentPageNumber : 1,
+			showLoader : false
 		}
 
 		this.handleChange = this.handleChange.bind(this);
@@ -341,10 +343,52 @@ class FindProjectPage extends Component {
 		}, () => {this.handleProjectSearch()} )
 	};
 
+    handleAdminStatusChange = (data, project) => {
+		this.setState( { showLoader : true } )
+		const user = JSON.parse(sessionStorage.getItem('user'))
+        const fetchHeaders = new Headers(
+            {
+                "Content-Type": "application/json",
+                "Authorization" : sessionStorage.getItem('accessToken')
+            }
+		)
+
+		const fetchBody = JSON.stringify( {
+            "User" : {
+				"email" : user.email
+			},
+            "ProjectID": project.projectID,
+            "StatusID": data.id,
+		})
+
+        fetch ('https://api-dev.umusic.net/guardian/project/status', {
+            method : 'POST',
+            headers : fetchHeaders,
+            body : fetchBody
+        }).then (response => 
+            {
+                return(response.json());
+            }
+        )
+        .then (responseJSON => 
+            {
+				this.handleProjectSearch();
+				this.setState( { showLoader : false } )
+            }
+        )
+        .catch(
+            error => {
+				this.setState( { showLoader : false } )
+                console.error(error)
+            }
+        );
+    };
+
     render() {
 		return(
 			<div className="col-10">
 				<IntroModal />
+				<LoadingImg show={this.state.showLoader} />
 
 					<div className="row d-flex no-gutters">
 						<div className="col-12">
@@ -439,8 +483,9 @@ class FindProjectPage extends Component {
 					<div className="table-responsive">
 						<FindProjectDataTable 
 							userData={JSON.parse(sessionStorage.getItem('user'))}
-							data={this.state.project.Projects}
+							data={this.state.project}
 							handleColumnSort={ (columnID, columnSortOrder) => this.handleColumnSort(columnID, columnSortOrder)}
+							handleAdminStatusChange={this.handleAdminStatusChange}
 						/>
 					</div>
 
