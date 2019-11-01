@@ -48,11 +48,8 @@ class TrackInformationPage extends Component {
             },
             showloader : false,
             showReplaceAudioModal : false,
-            activeFileUploads : {
-
-            }
-
-            
+            activeFileUploads : { },
+            dragSource : null,
         }
         this.addBlankRow = this.addBlankRow.bind(this);
         this.showTrackModal = this.showTrackModal.bind(this);
@@ -66,7 +63,7 @@ class TrackInformationPage extends Component {
         this.removeTrack = this.removeTrack.bind(this);
         this.hideReplaceAudioModal = this.hideReplaceAudioModal.bind(this);
         this.showReplaceModal = this.showReplaceModal.bind(this);
-
+        this.handleChildDrag = this.handleChildDrag.bind(this);
     }
 
     setActiveDiscTab(tabID) {
@@ -340,6 +337,69 @@ class TrackInformationPage extends Component {
         return(modifiedDiscs)
     };
 
+    handleNoRightsTracksRemove = (i) => {
+        const { UnassignedTerritorialRightsSetTracks } = this.state.project;
+        let modifiedUnassignedTracks = UnassignedTerritorialRightsSetTracks;
+            modifiedUnassignedTracks.splice(i,1);
+        this.setState( {UnassignedTerritorialRightsSetTracks : modifiedUnassignedTracks} )
+    };
+
+    handleDropAdd = (e) => {
+        const setIndex = this.state.dragSource.getAttribute('setindex');
+        const trackId = this.state.dragSource.getAttribute('trackid');
+        const trackTitle = this.state.dragSource.getAttribute('trackTitle');
+        const trackIndex = this.state.dragSource.getAttribute('trackindex');
+
+        //restrict dropping to just the set tracks
+        if( ((this.state.dragSource) && !this.state.dragSource.classList.contains('unassignedTrack')) || !e.target.classList.contains('unassignedTrack')) {
+            //add the selection to the unassigned tracks
+            const { UnassignedTerritorialRightsSetTracks } = this.state.project;
+            let modifiedUnassignedTracks = UnassignedTerritorialRightsSetTracks;
+                modifiedUnassignedTracks.push({trackID : trackId, trackTitle : trackTitle})
+            this.setState({UnassignedTerritorialRightsSetTracks : modifiedUnassignedTracks})
+
+            //remove the selection from the set's assigned tracks
+            const { TerritorialRightsSets } = this.state.project;
+            let modifiedTerritorialRightsSets = TerritorialRightsSets;
+                modifiedTerritorialRightsSets[setIndex].tracks.splice(trackIndex, 1)
+            this.setState({TerritorialRightsSets : modifiedTerritorialRightsSets})
+        }
+    };
+
+    handleChildDrag = (e, i) => {
+        this.setState( {
+            dragSource : e.target,
+            dragSourceIndex : i
+        } )
+    };
+
+    handleChildDrop = (e, i) => {
+        this.handleTrackMove(this.state.dragSourceIndex, i)
+        this.setState( {
+            dragTarget : e.target,
+            dragTargetIndex : i
+        } )
+    };
+
+    handleTrackMove = (sourceIndex, targetIndex) => {
+        const { Discs } = this.state.project;
+
+        let sourceTrack = Discs[this.state.activeDiscTab -1].Tracks[sourceIndex];
+        let targetTrack = Discs[this.state.activeDiscTab -1].Tracks[targetIndex];
+
+        let modifiedDiscs = Discs;
+            modifiedDiscs[this.state.activeDiscTab -1].Tracks.splice(sourceIndex, 1);
+            modifiedDiscs[this.state.activeDiscTab -1].Tracks.splice(targetIndex, 0, sourceTrack);
+
+        this.setState( {
+            Discs : this.handleTrackResequence(modifiedDiscs),
+            dragSource : null,
+            dragSourceIndex : null,
+            dragTarget : null,
+            dragTargetIndex : null
+        } )
+    }
+
     render() {
         return (
             <div className="col-10">
@@ -376,6 +436,8 @@ class TrackInformationPage extends Component {
                     setSingle={this.setSingle}
                     showReplaceModal={ (track, i) => this.showReplaceModal(track, i)}
                     hideReplaceAudioModal={ (track, i) => this.hideReplaceAudioModal(track, i)}
+                    handleChildDrag={(e,i) => this.handleChildDrag(e,i)}
+                    handleChildDrop={(e,i) => this.handleChildDrop(e,i)}
                 />
 
                 <section className="row save-buttons">

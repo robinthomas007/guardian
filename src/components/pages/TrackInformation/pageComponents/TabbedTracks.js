@@ -43,6 +43,8 @@ class TabbedTracks extends Component {
                             showReplaceModal={ (track, i) => this.props.showReplaceModal(track, i)}
                             hideReplaceAudioModal={ (track, i) => this.props.hideReplaceAudioModal(track, i)}
                             addDisc={this.props.addDisc}
+                            handleChildDrag={(e,i) => this.props.handleChildDrag(e,i)}
+                            handleChildDrop={(e,i) => this.props.handleChildDrop(e,i)}
                         />
                     </Tab>
                 )

@@ -182,18 +182,18 @@ export default withAuth(class Header extends Component {
                                 <li><NavLink className="steps" to={{pathname: '/releaseInformation'}}>New Project</NavLink></li>
                                 <li><NavLink className="steps" to={{pathname: '/findProject'}}>Find A Project</NavLink></li>
                                 <li>
-                                <div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Recent Projects
-  </button>
-  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="#">Recent Project 1</a>
-    <a class="dropdown-item" href="#">Recent Project 2</a>
-    <a class="dropdown-item" href="#">Recent Project 3</a>
-    <a class="dropdown-item" href="#">Recent Project 4</a>
-    <a class="dropdown-item" href="#">Recent Project 5</a>
-  </div>
-</div>
+                                    <div class="dropdown">
+                                        <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Recent Projects
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a className="dropdown-item" href="#">Recent Project 1</a>
+                                            <a className="dropdown-item" href="#">Recent Project 2</a>
+                                            <a className="dropdown-item" href="#">Recent Project 3</a>
+                                            <a className="dropdown-item" href="#">Recent Project 4</a>
+                                            <a className="dropdown-item" href="#">Recent Project 5</a>
+                                        </div>
+                                    </div>
                                 </li>
                                 { (this.props.userData.IsAdmin) ? <li><NavLink className="steps" to={{pathname: '/admin'}}>Admin</NavLink></li> : null}
                                 <li> | </li>

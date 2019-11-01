@@ -19,6 +19,7 @@ class TrackInformationDataTable extends Component {
         }
         this.setDatePicker = this.setDatePicker.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleDrag = this.handleDrag.bind(this);
     }
  
     trackInformationDataHeader = () => {
@@ -113,19 +114,34 @@ class TrackInformationDataTable extends Component {
         this.props.updateDiscData(this.props.discID, modifiedDiscs)
     }
 
+    handleAllowDrop(e) {
+        //alert('allow drop')
+        e.preventDefault();
+    }
+
+    handleDrop = (e, i) => {
+        this.props.handleChildDrop(e, i);
+        //this.props.handleDropAdd(e)
+    }
+
+    handleDrag(e, i, track) {
+        this.props.handleChildDrag(e, i);
+        e.dataTransfer.setData("text/html", e.target);
+    }
 
     getTrackRows() {
         if(this.props.data.Discs.length > 0 && this.props.data.Discs[this.props.discID].Tracks) {
             let tableRows = this.props.data.Discs[this.props.discID].Tracks.map( (track, i) => {
 
                 return(
-                    <tr draggable key={i}>
+                    <tr className={'draggable-track'} draggable="true" key={i} onDrop={ (e) => this.handleDrop(e, i)} onDragOver={this.handleAllowDrop} onDragStart={(e) => this.handleDrag(e, i, track)} >
                         <td className="text-center">
                             <Form.Control 
                                 type="hidden" 
                                 id={'trackID'} 
                                 value={track.trackID} 
                                 onChange={(evt) => this.handleChange(evt, track, i)}
+                                onDragStart={(e) => this.handleDrag(e, i, track)} 
                             ></Form.Control>
                             {i+1}
                         </td>
