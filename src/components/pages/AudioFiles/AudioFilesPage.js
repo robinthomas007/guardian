@@ -6,6 +6,7 @@ import './AudioFiles.css';
 import Noty from 'noty';
 import LoadingImg from '../../ui/LoadingImg';
 import AudioFilesTabbedTracks from '../AudioFiles/pageComponents/audioFilesTabbedTracks';
+import { isValidIsrc } from '../../Utils'
 
 
 class AudioFilesPage extends Component {
