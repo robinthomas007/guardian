@@ -4,6 +4,7 @@ import LoadingImg from '../../ui/LoadingImg';
 import PageHeader from '../PageHeader/PageHeader';
 import Noty from 'noty';
 import AudioFilesTabsContainer from '../ReviewAndSubmit/pageComponents/AudioFileTabsContainer';
+import TerritorialRightsTable from '../ReviewAndSubmit/pageComponents/TerritorialRightsTable';
 import { withRouter } from 'react-router-dom';
 
 class ReviewAndSubmitPage extends Component {
@@ -280,35 +281,16 @@ class ReviewAndSubmitPage extends Component {
                     <h2>Territorial Rights</h2>
                 </div>
                 <div className="col-2 justify-content-end">
-                <button className="btn btn-secondary align-content-end float-right" onClick={() => this.handleProjectCategoryClick('/territorialRights/')}>
-                             <i className="material-icons">edit</i>  Edit
-                            </button>
+                    <button className="btn btn-secondary align-content-end float-right" onClick={() => this.handleProjectCategoryClick('/territorialRights/')}>
+                        <i className="material-icons">edit</i>  Edit
+                    </button>
                 </div>
                 <div className="col-12">
                     <br />
                     <div className="review-card">
-                        <table className="table">
-                            <tbody>
-                                <tr className="row no-gutters">
-                                    <th className="col-3">Rights Policy Name</th>
-                                    <th className="col-3">Tracks With This Policy</th>
-                                    <th className="col-3">Owned In</th>
-                                    <th className="col-3">Not Owned In</th>
-                                </tr>
-                                <tr className="row no-gutters">
-                                    <td className="col-3">Global Rights Policy</td>
-                                    <td className="col-3">Track Name 2</td>
-                                    <td className="col-3">Worldwide</td>
-                                    <td className="col-3">N/A</td>
-                                </tr>
-                                <tr className="row no-gutters">
-                                    <td className="col-3"></td>
-                                    <td className="col-3">Track Name 4</td>
-                                    <td className="col-3">USA, Canada, UK</td>
-                                    <td className="col-3">N/A</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <TerritorialRightsTable 
+                            data={this.state.project}
+                        />
                     </div>
                     </div>
                 </div>
