@@ -23,43 +23,50 @@ export default withAuth(class Header extends Component {
                         description : 'Release Info',
                         path : '/releaseInformation/',
                         complete : false,
-                        stepComplete : true
+                        stepComplete : true,
+                        preRelease : true
                     },
                     {
                         description : 'Contacts',
                         path : '/projectContacts/',
                         complete : false,
-                        stepComplete : false
+                        stepComplete : false,
+                        preRelease : true
                     },
                     {
                         description : 'Audio Files',
                         path : '/audioFiles/',
                         complete : false,
-                        stepComplete : false
+                        stepComplete : false,
+                        preRelease : false
                     },
                     {
                         description : 'Track Info',
                         path : '/trackInformation/',
                         complete : false,
-                        stepComplete : false
+                        stepComplete : false,
+                        preRelease : true
                     },
                     {
                         description : 'Rights',
                         path : '/territorialRights/',
                         complete : false,
-                        stepComplete : false
+                        stepComplete : false,
+                        preRelease : false
                     },
                     {
                         description : 'Blocking',
                         path : '/blockingPolicies/',
                         complete : false,
-                        stepComplete : false
+                        stepComplete : false,
+                        preRelease : true
                     },
                     {
                         description : 'Review',
                         path : '/reviewSubmit/',
                         complete : false,
-                        stepComplete : false
+                        stepComplete : false,
+                        preRelease : true
                     }
                 ],
                 postRelease : []
@@ -182,11 +189,11 @@ export default withAuth(class Header extends Component {
                                 <li><NavLink className="steps" to={{pathname: '/releaseInformation'}}>New Project</NavLink></li>
                                 <li><NavLink className="steps" to={{pathname: '/findProject'}}>Find A Project</NavLink></li>
                                 <li>
-                                    <div class="dropdown">
+                                    <div className="dropdown">
                                         <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             Recent Projects
                                         </button>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                             <a className="dropdown-item" href="#">Recent Project 1</a>
                                             <a className="dropdown-item" href="#">Recent Project 2</a>
                                             <a className="dropdown-item" href="#">Recent Project 3</a>
