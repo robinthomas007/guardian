@@ -48,7 +48,6 @@ class TrackInformationPage extends Component {
             },
             showloader : false,
             showReplaceAudioModal : false,
-            activeFileUploads : { },
             dragSource : null,
         }
         this.addBlankRow = this.addBlankRow.bind(this);
@@ -279,14 +278,18 @@ class TrackInformationPage extends Component {
         })
     }
     
-    showTrackUploadIconVisibilty = (track) => {
-        track.fileUpload = false;
-    };
+    handleFileUploadView = (trackNumber, showUpload) => {
+        const { Discs } = this.state.project;
+        let targetTrack = (trackNumber > 0) ? trackNumber - 1 : 0;
+
+        let modifiedDDiscs = Discs;
+            modifiedDDiscs[this.state.activeDiscTab -1 ].Tracks[targetTrack].fileUpload = showUpload;
+            modifiedDDiscs[this.state.activeDiscTab -1 ].Tracks[targetTrack].hasUpload = (showUpload) ? false : true;
+        
+        this.setState( {Discs : modifiedDDiscs} )
+    }
 
     handleFileUpload(files, track) {
-
-
-        track.fileUpload = true;
 
         const user = JSON.parse(sessionStorage.getItem('user'));
         const projectID = (this.state.project.Project.projectID) ? (this.state.project.Project.projectID) : '';
@@ -299,10 +302,9 @@ class TrackInformationPage extends Component {
             }
         )
 
+        this.handleFileUploadView(track.trackNumber, true);
+
         for (var i = 0; i < files.length; i++) {
-
-            var targetTrack = track;
-
             var formData = new FormData();
                 formData.append('file', files[0]);
 
@@ -313,7 +315,7 @@ class TrackInformationPage extends Component {
               }).then (response => {
                 return(response.json());
               }).then (responseJSON => {
-                this.showTrackUploadIconVisibilty(targetTrack);
+                this.handleFileUploadView(track.trackNumber, false);
               }).catch(
                   error => {
                     console.error(error)

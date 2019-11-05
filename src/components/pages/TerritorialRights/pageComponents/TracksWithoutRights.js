@@ -12,7 +12,7 @@ class TracksWithoutRights extends Component {
     }
 
     handleDrop = (e) => {
-        this.props.handleDropAdd(e)
+        this.props.handleDropAdd(e);
     }
 
     handleDrag(e, i, track) {
@@ -26,7 +26,7 @@ class TracksWithoutRights extends Component {
                 return(
                     <div 
                         key={i} 
-                        draggable="true" 
+                        draggable="true"
                         className="draggable-track unassignedTrack" 
                         trackindex={i} 
                         trackid={track.trackID} 
