@@ -43,8 +43,10 @@ class TracksWithoutRights extends Component {
 
     render() {
         return(
-            <div className="track-draggable-area h-100 unassignedTrack" onDrop={ (e) => this.handleDrop(e)} onDragOver={this.handleAllowDrop}>
+            <div className="track-draggable-area d-flex flex-column h-100 unassignedTrack" onDrop={ (e) => this.handleDrop(e)} onDragOver={this.handleAllowDrop}>
+               <div className="sticky-box">
                 {this.getTracksList()}
+                </div>
             </div>
         )
     }

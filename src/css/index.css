@@ -924,7 +924,7 @@ div.table-responsive.d-flex.row.no-gutters {
 
 .set-card {
 	margin-left: -20px;
-	margin-bottom: 0px !important;
+	margin-bottom: 10px;
 	padding: 1rem;
 	background-color: #F5F5F5;
 }
@@ -1055,6 +1055,12 @@ ul.tracks li label.dropdown-item {
 
 .dropdown.allowance {
 	min-width: 100px;
+}
+
+div.sticky-box {
+	position: sticky;
+	top: 35vh;
+	height: auto;
 }
 
 /* Review & Submit */
