@@ -814,7 +814,7 @@ label.col-form-label.tbd.text-nowrap.form-label {
 /* Audio Files & Track Information */
 
 .audio-drop-area {
-	border: solid 1px #CCC;
+	border: none;
 	width: 100%;
 	height: 190px;
 	background-color: #d9f3fe;
@@ -823,7 +823,7 @@ label.col-form-label.tbd.text-nowrap.form-label {
 
 .track-draggable-area {
 	background-color: #d9f3fe;
-	border: dashed 1px #CCC;
+	border: none;
 	padding: .30rem .60rem;
 	vertical-align: top;
 }
@@ -852,6 +852,7 @@ label.col-form-label.tbd.text-nowrap.form-label {
 	border-radius: 2px;
 	background-color: #d9f3fe;
 	vertical-align: middle;
+	border: none !important;
 	cursor: grab;
 }
 
@@ -1076,6 +1077,27 @@ div.sticky-box {
 	position: sticky;
 	top: 35vh;
 	height: auto;
+}
+
+.dropdown.tracks-dropdown {
+	width: 90% !important;
+}
+
+table.blocking-set .dropdown.tracks-dropdown {
+	width: 100% !important;
+}
+
+
+.track-draggable-area {
+	border: none !important;
+}
+
+table.blocking-set .track-draggable-area.territory-tracks {
+	width: 100% !important;
+}
+
+.track-draggable-area.territory-tracks {
+	width: 90% !important;
 }
 
 /* Review & Submit */

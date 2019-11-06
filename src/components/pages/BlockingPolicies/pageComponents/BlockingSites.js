@@ -100,7 +100,7 @@ class BlockingSites extends Component {
 
     render() {
         return (
-            <Table>
+            <Table className="blocking-set">
                 <thead>
                     <tr>
                         <th>Tracks for Policy  <ToolTip 
@@ -115,7 +115,7 @@ class BlockingSites extends Component {
                                         tabIndex='-1' 
                                         message='No blocking will take place.'
                                     /></th>
-                        <th className="text-right">Blocking Rules <ToolTip 
+                        <th className="text-right">Block <ToolTip 
                                         tabIndex='-1' 
                                         message='Select the blocking option to initiate blocking options.'
                                     /></th>
