@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import {Table, Grid, Button, Form } from 'react-bootstrap'; 
+import {Table, Grid, Button, Form } from 'react-bootstrap';
+import ToolTip from '../../../ui/Tooltip';
 import BlockingPolicDurationInput from '../pageComponents/blockingPolicyDurationInput'
 import BlockingPolicyDateInput from '../pageComponents/BlockingPolicyDateInput'
 import TracksDropArea from '../../TerritorialRights/pageComponents/TracksDropArea';
@@ -102,12 +103,27 @@ class BlockingSites extends Component {
             <Table>
                 <thead>
                     <tr>
-                        <th>Tracks to Block</th>
-                        <th>Platform</th>
-                        <th>Monetize</th>
-                        <th>Block</th>
-                        <th>Allowance</th>
-                        <th>Block Until</th>
+                        <th>Tracks for Policy  <ToolTip 
+                                        tabIndex='-1' 
+                                        message='Drag and drop the tracks to include in the policy in the blue area below or select them from the dropdown.'
+                                    /></th>
+                        <th>Platform <ToolTip 
+                                        tabIndex='-1' 
+                                        message='The media platform the policy rule applies to.'
+                                    /></th>
+                        <th className="text-right">Monetize <ToolTip 
+                                        tabIndex='-1' 
+                                        message='No blocking will take place.'
+                                    /></th>
+                        <th className="text-right">Blocking Rules <ToolTip 
+                                        tabIndex='-1' 
+                                        message='Select the blocking option to initiate blocking options.'
+                                    /></th>
+                        <th></th>
+                        <th>Blocked Until <ToolTip 
+                                        tabIndex='-1' 
+                                        message='The date when the rule expires. If none is selected, it will be considered blocked always.'
+                                    /></th>
                     </tr>
                 </thead>
 

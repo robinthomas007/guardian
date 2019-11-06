@@ -949,6 +949,21 @@ div.table-responsive.d-flex.row.no-gutters {
 	right: 0px;
 }
 
+.set-card input,
+.set-card .dropdown {
+	background-color: #fff;
+	text-align: center;
+}
+
+th.text-right {
+	text-align: right;
+}
+
+th button.tooltip-btn {
+	float: none;
+	vertical-align: baseline;
+}
+
 span.drag-drop-arrow {
 	display: block;
 	height: 33px;
