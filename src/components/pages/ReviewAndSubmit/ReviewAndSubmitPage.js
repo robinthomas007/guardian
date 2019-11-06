@@ -5,6 +5,7 @@ import PageHeader from '../PageHeader/PageHeader';
 import Noty from 'noty';
 import AudioFilesTabsContainer from '../ReviewAndSubmit/pageComponents/AudioFileTabsContainer';
 import TerritorialRightsTable from '../ReviewAndSubmit/pageComponents/TerritorialRightsTable';
+import BlockingPoliciesDataTable from '../ReviewAndSubmit/pageComponents/BlockingPoliciesDataTable';
 import { withRouter } from 'react-router-dom';
 
 class ReviewAndSubmitPage extends Component {
@@ -151,6 +152,9 @@ class ReviewAndSubmitPage extends Component {
     }
 
     render() {
+
+        console.log(this.state.project)
+
         return(
             <div className="col-10">		
                 <div className="page-container">
@@ -309,30 +313,9 @@ class ReviewAndSubmitPage extends Component {
                 <div className="col-12">
                     <br />
                     <div className="review-card">
-                        <table className="table">
-                            <thead>
-                                <tr>
-                                    <th className="align-text-bottom" nowrap="nowrap">Blocking Policy Name</th>
-                                    <th className="align-text-bottom" nowrap="nowrap">Tracks With This Policy</th>
-                                    <th className="align-items-center"><span className="platform-sprite small youtube"></span></th>
-                                    <th className="align-items-center"><span className="platform-sprite small soundcloud"></span></th>
-                                    <th className="align-items-center"><span className="platform-sprite small facebook"></span></th>
-                                    <th className="align-items-center"><span className="platform-sprite small instagram"></span></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td nowrap="nowrap">Blocking Policy 1</td>
-                                    <td className="" nowrap="nowrap">Track Name 1</td>
-                                    <td className="align-items-center" nowrap="nowrap">Leave Up All</td>
-                                    <td className="align-items-center" nowrap="nowrap">Block &lt; 30 Sec</td>
-                                    <td className="align-items-center" nowrap="nowrap">Block All<br />
-                                    <span className="block-date">Until 12/28/2019</span>
-                                    </td>
-                                    <td className="align-items-center" nowrap="nowrap">Leave Up All</td>
-                                </tr>
-                                </tbody>
-                            </table>
+                        <BlockingPoliciesDataTable 
+                            data={this.state.project}
+                        />
                         </div>
                     </div>
                 </div>
