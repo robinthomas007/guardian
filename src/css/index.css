@@ -833,7 +833,7 @@ label.col-form-label.tbd.text-nowrap.form-label {
 	background-color: #fff;
 	margin: 7px 0;
 	padding: 6px;
-	box-shadow: 2px 3px 8px #8c9396;
+	box-shadow: none !important;
 	cursor: grab;
 }
 
