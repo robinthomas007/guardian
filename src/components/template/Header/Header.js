@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Route, NavLink } from "react-router-dom";
 import { withAuth } from '@okta/okta-react';
+import RecentProjectsDrop from "../Header/RecentProjectsDrop";
 
 export default withAuth(class Header extends Component {
     constructor(props) {
@@ -229,18 +230,9 @@ export default withAuth(class Header extends Component {
                                 <li><NavLink className="steps" to={{pathname: '/releaseInformation'}}>New Project</NavLink></li>
                                 <li><NavLink className="steps" to={{pathname: '/findProject'}}>Find A Project</NavLink></li>
                                 <li>
-                                    <div className="dropdown">
-                                        <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Recent Projects
-                                        </button>
-                                        <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a className="dropdown-item" href="#">Recent Project 1</a>
-                                            <a className="dropdown-item" href="#">Recent Project 2</a>
-                                            <a className="dropdown-item" href="#">Recent Project 3</a>
-                                            <a className="dropdown-item" href="#">Recent Project 4</a>
-                                            <a className="dropdown-item" href="#">Recent Project 5</a>
-                                        </div>
-                                    </div>
+                                    <RecentProjectsDrop 
+                                        updateHistory={ (projectID)=> this.props.updateHistory(projectID)}
+                                    />
                                 </li>
                                 { (this.props.userData.IsAdmin) ? <li><NavLink className="steps" to={{pathname: '/admin'}}>Admin</NavLink></li> : null}
                                 <li> | </li>
