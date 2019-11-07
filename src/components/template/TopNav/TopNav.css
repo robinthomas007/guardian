@@ -1,6 +1,0 @@
-nav.top-nav.int {text-align:right;}
-nav.top-nav.int ul {list-style:none; margin:0 40px 0 0; padding:0;}
-nav.top-nav.int ul li {display:inline-block;}
-nav.top-nav.int ul li a {display:block; margin-right:30px; padding:8px; color:#333; text-decoration:none;}
-nav.top-nav.int ul li a:hover {color:#01579b;}
-nav.top-nav.int ul li a.help {background-color:#01579b; color:#fff;}
