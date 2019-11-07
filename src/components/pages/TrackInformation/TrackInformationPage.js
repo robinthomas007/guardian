@@ -421,7 +421,7 @@ class TrackInformationPage extends Component {
                 <div className="row no-gutters step-description">
                     <div className="col-12">
                         <h2>Step <span className="count-circle">4</span> Track Information</h2>
-                        <p>In this step, you can upload audio files for filtering by either dragging &amp; dropping or clicking to browse files, e.g. mp3, WAV, etc. Tracks can also be reordered with drag and drop. This section must be completed by clicking on the 'Save &amp; Continue' button below.</p>
+                        <p>In this step, you can define a tracklist and sequence and provide metadata for each track including ISRCs and release dates (if different from the album release).  This section must be completed by selecting the Save &amp; Continue button below.</p>
                     </div>
                 </div>
 

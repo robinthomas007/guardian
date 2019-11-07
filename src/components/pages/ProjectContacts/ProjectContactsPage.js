@@ -252,7 +252,7 @@ class ProjectContactsPage extends Component {
                 <div className="row d-flex no-gutters step-description">
                     <div className="col-12">
                         <h2>Step <span className="count-circle">2</span> Project Contacts</h2>
-                        <p>In this step, you can choose which contacts will be associated with the project that has recently been created. You can select the level of project security (i.e., who will be able to see the project) and who should be contacted regarding this project if necessary. Required fields are indicated with an <span className="required-ind">*</span>.</p>
+                        <p>In this step, you can choose which contacts will be associated with the project. You can select the level of project security (i.e., who will be able to see the project) and who should be contacted regarding this project, if necessary. Required fields are indicated with an <span className="required-ind">*</span>.</p>
                     </div>
                 </div>
     
@@ -326,7 +326,7 @@ class ProjectContactsPage extends Component {
                                 <div className="col-2">
                                 <Form.Label className='col-form-label align-top'>Additional Contacts
                                 </Form.Label>
-                                <ToolTip tabIndex='-1' message='Additional contacts or users that youd like to share this project with may be added here. You can copy any paste from Outlook,  or separate a list of users to be added by commas, spaces, semi-colons or any combination of these.' />
+                                <ToolTip tabIndex='-1' message='Additional contacts or users that youd like to share this project with may be added here. You can copy and paste from Outlook, or separate a list of users to be added by commas, spaces, semi-colons or any combination of these.' />
                                 </div>
                                 <div className="col-10">
                                 <Form.Control 

@@ -170,7 +170,7 @@ class ReviewAndSubmitPage extends Component {
                     <div className="row no-gutters step-description review">
                         <div className="col-11">
                             <h2>Step <span className="count-circle">7</span> Review and Submit</h2>
-                            <p>Take some time to review the project before submitting. Click on any of the sections in order to return the corresponding step to make changes.</p>
+                            <p>In this FINAL step, please take some time to review the project for accuracy before submitting.  Click on any of the sections to return to the corresponding step and make changes.  Once a project is submitted as final in this step, only a Guardian administrator can unlock the project for additional editing.</p>
                         </div>
                         <div className="col-1">
                         <button type="button" className="btn btn-primary float-right" onClick={this.handleSubmitProjectClick}>Submit Project</button>

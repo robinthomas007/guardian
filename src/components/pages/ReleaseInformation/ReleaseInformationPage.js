@@ -413,7 +413,7 @@ class ReleaseinformationPage extends Component {
                                     </Form.Label>
                                     <ToolTip 
                                         tabIndex='-1' 
-                                        message='Enter the artist for your project here. It ay consist of any letter, number or symbol from 0-255 characters in length.'
+                                        message='Enter the artist for your project here. It may consist of any letter, number or symbol from 0-255 characters in length.'
                                     />
                                 </div>
                                <div className="col-9">
@@ -460,7 +460,7 @@ class ReleaseinformationPage extends Component {
                                     </Form.Label>
                                     <ToolTip 
                                         tabIndex='-1' 
-                                        message='Please select the releasing labe for your project. If you only have access to a single label, your label will be pre-loaded and not require a selection.'
+                                        message='Please select the releasing label for your project. If you only have access to a single label, your label will be pre-loaded and not require a selection.'
                                     />
                                 </div>
                                 <div className="col-9">
@@ -523,6 +523,10 @@ class ReleaseinformationPage extends Component {
                             <Form.Group className='row d-flex no-gutters'>
                                 <div className="col-3">
                                 <Form.Label className="notes">Notes</Form.Label>
+                                <ToolTip 
+                                        tabIndex='-1' 
+                                        message='Anything notable about this release?'
+                                    />
                                 </div>
                                <div className="col-9">
                                <Form.Control

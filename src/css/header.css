@@ -7,14 +7,14 @@ header {
 	z-index: 1000;
 	width: 100%;
 	color: #fff;
-	height: 27vh;
+	height: 29vh;
 	background-color: #333;
 	background-image: url(../images/new-header-bg.png);
 	background-size: cover;
 }
 
 .content {
-	margin-top: 27vh;
+	margin-top: 29vh;
 }
 
 header.compact {

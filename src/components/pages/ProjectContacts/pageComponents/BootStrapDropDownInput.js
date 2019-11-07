@@ -11,8 +11,8 @@ class BootStrapDropDownInput extends Component {
             value : this.props.value,
             onChange : '',
             options : [
-                '<i class="material-icons" data-toggle="tooltip" title="Private">lock</i> Private (Viewable on by you)', 
-                '<i class="material-icons" data-toggle="tooltip" title="Public">group</i> Public (Viewable by all label members)'
+                '<i class="material-icons" data-toggle="tooltip" title="Private">lock</i> Private (Viewable ONLY by you)', 
+                '<i class="material-icons" data-toggle="tooltip" title="Public">group</i> Public (Viewable by ALL label users)'
             ]
         }
 

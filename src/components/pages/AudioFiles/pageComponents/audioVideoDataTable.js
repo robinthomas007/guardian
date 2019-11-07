@@ -25,8 +25,8 @@ class AudioVideoDataTable extends Component {
                 <tr>
                     <th className="text-center">#</th>
                     <th>Audio File</th>
-                    <th>ISRC <i><span className="required-ind"></span></i></th>
                     <th>Track Title <i><span className="required-ind">(Required)</span></i></th>
+                    <th>ISRC</th>
                     <th>Artist</th>
                     <th className="text-center">Actions</th>
                 </tr>
@@ -127,21 +127,7 @@ class AudioVideoDataTable extends Component {
                                     value={this.state.tableData[i].fileName}
                                 />
                             </div>
-                        </td>
-
-                        <td>
-                            <Form.Control
-                                type="text"
-                                id="isrc"
-                                onChange={ (e) => this.handleChange(e, track, i) }
-                                value={this.state.tableData[i].isrc}
-                                className={'trackIsrcField'}
-                                onBlur={ (e) => this.handleOnBlur(e) }
-                            />
-                            <div className="invalid-tooltip">
-                                Invalid ISRC
-                            </div>
-                        </td>
+                        </td>                      
                         <td>
                             <Form.Control
                                 type="text"
@@ -153,6 +139,19 @@ class AudioVideoDataTable extends Component {
                             />
                             <div className="invalid-tooltip">
                                 Invalid Track Title
+                            </div>
+                        </td>
+                        <td>
+                            <Form.Control
+                                type="text"
+                                id="isrc"
+                                onChange={ (e) => this.handleChange(e, track, i) }
+                                value={this.state.tableData[i].isrc}
+                                className={'trackIsrcField'}
+                                onBlur={ (e) => this.handleOnBlur(e) }
+                            />
+                            <div className="invalid-tooltip">
+                                Invalid ISRC
                             </div>
                         </td>
                         <td>

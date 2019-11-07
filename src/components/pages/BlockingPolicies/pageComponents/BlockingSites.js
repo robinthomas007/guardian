@@ -109,20 +109,20 @@ class BlockingSites extends Component {
                                     /></th>
                         <th>Platform <ToolTip 
                                         tabIndex='-1' 
-                                        message='The media platform the policy rule applies to.'
+                                        message='The UMG licensed platform to which the policy applies.'
                                     /></th>
                         <th className="text-right">Monetize <ToolTip 
                                         tabIndex='-1' 
-                                        message='No blocking will take place.'
+                                        message='No blocking will take place after commercial release.'
                                     /></th>
                         <th className="text-right">Block <ToolTip 
                                         tabIndex='-1' 
-                                        message='Select the blocking option to initiate blocking options.'
+                                        message='Blocking will continue after commercial release.'
                                     /></th>
                         <th></th>
                         <th>Blocked Until <ToolTip 
                                         tabIndex='-1' 
-                                        message='The date when the rule expires. If none is selected, it will be considered blocked always.'
+                                        message='The expiration date for the block policy you submit.  If no date is selected, blocking will continue indefinitely.'
                                     /></th>
                     </tr>
                 </thead>

@@ -67,8 +67,7 @@ class HaveAudioModal extends Component {
             </Button>
           </span>
           <div className="alert alert-primary clearfix" role="alert">
-              If you do not have audio files the project cannot be submitted for full protection until audio files have been provided.
-              In the meantime you can submit track information for initial protection in the next step, which will immedietly provide inital protection.
+          In order to submit a project for full anti-piracy services including pre-release filtering, you must submit audio files.  In the meantime, you can submit track titles and metadata for basic leak detection, monitoring and web-crawling in the next step.
             </div>
           </Modal.Body>
         </Modal>

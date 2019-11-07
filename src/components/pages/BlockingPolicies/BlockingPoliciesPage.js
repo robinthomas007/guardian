@@ -328,10 +328,9 @@ class BlockingPoliciesPage extends Component {
                 <div className="row no-gutters step-description">
                     <div className="col-12">
                         <h2>Step <span className="count-circle">6</span> Post-Release UGC Blocking <span className="option-text">(Optional)</span></h2>
-                        <p>In this optional step, you can choose to block content after commericial release until the desired date. UMG's default policy is to monetize content on licensed platforms upon commercial release. Here you can create a post-release block policy set then drag &amp; drop titles to assign specific tracks to that policy.</p>
+                        <p>In this OPTIONAL step, you can choose to block content AFTER commercial release until a desired date.  UMG’s default policy is to monetize content on licensed platforms upon commercial release.  Here you can create a post-release block policy set, then drag &amp; drop titles to assign specific tracks to that policy.  This section can only be completed by selecting the Request Approval button below.</p>
                         <p>
-                            *Any post-release policies created here will require review and will not be complete until approval is granted.  <br />
-                            *Confirmation of approval will arrive via email.
+                            Note: any post-release policies created in this section require approval and will not be put into effect until approval is granted.  Confirmation of approval will arrive via email.
                         </p>
                     </div>
                 </div>

@@ -469,7 +469,7 @@ class AudioFilesPage extends Component {
                 <div className="row no-gutters step-description">
                     <div className="col-12">
                         <h2>Step <span className="count-circle">3</span> Audio Files</h2>
-                        <p>In this step, you can upload MP3s/WAVs for filtering by either dragging &amp; dropping or clicking to browse files, e.g. mp3, WAV, etc. Tracks can also be reordered with drag and drop. This section must be completed by clicking on the 'Save &amp; Continue' button below.</p>
+                        <p>In this step, you can upload MP3s/WAVs for pre-release filtering by either dragging &amp; dropping or clicking to browse files. Tracks can be reordered using drag and drop as well. This section must be completed by clicking on the 'Save &amp; Continue' button below.</p>
                     </div>
                 </div>
 

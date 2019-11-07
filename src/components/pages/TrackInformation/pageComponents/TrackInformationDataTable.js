@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Table, Form } from 'react-bootstrap';
 import { formatDateToYYYYMMDD } from '../../../Utils';
+import ToolTip from '../../../ui/Tooltip';
 import LoadingImgSm from '../../../ui/LoadingImgSm';
 
 class TrackInformationDataTable extends Component {
@@ -23,15 +24,24 @@ class TrackInformationDataTable extends Component {
     }
  
     trackInformationDataHeader = () => {
+        console.log(333)
         return(
             <tr>
                 <th className="text-center">#</th>
                 <th className="text-center"></th>
                 <th className="text-center"></th>
                 <th>Track Title</th>
-                <th>ISRC <i>(Optional)</i></th>
+                <th>ISRC <i>(Optional) </i>
+                <ToolTip  tabIndex='-1' 
+                              message='You may include ISRC here if known, necessary for completion of Step 3 (Audio Files).'
+                     />
+                </th>
                 <th className="text-center">Single</th>
-                <th className="release-date-col">Release Date <span>TBD</span></th>
+                <th className="release-date-col">Release Date <span>TBD </span>
+                <ToolTip  tabIndex='-1' 
+                              message='Indicate a single’s release date here if different from album release date.'
+                     />
+                </th>
                 <th className="text-center">Actions</th>
             </tr> 
         )
