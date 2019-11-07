@@ -29,7 +29,7 @@ class BlockingPoliciesDataTable extends Component {
 
     getBlockingPolicyTracks = (policy, setIndex) => {
         return(
-            this.props.data.TerritorialRightsSets[setIndex].tracks.map( (track, i)  => {
+            this.props.data.BlockingPolicySets[setIndex].tracks.map( (track, i)  => {
                 return(
                     <tr>
                         <td nowrap="nowrap">{(i === 0) ? policy.description : ''}</td>
