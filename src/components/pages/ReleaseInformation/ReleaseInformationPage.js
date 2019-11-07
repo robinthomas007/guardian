@@ -481,7 +481,7 @@ class ReleaseinformationPage extends Component {
                                     </Form.Label>
                                     <ToolTip 
                                         tabIndex='-1' 
-                                        message='Projects with a release date prior to todays date will be considered post-release entries. If the projects release date is to be determined, select the TBD option.'
+                                        message='Projects with a release date prior to today&#39;s date will be considered post-release. If the project&#39;s release date is to be determined, select TBD.'
                                     />
                                 </div>
                                <div className="col-3 release-date">

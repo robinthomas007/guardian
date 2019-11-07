@@ -1,28 +1,106 @@
-#IntroModal .modal-content {color:#fff; background:#000;} 
+#IntroModal .modal-content {
+    color: #fff;
+    background: #000;
+}
+
 #IntroModal .modal-content div.purp-diag {
-    background: -moz-linear-gradient(-45deg, rgba(0,0,0,0.8) 0%, rgba(248,4,141,0.51) 51%, rgba(243,4,138,0.5) 52%, rgba(0,0,0,0.8) 100%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(-45deg, rgba(0,0,0,0.8) 0%,rgba(248,4,141,0.51) 51%,rgba(243,4,138,0.5) 52%,rgba(0,0,0,0.8) 100%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(135deg, rgba(0,0,0,0.8) 0%,rgba(248,4,141,0.51) 51%,rgba(243,4,138,0.5) 52%,rgba(0,0,0,0.8) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cc000000', endColorstr='#cc000000',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+    background: -moz-linear-gradient(-45deg, rgba(0, 0, 0, 0.8) 0%, rgba(248, 4, 141, 0.51) 51%, rgba(243, 4, 138, 0.5) 52%, rgba(0, 0, 0, 0.8) 100%);
+    /* FF3.6-15 */
+    background: -webkit-linear-gradient(-45deg, rgba(0, 0, 0, 0.8) 0%, rgba(248, 4, 141, 0.51) 51%, rgba(243, 4, 138, 0.5) 52%, rgba(0, 0, 0, 0.8) 100%);
+    /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(248, 4, 141, 0.51) 51%, rgba(243, 4, 138, 0.5) 52%, rgba(0, 0, 0, 0.8) 100%);
+    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#cc000000', endColorstr='#cc000000', GradientType=1);
+    /* IE6-9 fallback on horizontal gradient */
 }
+
 #IntroModal .modal-content div.red-diag {
-    background: -moz-linear-gradient(45deg, rgba(0,0,0,0.8) 0%, rgba(239,48,10,0.5) 52%, rgba(0,0,0,0.8) 100%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(45deg, rgba(0,0,0,0.8) 0%,rgba(239,48,10,0.5) 52%,rgba(0,0,0,0.8) 100%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(45deg, rgba(0,0,0,0.8) 0%,rgba(239,48,10,0.5) 52%,rgba(0,0,0,0.8) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cc000000', endColorstr='#cc000000',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+    background: -moz-linear-gradient(45deg, rgba(0, 0, 0, 0.8) 0%, rgba(239, 48, 10, 0.5) 52%, rgba(0, 0, 0, 0.8) 100%);
+    /* FF3.6-15 */
+    background: -webkit-linear-gradient(45deg, rgba(0, 0, 0, 0.8) 0%, rgba(239, 48, 10, 0.5) 52%, rgba(0, 0, 0, 0.8) 100%);
+    /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(45deg, rgba(0, 0, 0, 0.8) 0%, rgba(239, 48, 10, 0.5) 52%, rgba(0, 0, 0, 0.8) 100%);
+    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#cc000000', endColorstr='#cc000000', GradientType=1);
+    /* IE6-9 fallback on horizontal gradient */
 }
-#IntroModal .modal-title.h4 {font-size:2.5em; font-style:italic; font-weight:700;}
-#IntroModal .modal-body {font-size:1em; background-color:#000;}
-#IntroModal .modal-body ul {display:inline-block; list-style:none; width:100%; margin:30px 0; padding:0;}
-#IntroModal .modal-body ul li {display:inline-block; width:33%;  vertical-align:top; text-align:center; }
 
-#IntroModal .modal-body div {font-size:1em; font-weight:700; padding:15px; text-align:center;}
-#IntroModal .modal-body div.leak-detection {display:block; margin:0 auto; width:77px; height:77px; background:url(../../images/leak-detection.png) no-repeat;}
-#IntroModal .modal-body div.web-crawling {display:block; margin:0 auto; width:88px; height:88px; background:url(../../images/web-crawling.png) no-repeat;}
-#IntroModal .modal-body div.territorial-rights {display:block; margin:0 auto; width:77px; height:77px; background:url(../../images/territorial-rights.png) no-repeat;}
+#IntroModal a {
+    color: #80d8ff;
+}
 
-#IntroModal .modal-footer {vertical-align:middle;}
-#IntroModal .modal-footer div.show-check {position:fixed; left:15px; bottom:16px; vertical-align:middle;}
-#IntroModal .modal-footer label.noshow-label {margin-left:15px;}
+#IntroModal .modal-title.h4 {
+    font-size: 2.5em;
+    font-style: italic;
+    font-weight: 700;
+}
 
-.modal-dialog {margin:10% auto!important;}
+#IntroModal .modal-body {
+    font-size: 1em;
+    background-color: #000;
+}
+
+#IntroModal .modal-body ul {
+    display: inline-block;
+    list-style: none;
+    width: 100%;
+    margin: 30px 0;
+    padding: 0;
+}
+
+#IntroModal .modal-body ul li {
+    display: inline-block;
+    width: 33%;
+    vertical-align: top;
+    text-align: center;
+}
+
+#IntroModal .modal-body div {
+    font-size: 1em;
+    font-weight: 700;
+    padding: 15px;
+    text-align: center;
+}
+
+#IntroModal .modal-body div.leak-detection {
+    display: block;
+    margin: 0 auto;
+    width: 88px;
+    height: 88px;
+    background: url(../../images/leak-detection.png) no-repeat;
+}
+
+#IntroModal .modal-body div.web-crawling {
+    display: block;
+    margin: 0 auto;
+    width: 88px;
+    height: 88px;
+    background: url(../../images/web-crawling.png) no-repeat;
+}
+
+#IntroModal .modal-body div.territorial-rights {
+    display: block;
+    margin: 0 auto;
+    width: 88px;
+    height: 88px;
+    background: url(../../images/territorial-rights.png) no-repeat;
+}
+
+#IntroModal .modal-footer {
+    vertical-align: middle;
+}
+
+#IntroModal .modal-footer div.show-check {
+    position: fixed;
+    left: 15px;
+    bottom: 16px;
+    vertical-align: middle;
+}
+
+#IntroModal .modal-footer label.noshow-label {
+    margin-left: 15px;
+}
+
+.modal-dialog {
+    margin: 10% auto !important;
+}

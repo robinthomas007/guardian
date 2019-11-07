@@ -211,7 +211,20 @@ export default withAuth(class Header extends Component {
                     <div className="col-1"></div>
                 </div>
                 { (!this.state.pageViewCompact) ? this.getHeaderContent() : null}
+
+                <ul className="button-bar">
+                    <li>
+                    <button className="btn btn-secondary btn-collapse" onClick=""><i class="material-icons">unfold_more</i></button>
+                    </li>
+                    <li>
+                    <button className="btn btn-secondary btn-video" onClick=""><i class="material-icons">videocam</i> Video</button>
+                    </li>
+                    <li>
+                    <button className="btn btn-primary btn-help" onClick="/help"><i class="material-icons">contact_support</i> Help</button>
+                    </li>
+                </ul>
             </div>
+           
         </header>
         )
     }

@@ -37,10 +37,10 @@ class TrackInformationDataTable extends Component {
                      />
                 </th>
                 <th className="text-center">Single</th>
-                <th className="release-date-col">Release Date <span>TBD </span>
-                <ToolTip  tabIndex='-1' 
+                <th className="release-date-col">Release Date  <ToolTip  tabIndex='-1' 
                               message='Indicate a single’s release date here if different from album release date.'
-                     />
+                     /> <span>TBD </span>
+              
                 </th>
                 <th className="text-center">Actions</th>
             </tr> 

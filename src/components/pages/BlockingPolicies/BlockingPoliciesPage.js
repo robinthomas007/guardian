@@ -381,7 +381,7 @@ class BlockingPoliciesPage extends Component {
                 <div className="row save-buttons">
                     <div className="col-12">
                         <button tabIndex='5+' id="contactsSaveButton" type="button" className="btn btn-secondary" onClick={this.handleSubmit}>Save</button>
-                        <button tabIndex='6+' id="contactsSaveContButton" type="button" className="btn btn-primary" onClick={this.handleSubmit}>Save &amp; Continue</button>
+                        <button tabIndex='6+' id="contactsSaveContButton" type="button" className="btn btn-primary" onClick={this.handleSubmit}>Request Approval</button>
                     </div>
                 </div>
             </div>

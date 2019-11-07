@@ -54,27 +54,27 @@ class IntroModal extends Component {
                 </Modal.Header>
           
                 <Modal.Body>
-                  UMG's Content Protection Guardian application is a 'one-stop-shop' for all of your content protection and anti-piracy needs. Here, users can set up new and upcoming releases for protection services, including:
+                UMG’s Content Protection Guardian is a “one-stop shop” for all your Content Protection and Anti-Piracy needs. <br /> Here, users can set up new releases for anti-piracy services, including:
                   <ul>
                       <li>
                           <div className='leak-detection'></div>
-                          <div>Content Protection, Leak Detection &amp; Monitoring</div>
+                          <div>Content protection, leak detection and monitoring</div>
                       </li>
                       <li>
                           <div className='web-crawling'></div>
-                          <div>Web-Crawling &amp; Take-downs from Unlicensed Platforms</div>
+                          <div>Web-crawling and takedowns from unlicensed platforms</div>
                       </li>
                       <li>
                           <div className='territorial-rights'></div>
-                          <div>Establish Territorial Rights &amp; Set Post-Release UGC Blocking Policies</div>
+                          <div>Establish territorial rights and set post-release UGC blocking policies</div>
                       </li>
                   </ul>
-                  Feel free to click on any of the helpful informational buttons scattered throughout the site but please also contact us at the address below. We are here to help you achieve success for your artists!
+                  Feel free to click on any of the helpful info buttons scattered throughout the site but you can always reach out to contact us at the address below.  We’re here to help you achieve success for your artists!
                   
                   <br />
                   <br />
 
-                  <a href="#">Have a question or need help getting started? Click Here</a>
+                  Have a question or need help getting started? <a href="#">Click Here</a> or contact us directly at <a href="mailto:guardian-support@umusic.com">guardian-support@umusic.com</a>
 
                   <br />
                   <br />
