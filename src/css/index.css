@@ -728,7 +728,7 @@ nav.top-nav.int ul li a.help {
 
 span.count-circle {
 	background-color: #80d8ff;
-	padding: 3px 10px;
+	padding: 2px 10px !important;
 	border-radius: 100%;
 }
 
@@ -982,6 +982,7 @@ th.text-right {
 th button.tooltip-btn {
 	float: none;
 	vertical-align: baseline;
+	z-index: 2000;
 }
 
 span.drag-drop-arrow {

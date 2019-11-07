@@ -69,7 +69,43 @@ export default withAuth(class Header extends Component {
                         preRelease : true
                     }
                 ],
-                postRelease : []
+                postRelease : [
+                    {
+                        description : 'Release Info',
+                        path : '/releaseInformation/',
+                        complete : false,
+                        stepComplete : true,
+                        preRelease : true
+                    },
+                    {
+                        description : 'Contacts',
+                        path : '/projectContacts/',
+                        complete : false,
+                        stepComplete : false,
+                        preRelease : true
+                    },
+                    {
+                        description : 'Track Info',
+                        path : '/trackInformation/',
+                        complete : false,
+                        stepComplete : false,
+                        preRelease : true
+                    },
+                    {
+                        description : 'Blocking',
+                        path : '/blockingPolicies/',
+                        complete : false,
+                        stepComplete : false,
+                        preRelease : true
+                    },
+                    {
+                        description : 'Review',
+                        path : '/reviewSubmit/',
+                        complete : false,
+                        stepComplete : false,
+                        preRelease : true
+                    }
+                ]
             }
         }
     }
@@ -108,6 +144,10 @@ export default withAuth(class Header extends Component {
     handleHeaderViewType = () => {
         return( (this.state.compactViewPages.indexOf(this.props.pagePath.split('/')[1]) >= 0 ) ? true : false)
     }
+
+    headerToggle = () => {
+         this.setState( {pageViewCompact : !this.state.pageViewCompact} )
+    };
 
     componentDidUpdate() {
         if(this.props.pagePath !== this.state.pagePath) {
@@ -214,13 +254,13 @@ export default withAuth(class Header extends Component {
 
                 <ul className="button-bar">
                     <li>
-                    <button className="btn btn-secondary btn-collapse" onClick=""><i class="material-icons">unfold_more</i></button>
+                        <button className="btn btn-secondary btn-collapse" onClick={this.headerToggle}><i class="material-icons">unfold_more</i></button>
                     </li>
                     <li>
-                    <button className="btn btn-secondary btn-video" onClick=""><i class="material-icons">videocam</i> Video</button>
+                        <button className="btn btn-secondary btn-video" onClick=""><i class="material-icons">videocam</i> Video</button>
                     </li>
                     <li>
-                    <button className="btn btn-primary btn-help" onClick="/help"><i class="material-icons">contact_support</i> Help</button>
+                        <button className="btn btn-primary btn-help" onClick="/help"><i class="material-icons">contact_support</i> Help</button>
                     </li>
                 </ul>
             </div>
