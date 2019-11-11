@@ -246,13 +246,13 @@ export default withAuth(class Header extends Component {
 
                 <ul className="button-bar">
                     <li>
-                        <button className="btn btn-secondary btn-collapse" onClick={this.headerToggle}><i class="material-icons">unfold_more</i></button>
+                        <button className="btn btn-sm btn-secondary btn-collapse" onClick={this.headerToggle} title="Collapse/Expand Header"><i class="material-icons">unfold_more</i></button>
                     </li>
                     <li>
-                        <button className="btn btn-secondary btn-video" onClick=""><i class="material-icons">videocam</i> Video</button>
+                        <button className="btn btn-sm btn-secondary btn-video" onClick="" title="Tutorial Video"><i class="material-icons">videocam</i></button>
                     </li>
                     <li>
-                        <button className="btn btn-primary btn-help" onClick="/help"><i class="material-icons">contact_support</i> Help</button>
+                        <button className="btn btn-sm btn-primary btn-help" onClick="/help" title="Help/FAQs"><i class="material-icons">contact_support</i> Help</button>
                     </li>
                 </ul>
             </div>
