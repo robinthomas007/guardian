@@ -11,10 +11,16 @@ header {
 	background-color: #333;
 	background-image: url(../images/new-header-bg.png);
 	background-size: cover;
+	transition-property: all;
+	transition-duration: .5s;
+	transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
 }
 
 .content {
 	margin-top: 30vh;
+	transition-property: all;
+	transition-duration: .5s;
+	transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
 }
 
 header.compact {

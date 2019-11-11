@@ -985,6 +985,10 @@ th button.tooltip-btn {
 	z-index: 2000;
 }
 
+.tooltip {
+	pointer-events: none !important;
+}
+
 span.drag-drop-arrow {
 	display: block;
 	height: 33px;
