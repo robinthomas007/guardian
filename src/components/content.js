@@ -29,7 +29,7 @@ export default withAuth(class Content extends Component {
         sessionId : uuidv4(),
         pageViewCompact : true,
         projectID : '',
-        Project : {}
+        project : {}
 
     }
     this.setProjectID = this.setProjectID.bind(this);
@@ -133,8 +133,9 @@ export default withAuth(class Content extends Component {
         }
     ).then (responseJSON =>
         {
+
           this.setState({
-                Project : responseJSON.Project,
+                project : responseJSON,
             })
         }
     )
@@ -146,10 +147,10 @@ export default withAuth(class Content extends Component {
     );
 }
 
-  updateHistory(historyValue) {
-      this.props.history.push(historyValue)
+  updateHistory(projectID) {
+    this.props.history.push('/reviewSubmit/' + projectID);
+    this.setProjectID(projectID);
   }
-
 
   setProjectID(pid) {
     if(this.state.projectID !== pid) {
@@ -171,9 +172,10 @@ export default withAuth(class Content extends Component {
 
             <Header
               userData={this.state.user}
-              projectData={this.state.Project}
+              projectData={this.state.project.Project}
               pagePath={this.props.location.pathname}
               setPageViewType={this.setPageViewType}
+              updateHistory={this.updateHistory}
             />
 
             <div className={this.state.pageViewCompact ? "row d-flex no-gutters content compact" : "row d-flex no-gutters content"} >
@@ -185,7 +187,7 @@ export default withAuth(class Content extends Component {
                 <SecureRoute path="/territorialRights/:projectID?" render={ () => ( <TerritorialRightsPage user={this.state.user} setProjectID={this.setProjectID} />) }/>
                 <SecureRoute path="/blockingPolicies/:projectID?" render={ () => ( <BlockingPoliciesPage user={this.state.user} setProjectID={this.setProjectID} />) }/>
                 <SecureRoute path="/audioFiles/:projectID?" render={ () => ( <AudioFilesPage user={this.state.user} setProjectID={this.setProjectID} />) } />
-                <SecureRoute path="/reviewSubmit/:projectID?" render={ () => ( <ReviewAndSubmitPage user={this.state.user} setProjectID={this.setProjectID} />) } />
+                <SecureRoute path="/reviewSubmit/:projectID?" render={ () => ( <ReviewAndSubmitPage user={this.state.user} setProjectID={this.setProjectID} data={this.state.project} />) } />
                 <SecureRoute path="/findProject" render={ () => ( <FindProjectPage user={this.state.user} setProjectID={this.setProjectID} />) } />
                 <SecureRoute path="/helpGuide" component={HelpGuide}/>
                 <SecureRoute path="/admin" render={ () => ( <UserAdministration user={this.state.user} setProjectID={this.setProjectID} />) } />

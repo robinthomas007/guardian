@@ -14,32 +14,6 @@ class ReviewAndSubmitPage extends Component {
         super(props);
 
         this.state = { 
-            projectID : props.projectID,
-            project : {
-                Project : {
-                    projectID : '',
-                    projectTitle : '',
-                    projectTypeID : '',
-                    projectType : '',
-                    projectArtistName : '',
-                    projectReleasingLabelID : '',
-                    projectReleasingLabel : '',
-                    projectReleaseDate : '',
-                    projectReleaseDateTBD : false,
-                    projectPrimaryContact : '',
-                    projectPrimaryContactEmail : '',
-                    projectAdditionalContacts : '',
-                    projectNotes : '',
-                    projectSecurityID : '',
-                    projectSecurity : '',
-                    projectStatusID : '',
-                    projectStatus : '',
-                    projectCoverArtFileName : '',
-                    projectCoverArtBase64Data : '',
-                }
-            },
-            discs : [],
-            projectID : '',
             showloader : false
         }
         this.handleSubmitProjectClick = this.handleSubmitProjectClick.bind(this);
@@ -47,48 +21,10 @@ class ReviewAndSubmitPage extends Component {
     };
 
     componentDidMount() {
-
-        this.setState( {showloader : true} )
-
-        const user = JSON.parse(sessionStorage.getItem('user'))
-        const fetchHeaders = new Headers(
-            {
-                "Content-Type": "application/json",
-                "Authorization" : sessionStorage.getItem('accessToken')
-            }
-        )
-
-        const fetchBody = JSON.stringify( {
-            "User" : {
-                "email" : user.email
-            },
-            "ProjectID" : (this.props.match.params.projectID) ? this.props.match.params.projectID : ''
+        this.setState({
+            project : this.props.data,
         })
-
-        fetch ('https://api-dev.umusic.net/guardian/project/review', {
-            method : 'POST',
-            headers : fetchHeaders,
-            body : fetchBody
-        }).then (response => 
-            {
-                return(response.json());
-            }
-        ).then (responseJSON => 
-
-            {
-                this.setState({
-                    project : responseJSON,
-                    discs : responseJSON.Discs
-                })
-                this.setState( {showloader : false} )
-            }
-        )
-        .catch(
-            error => {
-                console.error(error);
-                this.setState( {showloader : false} )
-            }
-        );
+        this.setState( {showloader : false} )
     }
 
     handleProjectCategoryClick(category) {
@@ -151,12 +87,9 @@ class ReviewAndSubmitPage extends Component {
         }
     }
 
-    render() {
-
-        console.log(this.state.project)
-
+    getPage = () => {
         return(
-            <div className="col-10">		
+            <div>
                 <div className="page-container">
 
                     <LoadingImg
@@ -164,7 +97,7 @@ class ReviewAndSubmitPage extends Component {
                     />
 
                    <PageHeader 
-                        data={this.state.project}
+                        data={this.props.data.Project}
                     />
 
                     <div className="row no-gutters step-description review">
@@ -173,7 +106,7 @@ class ReviewAndSubmitPage extends Component {
                             <p>In this FINAL step, please take some time to review the project for accuracy before submitting.  Click on any of the sections to return to the corresponding step and make changes.  Once a project is submitted as final in this step, only a Guardian administrator can unlock the project for additional editing.</p>
                         </div>
                         <div className="col-1">
-                        <button type="button" className="btn btn-primary float-right" onClick={this.handleSubmitProjectClick}>Submit Project</button>
+                            <button type="button" className="btn btn-primary float-right" onClick={this.handleSubmitProjectClick}>Submit Project</button>
                         </div>
                     </div>
                 </div>
@@ -184,38 +117,38 @@ class ReviewAndSubmitPage extends Component {
                             <h2>Release Information</h2>
                         </div>
                         <div className="col-2 justify-content-end">
-                        <button className="btn btn-secondary align-content-end float-right" onClick={() => this.handleProjectCategoryClick('/releaseInformation/')}>
-                             <i className="material-icons">edit</i>  Edit
+                            <button className="btn btn-secondary align-content-end float-right" onClick={() => this.handleProjectCategoryClick('/releaseInformation/')}>
+                                <i className="material-icons">edit</i>  Edit
                             </button>
                         </div>
                     </div>
                     <br />
-                    <div className="review-card">      
-                    <div className="row no-gutters">
-                        <div className="col-2">
-                            <img className="album-art" src={this.state.project.Project.projectCoverArtBase64Data}/>
-                        </div>
-                        <div className="col-10">
-                            <div className="row no-gutters">
-                                <div className="col-6">
-                                    <label>Project Title:</label><span> {this.state.project.Project.projectTitle}</span>
-                                </div>
-                                <div className="col-6">
-                                    <label>Artist:</label><span> {this.state.project.Project.projectArtistName}</span>
-                                </div>
-                                <div className="col-6">
-                                    <label>Project Type:</label><span> {this.state.project.Project.projectType}</span>
-                                </div>
-                                <div className="col-6">
-                                    <label>Label:</label><span> {this.state.project.Project.projectReleasingLabel}</span>
-                                </div>
-                                <div className="col-12">
-                                    <label>Release Date:</label><span> {this.state.project.Project.projectReleaseDate}</span>
-                                </div>
-                                <div className="col-12">
-                                    <label>Notes:</label><span> {this.state.project.Project.projectNotes}</span>
-                                </div>
+                    <div className="review-card">
+                        <div className="row no-gutters">
+                            <div className="col-2">
+                                <img className="album-art" src={(this.props.data && this.props.data.Project ) ? this.props.data.Project.projectCoverArtBase64Data : ''}/>
                             </div>
+                            <div className="col-10">
+                                <div className="row no-gutters">
+                                    <div className="col-6">
+                                        <label>Project Title:</label><span> {(this.props.data.Project) ? this.props.data.Project.projectTitle : ''}</span>
+                                    </div>
+                                    <div className="col-6">
+                                        <label>Artist:</label><span> {(this.props.data.Project) ? this.props.data.Project.projectArtistName : ''}</span>
+                                    </div>
+                                    <div className="col-6">
+                                        <label>Project Type:</label><span> {(this.props.data.Project) ?this.props.data.Project.projectType : ''}</span>
+                                    </div>
+                                    <div className="col-6">
+                                        <label>Label:</label><span> {(this.props.data.Project) ? this.props.data.Project.projectReleasingLabel : ''}</span>
+                                    </div>
+                                    <div className="col-12">
+                                        <label>Release Date:</label><span> {(this.props.data.Project) ? this.props.data.Project.projectReleaseDate : ''}</span>
+                                    </div>
+                                    <div className="col-12">
+                                        <label>Notes:</label><span> {(this.props.data.Project) ? this.props.data.Project.projectNotes : ''}</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -228,28 +161,27 @@ class ReviewAndSubmitPage extends Component {
                         </div>
                         <div className="col-2 justify-content-end">
                             <button className="btn btn-secondary align-content-end float-right" onClick={() => this.handleProjectCategoryClick('/projectContacts/')}>
-                             <i className="material-icons">edit</i>  Edit
+                                <i className="material-icons">edit</i>  Edit
                             </button>
                            
                         </div>
                     </div>
                     <br />
                     <div className="review-card">
-                    
-                    <div className="row no-gutters">
-                        <div className="col-6">
-                            <label>Primary Contact:</label><span> {this.state.project.Project.projectPrimaryContact}</span>
+                        <div className="row no-gutters">
+                            <div className="col-6">
+                                <label>Primary Contact:</label><span> {(this.props.data.Project) ? this.props.data.Project.projectPrimaryContact : ''}</span>
+                            </div>
+                            <div className="col-6">
+                                <label>Project Security:</label><span> {(this.props.data.Project) ? this.props.data.Project.projectSecurity : ''}</span>
+                            </div>
+                            <div className="col-12">
+                                <label>Primary Email:</label><span> {(this.props.data.Project) ? this.props.data.Project.projectPrimaryContactEmail : ''}</span>
+                            </div>
+                            <div className="col-12">
+                                <label>Additional Contacts:</label><span> {(this.props.data.Project) ? this.props.data.Project.projectAdditionalContacts : ''}</span>
+                            </div>
                         </div>
-                        <div className="col-6">
-                            <label>Project Security:</label><span> {this.state.project.Project.projectSecurity}</span>
-                        </div>
-                        <div className="col-12">
-                            <label>Primary Email:</label><span> {this.state.project.Project.projectPrimaryContactEmail}</span>
-                        </div>
-                        <div className="col-12">
-                            <label>Additional Contacts:</label><span> {this.state.project.Project.projectAdditionalContacts}</span>
-                        </div>
-                    </div>
                     </div>
                 </div>
             
@@ -270,7 +202,7 @@ class ReviewAndSubmitPage extends Component {
                     <div className="tab-content" id="nav-tabContent">
                         <div className="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                             <AudioFilesTabsContainer 
-                                discs={this.state.discs}
+                                discs={this.props.data.Discs}
                             />
                         </div>
                         </div>
@@ -293,7 +225,7 @@ class ReviewAndSubmitPage extends Component {
                     <br />
                     <div className="review-card">
                         <TerritorialRightsTable 
-                            data={this.state.project}
+                            data={this.props.data}
                         />
                     </div>
                     </div>
@@ -314,7 +246,7 @@ class ReviewAndSubmitPage extends Component {
                     <br />
                     <div className="review-card">
                         <BlockingPoliciesDataTable 
-                            data={this.state.project}
+                            data={this.props.data}
                         />
                         </div>
                     </div>
@@ -326,8 +258,20 @@ class ReviewAndSubmitPage extends Component {
                     <button type="button" className="btn btn-primary float-right" onClick={this.handleSubmitProjectClick}>Submit Project</button>
                 </div>
             </div>
+            </div>
+        )
+    }
+
     
-        </div>
+
+    render() {
+
+        console.log(this.props.data.Project)
+
+        return(
+            <div className="col-10">		
+                {(this.props.data) ? this.getPage() : null }
+            </div>
         )
     }
 };
