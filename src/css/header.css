@@ -7,7 +7,7 @@ header {
 	z-index: 1000;
 	width: 100%;
 	color: #fff;
-	height: 28vh;
+	height: 240px;
 	background-color: #333;
 	background-image: url(../images/new-header-bg.png);
 	background-size: cover;
@@ -17,7 +17,7 @@ header {
 }
 
 .content {
-	margin-top: 30vh;
+	margin-top: 280px;
 	transition-property: all;
 	transition-duration: .5s;
 	transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
