@@ -294,7 +294,7 @@ export default withRouter(class Header extends Component {
                                 { (this.props.userData.IsAdmin) ? <li><NavLink className="steps" to={{pathname: '/admin'}}>Admin</NavLink></li> : null}
                                 <li> | </li>
                                 <li>Welcome, {this.props.userData.name}</li>
-                                <li><span onClick={this.handleLogoutClick}>Log Out</span></li>
+                                <li><span className="btn-log" onClick={this.handleLogoutClick}>Log Out</span></li>
                             </ul>
                         </nav>
                     <div className="col-1"></div>

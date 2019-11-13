@@ -501,6 +501,11 @@ nav.top-nav.ext ul li a:hover {
 	z-index: 1;
 }
 
+
+span.btn-log {
+	cursor: pointer;
+}
+
 @keyframes overbar-h1 {
 	0% {
 		opacity: 0.0;
