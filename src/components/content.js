@@ -29,7 +29,11 @@ export default withAuth(class Content extends Component {
         sessionId : uuidv4(),
         pageViewCompact : true,
         projectID : '',
-        project : {}
+        project : {
+          Project : {
+            
+          }
+        }
 
     }
     this.setProjectID = this.setProjectID.bind(this);
@@ -133,10 +137,7 @@ export default withAuth(class Content extends Component {
         }
     ).then (responseJSON =>
         {
-
-          this.setState({
-                project : responseJSON,
-            })
+          return ( (this.state.project !== responseJSON) ? this.setState( { project : responseJSON } ) : '')
         }
     )
     .catch(
@@ -162,6 +163,13 @@ export default withAuth(class Content extends Component {
     return ( (this.state.pageViewCompact !== isCompactView) ? this.setState( {pageViewCompact : isCompactView} ) : null)
   }
 
+  clearProject = () => {
+    const blankProject = {
+      Project : {}
+    }
+    this.setState( { project : blankProject})
+  }
+
   render() {
 
     if(this.state.userLoaded) {
@@ -176,6 +184,7 @@ export default withAuth(class Content extends Component {
               pagePath={this.props.location.pathname}
               setPageViewType={this.setPageViewType}
               updateHistory={this.updateHistory}
+              clearProject={this.clearProject}
             />
 
             <div className={this.state.pageViewCompact ? "row d-flex no-gutters content compact" : "row d-flex no-gutters content"} >

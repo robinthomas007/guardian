@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Route, NavLink } from "react-router-dom";
+import { BrowserRouter as Route, NavLink, withRouter } from "react-router-dom";
 import { withAuth } from '@okta/okta-react';
 import RecentProjectsDrop from "../Header/RecentProjectsDrop";
 
-export default withAuth(class Header extends Component {
+export default withRouter(class Header extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -12,12 +12,20 @@ export default withAuth(class Header extends Component {
                 projectStatus : '',
                 projectID : '',
             },
-            compactViewPages : ['findProject', 'admin'],
-            navLoaded : false,
-            headerDataLoaded : false,
+            compactViewPages : {
+                findProject : {
+                    titleText : 'Find A Project'
+                },
+                admin : {
+                   titleText : 'User Admin'
+                }
+            },
             projectID : '',
             pagePath : '',
             pageViewCompact : true,
+            showProgressBar : true,
+            showHeaderSizeToggle : true,
+            showProjectStatus : true,
             navSteps  : {
                 preRelease : [
                     {
@@ -138,24 +146,70 @@ export default withAuth(class Header extends Component {
         localStorage.clear()
     };
 
-    handleSetProjectData = (projectData) => {
-        this.setState( { Project : projectData} )
+    getDefaultPageTitle = (defaultText) => {
+        const isDefaultCompactViewPage = this.state.compactViewPages[this.props.pagePath.split('/')[1]];
+
+        return(isDefaultCompactViewPage ? isDefaultCompactViewPage.titleText : defaultText)
     };
 
     handleHeaderViewType = () => {
-        return( (this.state.compactViewPages.indexOf(this.props.pagePath.split('/')[1]) >= 0 ) ? true : false)
-    }
+        const isDefaultCompactViewPage = this.state.compactViewPages[this.props.pagePath.split('/')[1]];
+
+        if(isDefaultCompactViewPage) {
+            //this.setDefaultPageTitle(isDefaultCompactViewPage)
+            this.props.clearProject()
+        }
+
+        return(isDefaultCompactViewPage ? true : false)
+    };
 
     headerToggle = () => {
-         this.setState( {pageViewCompact : !this.state.pageViewCompact} )
+        const isCompactView = this.handleHeaderViewType();
+
+         this.setState( {
+            showProgressBar : (this.handleHeaderViewType()) ? false : !this.state.showProgressBar,
+            pageViewCompact : !this.state.pageViewCompact
+        } )
+    };
+
+    setHeaderView = () => {
+        const isCompactView = this.handleHeaderViewType();
+
+        if(isCompactView) {
+            this.setState( {
+                showProgressBar : false,
+                pageViewCompact : true,
+                showHeaderSizeToggle : false,
+                showProjectStatus : false
+            } )
+        } else {
+            (this.state.showProgressBar) ? 
+                this.setState( { 
+                    showProgressBar : true, 
+                    pageViewCompact : false, 
+                    showHeaderSizeToggle : true ,
+                    showProjectStatus : true
+                } ) 
+                : 
+                this.setState( { 
+                    showProgressBar : false, 
+                    pageViewCompact : true, 
+                    showHeaderSizeToggle : true,
+                    showProjectStatus : true
+                } )
+        }
     };
 
     componentDidUpdate() {
+
         if(this.props.pagePath !== this.state.pagePath) {
             this.setState( {
                 pagePath : this.props.pagePath,
-                pageViewCompact : this.handleHeaderViewType(),
-            })
+                showProgressBar : !this.handleHeaderViewType(), 
+                pageViewCompact : this.handleHeaderViewType(), 
+                showHeaderSizeToggle : !this.handleHeaderViewType() 
+
+            }, this.setHeaderView())
         }
 
         if(this.props.projectData !== this.state.Project) {
@@ -164,15 +218,15 @@ export default withAuth(class Header extends Component {
             })
         }
 
+
         this.props.setPageViewType(this.state.pageViewCompact)
-    }
+    };
 
     componentDidMount = () => {
         if(this.props.pagePath !== this.state.pagePath) {
-            const pageView = (this.props.pagePath.indexOf('findProject') >= 0) ? true : false;
             this.setState( {
                 pagePath : this.props.pagePath,
-                pageViewCompact : pageView
+                pageViewCompact : this.handleHeaderViewType()
             })
         }
 
@@ -182,9 +236,9 @@ export default withAuth(class Header extends Component {
             })
         }
 
+        this.setHeaderView()
         this.props.setPageViewType(this.state.pageViewCompact)
-
-    }
+    };
 
     getHeaderContent = () => {
         return(
@@ -193,10 +247,14 @@ export default withAuth(class Header extends Component {
                 <div className="col-9">
                     <div className="row d-flex no-gutters">
                         <div className="col-10 align-self-start">
-                            <h1>{ (this.props.projectData && this.props.projectData.projectTitle) ? this.props.projectData.projectTitle : 'New Project'}</h1>
+                            <h1>{ (this.props.projectData && this.props.projectData.projectTitle) ? this.props.projectData.projectTitle : this.getDefaultPageTitle('New Project')}</h1>
                         </div>
                         <div className="col-2 align-self-start">
-                            STATUS: { (this.props.projectData && this.props.projectData.projectStatus) ?this.props.projectData.projectStatus : 'In Progress'}
+                            {
+                                (this.state.showProjectStatus) ? 
+                                    'STATUS:' + (this.props.projectData && this.props.projectData.projectStatus ? this.props.projectData.projectStatus : 'In Progress') :
+                                null
+                            }
                         </div>
                     </div>
                     <div className="col-1"></div>
@@ -205,14 +263,13 @@ export default withAuth(class Header extends Component {
                 <div className="row d-flex no-gutters steps-bar">
                     <div className="col-1"></div>
                     <div className="col-10">
-                        {this.getNavLinks()}
+                        {(this.state.showProgressBar) ? this.getNavLinks() : null}
                     </div>
                     <div className="col-1"></div>
                 </div>
             </div>
         )
-    }
-
+    };
 
     render() {
 
@@ -227,7 +284,7 @@ export default withAuth(class Header extends Component {
                         <div className="nav-bg"></div>
                         <nav className="col-8 d-flex no-gutters justify-content-end">
                             <ul>
-                                <li><NavLink className="steps" to={{pathname: '/releaseInformation'}}>New Project</NavLink></li>
+                                <li><NavLink className="steps" to={{pathname: '/releaseInformation'}} onClick={ ()=> this.props.clearProject()}>New Project</NavLink></li>
                                 <li><NavLink className="steps" to={{pathname: '/findProject'}}>Find A Project</NavLink></li>
                                 <li>
                                     <RecentProjectsDrop 
@@ -242,12 +299,17 @@ export default withAuth(class Header extends Component {
                         </nav>
                     <div className="col-1"></div>
                 </div>
-                { (!this.state.pageViewCompact) ? this.getHeaderContent() : null}
+                { this.getHeaderContent()}
 
                 <ul className="button-bar">
-                    <li>
-                        <button className="btn btn-sm btn-secondary btn-collapse" onClick={this.headerToggle} title="Collapse/Expand Header"><i class="material-icons">unfold_more</i></button>
-                    </li>
+                    {(this.state.showHeaderSizeToggle) ?
+                        <li>
+                            <button className="btn btn-sm btn-secondary btn-collapse" onClick={this.headerToggle} title="Collapse/Expand Header"><i class="material-icons">unfold_more</i></button>
+                        </li>
+                        :
+                        null
+                    }
+
                     <li>
                         <button className="btn btn-sm btn-secondary btn-video" onClick="" title="Tutorial Video"><i class="material-icons">videocam</i></button>
                     </li>
