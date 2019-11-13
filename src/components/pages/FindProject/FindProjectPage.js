@@ -392,7 +392,7 @@ class FindProjectPage extends Component {
 
 					<div className="row d-flex no-gutters">
 						<div className="col-12">
-							<h1>Find A Project</h1>
+							<h2>Find A Project</h2>
 							<p>
 								Search for an existing project or release in the search bar below. Projects can be located by Artist, Track, ISRC or Project Title (Album, Compilation, EP, or Single name). <br />
 								Can't find what you're looking for? Email us at <a href="mailto:guardian-support@umusic.com">guardian-support@umusic.com</a>.
