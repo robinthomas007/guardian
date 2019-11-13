@@ -7,7 +7,7 @@ header {
 	z-index: 1000;
 	width: 100%;
 	color: #fff;
-	height: 30vh;
+	height: 240px;
 	background-color: #333;
 	background-image: url(../images/new-header-bg.png);
 	background-size: cover;
@@ -17,18 +17,18 @@ header {
 }
 
 .content {
-	margin-top: 30vh;
+	margin-top: 280px;
 	transition-property: all;
 	transition-duration: .5s;
 	transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
 }
 
 header.compact {
-	height: 21vh;
+	height: 156px;
 }
 
 .content.compact {
-	margin-top: 26vh;
+	margin-top: 196px;
 }
 
 .nav-bg {

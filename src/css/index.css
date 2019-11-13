@@ -501,6 +501,11 @@ nav.top-nav.ext ul li a:hover {
 	z-index: 1;
 }
 
+
+span.btn-log {
+	cursor: pointer;
+}
+
 @keyframes overbar-h1 {
 	0% {
 		opacity: 0.0;
@@ -1152,6 +1157,10 @@ div.submit-project {
 	margin: 30px auto 60px auto;
 }
 
+.submit-buttons button {
+	margin-left: 6px;
+}
+
 /* Search Screens */
 
 ul.search-row {
@@ -1241,11 +1250,11 @@ td.status {
 
 td.status i {
 	font-size: 20px;
-	color: rgba(220, 53, 69, .8) !important;
+	color: red !important;
 }
 
 td.status i.material-icons.success {
-	color: #004D40 !important;
+	color: green !important;
 }
 
 ul.results-controls {

@@ -7,6 +7,7 @@ import AudioFilesTabsContainer from '../ReviewAndSubmit/pageComponents/AudioFile
 import TerritorialRightsTable from '../ReviewAndSubmit/pageComponents/TerritorialRightsTable';
 import BlockingPoliciesDataTable from '../ReviewAndSubmit/pageComponents/BlockingPoliciesDataTable';
 import { withRouter } from 'react-router-dom';
+import SubmitProjectModal from '../../modals/SubmitProjectModal';
 
 class ReviewAndSubmitPage extends Component {
 
@@ -14,10 +15,13 @@ class ReviewAndSubmitPage extends Component {
         super(props);
 
         this.state = { 
-            showloader : false
+            showloader : false,
+            showRequestModal : false
         }
         this.handleSubmitProjectClick = this.handleSubmitProjectClick.bind(this);
         this.handleProjectCategoryClick = this.handleProjectCategoryClick.bind(this);
+        this.showProjectSubmitModal = this.showProjectSubmitModal.bind(this);
+        this.hideProjectSubmitModal = this.hideProjectSubmitModal.bind(this);
     };
 
     componentDidMount() {
@@ -31,10 +35,19 @@ class ReviewAndSubmitPage extends Component {
         this.props.history.push(category + this.props.match.params.projectID)
     }
 
+    showProjectSubmitModal() {
+        this.setState({showRequestModal : true})
+    }
+
+    hideProjectSubmitModal() {
+        this.setState({showRequestModal : false})
+    }
+
     handleSubmitProjectClick() {
-
-        this.setState( {showloader : true} )
-
+        this.setState( {
+            showloader : true,
+            showRequestModal : false
+        } )
         const user = JSON.parse(sessionStorage.getItem('user'))
         const fetchHeaders = new Headers(
             {
@@ -100,13 +113,20 @@ class ReviewAndSubmitPage extends Component {
                         data={this.props.data.Project}
                     />
 
+                   <SubmitProjectModal 
+                        showModal={this.showProjectSubmitModal} 
+                        handleClose={this.hideProjectSubmitModal}
+                        show={this.state.showRequestModal}
+                        handleSubmitProjectClick={this.handleSubmitProjectClick}
+                    />
+
                     <div className="row no-gutters step-description review">
                         <div className="col-11">
                             <h2>Step <span className="count-circle">7</span> Review and Submit</h2>
-                            <p>In this FINAL step, please take some time to review the project for accuracy before submitting.  Click on any of the sections to return to the corresponding step and make changes.  Once a project is submitted as final in this step, only a Guardian administrator can unlock the project for additional editing.</p>
+                            <p>In this FINAL step, please take some time to review the project for accuracy before submitting.  <br />Click on any of the sections to return to the corresponding step and make changes.  Once a project is submitted as final in this step, only a Guardian administrator can unlock the project for additional editing.</p>
                         </div>
                         <div className="col-1">
-                            <button type="button" className="btn btn-primary float-right" onClick={this.handleSubmitProjectClick}>Submit Project</button>
+                            <button type="button" className="btn btn-primary float-right" onClick={this.showProjectSubmitModal}>Submit Project</button>
                         </div>
                     </div>
                 </div>
@@ -255,7 +275,7 @@ class ReviewAndSubmitPage extends Component {
           
             <div className="row d-flex no-gutters">
                 <div className="col-12 align-content-end submit-project">
-                    <button type="button" className="btn btn-primary float-right" onClick={this.handleSubmitProjectClick}>Submit Project</button>
+                    <button type="button" className="btn btn-primary float-right" onClick={this.showProjectSubmitModal}>Submit Project</button>
                 </div>
             </div>
             </div>
