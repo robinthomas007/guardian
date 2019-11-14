@@ -170,6 +170,12 @@ export default withAuth(class Content extends Component {
     this.setState( { project : blankProject})
   }
 
+    handleLogoutClick = (e) => {
+        e.preventDefault();
+        this.props.auth.logout('/');
+        localStorage.clear()
+    };
+
   render() {
 
     if(this.state.userLoaded) {
@@ -185,6 +191,7 @@ export default withAuth(class Content extends Component {
               setPageViewType={this.setPageViewType}
               updateHistory={this.updateHistory}
               clearProject={this.clearProject}
+              handleLogoutClick={this.handleLogoutClick}
             />
 
             <div className={this.state.pageViewCompact ? "row d-flex no-gutters content compact" : "row d-flex no-gutters content"} >

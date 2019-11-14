@@ -8,7 +8,8 @@ class TracksRightsSets extends Component {
     constructor(props) {
 		super(props);
 		this.state = {
-            TerritorialRightsSets : []
+            TerritorialRightsSets : [],
+            selectedCountries : []
         }
 
         this.handleDrop = this.handleDrop.bind(this);
@@ -62,7 +63,7 @@ class TracksRightsSets extends Component {
         }
     }
 
-    handleCountryChange = (inputValue, setIndex) => {
+   handleCountryChange = (inputValue, setIndex) => {
         const { TerritorialRightsSets } = this.props.data;
         const stateContainsWW = TerritorialRightsSets[setIndex].countries.includes('WW');
         const wwIndex = inputValue.indexOf('WW');
@@ -108,6 +109,14 @@ class TracksRightsSets extends Component {
         return(countryIDs)
     }
 
+    listOfCountries = (countries) => {
+        return(
+            countries.map( (country, i) => {
+                return(country.name)
+            })
+        )
+    }
+
     getSetsList = () => {
         const rightsSets = this.props.data.TerritorialRightsSets.map( (rightsSet, i) => {
             return(
@@ -136,7 +145,7 @@ class TracksRightsSets extends Component {
   
                                         <TracksSelectDropDown 
                                             data={this.props.data.UnassignedTerritorialRightsSetTracks }
-                                            onChange={ (e) => this.handleTrackSelect(e)}
+                                            onChange={ (e) => this.handleTrackSelect(e, rightsSet)}
                                             setIndex={i}
                                         />
 
@@ -165,6 +174,11 @@ class TracksRightsSets extends Component {
                                                 id={'territorialRightsCountry_' + i}
                                                 onChange={(value) => this.handleCountryChange(value, i)}
                                             />
+                                        </div>
+                                        <br />
+                                        <br />
+                                        <div>
+                                            {this.listOfCountries(rightsSet.countries).toString().replace(/,/g, ', ')}
                                         </div>
                                     </td>
                                 </tr>

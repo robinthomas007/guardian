@@ -140,12 +140,6 @@ export default withRouter(class Header extends Component {
         )
     };
 
-    handleLogoutClick = (e) => {
-        e.preventDefault();
-        this.props.auth.logout('/');
-        localStorage.clear()
-    };
-
     getDefaultPageTitle = (defaultText) => {
         const isDefaultCompactViewPage = this.state.compactViewPages[this.props.pagePath.split('/')[1]];
 
@@ -294,7 +288,7 @@ export default withRouter(class Header extends Component {
                                 { (this.props.userData.IsAdmin) ? <li><NavLink className="steps" to={{pathname: '/admin'}}>Admin</NavLink></li> : null}
                                 <li> | </li>
                                 <li>Welcome, {this.props.userData.name}</li>
-                                <li><span className="btn-log" onClick={this.handleLogoutClick}>Log Out</span></li>
+                                <li><span className="btn-log" onClick={ (e)=> this.props.handleLogoutClick(e)}>Log Out</span></li>
                             </ul>
                         </nav>
                     <div className="col-1"></div>
