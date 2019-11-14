@@ -200,8 +200,16 @@ div.row.d-flex.steps-bar ul li.step-bar {
 	background-color: #01579b;
 }
 
+
+
 div.row.d-flex.steps-bar ul li a span.step-arrow {
-	display: none;
+	display: block;
+	margin: 30px auto 0px auto;
+	width: 0;
+	height: 0;
+	border-left: 15px solid transparent;
+	border-right: 15px solid transparent;
+	border-bottom: 15px solid transparent;
 }
 
 div.row.d-flex.steps-bar ul li a.active span.step-arrow {
