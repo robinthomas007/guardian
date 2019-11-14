@@ -113,7 +113,7 @@ export const fetchUsers = () => {
             .then(json => dispatch(userSearchSuccess(json)))
             .catch(error => {
                 console.error(error);
-                dispatch(showError(error));
+                dispatch(showError(error.message));
                 dispatch(userSearchFail());
             });
     };
@@ -176,7 +176,7 @@ export const approveDenyUser = (accessRequestID, action) => {
             })
             .catch(error => {
                 console.error(error);
-                dispatch(showError(error));
+                dispatch(showError(error.message));
                 dispatch(userAccessFail());
             });
     };
@@ -311,7 +311,7 @@ export const editUser = userToEdit => {
             })
             .catch(error => {
                 console.error(error);
-                dispatch(showError(error));
+                dispatch(showError(error.message));
                 // Show edit error?
             });
     };
@@ -379,7 +379,7 @@ export const revokeReinstnateUser = (ExistingUserID, action) => {
             })
             .catch(error => {
                 console.error(error);
-                dispatch(showError(error));
+                dispatch(showError(error.message));
                 // Dispatch specific action failure?
                 // if (action === REVOKE)
                 // else if (action === REINSTATE)
