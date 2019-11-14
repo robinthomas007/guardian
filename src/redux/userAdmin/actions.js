@@ -113,7 +113,7 @@ export const fetchUsers = () => {
             .then(json => dispatch(userSearchSuccess(json)))
             .catch(error => {
                 console.error(error);
-                dispatch(showError(error));
+                dispatch(showError(error.message));
                 dispatch(userSearchFail());
             });
     };
