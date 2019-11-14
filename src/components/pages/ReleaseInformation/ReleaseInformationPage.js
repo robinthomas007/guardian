@@ -542,9 +542,10 @@ class ReleaseinformationPage extends Component {
                             </Form.Group>
                         </div>
                             
-                        <div className="col-3 d-flex justify-content-end">
+                        <div className="col-3 row d-flex no-gutters">
                          
                                 <Form.Label className="col-form-label col-3 text-nowrap">Cover Art</Form.Label>
+                                <div className="col-9 d-flex flex-fill justify-content-end">
                                 <div id="preview" dropppable="true" className="form-control album-art-drop">
                                     <Button 
                                         id="removeAlbumArt"
@@ -571,7 +572,7 @@ class ReleaseinformationPage extends Component {
                                         />
                                     </div>
                                 </div>
-                           
+                            </div>
                         </div> 
                     </div>
                 
