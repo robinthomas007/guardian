@@ -139,7 +139,7 @@ class UserAdministration extends Component {
                 <div>
                     <div className="row d-flex no-gutters">
                         <div className="col-12">
-                            <h1>User Administration</h1>
+                            <h2>User Administration</h2>
                             <p>Search for an existing user or a user that is requesting access.</p>
                         </div>
                     </div>
