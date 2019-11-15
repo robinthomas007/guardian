@@ -17,17 +17,19 @@ let UserEditForm = props => {
                     <Form.Label>First Name</Form.Label>
                     <Field component="input" type="text" placeholder="John" name="firstName" className="form-control" />
                 </Form.Group>
-
+                </Form.Row>
+                <Form.Row>
                 <Form.Group as={Col} controlId="formLastName">
                     <Form.Label>Last Name</Form.Label>
                     <Field component="input" type="text" placeholder="Doe" name="lastName" className="form-control" />
                 </Form.Group>
-            </Form.Row>
-            <Form.Row>
+                </Form.Row>
+                <Form.Row>
                 <Form.Group as={Col} controlId="formLabel">
                     <LabelsDropDown id="primaryLabelID" className="form-control" name="primaryLabelID" selected={props.userValues.primaryLabelID} />
                 </Form.Group>
-
+                </Form.Row>
+                <Form.Row>
                 <Form.Group as={Col} controlId="formPhoneNumber">
                     <Form.Label>Phone Number</Form.Label>
                     <Field component="input" type="text" placeholder="123-456-7890" name="phoneNumber" className="form-control" />
