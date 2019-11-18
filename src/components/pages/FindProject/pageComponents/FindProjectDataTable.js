@@ -93,12 +93,21 @@ class FindProjectDataTable extends Component {
         this.props.handleAdminStatusChange(data, project)
     };
 
+    getAdminButtons = (project) => {
+        return (
+            <td className="col-1 text-center">
+                {parseInt(project.statusID) !== 1 ? <button onClick={ () => this.handleProjectDownload(project.projectID, project.submissionFileName)} className="btn btn-secondary"><i className="material-icons">cloud_download</i></button> : null}    
+                {parseInt(project.statusID) === 1 ? <button onClick={null} className="btn btn-secondary"><i className="material-icons">alarm</i></button> : null}
+            </td>
+        )
+    }
+
     renderProjects() {
         if(this.props.data.Projects) {
             const tableRows = this.props.data.Projects.map( (project, i) => {
                 return(
                     <tr className="d-flex w-100" key={i}>
-                        { (this.props.userData.IsAdmin) ? <td className="col-1 text-center">{parseInt(project.statusID) !== 1 ? <button onClick={ () => this.handleProjectDownload(project.projectID, project.submissionFileName)} className="btn btn-secondary"><i className="material-icons">cloud_download</i></button> : null} </td> : ''}
+                        { (this.props.userData.IsAdmin) ? this.getAdminButtons(project)  : null}
                         <td onClick={ () => this.handleRowClick(project.projectID) } className="col-1 text-center">{convertToLocaleTime(project.projectLastModified)}</td>
                         <td onClick={ () => this.handleRowClick(project.projectID) } className="col-2">{project.projectTitle}</td>
                         <td onClick={ () => this.handleRowClick(project.projectID) } className="col-2">{project.projectArtistName}</td>
@@ -135,7 +144,7 @@ class FindProjectDataTable extends Component {
         return(
                 <thead>
                     <tr className='d-flex w-100'>
-                        { (this.props.userData.IsAdmin) ? <th className="col-1 text-center">Download</th> : null}
+                        { (this.props.userData.IsAdmin) ? <th className="col-1 text-center">Actions</th> : null}
                         <th
                             className="col-1 sortable"
                             onMouseOver={ (e, columnID) => this.handleMouseOver(e, 'last_updated')}

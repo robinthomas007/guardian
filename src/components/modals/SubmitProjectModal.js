@@ -14,14 +14,9 @@ class SubmitProjectModal extends Component {
     return (
       <>
         <Modal id='SubmitProjectModal' show={this.props.show} onHide={this.props.handleClose}>
-          <Modal.Header  closeButton >
-              <Modal.Title>
-                  Submit Project
-              </Modal.Title>
-          </Modal.Header>
           <Modal.Body>
           <div className="alert alert-danger" role="alert">
-                Once submitted this project will be locked and no longer editable. Please make sure your project is complete before submitting it. Any changes required after submission may only be made by requesting assistance from the guardian team.
+          Are you sure?  Once submitted, this project will be locked and no longer editable <i>except by a Guardian support administrator.</i>
             </div>
           <div className="submit-buttons float-right">
             <Button variant="secondary" onClick={this.props.handleClose}>

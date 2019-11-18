@@ -17,7 +17,10 @@ export default withRouter(class Header extends Component {
                     titleText : 'Find A Project'
                 },
                 admin : {
-                   titleText : 'User Admin'
+                   titleText : 'User Administration'
+                },
+                help : {
+                   titleText : 'Help / FAQs'
                 }
             },
             projectID : '',
