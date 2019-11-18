@@ -298,17 +298,17 @@ export default withRouter(class Header extends Component {
                 <ul className="button-bar">
                     {(this.state.showHeaderSizeToggle) ?
                         <li>
-                            <button className="btn btn-sm btn-secondary btn-collapse" onClick={this.headerToggle} title="Collapse/Expand Header"><i class="material-icons">unfold_more</i></button>
+                            <button className="btn btn-sm btn-secondary btn-collapse" onClick={this.headerToggle} title="Collapse/Expand Header"><i className={'material-icons'}>unfold_more</i></button>
                         </li>
                         :
                         null
                     }
 
                     <li>
-                        <button className="btn btn-sm btn-secondary btn-video" onClick="" title="Tutorial Video"><i class="material-icons">videocam</i></button>
+                        <button className="btn btn-sm btn-secondary btn-video" onClick="" title="Tutorial Video"><i className={'material-icons'}>videocam</i></button>
                     </li>
                     <li>
-                        <button className="btn btn-sm btn-primary btn-help" onClick="/help" title="Help/FAQs"><i class="material-icons">contact_support</i> Help</button>
+                        <button className="btn btn-sm btn-primary btn-help" onClick="/help" title="Help/FAQs"><i className={'material-icons'}>contact_support</i> Help</button>
                     </li>
                 </ul>
             </div>
