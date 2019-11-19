@@ -36,11 +36,11 @@ let RequestAccessForm = props => {
                 <li>Fill in the fields below for review by our administrative team.</li>
                 <li>
                     <Form.Label>First Name</Form.Label>
-                    <Field component="input" type="text" placeholder="John" name="firstName" className="form-control requiredInput" />
+                    <Field component="input" type="text" name="firstName" className="form-control requiredInput" />
                 </li>
                 <li>
                     <Form.Label>Last Name</Form.Label>
-                    <Field component="input" type="text" placeholder="Doe" name="lastName" className="form-control requiredInput" />
+                    <Field component="input" type="text" name="lastName" className="form-control requiredInput" />
                 </li>
                 <li>
                     <LabelsDropDown
@@ -54,11 +54,11 @@ let RequestAccessForm = props => {
                 </li>
                 <li>
                     <Form.Label>Email</Form.Label>
-                    <Field component="input" type="email" placeholder="my@email.com" name="email" className="form-control requiredInput" />
+                    <Field component="input" type="email" name="email" className="form-control requiredInput" />
                 </li>
                 <li>
                     <Form.Label>Phone</Form.Label>
-                    <Field component="input" type="text" placeholder="123-456-7890" name="phoneNumber" className="form-control requiredInput" />
+                    <Field component="input" type="text" name="phoneNumber" className="form-control requiredInput" />
                 </li>
                 <li className="float-right">
                     <Button variant="secondary" id="cancelButton" onClick={props.handleClose}>
