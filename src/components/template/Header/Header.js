@@ -131,7 +131,11 @@ export default withRouter(class Header extends Component {
                             <li key={i} id={"step-" + (i + 1)}>
                                 <NavLink className="" to={{pathname: navLink.path + ((this.state.Project && this.state.Project.projectID) ? this.state.Project.projectID : '')}}>
                                     <span className="step-description text-nowrap">{navLink.description}</span>
-                                    <span className="step">{i + 1}</span>
+                                    <span className="step">
+                                      {i + 1} 
+                                      {/* If step is complete then <i class="material-icons">check</i>
+                                          If step is incomplete then <i class="material-icons">block</i> */}
+                                    </span>
                                     <span className="step-arrow"></span>
                                 </NavLink>
                             </li>
