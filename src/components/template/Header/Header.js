@@ -253,7 +253,7 @@ export default withRouter(class Header extends Component {
                         <div className="col-2 align-self-start">
                             {
                                 (this.state.showProjectStatus) ? 
-                                    'STATUS:' + (this.props.projectData && this.props.projectData.projectStatus ? this.props.projectData.projectStatus : 'In Progress') :
+                                    'STATUS: ' + (this.props.projectData && this.props.projectData.projectStatus ? this.props.projectData.projectStatus : 'In Progress') :
                                 null
                             }
                         </div>
