@@ -36,10 +36,12 @@ class BlockingPoliciesPage extends Component {
     handleMonetizeBlock = (e) => {
         const setIndex = e.target.getAttribute('setIndex');
         const siteIndex = e.target.getAttribute('siteIndex');
+        const eTargetValue = (e.target.value === "true") ? true : false;
         const { BlockingPolicySets } = this.state.project;
         let modifiedBlockingPolicySets = BlockingPolicySets;
-            modifiedBlockingPolicySets[setIndex].platformPolicies[siteIndex].block = (e.target.value === "true" ? true : false)
-        this.setState( {BlockingPolicySets : modifiedBlockingPolicySets} )
+            modifiedBlockingPolicySets[setIndex].platformPolicies[siteIndex].block = eTargetValue;
+
+       this.setState( {BlockingPolicySets : modifiedBlockingPolicySets} )
     }
 
     getPlatforms = () => {

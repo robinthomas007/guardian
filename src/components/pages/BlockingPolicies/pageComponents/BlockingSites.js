@@ -80,6 +80,7 @@ class BlockingSites extends Component {
                                 setIndex={this.props.setIndex}
                                 inputTarget={'duration'}
                                 id={'duration'}
+                                disabled={site.block ? false : true}
                             />
                         </td>
                         <td>
@@ -90,6 +91,7 @@ class BlockingSites extends Component {
                                 siteIndex={i}
                                 setIndex={this.props.setIndex}
                                 inputTarget={'expirationDate'}
+                                disabled={site.block ? false : true}
                             />
                         </td>
                     </tr>

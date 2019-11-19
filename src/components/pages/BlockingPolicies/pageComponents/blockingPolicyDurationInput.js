@@ -49,6 +49,7 @@ class BlockingPolicDurationInput extends Component {
                 siteIndex={this.props.siteIndex}
                 setIndex={this.props.setIndex}
                 inputTarget={this.props.inputTarget}
+                disabled={this.props.disabled}
             >
                 {this.getOptions()}
             </Form.Control>
