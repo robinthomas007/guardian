@@ -3,6 +3,8 @@ import { convertToLocaleTime } from '../../../Utils';
 import {Table, Grid, Button, Form, Pagination, Dropdown, DropdownButton, Alert } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import AdminStatusDropdown from '../pageComponents/AdminStatusDropdown';
+import Noty from 'noty'
+import LoadingImg from '../../../ui/LoadingImg';
 
 class FindProjectDataTable extends Component {
 	constructor(props) {
@@ -12,7 +14,7 @@ class FindProjectDataTable extends Component {
             activeSortColumn : 'last_updated',
             activeSortDesc : true,
             activeHover : null,
-
+            showloader : false
         }
 
         this.handleSortDisplay = this.handleSortDisplay.bind(this);
@@ -20,11 +22,11 @@ class FindProjectDataTable extends Component {
 
     checkProjectStepStatus = (stepStatus) => {
         return ( (stepStatus) ? <i className="material-icons success">verified_user</i> : <i className="material-icons">block</i>)
-    }
+    };
 
 	handleRowClick = (projectID) => {
 		this.props.history.push('/reviewSubmit/' + projectID)
-	}
+	};
 
     handleTableSort = (columnID) => {
         let sortDesc = this.state.activeSortDesc;
@@ -41,29 +43,29 @@ class FindProjectDataTable extends Component {
             activeSortColumn : columnID,
             activeSortDesc : sortDesc
         }, () => { this.props.handleColumnSort(columnID, (sortDesc) ? 'desc' : 'asc') })
-    }
+    };
 
     handleSortDisplay = (columnID) => {
         return(
             (this.state.activeSortColumn === columnID) ? ((this.state.activeSortDesc) ? <i className={"material-icons"}>arrow_drop_down</i> : <i className={"material-icons"}>arrow_drop_up</i>) : ''
         )
-    }
+    };
 
     handleMouseOver = (e, columnID) => {
         return (
             (this.state.activeSortColumn !== columnID) ? this.setState( {activeHover : columnID} ) : null
         )
-    }
+    };
 
     handleMouseOut = (e, columnID) => {
         this.setState( {activeHover : null} )
-    }
+    };
 
     handleHoverDisplay = (columnID) => {
         return(
             <i className={(this.state.activeHover === columnID) ? "material-icons" : "material-icons d-none"}>arrow_drop_up</i>
         )
-    }
+    };
 
     handleProjectDownload = (projectID, projectFileName) => {
         const user = JSON.parse(sessionStorage.getItem('user'))
@@ -93,14 +95,45 @@ class FindProjectDataTable extends Component {
         this.props.handleAdminStatusChange(data, project)
     };
 
+    handleProjectReminder = (projectID) => {
+
+        this.setState( {showloader : true} )
+
+        const user = JSON.parse(sessionStorage.getItem('user'))
+
+        const fetchHeaders = new Headers({
+            "Content-Type": "application/json",
+            "Authorization" : sessionStorage.getItem('accessToken')
+        })
+
+        const fetchBody = {
+            ProjectID: projectID,
+         }
+
+        fetch('https://api-dev.umusic.net/guardian/project/reminder', {
+            method: 'POST',
+            headers: fetchHeaders,
+            body : JSON.stringify(fetchBody)
+        }).then (response => {
+            return(response.json());
+        }).then (responseJSON => {
+            this.setState( {showloader : false} )
+        }).catch(
+            error => {
+                console.error(error);
+                this.setState( {showloader : false} )
+            }
+        );
+    };
+
     getAdminButtons = (project) => {
         return (
             <td className="col-1 text-center">
                 {parseInt(project.statusID) !== 1 ? <button onClick={ () => this.handleProjectDownload(project.projectID, project.submissionFileName)} className="btn btn-secondary"><i className="material-icons">cloud_download</i></button> : null}    
-                {parseInt(project.statusID) === 1 ? <button onClick={null} className="btn btn-secondary"><i className="material-icons">alarm</i></button> : null}
+                {parseInt(project.statusID) === 1 ? <button onClick={ () => this.handleProjectReminder(project.projectID, project.submissionFileName)} className="btn btn-secondary"><i className="material-icons">alarm</i></button> : null}
             </td>
         )
-    }
+    };
 
     renderProjects() {
         if(this.props.data.Projects) {
@@ -138,7 +171,7 @@ class FindProjectDataTable extends Component {
             })
             return(tableRows)
         }
-    }
+    };
 
     getDataTable = () => {
         return(
@@ -189,14 +222,17 @@ class FindProjectDataTable extends Component {
             data : this.props.data.Projects,
             userData : this.props.userData
         } )
-    }
+    };
 
     render() {
         return(
-            <Table className="search-table">
-                {this.getDataTable()}
-                <tbody>{this.renderProjects()}</tbody>
-            </Table>
+            <div>
+                <LoadingImg show={this.state.showloader} />
+                <Table className="search-table">
+                    {this.getDataTable()}
+                    <tbody>{this.renderProjects()}</tbody>
+                </Table>
+            </div>
         )
     }
 }
