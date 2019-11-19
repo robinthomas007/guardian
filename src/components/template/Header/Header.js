@@ -19,7 +19,7 @@ export default withRouter(class Header extends Component {
                 admin : {
                    titleText : 'User Administration'
                 },
-                help : {
+                helpGuide : {
                    titleText : 'Help / FAQs'
                 }
             },
@@ -276,6 +276,10 @@ export default withRouter(class Header extends Component {
         )
     };
 
+    handleHelpClick = () =>{
+        this.props.history.push({ pathname : '/helpGuide/' }) 
+     }
+     
     render() {
 
         return(

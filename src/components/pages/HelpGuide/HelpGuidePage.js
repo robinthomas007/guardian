@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import {Accordion, Card, Button, Tab, Tabs} from 'react-bootstrap'; 
+import {Accordion, Card, Button, Tab, Tabs} from 'react-bootstrap';
+import { withRouter } from 'react-router-dom'; 
 import './HelpGuide.css';
 
-class faqs extends Component {
+class HelpGuide extends Component {
 render() {
     return (
         <div className="col-10">
-        <h1>Help Guide</h1>
+        <h2>Help / FAQs</h2>
         <div className="row no-gutters">
             If you can't locate an answer to your support question below please feel free to email us at <a href="mailto:guardian-support@theguardian.umusic.com">guardian-support@theguardian.umusic.com</a>
          </div>
@@ -132,4 +133,4 @@ If the territorial rights are specific to only that track, select “No” when 
     }
 };
 
-export default faqs;
+export default withRouter(HelpGuide); 
