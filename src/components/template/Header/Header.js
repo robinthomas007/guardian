@@ -237,6 +237,10 @@ export default withRouter(class Header extends Component {
         this.props.setPageViewType(this.state.pageViewCompact)
     };
 
+    handleHelpClick = () => {
+
+    }
+
     getHeaderContent = () => {
         return(
             <div className="row d-flex no-gutters project-title">
@@ -308,10 +312,10 @@ export default withRouter(class Header extends Component {
                     }
 
                     <li>
-                        <button className="btn btn-sm btn-secondary btn-video" onClick="" title="Tutorial Video"><i className={'material-icons'}>videocam</i></button>
+                        <button className="btn btn-sm btn-secondary btn-video" onClick={null} title="Tutorial Video"><i className={'material-icons'}>videocam</i></button>
                     </li>
                     <li>
-                        <button className="btn btn-sm btn-primary btn-help" onClick="/help" title="Help/FAQs"><i className={'material-icons'}>contact_support</i> Help</button>
+                        <button className="btn btn-sm btn-primary btn-help" onClick={this.handleHelpClick} title="Help/FAQs"><i className={'material-icons'}>contact_support</i> Help</button>
                     </li>
                 </ul>
             </div>
