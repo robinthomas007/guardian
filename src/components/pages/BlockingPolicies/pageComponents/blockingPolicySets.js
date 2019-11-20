@@ -13,17 +13,6 @@ class BlockingPolicySets extends Component {
         this.props.handleTrackSelect(e);
     }
 
-     handleDrop(e, i) {
-
-        // const { TerritorialRightsSets } = this.props.data;
-        // var data = e.dataTransfer.getData("text/html");
-        // let modifiedTerritorialRightsSets = TerritorialRightsSets;
-        //     modifiedTerritorialRightsSets[i].tracks.push( {trackID : this.props.dragSource.getAttribute('trackid'), trackTitle : this.props.dragSource.getAttribute('tracktitle')} )
-
-        // this.props.handleChange(modifiedTerritorialRightsSets);
-        // this.props.handleChildDrop(i);
-    }
-
     handleDeleteButton = (i) => {
         if(this.props.data.BlockingPolicySets.length > 1 ) {
             return (
