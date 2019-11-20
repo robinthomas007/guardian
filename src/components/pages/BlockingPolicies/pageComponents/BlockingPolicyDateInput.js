@@ -13,26 +13,18 @@ class BlockingPolicyDateInput extends Component {
     }
 
     handleChange(e) {
-        e.target.velue = e.target.value
         this.setState( {value : e.target.value} );
         this.props.onChange(e);
     };
-
-
-   componentWillReceiveProps(nextProps) {
-        if(this.props.data != this.state.value) {
-            this.setState({ value: this.props.data });
-        }
-    }
 
     render() {
 
         return(
             <input
                 id="expirationDate" 
-                className={'form-control'} 
+                className={'form-control blockingPolicyDateInput'} 
                 type='date'
-                value={this.props.disabled ? '' : this.state.value}
+                value={this.props.data}
                 disabled={this.props.disabled}
                 onChange={this.handleChange}
                 siteName={this.props.siteName}

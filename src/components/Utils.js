@@ -77,3 +77,14 @@ export const resetDatePicker = (inputID) => {
         projectReleaseDatePicker.value = '';
     }
 };
+
+export const resetDatePickerByObj = (inputObj) => {
+    //because datepickers don't have a simple way to reset
+
+    if(inputObj) {
+        let isDisabled = inputObj.disabled;
+        inputObj.disabled = false;
+        inputObj.value = null;
+        inputObj.disabled = isDisabled;
+    }
+};
