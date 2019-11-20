@@ -44,6 +44,21 @@ class TerritorialRightsTable extends Component {
         )
     };
 
+    getUnassignedTerritorialRightsSetTracks = () => {
+        return(
+            this.props.data.UnassignedTerritorialRightsSetTracks.map( (track, i) => {
+                return(
+                    <tr key={i} className={'row no-gutters'}>
+                        <td className="col-3">{(i === 0 ) ? 'Unassigned Tracks' : ''}</td>
+                        <td className="col-3">{track.trackTitle}</td>
+                        <td className="col-3">Worldwide</td>
+                        <td className="col-3">&nbsp;</td>
+                    </tr>
+                )
+            })
+        )
+    };
+
     render() {
         return(
             <table className="table">
@@ -57,6 +72,7 @@ class TerritorialRightsTable extends Component {
                 </thead>
                 <tbody>
                     {(this.props.data.TerritorialRightsSets) ? this.getTerritorialRightsSets() : null}
+                    {(this.props.data.UnassignedTerritorialRightsSetTracks) ? this.getUnassignedTerritorialRightsSetTracks() : null}
                 </tbody>
             </table>
         )
