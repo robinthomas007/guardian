@@ -6,6 +6,7 @@ import LabelsDropDown from 'components/modals/pageComponents/LabelsDropDown';
 import { fetchLabels } from 'redux/labels/actions';
 import { requestAccess } from 'redux/user/actions';
 import { isFormValid } from 'components/Utils';
+import Noty from 'noty';
 
 let RequestAccessForm = props => {
     const handleSubmit = event => {
@@ -14,12 +15,15 @@ let RequestAccessForm = props => {
     };
 
     if (props.success) {
-        return (
-            <h5>
-                <i className="material-icons">done</i>
-                &nbsp; Your request has been submitted.
-            </h5>
-        );
+        new Noty ({
+            type: 'success',
+            id:'requestAccessSent',
+            text: 'Your request for access to the Guardian has been successfully sent.',
+            theme: 'bootstrap-v4',
+            layout: 'top',
+            timeout: '3000'
+        }).show()
+        props.handleClose()
     }
 
     if (props.submitting) {
