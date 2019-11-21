@@ -18,14 +18,6 @@ class BlockingSites extends Component {
                 'facebook',
                 'instagram'
             ],
-            blockingSet : {
-                platformPolicies : [
-                    { 
-                        block : false,
-                        platformName : ''
-                    }
-                ]
-            }
         }
     }
 
@@ -33,13 +25,9 @@ class BlockingSites extends Component {
         this.props.handleMonetizeBlock(e);
     }
 
-    componentDidMount() {
-        this.setState( {blockingSet : this.props.blockingSet} )
-    };
-
     getSites = () => {
         return (
-            this.state.blockingSet.platformPolicies.map( (site, i) => {
+            this.props.blockingSet.platformPolicies.map( (site, i) => {
                 return(
                     <tr key={i}>
                         <td>
@@ -80,6 +68,7 @@ class BlockingSites extends Component {
                                 setIndex={this.props.setIndex}
                                 inputTarget={'duration'}
                                 id={'duration'}
+                                disabled={site.block ? false : true}
                             />
                         </td>
                         <td>
@@ -90,6 +79,7 @@ class BlockingSites extends Component {
                                 siteIndex={i}
                                 setIndex={this.props.setIndex}
                                 inputTarget={'expirationDate'}
+                                disabled={site.block ? false : true}
                             />
                         </td>
                     </tr>

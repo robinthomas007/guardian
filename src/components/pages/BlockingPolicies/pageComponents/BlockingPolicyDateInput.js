@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Form } from 'react-bootstrap';
-import {formatDateToYYYYMMDD} from '../../../Utils';
+import {formatDateToYYYYMMDD, } from '../../../Utils';
 
 class BlockingPolicyDateInput extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            value : this.props.value,
+            value : '',
             disabled : false
         }
         this.handleChange = this.handleChange.bind(this);
@@ -17,18 +17,15 @@ class BlockingPolicyDateInput extends Component {
         this.props.onChange(e);
     };
 
-    componentDidMount() {
-        this.setState( {value : this.props.data} )
-    };
-
     render() {
+
         return(
             <input
                 id="expirationDate" 
-                className={'form-control'} 
+                className={'form-control blockingPolicyDateInput'} 
                 type='date'
                 value={this.props.data}
-                disabled={this.state.disabled}
+                disabled={this.props.disabled}
                 onChange={this.handleChange}
                 siteName={this.props.siteName}
                 siteIndex={this.props.siteIndex}

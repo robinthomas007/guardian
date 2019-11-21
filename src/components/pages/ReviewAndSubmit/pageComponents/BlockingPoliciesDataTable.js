@@ -51,6 +51,23 @@ class BlockingPoliciesDataTable extends Component {
         )
     };
 
+    getUnassignedBlockingPolicyTracks = () => {
+        return(
+            this.props.data.UnassignedBlockingPolicySetTracks.map( (track, i) => {
+                return(
+                    <tr key={i}>
+                        <td>{(i === 0 ) ? 'Unassigned Tracks' : ''}</td>
+                        <td>{track.trackTitle}</td>
+                        <td>Block All</td>
+                        <td>Block All</td>
+                        <td>Block All</td>
+                        <td>Block All</td>
+                    </tr>
+                )
+            })
+        )
+    };
+
     render() {
         return(
             <table className="table">
@@ -66,6 +83,7 @@ class BlockingPoliciesDataTable extends Component {
                 </thead>
                 <tbody>
                     {(this.props.data.TerritorialRightsSets) ? this.getBlockingPolicySets() : null}
+                    {(this.props.data.UnassignedBlockingPolicySetTracks) ? this.getUnassignedBlockingPolicyTracks() : null}
                 </tbody>
             </table>
         )

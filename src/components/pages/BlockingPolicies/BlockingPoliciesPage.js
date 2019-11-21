@@ -6,6 +6,7 @@ import BlockingPolicySets from '../BlockingPolicies/pageComponents/blockingPolic
 import LoadingImg from '../../ui/LoadingImg';
 import { withRouter } from 'react-router-dom';
 import Noty from 'noty';
+import {formatDateToYYYYMMDD, resetDatePickerByObj} from '../../Utils';
 
 class BlockingPoliciesPage extends Component {
 
@@ -33,13 +34,38 @@ class BlockingPoliciesPage extends Component {
         this.setState( {BlockingPolicySets : modifiedBlockingPolicySets} )
     }
 
+    handleExpirationDisable = (setIndex, siteIndex) => {
+        const { BlockingPolicySets } = this.state.project;
+        let modifiedBlockingPolicySets = BlockingPolicySets;
+            modifiedBlockingPolicySets[setIndex].platformPolicies[siteIndex].disabled = true;
+        this.setState( {BlockingPolicySets : modifiedBlockingPolicySets});
+    };
+
     handleMonetizeBlock = (e) => {
         const setIndex = e.target.getAttribute('setIndex');
         const siteIndex = e.target.getAttribute('siteIndex');
+        const eTargetValue = (e.target.value === "true") ? true : false;
         const { BlockingPolicySets } = this.state.project;
         let modifiedBlockingPolicySets = BlockingPolicySets;
-            modifiedBlockingPolicySets[setIndex].platformPolicies[siteIndex].block = (e.target.value === "true" ? true : false)
-        this.setState( {BlockingPolicySets : modifiedBlockingPolicySets} )
+            modifiedBlockingPolicySets[setIndex].platformPolicies[siteIndex].block = eTargetValue;
+
+        const expirationDateInputs = document.getElementsByClassName('blockingPolicyDateInput');
+
+        for(var i=0; i<expirationDateInputs.length; i++) {
+            if(expirationDateInputs[i].getAttribute('setIndex') === setIndex && expirationDateInputs[i].getAttribute('siteIndex') === siteIndex) {
+                resetDatePickerByObj(expirationDateInputs[i])
+            }
+        }
+
+        if(!eTargetValue) {
+            modifiedBlockingPolicySets[setIndex].platformPolicies[siteIndex].disabled = false;
+            modifiedBlockingPolicySets[setIndex].platformPolicies[siteIndex].expirationDate = '';
+            modifiedBlockingPolicySets[setIndex].platformPolicies[siteIndex].duration = '';
+            this.setState( { BlockingPolicySets : modifiedBlockingPolicySets}, () => { this.handleExpirationDisable(setIndex, siteIndex) } )
+        } else {
+            modifiedBlockingPolicySets[setIndex].platformPolicies[siteIndex].disabled = false;
+            this.setState( { BlockingPolicySets : modifiedBlockingPolicySets } )
+        }       
     }
 
     getPlatforms = () => {
@@ -47,25 +73,25 @@ class BlockingPoliciesPage extends Component {
             [
                 {
                     platformName : 'YouTube',
-                    block : false,
+                    block : true,
                     duration : '',
                     expirationDate : ''
                 },
                 {
                     platformName : 'SoundCloud',
-                    block : false,
+                    block : true,
                     duration : '',
                     expirationDate : ''
                 },
                 {
                     platformName : 'Facebook',
-                    block : false,
+                    block : true,
                     duration : '',
                     expirationDate : ''
                 },
                 {
                     platformName : 'Instagram',
-                    block : false,
+                    block : true,
                     duration : '',
                     expirationDate : ''
                 },
@@ -134,9 +160,8 @@ class BlockingPoliciesPage extends Component {
             }
 		);
     };
-    
-    handleSubmit = (e) => {
-        e.preventDefault();
+
+    handleSubmit = () => {
         this.setState( { showLoader : true } )
         const user = JSON.parse(sessionStorage.getItem('user'))
         const fetchHeaders = new Headers(
