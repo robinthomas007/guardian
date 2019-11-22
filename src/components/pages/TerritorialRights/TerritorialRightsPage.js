@@ -273,7 +273,7 @@ class TerritorialRightsPage extends Component {
                 <div className="row no-gutters step-description">
                     <div className="col-12">
                         <h2>Step <span className="count-circle">5</span> Territorial Rights</h2>
-                        <p>In this step, you can set the territorial/geographic rights for each track in the project. Tracks with no specified territories will be claimed worldwide. You can either drag & drop tracks from the list or select tracks from the "Tracks with this Rights Set" dropdown before assigning rights to them. The section must be completed by selecting the "Save &amp; Continue" button below.</p>
+                        <p>In this step, you can set the territorial/geographic rights for each track in the project.  You can either drag &amp; drop tracks from the list or select tracks from the "Tracks with this Rights Set" dropdown before assigning rights to them. The section must be completed by assigning all tracks to a rights set and by selecting the "Save &amp; Continue" button below.</p>
                     </div>
                 </div>
     
