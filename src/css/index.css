@@ -501,6 +501,9 @@ nav.top-nav.ext ul li a:hover {
 	z-index: 1;
 }
 
+select:disabled {
+	background-color: #e9ecef !important;
+}
 
 span.btn-log {
 	cursor: pointer;
