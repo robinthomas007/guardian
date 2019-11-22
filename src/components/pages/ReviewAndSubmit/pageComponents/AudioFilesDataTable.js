@@ -15,7 +15,7 @@ class AudioFilesDataTable extends Component {
             return (
                 this.props.data.map( (track, i) => {
                     return ( 
-                        <tr className="row no-gutters">
+                        <tr key={i} className="row no-gutters">
                             <td className="col-1 text-center">{track.trackNumber}</td>
                             <td className="col-2">{track.fileName}</td>
                             <td className="col-2">{track.trackTitle}</td>

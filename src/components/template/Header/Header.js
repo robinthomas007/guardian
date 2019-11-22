@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Route, NavLink, withRouter } from "react-router-dom";
 import { withAuth } from '@okta/okta-react';
 import RecentProjectsDrop from "../Header/RecentProjectsDrop";
+import { formatDateToYYYYMMDD, convertToLocaleTime } from '../../Utils.js';
 
 export default withRouter(class Header extends Component {
     constructor(props) {
@@ -29,6 +30,7 @@ export default withRouter(class Header extends Component {
             showProgressBar : true,
             showHeaderSizeToggle : true,
             showProjectStatus : true,
+            utcDateTime : '',
             navSteps  : {
                 preRelease : [
                     {
@@ -36,110 +38,107 @@ export default withRouter(class Header extends Component {
                         path : '/releaseInformation/',
                         complete : false,
                         stepComplete : true,
-                        preRelease : true
+                        preRelease : true,
+                        stepValidation : 'isReleaseInfoComplete'
+
                     },
                     {
                         description : 'Contacts',
                         path : '/projectContacts/',
                         complete : false,
                         stepComplete : false,
-                        preRelease : true
+                        preRelease : true,
+                        stepValidation : 'isProjectContactsComplete'
                     },
                     {
                         description : 'Audio Files',
                         path : '/audioFiles/',
                         complete : false,
                         stepComplete : false,
-                        preRelease : false
+                        preRelease : false,
+                        stepValidation : 'isAudioFilesComplete'
                     },
                     {
                         description : 'Track Info',
                         path : '/trackInformation/',
                         complete : false,
                         stepComplete : false,
-                        preRelease : true
+                        preRelease : true,
+                        stepValidation : 'isTrackInfoComplete'
                     },
                     {
                         description : 'Rights',
                         path : '/territorialRights/',
                         complete : false,
                         stepComplete : false,
-                        preRelease : false
+                        preRelease : false,
+                        stepValidation : 'isTerritorialRightsComplete'
                     },
                     {
                         description : 'Blocking',
                         path : '/blockingPolicies/',
                         complete : false,
                         stepComplete : false,
-                        preRelease : true
+                        preRelease : true,
+                        stepValidation : 'isBlockingPoliciesComplete'
                     },
                     {
                         description : 'Review',
                         path : '/reviewSubmit/',
                         complete : false,
                         stepComplete : false,
-                        preRelease : true
-                    }
-                ],
-                postRelease : [
-                    {
-                        description : 'Release Info',
-                        path : '/releaseInformation/',
-                        complete : false,
-                        stepComplete : true,
-                        preRelease : true
-                    },
-                    {
-                        description : 'Contacts',
-                        path : '/projectContacts/',
-                        complete : false,
-                        stepComplete : false,
-                        preRelease : true
-                    },
-                    {
-                        description : 'Track Info',
-                        path : '/trackInformation/',
-                        complete : false,
-                        stepComplete : false,
-                        preRelease : true
-                    },
-                    {
-                        description : 'Blocking',
-                        path : '/blockingPolicies/',
-                        complete : false,
-                        stepComplete : false,
-                        preRelease : true
-                    },
-                    {
-                        description : 'Review',
-                        path : '/reviewSubmit/',
-                        complete : false,
-                        stepComplete : false,
-                        preRelease : true
+                        preRelease : true,
+                        stepValidation : 'isProjectSubmitComplete'
                     }
                 ]
             }
         }
     }
 
+    isPreReleaseDate = () => {
+        const user = JSON.parse(sessionStorage.getItem('user'))
+        if(user) {
+            const projectReleaseDate =  parseInt((this.props.projectData.projectReleaseDate) ? new Date(this.props.projectData.projectReleaseDate).getTime() : '');
+            const serverDate =  parseInt((user.UtcDateTime) ? new Date(user.UtcDateTime).getTime() : '');
+
+            if(!Number.isNaN(projectReleaseDate)) {
+                return ( projectReleaseDate > serverDate)
+            } else {
+                return (true)
+            }
+        }
+    };
+
+    isStepComplete = (navLink) => {
+        if(this.props.projectData[navLink.stepValidation]) {
+            return(this.props.projectData[navLink.stepValidation])
+        }
+    };
+
     getNavLinks = () => {
+        const isPreRelease = this.isPreReleaseDate();
+        const navToUse = ( isPreRelease ? this.state.navSteps.preRelease : this.state.navSteps.preRelease.filter(step => (step.preRelease) ))
         return(
             <ul className="d-flex justify-content-center align-items-stretch">
-                {this.state.navSteps.preRelease.map( (navLink, i) => {
+                {
+                    navToUse.map( (navLink, i) => {
                     return(
                         <React.Fragment key={i}>
                             <li key={i} id={"step-" + (i + 1)}>
                                 <NavLink className="" to={{pathname: navLink.path + ((this.state.Project && this.state.Project.projectID) ? this.state.Project.projectID : '')}}>
                                     <span className="step-description text-nowrap">{navLink.description}</span>
                                     <span className="step">
-                                      {i + 1} 
-                                      {/* If step is complete then <i class="material-icons">check</i>
-                                          If step is incomplete then <i class="material-icons">block</i> */}
+                                        { (this.props.projectData.projectID && this.props.projectData.projectID) ?  
+                                        
+                                            this.isStepComplete(navLink) ? <i class="material-icons">check</i> : <i class="material-icons">block</i>
+                                        : 
+                                            i + 1
+                                        } 
                                     </span>
                                     <span className="step-arrow"></span>
                                 </NavLink>
                             </li>
-                            { (i < this.state.navSteps.preRelease.length - 1) ? <li className="step-bar"><span></span></li> : null}
+                            { (i < navToUse.length - 1) ? <li className="step-bar"><span></span></li> : null}
                         </React.Fragment>
                     )
                 })}
@@ -149,18 +148,14 @@ export default withRouter(class Header extends Component {
 
     getDefaultPageTitle = (defaultText) => {
         const isDefaultCompactViewPage = this.state.compactViewPages[this.props.pagePath.split('/')[1]];
-
         return(isDefaultCompactViewPage ? isDefaultCompactViewPage.titleText : defaultText)
     };
 
     handleHeaderViewType = () => {
         const isDefaultCompactViewPage = this.state.compactViewPages[this.props.pagePath.split('/')[1]];
-
         if(isDefaultCompactViewPage) {
-            //this.setDefaultPageTitle(isDefaultCompactViewPage)
             this.props.clearProject()
         }
-
         return(isDefaultCompactViewPage ? true : false)
     };
 
@@ -216,11 +211,12 @@ export default withRouter(class Header extends Component {
         if(this.props.projectData !== this.state.Project) {
             this.setState( {
                 Project : this.props.projectData
-            })
+            }, () => {this.getNavLinks()})
         }
 
-
-        this.props.setPageViewType(this.state.pageViewCompact)
+        this.isPreReleaseDate()
+        this.props.setPageViewType(this.state.pageViewCompact);
+        
     };
 
     componentDidMount = () => {
@@ -236,14 +232,9 @@ export default withRouter(class Header extends Component {
                 Project : this.props.projectData
             })
         }
-
         this.setHeaderView()
         this.props.setPageViewType(this.state.pageViewCompact)
     };
-
-    handleHelpClick = () => {
-
-    }
 
     getHeaderContent = () => {
         return(
@@ -281,7 +272,6 @@ export default withRouter(class Header extends Component {
      }
      
     render() {
-
         return(
             <header className={ (this.state.pageViewCompact) ? "row d-flex no-gutters compact" : "row d-flex no-gutters" }>
                 <div className="col-12 align-items-end flex-column flex-grow-1">

@@ -21,7 +21,7 @@ class BlockingPoliciesDataTable extends Component {
         return(
             platforms.map( (platform, i) => {
                 return(
-                    <td className="align-items-center" nowrap="nowrap">{ (platform.block) ? this.getblockedPolicyText(platform) : 'Monetize All'}</td>
+                    <td key={i} className="align-items-center" nowrap="nowrap">{ (platform.block) ? this.getblockedPolicyText(platform) : 'Monetize All'}</td>
                 )
             })
         )
@@ -31,7 +31,7 @@ class BlockingPoliciesDataTable extends Component {
         return(
             this.props.data.BlockingPolicySets[setIndex].tracks.map( (track, i)  => {
                 return(
-                    <tr>
+                    <tr key={i}>
                         <td nowrap="nowrap">{(i === 0) ? policy.description : ''}</td>
                         <td className="" nowrap="nowrap">{track.trackTitle}</td>
                         {this.getTrackPolicies(policy.platformPolicies)}

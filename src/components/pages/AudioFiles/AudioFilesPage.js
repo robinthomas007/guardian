@@ -270,16 +270,12 @@ class AudioFilesPage extends Component {
     handleDataLoad() {
         const user = JSON.parse(sessionStorage.getItem('user'));
         const {pageTableData} = this.state;
-        const fetchHeaders = new Headers(
-            {
-                "Authorization" : sessionStorage.getItem('accessToken')
-            }
-        )
+        const fetchHeaders = new Headers({
+            "Authorization" : sessionStorage.getItem('accessToken')
+        })
 
         const fetchBody = JSON.stringify( {
-            "User" : {
-                "email" : user.email
-            },
+            "User" : {},
             "ProjectID" : (this.props.match.params.projectID) ? this.props.match.params.projectID : ''
         })
 

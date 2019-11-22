@@ -36,6 +36,9 @@ class ProjectContactsPage extends Component {
         this.showNotification = this.showNotification.bind(this);
         this.handleChangeByID = this.handleChangeByID.bind(this);
         this.isAdditionalContactsValid = this.isAdditionalContactsValid.bind(this);
+
+
+        console.log(sessionStorage.getItem('user'))
     }
     
     handlePageDataLoad() {
@@ -214,11 +217,10 @@ class ProjectContactsPage extends Component {
                     if(responseJSON.errorMessage) {
                         this.showNotSavedNotification()
                     } else {
-
                         this.setState({ showloader : false})
-
                         this.showNotification('', responseJSON.Project.projectID)
-                        
+                        this.props.setHeaderProjectData(responseJSON.Project)
+
                         //clear the local storage
                         localStorage.removeItem('projectData')
                     }
