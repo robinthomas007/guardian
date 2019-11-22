@@ -170,16 +170,23 @@ export default withAuth(class Content extends Component {
     this.setState( { project : blankProject})
   }
 
-    handleLogoutClick = (e) => {
-        e.preventDefault();
-        this.props.auth.logout('/');
-        localStorage.clear()
-    };
+  handleLogoutClick = (e) => {
+      e.preventDefault();
+      this.props.auth.logout('/');
+      localStorage.clear()
+  };
+
+  setHeaderProjectData = (projectData) => {
+    if(this.state.project.Project !== projectData) {
+      let project = {...this.state.project}
+          project.Project = projectData
+      this.setState( { project } )
+    }
+  };
 
   render() {
 
     if(this.state.userLoaded) {
-
       return (
         <div className="row d-flex no-gutters">
           <div className="col-12">
@@ -197,16 +204,16 @@ export default withAuth(class Content extends Component {
             <div className={this.state.pageViewCompact ? "row d-flex no-gutters content compact" : "row d-flex no-gutters content"} >
               <div className="col-1"></div>
 
-                <SecureRoute path="/releaseInformation/:projectID?" render={ () => ( <ReleaseInformationPage user={this.state.user} setProjectID={this.setProjectID} />) } />
-                <SecureRoute path="/projectContacts/:projectID?" render={ () => ( <ProjectContactsPage user={this.state.user} setProjectID={this.setProjectID} />) }/>
-                <SecureRoute path="/trackInformation/:projectID?" render={ () => ( <TrackInformationPage user={this.state.user} setProjectID={this.setProjectID} />) }/>
-                <SecureRoute path="/territorialRights/:projectID?" render={ () => ( <TerritorialRightsPage user={this.state.user} setProjectID={this.setProjectID} />) }/>
-                <SecureRoute path="/blockingPolicies/:projectID?" render={ () => ( <BlockingPoliciesPage user={this.state.user} setProjectID={this.setProjectID} />) }/>
-                <SecureRoute path="/audioFiles/:projectID?" render={ () => ( <AudioFilesPage user={this.state.user} setProjectID={this.setProjectID} />) } />
-                <SecureRoute path="/reviewSubmit/:projectID?" render={ () => ( <ReviewAndSubmitPage user={this.state.user} setProjectID={this.setProjectID} data={this.state.project} />) } />
-                <SecureRoute path="/findProject" render={ () => ( <FindProjectPage user={this.state.user} setProjectID={this.setProjectID} />) } />
+                <SecureRoute path="/releaseInformation/:projectID?" render={ () => ( <ReleaseInformationPage user={this.state.user} setProjectID={this.setProjectID} setHeaderProjectData={this.setHeaderProjectData}/>) } />
+                <SecureRoute path="/projectContacts/:projectID?" render={ () => ( <ProjectContactsPage user={this.state.user} setProjectID={this.setProjectID} setHeaderProjectData={this.setHeaderProjectData} />) }/>
+                <SecureRoute path="/trackInformation/:projectID?" render={ () => ( <TrackInformationPage user={this.state.user} setProjectID={this.setProjectID} setHeaderProjectData={this.setHeaderProjectData} />) }/>
+                <SecureRoute path="/territorialRights/:projectID?" render={ () => ( <TerritorialRightsPage user={this.state.user} setProjectID={this.setProjectID} setHeaderProjectData={this.setHeaderProjectData} />) }/>
+                <SecureRoute path="/blockingPolicies/:projectID?" render={ () => ( <BlockingPoliciesPage user={this.state.user} setProjectID={this.setProjectID} setHeaderProjectData={this.setHeaderProjectData} />) }/>
+                <SecureRoute path="/audioFiles/:projectID?" render={ () => ( <AudioFilesPage user={this.state.user} setProjectID={this.setProjectID} setHeaderProjectData={this.setHeaderProjectData} />) } />
+                <SecureRoute path="/reviewSubmit/:projectID?" render={ () => ( <ReviewAndSubmitPage user={this.state.user} setProjectID={this.setProjectID} data={this.state.project} setHeaderProjectData={this.setHeaderProjectData} />) } />
+                <SecureRoute path="/findProject" render={ () => ( <FindProjectPage user={this.state.user} setProjectID={this.setProjectID} />) } setHeaderProjectData={this.setHeaderProjectData} />
                 <SecureRoute path="/helpGuide" render={ () => ( <HelpGuide/> ) } />
-                <SecureRoute path="/admin" render={ () => ( <UserAdministration user={this.state.user} setProjectID={this.setProjectID} />) } />
+                <SecureRoute path="/admin" render={ () => ( <UserAdministration user={this.state.user} setProjectID={this.setProjectID} />) } setHeaderProjectData={this.setHeaderProjectData} />
                <div className="col-1"></div>
             </div>
 

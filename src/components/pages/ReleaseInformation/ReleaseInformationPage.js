@@ -189,8 +189,11 @@ class ReleaseinformationPage extends Component {
                         if(responseJSON.errorMessage) {
 
                         } else {
+                            this.props.setHeaderProjectData(responseJSON.Project)
                             localStorage.setItem('projectData', JSON.stringify(this.state.formInputs));
                             this.props.history.push('/projectContacts/' + responseJSON.Project.projectID)
+
+
                         }
                     }
                 ).catch(
