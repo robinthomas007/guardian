@@ -184,6 +184,10 @@ export default withAuth(class Content extends Component {
     }
   };
 
+  componentDidUpdate = () => {
+    console.log('content updated')
+  }
+
   render() {
 
     if(this.state.userLoaded) {
@@ -210,7 +214,7 @@ export default withAuth(class Content extends Component {
                 <SecureRoute path="/territorialRights/:projectID?" render={ () => ( <TerritorialRightsPage user={this.state.user} setProjectID={this.setProjectID} setHeaderProjectData={this.setHeaderProjectData} />) }/>
                 <SecureRoute path="/blockingPolicies/:projectID?" render={ () => ( <BlockingPoliciesPage user={this.state.user} setProjectID={this.setProjectID} setHeaderProjectData={this.setHeaderProjectData} />) }/>
                 <SecureRoute path="/audioFiles/:projectID?" render={ () => ( <AudioFilesPage user={this.state.user} setProjectID={this.setProjectID} setHeaderProjectData={this.setHeaderProjectData} />) } />
-                <SecureRoute path="/reviewSubmit/:projectID?" render={ () => ( <ReviewAndSubmitPage user={this.state.user} setProjectID={this.setProjectID} data={this.state.project} setHeaderProjectData={this.setHeaderProjectData} />) } />
+                <SecureRoute path="/reviewSubmit/:projectID?" render={ () => ( <ReviewAndSubmitPage user={this.state.user} setProjectID={this.setProjectID} projectID={this.state.project.Project.projectID} data={this.state.project} setHeaderProjectData={this.setHeaderProjectData} />) } />
                 <SecureRoute path="/findProject" render={ () => ( <FindProjectPage user={this.state.user} setProjectID={this.setProjectID} />) } setHeaderProjectData={this.setHeaderProjectData} />
                 <SecureRoute path="/helpGuide" render={ () => ( <HelpGuide/> ) } />
                 <SecureRoute path="/admin" render={ () => ( <UserAdministration user={this.state.user} setProjectID={this.setProjectID} />) } setHeaderProjectData={this.setHeaderProjectData} />
