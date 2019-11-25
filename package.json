@@ -27,10 +27,17 @@
     },
     "scripts": {
         "config": "node scripts/config.js",
+        "env:dev": "NODE_ENV=dev node scripts/config.js && cp public/static/config/index.js public/static/config/index.dev.js",
+        "env:qa": "NODE_ENV=qa node scripts/config.js && cp public/static/config/index.js public/static/config/index.qa.js",
+        "env:sandbox": "NODE_ENV=sandbox node scripts/config.js && cp public/static/config/index.js public/static/config/index.sandbox.js",
+        "env:stage": "NODE_ENV=stage node scripts/config.js && cp public/static/config/index.js public/static/config/index.stage.js",
+        "env:test": "NODE_ENV=test node scripts/config.js && cp public/static/config/index.js public/static/config/index.test.js",
+        "env:prod": "NODE_ENV=prod node scripts/config.js && cp public/static/config/index.js public/static/config/index.prod.js",
+        "allenvs": "npm run env:sandbox && npm run env:prod && npm run env:qa && npm run env:stage && npm run env:test && npm run env:dev",
         "start": "bash ./scripts/config && react-scripts start",
-        "build": "npm run config && react-scripts build",
-        "test": "npm run config && react-scripts test",
-        "eject": "npm run config && react-scripts eject"
+        "build": "react-scripts build",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject"
     },
     "eslintConfig": {
         "extends": "react-app"

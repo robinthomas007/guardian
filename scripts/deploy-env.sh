@@ -1,7 +1,5 @@
 #!/bin/bash
 
-OUTDIR="/tmp"
-
 checkenv() {
   if [[ -z "$ENV" ]]; then
     echo ENV required
@@ -13,7 +11,7 @@ deployenv() {
   echo =======================
   echo Deploying $ENV
   echo =======================
-  cp -r $OUTDIR/$ENV/* /usr/share/nginx/html
+  cp static/config/index.$ENV.js static/config/index.js
 }
 
 main() {

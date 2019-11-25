@@ -9,8 +9,9 @@ import '../src/css/header.css';
 import LoginPage from './components/pages/HomePage/HomePage';
 import Content from './components/content';
 import { Security, SecureRoute, ImplicitCallback } from '@okta/okta-react';
-import config from './config';
 import { withRouter } from 'react-router';
+
+const config = Object.freeze(window.env);
 
 class App extends Component {
     componentDidMount() {

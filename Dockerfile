@@ -26,7 +26,7 @@ WORKDIR /usr/share/nginx/html
 
 COPY nginx.conf /etc/nginx/nginx.conf
 
-COPY --from=builder /src/app-dist /tmp
+COPY --from=builder /src/build/ /usr/share/nginx/html/
 
 COPY --from=builder /src/scripts/deploy-env.sh deploy-env.sh
 

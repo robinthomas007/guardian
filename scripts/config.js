@@ -79,7 +79,10 @@ async function vaultGetSecret(token, secret) {
     process.env.NODE_ENV = process.env.NODE_ENV.toLowerCase()
     console.log("Get secret for env", process.env.NODE_ENV)
     let data = await vaultGetSecret(token, 'guardian-ui/' + process.env.NODE_ENV)
-    fs.writeFileSync("src/config/index.json", JSON.stringify(data))
+    //fs.writeFileSync("src/config/index."+process.env.NODE_ENV+".json", JSON.stringify(data))
+    let configData = JSON.stringify(data);
+    let tpl = `window.env = ${configData}`;
+    fs.writeFileSync("public/static/config/index.js", tpl);
   } catch(e) {
     console.log(e.message)
   }
