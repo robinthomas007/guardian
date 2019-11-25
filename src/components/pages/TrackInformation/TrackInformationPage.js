@@ -210,6 +210,7 @@ class TrackInformationPage extends Component {
             {
                 this.setState({ showloader : false});
                 this.showNotification(forward);
+                this.props.setHeaderProjectData(this.state.project)
             }
         ).catch(
             error => {

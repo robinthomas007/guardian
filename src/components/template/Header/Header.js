@@ -97,8 +97,9 @@ export default withRouter(class Header extends Component {
 
     isPreReleaseDate = () => {
         const user = JSON.parse(sessionStorage.getItem('user'))
-        if(user) {
-            const projectReleaseDate =  parseInt((this.props.projectData.projectReleaseDate) ? new Date(this.props.projectData.projectReleaseDate).getTime() : '');
+
+        if(user && this.props.projectData && this.props.projectData.Project && this.props.projectData.Project.projectReleaseDate) {
+            const projectReleaseDate =  parseInt((this.props.projectData.Project.projectReleaseDate) ? new Date(this.props.projectData.Project.projectReleaseDate).getTime() : '');
             const serverDate =  parseInt((user.UtcDateTime) ? new Date(user.UtcDateTime).getTime() : '');
 
             if(!Number.isNaN(projectReleaseDate)) {
@@ -110,8 +111,8 @@ export default withRouter(class Header extends Component {
     };
 
     isStepComplete = (navLink) => {
-        if(this.props.projectData[navLink.stepValidation]) {
-            return(this.props.projectData[navLink.stepValidation])
+        if(this.props.projectData.Project[navLink.stepValidation]) {
+            return(this.props.projectData.Project[navLink.stepValidation])
         }
     };
 
@@ -128,7 +129,7 @@ export default withRouter(class Header extends Component {
                                 <NavLink className="" to={{pathname: navLink.path + ((this.state.Project && this.state.Project.projectID) ? this.state.Project.projectID : '')}}>
                                     <span className="step-description text-nowrap">{navLink.description}</span>
                                     <span className="step">
-                                        { (this.props.projectData.projectID && this.props.projectData.projectID) ?  
+                                        { (this.props.projectData.Project.projectID && this.props.projectData.Project.projectID) ?  
                                         
                                             this.isStepComplete(navLink) ? <i class="material-icons">check</i> : <i class="material-icons">block</i>
                                         : 
@@ -208,9 +209,9 @@ export default withRouter(class Header extends Component {
             }, this.setHeaderView())
         }
 
-        if(this.props.projectData !== this.state.Project) {
+        if(this.props.projectData.Project !== this.state.Project) {
             this.setState( {
-                Project : this.props.projectData
+                Project : this.props.projectData.Project
             }, () => {this.getNavLinks()})
         }
 
@@ -227,9 +228,9 @@ export default withRouter(class Header extends Component {
             })
         }
 
-        if(this.props.projectData !== this.state.Project) {
+        if(this.props.projectData.Project !== this.state.Project) {
             this.setState( {
-                Project : this.props.projectData
+                Project : this.props.projectData.Project
             })
         }
         this.setHeaderView()
@@ -243,12 +244,12 @@ export default withRouter(class Header extends Component {
                 <div className="col-9">
                     <div className="row d-flex no-gutters">
                         <div className="col-10 align-self-start">
-                            <h1>{ (this.props.projectData && this.props.projectData.projectTitle) ? this.props.projectData.projectTitle : this.getDefaultPageTitle('New Project')}</h1>
+                            <h1>{ (this.props.projectData.Project && this.props.projectData.Project.projectTitle) ? this.props.projectData.Project.projectTitle : this.getDefaultPageTitle('New Project')}</h1>
                         </div>
                         <div className="col-2 align-self-start">
                             {
                                 (this.state.showProjectStatus) ? 
-                                    'STATUS: ' + (this.props.projectData && this.props.projectData.projectStatus ? this.props.projectData.projectStatus : 'In Progress') :
+                                    'STATUS: ' + (this.props.projectData.Project && this.props.projectData.Project.projectStatus ? this.props.projectData.Project.projectStatus : 'In Progress') :
                                 null
                             }
                         </div>
@@ -272,53 +273,56 @@ export default withRouter(class Header extends Component {
      }
      
     render() {
-        return(
-            <header className={ (this.state.pageViewCompact) ? "row d-flex no-gutters compact" : "row d-flex no-gutters" }>
-                <div className="col-12 align-items-end flex-column flex-grow-1">
-                    <div className="row d-flex no-gutters">
+        if(this.props.projectData.Project) {
+            return(
+                <header className={ (this.state.pageViewCompact) ? "row d-flex no-gutters compact" : "row d-flex no-gutters" }>
+                    <div className="col-12 align-items-end flex-column flex-grow-1">
+                        <div className="row d-flex no-gutters">
+                            <div className="col-1"></div>
+                            <div className="col-2">
+                                <span className="guardian-logo"></span>
+                            </div>
+                            <div className="nav-bg"></div>
+                            <nav className="col-8 d-flex no-gutters justify-content-end">
+                                <ul>
+                                    <li><NavLink className="steps" to={{pathname: '/releaseInformation'}} onClick={ ()=> this.props.clearProject()}>New Project</NavLink></li>
+                                    <li><NavLink className="steps" to={{pathname: '/findProject'}}>Find A Project</NavLink></li>
+                                    <li>
+                                        <RecentProjectsDrop 
+                                            updateHistory={ (projectID)=> this.props.updateHistory(projectID)}
+                                        />
+                                    </li>
+                                    { (this.props.userData.IsAdmin) ? <li><NavLink className="steps" to={{pathname: '/admin'}}>Admin</NavLink></li> : null}
+                                    <li> | </li>
+                                    <li>Welcome, {this.props.userData.name}</li>
+                                    <li><span className="btn-log" onClick={ (e)=> this.props.handleLogoutClick(e)}>Log Out</span></li>
+                                </ul>
+                            </nav>
                         <div className="col-1"></div>
-                        <div className="col-2">
-                            <span className="guardian-logo"></span>
-                        </div>
-                        <div className="nav-bg"></div>
-                        <nav className="col-8 d-flex no-gutters justify-content-end">
-                            <ul>
-                                <li><NavLink className="steps" to={{pathname: '/releaseInformation'}} onClick={ ()=> this.props.clearProject()}>New Project</NavLink></li>
-                                <li><NavLink className="steps" to={{pathname: '/findProject'}}>Find A Project</NavLink></li>
-                                <li>
-                                    <RecentProjectsDrop 
-                                        updateHistory={ (projectID)=> this.props.updateHistory(projectID)}
-                                    />
-                                </li>
-                                { (this.props.userData.IsAdmin) ? <li><NavLink className="steps" to={{pathname: '/admin'}}>Admin</NavLink></li> : null}
-                                <li> | </li>
-                                <li>Welcome, {this.props.userData.name}</li>
-                                <li><span className="btn-log" onClick={ (e)=> this.props.handleLogoutClick(e)}>Log Out</span></li>
-                            </ul>
-                        </nav>
-                    <div className="col-1"></div>
-                </div>
-                { this.getHeaderContent()}
+                    </div>
+                    { this.getHeaderContent()}
 
-                <ul className="button-bar">
-                    {(this.state.showHeaderSizeToggle) ?
+                    <ul className="button-bar">
+                        {(this.state.showHeaderSizeToggle) ?
+                            <li>
+                                <button className="btn btn-sm btn-secondary btn-collapse" onClick={this.headerToggle} title="Collapse/Expand Header"><i className={'material-icons'}>unfold_more</i></button>
+                            </li>
+                            :
+                            null
+                        }
+
                         <li>
-                            <button className="btn btn-sm btn-secondary btn-collapse" onClick={this.headerToggle} title="Collapse/Expand Header"><i className={'material-icons'}>unfold_more</i></button>
+                            <button className="btn btn-sm btn-secondary btn-video" onClick={null} title="Tutorial Video"><i className={'material-icons'}>videocam</i></button>
                         </li>
-                        :
-                        null
-                    }
+                        <li>
+                            <button className="btn btn-sm btn-primary btn-help" onClick={this.handleHelpClick} title="Help/FAQs"><i className={'material-icons'}>contact_support</i> Help</button>
+                        </li>
+                    </ul>
+                </div>
+            
+            </header>
+            )
+        }
 
-                    <li>
-                        <button className="btn btn-sm btn-secondary btn-video" onClick={null} title="Tutorial Video"><i className={'material-icons'}>videocam</i></button>
-                    </li>
-                    <li>
-                        <button className="btn btn-sm btn-primary btn-help" onClick={this.handleHelpClick} title="Help/FAQs"><i className={'material-icons'}>contact_support</i> Help</button>
-                    </li>
-                </ul>
-            </div>
-           
-        </header>
-        )
     }
 })

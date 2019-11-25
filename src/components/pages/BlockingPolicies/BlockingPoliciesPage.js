@@ -193,6 +193,7 @@ class BlockingPoliciesPage extends Component {
                     this.showNotSavedNotification()
                 } else {
                     this.showNotification(null, this.props.match.params.projectID)
+                    this.props.setHeaderProjectData(this.state.project)
                 }
                 this.setState( { showLoader : false } )
             }

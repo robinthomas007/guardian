@@ -382,23 +382,17 @@ class AudioFilesPage extends Component {
                 method : 'POST',
                 headers : fetchHeaders,
                 body : fetchBody
-            }).then (response => 
-                {
-                    return(response.json());
-                }
-            )
-            .then (responseJSON => 
-                {
-                    this.showNotification();
-                    this.setState( {showLoader : false } )
-                }
-            )
-            .catch(
+            }).then (response => {
+                return(response.json());
+            }).then (responseJSON => {
+                this.showNotification();
+                this.setState( {showLoader : false } )
+                this.props.setHeaderProjectData(this.state.project)
+            }).catch(
                 error => {
                     this.setState( {showLoader : false } )
                     console.error(error)
                 }
-
             );
         } else {
 

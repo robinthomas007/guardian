@@ -177,10 +177,16 @@ export default withAuth(class Content extends Component {
   };
 
   setHeaderProjectData = (projectData) => {
-    if(this.state.project.Project !== projectData) {
-      let project = {...this.state.project}
-          project.Project = projectData
-      this.setState( { project } )
+
+    console.log('this.state.project.Project')
+    console.log(this.state.project.Project)
+
+    console.log('projectData')
+    console.log(projectData)
+
+
+    if(this.state.project !== projectData) {
+      this.setState( { project : projectData} )
     }
   };
 
@@ -197,7 +203,7 @@ export default withAuth(class Content extends Component {
 
             <Header
               userData={this.state.user}
-              projectData={this.state.project.Project}
+              projectData={this.state.project}
               pagePath={this.props.location.pathname}
               setPageViewType={this.setPageViewType}
               updateHistory={this.updateHistory}
