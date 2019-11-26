@@ -219,7 +219,7 @@ class ProjectContactsPage extends Component {
                     } else {
                         this.setState({ showloader : false})
                         this.showNotification('', responseJSON.Project.projectID)
-                        this.props.setHeaderProjectData(responseJSON.Project)
+                        this.props.setHeaderProjectData(responseJSON)
 
                         //clear the local storage
                         localStorage.removeItem('projectData')
