@@ -101,12 +101,13 @@ export default withRouter(class Header extends Component {
         if(user && this.props.projectData && this.props.projectData.Project && this.props.projectData.Project.projectReleaseDate) {
             const projectReleaseDate =  parseInt((this.props.projectData.Project.projectReleaseDate) ? new Date(this.props.projectData.Project.projectReleaseDate).getTime() : '');
             const serverDate =  parseInt((user.UtcDateTime) ? new Date(user.UtcDateTime).getTime() : '');
-
             if(!Number.isNaN(projectReleaseDate)) {
                 return ( projectReleaseDate > serverDate)
             } else {
                 return (true)
             }
+        } else {
+            return (true)
         }
     };
 
