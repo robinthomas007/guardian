@@ -55,9 +55,6 @@ class ProjectContactsPage extends Component {
         )
 
         const fetchBody = JSON.stringify( {
-            "User" : {
-                "email" : user.email
-            },
             "ProjectID" : projectID
         })
 
@@ -148,9 +145,6 @@ class ProjectContactsPage extends Component {
             }
         )
         const fetchBody = JSON.stringify( {
-            "User" : {
-                "email" : user.email
-            },
             "emails": this.state.formInputs.projectAdditionalContacts
         })
         fetch ('https://api-dev.umusic.net/guardian/project/validate/emails', {
@@ -198,9 +192,6 @@ class ProjectContactsPage extends Component {
             )
 
             const fetchBody = JSON.stringify( {
-                "User" : {
-                    "email" : user.email
-                },
                 "Project" : projectFields
             })
 

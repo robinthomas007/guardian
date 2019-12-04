@@ -165,9 +165,6 @@ class ReleaseinformationPage extends Component {
             )
 
             const fetchBody = JSON.stringify( {
-                "User" : {
-                    "email" : user.email
-                },
                 "Project" : this.state.formInputs
             })
 
@@ -331,9 +328,6 @@ class ReleaseinformationPage extends Component {
         )
 
         const fetchBody = JSON.stringify( {
-            "User" : {
-                "email" : user.email
-            },
             "ProjectID" : this.props.match.params.projectID
         })
 
