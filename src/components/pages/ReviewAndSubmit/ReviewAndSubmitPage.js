@@ -57,9 +57,6 @@ class ReviewAndSubmitPage extends Component {
         )
 
         const fetchBody = JSON.stringify( {
-            "User" : {
-                "email" : user.email
-            },
             "ProjectID" : (this.props.match.params.projectID) ? this.props.match.params.projectID : ''
         })
 
