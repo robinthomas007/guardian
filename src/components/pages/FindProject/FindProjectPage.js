@@ -85,7 +85,6 @@ class FindProjectPage extends Component {
 		)
 
 		const fetchBody = JSON.stringify( {
-            "User" : {},
 			"SearchCriteria" : this.state.searchCriteria,
 		})
 
@@ -352,9 +351,6 @@ class FindProjectPage extends Component {
 		)
 
 		const fetchBody = JSON.stringify( {
-            "User" : {
-				"email" : user.email
-			},
             "ProjectID": project.projectID,
             "StatusID": data.id,
 		})
