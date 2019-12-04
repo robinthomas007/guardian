@@ -131,9 +131,6 @@ class BlockingPoliciesPage extends Component {
 		)
 
 		const fetchBody = JSON.stringify( {
-            "User" : {
-				"email" : user.email
-            },
             "ProjectID": this.props.match.params.projectID,
 		})
 
@@ -172,9 +169,6 @@ class BlockingPoliciesPage extends Component {
 		)
 
 		const fetchBody = JSON.stringify( {
-            "User" : {
-				"email" : user.email
-            },
             "projectID": this.props.match.params.projectID,
             "BlockingPolicySets": this.state.project.BlockingPolicySets
 		})

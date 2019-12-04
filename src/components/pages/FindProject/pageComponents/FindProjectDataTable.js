@@ -131,12 +131,12 @@ class FindProjectDataTable extends Component {
                 console.error(error);
                 this.setState( {showloader : false} )
                 new Noty ({
-                    type: 'error',
-                    id:'projectReminderNotSent',
-                    text: 'Your project reminder encountered an error, please try again.',
-                    theme: 'bootstrap-v4',
-                    layout: 'top',
-                    timeout: '3000'
+                type: 'error',
+                id:'projectReminderNotSent',
+                text: 'Your project reminder encountered an error, please try again.',
+                theme: 'bootstrap-v4',
+                layout: 'top',
+                timeout: '3000'
                 }).show()
             }
         );

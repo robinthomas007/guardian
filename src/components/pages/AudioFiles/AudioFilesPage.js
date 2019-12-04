@@ -207,7 +207,6 @@ class AudioFilesPage extends Component {
         const fetchHeaders = new Headers(
             {
                 "Authorization" : sessionStorage.getItem('accessToken'),
-                "User-Email" : user.email,
                 "Project-Id" : projectID,
                 "Track-Id" : (trackID) ? trackID : ''
             }
@@ -370,9 +369,6 @@ class AudioFilesPage extends Component {
             )
 
             const fetchBody = JSON.stringify( {
-                "User" : {
-                    "email" : user.email
-                },
                 "projectID" : projectID,
                 "isAudioPage" : true,
                 "Discs" : this.state.discs
