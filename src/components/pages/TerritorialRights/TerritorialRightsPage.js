@@ -42,9 +42,6 @@ class TerritorialRightsPage extends Component {
 		)
 
 		const fetchBody = JSON.stringify( {
-            "User" : {
-				"email" : user.email
-            },
             "ProjectID": this.props.match.params.projectID,
 		})
 
@@ -214,9 +211,6 @@ class TerritorialRightsPage extends Component {
 		)
 
 		const fetchBody = JSON.stringify( {
-            "User" : {
-				"email" : user.email
-            },
             "projectID": this.props.match.params.projectID,
             "TerritorialRightsSets": this.state.project.TerritorialRightsSets,
 		})
