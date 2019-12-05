@@ -232,6 +232,13 @@ select.dropdown {
 	border-radius: .2rem;
 }
 
+ul.request-form li>.invalid-tooltip {
+	position: relative;
+	top: -56px;
+	right: -290px;
+	width: 130px;
+}
+
 button.tooltip-btn {
 	margin-right: 10px;
 	margin-top: 8px;

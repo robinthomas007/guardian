@@ -36,15 +36,21 @@ let RequestAccessForm = props => {
 
     return (
         <Form onSubmit={handleSubmit}>
-            <ul>
+            <ul className="request-form">
                 <li>Fill in the fields below for review by our administrative team.</li>
                 <li>
                     <Form.Label>First Name</Form.Label>
                     <Field component="input" type="text" name="firstName" className="form-control requiredInput" />
+                    <div className="invalid-tooltip">
+                        First Name is required.
+                    </div>
                 </li>
                 <li>
                     <Form.Label>Last Name</Form.Label>
                     <Field component="input" type="text" name="lastName" className="form-control requiredInput" />
+                    <div className="invalid-tooltip">
+                        Last Name is required.
+                    </div>
                 </li>
                 <li>
                     <LabelsDropDown
@@ -55,14 +61,23 @@ let RequestAccessForm = props => {
                         selected={props.userValues.primaryLabelID}
                         forCreate={true}
                     />
+                     <div className="invalid-tooltip">
+                        A label selection is required.
+                    </div>
                 </li>
                 <li>
                     <Form.Label>Email</Form.Label>
                     <Field component="input" type="email" name="email" className="form-control requiredInput" />
+                    <div className="invalid-tooltip">
+                        An email address is required.
+                    </div>
                 </li>
                 <li>
                     <Form.Label>Phone</Form.Label>
                     <Field component="input" type="text" name="phoneNumber" className="form-control requiredInput" />
+                    <div className="invalid-tooltip">
+                        A phone number is required.
+                    </div>
                 </li>
                 <li className="float-right">
                     <Button variant="secondary" id="cancelButton" onClick={props.handleClose}>
