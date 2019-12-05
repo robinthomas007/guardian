@@ -171,7 +171,7 @@ class ReleaseinformationPage extends Component {
             //if this is an existing project we need to skip validation and save
             if(this.state.formInputs.projectID !== '') {
 
-                fetch ('https://api-dev.umusic.net/guardian/project', {
+                fetch (window.env.api.url + '/project', {
                     method : 'POST',
                     headers : fetchHeaders,
                     body : fetchBody

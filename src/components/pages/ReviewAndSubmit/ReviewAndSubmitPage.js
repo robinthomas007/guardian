@@ -134,9 +134,14 @@ class ReviewAndSubmitPage extends Component {
                             <h2>Release Information</h2>
                         </div>
                         <div className="col-2 justify-content-end">
-                            <button className="btn btn-secondary align-content-end float-right" onClick={() => this.handleProjectCategoryClick('/releaseInformation/')}>
-                                <i className="material-icons">edit</i>  Edit
-                            </button>
+                            { 
+                                (parseInt(this.props.data.Project.projectStatusID) === 1) ? 
+                                    <button className="btn btn-secondary align-content-end float-right" onClick={() => this.handleProjectCategoryClick('/releaseInformation/')}>
+                                        <i className="material-icons">edit</i>  Edit
+                                    </button>
+                                :
+                                    null
+                            }
                         </div>
                     </div>
                     <br />
@@ -177,10 +182,13 @@ class ReviewAndSubmitPage extends Component {
                             <h2>Project Contacts</h2>
                         </div>
                         <div className="col-2 justify-content-end">
-                            <button className="btn btn-secondary align-content-end float-right" onClick={() => this.handleProjectCategoryClick('/projectContacts/')}>
-                                <i className="material-icons">edit</i>  Edit
-                            </button>
-                           
+                            { (parseInt(this.props.data.Project.projectStatusID) === 1) ? 
+                                <button className="btn btn-secondary align-content-end float-right" onClick={() => this.handleProjectCategoryClick('/projectContacts/')}>
+                                    <i className="material-icons">edit</i>  Edit
+                                </button>
+                              :
+                                null
+                            }                           
                         </div>
                     </div>
                     <br />
@@ -209,20 +217,25 @@ class ReviewAndSubmitPage extends Component {
                     </div>
                 
                     <div className="col-2 justify-content-end">
-                    <button className="btn btn-secondary align-content-end float-right" onClick={() => this.handleProjectCategoryClick('/audioFiles/')}>
-                             <i className="material-icons">edit</i>  Edit
+                        { (parseInt(this.props.data.Project.projectStatusID) === 1) ? 
+                            <button className="btn btn-secondary align-content-end float-right" onClick={() => this.handleProjectCategoryClick('/audioFiles/')}>
+                                 <i className="material-icons">edit</i>  Edit
                             </button>
+                           :
+                              null
+                        }
                     </div>
+
                     <div className="col-12">
-                    <br />
-                    <div className="review-card">
-                    <div className="tab-content" id="nav-tabContent">
-                        <div className="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                            <AudioFilesTabsContainer 
-                                discs={this.props.data.Discs}
-                            />
-                        </div>
-                        </div>
+                        <br />
+                         <div className="review-card">
+                            <div className="tab-content" id="nav-tabContent">
+                                <div className="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                                    <AudioFilesTabsContainer 
+                                        discs={this.props.data.Discs}
+                                    />
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -234,9 +247,14 @@ class ReviewAndSubmitPage extends Component {
                     <h2>Territorial Rights</h2>
                 </div>
                 <div className="col-2 justify-content-end">
-                    <button className="btn btn-secondary align-content-end float-right" onClick={() => this.handleProjectCategoryClick('/territorialRights/')}>
-                        <i className="material-icons">edit</i>  Edit
-                    </button>
+                    { (parseInt(this.props.data.Project.projectStatusID) === 1) ? 
+                        <button className="btn btn-secondary align-content-end float-right" onClick={() => this.handleProjectCategoryClick('/territorialRights/')}>
+                            <i className="material-icons">edit</i>  Edit
+                        </button>
+                       :
+                         null
+                    }
+
                 </div>
                 <div className="col-12">
                     <br />
@@ -255,9 +273,15 @@ class ReviewAndSubmitPage extends Component {
                     <h2>Blocking Polices</h2>
                 </div>
                 <div className="col-2 justify-content-end">
-                <button className="btn btn-secondary align-content-end float-right" onClick={() => this.handleProjectCategoryClick('/blockingPolicies/')}>
-                             <i className="material-icons">edit</i>  Edit
-                            </button>
+                    { (parseInt(this.props.data.Project.projectStatusID) === 1) ? 
+                        <button className="btn btn-secondary align-content-end float-right" onClick={() => this.handleProjectCategoryClick('/blockingPolicies/')}>
+                            <i className="material-icons">edit</i>  Edit
+                        </button>
+
+                        :
+
+                        null
+                    }
                 </div>
                 <div className="col-12">
                     <br />

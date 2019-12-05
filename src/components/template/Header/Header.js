@@ -154,10 +154,11 @@ export default withRouter(class Header extends Component {
     };
 
     handleHeaderViewType = () => {
-        const isDefaultCompactViewPage = this.state.compactViewPages[this.props.pagePath.split('/')[1]];
+        const isDefaultCompactViewPage = (this.state.compactViewPages[this.props.pagePath.split('/')[1]]);
         if(isDefaultCompactViewPage) {
             this.props.clearProject()
         }
+
         return(isDefaultCompactViewPage ? true : false)
     };
 
@@ -198,6 +199,20 @@ export default withRouter(class Header extends Component {
         }
     };
 
+    handleNavLoadByStatus = () => {
+        const projectStatusID = parseInt(this.props.projectData.Project.projectStatusID)
+        if(projectStatusID === 1) {
+            this.getNavLinks()
+        } else {
+            this.setState( { 
+                showProgressBar : false, 
+                pageViewCompact : true, 
+                showHeaderSizeToggle : true,
+                showProjectStatus : true
+            } )     
+        }
+    }
+
     componentDidUpdate() {
 
         if(this.props.pagePath !== this.state.pagePath) {
@@ -207,18 +222,17 @@ export default withRouter(class Header extends Component {
                 pageViewCompact : this.handleHeaderViewType(), 
                 showHeaderSizeToggle : !this.handleHeaderViewType() 
 
-            }, this.setHeaderView())
+            }, this.handleNavLoadByStatus())
         }
 
         if(this.props.projectData.Project !== this.state.Project) {
             this.setState( {
                 Project : this.props.projectData.Project
-            }, () => {this.getNavLinks()})
+            }, this.handleNavLoadByStatus()
+            )
         }
-
         this.isPreReleaseDate()
         this.props.setPageViewType(this.state.pageViewCompact);
-        
     };
 
     componentDidMount = () => {
