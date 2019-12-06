@@ -171,7 +171,7 @@ class TerritorialRightsPage extends Component {
         this.setState( {dragSource : null} )
     };
 
-    showNotification(e, projectID){
+    showNotification(saveAndContinue, projectID){
         new Noty ({
             type: 'success',
             id:'rightsSaved',
@@ -179,11 +179,13 @@ class TerritorialRightsPage extends Component {
             theme: 'bootstrap-v4',
             layout: 'top',
             timeout: '3000'
-        }).on('afterClose', ()  =>
-            this.props.history.push({
-                pathname : '/blockingPolicies/' + projectID
-            })
-        ).show()
+        }).on('afterClose', ()  => {
+            if(saveAndContinue) {
+                this.props.history.push({
+                    pathname : '/blockingPolicies/' + projectID
+                })
+            }
+        }).show()
     };
 
     showNotSavedNotification(e){
@@ -197,63 +199,70 @@ class TerritorialRightsPage extends Component {
         }).show()
     };
 
-    showUnassignedTracksNotification(e){
+    showUnassignedTracksNotification(saveAndContinue, projectID){
         new Noty ({
             type: 'error',
             id:'rightsnotSaved',
-            text: 'All Unassigned Tracks must be assigned to 1 or more sets. Your rights policies have NOT been successfully saved.',
+            text: ' Your rights policies have been successfully saved however, all Unassigned Tracks must be assigned to 1 or more sets for this step to be complete.',
             theme: 'bootstrap-v4',
             layout: 'top',
             timeout: '3000'
+        }).on('afterClose', ()  => {
+            if(saveAndContinue) {
+                this.props.history.push({
+                    pathname : '/blockingPolicies/' + projectID
+                })
+            }
         }).show()
     };
 
 
     handleSubmit = (e) => {
         e.preventDefault();
+        this.setState( { showLoader : true } )
+        const saveAndContinue = (e.target.id === 'contactsSaveContButton') ? true : false;
+        const user = JSON.parse(sessionStorage.getItem('user'))
+        const fetchHeaders = new Headers(
+            {
+                "Content-Type": "application/json",
+                "Authorization" : sessionStorage.getItem('accessToken')
+            }
+        )
 
-        if(this.state.project.UnassignedTerritorialRightsSetTracks.length > 0) {
-            this.showUnassignedTracksNotification()
-        } else {
-            this.setState( { showLoader : true } )
-            const saveAndContinue = (e.target.id === 'contactsSaveContButton') ? true : false;
-            const user = JSON.parse(sessionStorage.getItem('user'))
-            const fetchHeaders = new Headers(
-                {
-                    "Content-Type": "application/json",
-                    "Authorization" : sessionStorage.getItem('accessToken')
-                }
-            )
+        const fetchBody = JSON.stringify( {
+            "projectID": this.props.match.params.projectID,
+            "TerritorialRightsSets": this.state.project.TerritorialRightsSets,
+        })
 
-            const fetchBody = JSON.stringify( {
-                "projectID": this.props.match.params.projectID,
-                "TerritorialRightsSets": this.state.project.TerritorialRightsSets,
-            })
+        fetch ('https://api-dev.umusic.net/guardian/project/territorialrights', {
+            method : 'POST',
+            headers : fetchHeaders,
+            body : fetchBody
+        }).then (response => 
+            {
+                return(response.json());
+            }
+        ).then (responseJSON => {
+            if(responseJSON.errorMessage) {
+                this.showNotSavedNotification()
+            } else {
 
-            fetch ('https://api-dev.umusic.net/guardian/project/territorialrights', {
-                method : 'POST',
-                headers : fetchHeaders,
-                body : fetchBody
-            }).then (response => 
-                {
-                    return(response.json());
-                }
-            ).then (responseJSON => {
-                if(responseJSON.errorMessage) {
-                    this.showNotSavedNotification()
+                if(this.state.project.UnassignedTerritorialRightsSetTracks.length > 0) {
+                    this.showUnassignedTracksNotification(saveAndContinue, this.props.match.params.projectID)
                 } else {
-                    this.showNotification(null, this.props.match.params.projectID)
-                    this.props.setHeaderProjectData(this.state.project)
+                    this.showNotification(saveAndContinue, this.props.match.params.projectID)
                 }
+                this.props.setHeaderProjectData(this.state.project)
+            }
+            this.setState( { showLoader : false } )
+        }).catch(
+            error => {
+                console.error(error)
+                this.showNotSavedNotification()
                 this.setState( { showLoader : false } )
-            }).catch(
-                error => {
-                    console.error(error)
-                    this.showNotSavedNotification()
-                    this.setState( { showLoader : false } )
-                }
-            );
-        }
+            }
+        );
+
     };
 
     componentDidMount() {
