@@ -201,7 +201,7 @@ class TerritorialRightsPage extends Component {
         new Noty ({
             type: 'error',
             id:'rightsnotSaved',
-            text: 'All Unassigned Tracks must be assigned to 1 or more sets. Your rights policies have NOT been successfully saved.'
+            text: 'All Unassigned Tracks must be assigned to 1 or more sets. Your rights policies have NOT been successfully saved.',
             theme: 'bootstrap-v4',
             layout: 'top',
             timeout: '3000'
