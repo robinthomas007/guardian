@@ -197,50 +197,64 @@ class TerritorialRightsPage extends Component {
         }).show()
     };
 
+    showUnassignedTracksNotification(e){
+        new Noty ({
+            type: 'error',
+            id:'rightsnotSaved',
+            text: 'All Unassigned Tracks must be assigned to 1 or more sets. Your rights policies have NOT been successfully saved.'
+            theme: 'bootstrap-v4',
+            layout: 'top',
+            timeout: '3000'
+        }).show()
+    };
+
 
     handleSubmit = (e) => {
         e.preventDefault();
-        this.setState( { showLoader : true } )
-        const saveAndContinue = (e.target.id === 'contactsSaveContButton') ? true : false;
-        const user = JSON.parse(sessionStorage.getItem('user'))
-        const fetchHeaders = new Headers(
-            {
-                "Content-Type": "application/json",
-                "Authorization" : sessionStorage.getItem('accessToken')
-            }
-		)
 
-		const fetchBody = JSON.stringify( {
-            "projectID": this.props.match.params.projectID,
-            "TerritorialRightsSets": this.state.project.TerritorialRightsSets,
-		})
+        if(this.state.project.UnassignedTerritorialRightsSetTracks.length > 0) {
+            this.showUnassignedTracksNotification()
+        } else {
+            this.setState( { showLoader : true } )
+            const saveAndContinue = (e.target.id === 'contactsSaveContButton') ? true : false;
+            const user = JSON.parse(sessionStorage.getItem('user'))
+            const fetchHeaders = new Headers(
+                {
+                    "Content-Type": "application/json",
+                    "Authorization" : sessionStorage.getItem('accessToken')
+                }
+            )
 
-        fetch ('https://api-dev.umusic.net/guardian/project/territorialrights', {
-            method : 'POST',
-            headers : fetchHeaders,
-            body : fetchBody
-        }).then (response => 
-            {
-                return(response.json());
-            }
-        ).then (responseJSON => {
-            if(responseJSON.errorMessage) {
-                this.showNotSavedNotification()
-            } else {
-                this.showNotification(null, this.props.match.params.projectID)
-                this.props.setHeaderProjectData(this.state.project)
-            }
-            this.setState( { showLoader : false } )
-        }).catch(
-            error => {
-                console.error(error)
-                this.showNotSavedNotification()
+            const fetchBody = JSON.stringify( {
+                "projectID": this.props.match.params.projectID,
+                "TerritorialRightsSets": this.state.project.TerritorialRightsSets,
+            })
+
+            fetch ('https://api-dev.umusic.net/guardian/project/territorialrights', {
+                method : 'POST',
+                headers : fetchHeaders,
+                body : fetchBody
+            }).then (response => 
+                {
+                    return(response.json());
+                }
+            ).then (responseJSON => {
+                if(responseJSON.errorMessage) {
+                    this.showNotSavedNotification()
+                } else {
+                    this.showNotification(null, this.props.match.params.projectID)
+                    this.props.setHeaderProjectData(this.state.project)
+                }
                 this.setState( { showLoader : false } )
-            }
-        );
+            }).catch(
+                error => {
+                    console.error(error)
+                    this.showNotSavedNotification()
+                    this.setState( { showLoader : false } )
+                }
+            );
+        }
     };
-
-       
 
     componentDidMount() {
         if(this.props.match.params.projectID) {
@@ -252,6 +266,7 @@ class TerritorialRightsPage extends Component {
         if(this.props.match.params.projectID) {
             this.props.setProjectID(this.props.match.params.projectID)
         }
+
     };
 
     render() {
