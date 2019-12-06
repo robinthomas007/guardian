@@ -72,7 +72,7 @@ class TerritorialRightsTable extends Component {
                 </thead>
                 <tbody>
                     {(this.props.data.TerritorialRightsSets) ? this.getTerritorialRightsSets() : null}
-                    {(this.props.data.UnassignedTerritorialRightsSetTracks) ? this.getUnassignedTerritorialRightsSetTracks() : null}
+                    {/* {(this.props.data.UnassignedTerritorialRightsSetTracks) ? this.getUnassignedTerritorialRightsSetTracks() : null} */}
                 </tbody>
             </table>
         )
