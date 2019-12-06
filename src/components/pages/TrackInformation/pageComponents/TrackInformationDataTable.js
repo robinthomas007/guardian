@@ -24,23 +24,23 @@ class TrackInformationDataTable extends Component {
     }
  
     trackInformationDataHeader = () => {
-        console.log(333)
         return(
             <tr>
                 <th className="text-center">#</th>
                 <th className="text-center"></th>
                 <th className="text-center"></th>
-                <th>Track Title</th>
+                <th>Track Title <span class="required-ind"><i>(Required)</i></span></th>
                 <th>ISRC <i>(Optional) </i>
-                <ToolTip  tabIndex='-1' 
-                              message='You may include ISRC here if known, necessary for completion of Step 3 (Audio Files).'
+                    <ToolTip  tabIndex='-1' 
+                        message='You may include ISRC here if known, necessary for completion of Step 3 (Audio Files).'
                      />
                 </th>
                 <th className="text-center">Single</th>
-                <th className="release-date-col">Release Date  <ToolTip  tabIndex='-1' 
-                              message='Indicate a single’s release date here if different from album release date.'
-                     /> <span>TBD </span>
-              
+                <th className="release-date-col">Release Date  
+                    <ToolTip  tabIndex='-1' 
+                        message='Indicate a single’s release date here if different from album release date.'
+                    />
+                    <span>TBD </span>
                 </th>
                 <th className="text-center">Actions</th>
             </tr> 
@@ -168,7 +168,11 @@ class TrackInformationDataTable extends Component {
                                 id={'trackTitle'} 
                                 value={track.trackTitle} 
                                 onChange={(evt) => this.handleChange(evt, track, i)}
+                                className={'requiredInput'}
                             ></Form.Control>
+                            <div className="invalid-tooltip">
+                                Invalid Track Title
+                            </div>
                         </td>
                         <td>
                             <Form.Control 

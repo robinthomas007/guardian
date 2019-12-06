@@ -7,6 +7,7 @@ import './TrackInformation.css';
 import Noty from 'noty'
 import { withRouter } from "react-router";
 import AudioFilesTabbedTracks from '../AudioFiles/pageComponents/audioFilesTabbedTracks';
+import {isFormValid} from '../../Utils';
 
 class TrackInformationPage extends Component {
 
@@ -177,46 +178,48 @@ class TrackInformationPage extends Component {
 
     handleSubmit(e) {
 
-        this.setState({ showloader : true})
+        if (isFormValid()) {
+            this.setState({ showloader : true})
 
-        const user = JSON.parse(sessionStorage.getItem('user'))
-        const forward = (e.target.classList.contains('saveContinueButton')) ? true : false;
+            const user = JSON.parse(sessionStorage.getItem('user'))
+            const forward = (e.target.classList.contains('saveContinueButton')) ? true : false;
 
-        const fetchHeaders = new Headers(
-            {
-                "Content-Type": "application/json",
-                "Authorization" : sessionStorage.getItem('accessToken')
-            }
-        )
-        const fetchBody = JSON.stringify( {
-            "User" : {
-                "email" : user.email
-            },
-            "projectID": this.props.match.params.projectID,
-            "isAudioPage" : false,
-            "Discs" : this.state.project.Discs
-         })
+            const fetchHeaders = new Headers(
+                {
+                    "Content-Type": "application/json",
+                    "Authorization" : sessionStorage.getItem('accessToken')
+                }
+            )
+            const fetchBody = JSON.stringify( {
+                "User" : {
+                    "email" : user.email
+                },
+                "projectID": this.props.match.params.projectID,
+                "isAudioPage" : false,
+                "Discs" : this.state.project.Discs
+            })
 
 
-        fetch ('https://api-dev.umusic.net/guardian/project/track', {
-            method : 'POST',
-            headers : fetchHeaders,
-            body : fetchBody
-        }).then (response =>
-            {
-                return(response.json());
-            }
-        ).then (responseJSON =>
-            {
-                this.setState({ showloader : false});
-                this.showNotification(forward);
-                this.props.setHeaderProjectData(this.state.project)
-            }
-        ).catch(
-            error => {
-                this.setState({ showloader : false})
-            }
-        );
+            fetch ('https://api-dev.umusic.net/guardian/project/track', {
+                method : 'POST',
+                headers : fetchHeaders,
+                body : fetchBody
+            }).then (response =>
+                {
+                    return(response.json());
+                }
+            ).then (responseJSON =>
+                {
+                    this.setState({ showloader : false});
+                    this.showNotification(forward);
+                    this.props.setHeaderProjectData(this.state.project)
+                }
+            ).catch(
+                error => {
+                    this.setState({ showloader : false})
+                }
+            );
+        }
     };
 
     componentDidMount() {
