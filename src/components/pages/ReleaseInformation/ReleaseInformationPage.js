@@ -328,6 +328,7 @@ class ReleaseinformationPage extends Component {
         )
 
         const fetchBody = JSON.stringify( {
+            "PagePath" : (this.props.match.url) ? this.props.match.url : '',
             "ProjectID" : this.props.match.params.projectID
         })
 

@@ -98,6 +98,7 @@ class TrackInformationPage extends Component {
             "User" : {
                 "email" : user.email
             },
+            "PagePath" : (this.props.match.url) ? this.props.match.url : '',
             "ProjectID" : projectID
         })
 

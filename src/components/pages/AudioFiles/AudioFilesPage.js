@@ -274,9 +274,10 @@ class AudioFilesPage extends Component {
         })
 
         const fetchBody = JSON.stringify( {
-            "User" : {},
+            "PagePath" : (this.props.match.url) ? this.props.match.url : '',
             "ProjectID" : (this.props.match.params.projectID) ? this.props.match.params.projectID : ''
         })
+
 
         fetch ('https://api-dev.umusic.net/guardian/project/review', {
             method : 'POST',
