@@ -123,7 +123,11 @@ class ReviewAndSubmitPage extends Component {
                             <p>In this FINAL step, please take some time to review the project for accuracy before submitting.  <br />Click on any of the sections to return to the corresponding step and make changes.  Once a project is submitted as final in this step, only a Guardian administrator can unlock the project for additional editing.</p>
                         </div>
                         <div className="col-1">
-                            <button type="button" className="btn btn-primary float-right" onClick={this.showProjectSubmitModal}>Submit Project</button>
+                            { (parseInt(this.props.data.Project.projectStatusID) === 1) ? 
+                                <button type="button" className="btn btn-primary float-right" onClick={this.showProjectSubmitModal}>Submit Project</button>
+                                : 
+                                null
+                            }
                         </div>
                     </div>
                 </div>
@@ -296,7 +300,11 @@ class ReviewAndSubmitPage extends Component {
           
             <div className="row d-flex no-gutters">
                 <div className="col-12 align-content-end submit-project">
+                { (parseInt(this.props.data.Project.projectStatusID) === 1) ? 
                     <button type="button" className="btn btn-primary float-right" onClick={this.showProjectSubmitModal}>Submit Project</button>
+                    : 
+                    null
+                 }
                 </div>
             </div>
             </div>

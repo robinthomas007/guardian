@@ -31,67 +31,65 @@ export default withRouter(class Header extends Component {
             showHeaderSizeToggle : true,
             showProjectStatus : true,
             utcDateTime : '',
-            navSteps  : {
-                preRelease : [
-                    {
-                        description : 'Release Info',
-                        path : '/releaseInformation/',
-                        complete : false,
-                        stepComplete : true,
-                        preRelease : true,
-                        stepValidation : 'isReleaseInfoComplete'
+            navSteps  : [
+                {
+                    description : 'Release Info',
+                    path : '/releaseInformation/',
+                    complete : false,
+                    stepComplete : true,
+                    preRelease : true,
+                    stepValidation : 'releaseInfoStatus'
 
-                    },
-                    {
-                        description : 'Contacts',
-                        path : '/projectContacts/',
-                        complete : false,
-                        stepComplete : false,
-                        preRelease : true,
-                        stepValidation : 'isProjectContactsComplete'
-                    },
-                    {
-                        description : 'Audio Files',
-                        path : '/audioFiles/',
-                        complete : false,
-                        stepComplete : false,
-                        preRelease : false,
-                        stepValidation : 'isAudioFilesComplete'
-                    },
-                    {
-                        description : 'Track Info',
-                        path : '/trackInformation/',
-                        complete : false,
-                        stepComplete : false,
-                        preRelease : true,
-                        stepValidation : 'isTrackInfoComplete'
-                    },
-                    {
-                        description : 'Rights',
-                        path : '/territorialRights/',
-                        complete : false,
-                        stepComplete : false,
-                        preRelease : false,
-                        stepValidation : 'isTerritorialRightsComplete'
-                    },
-                    {
-                        description : 'Blocking',
-                        path : '/blockingPolicies/',
-                        complete : false,
-                        stepComplete : false,
-                        preRelease : true,
-                        stepValidation : 'isBlockingPoliciesComplete'
-                    },
-                    {
-                        description : 'Review',
-                        path : '/reviewSubmit/',
-                        complete : false,
-                        stepComplete : false,
-                        preRelease : true,
-                        stepValidation : 'isProjectSubmitComplete'
-                    }
-                ]
-            }
+                },
+                {
+                    description : 'Contacts',
+                    path : '/projectContacts/',
+                    complete : false,
+                    stepComplete : false,
+                    preRelease : true,
+                    stepValidation : 'projectContactsStatus'
+                },
+                {
+                    description : 'Audio Files',
+                    path : '/audioFiles/',
+                    complete : false,
+                    stepComplete : false,
+                    preRelease : false,
+                    stepValidation : 'audioFilesStatus'
+                },
+                {
+                    description : 'Track Info',
+                    path : '/trackInformation/',
+                    complete : false,
+                    stepComplete : false,
+                    preRelease : true,
+                    stepValidation : 'trackInfoStatus'
+                },
+                {
+                    description : 'Rights',
+                    path : '/territorialRights/',
+                    complete : false,
+                    stepComplete : false,
+                    preRelease : false,
+                    stepValidation : 'territorialRightsStatus'
+                },
+                {
+                    description : 'Blocking',
+                    path : '/blockingPolicies/',
+                    complete : false,
+                    stepComplete : false,
+                    preRelease : true,
+                    stepValidation : 'blockingPoliciesStatus'
+                },
+                {
+                    description : 'Review',
+                    path : '/reviewSubmit/',
+                    complete : false,
+                    stepComplete : false,
+                    preRelease : true,
+                    stepValidation : 'projectSubmitStatus'
+                }
+            ]
         }
     }
 
@@ -111,15 +109,20 @@ export default withRouter(class Header extends Component {
         }
     };
 
-    isStepComplete = (navLink) => {
-        if(this.props.projectData.Project[navLink.stepValidation]) {
-            return(this.props.projectData.Project[navLink.stepValidation])
+    getStepIcon = (navLink, navIndex) => {
+        const stepValidation = parseInt(this.props.projectData.Project[navLink.stepValidation]);
+        if(!stepValidation || stepValidation === 1) {
+            return(navIndex + 1)
+        } else if(stepValidation === 2) {
+            return(<i class="material-icons">block</i>)
+        } else {
+            return(<i class="material-icons">check</i>)
         }
     };
 
     getNavLinks = () => {
         const isPreRelease = this.isPreReleaseDate();
-        const navToUse = ( isPreRelease ? this.state.navSteps.preRelease : this.state.navSteps.preRelease.filter(step => (step.preRelease) ))
+        const navToUse = ( isPreRelease ? this.state.navSteps : this.state.navSteps.filter(step => (step.preRelease) ))
         return(
             <ul className="d-flex justify-content-center align-items-stretch">
                 {
@@ -130,12 +133,7 @@ export default withRouter(class Header extends Component {
                                 <NavLink className="" to={{pathname: navLink.path + ((this.state.Project && this.state.Project.projectID) ? this.state.Project.projectID : '')}}>
                                     <span className="step-description text-nowrap">{navLink.description}</span>
                                     <span className="step">
-                                        { (this.props.projectData.Project.projectID && this.props.projectData.Project.projectID) ?  
-                                        
-                                            this.isStepComplete(navLink) ? <i class="material-icons">check</i> : <i class="material-icons">block</i>
-                                        : 
-                                            i + 1
-                                        } 
+                                        { (this.props.projectData.Project) ?  this.getStepIcon(navLink, i) : null } 
                                     </span>
                                     <span className="step-arrow"></span>
                                 </NavLink>
@@ -315,6 +313,7 @@ export default withRouter(class Header extends Component {
                             </nav>
                         <div className="col-1"></div>
                     </div>
+                    
                     { this.getHeaderContent()}
 
                     <ul className="button-bar">
@@ -325,7 +324,6 @@ export default withRouter(class Header extends Component {
                             :
                             null
                         }
-
                         <li>
                             <button className="btn btn-sm btn-secondary btn-video" onClick={null} title="Tutorial Video"><i className={'material-icons'}>videocam</i></button>
                         </li>
