@@ -32,7 +32,7 @@ class RecentProjectDrop extends Component {
             "Items" : 5
         })
 
-        fetch ('https://api-dev.umusic.net/guardian/project/search/recent', {
+        fetch (window.env.api.url + '/project/search/recent', {
             method : 'POST',
             headers : fetchHeaders,
             body : fetchBody
