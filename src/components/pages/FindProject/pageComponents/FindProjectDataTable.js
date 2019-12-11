@@ -70,7 +70,7 @@ class FindProjectDataTable extends Component {
     handleProjectDownload = (projectID, projectFileName) => {
         const user = JSON.parse(sessionStorage.getItem('user'))
 
-        fetch("https://api-dev.umusic.net/guardian-media/api/Submit?projectid=" + projectID, {
+        fetch(window.env.api.url + '/media/api/Submit?projectid=' + projectID, {
             method: 'GET',
             headers: new Headers({
                 "Authorization" : sessionStorage.getItem('accessToken'),
@@ -110,7 +110,7 @@ class FindProjectDataTable extends Component {
             ProjectID: projectID,
          }
 
-        fetch('https://api-dev.umusic.net/guardian/project/reminder', {
+        fetch(window.env.api.url + '/project/reminder', {
             method: 'POST',
             headers: fetchHeaders,
             body : JSON.stringify(fetchBody)
