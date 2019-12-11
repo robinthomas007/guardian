@@ -135,7 +135,7 @@ class BlockingPoliciesPage extends Component {
             "ProjectID": this.props.match.params.projectID
 		})
 
-        fetch ('https://api-dev.umusic.net/guardian/project/review', {
+        fetch (window.env.api.url + '/project/review', {
             method : 'POST',
             headers : fetchHeaders,
             body : fetchBody
@@ -174,7 +174,7 @@ class BlockingPoliciesPage extends Component {
             "BlockingPolicySets": this.state.project.BlockingPolicySets
 		})
 
-        fetch ('https://api-dev.umusic.net/guardian/project/blockingpolicies', {
+        fetch (window.env.api.url + '/project/blockingpolicies', {
             method : 'POST',
             headers : fetchHeaders,
             body : fetchBody

@@ -59,7 +59,7 @@ class ProjectContactsPage extends Component {
             "ProjectID" : projectID
         })
 
-        fetch ('https://api-dev.umusic.net/guardian/project/review', {
+        fetch (window.env.api.url + '/project/review', {
             method : 'POST',
             headers : fetchHeaders,
             body : fetchBody
@@ -73,10 +73,9 @@ class ProjectContactsPage extends Component {
                 let modifiedFormInputs = responseJSON.Project;
                 this.setState({ 
                     formInputs: modifiedFormInputs,
-                    project: responseJSON
-                });
-
-                this.setState({ showloader : false})
+                    project: responseJSON, 
+                    showloader : false
+                })
 
             }
         )
@@ -148,7 +147,7 @@ class ProjectContactsPage extends Component {
         const fetchBody = JSON.stringify( {
             "emails": this.state.formInputs.projectAdditionalContacts
         })
-        fetch ('https://api-dev.umusic.net/guardian/project/validate/emails', {
+        fetch (window.env.api.url + '/project/validate/emails', {
             method : 'POST',
             headers : fetchHeaders,
             body : fetchBody
@@ -196,7 +195,7 @@ class ProjectContactsPage extends Component {
                 "Project" : projectFields
             })
 
-            fetch ('https://api-dev.umusic.net/guardian/project', {
+            fetch (window.env.api.url + '/project', {
                 method : 'POST',
                 headers : fetchHeaders,
                 body : fetchBody

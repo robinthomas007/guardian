@@ -102,7 +102,7 @@ class TrackInformationPage extends Component {
             "ProjectID" : projectID
         })
 
-        fetch ('https://api-dev.umusic.net/guardian/project/review', {
+        fetch (window.env.api.url + '/project/review', {
             method : 'POST',
             headers : fetchHeaders,
             body : fetchBody
@@ -201,7 +201,7 @@ class TrackInformationPage extends Component {
             })
 
 
-            fetch ('https://api-dev.umusic.net/guardian/project/track', {
+            fetch (window.env.api.url + '/project/track', {
                 method : 'POST',
                 headers : fetchHeaders,
                 body : fetchBody
@@ -313,7 +313,7 @@ class TrackInformationPage extends Component {
             var formData = new FormData();
                 formData.append('file', files[0]);
 
-            fetch('https://api-dev.umusic.net/guardian-media/api/Upload', {
+            fetch(window.env.api.url + '/media/api/Upload', {
                 method: 'POST',
                 headers : fetchHeaders,
                 body: formData

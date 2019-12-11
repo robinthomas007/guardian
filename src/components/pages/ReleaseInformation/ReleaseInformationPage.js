@@ -171,7 +171,7 @@ class ReleaseinformationPage extends Component {
             //if this is an existing project we need to skip validation and save
             if(this.state.formInputs.projectID !== '') {
 
-                fetch ('https://api-dev.umusic.net/guardian/project', {
+                fetch (window.env.api.url + '/project', {
                     method : 'POST',
                     headers : fetchHeaders,
                     body : fetchBody
@@ -199,7 +199,7 @@ class ReleaseinformationPage extends Component {
             } else {
                 //if this is a new project we need to go the validator path
 
-                fetch ('https://api-dev.umusic.net/guardian/project/validate', {
+                fetch (window.env.api.url + '/project/validate', {
                     method : 'POST',
                     headers : fetchHeaders,
                     body : fetchBody
@@ -332,7 +332,7 @@ class ReleaseinformationPage extends Component {
             "ProjectID" : this.props.match.params.projectID
         })
 
-        fetch ('https://api-dev.umusic.net/guardian/project/review', {
+        fetch (window.env.api.url + '/project/review', {
             method : 'POST',
             headers : fetchHeaders,
             body : fetchBody

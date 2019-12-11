@@ -216,7 +216,7 @@ class AudioFilesPage extends Component {
             var formData = new FormData();
                 formData.append('file', files[i]);
 
-            fetch('https://api-dev.umusic.net/guardian-media/api/Upload', {
+            fetch(window.env.api.url + '/media/api/Upload', {
                 method: 'POST',
                 headers : fetchHeaders,
                 body: formData
@@ -279,7 +279,7 @@ class AudioFilesPage extends Component {
         })
 
 
-        fetch ('https://api-dev.umusic.net/guardian/project/review', {
+        fetch (window.env.api.url + '/project/review', {
             method : 'POST',
             headers : fetchHeaders,
             body : fetchBody
@@ -375,7 +375,7 @@ class AudioFilesPage extends Component {
                 "Discs" : this.state.discs
             })
 
-            fetch ('https://api-dev.umusic.net/guardian/project/track', {
+            fetch (window.env.api.url + '/project/track', {
                 method : 'POST',
                 headers : fetchHeaders,
                 body : fetchBody

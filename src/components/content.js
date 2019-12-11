@@ -11,6 +11,7 @@ import ReleaseInformationPage from './pages/ReleaseInformation/ReleaseInformatio
 import FindProjectPage from './pages/FindProject/FindProjectPage';
 import HelpGuide from './pages/HelpGuide/HelpGuidePage';
 import UserAdministration from './pages/UserAdministration/UserAdministration';
+import UserAdmin from './pages/UserAdmin/UserAdmin';
 import { withAuth } from '@okta/okta-react';
 
 export default withAuth(class Content extends Component {
@@ -87,7 +88,7 @@ export default withAuth(class Content extends Component {
           }
       })
 
-      fetch ('https://api-dev.umusic.net/guardian/login', {
+      fetch (window.env.api.url + '/login', {
           method : 'POST',
           headers : fetchHeaders,
           body : fetchBody
@@ -125,7 +126,7 @@ export default withAuth(class Content extends Component {
         "ProjectID" : (this.state.projectID) ? this.state.projectID : ''
     })
 
-    fetch ('https://api-dev.umusic.net/guardian/project/review', {
+    fetch (window.env.api.url + '/project/review', {
         method : 'POST',
         headers : fetchHeaders,
         body : fetchBody
@@ -222,6 +223,7 @@ export default withAuth(class Content extends Component {
                 <SecureRoute path="/findProject" render={ () => ( <FindProjectPage user={this.state.user} setProjectID={this.setProjectID} />) } setHeaderProjectData={this.setHeaderProjectData} />
                 <SecureRoute path="/helpGuide" render={ () => ( <HelpGuide/> ) } />
                 <SecureRoute path="/admin" render={ () => ( <UserAdministration user={this.state.user} setProjectID={this.setProjectID} />) } setHeaderProjectData={this.setHeaderProjectData} />
+                <SecureRoute path="/userAdmin" render={ () => ( <UserAdmin user={this.state.user} setProjectID={this.setProjectID} />) } setHeaderProjectData={this.setHeaderProjectData} />
                <div className="col-1"></div>
             </div>
 

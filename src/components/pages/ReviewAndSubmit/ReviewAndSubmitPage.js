@@ -27,21 +27,21 @@ class ReviewAndSubmitPage extends Component {
     componentDidMount() {
         this.setState({
             project : this.props.data,
+            showloader : false
         })
-        this.setState( {showloader : false} )
-    }
+    };
 
     handleProjectCategoryClick(category) {
         this.props.history.push(category + this.props.match.params.projectID)
-    }
+    };
 
     showProjectSubmitModal() {
         this.setState({showRequestModal : true})
-    }
+    };
 
     hideProjectSubmitModal() {
         this.setState({showRequestModal : false})
-    }
+    };
 
     handleSubmitProjectClick() {
         this.setState( {
@@ -49,56 +49,47 @@ class ReviewAndSubmitPage extends Component {
             showRequestModal : false
         } )
         const user = JSON.parse(sessionStorage.getItem('user'))
-        const fetchHeaders = new Headers(
-            {
-                "Content-Type": "application/json",
-                "Authorization" : sessionStorage.getItem('accessToken')
-            }
-        )
+        const fetchHeaders = new Headers({
+            "Content-Type": "application/json",
+            "Authorization" : sessionStorage.getItem('accessToken')
+        })
 
         const fetchBody = JSON.stringify( {
             "ProjectID" : (this.props.match.params.projectID) ? this.props.match.params.projectID : ''
         })
 
-
-
-        fetch ('https://api-dev.umusic.net/guardian/project/submit', {
+        fetch (window.env.api.url + '/project/submit', {
             method : 'POST',
             headers : fetchHeaders,
             body : fetchBody
-        }).then (response => 
-            {
-                return(response.json());
-            }
-        ).then (responseJSON => 
-            {
-                this.setState( {showloader : false} )
-                new Noty ({
-                    type: 'success',
-                    id:'tracksSaved',
-                    text: 'Your project has been successfully saved and submitted for review.',
-                    theme: 'bootstrap-v4',
-                    layout: 'top',
-                    timeout: '5000'
-                }).on('afterClose', ()  => {
-                    return( this.props.history.push({pathname : '/findProject/'}))
-                }).show()
-            }
-        )
-        .catch(
+        }).then (response => {
+            return(response.json());
+        }).then (responseJSON => {
+            this.setState( {showloader : false} )
+            new Noty ({
+                type: 'success',
+                id:'tracksSaved',
+                text: 'Your project has been successfully saved and submitted for review.',
+                theme: 'bootstrap-v4',
+                layout: 'top',
+                timeout: '5000'
+            }).on('afterClose', ()  => {
+                return( this.props.history.push({pathname : '/findProject/'}))
+            }).show()
+        }).catch(
             error => {
                 console.error(error)
                 this.setState( {showloader : false} )
             }
         );
-    }
+    };
 
     componentDidUpdate() {
         if(this.props.match && this.props.match.params && this.props.match.params.projectID) {
             const pagePath = (this.props.match.url) ? this.props.match.url : '';
             this.props.setProjectID(this.props.match.params.projectID, pagePath)
         }
-    }
+    };
 
     getPage = () => {
         return(
@@ -251,25 +242,26 @@ class ReviewAndSubmitPage extends Component {
             <div className="page-container review-section">
                 <div className="row no-gutters">
                     <div className="col-10 justify-content-start">
-                    <h2>Territorial Rights</h2>
-                </div>
-                <div className="col-2 justify-content-end">
-                    { (parseInt(this.props.data.Project.projectStatusID) === 1) ? 
-                        <button className="btn btn-secondary align-content-end float-right" onClick={() => this.handleProjectCategoryClick('/territorialRights/')}>
-                            <i className="material-icons">edit</i>  Edit
-                        </button>
-                       :
-                         null
-                    }
-
-                </div>
-                <div className="col-12">
-                    <br />
-                    <div className="review-card">
-                        <TerritorialRightsTable 
-                            data={this.props.data}
-                        />
+                        <h2>Territorial Rights</h2>
                     </div>
+                    <div className="col-2 justify-content-end">
+                        { 
+                            (parseInt(this.props.data.Project.projectStatusID) === 1) ? 
+                                <button className="btn btn-secondary align-content-end float-right" onClick={() => this.handleProjectCategoryClick('/territorialRights/')}>
+                                    <i className="material-icons">edit</i>  Edit
+                                </button>
+                        :
+                                null
+                        }
+
+                    </div>
+                    <div className="col-12">
+                        <br />
+                        <div className="review-card">
+                            <TerritorialRightsTable 
+                                data={this.props.data}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>

@@ -46,7 +46,7 @@ class TerritorialRightsPage extends Component {
             "ProjectID": this.props.match.params.projectID
 		})
 
-        fetch ('https://api-dev.umusic.net/guardian/project/review', {
+        fetch (window.env.api.url + '/project/review', {
             method : 'POST',
             headers : fetchHeaders,
             body : fetchBody
@@ -235,7 +235,7 @@ class TerritorialRightsPage extends Component {
             "TerritorialRightsSets": this.state.project.TerritorialRightsSets,
         })
 
-        fetch ('https://api-dev.umusic.net/guardian/project/territorialrights', {
+        fetch (window.env.api.url + '/project/territorialrights', {
             method : 'POST',
             headers : fetchHeaders,
             body : fetchBody
