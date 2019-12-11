@@ -25,5 +25,4 @@ yarn-error.log*
 
 src/config/index.*
 public/static/config/*.js
-src/components/pages/UserAdministration/UserAdministration.js
-src/components/pages/UserAdministration/pageComponents/SearchFiltersUserPanel.js
+

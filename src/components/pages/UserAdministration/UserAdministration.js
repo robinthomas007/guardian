@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { Redirect, NavLink } from 'react-router-dom';
 import { Nav, Alert } from 'react-bootstrap';
+import SearchFiltersPanel from './pageComponents/SearchFiltersPanel';
 import { REQUESTING, EXISTING } from 'redux/userAdmin/constants';
 import {
     showError,
@@ -36,6 +37,7 @@ class UserAdministration extends Component {
             searchTerm: '',
             filters: [],
             activeKey: 'requesting',
+            showFiltersPanel : false,
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleUserSearch = this.handleUserSearch.bind(this);
@@ -58,6 +60,10 @@ class UserAdministration extends Component {
     handleUserSearch() {
         this.props.fetchUsers();
     }
+
+    handleFiltersPanelView() {
+		(this.state.showFiltersPane) ? this.setState({ showFiltersPanel: false }) :  this.setState({ showFiltersPanel: true })
+	}
 
     setRequesting() {
         this.setState({ activeKey: REQUESTING });
@@ -149,68 +155,32 @@ class UserAdministration extends Component {
                     <ul className="row search-row">
                         <li className="col-2 d-flex"></li>
                         <li className="col-8 d-flex justify-content-center">
-                            <div className="dropdown">
-                                <button
-                                    onClick={this.handleFilterModalView}
-                                    className="btn btn-secondary "
-                                    type="button"
-                                    id="dropdownMenuButton"
-                                    aria-haspopup="true"
-                                    aria-expanded="false"
-                                >
-                                    <i className="material-icons">settings</i> Filters
-                                </button>
+                        <button 
+								onClick={this.handleFilterModalView}
+								className="btn btn-secondary " 
+								type="button" 
+								id="dropdownMenuButton" 
+								data-toggle="collapse" 
+								data-target="#collapsePanel" 
+								aria-expanded="false" 
+								aria-controls="collapsePanel"
+							>
+								<i className="material-icons">settings</i> Filters
+							</button>
 
-                                <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <h5>Search Filters</h5>
-
-                                    <br />
-
-                                    <div className="row no-gutters">
-                                        <div className="col-2">
-                                            <label>By Label</label>
-                                        </div>
-
-                                        <div className="col-4"></div>
-
-                                        <div className="col-2">
-                                            <label>By Status</label>
-                                        </div>
-
-                                        <div className="col-4"></div>
-
-                                        <div className="col-2">
-                                            <label>Has Audio</label>
-                                        </div>
-                                        <div className="col-4"></div>
-
-                                        <div className="col-2">
-                                            <label>Has Blocking</label>
-                                        </div>
-                                        <div className="col-4"></div>
-
-                                        <div className="col-2">
-                                            <label>Last Updated</label>
-                                        </div>
-
-                                        <div className="col-10">
-                                            <label> to</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <input
-                                id="projectSearchInput"
-                                className="form-control"
-                                type="search"
-                                onChange={this.handleChange}
-                                onSubmit={this.handleUserSearch}
-                                value={this.state.searchTerm}
-                            />
-                            <button id="projectSearchButton" className="btn btn-primary" type="button" onClick={this.handleUserSearch}>
-                                <i className="material-icons">search</i> Search
-                            </button>
+							<input 
+								id="projectSearchInput" 
+								className="form-control" 
+								type="search" 
+								onChange={this.handleChange}
+								onKeyUp={this.handleKeyUp}
+							/>
+							<button 
+								id="projectSearchButton" 
+								className="btn btn-primary" 
+								type="button" 
+								onClick={this.handleProjectSearch}
+							><i className="material-icons">search</i> Search</button>
                         </li>
                         <li className="col-2 d-flex"></li>
                     </ul>
@@ -233,7 +203,21 @@ class UserAdministration extends Component {
                         </li>
                         <li className="col-2 d-flex"></li>
                     </ul>
+
+                    <SearchFiltersPanel
+						showFiltersPanel={this.state.showFiltersPanel}
+						/* data={this.state.project} 
+						labels={this.state.defaultLabels}
+						handleLabelFacetsChange={ (e,i)=> this.handleLabelFacetsChange(e,i)}
+						handleStatusFacetsChange={this.handleStatusFacetsChange}
+						handleHasAudioFacetsChange={this.handleHasAudioFacetsChange}
+						handleHasBlockingFacetsChange={this.handleHasBlockingFacetsChange}
+						setDateFilter={this.setDateFilter} */
+					/>
+
                 </div>
+
+                
 
                 <div>
                     {this.renderError()}

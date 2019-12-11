@@ -158,7 +158,7 @@ class UserSearchDataTable extends Component {
                             onMouseOut={(e, columnID) => this.handleMouseOut(e, 'date_created')}
                             onClick={id => this.handleTableSort('date_created')}
                         >
-                            Request Date
+                           Date Created
                             {this.handleSortDisplay('date_created')}
                             <i
                                 className={
