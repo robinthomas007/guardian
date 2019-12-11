@@ -109,7 +109,7 @@ export default withAuth(class Content extends Component {
       );
   }
 
-  handleProjectDataLoad = () => {
+  handleProjectDataLoad = (pagePath) => {
 
     const user = JSON.parse(sessionStorage.getItem('user'))
 
@@ -121,9 +121,7 @@ export default withAuth(class Content extends Component {
     )
 
     const fetchBody = JSON.stringify( {
-        "User" : {
-            "email" : user.email
-        },
+        "PagePath" : (pagePath) ? pagePath : '',
         "ProjectID" : (this.state.projectID) ? this.state.projectID : ''
     })
 
@@ -153,9 +151,9 @@ export default withAuth(class Content extends Component {
     this.setProjectID(projectID);
   }
 
-  setProjectID(pid) {
+  setProjectID(pid, pagePath) {
     if(this.state.projectID !== pid) {
-        this.setState( {projectID : pid}, ()=> {this.handleProjectDataLoad();})
+        this.setState( {projectID : pid}, ()=> {this.handleProjectDataLoad(pagePath);})
     }
   }
 

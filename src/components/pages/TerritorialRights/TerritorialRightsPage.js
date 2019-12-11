@@ -42,7 +42,8 @@ class TerritorialRightsPage extends Component {
 		)
 
 		const fetchBody = JSON.stringify( {
-            "ProjectID": this.props.match.params.projectID,
+            "PagePath" : (this.props.match.url) ? this.props.match.url : '',
+            "ProjectID": this.props.match.params.projectID
 		})
 
         fetch ('https://api-dev.umusic.net/guardian/project/review', {
