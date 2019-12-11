@@ -11,7 +11,6 @@ import ReleaseInformationPage from './pages/ReleaseInformation/ReleaseInformatio
 import FindProjectPage from './pages/FindProject/FindProjectPage';
 import HelpGuide from './pages/HelpGuide/HelpGuidePage';
 import UserAdministration from './pages/UserAdministration/UserAdministration';
-import UserAdmin from './pages/UserAdmin/UserAdmin';
 import { withAuth } from '@okta/okta-react';
 
 export default withAuth(class Content extends Component {
