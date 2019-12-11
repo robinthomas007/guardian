@@ -88,7 +88,7 @@ class FindProjectPage extends Component {
 			"SearchCriteria" : this.state.searchCriteria,
 		})
 
-        fetch ('https://api-dev.umusic.net/guardian/project/search', {
+        fetch (window.env.api.url + '/project/search', {
             method : 'POST',
             headers : fetchHeaders,
             body : fetchBody
@@ -355,7 +355,7 @@ class FindProjectPage extends Component {
             "StatusID": data.id,
 		})
 
-        fetch ('https://api-dev.umusic.net/guardian/project/status', {
+        fetch (window.env.api.url + '/project/status', {
             method : 'POST',
             headers : fetchHeaders,
             body : fetchBody
