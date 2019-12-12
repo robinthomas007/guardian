@@ -164,9 +164,7 @@ export default withRouter(class Header extends Component {
                     )
                 })}
             </ul>
-        )
-
-        
+        )        
     };
 
     getDefaultPageTitle = (defaultText) => {
@@ -222,7 +220,7 @@ export default withRouter(class Header extends Component {
 
     handleNavLoadByStatus = () => {
         const projectStatusID = parseInt(this.props.projectData.Project.projectStatusID)
-        if(projectStatusID === 1) {
+        if(!projectStatusID || projectStatusID === 1) {
             this.getNavLinks()
         } else {
             this.setState( { 
