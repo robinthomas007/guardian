@@ -102,7 +102,7 @@ class TrackInformationDataTable extends Component {
     }
 
     handleTBDCheckedLoad = (track) => {
-        return( (!track.trackReleaseDate && !track.isSingle) ? true : false)
+        return((!track.trackReleaseDate && !track.isSingle) ? true : false)
     }
 
     setSingle(e, track, i) {
@@ -116,7 +116,7 @@ class TrackInformationDataTable extends Component {
             modifiedDiscs.Tracks[i].isTbdChecked = false;
             modifiedDiscs.Tracks[i].isTbdDisabled = false;
         } else {
-            modifiedDiscs.Tracks[i].trackReleaseDate = (this.props.data.Project.projectReleaseDate) ? this.props.data.Project.projectReleaseDate : '';;
+            modifiedDiscs.Tracks[i].trackReleaseDate = (this.props.data.Project.projectReleaseDate) ? this.props.data.Project.projectReleaseDate : '';
             modifiedDiscs.Tracks[i].isSingle = false;
             modifiedDiscs.Tracks[i].isReleaseDateDisabled = true;
             this.setDatePicker(e.target.checked, i)
@@ -125,13 +125,11 @@ class TrackInformationDataTable extends Component {
     }
 
     handleAllowDrop(e) {
-        //alert('allow drop')
         e.preventDefault();
     }
 
     handleDrop = (e, i) => {
         this.props.handleChildDrop(e, i);
-        //this.props.handleDropAdd(e)
     }
 
     handleDrag(e, i, track) {
@@ -195,14 +193,13 @@ class TrackInformationDataTable extends Component {
                             </label>
                         </td>
                         <td className="release-date-col">
-
                             <Form.Control 
                                 discnumber={this.props.discID}
                                 className={'trackReleaseDateInput'}
                                 type="date" 
                                 id={'trackReleaseDate'}
                                 value={formatDateToYYYYMMDD(track.trackReleaseDate)}
-                                disabled={track.isReleaseDateDisabled}
+                                disabled={ (track.isSingle) ? false : true}
                                 onChange={(evt) => this.handleChange(evt, track, i)}
                             />
                             <label className="custom-checkbox"> 
