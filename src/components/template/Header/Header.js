@@ -22,6 +22,9 @@ export default withRouter(class Header extends Component {
                 },
                 helpGuide : {
                    titleText : 'Help / FAQs'
+                },
+                userAdmin : {
+                    titleText : 'User Administration'
                 }
             },
             projectID : '',
@@ -38,8 +41,8 @@ export default withRouter(class Header extends Component {
                     complete : false,
                     stepComplete : true,
                     preRelease : true,
-                    stepValidation : 'releaseInfoStatus'
-
+                    stepValidation : 'releaseInfoStatus',
+                    isActive : false
                 },
                 {
                     description : 'Contacts',
@@ -47,7 +50,8 @@ export default withRouter(class Header extends Component {
                     complete : false,
                     stepComplete : false,
                     preRelease : true,
-                    stepValidation : 'projectContactsStatus'
+                    stepValidation : 'projectContactsStatus',
+                    isActive : false
                 },
                 {
                     description : 'Audio Files',
@@ -55,7 +59,8 @@ export default withRouter(class Header extends Component {
                     complete : false,
                     stepComplete : false,
                     preRelease : false,
-                    stepValidation : 'audioFilesStatus'
+                    stepValidation : 'audioFilesStatus',
+                    isActive : false
                 },
                 {
                     description : 'Track Info',
@@ -63,7 +68,8 @@ export default withRouter(class Header extends Component {
                     complete : false,
                     stepComplete : false,
                     preRelease : true,
-                    stepValidation : 'trackInfoStatus'
+                    stepValidation : 'trackInfoStatus',
+                    isActive : false
                 },
                 {
                     description : 'Rights',
@@ -71,7 +77,8 @@ export default withRouter(class Header extends Component {
                     complete : false,
                     stepComplete : false,
                     preRelease : false,
-                    stepValidation : 'territorialRightsStatus'
+                    stepValidation : 'territorialRightsStatus',
+                    isActive : false
                 },
                 {
                     description : 'Blocking',
@@ -79,7 +86,8 @@ export default withRouter(class Header extends Component {
                     complete : false,
                     stepComplete : false,
                     preRelease : true,
-                    stepValidation : 'blockingPoliciesStatus'
+                    stepValidation : 'blockingPoliciesStatus',
+                    isActive : false
                 },
                 {
                     description : 'Review',
@@ -87,7 +95,8 @@ export default withRouter(class Header extends Component {
                     complete : false,
                     stepComplete : false,
                     preRelease : true,
-                    stepValidation : 'projectSubmitStatus'
+                    stepValidation : 'projectSubmitStatus',
+                    isActive : false
                 }
             ]
         }
@@ -120,9 +129,21 @@ export default withRouter(class Header extends Component {
         }
     };
 
+    getPreviousLinkStepValidation = (navLink, i) => {
+        const navToUse = ( this.isPreReleaseDate() ? this.state.navSteps : this.state.navSteps.filter(step => (step.preRelease) ))
+        const pathName = this.props.location.pathname.split('/')[1];
+        
+        for(let i=0; i<navToUse.length; i++) {
+            if (navToUse[i].path === '/' + pathName + '/') {
+                //alert(i)
+            }
+        }
+    }
+
     getNavLinks = () => {
         const isPreRelease = this.isPreReleaseDate();
         const navToUse = ( isPreRelease ? this.state.navSteps : this.state.navSteps.filter(step => (step.preRelease) ))
+        this.getPreviousLinkStepValidation();
         return(
             <ul className="d-flex justify-content-center align-items-stretch">
                 {
@@ -130,7 +151,7 @@ export default withRouter(class Header extends Component {
                     return(
                         <React.Fragment key={i}>
                             <li key={i} id={"step-" + (i + 1)}>
-                                <NavLink className="" to={{pathname: navLink.path + ((this.state.Project && this.state.Project.projectID) ? this.state.Project.projectID : '')}}>
+                                <NavLink onClick={null} className={null} to={{pathname: navLink.path + ((this.state.Project && this.state.Project.projectID) ? this.state.Project.projectID : '')}}>
                                     <span className="step-description text-nowrap">{navLink.description}</span>
                                     <span className="step">
                                         { (this.props.projectData.Project) ?  this.getStepIcon(navLink, i) : null } 
@@ -144,6 +165,8 @@ export default withRouter(class Header extends Component {
                 })}
             </ul>
         )
+
+        
     };
 
     getDefaultPageTitle = (defaultText) => {
@@ -205,8 +228,8 @@ export default withRouter(class Header extends Component {
             this.setState( { 
                 showProgressBar : false, 
                 pageViewCompact : true, 
-                showHeaderSizeToggle : true,
-                showProjectStatus : true
+                showHeaderSizeToggle : false,
+                showProjectStatus : false
             } )     
         }
     }
