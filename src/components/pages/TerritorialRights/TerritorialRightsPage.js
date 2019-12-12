@@ -274,7 +274,7 @@ class TerritorialRightsPage extends Component {
 
     componentDidUpdate() {
         if(this.props.match.params.projectID) {
-            this.props.setProjectID(this.props.match.params.projectID)
+            this.props.setProjectID(this.props.match.params.projectID, this.props.match.url)
         }
 
     };

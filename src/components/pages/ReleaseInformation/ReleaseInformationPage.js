@@ -297,7 +297,7 @@ class ReleaseinformationPage extends Component {
             this.handleDataLoad()
         }
 
-        this.props.setProjectID((this.props.match.params.projectID) ? this.props.match.params.projectID : '')
+        this.props.setProjectID((this.props.match.params.projectID) ? this.props.match.params.projectID : '', this.props.match.url)
     }
 
     componentDidUpdate() {
@@ -310,7 +310,7 @@ class ReleaseinformationPage extends Component {
         }
 
         if(this.props.match.params.projectID) {
-            this.props.setProjectID(this.props.match.params.projectID)
+            this.props.setProjectID(this.props.match.params.projectID, this.props.match.url)
         }
         
     }

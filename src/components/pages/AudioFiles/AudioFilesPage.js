@@ -90,7 +90,7 @@ class AudioFilesPage extends Component {
                 isSingle : (track.isSingle) ? track.isSingle : false,
                 trackID : (track.trackID) ? track.trackID : '',
                 trackNumber : (track.trackID) ? (track.trackID) : trackIndex,
-                trackReleaseDate : (track.trackReleaseDate) ? track.trackReleaseDate : '',
+                trackReleaseDate : (track.trackReleaseDate) ? track.trackReleaseDate : projectData.projectReleaseDate,
                 trackTitle : (track.trackTitle) ? track.trackTitle : '',
                 fileUpload :  (track.fileUpload) ? track.fileUpload : false,
             }
@@ -399,7 +399,7 @@ class AudioFilesPage extends Component {
     componentDidMount() {
         if(this.props.match.params && this.props.match.params.projectID) {
             this.handleDataLoad()
-            this.props.setProjectID(this.props.match.params.projectID)
+            this.props.setProjectID(this.props.match.params.projectID, this.props.match.url)
         }
     }
 

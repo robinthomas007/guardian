@@ -86,8 +86,7 @@ class ReviewAndSubmitPage extends Component {
 
     componentDidUpdate() {
         if(this.props.match && this.props.match.params && this.props.match.params.projectID) {
-            const pagePath = (this.props.match.url) ? this.props.match.url : '';
-            this.props.setProjectID(this.props.match.params.projectID, pagePath)
+            this.props.setProjectID(this.props.match.params.projectID, this.props.match.url)
         }
     };
 

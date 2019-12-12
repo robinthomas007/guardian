@@ -151,21 +151,17 @@ class ProjectContactsPage extends Component {
             method : 'POST',
             headers : fetchHeaders,
             body : fetchBody
-        }).then (response => 
-            {
-                return(response.json());
+        }).then (response => {
+            return(response.json());
+        }).then (responseJSON => {
+            if(responseJSON.IsValid) {
+                this.handleSubmit(true)
+                this.setState({projectAdditionalContactsValid : ''})
+            } else {
+                this.handleSubmit(false)
+                this.setState({projectAdditionalContactsValid : ' is-invalid'})
             }
-        ).then (responseJSON => 
-            {
-                if(responseJSON.IsValid) {
-                    this.handleSubmit(true)
-                    this.setState({projectAdditionalContactsValid : ''})
-                } else {
-                    this.handleSubmit(false)
-                    this.setState({projectAdditionalContactsValid : ' is-invalid'})
-                }
-            }
-        ).catch(
+        }).catch(
             error => console.error(error)
         );
     }
@@ -228,13 +224,13 @@ class ProjectContactsPage extends Component {
 
     componentDidUpdate = () => {
         if(this.props.match.params.projectID) {
-            this.props.setProjectID(this.props.match.params.projectID)
+            this.props.setProjectID(this.props.match.params.projectID, this.props.match.url)
         }
     }
 
     componentDidMount = () => {
         if(this.props.match.params.projectID) {
-            this.props.setProjectID(this.props.match.params.projectID)
+            this.props.setProjectID(this.props.match.params.projectID, this.props.match.url)
         }
     }
 

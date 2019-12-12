@@ -189,7 +189,7 @@ class FindProjectPage extends Component {
 	}
 	
 	componentDidUpdate(props) {
-        this.props.setProjectID('')
+        this.props.setProjectID('', this.props.match.url)
     }
 
     handleChange(event) {
