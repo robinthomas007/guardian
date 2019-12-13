@@ -11,6 +11,7 @@ import ReleaseInformationPage from './pages/ReleaseInformation/ReleaseInformatio
 import FindProjectPage from './pages/FindProject/FindProjectPage';
 import HelpGuide from './pages/HelpGuide/HelpGuidePage';
 import UserAdministration from './pages/UserAdministration/UserAdministration';
+import UserAdmin from './pages/UserAdmin/UserAdmin';
 import { withAuth } from '@okta/okta-react';
 
 export default withAuth(class Content extends Component {
@@ -29,6 +30,7 @@ export default withAuth(class Content extends Component {
         sessionId : uuidv4(),
         pageViewCompact : true,
         projectID : '',
+        pagePath : '',
         project : {
           Project : {
             
@@ -129,16 +131,11 @@ export default withAuth(class Content extends Component {
         method : 'POST',
         headers : fetchHeaders,
         body : fetchBody
-    }).then (response =>
-        {
-            return(response.json());
-        }
-    ).then (responseJSON =>
-        {
-          return ( (this.state.project !== responseJSON) ? this.setState( { project : responseJSON } ) : '')
-        }
-    )
-    .catch(
+    }).then (response => {
+        return(response.json());
+    }).then (responseJSON => {
+        return ( (this.state.project !== responseJSON) ? this.setState( { project : responseJSON } ) : '')
+    }).catch(
         error => {
             console.error(error);
             this.setState( {showloader : false} )
@@ -154,6 +151,10 @@ export default withAuth(class Content extends Component {
   setProjectID(pid, pagePath) {
     if(this.state.projectID !== pid) {
         this.setState( {projectID : pid}, ()=> {this.handleProjectDataLoad(pagePath);})
+    } else {
+      if(this.state.pagePath !== pagePath) {
+        this.setState( {pagePath : pagePath}, ()=> {this.handleProjectDataLoad(pagePath);})
+      }
     }
   }
 
@@ -175,21 +176,13 @@ export default withAuth(class Content extends Component {
   };
 
   setHeaderProjectData = (projectData) => {
-
-    console.log('this.state.project.Project')
-    console.log(this.state.project.Project)
-
-    console.log('projectData')
-    console.log(projectData)
-
-
     if(this.state.project !== projectData) {
       this.setState( { project : projectData} )
     }
   };
 
   componentDidUpdate = () => {
-    console.log('content updated')
+
   }
 
   render() {
@@ -222,6 +215,7 @@ export default withAuth(class Content extends Component {
                 <SecureRoute path="/findProject" render={ () => ( <FindProjectPage user={this.state.user} setProjectID={this.setProjectID} />) } setHeaderProjectData={this.setHeaderProjectData} />
                 <SecureRoute path="/helpGuide" render={ () => ( <HelpGuide/> ) } />
                 <SecureRoute path="/admin" render={ () => ( <UserAdministration user={this.state.user} setProjectID={this.setProjectID} />) } setHeaderProjectData={this.setHeaderProjectData} />
+                <SecureRoute path="/userAdmin" render={ () => ( <UserAdmin user={this.state.user} setProjectID={this.setProjectID} />) } setHeaderProjectData={this.setHeaderProjectData} />
                <div className="col-1"></div>
             </div>
 

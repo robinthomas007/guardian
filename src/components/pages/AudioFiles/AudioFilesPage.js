@@ -405,9 +405,10 @@ class AudioFilesPage extends Component {
 
     componentDidUpdate() {
         if(this.props.match && this.props.match.params && this.state.projectID !== this.props.match.params.projectID) {
+            this.props.setProjectID(this.props.match.params.projectID, this.props.match.url)
             this.setState({projectID : this.props.match.params.projectID});
         }
-    }
+    };
 
     handleTabClick(key) {
         this.setState({activeTab : key})

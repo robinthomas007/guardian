@@ -123,9 +123,9 @@ export default withRouter(class Header extends Component {
         if(!stepValidation || stepValidation === 1) {
             return(navIndex + 1)
         } else if(stepValidation === 2) {
-            return(<i class="material-icons">block</i>)
+            return(<i className="material-icons">block</i>)
         } else {
-            return(<i class="material-icons">check</i>)
+            return(<i className="material-icons">check</i>)
         }
     };
 
@@ -143,7 +143,6 @@ export default withRouter(class Header extends Component {
     getNavLinks = () => {
         const isPreRelease = this.isPreReleaseDate();
         const navToUse = ( isPreRelease ? this.state.navSteps : this.state.navSteps.filter(step => (step.preRelease) ))
-        this.getPreviousLinkStepValidation();
         return(
             <ul className="d-flex justify-content-center align-items-stretch">
                 {
