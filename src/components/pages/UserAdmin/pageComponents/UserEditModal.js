@@ -48,7 +48,7 @@ class UserEditModal extends Component {
                                     placeholder="John" 
                                     name="firstName" 
                                     className="form-control" 
-                                    value={this.props.user.firstName}
+                                    value={(this.props.user.firstName) ? this.props.user.firstName : ''}
                                     onChange={this.handleOnChange}
                                 />
                             </Form.Group>
@@ -62,7 +62,7 @@ class UserEditModal extends Component {
                                     placeholder="Doe" 
                                     name="lastName" 
                                     className="form-control"
-                                    value={this.props.user.lastName}
+                                    value={(this.props.user.lastName) ? this.props.user.lastName : '' }
                                     onChange={this.handleOnChange}
                                 />
                             </Form.Group>
@@ -74,7 +74,7 @@ class UserEditModal extends Component {
                                     options={this.props.releasingLabels} 
                                     onChange={(e,label) => this.props.handleLabelSelectChange(e,label)}
                                     defaultText="Select Option"
-                                    selectedOptions={[3, 4]}
+                                    selectedOptions={this.props.selectedOptions}
                                 />
                             </Form.Group>
                         </Form.Row>
@@ -87,7 +87,7 @@ class UserEditModal extends Component {
                                     placeholder="123-456-7890" 
                                     name="phoneNumber" 
                                     className="form-control"
-                                    value={this.props.user.phoneNumber}
+                                    value={(this.props.user.phoneNumber) ? this.props.user.phoneNumber : ''}
                                     onChange={this.handleOnChange}
                                 />
                             </Form.Group>

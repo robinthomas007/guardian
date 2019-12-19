@@ -58,7 +58,7 @@ class UserAdmin extends Component {
             showloader : false,
             showUserEditModal : false,
             targetUser : {
-                primaryLabelIDs : []
+                secondaryLabelIds : []
             },
             showFilterModal : false,
             releasingLabels : [],
@@ -121,7 +121,6 @@ class UserAdmin extends Component {
     };
 
     handleUserUpdate = (user) => {
-
         const fetchHeaders = new Headers({
             "Content-Type" : "application/json",
             "Authorization" : sessionStorage.getItem('accessToken')
@@ -132,7 +131,8 @@ class UserAdmin extends Component {
             Action : 'MODIFY',
             FirstName : this.state.targetUser.firstName,
             LastName : this.state.targetUser.lastName,
-            LabelID : this.state.targetUser.primaryLabelIDs,
+            // LabelID : this.state.targetUser.primaryLabelID,
+            LabelIds : this.state.targetUser.secondaryLabelIds,
             PhoneNumber : this.state.targetUser.phoneNumber,
             UserSearchCriteria : this.state.UserSearchCriteria,
             AccessRequestSearchCriteria : this.state.AccessRequestSearchCriteria,
@@ -214,7 +214,7 @@ class UserAdmin extends Component {
 
     hideUserEditModal = () => {
         this.setState( {
-            targetUser : {},
+            targetUser : { secondaryLabelIds : []},
             showUserEditModal : false
         })
     };
@@ -231,9 +231,6 @@ class UserAdmin extends Component {
     }
 
     handleSearchTextChange = (e) => {
-
-        e.target.value = e.target.value
-
         const { AccessRequestSearchCriteria } = this.state;
         const { UserSearchCriteria } = this.state;
 
@@ -247,16 +244,6 @@ class UserAdmin extends Component {
             AccessRequestSearchCriteria : modifiedAccessRequestSearchCriteria,
             UserSearchCriteria : modifiedUserSearchCriteria
         })
-    };
-
-    handleLabelSelectChange = (e, label) => {
-        let targetUser = {...this.state.targetUser}
-        if(e.target.checked) {
-            targetUser.primaryLabelIDs.push(label.id)
-        } else {
-            targetUser.primaryLabelIDs.splice(targetUser.primaryLabelIDs.indexOf(label.id), 1)
-        }
-        this.setState( {targetUser} )
     };
 
     handleTabClick = (key) => {
@@ -439,6 +426,19 @@ class UserAdmin extends Component {
         }, () => this.fetchUsers())
     };
 
+    handleLabelSelectChange = (e,label) => {
+        const { targetUser } = this.state;
+        let modifiedTargetUser = targetUser;
+
+        if(e.target.checked) {
+            modifiedTargetUser.secondaryLabelIds.push(label.id)
+        } else {
+            modifiedTargetUser.secondaryLabelIds.splice(modifiedTargetUser.secondaryLabelIds.indexOf(label.id), 1)
+        }
+
+        this.setState( {targetUser : modifiedTargetUser} )
+    }
+
     render() {
         return (
             <div className="col-10">
@@ -453,6 +453,7 @@ class UserAdmin extends Component {
                     handleTargetUserUpdate={this.handleTargetUserUpdate}
                     handleLabelSelectChange={this.handleLabelSelectChange}
                     releasingLabels={this.state.releasingLabels}
+                    selectedOptions={this.state.targetUser.secondaryLabelIds}
                 />
 
                 <div>

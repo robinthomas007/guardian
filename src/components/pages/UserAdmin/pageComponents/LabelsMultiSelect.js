@@ -16,21 +16,12 @@ class LabelsMultiSelect extends Component {
 	};
 
     isChecked = (labelID) => {
-        return (this.state.selectedOptions.indexOf(parseInt(labelID)) >= 0 )
+        return (this.props.selectedOptions.indexOf(labelID) >= 0 )
     };
-
-    componentDidUpdate = () => {
-        if(this.props.options !== this.state.options) {
-            this.setState( { 
-                options : this.props.options,
-                selectedOptions : this.props.selectedOptions
-            } )
-        }
-    }
 
     getLabelOptions = () => {
         return(
-            this.state.options.map( (label, i) => {
+            this.props.options.map( (label, i) => {
                 return(
                     <a className="dropdown-item" key={i}>
                         <label className="custom-checkbox"> 		
