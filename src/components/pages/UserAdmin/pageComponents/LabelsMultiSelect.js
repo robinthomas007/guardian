@@ -3,41 +3,33 @@ import React, { Component } from 'react';
 class LabelsMultiSelect extends Component {
     constructor(props) {
 		super(props);
-		this.state = {
-            defaultLabels : [],
-            options : [],
-            selectedOptions : []
-        }
+		this.state = { }
 		this.handleChange = this.handleChange.bind(this);
     }
 
-	handleChange = (e, label) => {
-        this.props.onChange(e, label)
+	handleChange = (e, option) => {
+        this.props.onChange(e, option)
 	};
-
-    isChecked = (labelID) => {
-        return (this.props.selectedOptions.indexOf(labelID) >= 0 )
-    };
 
     getLabelOptions = () => {
         return(
-            this.props.options.map( (label, i) => {
+            this.props.options.map( (option, i) => {
                 return(
                     <a className="dropdown-item" key={i}>
                         <label className="custom-checkbox"> 		
                             <input   
-                                onChange={(e) => this.handleChange(e, label)}
+                                onChange={(e) => this.handleChange(e, option)}
                                 type='checkbox'
-                                id={label.id}
-                                value={label.id}
-                                defaultChecked={this.isChecked(label.id)}
-                                labelname={label.name}
+                                id={option.id}
+                                value={option.id}
+                                checked={this.props.selectedOptions.indexOf(option.id) >= 0 ? true : false}
+                                labelname={option.name}
                             />
                             <span className="checkmark "></span>
                         </label>
                         
-                        <label htmlFor={label.id}>
-                            {label.name}
+                        <label htmlFor={option.id} className={'option-label'}>
+                            {option.name}
                         </label>
                     </a>
                 )

@@ -415,14 +415,19 @@ class UserAdmin extends Component {
     }
 
     removeLabelsFilter = (labelID) => {
+
+        const { selectedFilterLabelOptions } = this.state;
+        let modifiedselectedFilterLabelOptions = selectedFilterLabelOptions
         const AccessRequestSearchCriteria = {...this.state.AccessRequestSearchCriteria};
         const UserSearchCriteria = {...this.state.UserSearchCriteria};
             AccessRequestSearchCriteria.filter.labelIds.splice(AccessRequestSearchCriteria.filter.labelIds.indexOf(labelID), 1);
             UserSearchCriteria.filter.labelIds.splice(UserSearchCriteria.filter.labelIds.indexOf(labelID), 1);
+            modifiedselectedFilterLabelOptions.splice(selectedFilterLabelOptions.indexOf(labelID), 1)
+
         this.setState( {
             AccessRequestSearchCriteria,
             UserSearchCriteria,
-            selectedFilterLabelOptions : []
+            selectedFilterLabelOptions : modifiedselectedFilterLabelOptions
         }, () => this.fetchUsers())
     };
 
@@ -481,45 +486,6 @@ class UserAdmin extends Component {
                                 >
                                     <i className="material-icons">settings</i> Filters
                                 </button>
-
-
-                                <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <h5>Search Filters</h5>
-
-                                    <br />
-
-                                    <div className="row no-gutters">
-                                        <div className="col-2">
-                                            <label>By Label</label>
-                                        </div>
-
-                                        <div className="col-4"></div>
-
-                                        <div className="col-2">
-                                            <label>By Status</label>
-                                        </div>
-
-                                        <div className="col-4"></div>
-
-                                        <div className="col-2">
-                                            <label>Has Audio</label>
-                                        </div>
-                                        <div className="col-4"></div>
-
-                                        <div className="col-2">
-                                            <label>Has Blocking</label>
-                                        </div>
-                                        <div className="col-4"></div>
-
-                                        <div className="col-2">
-                                            <label>Last Updated</label>
-                                        </div>
-
-                                        <div className="col-10">
-                                            <label> to</label>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
 
                             <input
