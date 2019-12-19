@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm, formValueSelector } from 'redux-form';
 import { Form, Button, Col } from 'react-bootstrap';
 import LabelsDropDown from 'components/modals/pageComponents/LabelsDropDown';
+import LabelsMultiSelect from 'components/modals/pageComponents/LabelsMultiSelect';
+import MultiSelectDropdown from 'components/SharedPageComponents/multiSelectDropdown';
+
 
 let UserEditForm = props => {
     const handleSubmit = event => {
@@ -26,7 +29,25 @@ let UserEditForm = props => {
                 </Form.Row>
                 <Form.Row>
                 <Form.Group as={Col} controlId="formLabel">
-                    <LabelsDropDown id="primaryLabelID" className="form-control" name="primaryLabelID" selected={props.userValues.primaryLabelID} />
+                
+                    <LabelsDropDown 
+                        id="primaryLabelID" 
+                        className="form-control" 
+                        name="primaryLabelID" 
+                        selected={props.userValues.primaryLabelID}
+                    />
+
+                    <LabelsMultiSelect 
+                        id="primaryLabelID" 
+                        className="form-control" 
+                        name="primaryLabelID" 
+                        selected={props.userValues.primaryLabelID}
+                    />
+        
+                    {/* <MultiSelectDropdown id="primaryLabelID" className="form-control" name="primaryLabelID" selected={props.userValues.primaryLabelID} /> */}
+
+
+
                 </Form.Group>
                 </Form.Row>
                 <Form.Row>
@@ -46,6 +67,9 @@ let UserEditForm = props => {
     );
 };
 
+
+
+
 UserEditForm = reduxForm({
     form: 'userEditForm',
     enableReinitialize: true,
@@ -64,5 +88,6 @@ UserEditForm = connect(
     },
     {}
 )(UserEditForm);
+
 
 export default UserEditForm;

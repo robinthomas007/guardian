@@ -325,7 +325,7 @@ export default withRouter(class Header extends Component {
                                             updateHistory={ (projectID)=> this.props.updateHistory(projectID)}
                                         />
                                     </li>
-                                    { (this.props.userData.IsAdmin) ? <li><NavLink className="steps" to={{pathname: '/admin'}}>Admin</NavLink></li> : null}
+                                    { (this.props.userData.IsAdmin) ? <li><NavLink className="steps" to={{pathname: '/userAdmin'}}>Admin</NavLink></li> : null}
                                     <li> | </li>
                                     <li>Welcome, {this.props.userData.name}</li>
                                     <li><span className="btn-log" onClick={ (e)=> this.props.handleLogoutClick(e)}>Log Out</span></li>
