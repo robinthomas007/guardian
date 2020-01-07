@@ -306,7 +306,6 @@ class ReviewAndSubmitPage extends Component {
     }
 
     render() {
-        console.log(this.props.data)
         return(
             <div className="col-10">		
                 {(this.props.data) ? this.getPage() : null }

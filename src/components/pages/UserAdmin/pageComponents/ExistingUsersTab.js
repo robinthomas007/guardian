@@ -32,7 +32,7 @@ class ExistingUsersTab extends Component {
                                 totalItems={this.props.totalSearchItems}
                                 itemsPerPage={this.props.itemsPerPage}
                                 handlePaginationChange={this.props.handlePaginationChange}
-                                pageView={this.props.pageView}
+
                             />
                         </nav>
                     </li>

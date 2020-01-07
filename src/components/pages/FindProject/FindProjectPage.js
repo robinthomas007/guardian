@@ -379,10 +379,6 @@ class FindProjectPage extends Component {
     };
 
     render() {
-
-
-		console.log(this.state.project)
-
 		return(
 			<div className="col-10">
 				<IntroModal />

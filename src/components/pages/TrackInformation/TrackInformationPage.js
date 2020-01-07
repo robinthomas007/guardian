@@ -7,7 +7,7 @@ import './TrackInformation.css';
 import Noty from 'noty'
 import { withRouter } from "react-router";
 import AudioFilesTabbedTracks from '../AudioFiles/pageComponents/audioFilesTabbedTracks';
-import {isFormValid} from '../../Utils';
+import {isFormValid, formatDateToYYYYMMDD, convertToLocaleTime} from '../../Utils';
 
 class TrackInformationPage extends Component {
 
@@ -134,7 +134,15 @@ class TrackInformationPage extends Component {
             layout: 'top',
             timeout: '3000'
         }).on('afterClose', ()  => {
-            return( (forward) ? this.props.history.push({pathname : '/territorialRights/' + this.props.match.params.projectID}) : null)
+            if(formatDateToYYYYMMDD(convertToLocaleTime(this.props.serverTimeDate)) > formatDateToYYYYMMDD(this.state.project.Project.projectReleaseDate)) {
+                this.props.history.push({
+                    pathname : '/blockingPolicies/' + this.props.match.params.projectID
+                })
+            } else {
+                this.props.history.push({
+                    pathname : '/territorialRights/' + this.props.match.params.projectID
+                })
+            }
         }).show()
     };
 

@@ -12,6 +12,7 @@ export default withRouter(class Header extends Component {
                 projectTitle : '',
                 projectStatus : '',
                 projectID : '',
+                serverTimeDate : ''
             },
             compactViewPages : {
                 findProject : {
@@ -249,6 +250,7 @@ export default withRouter(class Header extends Component {
             }, this.handleNavLoadByStatus()
             )
         }
+        
         this.isPreReleaseDate()
         this.props.setPageViewType(this.state.pageViewCompact);
     };
@@ -266,6 +268,9 @@ export default withRouter(class Header extends Component {
                 Project : this.props.projectData.Project
             })
         }
+        
+
+
         this.setHeaderView()
         this.props.setPageViewType(this.state.pageViewCompact)
     };

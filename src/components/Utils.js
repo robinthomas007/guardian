@@ -70,6 +70,14 @@ export const formatDateToYYYYMMDD = (unFormattedDate) => {
     return([year, month, day].join('-'))
 };
 
+export const convertUTC = (date) => {
+    let newDate = new Date(date)
+        newDate.setHours(23,59,59);	
+        newDate.setDate(newDate.getDate() + 1)
+    newDate = newDate.toISOString().replace('Z', '')
+    return(newDate)
+}
+
 export const resetDatePicker = (inputID) => {
     //because datepickers don't have a simple way to reset
     const projectReleaseDatePicker = document.getElementById(inputID);

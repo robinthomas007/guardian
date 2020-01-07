@@ -6,7 +6,7 @@ import { withRouter } from "react-router";
 import './ProjectContacts.css';
 import LoadingImg from '../../ui/LoadingImg';
 import Noty from 'noty';
-import { isFormValid } from '../../Utils.js';
+import { isFormValid, formatDateToYYYYMMDD, convertToLocaleTime } from '../../Utils.js';
 
 class ProjectContactsPage extends Component {
     constructor(props) {
@@ -36,9 +36,6 @@ class ProjectContactsPage extends Component {
         this.showNotification = this.showNotification.bind(this);
         this.handleChangeByID = this.handleChangeByID.bind(this);
         this.isAdditionalContactsValid = this.isAdditionalContactsValid.bind(this);
-
-
-        console.log(sessionStorage.getItem('user'))
     }
     
     handlePageDataLoad() {
@@ -47,12 +44,10 @@ class ProjectContactsPage extends Component {
 
         const user = JSON.parse(sessionStorage.getItem('user'))
         const projectID = this.props.match.params.projectID
-        const fetchHeaders = new Headers(
-            {
-                "Content-Type": "application/json",
-                "Authorization" : sessionStorage.getItem('accessToken')
-            }
-        )
+        const fetchHeaders = new Headers({
+            "Content-Type": "application/json",
+            "Authorization" : sessionStorage.getItem('accessToken')
+        })
 
         const fetchBody = JSON.stringify( {
             "PagePath" : (this.props.match.url) ? this.props.match.url : '',
@@ -63,23 +58,17 @@ class ProjectContactsPage extends Component {
             method : 'POST',
             headers : fetchHeaders,
             body : fetchBody
-        }).then (response => 
-            {
-                return(response.json());
-            }
-        ).then (responseJSON => 
-            {
-                const { formInputs } = this.state;
-                let modifiedFormInputs = responseJSON.Project;
-                this.setState({ 
-                    formInputs: modifiedFormInputs,
-                    project: responseJSON, 
-                    showloader : false
-                })
-
-            }
-        )
-        .catch(
+        }).then (response => {
+            return(response.json());
+        }).then (responseJSON => {
+            const { formInputs } = this.state;
+            let modifiedFormInputs = responseJSON.Project;
+            this.setState({ 
+                formInputs: modifiedFormInputs,
+                project: responseJSON, 
+                showloader : false
+            })
+        }).catch(
             error => {
                 console.error(error)
                 this.setState({ showloader : false})
@@ -96,11 +85,17 @@ class ProjectContactsPage extends Component {
             theme: 'bootstrap-v4',
             layout: 'top',
             timeout: '3000'
-        }).on('afterClose', ()  =>
-            this.props.history.push({
-                pathname : '/audioFiles/' + projectID
-            })
-        ).show()
+        }).on('afterClose', ()  => {
+            if(formatDateToYYYYMMDD(convertToLocaleTime(this.props.serverTimeDate)) > formatDateToYYYYMMDD(this.state.project.Project.projectReleaseDate)) {
+                this.props.history.push({
+                    pathname : '/trackInformation/' + projectID
+                })
+            } else {
+                this.props.history.push({
+                    pathname : '/audioFiles/' + projectID
+                })
+            }
+        }).show()
     };
 
     showNotSavedNotification(e){
@@ -126,24 +121,12 @@ class ProjectContactsPage extends Component {
         this.setState({formInputs : modifiedFormInput})
     }
 
-    getProjectSecurityOptions() {
-        let securityOptions = '';
-        if(this.props.user && this.props.user.ProjectSecurities) {
-            securityOptions = this.props.user.ProjectSecurities.map( (security, i) =>
-                <option key={i} value={security.id}>{(security.id === 1) ? 'lock' : '' + 1111 + security.name}</option>
-            )
-        }
-        return(securityOptions)
-    }
-
-    isAdditionalContactsValid() {
+    isAdditionalContactsValid(e) {
         const user = JSON.parse(sessionStorage.getItem('user'));
-        const fetchHeaders = new Headers(
-            {
-                "Content-Type": "application/json",
-                "Authorization" : sessionStorage.getItem('accessToken')
-            }
-        )
+        const fetchHeaders = new Headers({
+            "Content-Type": "application/json",
+            "Authorization" : sessionStorage.getItem('accessToken')
+        })
         const fetchBody = JSON.stringify( {
             "emails": this.state.formInputs.projectAdditionalContacts
         })
@@ -155,18 +138,18 @@ class ProjectContactsPage extends Component {
             return(response.json());
         }).then (responseJSON => {
             if(responseJSON.IsValid) {
-                this.handleSubmit(true)
-                this.setState({projectAdditionalContactsValid : ''})
+                this.handleSubmit(e, true);
+                this.setState({projectAdditionalContactsValid : ''});
             } else {
-                this.handleSubmit(false)
-                this.setState({projectAdditionalContactsValid : ' is-invalid'})
+                this.handleSubmit(e, false);
+                this.setState({projectAdditionalContactsValid : ' is-invalid'});
             }
         }).catch(
             error => console.error(error)
         );
     }
 
-    handleSubmit(preValidationError) {
+    handleSubmit(e, preValidationError) {
 
         const isValidForm = isFormValid();
 
@@ -180,12 +163,10 @@ class ProjectContactsPage extends Component {
 
             const projectFields = (projectID) ? this.state.formInputs : {...releaseInformationInputs, ...this.state.formInputs}
 
-            const fetchHeaders = new Headers(
-                {
-                    "Content-Type": "application/json",
-                    "Authorization" : sessionStorage.getItem('accessToken')
-                }
-            )
+            const fetchHeaders = new Headers({
+                "Content-Type": "application/json",
+                "Authorization" : sessionStorage.getItem('accessToken')
+            })
 
             const fetchBody = JSON.stringify( {
                 "Project" : projectFields
@@ -195,25 +176,22 @@ class ProjectContactsPage extends Component {
                 method : 'POST',
                 headers : fetchHeaders,
                 body : fetchBody
-            }).then (response => 
-                {
-                    return(response.json());
-                }
-            ).then (responseJSON => 
-                {
-                    if(responseJSON.errorMessage) {
-                        this.showNotSavedNotification()
-                    } else {
-                        this.setState({ showloader : false})
-                        this.showNotification('', responseJSON.Project.projectID)
-                        this.props.setHeaderProjectData(responseJSON)
+            }).then (response => {
+                return(response.json());
+            }).then (responseJSON => {
+                if(responseJSON.errorMessage) {
+                    this.showNotSavedNotification()
+                } else {
+                    this.setState({ 
+                        project : responseJSON,
+                        showloader : false
+                    }, ()=> this.showNotification(e, responseJSON.Project.projectID))
+                    this.props.setHeaderProjectData(responseJSON);
 
-                        //clear the local storage
-                        localStorage.removeItem('projectData')
-                    }
+                    //clear the local storage
+                    localStorage.removeItem('projectData')
                 }
-            )
-            .catch(
+            }).catch(
                 error => {
                     console.error(error)
                     this.setState({ showloader : false})
@@ -339,8 +317,8 @@ class ProjectContactsPage extends Component {
                
                     <div className="row save-buttons">
                         <div className="col-12">
-                            <button tabIndex='5+' id="contactsSaveButton" type="button" className="btn btn-secondary">Save</button>
-                            <button tabIndex='6+' id="contactsSaveContButton" type="button" className="btn btn-primary" onClick={this.isAdditionalContactsValid}>Save &amp; Continue</button>
+                            <button tabIndex='5+' id="contactsSaveButton" type="button" className="btn btn-secondary saveButton" onClick={this.isAdditionalContactsValid}>Save</button>
+                            <button tabIndex='6+' id="contactsSaveContButton" type="button" className="btn btn-primary saveAndContinueButton" onClick={this.isAdditionalContactsValid}>Save &amp; Continue</button>
                         </div>
                     </div>
                 </Form>
