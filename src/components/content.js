@@ -183,7 +183,7 @@ export default withAuth(class Content extends Component {
   };
 
   componentDidUpdate = () => {
-      if(JSON.parse(sessionStorage.getItem('user')).UtcDateTime && this.state.serverTimeDate !== JSON.parse(sessionStorage.getItem('user')).UtcDateTime) {
+      if(sessionStorage.getItem('user') && this.state.serverTimeDate !== JSON.parse(sessionStorage.getItem('user')).UtcDateTime) {
           this.setState( { serverTimeDate : JSON.parse(sessionStorage.getItem('user')).UtcDateTime } ) 
       }
   }
