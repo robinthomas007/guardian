@@ -74,10 +74,6 @@ class ReleaseinformationPage extends Component {
 
     handleReleaseTBDChange = (e) => {
         let {formInputs} = this.state;
-        let {projectReleaseDate} = formInputs;
-        let modifiedProjectReleaseDate = '';
-        let newDate = null;
-
         this.state.formInputs.projectReleaseDate = null;
 
         if(e.target.checked) {
@@ -105,8 +101,6 @@ class ReleaseinformationPage extends Component {
 
         //this gets the inputs into the state.formInputs obj on change
         this.setState( {formInputs : { ...this.state.formInputs, [e.target.id] : inputValue}} )
-        //console.log('-----', this.state.formInputs)
-
     };
 
     handleCoverChange(file) {
@@ -126,23 +120,22 @@ class ReleaseinformationPage extends Component {
         this.setState({formInputs : updatedFormInputs})
     };
 
-    setCoverArt(imgSrc) {
-
+    setCoverArt() {
         const coverImg = document.getElementById('projectCoverArtIMG');
 
         if(coverImg) {
             coverImg.src = this.state.formInputs.projectCoverArtBase64Data
         } else {
             const img = document.createElement("img");
-            img.src = this.state.formInputs.projectCoverArtBase64Data;
-            img.height = 188;
-            img.width = 188;
-            img.classList.add("obj");
-            img.id = 'projectCoverArtIMG';
-            //img.file = file;
+                img.src = this.state.formInputs.projectCoverArtBase64Data;
+                img.height = 188;
+                img.width = 188;
+                img.classList.add("obj");
+                img.id = 'projectCoverArtIMG';
+                //img.file = file;
 
         const preview = document.getElementById('preview')
-                preview.appendChild(img);
+            preview.appendChild(img);
         }
     }
 
@@ -151,18 +144,12 @@ class ReleaseinformationPage extends Component {
         event.preventDefault();
 
         if(isFormValid()) {
-
             this.setState({ showloader : true})
-
-            const releaseInformationInputs = JSON.parse(localStorage.getItem('projectData'));
-            const user = JSON.parse(sessionStorage.getItem('user'));
             const projectID = this.state.projectID;
-            const fetchHeaders = new Headers(
-                {
-                    "Content-Type": "application/json",
-                    "Authorization" : sessionStorage.getItem('accessToken')
-                }
-            )
+            const fetchHeaders = new Headers({
+                "Content-Type": "application/json",
+                "Authorization" : sessionStorage.getItem('accessToken')
+            })
 
             const fetchBody = JSON.stringify( {
                 "Project" : this.state.formInputs
@@ -175,25 +162,19 @@ class ReleaseinformationPage extends Component {
                     method : 'POST',
                     headers : fetchHeaders,
                     body : fetchBody
-                }).then (response => 
-                    {
-                        return(response.json());
+                }).then (response => {
+                    return(response.json());
+                }).then (responseJSON => {
+                    this.setState({ showloader : false})
+
+                    if(responseJSON.errorMessage) {
+
+                    } else {
+                        this.props.setHeaderProjectData(responseJSON)
+                        localStorage.setItem('projectData', JSON.stringify(this.state.formInputs));
+                        this.props.history.push('/projectContacts/' + responseJSON.Project.projectID)
                     }
-                ).then (responseJSON => 
-                    {
-                        this.setState({ showloader : false})
-
-                        if(responseJSON.errorMessage) {
-
-                        } else {
-                            this.props.setHeaderProjectData(responseJSON)
-                            localStorage.setItem('projectData', JSON.stringify(this.state.formInputs));
-                            this.props.history.push('/projectContacts/' + responseJSON.Project.projectID)
-
-
-                        }
-                    }
-                ).catch(
+                }).catch(
                     error => console.error(error)
                 );
             } else {
@@ -203,33 +184,27 @@ class ReleaseinformationPage extends Component {
                     method : 'POST',
                     headers : fetchHeaders,
                     body : fetchBody
-                }).then (response => 
-                    {
-                        return(response.json());
-                    }
-                )
-                .then (responseJSON => 
-                    {
-                        if(responseJSON.IsValid) {
-                            localStorage.setItem('projectData', JSON.stringify(this.state.formInputs));
-                            this.props.history.push('/projectContacts')
-                        } else {
+                }).then (response => {
+                    return(response.json());
+                }).then (responseJSON => {
+                    if(responseJSON.IsValid) {
+                        localStorage.setItem('projectData', JSON.stringify(this.state.formInputs));
+                        this.props.history.push('/projectContacts')
+                    } else {
 
-                            this.setState({ showloader : false})
+                        this.setState({ showloader : false})
 
-                            new Noty ({
-                                type: 'error',
-                                id:'duplicateTitle',
-                                text: 'The project title ' + responseJSON.projectTitle + ' by ' + responseJSON.projectArtist +' already exists. Please enter a new title. Click to close.',
-                                theme: 'bootstrap-v4',
-                                layout: 'top',
-                                timeout: false,
-                                onClick: 'Noty.close();'
-                            }).show() 
-                        }
+                        new Noty ({
+                            type: 'error',
+                            id:'duplicateTitle',
+                            text: 'The project title ' + responseJSON.projectTitle + ' by ' + responseJSON.projectArtist +' already exists. Please enter a new title. Click to close.',
+                            theme: 'bootstrap-v4',
+                            layout: 'top',
+                            timeout: false,
+                            onClick: 'Noty.close();'
+                        }).show() 
                     }
-                )
-                .catch(
+                }).catch(
                     error => console.log(error)
                 );
             }
@@ -238,7 +213,6 @@ class ReleaseinformationPage extends Component {
     };
 
     albumArt(e) {
-
         const files = e.target.files
 
         for (let i = 0; i < files.length; i++) {
@@ -269,7 +243,6 @@ class ReleaseinformationPage extends Component {
     }
 
     clearCoverArt(e) {
-        
         const {formInputs} = this.state;
         let modifiedFormInputs = formInputs;
             modifiedFormInputs['projectCoverArtFileName'] = '';
@@ -293,6 +266,10 @@ class ReleaseinformationPage extends Component {
             this.setState({projectReleaseDateDisabled : true})
         }
 
+        if(this.state.formInputs.projectCoverArtBase64Data !== '') {
+            this.setCoverArt()
+        }
+
         if(this.props.match.params && this.props.match.params.projectID) {
             this.handleDataLoad()
         }
@@ -306,13 +283,12 @@ class ReleaseinformationPage extends Component {
         }
 
         if(this.state.formInputs.projectCoverArtBase64Data !== '') {
-            this.setCoverArt(this.state.formInputs.projectCoverArtBase64Data)
+            this.setCoverArt()
         }
 
         if(this.props.match.params.projectID) {
             this.props.setProjectID(this.props.match.params.projectID, this.props.match.url)
-        }
-        
+        }        
     }
 
     handleDataLoad() {
@@ -320,14 +296,12 @@ class ReleaseinformationPage extends Component {
         this.setState({ showloader : true})
 
         const user = JSON.parse(sessionStorage.getItem('user'))
-        const fetchHeaders = new Headers(
-            {
-                "Content-Type": "application/json",
-                "Authorization" : sessionStorage.getItem('accessToken')
-            }
-        )
+        const fetchHeaders = new Headers({
+            "Content-Type": "application/json",
+            "Authorization" : sessionStorage.getItem('accessToken')
+        })
 
-        const fetchBody = JSON.stringify( {
+        const fetchBody = JSON.stringify({
             "PagePath" : (this.props.match.url) ? this.props.match.url : '',
             "ProjectID" : this.props.match.params.projectID
         })
@@ -336,20 +310,15 @@ class ReleaseinformationPage extends Component {
             method : 'POST',
             headers : fetchHeaders,
             body : fetchBody
-        }).then (response => 
-            {
+        }).then (response => {
                 return(response.json());
-            }
-        ).then (responseJSON => 
-            {
-                this.setState({
-                    project : responseJSON,
-                    formInputs : responseJSON.Project,
-                    showloader : false
-                })
-            }
-        )
-        .catch(
+        }).then (responseJSON => {
+            this.setState({
+                project : responseJSON,
+                formInputs : responseJSON.Project,
+                showloader : false
+            })
+        }).catch(
             error => {
                 console.error(error)
                 this.setState( {showloader : false} )
