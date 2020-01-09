@@ -167,6 +167,7 @@ export default withAuth(class Content extends Component {
     const blankProject = {
       Project : {}
     }
+    localStorage.removeItem('projectData')
     this.setState( { project : blankProject})
   }
 
