@@ -23,7 +23,7 @@ export const fetchLabels = () => {
             'Content-Type': 'application/json',
         });
 
-        return fetch('https://api-dev.umusic.net/guardian/labels', {
+        return fetch(window.env.api.url +  '/labels', {
             method: 'GET',
             headers,
         })

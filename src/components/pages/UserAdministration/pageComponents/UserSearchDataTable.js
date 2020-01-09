@@ -64,7 +64,7 @@ class UserSearchDataTable extends Component {
     handleProjectDownload = (projectID, projectFileName) => {
         const user = JSON.parse(sessionStorage.getItem('user'));
 
-        fetch('https://api-dev.umusic.net/guardian-media/api/Submit?projectid=' + projectID, {
+        fetch(window.env.api.url +  '/media/api/Submit?projectid=' + projectID, {
             method: 'GET',
             headers: new Headers({
                 Authorization: sessionStorage.getItem('accessToken'),

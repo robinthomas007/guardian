@@ -31,7 +31,7 @@ export const requestAccess = user => {
             PhoneNumber: user.phoneNumber,
         });
 
-        return fetch('https://api-dev.umusic.net/guardian/access', {
+        return fetch(window.env.api.url + '/access', {
             method: 'POST',
             headers,
             body,
