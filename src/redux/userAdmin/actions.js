@@ -104,7 +104,7 @@ export const fetchUsers = () => {
             Authorization: sessionStorage.getItem('accessToken'),
         });
 
-        return fetch('https://api-dev.umusic.net/guardian/admin/search', {
+        return fetch(window.env.api.url + '/admin/search', {
             method: 'POST',
             headers,
             body,
@@ -158,7 +158,7 @@ export const approveDenyUser = (accessRequestID, action) => {
             Authorization: sessionStorage.getItem('accessToken'),
         });
 
-        return fetch('https://api-dev.umusic.net/guardian/admin/access', {
+        return fetch(window.env.api.url + '/admin/access', {
             method: 'POST',
             headers,
             body,
@@ -294,7 +294,7 @@ export const editUser = userToEdit => {
             Authorization: sessionStorage.getItem('accessToken'),
         });
 
-        return fetch('https://api-dev.umusic.net/guardian/admin/user', {
+        return fetch(window.env.api.url + '/admin/user', {
             method: 'POST',
             headers,
             body,
@@ -361,7 +361,7 @@ export const revokeReinstnateUser = (ExistingUserID, action) => {
             Authorization: sessionStorage.getItem('accessToken'),
         });
 
-        return fetch('https://api-dev.umusic.net/guardian/admin/user', {
+        return fetch(window.env.api.url + '/admin/user', {
             method: 'POST',
             headers,
             body,

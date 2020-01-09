@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import RequestAccessModal from '../../modals/RequestAccessModal';
-import OktaSignInWidget from 'OktaSignInWidget';
+//import OktaSignInWidget from 'OktaSignInWidget';
 import Noty from 'noty';
 import './HomePage.css'
 
