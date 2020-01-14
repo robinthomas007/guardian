@@ -105,15 +105,15 @@ class UserSearchDataTable extends Component {
     renderProjects() {
         const tableRows = this.props.data.map((user, i) => {
             return (
-                <tr className="w-100" key={i}>
-                    <td>{convertToLocaleTime(user.dateAdded || user.dateRequested)}</td>
-                    <td>{user.firstName}</td>
-                    <td>{user.lastName}</td>
-                    <td>{user.email}</td>
-                    <td>
+                <tr className="d-flex w-100" key={i}>
+                    <td className="col-2">{convertToLocaleTime(user.dateAdded || user.dateRequested)}</td>
+                    <td className="col-2">{user.firstName}</td>
+                    <td className="col-2">{user.lastName}</td>
+                    <td className="col-2">{user.email}</td>
+                    <td className="col-2">
                         <span>{user.primaryLabel}</span>
                     </td>
-                    <td className="text-center">
+                    <td className="col-2 text-center">
                         {this.props.type === 'requesting' ? (
                             <>
                                 <Button
@@ -151,9 +151,9 @@ class UserSearchDataTable extends Component {
         return (
             <Table className="search-table">
                 <thead>
-                    <tr>
+                    <tr className="d-flex w-100">
                         <th
-                            className="text-nowrap sortable"
+                            className="col-2 text-nowrap sortable"
                             onMouseOver={(e, columnID) => this.handleMouseOver(e, 'date_created')}
                             onMouseOut={(e, columnID) => this.handleMouseOut(e, 'date_created')}
                             onClick={id => this.handleTableSort('date_created')}
@@ -171,7 +171,7 @@ class UserSearchDataTable extends Component {
                             </i>
                         </th>
                         <th
-                            className="text-nowrap sortable"
+                            className="col-2 text-nowrap sortable"
                             onMouseOver={(e, columnID) => this.handleMouseOver(e, 'first_name')}
                             onMouseOut={(e, columnID) => this.handleMouseOut(e, 'first_name')}
                             onClick={id => this.handleTableSort('first_name')}
@@ -187,7 +187,7 @@ class UserSearchDataTable extends Component {
                             </i>
                         </th>
                         <th
-                            className="sortable"
+                            className="col-2 sortable"
                             onMouseOver={(e, columnID) => this.handleMouseOver(e, 'last_name')}
                             onMouseOut={(e, columnID) => this.handleMouseOut(e, 'last_name')}
                             onClick={id => this.handleTableSort('last_name')}
@@ -203,7 +203,7 @@ class UserSearchDataTable extends Component {
                             </i>
                         </th>
                         <th
-                            className="sortable"
+                            className="col-2 sortable"
                             onMouseOver={(e, columnID) => this.handleMouseOver(e, 'email')}
                             onMouseOut={(e, columnID) => this.handleMouseOut(e, 'email')}
                             onClick={id => this.handleTableSort('email')}
@@ -219,7 +219,7 @@ class UserSearchDataTable extends Component {
                             </i>
                         </th>
                         <th
-                            className="sortable"
+                            className="col-2 sortable"
                             onMouseOver={(e, columnID) => this.handleMouseOver(e, 'label')}
                             onMouseOut={(e, columnID) => this.handleMouseOut(e, 'label')}
                             onClick={id => this.handleTableSort('label')}
@@ -234,7 +234,7 @@ class UserSearchDataTable extends Component {
                                 arrow_drop_up
                             </i>
                         </th>
-                        <th className="text-center">Actions</th>
+                        <th className="col-2 text-center">Actions</th>
                     </tr>
                 </thead>
                 <tbody>{this.renderProjects()}</tbody>
