@@ -522,7 +522,7 @@ class UserAdmin extends Component {
                 <div>
                     <Tab.Container>
                         <Tabs onSelect={this.handleTabClick} defaultActiveKey='requestAccess'>
-                            <Tab eventKey={'requestAccess'} title={'Requesting Access'}>
+                            <Tab eventKey={'requestAccess'} title={'Requesting Users'}>
                                 <RequestingAccessTab 
                                     tableData = {this.state.tableData.AccessRequestSearchResponse.AccessRequests}
                                     activePage={this.state.AccessRequestSearchCriteria.pageNumber}
@@ -539,7 +539,7 @@ class UserAdmin extends Component {
                                 />
                             </Tab>
 
-                            <Tab eventKey={'existing'} title={'Existing'}>
+                            <Tab eventKey={'existing'} title={'Existing Users'}>
                                 <ExistingUsersTab
                                     tableData = {this.state.tableData.UserSearchResponse.Users}
                                     activePage={this.state.UserSearchCriteria.pageNumber}

@@ -100,7 +100,7 @@ class UserDataTable extends Component {
 
     render() {
         return(
-            <Table className="search-table">
+            <Table>
                 <thead>
                     <tr className="d-flex w-100">
                         <th

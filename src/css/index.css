@@ -362,6 +362,11 @@ a {
     vertical-align: middle;
 }
 
+.table td,
+.table th {
+    flex-grow: 1;
+}
+
 .table td.text-center button {
     margin-right: 6px;
 }
