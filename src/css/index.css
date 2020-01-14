@@ -91,13 +91,13 @@ label.custom-checkbox {
 }
 
 /* Creates new checkmark */
-.custom-checkbox:hover input ~ .checkmark {
+.custom-checkbox:hover input~.checkmark {
     background-color: #666;
     border: solid 1px #666;
 }
 
 /* Adds hover color to the box */
-.custom-checkbox input:checked ~ .checkmark {
+.custom-checkbox input:checked~.checkmark {
     background-color: #666;
     border: solid 1px #666;
 }
@@ -111,7 +111,7 @@ label.custom-checkbox {
 }
 
 /* Creates the checkmark indicator (hidden when not checked) */
-.custom-checkbox input:checked ~ .checkmark:after {
+.custom-checkbox input:checked~.checkmark:after {
     display: block;
 }
 
@@ -151,7 +151,7 @@ label.custom-checkbox {
 }
 
 /* Creates new checkmark */
-.custom-checkbox input:checked ~ .static-checkmark {
+.custom-checkbox input:checked~.static-checkmark {
     display: block;
     background-color: #fff;
     border: solid 1px #fff;
@@ -165,7 +165,7 @@ label.custom-checkbox {
 }
 
 /* Creates the checkmark indicator (hidden when not checked) */
-.custom-checkbox input:checked ~ .static-checkmark:after {
+.custom-checkbox input:checked~.static-checkmark:after {
     display: block;
 }
 
@@ -192,7 +192,7 @@ select.dropdown {
     padding: 0 0 !important;
 }
 
-.dropdown > .btn-primary {
+.dropdown>.btn-primary {
     background-color: #f5f5f5;
     border: solid 1px #ccc;
     border-radius: 2px;
@@ -231,7 +231,7 @@ select.dropdown {
     border-radius: 0.2rem;
 }
 
-ul.request-form li > .invalid-tooltip {
+ul.request-form li>.invalid-tooltip {
     position: relative;
     top: -56px;
     right: -290px;
@@ -285,8 +285,8 @@ a {
     margin: 0 5px;
 }
 
-.btn-primary > i,
-.btn-secondary > i {
+.btn-primary>i,
+.btn-secondary>i {
     font-size: 20px;
 }
 
@@ -304,27 +304,27 @@ a {
     transform: translate3d(5px, 35px, 0px) !important;
 }
 
-.dropdown-menu > a.dropdown-item {
+.dropdown-menu>a.dropdown-item {
     font-size: 0.9em;
 }
 
-.multi-select.dropdown > .dropdown-menu > a.dropdown-item {
+.multi-select.dropdown>.dropdown-menu>a.dropdown-item {
     font-size: 0.9em;
     line-height: 2em;
 }
 
-.multi-select.dropdown > .dropdown-menu > a.dropdown-item:hover,
-.multi-select.dropdown > .dropdown-menu > a.dropdown-item:active {
+.multi-select.dropdown>.dropdown-menu>a.dropdown-item:hover,
+.multi-select.dropdown>.dropdown-menu>a.dropdown-item:active {
     cursor: default;
     background-color: transparent;
 }
 
-.multi-select.dropdown > .dropdown-menu > a.dropdown-item .custom-checkbox {
+.multi-select.dropdown>.dropdown-menu>a.dropdown-item .custom-checkbox {
     margin-right: 8px;
     vertical-align: middle;
 }
 
-.show > .btn-secondary.dropdown-toggle {
+.show>.btn-secondary.dropdown-toggle {
     background-color: #fff;
     border-color: #ccc;
     color: #333;
@@ -360,6 +360,10 @@ a {
     border-bottom: 1px solid #dee2e6;
     padding: 0.5rem;
     vertical-align: middle;
+}
+
+.table td.text-center button {
+    margin-right: 6px;
 }
 
 .modal-dialog {
@@ -815,12 +819,12 @@ input#projectCoverArt {
     margin-left: 15px;
 }
 
-.notes-row > textarea {
+.notes-row>textarea {
     vertical-align: top;
     height: 120px;
 }
 
-.release-date > .invalid-tooltip {
+.release-date>.invalid-tooltip {
     width: 100%;
     right: -200%;
 }
@@ -1013,7 +1017,7 @@ span.drag-drop-arrow {
     z-index: 10;
 }
 
-span.drag-drop-arrow > span {
+span.drag-drop-arrow>span {
     position: absolute;
     top: -20px;
     left: -10px;
@@ -1180,7 +1184,7 @@ ul.search-row li {
     padding: 0;
 }
 
-ul.search-row li > input {
+ul.search-row li>input {
     margin: auto 10px;
     width: 100%;
 }

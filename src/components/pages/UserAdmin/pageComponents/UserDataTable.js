@@ -33,12 +33,12 @@ class UserDataTable extends Component {
     getUsersDataRows = () => {
         const dataRows = this.props.data.map( (user, i) => {
             return(
-                <tr key={i}>
-                    <td>{ (this.props.pageView === 'requesting') ? user.dateRequested : user.dateAdded}</td>
-                    <td>{user.firstName}</td>
-                    <td>{user.lastName}</td>
-                    <td>{user.email}</td>
-                    <td>{user.primaryLabel}</td>
+                <tr key={i} className="d-flex w-100">
+                    <td className="col-2">{ (this.props.pageView === 'requesting') ? user.dateRequested : user.dateAdded}</td>
+                    <td className="col-2">{user.firstName}</td>
+                    <td className="col-2">{user.lastName}</td>
+                    <td className="col-2">{user.email}</td>
+                    <td className="col-2">{user.primaryLabel}</td>
                     {this.getPageButtons(user)}
                 </tr>
             )
@@ -51,16 +51,16 @@ class UserDataTable extends Component {
             <td className="text-center">
                 {this.props.pageView === 'requesting' ? (
                     <>
+                    <Button onClick={() => this.props.approveDenyUser('approve', user)} className={'btn btn-primary'}>
+                            <i className="material-icons">check</i> Approve
+                        </Button>
                         <Button
-                            variant="light"
                             onClick={() => this.props.approveDenyUser('deny', user)}
-                            className={'btn btn-secondary"'}
+                            className={'btn btn-secondary'}
                         >
                             <i className="material-icons">block</i> Deny
                         </Button>
-                        <Button onClick={() => this.props.approveDenyUser('approve', user)} className={'btn btn-primary'}>
-                            <i className="material-icons">check</i> Approve
-                        </Button>
+                        
                     </>
                 ) : (
                     <>
@@ -70,11 +70,11 @@ class UserDataTable extends Component {
 
                         {
                             user.status.toUpperCase() === 'ACTIVE' ?
-                                <Button onClick={() => this.props.revokeReinstateUser('revoke', user)} variant="light" className={'btn btn-secondary"'}>
+                                <Button onClick={() => this.props.revokeReinstateUser('revoke', user)} className={'btn btn-secondary'}>
                                     <i className="material-icons">block</i> Revoke
                                 </Button>
                             :
-                                <Button onClick={() => this.props.revokeReinstateUser('reinstate', user)} variant="light" className={'btn btn-secondary"'}>
+                                <Button onClick={() => this.props.revokeReinstateUser('reinstate', user)} className={'btn btn-secondary'}>
                                     <i className="material-icons">check</i> Reinstate
                                 </Button>
                         }
@@ -102,9 +102,9 @@ class UserDataTable extends Component {
         return(
             <Table className="search-table">
                 <thead>
-                    <tr>
+                    <tr className="d-flex w-100">
                         <th
-                            className="text-nowrap sortable"
+                            className="col-2 text-nowrap sortable"
                             onMouseOver={(e, columnID) => this.handleMouseOver(e, 'date_created')}
                             onMouseOut={(e, columnID) => this.handleMouseOut(e, 'date_created')}
                             onClick={id => this.handleTableSort('date_created')}
@@ -122,7 +122,7 @@ class UserDataTable extends Component {
                             </i>
                         </th>
                         <th
-                            className="text-nowrap sortable"
+                            className="col-2 text-nowrap sortable"
                             onMouseOver={(e, columnID) => this.handleMouseOver(e, 'first_name')}
                             onMouseOut={(e, columnID) => this.handleMouseOut(e, 'first_name')}
                             onClick={id => this.handleTableSort('first_name')}
@@ -139,7 +139,7 @@ class UserDataTable extends Component {
                             </i>
                         </th>
                         <th
-                            className="sortable"
+                            className="col-2 sortable"
                             onMouseOver={(e, columnID) => this.handleMouseOver(e, 'last_name')}
                             onMouseOut={(e, columnID) => this.handleMouseOut(e, 'last_name')}
                             onClick={id => this.handleTableSort('last_name')}
@@ -156,7 +156,7 @@ class UserDataTable extends Component {
                             </i>
                         </th>
                         <th
-                            className="sortable"
+                            className="col-2 sortable"
                             onMouseOver={(e, columnID) => this.handleMouseOver(e, 'email')}
                             onMouseOut={(e, columnID) => this.handleMouseOut(e, 'email')}
                             onClick={id => this.handleTableSort('email')}
@@ -173,7 +173,7 @@ class UserDataTable extends Component {
                             </i>
                         </th>
                         <th
-                            className="sortable"
+                            className="col-2 sortable"
                             onMouseOver={(e, columnID) => this.handleMouseOver(e, 'label')}
                             onMouseOut={(e, columnID) => this.handleMouseOut(e, 'label')}
                             onClick={id => this.handleTableSort('label')}
@@ -189,7 +189,7 @@ class UserDataTable extends Component {
                                 { this.handleSortCaratDisplay('label') }
                             </i>
                         </th>
-                        <th className="text-center">Actions</th>
+                        <th className="col-2 text-center">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
