@@ -117,9 +117,7 @@ class UserSearchDataTable extends Component {
                         {this.props.type === 'requesting' ? (
                             <>
                                 <Button
-                                    variant="light"
-                                    onClick={() => this.props.approveDenyUser(user.accessRequestID, DENY)}
-                                >
+                                    onClick={() => this.props.approveDenyUser(user.accessRequestID, DENY)}>
                                     Deny
                                 </Button>
                                 <Button onClick={() => this.props.approveDenyUser(user.accessRequestID, APPROVE)}>
