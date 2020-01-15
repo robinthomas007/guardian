@@ -40,12 +40,11 @@ class ReleasingLabelsInput extends Component {
     };
 
     render() {
-
         return(
             <Form.Control 
                 id="projectReleasingLabelID" 
                 as="select" 
-                className='col-form-label dropdown col-4' 
+                className={'col-form-label dropdown col-4 ' + this.props.className} 
                 value={this.props.value}
                 onChange={this.state.onChange}
             >
