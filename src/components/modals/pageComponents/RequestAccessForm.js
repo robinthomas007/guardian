@@ -59,6 +59,8 @@ class RequestAccessForm extends Component {
             layout: 'top',
             timeout: '3000'
         }).show()
+
+        //
     }
 
     sumbitRequestAccess = () => {
@@ -80,7 +82,7 @@ class RequestAccessForm extends Component {
         }).then (response => {
             return(response.json());
         }).then (responseJSON => {
-            this.setState( {submitDisabled : false}, ()=> this.props.handleClose() )
+            this.setState( {submitDisabled : false}, ()=> { this.handleAccessSuccess(); this.props.handleClose();})
             
         }).catch( 
             error => {
