@@ -30,13 +30,13 @@ class TrackInformationDataTable extends Component {
                 <th className="text-center"></th>
                 <th className="text-center"></th>
                 <th>Track Title <span class="required-ind"><i>(Required)</i></span></th>
-                <th>ISRC <i>(Optional) </i>
+                <th>ISRC <i>(Optional) </i>&nbsp;
                     <ToolTip  tabIndex='-1' 
                         message='You may include ISRC here if known, necessary for completion of Step 3 (Audio Files).'
                      />
                 </th>
                 <th className="text-center">Single</th>
-                <th className="release-date-col">Release Date  
+                <th className="release-date-col">Release Date &nbsp;  
                     <ToolTip  tabIndex='-1' 
                         message='Indicate a single’s release date here if different from album release date.'
                     />
