@@ -276,6 +276,9 @@ class UserAdmin extends Component {
         }).then (response => {
             return(response.json());
         }).then (userJSON => {
+
+            alert(JSON.stringify(userJSON))
+
             this.setState( {
                 tableData : userJSON, 
                 showloader : false
@@ -444,6 +447,12 @@ class UserAdmin extends Component {
         this.setState( {targetUser : modifiedTargetUser} )
     }
 
+	handleKeyUp(e) {
+		if(e.key === 'Enter') {
+			this.fetchUsers()
+		}		
+	};
+
     render() {
         return (
             <div className="col-10">
@@ -494,6 +503,7 @@ class UserAdmin extends Component {
                                 type="search"
                                 onChange={ (e) => this.handleSearchTextChange(e) }
                                 value={this.state.UserSearchCriteria.searchTerm}
+                                onKeyUp={(e) => this.handleKeyUp(e)}
                             />
                             <button id="projectSearchButton" className="btn btn-primary" type="button" onClick={this.fetchUsers}>
                                 <i className="material-icons">search</i> Search
