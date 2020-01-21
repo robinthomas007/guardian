@@ -90,7 +90,7 @@ class IntroModal extends Component {
                       />
                       <span className="checkmark "></span>
                     </label>
-                    <label class="noshow-label">Do not show this anymore.</label>
+                    <label htmlFor={'doNotShowIntro'} class="noshow-label">Do not show this anymore.</label>
                   </div>
             
                   <Button 
