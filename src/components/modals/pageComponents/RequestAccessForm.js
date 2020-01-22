@@ -59,8 +59,21 @@ class RequestAccessForm extends Component {
             layout: 'top',
             timeout: '3000'
         }).show()
-
         //
+    }
+
+    handleAccessError = (message) => {
+        new Noty ({
+            type: 'error',
+            id:'requestAccessError',
+            text: message + '<br /> this is a test',
+            theme: 'bootstrap-v4',
+            layout: 'top',
+            timeout: false,
+            onClick: 'Noty.close();',
+        }).on('afterClose', ()=> { 
+            this.setState( {submitDisabled : false} )
+        }).show();
     }
 
     sumbitRequestAccess = () => {
@@ -82,8 +95,11 @@ class RequestAccessForm extends Component {
         }).then (response => {
             return(response.json());
         }).then (responseJSON => {
-            this.setState( {submitDisabled : false}, ()=> { this.handleAccessSuccess(); this.props.handleClose();})
-            
+            if(responseJSON.message) {
+                this.setState( {submitDisabled : true}, ()=> { this.handleAccessError(responseJSON.message); })
+            } else {
+                this.setState( {submitDisabled : false}, ()=> { this.handleAccessSuccess(); this.props.handleClose();})
+            }
         }).catch( 
             error => {
                 console.error(error);
