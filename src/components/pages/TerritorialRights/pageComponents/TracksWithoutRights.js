@@ -33,7 +33,7 @@ class TracksWithoutRights extends Component {
                         tracktitle={track.trackTitle} 
                         onDragStart={(e) => this.handleDrag(e, i, track)} 
                         >
-                        <i className="material-icons">dehaze</i>{track.trackTitle}
+                        <i className="material-icons">dehaze</i>&nbsp;&nbsp;{track.trackTitle}
                     </div>
                 )
             })

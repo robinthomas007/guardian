@@ -19,7 +19,7 @@ class TracksRightsSets extends Component {
         const tracksList = tracks.map( (track, i) => {
             return(
                 <div key={i} draggable="true" class="draggable-track">
-                    <i class="material-icons">dehaze</i>{track.trackTitle}
+                    <i class="material-icons">dehaze</i>&nbsp;&nbsp;{track.trackTitle}
                 </div>
             )
         })

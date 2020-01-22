@@ -35,7 +35,7 @@ class TracksDropArea extends Component {
                     trackid={track.trackID} 
                     tracktitle={track.trackTitle} 
                 >
-                    <i className="material-icons">dehaze</i>{track.trackTitle}
+                    <i className="material-icons">dehaze</i>&nbsp;&nbsp;{track.trackTitle}
                 </div>
             )
         })
