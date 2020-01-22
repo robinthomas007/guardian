@@ -49,6 +49,7 @@
   background-color: #7f1b2e;
   color: #fff;
   border-color: transparent;
+  font-size: 1.2em;
 }
 
 .noty_theme__bootstrap-v4.noty_type__info,
@@ -56,6 +57,7 @@
   background-color: #d9edf7;
   color: #31708f;
   border-color: transparent;
+  font-size: 1.2em;
 }
 
 .noty_theme__bootstrap-v4.noty_type__success {
