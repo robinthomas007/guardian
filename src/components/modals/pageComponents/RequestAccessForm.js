@@ -169,13 +169,10 @@ class RequestAccessForm extends Component {
                             component="input" 
                             type="tel" 
                             name="phoneNumber" 
-                            className="form-control requiredInput"
+                            className="form-control"
                             value={this.state.formInputs.phoneNumber}
                             onChange={this.handleChange}
                         />
-                        <div className="invalid-tooltip">
-                            A phone number is required.
-                        </div>
                     </li>
                     <li className="float-right">
                         <Button variant="secondary" id="cancelButton" onClick={this.props.handleClose}>
