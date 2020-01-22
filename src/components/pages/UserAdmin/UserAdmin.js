@@ -276,9 +276,6 @@ class UserAdmin extends Component {
         }).then (response => {
             return(response.json());
         }).then (userJSON => {
-
-            alert(JSON.stringify(userJSON))
-
             this.setState( {
                 tableData : userJSON, 
                 showloader : false
