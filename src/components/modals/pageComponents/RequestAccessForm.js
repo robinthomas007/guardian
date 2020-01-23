@@ -66,7 +66,7 @@ class RequestAccessForm extends Component {
         new Noty ({
             type: 'error',
             id:'requestAccessError',
-            text: message + '<br /> this is a test',
+            text: 'This &nbsp;' + message + '&nbsp; We cannot accept your request at this time. &nbsp; Click to close.',
             theme: 'bootstrap-v4',
             layout: 'top',
             timeout: false,
@@ -125,7 +125,7 @@ class RequestAccessForm extends Component {
                 <ul className="request-form">
                     <li>Fill in the fields below for review by our administrative team.</li>
                     <li>
-                        <Form.Label>First Name</Form.Label>
+                        <Form.Label>First Name <span className="required-ind">*</span></Form.Label>
                         <Form.Control 
                             type="text" 
                             name="firstName" 
@@ -138,7 +138,7 @@ class RequestAccessForm extends Component {
                         </div>
                     </li>
                     <li>
-                        <Form.Label>Last Name</Form.Label>
+                        <Form.Label>Last Name <span className="required-ind">*</span></Form.Label>
                         <Form.Control  
                             component="input" 
                             type="text" 
@@ -152,7 +152,7 @@ class RequestAccessForm extends Component {
                         </div>
                     </li>
                     <li>
-                        <Form.Label id="labelName">Label/Company</Form.Label>
+                        <Form.Label id="labelName">Label/Company <span className="required-ind">*</span></Form.Label>
                         <ReleasingLabelsInput
                             id='LabelID'
                             name='LabelID'
@@ -166,7 +166,7 @@ class RequestAccessForm extends Component {
                         </div>
                     </li>
                     <li>
-                        <Form.Label>Email</Form.Label>
+                        <Form.Label>Email  <span className="required-ind">*</span></Form.Label>
                         <Form.Control 
                             component="input" 
                             type="email" 
