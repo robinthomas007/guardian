@@ -300,9 +300,10 @@ class ReleaseinformationPage extends Component {
             this.setCoverArt()
         }
 
-        // if(this.props.match.params.projectID) {
-        //     this.props.setProjectID(this.props.match.params.projectID, this.props.match.url)
-        // } else {
+        if(this.props.match.params.projectID) {
+             this.props.setProjectID(this.props.match.params.projectID, this.props.match.url)
+        }
+        // else {
         //     if(localStorage.getItem("projectData") && this.state.formInputs !== JSON.parse(localStorage.getItem("projectData"))) {
         //         this.setState( {formInputs : JSON.parse(localStorage.getItem("projectData"))} )
         //     } else {
