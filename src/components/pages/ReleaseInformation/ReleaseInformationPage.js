@@ -59,10 +59,6 @@ class ReleaseinformationPage extends Component {
             projectReleaseDateReset : false
         }
 
-        if(localStorage.getItem("projectData")) {
-            this.state.formInputs = JSON.parse(localStorage.getItem("projectData"));
-        }
-
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleReleaseTBDChange = this.handleReleaseTBDChange.bind(this);
@@ -277,6 +273,24 @@ class ReleaseinformationPage extends Component {
         this.props.setProjectID((this.props.match.params.projectID) ? this.props.match.params.projectID : '', this.props.match.url)
     }
 
+    getBlankFormInputs = () => {
+        return(
+            {
+                "projectID" : '',
+                "projectTitle" : '',
+                "projectCoverArt" : '',
+                "projectArtistName" : '',
+                "projectTypeID" : '1',
+                "projectReleasingLabelID" : '',
+                "projectReleaseDate" : '',
+                "projectReleaseDateTBD" : false,
+                "projectNotes" : '',
+                "projectCoverArtFileName": '',
+                "projectCoverArtBase64Data": ''
+            }
+        )
+    }
+
     componentDidUpdate() {
         if(this.props.user.ReleasingLabels && (this.state.formInputs.projectReleasingLabelID === '')) {
             this.setState( {formInputs : { ...this.state.formInputs, projectReleasingLabelID : this.props.user.ReleasingLabels[0].id}} )
@@ -286,9 +300,16 @@ class ReleaseinformationPage extends Component {
             this.setCoverArt()
         }
 
-        if(this.props.match.params.projectID) {
-            this.props.setProjectID(this.props.match.params.projectID, this.props.match.url)
-        }        
+        // if(this.props.match.params.projectID) {
+        //     this.props.setProjectID(this.props.match.params.projectID, this.props.match.url)
+        // } else {
+        //     if(localStorage.getItem("projectData") && this.state.formInputs !== JSON.parse(localStorage.getItem("projectData"))) {
+        //         this.setState( {formInputs : JSON.parse(localStorage.getItem("projectData"))} )
+        //     } else {
+        //         const blankFormInputs = this.getBlankFormInputs();
+        //         this.setState( {formInputs : blankFormInputs} )
+        //     }
+        // }
     }
 
     handleDataLoad() {
