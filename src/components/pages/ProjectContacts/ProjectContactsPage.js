@@ -138,10 +138,8 @@ class ProjectContactsPage extends Component {
             return(response.json());
         }).then (responseJSON => {
             if(responseJSON.IsValid) {
-                this.handleSubmit(e, true);
-                this.setState({projectAdditionalContactsValid : ''});
+                this.setState({projectAdditionalContactsValid : ''}, ()=> {this.handleSubmit(e, true)});
             } else {
-                this.handleSubmit(e, false);
                 this.setState({projectAdditionalContactsValid : ' is-invalid'});
             }
         }).catch(
