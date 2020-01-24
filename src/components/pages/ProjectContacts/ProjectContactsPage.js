@@ -138,10 +138,8 @@ class ProjectContactsPage extends Component {
             return(response.json());
         }).then (responseJSON => {
             if(responseJSON.IsValid) {
-                this.handleSubmit(e, true);
-                this.setState({projectAdditionalContactsValid : ''});
+                this.setState({projectAdditionalContactsValid : ''}, ()=> {this.handleSubmit(e, true)});
             } else {
-                this.handleSubmit(e, false);
                 this.setState({projectAdditionalContactsValid : ' is-invalid'});
             }
         }).catch(
@@ -228,92 +226,103 @@ class ProjectContactsPage extends Component {
                         <div className="col-12">
                             <Form.Group className="row d-flex no-gutters">
                                 <div className="col-2">
-                                <Form.Label className='col-form-label'>Project Security 
-                                    <span className='required-ind'>*</span>
-                                </Form.Label>
-                                <ToolTip tabIndex='-1' message='Projects are by default, set to private. This means only you may view or make changes to them. If set to public, projects will be made available to everyone within the label group.' />
+                                    <Form.Label className='col-form-label'>Project Security 
+                                        <span className='required-ind'>*</span>
+                                    </Form.Label>
+                                    <ToolTip 
+                                        tabIndex='-1' 
+                                        message='Projects are by default, set to private. This means only you may view or make changes to them. If set to public, projects will be made available to everyone within the label group.' 
+                                    />
                                 </div>
                                 <div className="col-10">
-                                <BootStrapDropDownInput 
-                                    tabIndex='1+'
-                                    id='projectSecurityID'
-                                    value={this.state.formInputs.projectSecurityID}
-                                    onChange={this.handleChangeByID}
-                                    className={'project-security-dropdown'}
-                                />
-                            
+                                    <BootStrapDropDownInput 
+                                        tabIndex='1+'
+                                        id='projectSecurityID'
+                                        value={this.state.formInputs.projectSecurityID}
+                                        onChange={this.handleChangeByID}
+                                        className={'project-security-dropdown'}
+                                    />
                                 </div>
                             </Form.Group>
     
                             <Form.Group className="row d-flex no-gutters">
                                 <div className="col-2">
-                                <Form.Label className='col-form-label'>Primary Contact 
-                                    <span className='required-ind'>*</span>
-                                </Form.Label>
-                                <ToolTip tabIndex='-1' message='The originator of the project is by default set to be the primary contact. This can be changed here and the project will be created for that users account as long as they have access to the selected label.' />
+                                    <Form.Label className='col-form-label'>Primary Contact 
+                                        <span className='required-ind'>*</span>
+                                    </Form.Label>
+                                    <ToolTip 
+                                        tabIndex='-1' 
+                                        message='The originator of the project is by default set to be the primary contact. This can be changed here and the project will be created for that users account as long as they have access to the selected label.'
+                                    />
                                 </div>
                                 <div className="col-5"> 
-                                <Form.Control 
-                                    className='form-control requiredInput'
-                                    tabIndex='2+'
-                                    id='projectPrimaryContact' 
-                                    value={this.state.formInputs.projectPrimaryContact}
-                                    onChange={this.handleChange} 
-                                />
-                                <div className="invalid-tooltip">
-                                    Primary Contact is Required
-                                </div>
+                                    <Form.Control 
+                                        className='form-control requiredInput'
+                                        tabIndex='2+'
+                                        id='projectPrimaryContact' 
+                                        value={this.state.formInputs.projectPrimaryContact}
+                                        onChange={this.handleChange} 
+                                    />
+                                    <div className="invalid-tooltip">
+                                        Primary Contact is Required
+                                    </div>
                                 </div>
                                 <div className="col-5"></div>
                             </Form.Group>
 
                             <Form.Group className="row d-flex no-gutters">
                                 <div className="col-2">
-                                <Form.Label className='col-form-label'>Primary Contact Email
-                                    <span className='required-ind'>*</span>
-                                </Form.Label>
-                                <ToolTip tabIndex='-1' message='The email address belonging to the primary contact. This may not belong to any user aside from the primary contact.' />
+                                    <Form.Label className='col-form-label'>Primary Contact Email
+                                        <span className='required-ind'>*</span>
+                                    </Form.Label>
+                                    <ToolTip 
+                                        tabIndex='-1' 
+                                        message='The email address belonging to the primary contact. This may not belong to any user aside from the primary contact.'
+                                    />
                                 </div>
                                 <div className="col-5">
-                                <Form.Control 
-                                    className='form-control requiredInput'
-                                    tabIndex='3+'
-                                    id='projectPrimaryContactEmail' 
-                                    value={this.state.formInputs.projectPrimaryContactEmail}
-                                    onChange={this.handleChange} 
-                                />
-                                <div className="invalid-tooltip">
-                                    Primary Contact Email is Required
-                                </div>
+                                    <Form.Control 
+                                        className='form-control requiredInput'
+                                        tabIndex='3+'
+                                        id='projectPrimaryContactEmail' 
+                                        value={this.state.formInputs.projectPrimaryContactEmail}
+                                        onChange={this.handleChange} 
+                                        type="email"
+                                    />
+                                    <div className="invalid-tooltip">
+                                        Primary Contact Email is Required
+                                    </div>
                                 </div>
                                 <div className="col-5"></div>
                             </Form.Group>
 
                             <Form.Group className="row d-flex no-gutters">
                                 <div className="col-2">
-                                <Form.Label className='col-form-label align-top'>Additional Contacts
-                                </Form.Label>
-                                <ToolTip tabIndex='-1' message='Additional contacts or users that youd like to share this project with may be added here. You can copy and paste from Outlook, or separate a list of users to be added by commas, spaces, semi-colons or any combination of these.' />
+                                    <Form.Label className='col-form-label align-top'>
+                                        Additional Contacts
+                                    </Form.Label>
+                                    <ToolTip 
+                                        tabIndex='-1' 
+                                        message='Additional contacts or users that youd like to share this project with may be added here. You can copy and paste from Outlook, or separate a list of users to be added by commas, spaces, semi-colons or any combination of these.'
+                                    />
                                 </div>
                                 <div className="col-10">
-                                <Form.Control 
-                                    id='projectAdditionalContacts'
-                                    className={'form-control additionalContactsInput' + this.state.projectAdditionalContactsValid} 
-                                    tabIndex='4+'
-                                    as='textarea' 
-                                    rows='5' 
-                                    value={this.state.formInputs.projectAdditionalContacts}
-                                    onChange={this.handleChange}
-                                />
+                                    <Form.Control 
+                                        id='projectAdditionalContacts'
+                                        className={'form-control additionalContactsInput' + this.state.projectAdditionalContactsValid} 
+                                        tabIndex='4+'
+                                        as='textarea' 
+                                        rows='5' 
+                                        value={this.state.formInputs.projectAdditionalContacts}
+                                        onChange={this.handleChange}
+                                    />
                                     <div className="invalid-tooltip">
                                         Incorrectly formatted email addresse(s)
                                     </div>
                                 </div>
                             </Form.Group>
-
-
-                            </div>
                         </div>
+                    </div>
                
                     <div className="row save-buttons">
                         <div className="col-12">
@@ -322,7 +331,7 @@ class ProjectContactsPage extends Component {
                         </div>
                     </div>
                 </Form>
-                </div>
+            </div>
         )
     }
 };
