@@ -15,8 +15,8 @@ class SubmitProjectModal extends Component {
       <>
         <Modal id='SubmitProjectModal' show={this.props.show} onHide={this.props.handleClose}>
           <Modal.Body>
-          <div className="alert alert-danger" role="alert">
-          Are you sure?  Once submitted, this project will be locked and no longer editable <i>except by a Guardian support administrator.</i>
+            <div className="alert alert-danger" role="alert">
+                Are you sure?  Once submitted, this project will be locked and no longer editable <i>except by a Guardian support administrator.</i>
             </div>
           <div className="submit-buttons float-right">
             <Button variant="secondary" onClick={this.props.handleClose}>

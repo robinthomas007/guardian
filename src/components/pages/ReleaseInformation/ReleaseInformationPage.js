@@ -258,6 +258,8 @@ class ReleaseinformationPage extends Component {
 
     componentDidMount() {
 
+        const localData = JSON.parse(localStorage.getItem('projectData'))
+
         if(this.state.formInputs.projectReleaseDateTBD === true) {
             this.setState({projectReleaseDateDisabled : true})
         }
@@ -270,6 +272,9 @@ class ReleaseinformationPage extends Component {
             this.handleDataLoad()
         }
 
+        if(localData && this.state.formInputs !== localData) {
+            this.setState( {formInputs : localData} )
+        }
         this.props.setProjectID((this.props.match.params.projectID) ? this.props.match.params.projectID : '', this.props.match.url)
     }
 
@@ -281,7 +286,7 @@ class ReleaseinformationPage extends Component {
                 "projectCoverArt" : '',
                 "projectArtistName" : '',
                 "projectTypeID" : '1',
-                "projectReleasingLabelID" : '',
+                "projectReleasingLabelID" : this.props.user.ReleasingLabels[0].id,
                 "projectReleaseDate" : '',
                 "projectReleaseDateTBD" : false,
                 "projectNotes" : '',
@@ -292,25 +297,26 @@ class ReleaseinformationPage extends Component {
     }
 
     componentDidUpdate() {
-        if(this.props.user.ReleasingLabels && (this.state.formInputs.projectReleasingLabelID === '')) {
-            this.setState( {formInputs : { ...this.state.formInputs, projectReleasingLabelID : this.props.user.ReleasingLabels[0].id}} )
-        }
 
-        if(this.state.formInputs.projectCoverArtBase64Data !== '') {
-            this.setCoverArt()
-        }
+        if(this.props.clearProject) {
+            const blankInputs = this.getBlankFormInputs();
+            if(this.state.formInputs !== blankInputs) {
+                this.setState( {formInputs : blankInputs},  ()=> this.setCoverArt())
+            }
+        } else {
 
-        if(this.props.match.params.projectID) {
-             this.props.setProjectID(this.props.match.params.projectID, this.props.match.url)
+            if(this.props.user.ReleasingLabels && (this.state.formInputs.projectReleasingLabelID === '')) {
+                this.setState( {formInputs : { ...this.state.formInputs, projectReleasingLabelID : this.props.user.ReleasingLabels[0].id}} )
+            }
+
+            if(this.state.formInputs.projectCoverArtBase64Data !== '') {
+                this.setCoverArt()
+            }
+
+            if(this.props.match.params.projectID) {
+                this.props.setProjectID(this.props.match.params.projectID, this.props.match.url)
+            } 
         }
-        // else {
-        //     if(localStorage.getItem("projectData") && this.state.formInputs !== JSON.parse(localStorage.getItem("projectData"))) {
-        //         this.setState( {formInputs : JSON.parse(localStorage.getItem("projectData"))} )
-        //     } else {
-        //         const blankFormInputs = this.getBlankFormInputs();
-        //         this.setState( {formInputs : blankFormInputs} )
-        //     }
-        // }
     }
 
     handleDataLoad() {
