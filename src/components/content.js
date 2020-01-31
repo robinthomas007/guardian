@@ -35,7 +35,8 @@ export default withAuth(class Content extends Component {
             
           }
         },
-        serverTimeDate : ''
+        serverTimeDate : '',
+        clearProject : false
 
     }
     this.setProjectID = this.setProjectID.bind(this);
@@ -167,7 +168,7 @@ export default withAuth(class Content extends Component {
       Project : {}
     }
     localStorage.removeItem('projectData');
-    this.setState( { project : blankProject})
+    this.setState( { project : blankProject, clearProject: true}, ()=> this.setState( { clearProject: false }))
   }
 
   handleLogoutClick = (e) => {
@@ -208,7 +209,7 @@ export default withAuth(class Content extends Component {
             <div className={this.state.pageViewCompact ? "row d-flex no-gutters content compact" : "row d-flex no-gutters content"} >
               <div className="col-1"></div>
 
-                <SecureRoute path="/releaseInformation/:projectID?" render={ () => ( <ReleaseInformationPage user={this.state.user} setProjectID={this.setProjectID} setHeaderProjectData={this.setHeaderProjectData} serverTimeDate={this.state.serverTimeDate}/>) } />
+                <SecureRoute path="/releaseInformation/:projectID?" render={ () => ( <ReleaseInformationPage user={this.state.user} clearProject={this.state.clearProject} data={this.state.project.Project} setProjectID={this.setProjectID} setHeaderProjectData={this.setHeaderProjectData} serverTimeDate={this.state.serverTimeDate}/>) } />
                 <SecureRoute path="/projectContacts/:projectID?" render={ () => ( <ProjectContactsPage user={this.state.user} setProjectID={this.setProjectID} setHeaderProjectData={this.setHeaderProjectData} serverTimeDate={this.state.serverTimeDate}/>) }/>
                 <SecureRoute path="/trackInformation/:projectID?" render={ () => ( <TrackInformationPage user={this.state.user} setProjectID={this.setProjectID} setHeaderProjectData={this.setHeaderProjectData} serverTimeDate={this.state.serverTimeDate} />) }/>
                 <SecureRoute path="/territorialRights/:projectID?" render={ () => ( <TerritorialRightsPage user={this.state.user} setProjectID={this.setProjectID} setHeaderProjectData={this.setHeaderProjectData} serverTimeDate={this.state.serverTimeDate} />) }/>

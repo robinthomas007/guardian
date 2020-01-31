@@ -8,6 +8,7 @@ import TerritorialRightsTable from '../ReviewAndSubmit/pageComponents/Territoria
 import BlockingPoliciesDataTable from '../ReviewAndSubmit/pageComponents/BlockingPoliciesDataTable';
 import { withRouter } from 'react-router-dom';
 import SubmitProjectModal from '../../modals/SubmitProjectModal';
+import IncompleteProjectModal from '../../modals/IncompleteProjectModal';
 
 class ReviewAndSubmitPage extends Component {
 
@@ -16,12 +17,15 @@ class ReviewAndSubmitPage extends Component {
 
         this.state = { 
             showloader : false,
-            showRequestModal : false
+            showRequestModal : false,
+            showIncompleteProjectModal : false
         }
         this.handleSubmitProjectClick = this.handleSubmitProjectClick.bind(this);
         this.handleProjectCategoryClick = this.handleProjectCategoryClick.bind(this);
         this.showProjectSubmitModal = this.showProjectSubmitModal.bind(this);
         this.hideProjectSubmitModal = this.hideProjectSubmitModal.bind(this);
+        this.showIncompleteProjectModal = this.showIncompleteProjectModal.bind(this);
+        this.hideIncompleteProjectModal = this.hideIncompleteProjectModal.bind(this);
     };
 
     componentDidMount() {
@@ -43,11 +47,21 @@ class ReviewAndSubmitPage extends Component {
         this.setState({showRequestModal : false})
     };
 
+    showIncompleteProjectModal() {
+        this.setState({showIncompleteProjectModal : true})
+    };
+
+    hideIncompleteProjectModal() {
+        this.setState({showIncompleteProjectModal : false})
+    };
+
+    handlePreSubmitCheck = () => {
+        return(
+            this.props.data.Project.isProjectComplete ? this.showProjectSubmitModal() : this.showIncompleteProjectModal()
+        )
+    };
+
     handleSubmitProjectClick() {
-        this.setState( {
-            showloader : true,
-            showRequestModal : false
-        } )
         const user = JSON.parse(sessionStorage.getItem('user'))
         const fetchHeaders = new Headers({
             "Content-Type": "application/json",
@@ -56,6 +70,11 @@ class ReviewAndSubmitPage extends Component {
 
         const fetchBody = JSON.stringify( {
             "ProjectID" : (this.props.match.params.projectID) ? this.props.match.params.projectID : ''
+        })
+
+        this.setState( {
+            showloader : true,
+            showRequestModal : false
         })
 
         fetch (window.env.api.url + '/project/submit', {
@@ -94,7 +113,6 @@ class ReviewAndSubmitPage extends Component {
         return(
             <div>
                 <div className="page-container">
-
                     <LoadingImg
                         show={this.state.showloader}
                     />
@@ -110,6 +128,11 @@ class ReviewAndSubmitPage extends Component {
                         handleSubmitProjectClick={this.handleSubmitProjectClick}
                     />
 
+                   <IncompleteProjectModal 
+                        handleClose={this.hideIncompleteProjectModal}
+                        show={this.state.showIncompleteProjectModal}
+                    />
+
                     <div className="row no-gutters step-description review">
                         <div className="col-11">
                             <h2>Step <span className="count-circle">7</span> Review and Submit</h2>
@@ -117,7 +140,7 @@ class ReviewAndSubmitPage extends Component {
                         </div>
                         <div className="col-1">
                             { (parseInt(this.props.data.Project.projectStatusID) === 1) ? 
-                                <button type="button" className="btn btn-primary float-right" onClick={this.showProjectSubmitModal}>Submit Project</button>
+                                <button type="button" className="btn btn-primary float-right" onClick={this.handlePreSubmitCheck}>Submit Project</button>
                                 : 
                                 null
                             }
@@ -249,8 +272,8 @@ class ReviewAndSubmitPage extends Component {
                                 <button className="btn btn-secondary align-content-end float-right" onClick={() => this.handleProjectCategoryClick('/territorialRights/')}>
                                     <i className="material-icons">edit</i>  Edit
                                 </button>
-                        :
-                                null
+                            :
+                            null
                         }
 
                     </div>
@@ -268,39 +291,40 @@ class ReviewAndSubmitPage extends Component {
             <div className="page-container review-section">
                 <div className="row no-gutters">
                     <div className="col-10 justify-content-start">
-                    <h2>Blocking Polices</h2>
-                </div>
-                <div className="col-2 justify-content-end">
-                    { (parseInt(this.props.data.Project.projectStatusID) === 1) ? 
-                        <button className="btn btn-secondary align-content-end float-right" onClick={() => this.handleProjectCategoryClick('/blockingPolicies/')}>
-                            <i className="material-icons">edit</i>  Edit
-                        </button>
+                        <h2>Blocking Polices</h2>
+                    </div>
+                    <div className="col-2 justify-content-end">
+                        { (parseInt(this.props.data.Project.projectStatusID) === 1) ? 
+                            <button className="btn btn-secondary align-content-end float-right" onClick={() => this.handleProjectCategoryClick('/blockingPolicies/')}>
+                                <i className="material-icons">edit</i>  Edit
+                            </button>
 
-                        :
+                            :
 
-                        null
-                    }
-                </div>
-                <div className="col-12">
-                    <br />
-                    <div className="review-card">
-                        <BlockingPoliciesDataTable 
-                            data={this.props.data}
-                        />
+                            null
+                        }
+                    </div>
+                    <div className="col-12">
+                        <br />
+                        <div className="review-card">
+                            <BlockingPoliciesDataTable 
+                                data={this.props.data}
+                            />
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-          
-            <div className="row d-flex no-gutters">
-                <div className="col-12 align-content-end submit-project">
-                { (parseInt(this.props.data.Project.projectStatusID) === 1) ? 
-                    <button type="button" className="btn btn-primary float-right" onClick={this.showProjectSubmitModal}>Submit Project</button>
-                    : 
-                    null
-                 }
+            
+                <div className="row d-flex no-gutters">
+                    <div className="col-12 align-content-end submit-project">
+                        { 
+                            (parseInt(this.props.data.Project.projectStatusID) === 1) ? 
+                                <button type="button" className="btn btn-primary float-right" onClick={this.handlePreSubmitCheck}>Submit Project</button>
+                            : 
+                            null
+                        }
+                    </div>
                 </div>
-            </div>
             </div>
         )
     }
