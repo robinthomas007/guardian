@@ -43,7 +43,7 @@ export default withRouter(class Header extends Component {
                     stepComplete : true,
                     preRelease : true,
                     stepValidation : 'releaseInfoStatus',
-                    isActive : false
+                    isActive : false,
                 },
                 {
                     description : 'Contacts',
@@ -52,7 +52,8 @@ export default withRouter(class Header extends Component {
                     stepComplete : false,
                     preRelease : true,
                     stepValidation : 'projectContactsStatus',
-                    isActive : false
+                    isActive : false,
+
                 },
                 {
                     description : 'Audio Files',
@@ -61,7 +62,7 @@ export default withRouter(class Header extends Component {
                     stepComplete : false,
                     preRelease : false,
                     stepValidation : 'audioFilesStatus',
-                    isActive : false
+                    isActive : false,
                 },
                 {
                     description : 'Track Info',
@@ -70,7 +71,8 @@ export default withRouter(class Header extends Component {
                     stepComplete : false,
                     preRelease : true,
                     stepValidation : 'trackInfoStatus',
-                    isActive : false
+                    isActive : false,
+
                 },
                 {
                     description : 'Rights',
@@ -79,7 +81,8 @@ export default withRouter(class Header extends Component {
                     stepComplete : false,
                     preRelease : false,
                     stepValidation : 'territorialRightsStatus',
-                    isActive : false
+                    isActive : false,
+
                 },
                 {
                     description : 'Blocking',
@@ -88,7 +91,8 @@ export default withRouter(class Header extends Component {
                     stepComplete : false,
                     preRelease : true,
                     stepValidation : 'blockingPoliciesStatus',
-                    isActive : false
+                    isActive : false,
+
                 },
                 {
                     description : 'Review',
@@ -97,7 +101,8 @@ export default withRouter(class Header extends Component {
                     stepComplete : false,
                     preRelease : true,
                     stepValidation : 'projectSubmitStatus',
-                    isActive : false
+                    isActive : false,
+
                 }
             ]
         }
@@ -121,47 +126,70 @@ export default withRouter(class Header extends Component {
 
     getStepIcon = (navLink, navIndex) => {
         const stepValidation = parseInt(this.props.projectData.Project[navLink.stepValidation]);
-        if(!stepValidation || stepValidation === 1) {
+        if(!stepValidation || parseInt(stepValidation) === 1) {
             return(navIndex + 1)
-        } else if(stepValidation === 2) {
+        } else if(parseInt(stepValidation) === 2) {
             return(<i className="material-icons">block</i>)
         } else {
             return(<i className="material-icons">check</i>)
         }
     };
 
-    getPreviousLinkStepValidation = (navLink, i) => {
-        const navToUse = ( this.isPreReleaseDate() ? this.state.navSteps : this.state.navSteps.filter(step => (step.preRelease) ))
-        const pathName = this.props.location.pathname.split('/')[1];
-        
-        for(let i=0; i<navToUse.length; i++) {
-            if (navToUse[i].path === '/' + pathName + '/') {
-                //alert(i)
-            }
-        }
-    }
+    setNavClickable = (e, navLink) => {
+        return (
+            parseInt(
+                this.props.projectData.Project[navLink.stepValidation]
+            ) < 2 ||  !this.props.projectData.Project[navLink.stepValidation] && navLink.stepValidation !== 'releaseInfoStatus' ? e.preventDefault() : null
+        )
+    };
+
+    setReviewSubmitNavClickable = (e, navLink) => {
+        return (
+            (!this.props.projectData.Project.projectID) ? e.preventDefault() : null
+        )
+    };
+
+
 
     getNavLinks = () => {
+        //alert(this.props.pagePath)
         const isPreRelease = this.isPreReleaseDate();
         const navToUse = ( isPreRelease ? this.state.navSteps : this.state.navSteps.filter(step => (step.preRelease) ))
         return(
             <ul className="d-flex justify-content-center align-items-stretch">
                 {
                     navToUse.map( (navLink, i) => {
-                    return(
-                        <React.Fragment key={i}>
-                            <li key={i} id={"step-" + (i + 1)}>
-                                <NavLink onClick={null} className={null} to={{pathname: navLink.path + ((this.state.Project && this.state.Project.projectID) ? this.state.Project.projectID : '')}}>
-                                    <span className="step-description text-nowrap">{navLink.description}</span>
-                                    <span className="step">
-                                        { (this.props.projectData.Project) ?  this.getStepIcon(navLink, i) : null } 
-                                    </span>
-                                    <span className="step-arrow"></span>
-                                </NavLink>
-                            </li>
-                            { (i < navToUse.length - 1) ? <li className="step-bar"><span></span></li> : null}
-                        </React.Fragment>
-                    )
+                        if(navLink.stepValidation !== 'projectSubmitStatus') {
+                            return(
+                                <React.Fragment key={i}>
+                                    <li key={i} id={"step-" + (i + 1)}>
+                                        <NavLink onClick={(e) => this.setNavClickable(e, navLink)} className={null} to={{pathname: navLink.path + ((this.state.Project && this.state.Project.projectID) ? this.state.Project.projectID : '')}}>
+                                            <span className="step-description text-nowrap">{navLink.description}</span>
+                                            <span className="step ">
+                                                { (this.props.projectData.Project) ?  this.getStepIcon(navLink, i) : null } 
+                                            </span>
+                                            <span className="step-arrow "></span>
+                                        </NavLink>
+                                    </li>
+                                    { (i < navToUse.length - 1) ? <li className="step-bar "><span></span></li> : null}
+                                </React.Fragment>
+                            )
+                        } else {
+                            return(
+                                <React.Fragment key={i}>
+                                    <li key={i} id={"step-" + (i + 1)}>
+                                        <NavLink onClick={(e) => this.setReviewSubmitNavClickable(e, navLink)} className={null} to={{pathname: navLink.path + ((this.state.Project && this.state.Project.projectID) ? this.state.Project.projectID : '')}}>
+                                            <span className="step-description text-nowrap">{navLink.description}</span>
+                                            <span className="step ">
+                                                { (this.props.projectData.Project) ?  this.getStepIcon(navLink, i) : null } 
+                                            </span>
+                                            <span className="step-arrow "></span>
+                                        </NavLink>
+                                    </li>
+                                    { (i < navToUse.length - 1) ? <li className="step-bar "><span></span></li> : null}
+                                </React.Fragment>
+                            )
+                        }
                 })}
             </ul>
         )        
