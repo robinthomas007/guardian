@@ -143,54 +143,43 @@ export default withRouter(class Header extends Component {
         )
     };
 
-    setReviewSubmitNavClickable = (e, navLink) => {
-        return (
-            (!this.props.projectData.Project.projectID) ? e.preventDefault() : null
-        )
+    getNavIndex = (nav) => {
+        let navMatch = null;
+        for( var i=0; i<this.state.navSteps.length; i++) {
+            if(this.props.pagePath.split('/')[1].toLowerCase() === this.state.navSteps[i].path.split('/')[1].toLowerCase()) {
+                navMatch = i;
+                break;
+            }
+        }
+        return(navMatch)
     };
-
-
 
     getNavLinks = () => {
         //alert(this.props.pagePath)
         const isPreRelease = this.isPreReleaseDate();
         const navToUse = ( isPreRelease ? this.state.navSteps : this.state.navSteps.filter(step => (step.preRelease) ))
+        const activeNav = this.getNavIndex();
+
         return(
             <ul className="d-flex justify-content-center align-items-stretch">
                 {
                     navToUse.map( (navLink, i) => {
-                        if(navLink.stepValidation !== 'projectSubmitStatus') {
-                            return(
-                                <React.Fragment key={i}>
-                                    <li key={i} id={"step-" + (i + 1)}>
-                                        <NavLink onClick={(e) => this.setNavClickable(e, navLink)} className={null} to={{pathname: navLink.path + ((this.state.Project && this.state.Project.projectID) ? this.state.Project.projectID : '')}}>
-                                            <span className="step-description text-nowrap">{navLink.description}</span>
-                                            <span className="step ">
-                                                { (this.props.projectData.Project) ?  this.getStepIcon(navLink, i) : null } 
-                                            </span>
-                                            <span className="step-arrow "></span>
-                                        </NavLink>
-                                    </li>
-                                    { (i < navToUse.length - 1) ? <li className="step-bar "><span></span></li> : null}
-                                </React.Fragment>
-                            )
-                        } else {
-                            return(
-                                <React.Fragment key={i}>
-                                    <li key={i} id={"step-" + (i + 1)}>
-                                        <NavLink onClick={(e) => this.setReviewSubmitNavClickable(e, navLink)} className={null} to={{pathname: navLink.path + ((this.state.Project && this.state.Project.projectID) ? this.state.Project.projectID : '')}}>
-                                            <span className="step-description text-nowrap">{navLink.description}</span>
-                                            <span className="step ">
-                                                { (this.props.projectData.Project) ?  this.getStepIcon(navLink, i) : null } 
-                                            </span>
-                                            <span className="step-arrow "></span>
-                                        </NavLink>
-                                    </li>
-                                    { (i < navToUse.length - 1) ? <li className="step-bar "><span></span></li> : null}
-                                </React.Fragment>
-                            )
-                        }
-                })}
+                        return(
+                            <React.Fragment key={i}>
+                                <li key={i} id={"step-" + (i + 1)}>
+                                    <NavLink onClick={ (e) => this.setNavClickable(e, navLink) } to={{pathname: navLink.path + ((this.state.Project && this.state.Project.projectID) ? this.state.Project.projectID : '')}}>
+                                        <span className="step-description text-nowrap">{navLink.description}</span>
+                                        <span className={(activeNav && activeNav > i) ? 'step past' : 'step'}>
+                                            { (this.props.projectData.Project) ?  this.getStepIcon(navLink, i) : null } 
+                                        </span>
+                                        <span className="step-arrow "></span>
+                                    </NavLink>
+                                </li>
+                                { (i < navToUse.length - 1) ? <li className={(activeNav && activeNav > i) ? 'step-bar past' : 'step-bar'}><span></span></li> : null}
+                            </React.Fragment>
+                        )
+                    })
+                }
             </ul>
         )        
     };
