@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Form, Button, Spinner } from 'react-bootstrap';
-import LabelsDropDown from 'components/modals/pageComponents/LabelsDropDown';
+// import LabelsDropDown from 'components/modals/pageComponents/LabelsDropDown';
 import ReleasingLabelsInput from '../../../components/pages/ReleaseInformation/pageComponents/ReleasingLabelsInput.js';
 import { isFormValid } from '../../../components/Utils';
 import Noty from 'noty';

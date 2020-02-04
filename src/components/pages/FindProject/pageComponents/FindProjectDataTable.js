@@ -151,18 +151,8 @@ class FindProjectDataTable extends Component {
         )
     };
 
-    renderProjects() {
-        if(this.props.data.Projects) {
-            const tableRows = this.props.data.Projects.map( (project, i) => {
-                return(
-                    <tr className="d-flex w-100" key={i}>
-                        { (this.props.userData.IsAdmin) ? this.getAdminButtons(project)  : null}
-                        <td onClick={ () => this.handleRowClick(project.projectID) } className="col-1 text-center">{convertToLocaleTime(project.projectLastModified)}</td>
-                        <td onClick={ () => this.handleRowClick(project.projectID) } className="col-2">{project.projectTitle}</td>
-                        <td onClick={ () => this.handleRowClick(project.projectID) } className="col-2">{project.projectArtistName}</td>
-                        <td onClick={ () => this.handleRowClick(project.projectID) } className="col-1">{project.projectReleasingLabel}</td>
-                        
-                        <td onClick={ () => (!this.props.userData.IsAdmin) ? this.handleRowClick(project.projectID) : null } className="col-1 status text-nowrap"><span>
+    /**
+     *  <td onClick={ () => (!this.props.userData.IsAdmin) ? this.handleRowClick(project.projectID) : null } className="col-1 status text-nowrap"><span>
                         { 
                             (this.props.userData.IsAdmin) ? 
                                 <AdminStatusDropdown 
@@ -176,6 +166,20 @@ class FindProjectDataTable extends Component {
                                 project.status
                         }
                         </span></td>
+     *
+     * @returns
+     * @memberof FindProjectDataTable
+     */
+    renderProjects() {
+        if(this.props.data.Projects) {
+            const tableRows = this.props.data.Projects.map( (project, i) => {
+                return(
+                    <tr className="d-flex w-100" key={i}>
+                        { (this.props.userData.IsAdmin) ? this.getAdminButtons(project)  : null}
+                        <td onClick={ () => this.handleRowClick(project.projectID) } className="col-1 text-center">{convertToLocaleTime(project.projectLastModified)}</td>
+                        <td onClick={ () => this.handleRowClick(project.projectID) } className="col-2">{project.projectTitle}</td>
+                        <td onClick={ () => this.handleRowClick(project.projectID) } className="col-2">{project.projectArtistName}</td>
+                        <td onClick={ () => this.handleRowClick(project.projectID) } className="col-1">{project.projectReleasingLabel}</td>
                         <td onClick={ () => this.handleRowClick(project.projectID) } className="status text-center">{this.checkProjectStepStatus(project.isReleaseInfoComplete)}</td>
                         <td onClick={ () => this.handleRowClick(project.projectID) } className="status text-center">{this.checkProjectStepStatus(project.isProjectContactsComplete)}</td>
                         <td onClick={ () => this.handleRowClick(project.projectID) } className="status text-center">{this.checkProjectStepStatus(project.isAudioFilesComplete)}</td>
@@ -189,6 +193,16 @@ class FindProjectDataTable extends Component {
         }
     };
 
+    /**
+     * <th className="col-1 sortable"
+        onMouseOver={ (e, columnID) => this.handleMouseOver(e, 'status')}
+        onMouseOut={ (e, columnID) => this.handleMouseOut(e, 'status')}
+        onClick={(id) => this.handleTableSort('status')}
+        >Status{this.handleSortDisplay('status')}<i className={(this.state.activeHover === 'status') ? "material-icons" : "material-icons d-none"}>arrow_drop_up</i></th>
+                      
+     *
+     * @memberof FindProjectDataTable
+     */
     getDataTable = () => {
         return(
                 <thead>
@@ -216,11 +230,6 @@ class FindProjectDataTable extends Component {
                             onMouseOut={ (e, columnID) => this.handleMouseOut(e, 'label')}
                             onClick={(id) => this.handleTableSort('label')}
                         >Label{this.handleSortDisplay('label')}<i className={(this.state.activeHover === 'label') ? "material-icons" : "material-icons d-none"}>arrow_drop_up</i></th>
-                        <th className="col-1 sortable"
-                            onMouseOver={ (e, columnID) => this.handleMouseOver(e, 'status')}
-                            onMouseOut={ (e, columnID) => this.handleMouseOut(e, 'status')}
-                            onClick={(id) => this.handleTableSort('status')}
-                        >Status{this.handleSortDisplay('status')}<i className={(this.state.activeHover === 'status') ? "material-icons" : "material-icons d-none"}>arrow_drop_up</i></th>
                         <th className="status text-center">Project</th>
                         <th className="status text-center">Contacts</th>
                         <th className="status text-center">Audio</th>

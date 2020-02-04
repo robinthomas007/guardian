@@ -40,10 +40,10 @@ class LabelsDropDown extends Component {
 
     render() {
         return (
-            <>
+            <div>
                 <Form.Label id="labelName">Label/Company</Form.Label>
                 <Field name={this.props.name} component={LabelSelect} {...this.props} />
-            </>
+            </div>
         );
     }
 }
