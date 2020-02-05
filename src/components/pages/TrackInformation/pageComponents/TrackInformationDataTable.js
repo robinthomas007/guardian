@@ -29,12 +29,13 @@ class TrackInformationDataTable extends Component {
                 <th className="text-center">#</th>
                 <th className="text-center"></th>
                 <th className="text-center"></th>
-                <th>Track Title <span class="required-ind"><i>(Required)</i></span></th>
-                <th>ISRC <i>(Optional) </i>&nbsp;
+                <th>Track Title <span className="required-ind"><i>(Required)</i></span></th>
+                <th>ISRC <span className="required-ind"><i>(Required)</i></span>&nbsp;
                     <ToolTip  tabIndex='-1' 
                         message='You may include ISRC here if known, necessary for completion of Step 3 (Audio Files).'
                      />
                 </th>
+                <th>Artist <span className="required-ind"><i>(Required)</i></span></th>
                 <th className="text-center">Single</th>
                 <th className="release-date-col">Release Date &nbsp;  
                     <ToolTip  tabIndex='-1' 
@@ -177,8 +178,24 @@ class TrackInformationDataTable extends Component {
                                 type="text" 
                                 id={'isrc'} 
                                 value={track.isrc}
+                                className={'requiredInput'}
                                 onChange={(evt) => this.handleChange(evt, track, i)}
                             ></Form.Control>
+                            <div className="invalid-tooltip">
+                                Invalid Isrc
+                            </div>
+                        </td>
+                        <td>
+                            <Form.Control 
+                                type="text" 
+                                id={'artist'} 
+                                value={track.artist}
+                                className={'requiredInput'}
+                                onChange={(evt) => this.handleChange(evt, track, i)}
+                            ></Form.Control>
+                            <div className="invalid-tooltip">
+                                Invalid Artist name
+                            </div>
                         </td>
                         <td className="text-center">
                             <label className="custom-checkbox">

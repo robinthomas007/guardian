@@ -83,7 +83,7 @@ class FindProjectPage extends Component {
                 "Authorization" : sessionStorage.getItem('accessToken')
             }
 		)
-
+		this.setState( { showLoader : true } )
 		const fetchBody = JSON.stringify( {
 			"SearchCriteria" : this.state.searchCriteria,
 		})
@@ -106,7 +106,8 @@ class FindProjectPage extends Component {
 				}
 
 				this.setState( { 
-					project : responseJSON 
+					project : responseJSON,
+					showLoader : false 
 				}) 
             }
         )
