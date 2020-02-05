@@ -114,34 +114,35 @@ export default withAuth(class Content extends Component {
 
   handleProjectDataLoad = (pagePath) => {
 
-    const user = JSON.parse(sessionStorage.getItem('user'))
+    if(pagePath && pagePath !== '') {
+        const user = JSON.parse(sessionStorage.getItem('user'))
 
-    const fetchHeaders = new Headers(
-        {
-            "Content-Type": "application/json",
-            "Authorization" : sessionStorage.getItem('accessToken')
-        }
-    )
+        const fetchHeaders = new Headers({
+          "Content-Type": "application/json",
+          "Authorization" : sessionStorage.getItem('accessToken')
+        })
 
-    const fetchBody = JSON.stringify( {
-        "PagePath" : (pagePath) ? pagePath : '',
-        "ProjectID" : (this.state.projectID) ? this.state.projectID : ''
-    })
+        const fetchBody = JSON.stringify( {
+            "PagePath" : pagePath,
+            "ProjectID" : (this.state.projectID) ? this.state.projectID : ''
+        })
 
-    fetch (window.env.api.url + '/project/review', {
-        method : 'POST',
-        headers : fetchHeaders,
-        body : fetchBody
-    }).then (response => {
-        return(response.json());
-    }).then (responseJSON => {
-        return ( (this.state.project !== responseJSON) ? this.setState( { project : responseJSON } ) : '')
-    }).catch(
-        error => {
-            console.error(error);
-            this.setState( {showloader : false} )
-        }
-    );
+        fetch (window.env.api.url + '/project/review', {
+            method : 'POST',
+            headers : fetchHeaders,
+            body : fetchBody
+        }).then (response => {
+            return(response.json());
+        }).then (responseJSON => {
+            return ( (this.state.project !== responseJSON) ? this.setState( { project : responseJSON } ) : '')
+        }).catch(
+            error => {
+                console.error(error);
+                this.setState( {showloader : false} )
+            }
+        );
+    }
+ 
 }
 
   updateHistory(projectID) {
@@ -187,6 +188,8 @@ export default withAuth(class Content extends Component {
       if(sessionStorage.getItem('user') && this.state.serverTimeDate !== JSON.parse(sessionStorage.getItem('user')).UtcDateTime) {
           this.setState( { serverTimeDate : JSON.parse(sessionStorage.getItem('user')).UtcDateTime } ) 
       }
+
+      //alert(this.props.location.pathname)
   }
 
   render() {
@@ -204,6 +207,7 @@ export default withAuth(class Content extends Component {
               updateHistory={this.updateHistory}
               clearProject={this.clearProject}
               handleLogoutClick={this.handleLogoutClick}
+
             />
 
             <div className={this.state.pageViewCompact ? "row d-flex no-gutters content compact" : "row d-flex no-gutters content"} >
