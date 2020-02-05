@@ -143,10 +143,10 @@ export default withRouter(class Header extends Component {
         )
     };
 
-    getNavIndex = (nav) => {
+    getNavIndex = (navToUse) => {
         let navMatch = null;
-        for( var i=0; i<this.state.navSteps.length; i++) {
-            if(this.props.pagePath.split('/')[1].toLowerCase() === this.state.navSteps[i].path.split('/')[1].toLowerCase()) {
+        for( var i=0; i<navToUse.length; i++) {
+            if(this.props.pagePath.split('/')[1].toLowerCase() === navToUse[i].path.split('/')[1].toLowerCase()) {
                 navMatch = i;
                 break;
             }
@@ -158,7 +158,7 @@ export default withRouter(class Header extends Component {
         //alert(this.props.pagePath)
         const isPreRelease = this.isPreReleaseDate();
         const navToUse = ( isPreRelease ? this.state.navSteps : this.state.navSteps.filter(step => (step.preRelease) ))
-        const activeNav = this.getNavIndex();
+        const activeNav = this.getNavIndex(navToUse);
 
         return(
             <ul className="d-flex justify-content-center align-items-stretch">
@@ -175,7 +175,7 @@ export default withRouter(class Header extends Component {
                                         <span className="step-arrow "></span>
                                     </NavLink>
                                 </li>
-                                { (i < navToUse.length - 1) ? <li className={(activeNav && activeNav > i) ? 'step-bar past' : 'step-bar'}><span></span></li> : null}
+                                { (i < navToUse.length - 1) ? <li className={(activeNav && ( parseInt(activeNav) ) > i) ? 'step-bar past' : 'step-bar'}><span></span></li> : null}
                             </React.Fragment>
                         )
                     })
