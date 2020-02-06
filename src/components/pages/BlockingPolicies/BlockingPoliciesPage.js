@@ -159,7 +159,8 @@ class BlockingPoliciesPage extends Component {
 		);
     };
 
-    handleSubmit = () => {
+    handleSubmit = (e) => {
+        const saveAndContinue = (e.target.classList.contains('saveAndContinueButton')) ? true : false
         this.setState( { showLoader : true } )
         const user = JSON.parse(sessionStorage.getItem('user'))
         const fetchHeaders = new Headers(
@@ -187,7 +188,7 @@ class BlockingPoliciesPage extends Component {
                 if(responseJSON.errorMessage) {
                     this.showNotSavedNotification()
                 } else {
-                    this.showNotification(null, this.props.match.params.projectID)
+                    this.showNotification(null, this.props.match.params.projectID, saveAndContinue)
                     this.props.setHeaderProjectData(this.state.project)
                 }
                 this.setState( { showLoader : false } )
@@ -300,7 +301,7 @@ class BlockingPoliciesPage extends Component {
         }
     };
 
-    showNotification(e, projectID){
+    showNotification(e, projectID, saveAndContinue){
         new Noty ({
             type: 'success',
             id:'blockingSaved',
@@ -308,11 +309,13 @@ class BlockingPoliciesPage extends Component {
             theme: 'bootstrap-v4',
             layout: 'top',
             timeout: '3000'
-        }).on('afterClose', ()  =>
-            this.props.history.push({
-                pathname : '/reviewSubmit/' + projectID
-            })
-        ).show()
+        }).on('afterClose', ()  => {
+            if(saveAndContinue) {
+                this.props.history.push({
+                    pathname : '/reviewSubmit/' + projectID
+                })
+            }
+        }).show()
     };
 
     showNotSavedNotification(e){
@@ -401,8 +404,8 @@ class BlockingPoliciesPage extends Component {
 
                 <div className="row save-buttons">
                     <div className="col-12">
-                        <button tabIndex='5+' id="contactsSaveButton" type="button" className="btn btn-secondary" onClick={this.handleSubmit}>Save</button>
-                        <button tabIndex='6+' id="contactsSaveContButton" type="button" className="btn btn-primary" onClick={this.handleSubmit}>Request Approval</button>
+                        <button tabIndex='5+' id="contactsSaveButton" type="button" className="btn btn-secondary saveButton" onClick={(e) => this.handleSubmit(e)}>Save</button>
+                        <button tabIndex='6+' id="contactsSaveContButton" type="button" className="btn btn-primary saveAndContinueButton" onClick={(e) => this.handleSubmit(e)}>Request Approval</button>
                     </div>
                 </div>
             </div>

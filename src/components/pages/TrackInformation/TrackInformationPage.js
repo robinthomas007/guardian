@@ -125,7 +125,7 @@ class TrackInformationPage extends Component {
         );
     }
 
-    showNotification(forward){
+    showNotification(saveAndContinue){
         new Noty ({
             type: 'success',
             id:'tracksSaved',
@@ -134,14 +134,17 @@ class TrackInformationPage extends Component {
             layout: 'top',
             timeout: '3000'
         }).on('afterClose', ()  => {
-            if(formatDateToYYYYMMDD(convertToLocaleTime(this.props.serverTimeDate)) > formatDateToYYYYMMDD(this.state.project.Project.projectReleaseDate)) {
-                this.props.history.push({
-                    pathname : '/blockingPolicies/' + this.props.match.params.projectID
-                })
-            } else {
-                this.props.history.push({
-                    pathname : '/territorialRights/' + this.props.match.params.projectID
-                })
+
+            if(saveAndContinue) {
+                if(formatDateToYYYYMMDD(convertToLocaleTime(this.props.serverTimeDate)) > formatDateToYYYYMMDD(this.state.project.Project.projectReleaseDate)) {
+                    this.props.history.push({
+                        pathname : '/blockingPolicies/' + this.props.match.params.projectID
+                    })
+                } else {
+                    this.props.history.push({
+                        pathname : '/territorialRights/' + this.props.match.params.projectID
+                    })
+                }
             }
         }).show()
     };
@@ -187,13 +190,13 @@ class TrackInformationPage extends Component {
 
     handleSubmit(e) {
 
+        const saveAndContinue = (e.target.classList.contains('saveAndContinueButton')) ? true : false
+
         if (isFormValid()) {
             this.setState({ showloader : true})
 
             const user = JSON.parse(sessionStorage.getItem('user'))
-            const forward = (e.target.classList.contains('saveContinueButton')) ? true : false;
-
-            const fetchHeaders = new Headers(
+             const fetchHeaders = new Headers(
                 {
                     "Content-Type": "application/json",
                     "Authorization" : sessionStorage.getItem('accessToken')
@@ -220,7 +223,7 @@ class TrackInformationPage extends Component {
             ).then (responseJSON =>
                 {
                     this.setState({ showloader : false});
-                    this.showNotification(forward);
+                    this.showNotification(saveAndContinue);
                     this.props.setHeaderProjectData(this.state.project)
                 }
             ).catch(
@@ -461,12 +464,12 @@ class TrackInformationPage extends Component {
                         <button
                             type="button"
                             className="btn btn-secondary saveButton"
-                            onClick={this.handleSubmit}
+                            onClick={(e)=> this.handleSubmit(e)}
                         >Save</button>
                         <button
                             type="button"
-                            className="btn btn-primary saveContinueButton"
-                            onClick={this.handleSubmit}
+                            className="btn btn-primary saveAndContinueButton"
+                            onClick={(e)=> this.handleSubmit(e)}
                         >Save &amp; Continue</button>
                     </div>
                 </section>
