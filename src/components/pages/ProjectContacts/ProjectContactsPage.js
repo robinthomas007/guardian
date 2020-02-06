@@ -74,10 +74,9 @@ class ProjectContactsPage extends Component {
                 this.setState({ showloader : false})
             }
         );
-    }
+    };
 
-
-    showNotification(e, projectID){
+    showNotification(e, projectID, saveAndContinue){
         new Noty ({
             type: 'success',
             id:'projectSaved',
@@ -86,14 +85,16 @@ class ProjectContactsPage extends Component {
             layout: 'top',
             timeout: '3000'
         }).on('afterClose', ()  => {
-            if(formatDateToYYYYMMDD(convertToLocaleTime(this.props.serverTimeDate)) > formatDateToYYYYMMDD(this.state.project.Project.projectReleaseDate)) {
-                this.props.history.push({
-                    pathname : '/trackInformation/' + projectID
-                })
-            } else {
-                this.props.history.push({
-                    pathname : '/audioFiles/' + projectID
-                })
+            if(saveAndContinue) {
+                if(formatDateToYYYYMMDD(convertToLocaleTime(this.props.serverTimeDate)) > formatDateToYYYYMMDD(this.state.project.Project.projectReleaseDate)) {
+                    this.props.history.push({
+                        pathname : '/trackInformation/' + projectID
+                    })
+                } else {
+                    this.props.history.push({
+                        pathname : '/audioFiles/' + projectID
+                    })
+                }
             }
         }).show()
     };
@@ -111,7 +112,7 @@ class ProjectContactsPage extends Component {
 
     handleChange(event) {
         this.setState( {formInputs : { ...this.state.formInputs, [event.target.id] : event.target.value}} )
-    }
+    };
 
     handleChangeByID(id, value) {
         const {formInputs} = this.state;
@@ -119,9 +120,12 @@ class ProjectContactsPage extends Component {
             modifiedFormInput[id] = value;
 
         this.setState({formInputs : modifiedFormInput})
-    }
+    };
 
     isAdditionalContactsValid(e) {
+
+        const saveAndContinue = (e.target.classList.contains('saveAndContinueButton')) ? true : false
+
         const user = JSON.parse(sessionStorage.getItem('user'));
         const fetchHeaders = new Headers({
             "Content-Type": "application/json",
@@ -138,16 +142,16 @@ class ProjectContactsPage extends Component {
             return(response.json());
         }).then (responseJSON => {
             if(responseJSON.IsValid) {
-                this.setState({projectAdditionalContactsValid : ''}, ()=> {this.handleSubmit(e, true)});
+                this.setState({projectAdditionalContactsValid : ''}, (e)=> {this.handleSubmit(e, saveAndContinue)});
             } else {
                 this.setState({projectAdditionalContactsValid : ' is-invalid'});
             }
         }).catch(
             error => console.error(error)
         );
-    }
+    };
 
-    handleSubmit(e, preValidationError) {
+    handleSubmit(e, saveAndContinue) {
 
         const isValidForm = isFormValid();
 
@@ -183,7 +187,7 @@ class ProjectContactsPage extends Component {
                     this.setState({ 
                         project : responseJSON,
                         showloader : false
-                    }, ()=> this.showNotification(e, responseJSON.Project.projectID))
+                    }, ()=> this.showNotification(e, responseJSON.Project.projectID, saveAndContinue))
                     this.props.setHeaderProjectData(responseJSON);
 
                     //clear the local storage
@@ -196,19 +200,19 @@ class ProjectContactsPage extends Component {
                 }
             );
         } 
-    }
+    };
 
     componentDidUpdate = () => {
         if(this.props.match.params.projectID) {
             this.props.setProjectID(this.props.match.params.projectID, this.props.match.url)
         }
-    }
+    };
 
     componentDidMount = () => {
         if(this.props.match.params.projectID) {
             this.props.setProjectID(this.props.match.params.projectID, this.props.match.url)
         }
-    }
+    };
 
     render() {
         return(

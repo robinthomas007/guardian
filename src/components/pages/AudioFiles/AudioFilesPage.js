@@ -113,7 +113,9 @@ class AudioFilesPage extends Component {
         this.setState({discs : modifiedDiscs})
     }
 
-    showNotification(){
+    showNotification(saveAndContinue){
+
+        alert(saveAndContinue)
 
         const projectID = (this.state.projectID) ? (this.state.projectID) : '';
 
@@ -124,11 +126,13 @@ class AudioFilesPage extends Component {
             theme: 'bootstrap-v4',
             layout: 'top',
             timeout: '3000'
-        }).on('afterClose', ()  =>
-            this.props.history.push({
-                pathname : '/trackInformation/' + projectID
-            })
-        ).show()
+        }).on('afterClose', ()  => {
+            if(saveAndContinue) {
+                this.props.history.push({
+                    pathname : '/trackInformation/' + projectID
+                })
+            }
+        }).show()
     };
 
     isValidAudioType(fileName) {
@@ -349,10 +353,10 @@ class AudioFilesPage extends Component {
         return(isValidForm)
     }
 
-    handleDataSubmit() {
-
+    handleDataSubmit(e) {
         const user = JSON.parse(sessionStorage.getItem('user'));
         const projectID = (this.state.projectID) ? (this.state.projectID) : '';
+        const saveAndContinue = (e.target.classList.contains('saveAndContinueButton')) ? true : false
 
         this.setTrackSequence();
 
@@ -382,7 +386,7 @@ class AudioFilesPage extends Component {
             }).then (response => {
                 return(response.json());
             }).then (responseJSON => {
-                this.showNotification();
+                this.showNotification(saveAndContinue);
                 this.setState( {showLoader : false } )
                 this.props.setHeaderProjectData(this.state.project)
             }).catch(
@@ -511,8 +515,8 @@ class AudioFilesPage extends Component {
 
                 <section className="row no-gutters save-buttons">
                     <div className="col-12">
-                        <button type="button" className="btn btn-secondary" onClick={this.handleDataSubmit}>Save</button>
-                        <button type="button" className="btn btn-primary" onClick={this.handleDataSubmit}>Save &amp; Continue</button>
+                        <button type="button" className="btn btn-secondary saveButton" onClick={(e) => this.handleDataSubmit(e)}>Save</button>
+                        <button type="button" className="btn btn-primary saveAndContinueButton" onClick={(e) => this.handleDataSubmit(e)}>Save &amp; Continue</button>
                     </div>
                 </section>
             </div>
