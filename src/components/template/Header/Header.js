@@ -155,8 +155,9 @@ export default withRouter(class Header extends Component {
     };
 
     getNavLinks = () => {
-        //alert(this.props.pagePath)
         const isPreRelease = this.isPreReleaseDate();
+        //If prerelease date is on, We need 7 steps. Otherwise we need only 5 steps. 
+        //This can be differentiate based on the flag preRelease
         const navToUse = ( isPreRelease ? this.state.navSteps : this.state.navSteps.filter(step => (step.preRelease) ))
         const activeNav = this.getNavIndex(navToUse);
 
@@ -237,9 +238,10 @@ export default withRouter(class Header extends Component {
 
     handleNavLoadByStatus = () => {
         const projectStatusID = parseInt(this.props.projectData.Project.projectStatusID)
-        if(!projectStatusID || projectStatusID === 1) {
+        //When project ID is there, we are fetching Navlinks and update.
+        if(projectStatusID && projectStatusID === 1) {
             this.getNavLinks()
-        } else {
+        } else { //If no project ID, We are loading normal header without status and other new project releated settings. 
             this.setState( { 
                 showProgressBar : false, 
                 pageViewCompact : true, 
@@ -261,9 +263,11 @@ export default withRouter(class Header extends Component {
             }, this.handleNavLoadByStatus())
         }
 
+        //Updating project status to show show the status
         if(this.props.projectData.Project !== this.state.Project) {
             this.setState( {
-                Project : this.props.projectData.Project
+                Project : this.props.projectData.Project,
+                showProjectStatus : this.props.projectData.Project.projectStatusID
             }, this.handleNavLoadByStatus()
             )
         }

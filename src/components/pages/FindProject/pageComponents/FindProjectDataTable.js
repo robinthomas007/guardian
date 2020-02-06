@@ -161,7 +161,6 @@ class FindProjectDataTable extends Component {
                         <td onClick={ () => this.handleRowClick(project.projectID) } className="col-2">{project.projectTitle}</td>
                         <td onClick={ () => this.handleRowClick(project.projectID) } className="col-2">{project.projectArtistName}</td>
                         <td onClick={ () => this.handleRowClick(project.projectID) } className="col-1">{project.projectReleasingLabel}</td>
-                        
                         <td onClick={ () => (!this.props.userData.IsAdmin) ? this.handleRowClick(project.projectID) : null } className="col-1 status text-nowrap"><span>
                         { 
                             (this.props.userData.IsAdmin) ? 
@@ -189,6 +188,7 @@ class FindProjectDataTable extends Component {
         }
     };
 
+    
     getDataTable = () => {
         return(
                 <thead>
@@ -217,10 +217,11 @@ class FindProjectDataTable extends Component {
                             onClick={(id) => this.handleTableSort('label')}
                         >Label{this.handleSortDisplay('label')}<i className={(this.state.activeHover === 'label') ? "material-icons" : "material-icons d-none"}>arrow_drop_up</i></th>
                         <th className="col-1 sortable"
-                            onMouseOver={ (e, columnID) => this.handleMouseOver(e, 'status')}
-                            onMouseOut={ (e, columnID) => this.handleMouseOut(e, 'status')}
-                            onClick={(id) => this.handleTableSort('status')}
-                        >Status{this.handleSortDisplay('status')}<i className={(this.state.activeHover === 'status') ? "material-icons" : "material-icons d-none"}>arrow_drop_up</i></th>
+        onMouseOver={ (e, columnID) => this.handleMouseOver(e, 'status')}
+        onMouseOut={ (e, columnID) => this.handleMouseOut(e, 'status')}
+        onClick={(id) => this.handleTableSort('status')}
+        >Status{this.handleSortDisplay('status')}<i className={(this.state.activeHover === 'status') ? "material-icons" : "material-icons d-none"}>arrow_drop_up</i></th>
+                      
                         <th className="status text-center">Project</th>
                         <th className="status text-center">Contacts</th>
                         <th className="status text-center">Audio</th>
