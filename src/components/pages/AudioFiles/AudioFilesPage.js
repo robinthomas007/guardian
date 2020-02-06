@@ -115,8 +115,6 @@ class AudioFilesPage extends Component {
 
     showNotification(saveAndContinue){
 
-        alert(saveAndContinue)
-
         const projectID = (this.state.projectID) ? (this.state.projectID) : '';
 
         new Noty ({
