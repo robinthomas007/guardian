@@ -188,11 +188,38 @@ class TrackInformationPage extends Component {
         }
     };
 
+    isValidIsrc(isrc) {
+        return( (isrc.replace(/\W/g, '').length === 12 || isrc.replace(/\W/g, '').length === 0) ? true : false);
+    }
+
+    setFieldValidation(input, status) {
+        if(status === 'is-invalid') {
+            input.className = input.className.replace('is-invalid', '') + ' is-invalid';
+        } else {
+            input.className = input.className.replace('is-invalid', '');
+        }
+    }
+
+    isValidForm() {
+        let isrcs = document.getElementsByClassName('trackIsrcField');
+        let isValidForm = true;
+
+        for(var i=0; i<isrcs.length; i++) {
+            if(!this.isValidIsrc(isrcs[i].value)) {
+                this.setFieldValidation(isrcs[i], 'is-invalid');
+                isValidForm = false;
+            } else {
+                this.setFieldValidation(isrcs[i], 'is-valid');
+            }
+        }
+        return(isValidForm)
+    }
+
     handleSubmit(e) {
 
         const saveAndContinue = (e.target.classList.contains('saveAndContinueButton')) ? true : false
 
-        if (isFormValid()) {
+        if (isFormValid() && this.isValidForm()) {
             this.setState({ showloader : true})
 
             const user = JSON.parse(sessionStorage.getItem('user'))
