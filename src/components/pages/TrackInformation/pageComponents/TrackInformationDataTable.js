@@ -30,12 +30,12 @@ class TrackInformationDataTable extends Component {
                 <th className="text-center"></th>
                 <th className="text-center"></th>
                 <th>Track Title <span className="required-ind"><i>(Required)</i></span></th>
-                <th>ISRC <span className="required-ind"><i>(Required)</i></span>&nbsp;
+                <th>ISRC &nbsp;
                     <ToolTip  tabIndex='-1' 
                         message='You may include ISRC here if known, necessary for completion of Step 3 (Audio Files).'
                      />
                 </th>
-                <th>Artist <span className="required-ind"><i>(Required)</i></span></th>
+                <th>Artist </th>
                 <th className="text-center">Single</th>
                 <th className="release-date-col">Release Date &nbsp;  
                     <ToolTip  tabIndex='-1' 
@@ -138,6 +138,24 @@ class TrackInformationDataTable extends Component {
         e.dataTransfer.setData("text/html", e.target);
     }
 
+    isValidIsrc(isrc) {
+        return( (isrc.replace(/\W/g, '').length === 12 || isrc.replace(/\W/g, '').length === 0) ? true : false);
+    }
+
+    setFieldValidation(input, status) {
+        if(status === 'is-invalid') {
+            input.className = input.className.replace('is-invalid', '') + ' is-invalid';
+        } else {
+            input.className = input.className.replace('is-invalid', '');
+        }
+    }
+
+    handleOnBlur(e) {
+        if(e.target.className.match('trackIsrcField')) {
+            (this.isValidIsrc(e.target.value)) ? this.setFieldValidation(e.target, 'is-Valid') : this.setFieldValidation(e.target, 'is-invalid')
+        }
+    }
+
     getTrackRows() {
         if(this.props.data.Discs.length > 0 && this.props.data.Discs[this.props.discID].Tracks) {
             let tableRows = this.props.data.Discs[this.props.discID].Tracks.map( (track, i) => {
@@ -178,8 +196,9 @@ class TrackInformationDataTable extends Component {
                                 type="text" 
                                 id={'isrc'} 
                                 value={track.isrc}
-                                className={'requiredInput'}
+                                className={'trackIsrcField'}
                                 onChange={(evt) => this.handleChange(evt, track, i)}
+                                onBlur={ (e) => this.handleOnBlur(e) }
                             ></Form.Control>
                             <div className="invalid-tooltip">
                                 Invalid Isrc
@@ -190,12 +209,8 @@ class TrackInformationDataTable extends Component {
                                 type="text" 
                                 id={'artist'} 
                                 value={track.artist}
-                                className={'requiredInput'}
                                 onChange={(evt) => this.handleChange(evt, track, i)}
                             ></Form.Control>
-                            <div className="invalid-tooltip">
-                                Invalid Artist name
-                            </div>
                         </td>
                         <td className="text-center">
                             <label className="custom-checkbox">
