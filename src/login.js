@@ -26,7 +26,8 @@ export default withAuth(class Login extends Component {
   }
 
   onSuccess(res) {
-    if (res.status === 'SUCCESS') {
+    if (res.status === 'SUCCESS') {  
+      //this.setState({authenticated : true})
       return this.props.auth.redirect({
         sessionToken: res.session.token
       });
@@ -44,7 +45,7 @@ export default withAuth(class Login extends Component {
   render() {
     if (this.state.authenticated === null) return null;
     return this.state.authenticated ?
-      <Redirect to={{ pathname: '/' }}/> :
+      <Redirect to={{ pathname: '/findProject' }}/> :
       <OktaSignInWidget
         baseUrl={this.props.baseUrl}
         onSuccess={this.onSuccess}

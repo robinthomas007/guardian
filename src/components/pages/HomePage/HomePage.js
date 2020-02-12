@@ -48,7 +48,10 @@ export default withAuth(class HomePage extends Component {
       }
     
       async login() {
-        this.props.auth.login('/');
+        //this.props.auth.login('/');
+            return(
+            this.props.history.push('/findProject')
+        )
       }
     
       async logout() {
