@@ -6,7 +6,7 @@ import BlockingPolicySets from '../BlockingPolicies/pageComponents/blockingPolic
 import LoadingImg from '../../ui/LoadingImg';
 import { withRouter } from 'react-router-dom';
 import Noty from 'noty';
-import {formatDateToYYYYMMDD, resetDatePickerByObj} from '../../Utils';
+import {formatDateToYYYYMMDD, convertToLocaleTime, resetDatePickerByObj} from '../../Utils';
 
 class BlockingPoliciesPage extends Component {
 
@@ -329,6 +329,14 @@ class BlockingPoliciesPage extends Component {
         }).show()
     };
 
+    getStepNumber() {
+        let stepNumber = 6
+        if (this.props.serverTimeDate && this.state.project && this.state.project.Project && this.state.project.Project.projectReleaseDate) {
+            stepNumber = formatDateToYYYYMMDD(convertToLocaleTime(this.props.serverTimeDate)) > formatDateToYYYYMMDD(this.state.project.Project.projectReleaseDate) ? 4 : 6;
+        }
+        return stepNumber
+    }
+
     componentDidMount() {
         this.handlePageDataLoad()
     };
@@ -351,7 +359,7 @@ class BlockingPoliciesPage extends Component {
     
                 <div className="row no-gutters step-description">
                     <div className="col-12">
-                        <h2>Step <span className="count-circle">6</span> Post-Release UGC Blocking <span className="option-text">(Optional)</span></h2>
+                        <h2>Step <span className="count-circle">{this.getStepNumber()}</span> Post-Release UGC Blocking <span className="option-text">(Optional)</span></h2>
                         <p>In this OPTIONAL step, you can choose to block content AFTER commercial release until a desired date.  UMG’s default policy is to monetize content on licensed platforms upon commercial release.  Here you can create a post-release block policy set, then drag &amp; drop titles to assign specific tracks to that policy.  This section can only be completed by selecting the Request Approval button below.</p>
                         <p>
                             Note: any post-release policies created in this section require approval and will not be put into effect until approval is granted.  Confirmation of approval will arrive via email.
