@@ -260,10 +260,6 @@ class ReleaseinformationPage extends Component {
 
         const localData = JSON.parse(localStorage.getItem('projectData'))
 
-        if(this.state.formInputs.projectReleaseDateTBD === true) {
-            this.setState({projectReleaseDateDisabled : true})
-        }
-
         if(this.state.formInputs.projectCoverArtBase64Data !== '') {
             this.setCoverArt()
         }
@@ -341,6 +337,9 @@ class ReleaseinformationPage extends Component {
         }).then (response => {
                 return(response.json());
         }).then (responseJSON => {
+            if(responseJSON.Project.projectReleaseDateTBD === true) {
+                this.setState({projectReleaseDateDisabled : true});
+            }
             this.setState({
                 project : responseJSON,
                 formInputs : responseJSON.Project,
