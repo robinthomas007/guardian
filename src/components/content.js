@@ -114,10 +114,9 @@ export default withAuth(class Content extends Component {
 
   handleProjectDataLoad = (pagePath) => {
 
-    if(pagePath && pagePath !== '') {
-        const user = JSON.parse(sessionStorage.getItem('user'))
+    if(pagePath && pagePath !== '' && this.state.projectID != '') {
 
-        const fetchHeaders = new Headers({
+      const fetchHeaders = new Headers({
           "Content-Type": "application/json",
           "Authorization" : sessionStorage.getItem('accessToken')
         })
@@ -147,7 +146,7 @@ export default withAuth(class Content extends Component {
 
   updateHistory(projectID) {
     this.props.history.push('/reviewSubmit/' + projectID);
-    this.setProjectID(projectID);
+    this.setProjectID(projectID,'/reviewSubmit/' + projectID);
   }
 
   setProjectID(pid, pagePath) {
@@ -155,7 +154,8 @@ export default withAuth(class Content extends Component {
         this.setState( {projectID : pid}, ()=> {this.handleProjectDataLoad(pagePath);})
     } else {
       if(this.state.pagePath !== pagePath) {
-        this.setState( {pagePath : pagePath}, ()=> {this.handleProjectDataLoad(pagePath);})
+        // this.setState( {pagePath : pagePath}, ()=> {this.handleProjectDataLoad(pagePath);})
+        this.setState( {pagePath : pagePath})
       }
     }
   }
