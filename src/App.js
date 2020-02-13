@@ -42,8 +42,7 @@ class App extends Component {
                     <Switch>
                         <Route path="/implicit/callback" component={ImplicitCallback} />
                         <Route path="/" exact={true} component={LoginPage} />
-                        {/* <Route path="/login" exact={true} component={Login} /> */}
-                        <Route path='/login' render={() => <Login baseUrl='https://umgpartner.oktapreview.com' />} />
+                        <Route path='/login' render={() => <Login baseUrl={config.okta.base_url} />} />
 
                         <SecureRoute path="/" component={Content} />
                         <SecureRoute path="/" render={() => <Content props={this.props} />} />
