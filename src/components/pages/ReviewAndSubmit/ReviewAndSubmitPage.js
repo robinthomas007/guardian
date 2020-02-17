@@ -9,7 +9,7 @@ import BlockingPoliciesDataTable from '../ReviewAndSubmit/pageComponents/Blockin
 import { withRouter } from 'react-router-dom';
 import SubmitProjectModal from '../../modals/SubmitProjectModal';
 import IncompleteProjectModal from '../../modals/IncompleteProjectModal';
-import { formatDateToYYYYMMDD, convertToLocaleTime } from '../../Utils';
+import { formatDateToYYYYMMDD, convertToLocaleTime, isPreReleaseDate } from '../../Utils';
 
 class ReviewAndSubmitPage extends Component {
 
@@ -113,7 +113,6 @@ class ReviewAndSubmitPage extends Component {
 
     getStepNumber() {
         let stepNumber = 7
-        debugger
         if (this.props.serverTimeDate && this.props.data && this.props.data.Project && this.props.data.Project.projectReleaseDate) {
             stepNumber = formatDateToYYYYMMDD(convertToLocaleTime(this.props.serverTimeDate)) > formatDateToYYYYMMDD(this.props.data.Project.projectReleaseDate) ? 5 : 7;
         }
@@ -248,7 +247,7 @@ class ReviewAndSubmitPage extends Component {
                     </div>
                 
                     <div className="col-2 justify-content-end">
-                        { (parseInt(this.props.data.Project.projectStatusID) === 1) ? 
+                        { (parseInt(this.props.data.Project.projectStatusID) === 1) && isPreReleaseDate(this.props.data) ? 
                             <button className="btn btn-secondary align-content-end float-right" onClick={() => this.handleProjectCategoryClick('/audioFiles/')}>
                                  <i className="material-icons">edit</i>  Edit
                             </button>
@@ -279,7 +278,7 @@ class ReviewAndSubmitPage extends Component {
                     </div>
                     <div className="col-2 justify-content-end">
                         { 
-                            (parseInt(this.props.data.Project.projectStatusID) === 1) ? 
+                            (parseInt(this.props.data.Project.projectStatusID) === 1) && isPreReleaseDate(this.props.data) ? 
                                 <button className="btn btn-secondary align-content-end float-right" onClick={() => this.handleProjectCategoryClick('/territorialRights/')}>
                                     <i className="material-icons">edit</i>  Edit
                                 </button>

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Route, NavLink, withRouter } from "react-router-dom";
 import { withAuth } from '@okta/okta-react';
 import RecentProjectsDrop from "../Header/RecentProjectsDrop";
-import { formatDateToYYYYMMDD, convertToLocaleTime } from '../../Utils.js';
+import { isPreReleaseDate } from '../../Utils.js';
 
 export default withRouter(class Header extends Component {
     constructor(props) {
@@ -108,22 +108,6 @@ export default withRouter(class Header extends Component {
         }
     }
 
-    isPreReleaseDate = () => {
-        const user = JSON.parse(sessionStorage.getItem('user'))
-
-        if(user && this.props.projectData && this.props.projectData.Project && this.props.projectData.Project.projectReleaseDate) {
-            const projectReleaseDate =  parseInt((this.props.projectData.Project.projectReleaseDate) ? new Date(this.props.projectData.Project.projectReleaseDate).getTime() : '');
-            const serverDate =  parseInt((user.UtcDateTime) ? new Date(user.UtcDateTime).getTime() : '');
-            if(!Number.isNaN(projectReleaseDate)) {
-                return ( projectReleaseDate > serverDate)
-            } else {
-                return (true)
-            }
-        } else {
-            return (true)
-        }
-    };
-
     getStepIcon = (navLink, navIndex) => {
         const stepValidation = parseInt(this.props.projectData.Project[navLink.stepValidation]);
         if(!stepValidation || parseInt(stepValidation) === 1) {
@@ -155,7 +139,7 @@ export default withRouter(class Header extends Component {
     };
 
     getNavLinks = () => {
-        const isPreRelease = this.isPreReleaseDate();
+        const isPreRelease = isPreReleaseDate(this.props.projectData);
         //If prerelease date is on, We need 7 steps. Otherwise we need only 5 steps. 
         //This can be differentiate based on the flag preRelease
         const navToUse = ( isPreRelease ? this.state.navSteps : this.state.navSteps.filter(step => (step.preRelease) ))
@@ -272,7 +256,7 @@ export default withRouter(class Header extends Component {
             )
         }
         
-        this.isPreReleaseDate()
+        isPreReleaseDate(this.props.projectData)
         this.props.setPageViewType(this.state.pageViewCompact);
     };
 

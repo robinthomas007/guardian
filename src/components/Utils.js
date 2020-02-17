@@ -94,3 +94,19 @@ export const resetDatePickerByObj = (inputObj) => {
         inputObj.disabled = isDisabled;
     }
 };
+
+export const isPreReleaseDate = (projectData) => {
+    const user = JSON.parse(sessionStorage.getItem('user'))
+
+    if(user && projectData && projectData.Project && projectData.Project.projectReleaseDate) {
+        const projectReleaseDate =  parseInt((projectData.Project.projectReleaseDate) ? new Date(projectData.Project.projectReleaseDate).getTime() : '');
+        const serverDate =  parseInt((user.UtcDateTime) ? new Date(user.UtcDateTime).getTime() : '');
+        if(!Number.isNaN(projectReleaseDate)) {
+            return ( projectReleaseDate > serverDate)
+        } else {
+            return (true)
+        }
+    } else {
+        return (true)
+    }
+};
