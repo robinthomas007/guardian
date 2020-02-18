@@ -355,7 +355,7 @@ export default withRouter(class Header extends Component {
                             null
                         }
                         <li>
-                            <button className="btn btn-sm btn-secondary btn-video" onClick={null} title="Tutorial Video"><i className={'material-icons'}>videocam</i></button>
+                            <button className="btn btn-sm btn-secondary btn-video" onClick={null} title="Tutorial Video"><i className={'material-icons'}>videocam</i> Tutorials</button>
                         </li>
                         <li>
                             <button className="btn btn-sm btn-primary btn-help" onClick={this.handleHelpClick} title="Help/FAQs"><i className={'material-icons'}>contact_support</i> Help</button>
