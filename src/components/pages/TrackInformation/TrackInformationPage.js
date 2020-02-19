@@ -116,6 +116,7 @@ class TrackInformationPage extends Component {
                     project : responseJSON, 
                     showloader : false
                  })
+                 this.props.setHeaderProjectData(this.state.project)
             }
         ).catch(
             error => {
