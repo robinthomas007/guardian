@@ -9,6 +9,7 @@ import BlockingPoliciesDataTable from '../ReviewAndSubmit/pageComponents/Blockin
 import { withRouter } from 'react-router-dom';
 import SubmitProjectModal from '../../modals/SubmitProjectModal';
 import IncompleteProjectModal from '../../modals/IncompleteProjectModal';
+import { formatDateToYYYYMMDD, convertToLocaleTime, isPreReleaseDate } from '../../Utils';
 
 class ReviewAndSubmitPage extends Component {
 
@@ -26,6 +27,7 @@ class ReviewAndSubmitPage extends Component {
         this.hideProjectSubmitModal = this.hideProjectSubmitModal.bind(this);
         this.showIncompleteProjectModal = this.showIncompleteProjectModal.bind(this);
         this.hideIncompleteProjectModal = this.hideIncompleteProjectModal.bind(this);
+        this.getStepNumber = this.getStepNumber.bind(this);
     };
 
     componentDidMount() {
@@ -109,6 +111,14 @@ class ReviewAndSubmitPage extends Component {
         }
     };
 
+    getStepNumber() {
+        let stepNumber = 7
+        if (this.props.serverTimeDate && this.props.data && this.props.data.Project && this.props.data.Project.projectReleaseDate) {
+            stepNumber = formatDateToYYYYMMDD(convertToLocaleTime(this.props.serverTimeDate)) > formatDateToYYYYMMDD(this.props.data.Project.projectReleaseDate) ? 5 : 7;
+        }
+        return stepNumber
+    }
+
     getPage = () => {
         return(
             <div>
@@ -135,7 +145,7 @@ class ReviewAndSubmitPage extends Component {
 
                     <div className="row no-gutters step-description review">
                         <div className="col-11">
-                            <h2>Step <span className="count-circle">7</span> Review and Submit</h2>
+                            <h2>Step <span className="count-circle">{this.getStepNumber()}</span> Review and Submit</h2>
                             <p>In this FINAL step, please take some time to review the project for accuracy before submitting.  <br />Click on any of the sections to return to the corresponding step and make changes.  Once a project is submitted as final in this step, only a Guardian administrator can unlock the project for additional editing.</p>
                         </div>
                         <div className="col-1">
@@ -237,7 +247,7 @@ class ReviewAndSubmitPage extends Component {
                     </div>
                 
                     <div className="col-2 justify-content-end">
-                        { (parseInt(this.props.data.Project.projectStatusID) === 1) ? 
+                        { (parseInt(this.props.data.Project.projectStatusID) === 1) && isPreReleaseDate(this.props.data) ? 
                             <button className="btn btn-secondary align-content-end float-right" onClick={() => this.handleProjectCategoryClick('/audioFiles/')}>
                                  <i className="material-icons">edit</i>  Edit
                             </button>
@@ -268,7 +278,7 @@ class ReviewAndSubmitPage extends Component {
                     </div>
                     <div className="col-2 justify-content-end">
                         { 
-                            (parseInt(this.props.data.Project.projectStatusID) === 1) ? 
+                            (parseInt(this.props.data.Project.projectStatusID) === 1) && isPreReleaseDate(this.props.data) ? 
                                 <button className="btn btn-secondary align-content-end float-right" onClick={() => this.handleProjectCategoryClick('/territorialRights/')}>
                                     <i className="material-icons">edit</i>  Edit
                                 </button>

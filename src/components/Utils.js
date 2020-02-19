@@ -43,17 +43,15 @@ export const isValidEmail = (email) => {
 };
 
 export const convertToLocaleTime = (dateString) => {
-
     const utcDate = new Date(dateString);
           utcDate.setSeconds(0,0);
-    const localTime = utcDate.toLocaleString();
+    const localTime = utcDate.toISOString();
         
-    let dateArr = localTime.split(' ')
+    let dateArr = localTime.split('T')
     let date = dateArr[0].replace(',', '')
     let timeArr =  dateArr[1].split(':')
     let amPm = (dateArr[2]) ? dateArr[2] : ''
     let dateStr = date + ' ' + timeArr[0] + ':' + timeArr[1] + ' ' + amPm
-
     return (dateStr)
 };
 
@@ -94,5 +92,21 @@ export const resetDatePickerByObj = (inputObj) => {
         inputObj.disabled = false;
         inputObj.value = null;
         inputObj.disabled = isDisabled;
+    }
+};
+
+export const isPreReleaseDate = (projectData) => {
+    const user = JSON.parse(sessionStorage.getItem('user'))
+
+    if(user && projectData && projectData.Project && projectData.Project.projectReleaseDate) {
+        const projectReleaseDate =  parseInt((projectData.Project.projectReleaseDate) ? new Date(projectData.Project.projectReleaseDate).getTime() : '');
+        const serverDate =  parseInt((user.UtcDateTime) ? new Date(user.UtcDateTime).getTime() : '');
+        if(!Number.isNaN(projectReleaseDate)) {
+            return ( projectReleaseDate > serverDate)
+        } else {
+            return (true)
+        }
+    } else {
+        return (true)
     }
 };
