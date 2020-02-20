@@ -190,18 +190,6 @@ class BlockingPoliciesPage extends Component {
                     this.showNotSavedNotification()
                 } else {
                     this.showNotification(null, this.props.match.params.projectID, saveAndContinue)
-
-                    //Updating the blocking set completed arrow
-                    if(responseJSON.BlockingPolicySets && responseJSON.BlockingPolicySets.length > 0) {
-                        let project = this.state.Project;
-                        project.Project.blockingPoliciesStatus = 3;
-                        this.setState ({ project})
-                    }else {
-                        let project = this.state.Project;
-                        project.Project.blockingPoliciesStatus = 1;
-                        this.setState ({ project})
-                    }
-                  
                     this.props.setHeaderProjectData(this.state.project)
                 }
                 this.setState( { showLoader : false } )

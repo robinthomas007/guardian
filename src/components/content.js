@@ -154,9 +154,13 @@ export default withAuth(class Content extends Component {
         this.setState( {projectID : pid}, ()=> {this.handleProjectDataLoad(pagePath);})
     } else {
       if(this.state.pagePath !== pagePath) {
-        // this.setState( {pagePath : pagePath}, ()=> {this.handleProjectDataLoad(pagePath);})
-        this.setState( {pagePath : pagePath})
-      }
+        //For blocking, We can't call the review api on the submit and preview page. So we are calling here.
+        if (this.state.pagePath.includes("blockingPolicies")) {
+          this.setState( {pagePath : pagePath}, ()=> {this.handleProjectDataLoad(pagePath);})
+         }else {
+          this.setState( {pagePath : pagePath})
+         }
+      } 
     }
   }
 
