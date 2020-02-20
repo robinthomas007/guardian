@@ -307,6 +307,7 @@ class AudioFilesPage extends Component {
                 } else {
                     this.addDisc();
                 }
+                this.props.setHeaderProjectData(this.state.project)
             }
         )
         .catch(

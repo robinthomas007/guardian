@@ -150,6 +150,7 @@ class BlockingPoliciesPage extends Component {
                     this.addBlockingSet();
                 }
                 this.setState( { showLoader : false } )
+                this.props.setHeaderProjectData(this.state.project)
             }
         ).catch(
             error =>  {

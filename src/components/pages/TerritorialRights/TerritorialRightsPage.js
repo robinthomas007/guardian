@@ -62,6 +62,7 @@ class TerritorialRightsPage extends Component {
                     this.addRightsSet();
                 }
                 this.setState( { showLoader : false } )
+                this.props.setHeaderProjectData(this.state.project)
             }
         )
         .catch(

@@ -345,6 +345,7 @@ class ReleaseinformationPage extends Component {
                 formInputs : responseJSON.Project,
                 showloader : false
             })
+            this.props.setHeaderProjectData(this.state.project)
         }).catch(
             error => {
                 console.error(error)
