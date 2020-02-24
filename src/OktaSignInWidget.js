@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import OktaSignIn from '@okta/okta-signin-widget';
 import '@okta/okta-signin-widget/dist/css/okta-sign-in.min.css';
 import '@okta/okta-signin-widget/dist/css/okta-theme.css';
+import './css/okta-overide.css';
 
 export default class OktaSignInWidget extends Component {
   componentDidMount() {
@@ -10,8 +11,12 @@ export default class OktaSignInWidget extends Component {
     this.widget = new OktaSignIn({
       baseUrl: this.props.baseUrl,
       authParams: {
-        pkce: true
-      }
+        pkce: true,
+      },
+      features: {
+        registration: false,    // Enable self-service registration flow
+        rememberMe:true, 
+      },
     });
     this.widget.renderEl({el}, this.props.onSuccess, this.props.onError);
   }
@@ -21,6 +26,20 @@ export default class OktaSignInWidget extends Component {
   }
 
   render() {
-    return <div />;
+    return <section className="container-fluid landing okta">
+       <section className="logo"><img src="/static/images/guardian-logo.png" /></section>
+
+        <section className="over-bar">
+                    <h1>WELCOME TO THE GUARDIAN</h1>
+                    <h2>CONTENT PROTECTION, LEAK DETECTION &amp; ANTI-PIRACY</h2>
+                    <span>
+                        <button id="loginRequestAccess" className="access btn" onClick={this.showRequestModal}>Request Access</button>
+                        <button id="loginLogIn" className="log-in btn" onClick={this.login}>Log In</button>
+                    </span>
+                </section>
+    
+                <section className="bar"></section>
+                <div className="fade modal-backdrop show"></div>
+    </section>;
   }
 };
