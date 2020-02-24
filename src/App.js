@@ -7,11 +7,16 @@ import '../src/css/bootstrap-v4.css';
 import '../src/css/header.css';
 
 import LoginPage from './components/pages/HomePage/HomePage';
+import Login from './login';
 import Content from './components/content';
 import { Security, SecureRoute, ImplicitCallback } from '@okta/okta-react';
 import { withRouter } from 'react-router';
 
 const config = Object.freeze(window.env);
+
+function onAuthRequired({history}) {
+    history.push('/login');
+  }
 
 class App extends Component {
     componentDidMount() {
@@ -27,11 +32,17 @@ class App extends Component {
     render() {
         return (
             <Router>
-                <Security issuer={config.okta.issuer} client_id={config.okta.client_id} redirect_uri={window.location.origin + '/implicit/callback'}>
+                <Security 
+                issuer={config.okta.issuer} 
+                client_id={config.okta.client_id} 
+                redirect_uri={window.location.origin + '/implicit/callback'}
+                onAuthRequired={onAuthRequired}
+                pkce={true}
+                >
                     <Switch>
                         <Route path="/implicit/callback" component={ImplicitCallback} />
                         <Route path="/" exact={true} component={LoginPage} />
-                        <Route path="/login" exact={true} component={LoginPage} />
+                        <Route path='/login' render={() => <Login baseUrl={config.okta.base_url} />} />
 
                         <SecureRoute path="/" component={Content} />
                         <SecureRoute path="/" render={() => <Content props={this.props} />} />
