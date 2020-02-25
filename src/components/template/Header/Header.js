@@ -223,9 +223,9 @@ export default withRouter(class Header extends Component {
     handleNavLoadByStatus = () => {
         const projectStatusID = parseInt(this.props.projectData.Project.projectStatusID)
         //When project ID is there, we are fetching Navlinks and update.
-        if(projectStatusID && projectStatusID === 1) {
+        if(!projectStatusID || projectStatusID === 1) {
             this.getNavLinks()
-        } else { //If no project ID, We are loading normal header without status and other new project releated settings. 
+        } else { //If no project ID, We are loading normal header without status and other new project releated settings.
             this.setState( { 
                 showProgressBar : false, 
                 pageViewCompact : true, 
