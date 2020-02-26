@@ -242,7 +242,8 @@ export default withRouter(class Header extends Component {
                 pagePath : this.props.pagePath,
                 showProgressBar : !this.handleHeaderViewType(), 
                 pageViewCompact : this.handleHeaderViewType(), 
-                showHeaderSizeToggle : !this.handleHeaderViewType() 
+                showHeaderSizeToggle : !this.handleHeaderViewType(),
+                showProjectStatus :  !this.handleHeaderViewType()
 
             }, this.handleNavLoadByStatus())
         }
@@ -250,8 +251,7 @@ export default withRouter(class Header extends Component {
         //Updating project status to show show the status
         if(this.props.projectData.Project !== this.state.Project) {
             this.setState( {
-                Project : this.props.projectData.Project,
-                showProjectStatus : this.props.projectData.Project.projectStatusID
+                Project : this.props.projectData.Project
             }, this.handleNavLoadByStatus()
             )
         }
