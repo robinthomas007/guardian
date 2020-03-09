@@ -68,30 +68,37 @@ class BlockingPoliciesPage extends Component {
         }       
     }
 
-    getPlatforms = () => {
+    setDefaultMonetizeForPostRelease = (releaseDate) => {
+        if(releaseDate)
+        return formatDateToYYYYMMDD(convertToLocaleTime(this.props.serverTimeDate)) > formatDateToYYYYMMDD(releaseDate);
+        else
+        return false;
+    }
+
+    getPlatforms = (releaseDate=null) => {
         return(
             [
                 {
                     platformName : 'YouTube',
-                    block : true,
+                    block : (this.setDefaultMonetizeForPostRelease(releaseDate)) ? false : true,
                     duration : '',
                     expirationDate : ''
                 },
                 {
                     platformName : 'SoundCloud',
-                    block : true,
+                    block : (this.setDefaultMonetizeForPostRelease(releaseDate)) ? false : true,
                     duration : '',
                     expirationDate : ''
                 },
                 {
                     platformName : 'Facebook',
-                    block : true,
+                    block : (this.setDefaultMonetizeForPostRelease(releaseDate)) ? false : true,
                     duration : '',
                     expirationDate : ''
                 },
                 {
                     platformName : 'Instagram',
-                    block : true,
+                    block : (this.setDefaultMonetizeForPostRelease(releaseDate)) ? false : true,
                     duration : '',
                     expirationDate : ''
                 },
@@ -99,22 +106,22 @@ class BlockingPoliciesPage extends Component {
         )
     }
 
-    getBlockingSet = (set, i) => {
+    getBlockingSet = (set, i, releaseDate=null) => {
         return(
             {
                 blockingPolicySetID : (set.blockingPolicySetID) ? set.blockingPolicySetID : '',
                 sequence :  (set.sequence) ? set.sequence : i,
                 description : 'Set #' + i,
-                platformPolicies : this.getPlatforms(),
+                platformPolicies : this.getPlatforms(releaseDate),
                 tracks : []
             }
         )
     };
 
-    addBlockingSet = () => {
+    addBlockingSet = (releaseDate=null) => {
         const { BlockingPolicySets } = this.state.project;
         let modifiedBlockingPolicySets = BlockingPolicySets;
-            modifiedBlockingPolicySets.push(this.getBlockingSet({}, BlockingPolicySets.length + 1));
+            modifiedBlockingPolicySets.push(this.getBlockingSet({}, BlockingPolicySets.length + 1, releaseDate));
         this.setState({BlockingPolicySets : modifiedBlockingPolicySets});
     }
 
@@ -145,9 +152,18 @@ class BlockingPoliciesPage extends Component {
             }
         ).then (responseJSON => 
             {
+                responseJSON.BlockingPolicySets.map((policies, key) => {
+                   policies.platformPolicies.map((data, index) =>{
+                       if(this.setDefaultMonetizeForPostRelease(responseJSON.Project.projectReleaseDate) && !data.duration && !data.expirationDate) {
+                          responseJSON.BlockingPolicySets[key].platformPolicies[index].block=false;
+                       }
+                   });
+
+
+                });
                 this.setState( {project : responseJSON} )
                 if(!responseJSON.BlockingPolicySets || !responseJSON.BlockingPolicySets.length) {
-                    this.addBlockingSet();
+                    this.addBlockingSet(responseJSON.Project.projectReleaseDate);
                 }
                 this.setState( { showLoader : false } )
                 this.props.setHeaderProjectData(this.state.project)

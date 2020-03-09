@@ -338,7 +338,7 @@ class ReleaseinformationPage extends Component {
                 return(response.json());
         }).then (responseJSON => {
             if(responseJSON.Project.projectReleaseDateTBD === true) {
-                this.setState({projectReleaseDateDisabled : true});
+                this.setState({projectReleaseDateDisabled : true, releaseDateRequired: false});
             }
             this.setState({
                 project : responseJSON,
