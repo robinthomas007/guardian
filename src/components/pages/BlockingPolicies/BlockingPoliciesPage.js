@@ -6,7 +6,7 @@ import BlockingPolicySets from '../BlockingPolicies/pageComponents/blockingPolic
 import LoadingImg from '../../ui/LoadingImg';
 import { withRouter } from 'react-router-dom';
 import Noty from 'noty';
-import {formatDateToYYYYMMDD, convertToLocaleTime, resetDatePickerByObj} from '../../Utils';
+import {formatDateToYYYYMMDD, formatDateToDDMMYYYY, convertToLocaleTime, resetDatePickerByObj} from '../../Utils';
 
 class BlockingPoliciesPage extends Component {
 
@@ -68,11 +68,23 @@ class BlockingPoliciesPage extends Component {
         }       
     }
 
-    setDefaultMonetizeForPostRelease = (releaseDate) => {
-        if(releaseDate)
+    setDefaultMonetizeForPostRelease = (releaseDate=null) => {
+        if(releaseDate && typeof(releaseDate) === 'string')
         return formatDateToYYYYMMDD(convertToLocaleTime(this.props.serverTimeDate)) > formatDateToYYYYMMDD(releaseDate);
         else
         return false;
+    }
+
+    setDefaultBlockedUntil= (releaseDate=null) => {
+        if(releaseDate && typeof(releaseDate) === 'string'){
+            if(formatDateToYYYYMMDD(convertToLocaleTime(this.props.serverTimeDate)) > formatDateToYYYYMMDD(releaseDate)){
+                return "";
+            }
+            else {
+                return formatDateToYYYYMMDD(releaseDate);
+            }
+        }
+        return "";
     }
 
     getPlatforms = (releaseDate=null) => {
@@ -82,25 +94,25 @@ class BlockingPoliciesPage extends Component {
                     platformName : 'YouTube',
                     block : (this.setDefaultMonetizeForPostRelease(releaseDate)) ? false : true,
                     duration : '',
-                    expirationDate : ''
+                    expirationDate : this.setDefaultBlockedUntil(releaseDate)
                 },
                 {
                     platformName : 'SoundCloud',
                     block : (this.setDefaultMonetizeForPostRelease(releaseDate)) ? false : true,
                     duration : '',
-                    expirationDate : ''
+                    expirationDate : this.setDefaultBlockedUntil(releaseDate)
                 },
                 {
                     platformName : 'Facebook',
                     block : (this.setDefaultMonetizeForPostRelease(releaseDate)) ? false : true,
                     duration : '',
-                    expirationDate : ''
+                    expirationDate : this.setDefaultBlockedUntil(releaseDate)
                 },
                 {
                     platformName : 'Instagram',
                     block : (this.setDefaultMonetizeForPostRelease(releaseDate)) ? false : true,
                     duration : '',
-                    expirationDate : ''
+                    expirationDate : this.setDefaultBlockedUntil(releaseDate)
                 },
             ]
         )
@@ -121,7 +133,11 @@ class BlockingPoliciesPage extends Component {
     addBlockingSet = (releaseDate=null) => {
         const { BlockingPolicySets } = this.state.project;
         let modifiedBlockingPolicySets = BlockingPolicySets;
-            modifiedBlockingPolicySets.push(this.getBlockingSet({}, BlockingPolicySets.length + 1, releaseDate));
+
+        if(typeof(releaseDate) === 'object')
+          releaseDate = this.state.project.Project.projectReleaseDate;
+
+        modifiedBlockingPolicySets.push(this.getBlockingSet({}, BlockingPolicySets.length + 1, releaseDate));
         this.setState({BlockingPolicySets : modifiedBlockingPolicySets});
     }
 

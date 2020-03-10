@@ -68,6 +68,19 @@ export const formatDateToYYYYMMDD = (unFormattedDate) => {
     return([year, month, day].join('-'))
 };
 
+export const formatDateToDDMMYYYY = (unFormattedDate) => {
+    if(unFormattedDate) {
+        var d = new Date(unFormattedDate.replace(/-/g, '\/')),
+        month = '' + (d.getMonth() + 1),
+        day = '' + (d.getDate()),
+        year = d.getFullYear();
+
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
+    }
+    return([day, month, year].join('/'))
+};
+
 export const convertUTC = (date) => {
     let newDate = new Date(date)
         newDate.setHours(23,59,59);	
