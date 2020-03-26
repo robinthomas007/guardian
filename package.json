@@ -36,8 +36,8 @@
         "env:test": "NODE_ENV=test node scripts/config.js && cp public/static/config/index.js public/static/config/index.test.js",
         "env:prod": "NODE_ENV=prod node scripts/config.js && cp public/static/config/index.js public/static/config/index.prod.js",
         "allenvs": "npm run env:sandbox && npm run env:prod && npm run env:qa && npm run env:stage && npm run env:test && npm run env:dev",
-        "start": "bash ./scripts/config && react-scripts start",
-        "build": "react-scripts build",
+        "start": "bash ./scripts/config && REACT_APP_CACHE_BUST=$(date +%s) react-scripts start",
+        "build": "REACT_APP_CACHE_BUST=$(date +%s) react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject"
     },
