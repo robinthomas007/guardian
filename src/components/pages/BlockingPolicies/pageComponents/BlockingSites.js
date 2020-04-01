@@ -101,11 +101,11 @@ class BlockingSites extends Component {
                                         tabIndex='-1' 
                                         message='The UMG licensed platform to which the policy applies.'
                                     /></th>
-                        <th className="text-right">Monetize <ToolTip 
+                        <th>Monetize <ToolTip 
                                         tabIndex='-1' 
                                         message='No blocking will take place after commercial release.'
                                     /></th>
-                        <th className="text-right">Block <ToolTip 
+                        <th>Block <ToolTip 
                                         tabIndex='-1' 
                                         message='Blocking will continue after commercial release.'
                                     /></th>
