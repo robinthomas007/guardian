@@ -23,6 +23,7 @@
 .set-card table.table th {
     align-content: center;
     text-align: center;
+    margin: 0 auto;
 }
 
 .set-card table.table td {
@@ -30,6 +31,12 @@
     align-content: center;
     text-align: center;
     border-bottom: none;
+}
+
+.set-card table.table td input[type=text] {
+    align-content: center;
+    text-align: center;
+    margin: 0 auto;
 }
 
 .set-card .track-draggable-area {
