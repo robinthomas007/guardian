@@ -23,6 +23,7 @@
 .set-card table.table th {
     align-content: center;
     text-align: center;
+    text-align: -webkit-center;
     margin: 0 auto;
 }
 
@@ -30,6 +31,7 @@
     vertical-align: middle;
     align-content: center;
     text-align: center;
+    text-align: -webkit-center;
     border-bottom: none;
 }
 
