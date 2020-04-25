@@ -86,8 +86,9 @@ class ProjectContactsPage extends Component {
             layout: 'top',
             timeout: '3000'
         }).on('afterClose', ()  => {
+            
             if(saveAndContinue) {
-                if(formatDateToYYYYMMDD(convertToLocaleTime(this.props.serverTimeDate)) > formatDateToYYYYMMDD(this.state.project.Project.projectReleaseDate)) {
+                if(!this.state.project.Project.projectReleaseDateTBD && formatDateToYYYYMMDD(convertToLocaleTime(this.props.serverTimeDate)) > formatDateToYYYYMMDD(this.state.project.Project.projectReleaseDate)) {
                     this.props.history.push({
                         pathname : '/trackInformation/' + projectID
                     })
