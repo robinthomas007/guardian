@@ -363,11 +363,16 @@ class BlockingPoliciesPage extends Component {
     };
 
     getStepNumber() {
-        let stepNumber = 6
+        let stepNumber;
+        if(this.state.project && this.state.project.Project) {
+            if(this.state.project.Project.projectReleaseDateTBD) {
+               return 6;
+            }
+         }
         if (this.props.serverTimeDate && this.state.project && this.state.project.Project && this.state.project.Project.projectReleaseDate) {
             stepNumber = formatDateToYYYYMMDD(convertToLocaleTime(this.props.serverTimeDate)) > formatDateToYYYYMMDD(this.state.project.Project.projectReleaseDate) ? 4 : 6;
         }
-        return stepNumber
+        return stepNumber;
     }
 
     componentDidMount() {

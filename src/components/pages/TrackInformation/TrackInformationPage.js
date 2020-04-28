@@ -64,6 +64,7 @@ class TrackInformationPage extends Component {
         this.hideReplaceAudioModal = this.hideReplaceAudioModal.bind(this);
         this.showReplaceModal = this.showReplaceModal.bind(this);
         this.handleChildDrag = this.handleChildDrag.bind(this);
+        this.getStepNumber = this.getStepNumber.bind(this);
     }
 
     setActiveDiscTab(tabID) {
@@ -137,7 +138,7 @@ class TrackInformationPage extends Component {
         }).on('afterClose', ()  => {
 
             if(saveAndContinue) {
-                if(formatDateToYYYYMMDD(convertToLocaleTime(this.props.serverTimeDate)) > formatDateToYYYYMMDD(this.state.project.Project.projectReleaseDate)) {
+                if(!this.state.project.Project.projectReleaseDateTBD && formatDateToYYYYMMDD(convertToLocaleTime(this.props.serverTimeDate)) > formatDateToYYYYMMDD(this.state.project.Project.projectReleaseDate)) {
                     this.props.history.push({
                         pathname : '/blockingPolicies/' + this.props.match.params.projectID
                     })
@@ -446,8 +447,18 @@ class TrackInformationPage extends Component {
         } )
     }
 
+    getStepNumber = (serverTimeDate) => {
+        if(this.state.project.Project.projectID){
+           if(this.state.project.Project.projectReleaseDateTBD) {
+              return 4
+           }
+        }
+        const stepNumber = formatDateToYYYYMMDD(convertToLocaleTime(serverTimeDate)) > formatDateToYYYYMMDD(this.state.project.Project.projectReleaseDate) ? 3 : 4;
+        return stepNumber;
+    }
+
     render() {
-        const stepNumber = formatDateToYYYYMMDD(convertToLocaleTime(this.props.serverTimeDate)) > formatDateToYYYYMMDD(this.state.project.Project.projectReleaseDate) ? 3 : 4;
+        
         return (
             <div className="col-10">
 
@@ -465,7 +476,7 @@ class TrackInformationPage extends Component {
 
                 <div className="row no-gutters step-description">
                     <div className="col-12">
-                        <h2>Step <span className="count-circle">{stepNumber}</span> Track Information</h2>
+                        <h2>Step <span className="count-circle">{this.getStepNumber(this.props.serverTimeDate)}</span> Track Information</h2>
                         <p>In this step, you can define a tracklist and sequence and provide metadata for each track including ISRCs and release dates (if different from the album release).  This section must be completed by selecting the Save &amp; Continue button below.</p>
                     </div>
                 </div>
