@@ -26,3 +26,8 @@ yarn-error.log*
 src/config/index.*
 public/static/config/*.js
 
+src/components/modals/HelpVideoModal.js
+src/components/template/Header/Header.js
+src/components/template/Header/Header.js
+src/components/template/Header/Header.js
+*.js
