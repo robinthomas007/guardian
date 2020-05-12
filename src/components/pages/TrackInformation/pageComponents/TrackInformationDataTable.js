@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import {Table, Form } from 'react-bootstrap';
-import { formatDateToYYYYMMDD } from '../../../Utils';
 import ToolTip from '../../../ui/Tooltip';
 import LoadingImgSm from '../../../ui/LoadingImgSm';
+import DatePicker from "react-datepicker";
+
+import "react-datepicker/dist/react-datepicker.css";
 
 class TrackInformationDataTable extends Component {
 
@@ -21,6 +23,7 @@ class TrackInformationDataTable extends Component {
         this.setDatePicker = this.setDatePicker.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleDrag = this.handleDrag.bind(this);
+        this.handleDateChange =  this.handleDateChange.bind(this);
     }
  
     trackInformationDataHeader = () => {
@@ -59,6 +62,15 @@ class TrackInformationDataTable extends Component {
         this.setState({DataRows : modifiedDataRows})
         this.props.updateDiscData(this.props.discID, modifiedDataRows)
     };
+
+    handleDateChange(date, track) {
+        const { DataRows } = this.state;
+        const modifiedDataRows = DataRows;
+        const formattedDate = date.toDateString();
+        track['trackReleaseDate'] = formattedDate;
+        this.setState({DataRows : modifiedDataRows})
+        this.props.updateDiscData(this.props.discID, modifiedDataRows)
+    }
    
     componentDidMount() {
         if(this.state.data !== this.props.data) {
@@ -225,7 +237,7 @@ class TrackInformationDataTable extends Component {
                             </label>
                         </td>
                         <td className="release-date-col">
-                            <Form.Control 
+                            {/* <Form.Control 
                                 discnumber={this.props.discID}
                                 className={'trackReleaseDateInput'}
                                 type="date" 
@@ -233,6 +245,16 @@ class TrackInformationDataTable extends Component {
                                 value={formatDateToYYYYMMDD(track.trackReleaseDate)}
                                 disabled={ (track.isSingle) ? false : true}
                                 onChange={(evt) => this.handleChange(evt, track, i)}
+                            /> */}
+                            <DatePicker
+                                id={'trackReleaseDate'}
+                                discnumber={this.props.discID}
+                                className="trackReleaseDateInput form-control"
+                                selected={track.trackReleaseDate ? new Date(track.trackReleaseDate) : new Date()} // yyyy-mm-dd
+                                disabled={ (track.isSingle) ? false : true}
+                                dateFormat="yyyy/MM/dd"
+                                placeholderText="yyyy/MM/dd"
+                                onChange={(date) => this.handleDateChange(date, track)}
                             />
                             <label className="custom-checkbox"> 
                                 <input 

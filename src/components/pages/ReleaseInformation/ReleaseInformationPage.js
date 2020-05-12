@@ -10,6 +10,9 @@ import {resetDatePicker, isFormValid, formatDateToYYYYMMDD} from '../../Utils.js
 
 import ReleasingLabelsInput from '../ReleaseInformation/pageComponents/ReleasingLabelsInput';
 import ProjectTypesInput from '../ReleaseInformation/pageComponents/ProjectTypesInput';
+import DatePicker from "react-datepicker";
+
+import "react-datepicker/dist/react-datepicker.css";
 
 class ReleaseinformationPage extends Component {
 
@@ -24,7 +27,7 @@ class ReleaseinformationPage extends Component {
                 "projectArtistName" : '',
                 "projectTypeID" : '1',
                 "projectReleasingLabelID" : '',
-                "projectReleaseDate" : '',
+                "projectReleaseDate" : new Date(),
                 "projectReleaseDateTBD" : false,
                 "projectNotes" : '',
                 "projectCoverArtFileName": '',
@@ -66,6 +69,7 @@ class ReleaseinformationPage extends Component {
         this.albumArt = this.albumArt.bind(this);
         this.handleCoverChange = this.handleCoverChange.bind(this);
         this.clearCoverArt = this.clearCoverArt.bind(this);
+        this.handleDateChange =  this.handleDateChange.bind(this);
     };
 
     handleReleaseTBDChange = (e) => {
@@ -98,6 +102,11 @@ class ReleaseinformationPage extends Component {
         //this gets the inputs into the state.formInputs obj on change
         this.setState( {formInputs : { ...this.state.formInputs, [e.target.id] : inputValue}} )
     };
+
+    handleDateChange(date) {
+        const formattedDate = date.toDateString();
+        this.setState( {formInputs : { ...this.state.formInputs, 'projectReleaseDate': formattedDate}} )
+    }
 
     handleCoverChange(file) {
         const {formInputs} = this.state;
@@ -480,18 +489,28 @@ class ReleaseinformationPage extends Component {
                                     />
                                 </div>
                                <div className="col-3 release-date">
-                                    <input
+                                    {/* <input
                                         tabIndex='5+'
                                         id="projectReleaseDate" 
                                         className={this.state.releaseDateRequired ? 'form-control requiredInput' : 'form-control'} 
                                         type='date'
-                                        value={formatDateToYYYYMMDD(this.state.formInputs.projectReleaseDate)}
+                                        value={formatDateToYYYYMMDD(this.state.formInputs.projectReleaseDate)} // yyyy-mm-dd
                                         disabled={this.state.projectReleaseDateDisabled}
                                         onChange={
                                             (e) => {
                                                 this.handleChange(e)
                                             }
                                         }
+                                    /> */}
+                                    <DatePicker
+                                        tabIndex='5+'
+                                        id="projectReleaseDate" 
+                                        className={this.state.releaseDateRequired ? 'form-control requiredInput' : 'form-control'} 
+                                        selected={new Date(this.state.formInputs.projectReleaseDate)} // yyyy-mm-dd
+                                        disabled={this.state.projectReleaseDateDisabled}
+                                        dateFormat="yyyy/MM/dd"
+                                        placeholderText="yyyy/MM/dd"
+                                        onChange={this.handleDateChange}
                                     />
                                     <div className="invalid-tooltip">
                                         Release Date is Required if not TBD

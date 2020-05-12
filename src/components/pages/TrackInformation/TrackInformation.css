@@ -84,3 +84,11 @@ table.table.track-information button.btn.btn-secondary.action {
 .release-date-col label {
     margin-left: 20px;
 }
+
+.react-datepicker__tab-loop, .react-datepicker__tab-loop__start, .react-datepicker__tab-loop__end {
+    display: inline-block;
+}
+
+.tab-pane > .table-responsive {
+    overflow-x: unset;
+}
