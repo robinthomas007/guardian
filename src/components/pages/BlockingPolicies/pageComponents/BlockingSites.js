@@ -75,6 +75,7 @@ class BlockingSites extends Component {
                             <BlockingPolicyDateInput 
                                 data={site.expirationDate}
                                 onChange={(e) => this.props.onChange(e,i)}
+                                handleDateChange={(date, id, setIndex, siteIndex) => this.props.handleDateChange(date, id, setIndex, siteIndex)}
                                 siteName={site.platformName}
                                 siteIndex={i}
                                 setIndex={this.props.setIndex}

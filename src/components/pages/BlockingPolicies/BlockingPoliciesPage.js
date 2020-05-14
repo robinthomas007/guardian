@@ -22,6 +22,7 @@ class BlockingPoliciesPage extends Component {
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleChildDrag = this.handleChildDrag.bind(this);
+        this.handleDateChange = this.handleDateChange.bind(this);
     }
   
     handleChange = (e) => {
@@ -31,6 +32,13 @@ class BlockingPoliciesPage extends Component {
         const { BlockingPolicySets } = this.state.project;
         let modifiedBlockingPolicySets = BlockingPolicySets;
             modifiedBlockingPolicySets[setIndex].platformPolicies[siteIndex][e.target.id] = e.target.value;
+        this.setState( {BlockingPolicySets : modifiedBlockingPolicySets} )
+    }
+
+    handleDateChange = (date, id, setIndex, siteIndex) => {
+        const { BlockingPolicySets } = this.state.project;
+        let modifiedBlockingPolicySets = BlockingPolicySets;
+            modifiedBlockingPolicySets[setIndex].platformPolicies[siteIndex][id] = date;
         this.setState( {BlockingPolicySets : modifiedBlockingPolicySets} )
     }
 
@@ -437,6 +445,7 @@ class BlockingPoliciesPage extends Component {
                         <BlockingPolicySets 
                             data={this.state.project}
                             onChange={(e) => this.handleChange(e)}
+                            handleDateChange={(date, id, setIndex, siteIndex) => this.handleDateChange(date, id, setIndex, siteIndex)}
                             handleMonetizeBlock = { (e) => this.handleMonetizeBlock(e)}
                             dragSource={this.state.dragSource}
                             handleDrop={(e,i) => this.handleChildDrop(e, i)}

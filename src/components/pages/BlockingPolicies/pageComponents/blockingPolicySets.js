@@ -51,6 +51,7 @@ class BlockingPolicySets extends Component {
                                 handleChildDrag={ (e) => this.props.handleChildDrag(e)}
                                 handleChildDrop={(e,i) => this.props.handleDrop(e,i) }
                                 handleTrackSelect={ (e) => this.props.handleTrackSelect(e)}
+                                handleDateChange={(date, id, setIndex, siteIndex) => this.props.handleDateChange(date, id, setIndex, siteIndex)}
                             />
                         </div>
                     </div>
