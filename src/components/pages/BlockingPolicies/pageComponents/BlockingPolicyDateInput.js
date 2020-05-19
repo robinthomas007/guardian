@@ -39,8 +39,8 @@ class BlockingPolicyDateInput extends Component {
                 className={'form-control blockingPolicyDateInput'} 
                 selected={new Date(this.props.data)} // yyyy-mm-dd
                 disabled={this.state.projectReleaseDateDisabled}
-                dateFormat="yyyy/MM/dd"
-                placeholderText="yyyy/MM/dd"
+                dateFormat="MM/dd/yyyy"
+                placeholderText="mm/dd/yyyy"
                 disabled={this.props.disabled}
                 onChange={(date) => this.handleChange(date, "expirationDate", setIndex, siteIndex)}
             />

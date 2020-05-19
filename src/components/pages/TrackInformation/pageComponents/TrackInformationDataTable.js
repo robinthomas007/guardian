@@ -3,6 +3,7 @@ import {Table, Form } from 'react-bootstrap';
 import ToolTip from '../../../ui/Tooltip';
 import LoadingImgSm from '../../../ui/LoadingImgSm';
 import DatePicker from "react-datepicker";
+import moment from 'moment';
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -66,7 +67,7 @@ class TrackInformationDataTable extends Component {
     handleDateChange(date, track) {
         const { DataRows } = this.state;
         const modifiedDataRows = DataRows;
-        const formattedDate = date.toDateString();
+        const formattedDate = moment(date).format('MM/DD/YYYY');
         track['trackReleaseDate'] = formattedDate;
         this.setState({DataRows : modifiedDataRows})
         this.props.updateDiscData(this.props.discID, modifiedDataRows)
@@ -83,7 +84,7 @@ class TrackInformationDataTable extends Component {
         let sortedInputs = [];
         for(var i=0; i<datePickers.length; i++) {
 
-            if(parseInt(datePickers[i].getAttribute('discnumber')) === parseInt(this.props.discID)) {
+            if(parseInt(datePickers[i].getAttribute('tabIndex')) === parseInt(this.props.discID)) {
                 sortedInputs.push(datePickers[i])
             }
         }
@@ -248,12 +249,12 @@ class TrackInformationDataTable extends Component {
                             /> */}
                             <DatePicker
                                 id={'trackReleaseDate'}
-                                discnumber={this.props.discID}
-                                className="trackReleaseDateInput form-control"
-                                selected={track.trackReleaseDate ? new Date(track.trackReleaseDate) : new Date()} // yyyy-mm-dd
+                                tabIndex={this.props.discID} // unable to add custom attribute in react-datepicker
+                                className="trackReleaseDateInput"
+                                selected={track.trackReleaseDate ? new Date(track.trackReleaseDate) : null}
                                 disabled={ (track.isSingle) ? false : true}
-                                dateFormat="yyyy/MM/dd"
-                                placeholderText="yyyy/MM/dd"
+                                dateFormat="MM/dd/yyyy"
+                                placeholderText="mm/dd/yyyy"
                                 onChange={(date) => this.handleDateChange(date, track)}
                             />
                             <label className="custom-checkbox"> 

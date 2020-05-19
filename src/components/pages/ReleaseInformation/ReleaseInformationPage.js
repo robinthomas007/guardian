@@ -5,7 +5,8 @@ import './ReleaseInformation.css';
 import { withRouter } from 'react-router-dom';
 import Noty from 'noty';
 import LoadingImg from '../../ui/LoadingImg';
-import {resetDatePicker, isFormValid, formatDateToYYYYMMDD} from '../../Utils.js';
+import {resetDatePicker, isFormValid} from '../../Utils.js';
+import moment from 'moment';
 
 
 import ReleasingLabelsInput from '../ReleaseInformation/pageComponents/ReleasingLabelsInput';
@@ -27,7 +28,7 @@ class ReleaseinformationPage extends Component {
                 "projectArtistName" : '',
                 "projectTypeID" : '1',
                 "projectReleasingLabelID" : '',
-                "projectReleaseDate" : new Date(),
+                "projectReleaseDate" : null,
                 "projectReleaseDateTBD" : false,
                 "projectNotes" : '',
                 "projectCoverArtFileName": '',
@@ -42,7 +43,7 @@ class ReleaseinformationPage extends Component {
                     projectArtistName : '',
                     projectReleasingLabelID : '',
                     projectReleasingLabel : '',
-                    projectReleaseDate : '',
+                    projectReleaseDate : null,
                     projectReleaseDateTBD : false,
                     projectPrimaryContact : '',
                     projectPrimaryContactEmail : '',
@@ -104,7 +105,10 @@ class ReleaseinformationPage extends Component {
     };
 
     handleDateChange(date) {
-        const formattedDate = date.toDateString();
+        let formattedDate = null;
+        if (date !== null) {
+            formattedDate = moment(date).format('MM/DD/YYYY');
+        }
         this.setState( {formInputs : { ...this.state.formInputs, 'projectReleaseDate': formattedDate}} )
     }
 
@@ -506,10 +510,10 @@ class ReleaseinformationPage extends Component {
                                         tabIndex='5+'
                                         id="projectReleaseDate" 
                                         className={this.state.releaseDateRequired ? 'form-control requiredInput' : 'form-control'} 
-                                        selected={new Date(this.state.formInputs.projectReleaseDate)} // yyyy-mm-dd
+                                        selected={this.state.formInputs.projectReleaseDate!= null ? new Date(this.state.formInputs.projectReleaseDate) : null }
                                         disabled={this.state.projectReleaseDateDisabled}
-                                        dateFormat="yyyy/MM/dd"
-                                        placeholderText="yyyy/MM/dd"
+                                        dateFormat="MM/dd/yyyy"
+                                        placeholderText="mm/dd/yyyy"
                                         onChange={this.handleDateChange}
                                     />
                                     <div className="invalid-tooltip">
