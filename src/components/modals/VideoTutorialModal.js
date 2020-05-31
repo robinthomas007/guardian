@@ -25,13 +25,14 @@ class VideoTutorialModal extends Component {
     }
 
     render() {
+        const { navSteps, activeNav } = this.props;
         return (
             <Modal id="VideoTutorialModal" show={this.props.showModal} onHide={this.handleClose}>
                 <Modal.Header closeButton>
                 </Modal.Header>
                 <Modal.Body>
                 <video controls autoPlay>
-                  <source src={this.props.navSteps[this.props.activeNav].tutorialVideoLink} type="video/mp4"/>
+                  {navSteps && activeNav!== null && <source src={navSteps[activeNav].tutorialVideoLink} type="video/mp4"/>}
                   Your browser does not support the video tag.
                 </video>
                 </Modal.Body>

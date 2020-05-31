@@ -55,7 +55,7 @@ export default withRouter(class Header extends Component {
                     preRelease : true,
                     stepValidation : 'projectContactsStatus',
                     isActive : false,
-                    tutorialVideoLink: "https://guardian.umusic.com/static/videos/The+Guardian+Training+Video+intro+v.3.mp4",
+                    tutorialVideoLink: "https://guardian.umusic.com/static/videos/The-Guardian-Training-Video-Project-Contact-Information-Step-2.mp4",
 
                 },
                 {
@@ -66,7 +66,7 @@ export default withRouter(class Header extends Component {
                     preRelease : false,
                     stepValidation : 'audioFilesStatus',
                     isActive : false,
-                    tutorialVideoLink: "https://guardian.umusic.com/static/videos/The+Guardian+Training+Video+intro+v.3.mp4",
+                    tutorialVideoLink: "https://guardian.umusic.com/static/videos/The-Guardian-Training-Video-Audio-Files-Part-1-Step-3.mp4",
                 },
                 {
                     description : 'Track Info',
@@ -76,7 +76,7 @@ export default withRouter(class Header extends Component {
                     preRelease : true,
                     stepValidation : 'trackInfoStatus',
                     isActive : false,
-                    tutorialVideoLink: "https://guardian.umusic.com/static/videos/The+Guardian+Training+Video+intro+v.3.mp4",
+                    tutorialVideoLink: "https://guardian.umusic.com/static/videos/The-Guardian-Training-Video-Track-Information-Step-4.mp4",
 
                 },
                 {
@@ -87,7 +87,7 @@ export default withRouter(class Header extends Component {
                     preRelease : false,
                     stepValidation : 'territorialRightsStatus',
                     isActive : false,
-                    tutorialVideoLink: "https://guardian.umusic.com/static/videos/The+Guardian+Training+Video+intro+v.3.mp4",
+                    tutorialVideoLink: "https://guardian.umusic.com/static/videos/The-Guardian-Training-Video-Territorial-Rights-Step-5.mp4",
 
                 },
                 {
@@ -98,7 +98,7 @@ export default withRouter(class Header extends Component {
                     preRelease : true,
                     stepValidation : 'blockingPoliciesStatus',
                     isActive : false,
-                    tutorialVideoLink: "https://guardian.umusic.com/static/videos/The+Guardian+Training+Video+intro+v.3.mp4",
+                    tutorialVideoLink: "https://guardian.umusic.com/static/videos/The-Guardian-Training-Video-Project-Blocking-Policies-Step-6.mp4",
 
                 },
                 {
@@ -109,7 +109,7 @@ export default withRouter(class Header extends Component {
                     preRelease : true,
                     stepValidation : 'projectSubmitStatus',
                     isActive : false,
-                    tutorialVideoLink: "https://guardian.umusic.com/static/videos/The+Guardian+Training+Video+intro+v.3.mp4",
+                    tutorialVideoLink: "https://guardian.umusic.com/static/videos/The-Guardian-Training-Video-Review-(Review-&-Submit)-Step-7.mp4",
 
                 }
             ],
@@ -339,12 +339,12 @@ export default withRouter(class Header extends Component {
         if(this.props.projectData.Project) {
             return(
                 <>
-                <VideoTutorialModal
+                {activeNav !== null && <VideoTutorialModal
                     showModal={this.state.showVideoTutorialModal}
                     handleClose={this.hideVideoTutorialModal}
                     navSteps={navToUse}
                     activeNav={activeNav}
-                />
+                />}
                 <header className={ (this.state.pageViewCompact) ? "row d-flex no-gutters compact" : "row d-flex no-gutters" }>
                     <div className="col-12 align-items-end flex-column flex-grow-1">
                         <div className="row d-flex no-gutters">
