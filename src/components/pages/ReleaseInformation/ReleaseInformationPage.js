@@ -296,7 +296,7 @@ class ReleaseinformationPage extends Component {
                 "projectArtistName" : '',
                 "projectTypeID" : '1',
                 "projectReleasingLabelID" : this.props.user.ReleasingLabels[0].id,
-                "projectReleaseDate" : '',
+                "projectReleaseDate" : null,
                 "projectReleaseDateTBD" : false,
                 "projectNotes" : '',
                 "projectCoverArtFileName": '',
@@ -510,7 +510,7 @@ class ReleaseinformationPage extends Component {
                                         tabIndex='5+'
                                         id="projectReleaseDate" 
                                         className={this.state.releaseDateRequired ? 'form-control requiredInput' : 'form-control'} 
-                                        selected={this.state.formInputs.projectReleaseDate!= null ? new Date(this.state.formInputs.projectReleaseDate) : null }
+                                        selected={this.state.formInputs.projectReleaseDate!= null && this.state.formInputs.projectReleaseDate!= '' ? new Date(this.state.formInputs.projectReleaseDate) : null }
                                         disabled={this.state.projectReleaseDateDisabled}
                                         dateFormat="MM/dd/yyyy"
                                         placeholderText="mm/dd/yyyy"

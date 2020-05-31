@@ -251,7 +251,7 @@ class TrackInformationDataTable extends Component {
                                 id={'trackReleaseDate'}
                                 tabIndex={this.props.discID} // unable to add custom attribute in react-datepicker
                                 className="trackReleaseDateInput"
-                                selected={track.trackReleaseDate ? new Date(track.trackReleaseDate) : null}
+                                selected={track.trackReleaseDate && track.trackReleaseDate!= '' ? new Date(track.trackReleaseDate) : null}
                                 disabled={ (track.isSingle) ? false : true}
                                 dateFormat="MM/dd/yyyy"
                                 placeholderText="mm/dd/yyyy"
