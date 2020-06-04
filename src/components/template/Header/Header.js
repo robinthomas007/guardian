@@ -3,6 +3,7 @@ import { BrowserRouter as Route, NavLink, withRouter } from "react-router-dom";
 import { withAuth } from '@okta/okta-react';
 import RecentProjectsDrop from "../Header/RecentProjectsDrop";
 import { isPreReleaseDate } from '../../Utils.js';
+import VideoTutorialModal from '../../modals/VideoTutorialModal';
 
 export default withRouter(class Header extends Component {
     constructor(props) {
@@ -44,6 +45,7 @@ export default withRouter(class Header extends Component {
                     preRelease : true,
                     stepValidation : 'releaseInfoStatus',
                     isActive : false,
+                    tutorialVideoLink: "https://guardian.umusic.com/static/videos/The+Guardian+Training+Video+intro+v.3.mp4",
                 },
                 {
                     description : 'Contacts',
@@ -53,6 +55,7 @@ export default withRouter(class Header extends Component {
                     preRelease : true,
                     stepValidation : 'projectContactsStatus',
                     isActive : false,
+                    tutorialVideoLink: "https://guardian.umusic.com/static/videos/The-Guardian-Training-Video-Project-Contact-Information-Step-2.mp4",
 
                 },
                 {
@@ -63,6 +66,7 @@ export default withRouter(class Header extends Component {
                     preRelease : false,
                     stepValidation : 'audioFilesStatus',
                     isActive : false,
+                    tutorialVideoLink: "https://guardian.umusic.com/static/videos/The-Guardian-Training-Video-Audio-Files-Part-1-Step-3.mp4",
                 },
                 {
                     description : 'Track Info',
@@ -72,6 +76,7 @@ export default withRouter(class Header extends Component {
                     preRelease : true,
                     stepValidation : 'trackInfoStatus',
                     isActive : false,
+                    tutorialVideoLink: "https://guardian.umusic.com/static/videos/The-Guardian-Training-Video-Track-Information-Step-4.mp4",
 
                 },
                 {
@@ -82,6 +87,7 @@ export default withRouter(class Header extends Component {
                     preRelease : false,
                     stepValidation : 'territorialRightsStatus',
                     isActive : false,
+                    tutorialVideoLink: "https://guardian.umusic.com/static/videos/The-Guardian-Training-Video-Territorial-Rights-Step-5.mp4",
 
                 },
                 {
@@ -92,6 +98,7 @@ export default withRouter(class Header extends Component {
                     preRelease : true,
                     stepValidation : 'blockingPoliciesStatus',
                     isActive : false,
+                    tutorialVideoLink: "https://guardian.umusic.com/static/videos/The-Guardian-Training-Video-Project-Blocking-Policies-Step-6.mp4",
 
                 },
                 {
@@ -102,9 +109,11 @@ export default withRouter(class Header extends Component {
                     preRelease : true,
                     stepValidation : 'projectSubmitStatus',
                     isActive : false,
+                    tutorialVideoLink: "https://guardian.umusic.com/static/videos/The-Guardian-Training-Video-Review-(Review-&-Submit)-Step-7.mp4",
 
                 }
-            ]
+            ],
+            showVideoTutorialModal: false
         }
     }
 
@@ -314,10 +323,28 @@ export default withRouter(class Header extends Component {
     handleHelpClick = () =>{
         this.props.history.push({ pathname : '/helpGuide/' }) 
      }
+
+     showVideoTutorialModal = () => {
+        this.setState({showVideoTutorialModal : true})
+     }
+
+     hideVideoTutorialModal = () => {
+        this.setState({showVideoTutorialModal : false})
+     }
      
     render() {
+        const isPreRelease = isPreReleaseDate(this.props.projectData);
+        const navToUse = ( isPreRelease ? this.state.navSteps : this.state.navSteps.filter(step => (step.preRelease) ))
+        const activeNav = this.getNavIndex(navToUse);
         if(this.props.projectData.Project) {
             return(
+                <>
+                {activeNav !== null && <VideoTutorialModal
+                    showModal={this.state.showVideoTutorialModal}
+                    handleClose={this.hideVideoTutorialModal}
+                    navSteps={navToUse}
+                    activeNav={activeNav}
+                />}
                 <header className={ (this.state.pageViewCompact) ? "row d-flex no-gutters compact" : "row d-flex no-gutters" }>
                     <div className="col-12 align-items-end flex-column flex-grow-1">
                         <div className="row d-flex no-gutters">
@@ -355,7 +382,7 @@ export default withRouter(class Header extends Component {
                             null
                         }
                         <li>
-                            <button className="btn btn-sm btn-secondary btn-video" onClick={null} title="Tutorial Video"><i className={'material-icons'}>videocam</i> Tutorials</button>
+                            <button className="btn btn-sm btn-secondary btn-video" onClick={this.showVideoTutorialModal} title="Tutorial Video"><i className={'material-icons'}>videocam</i> Tutorials</button>
                         </li>
                         <li>
                             <button className="btn btn-sm btn-primary btn-help" onClick={this.handleHelpClick} title="Help/FAQs"><i className={'material-icons'}>contact_support</i> Help</button>
@@ -364,6 +391,7 @@ export default withRouter(class Header extends Component {
                 </div>
             
             </header>
+            </>
             )
         }
 
