@@ -453,8 +453,10 @@ class TrackInformationPage extends Component {
               return 4
            }
         }
-        const stepNumber = formatDateToYYYYMMDD(convertToLocaleTime(serverTimeDate)) > formatDateToYYYYMMDD(this.state.project.Project.projectReleaseDate) ? 3 : 4;
-        return stepNumber;
+        if ( this.state.project && this.state.project.Project && this.state.project.Project.projectReleaseDate) {
+            const stepNumber = formatDateToYYYYMMDD(convertToLocaleTime(serverTimeDate)) > formatDateToYYYYMMDD(this.state.project.Project.projectReleaseDate) ? 3 : 4;
+            return stepNumber;
+        }
     }
 
     render() {
