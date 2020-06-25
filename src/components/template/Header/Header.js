@@ -46,6 +46,7 @@ export default withRouter(class Header extends Component {
                     stepValidation : 'releaseInfoStatus',
                     isActive : false,
                     tutorialVideoLink: "https://guardian.umusic.com/static/videos/The+Guardian+Training+Video+intro+v.3.mp4",
+                    modalHeader: 'Release Information' 
                 },
                 {
                     description : 'Contacts',
@@ -56,7 +57,7 @@ export default withRouter(class Header extends Component {
                     stepValidation : 'projectContactsStatus',
                     isActive : false,
                     tutorialVideoLink: "https://guardian.umusic.com/static/videos/The-Guardian-Training-Video-Project-Contact-Information-Step-2.mp4",
-
+                    modalHeader: "Project Contacts"
                 },
                 {
                     description : 'Audio Files',
@@ -67,6 +68,7 @@ export default withRouter(class Header extends Component {
                     stepValidation : 'audioFilesStatus',
                     isActive : false,
                     tutorialVideoLink: "https://guardian.umusic.com/static/videos/The-Guardian-Training-Video-Audio-Files-Part-1-Step-3.mp4",
+                    modalHeader: "Audio Files"
                 },
                 {
                     description : 'Track Info',
@@ -77,7 +79,7 @@ export default withRouter(class Header extends Component {
                     stepValidation : 'trackInfoStatus',
                     isActive : false,
                     tutorialVideoLink: "https://guardian.umusic.com/static/videos/The-Guardian-Training-Video-Track-Information-Step-4.mp4",
-
+                    modalHeader: "Track Information"
                 },
                 {
                     description : 'Rights',
@@ -88,7 +90,7 @@ export default withRouter(class Header extends Component {
                     stepValidation : 'territorialRightsStatus',
                     isActive : false,
                     tutorialVideoLink: "https://guardian.umusic.com/static/videos/The-Guardian-Training-Video-Territorial-Rights-Step-5.mp4",
-
+                    modalHeader: "Territorial Rights"
                 },
                 {
                     description : 'Blocking',
@@ -99,7 +101,7 @@ export default withRouter(class Header extends Component {
                     stepValidation : 'blockingPoliciesStatus',
                     isActive : false,
                     tutorialVideoLink: "https://guardian.umusic.com/static/videos/The-Guardian-Training-Video-Project-Blocking-Policies-Step-6.mp4",
-
+                    modalHeader: "Post-Release UGC Blocking"
                 },
                 {
                     description : 'Review',
@@ -110,7 +112,7 @@ export default withRouter(class Header extends Component {
                     stepValidation : 'projectSubmitStatus',
                     isActive : false,
                     tutorialVideoLink: "https://guardian.umusic.com/static/videos/The-Guardian-Training-Video-Review-(Review-&-Submit)-Step-7.mp4",
-
+                    modalHeader: "Review and Submit"
                 }
             ],
             showVideoTutorialModal: false
@@ -147,12 +149,19 @@ export default withRouter(class Header extends Component {
         return(navMatch)
     };
 
+    getActiveNav = () => {
+        const isPreRelease = isPreReleaseDate(this.props.projectData);
+        const navToUse = ( isPreRelease ? this.state.navSteps : this.state.navSteps.filter(step => (step.preRelease) ))
+        const activeNav = this.getNavIndex(navToUse);
+        return activeNav
+    }
+
     getNavLinks = () => {
         const isPreRelease = isPreReleaseDate(this.props.projectData);
         //If prerelease date is on, We need 7 steps. Otherwise we need only 5 steps. 
         //This can be differentiate based on the flag preRelease
         const navToUse = ( isPreRelease ? this.state.navSteps : this.state.navSteps.filter(step => (step.preRelease) ))
-        const activeNav = this.getNavIndex(navToUse);
+        const activeNav = this.getActiveNav();
 
         return(
             <ul className="d-flex justify-content-center align-items-stretch">
@@ -325,7 +334,10 @@ export default withRouter(class Header extends Component {
      }
 
      showVideoTutorialModal = () => {
-        this.setState({showVideoTutorialModal : true})
+        const activeNav = this.getActiveNav();
+        if (activeNav !== null){
+            this.setState({showVideoTutorialModal : true})
+        }
      }
 
      hideVideoTutorialModal = () => {
@@ -335,7 +347,7 @@ export default withRouter(class Header extends Component {
     render() {
         const isPreRelease = isPreReleaseDate(this.props.projectData);
         const navToUse = ( isPreRelease ? this.state.navSteps : this.state.navSteps.filter(step => (step.preRelease) ))
-        const activeNav = this.getNavIndex(navToUse);
+        const activeNav = this.getActiveNav();
         if(this.props.projectData.Project) {
             return(
                 <>
