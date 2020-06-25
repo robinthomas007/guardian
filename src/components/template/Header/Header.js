@@ -128,12 +128,16 @@ export default withRouter(class Header extends Component {
         }
     };
 
-    setNavClickable = (e, navLink) => {
-        return (
-            parseInt(
-                this.props.projectData.Project[navLink.stepValidation]
-            ) < 2 ||  !this.props.projectData.Project[navLink.stepValidation] && navLink.stepValidation !== 'releaseInfoStatus' ? e.preventDefault() : null
-        )
+    setNavClickable = (e, navLink, activeNav) => {
+        if (navLink.stepValidation === 'audioFilesStatus' && (this.props.projectData.Project['trackInfoStatus'] >= 2 || activeNav === 3)) {
+            return  null
+        } else {
+            return (
+                parseInt(
+                    this.props.projectData.Project[navLink.stepValidation]
+                ) < 2 ||  !this.props.projectData.Project[navLink.stepValidation] && navLink.stepValidation !== 'releaseInfoStatus' ? e.preventDefault() : null
+            )
+        }
     };
 
     getNavIndex = (navToUse) => {
@@ -161,7 +165,7 @@ export default withRouter(class Header extends Component {
                         return(
                             <React.Fragment key={i}>
                                 <li key={i} id={"step-" + (i + 1)}>
-                                    <NavLink onClick={ (e) => this.setNavClickable(e, navLink) } to={{pathname: navLink.path + ((this.state.Project && this.state.Project.projectID) ? this.state.Project.projectID : '')}}>
+                                    <NavLink onClick={ (e) => this.setNavClickable(e, navLink, activeNav) } to={{pathname: navLink.path + ((this.state.Project && this.state.Project.projectID) ? this.state.Project.projectID : '')}}>
                                         <span className="step-description text-nowrap">{navLink.description}</span>
                                         <span className={(activeNav && activeNav > i) ? 'step past' : 'step'}>
                                             { (this.props.projectData.Project) ?  this.getStepIcon(navLink, i) : null } 
