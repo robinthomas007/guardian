@@ -40,6 +40,8 @@
         "allenvs": "npm run env:sandbox && npm run env:prod && npm run env:qa && npm run env:stage && npm run env:test && npm run env:dev",
         "start": "bash ./scripts/config && REACT_APP_CACHE_BUST=$(date +%s) react-scripts start",
         "build": "REACT_APP_CACHE_BUST=$(date +%s) react-scripts build",
+        "start:win": "bash ./scripts/config && set REACT_APP_CACHE_BUST=%date:~0,2%%date:~3,2%%date:~6,8%%time:~0,2%%time:~3,2%%time:~6,2% && react-scripts start",
+        "build:win": "set REACT_APP_CACHE_BUST=%date:~0,2%%date:~3,2%%date:~6,8%%time:~0,2%%time:~3,2%%time:~6,2% && react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject"
     },
