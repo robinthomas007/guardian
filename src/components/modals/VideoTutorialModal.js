@@ -29,6 +29,7 @@ class VideoTutorialModal extends Component {
         return (
             <Modal id="VideoTutorialModal" show={this.props.showModal} onHide={this.handleClose}>
                 <Modal.Header closeButton>
+                    <h3>{navSteps[activeNav].modalHeader}</h3>
                 </Modal.Header>
                 <Modal.Body>
                 <video controls autoPlay>
