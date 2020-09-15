@@ -18,6 +18,7 @@ export default withRouter(class Header extends Component {
             compactViewPages : {
                 findProject : {
                     titleText : 'Find A Project'
+                    
                 },
                 admin : {
                    titleText : 'User Administration'
@@ -37,6 +38,7 @@ export default withRouter(class Header extends Component {
             showProjectStatus : true,
             utcDateTime : '',
             navSteps  : [
+              
                 {
                     description : 'Release Info',
                     path : '/releaseInformation/',
@@ -45,7 +47,7 @@ export default withRouter(class Header extends Component {
                     preRelease : true,
                     stepValidation : 'releaseInfoStatus',
                     isActive : false,
-                    tutorialVideoLink: "https://guardian.umusic.com/static/videos/The+Guardian+Training+Video+intro+v.3.mp4",
+                    tutorialVideoLink: "https://guardian.umusic.com/static/videos/The-Guardian-Training-Video-Release-Information-Step-1.mp4",
                     modalHeader: 'Release Information' 
                 },
                 {
