@@ -30,16 +30,44 @@ class HaveAudioModal extends Component {
 
       event.preventDefault();
 
-      if(this.state.projectID) {
-        this.props.history.push({
-          pathname : '/trackInformation/' + this.state.projectID
-        })
-      } else {
-        this.props.history.push({
-          pathname : '/trackInformation'
+      const fetchHeaders = new Headers(
+        {
+            "Authorization" : sessionStorage.getItem('accessToken'),
+            "Project-Id" : this.state.projectID
+        }
+      )
 
-        })
-      }
+      const paramData = {ProjectID: this.state.projectID, PagePath: "audioFiles"}
+      
+
+      fetch(window.env.api.url + '/project/pageskipped', {
+        method: 'POST',
+        headers : fetchHeaders,
+        body: JSON.stringify(paramData)
+      })
+      .then (response =>
+          {
+              return(response.json());
+          }
+      )
+      .then (responseJSON =>
+          {
+            if(this.state.projectID) {
+              this.props.history.push({
+                pathname : '/trackInformation/' + this.state.projectID
+              })
+            } else {
+              this.props.history.push({
+                pathname : '/trackInformation'
+      
+              })
+            } 
+          }
+      )
+      .catch(
+          error => console.error(error)
+      );
+
   }
 
   componentDidMount() {
