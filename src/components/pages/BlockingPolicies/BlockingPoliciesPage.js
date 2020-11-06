@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import BlockingPoliciesModal from '../../modals/BlockingPoliciesModal';
 import PageHeader from '../PageHeader/PageHeader';
 import './BlockingPolicies.css';
 import TracksWithoutRights from '../TerritorialRights/pageComponents/TracksWithoutRights';
@@ -396,6 +397,8 @@ class BlockingPoliciesPage extends Component {
     render() {
         return(
             <div className="col-10">
+
+                <BlockingPoliciesModal projectID={this.props.projectID}/>
     
                 <LoadingImg show={this.state.showLoader} />
 
