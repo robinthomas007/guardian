@@ -101,27 +101,35 @@ class BlockingPoliciesPage extends Component {
             [
                 {
                     platformName : 'YouTube',
-                    block : (this.setDefaultMonetizeForPostRelease(releaseDate)) ? false : true,
+                    // block : (this.setDefaultMonetizeForPostRelease(releaseDate)) ? false : true,
+                    block : false,
                     duration : '',
-                    expirationDate : this.setDefaultBlockedUntil(releaseDate)
+                    // expirationDate : this.setDefaultBlockedUntil(releaseDate)
+                    expirationDate : ''
                 },
                 {
                     platformName : 'SoundCloud',
-                    block : (this.setDefaultMonetizeForPostRelease(releaseDate)) ? false : true,
+                    // block : (this.setDefaultMonetizeForPostRelease(releaseDate)) ? false : true,
+                    block : false,
                     duration : '',
-                    expirationDate : this.setDefaultBlockedUntil(releaseDate)
+                    // expirationDate : this.setDefaultBlockedUntil(releaseDate)
+                    expirationDate : ''
                 },
                 {
                     platformName : 'Facebook',
-                    block : (this.setDefaultMonetizeForPostRelease(releaseDate)) ? false : true,
+                    // block : (this.setDefaultMonetizeForPostRelease(releaseDate)) ? false : true,
+                    block : false,
                     duration : '',
-                    expirationDate : this.setDefaultBlockedUntil(releaseDate)
+                    // expirationDate : this.setDefaultBlockedUntil(releaseDate)
+                    expirationDate : ''
                 },
                 {
                     platformName : 'Instagram',
-                    block : (this.setDefaultMonetizeForPostRelease(releaseDate)) ? false : true,
+                    // block : (this.setDefaultMonetizeForPostRelease(releaseDate)) ? false : true,
+                    block : false,
                     duration : '',
-                    expirationDate : this.setDefaultBlockedUntil(releaseDate)
+                    // expirationDate : this.setDefaultBlockedUntil(releaseDate)
+                    expirationDate : ''
                 },
             ]
         )
