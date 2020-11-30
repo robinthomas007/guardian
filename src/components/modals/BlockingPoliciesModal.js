@@ -84,7 +84,7 @@ class BlockingPoliciesModal extends Component {
           <Modal.Header>
             <Modal.Title></Modal.Title>
           </Modal.Header>
-          <Modal.Body>Do you want to set blocking policies ?
+          <Modal.Body>Do you wish to block on licensed platforms after commercial release?
           <span>
             <br />
           <Button variant="primary" id="yesButton" onClick={this.handleClose}>
