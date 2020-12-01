@@ -53,7 +53,9 @@ async function vaultGetSecret(token, secret) {
     }
     let token = ""
     let vaultTokenPath = path.join(require('os').homedir(), ".vault-token")
-    if (fs.existsSync(vaultTokenPath)) {
+    if (process.env.VAULT_TOKEN) {
+      token = process.env.VAULT_TOKEN
+    } else if (fs.existsSync(vaultTokenPath)) {
       tokenFile = fs.readFileSync(vaultTokenPath)
       token = tokenFile.toString()
     } else if (!process.env.VAULT_USER || !process.env.VAULT_PASS) {
