@@ -21,6 +21,7 @@ npm_build_envs() {
   inject_git_tag
   npm install
   npm run allenvs
+  ls -alt public/static/config/
   npm run build
   if [[ $? -ne 0 ]]; then
     echo Build Error > /dev/stderr

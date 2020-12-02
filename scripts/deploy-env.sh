@@ -12,6 +12,7 @@ deployenv() {
   echo Deploying $ENV
   echo =======================
   cp static/config/index.$ENV.js static/config/index.js
+  cat static/config/index.js
 }
 
 main() {
