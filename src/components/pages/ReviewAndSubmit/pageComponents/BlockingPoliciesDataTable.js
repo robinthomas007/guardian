@@ -58,10 +58,10 @@ class BlockingPoliciesDataTable extends Component {
                     <tr key={i}>
                         <td>{(i === 0 ) ? 'Unassigned Tracks' : ''}</td>
                         <td>{track.trackTitle}</td>
-                        <td>Block All</td>
-                        <td>Block All</td>
-                        <td>Block All</td>
-                        <td>Block All</td>
+                        <td>Monetize All</td>
+                        <td>Monetize All</td>
+                        <td>Monetize All</td>
+                        <td>Monetize All</td>
                     </tr>
                 )
             })
