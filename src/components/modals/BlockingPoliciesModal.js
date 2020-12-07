@@ -91,7 +91,7 @@ class BlockingPoliciesModal extends Component {
               Yes
             </Button>
             <Button variant="primary" id="noButton" onClick={this.handleNoAudioClick}>
-              No
+              Skip
             </Button>
           </span>
           <div className="alert alert-primary clearfix" role="alert">
