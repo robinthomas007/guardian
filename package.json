@@ -5,11 +5,9 @@
     "dependencies": {
         "@okta/okta-react": "^1.2.2",
         "@okta/okta-signin-widget": "^2.21.0",
-        "core-js": "^3.6.4",
         "dotenv": "^6.2.0",
         "moment": "^2.25.3",
         "noty": "^3.2.0-beta",
-        "npm": "^6.13.7",
         "react": "^16.9.0",
         "react-app-polyfill": "^1.0.6",
         "react-bootstrap": "^1.0.0-beta.12",
@@ -50,7 +48,7 @@
     "browserslist": [
         ">0.2%",
         "not dead",
-        "not ie <= 11",
+        "not ie <= 8",
         "not op_mini all"
     ],
     "devDependencies": {

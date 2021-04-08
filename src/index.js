@@ -1,7 +1,8 @@
+// NOTE: make sure polyfills stay at the top of the file
+import './polyfills';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import './polyfills';
 
 import App from './App';
 import * as serviceWorker from './serviceWorker';
