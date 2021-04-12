@@ -1,153 +1,153 @@
 /* Territorial Rights & Blocking Polcies */
 
 .card-nav {
-    text-align: right;
-    margin-bottom: 10px;
+  text-align: right;
+  margin-bottom: 10px;
 }
 
 .card-nav .dropdown {
-    margin-left: 10px;
+  margin-left: 10px;
 }
 
 .set-card {
-    margin-left: -20px;
-    margin-bottom: 10px;
-    padding: 1rem;
-    background-color: #F5F5F5;
+  margin-left: -20px;
+  margin-bottom: 10px;
+  padding: 1rem;
+  background-color: #f5f5f5;
 }
 
 .btn.btn-secondary.dropdown-toggle {
-    background-color: #fff;
+  background-color: #fff;
 }
 
 .set-card table.table th {
-    align-content: center;
-    text-align: center;
-    text-align: -webkit-center;
-    margin: 0 auto;
+  align-content: center;
+  text-align: center;
+  text-align: -webkit-center;
+  margin: 0 auto;
 }
 
 .set-card table.table td {
-    vertical-align: middle;
-    align-content: center;
-    text-align: center;
-    text-align: -webkit-center;
-    border-bottom: none;
+  vertical-align: middle;
+  align-content: center;
+  text-align: center;
+  text-align: -webkit-center;
+  border-bottom: none;
 }
 
-.set-card table.table td input[type=text] {
-    align-content: center;
-    text-align: center;
-    margin: 0 auto;
+.set-card table.table td input[type='text'] {
+  align-content: center;
+  text-align: center;
+  margin: 0 auto;
 }
 
 .set-card .track-draggable-area {
-    max-height: 400px;
-    overflow-y: auto;
-    overflow-x: hidden;
+  max-height: 400px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .set-card h3 {
-    margin-top: 8px;
-    margin-right: 8px;
+  margin-top: 8px;
+  margin-right: 8px;
 }
 
 span.drag-drop-arrow {
-    display: block;
-    height: 33px;
-    position: absolute;
-    padding-left: 50px;
-    left: -38px;
-    bottom: -44px;
-    background-image: url(../../../images/drag-over-arrow.png);
-    background-repeat: no-repeat;
-    z-index: 10;
+  display: block;
+  height: 33px;
+  position: absolute;
+  padding-left: 50px;
+  left: -38px;
+  bottom: -44px;
+  background-image: url(../../../images/drag-over-arrow.png);
+  background-repeat: no-repeat;
+  z-index: 10;
 }
 
-span.drag-drop-arrow>span {
-    position: absolute;
-    top: -20px;
-    left: -10px;
-    width: 160px;
-    font-size: .7em;
-    font-weight: 700;
+span.drag-drop-arrow > span {
+  position: absolute;
+  top: -20px;
+  left: -10px;
+  width: 160px;
+  font-size: 0.7em;
+  font-weight: 700;
 }
 
 ul.countries,
 ul.tracks {
-    margin: 0;
-    padding: .75rem;
-    list-style: none;
+  margin: 0;
+  padding: 0.75rem;
+  list-style: none;
 }
 
 ul.tracks {
-    min-width: 260px;
+  min-width: 260px;
 }
 
 ul.countries li,
 ul.tracks li {
-    display: flex;
-    padding-bottom: .60rem;
+  display: flex;
+  padding-bottom: 0.6rem;
 }
 
 ul.countries li .dropdown-item,
 ul.tracks li .dropdown-item {
-    margin: 0rem 0rem;
+  margin: 0rem 0rem;
 }
 
 ul.countries li:last-child,
 ul.tracks li:last-child {
-    padding-bottom: 0;
+  padding-bottom: 0;
 }
 
 ul.countries li span,
 ul.tracks li span {
-    vertical-align: middle;
+  vertical-align: middle;
 }
 
 ul.countries li label.dropdown-item,
 ul.tracks li label.dropdown-item {
-    padding: .50rem 1.1rem;
+  padding: 0.5rem 1.1rem;
 }
 
 .track-draggable-area.territory-tracks {
-    min-height: 100px !important;
+  min-height: 100px !important;
 }
 
 .dropdown .custom-checkbox {
-    display: inline-block;
+  display: inline-block;
 }
 
 .territory-tracks {
-    width: 260px;
+  width: 260px;
 }
 
 .dropdown.tracks-dropdown {
-    padding-left: 0px;
-    width: 100%;
+  padding-left: 0px;
+  width: 100%;
 }
 
 table.territorial-rights-table th {
-    padding: 20px 0 10px 0;
+  padding: 20px 0 10px 0;
 }
 
 table.territorial-rights-table td {
-    border-top: solid 1px #CCC;
-    padding-top: 10px;
+  border-top: solid 1px #ccc;
+  padding-top: 10px;
 }
 
 .option-text {
-    color: #999;
-    font-style: italic;
+  color: #999;
+  font-style: italic;
 }
 
 .required-text {
-    color: #FF0000;
-    font-style: italic;
+  color: #ff0000;
+  font-style: italic;
 }
 
 button.btn.btn-secondary.action.align-middle {
-    padding: 0px .25rem;
-    margin-left: 4px;
-    height: 1.9rem;
+  padding: 0px 0.25rem;
+  margin-left: 4px;
+  height: 1.9rem;
 }

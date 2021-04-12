@@ -1,20 +1,19 @@
 import React, { Component } from 'react';
-import './PageHeader.css'
-import { withRouter } from "react-router";
+import './PageHeader.css';
+import { withRouter } from 'react-router';
 
 class PageHeader extends Component {
+  constructor(props) {
+    super(props);
 
-    constructor(props) {
-        super(props);
+    this.state = {
+      user: {},
+    };
+  }
 
-        this.state = {
-            user : {},
-        };
-    }
-   
-    render() {
-        return('')
-    }
-};
+  render() {
+    return '';
+  }
+}
 
 export default withRouter(PageHeader);

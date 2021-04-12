@@ -1,24 +1,86 @@
 /* Audio Files & Track Information */
-	
-.audio-drop-area  {border:solid 1px #CCC; width:100%; height:190px; background-color:#d9f3fe;}
-.audio-drop-area span {display:block; margin:0 auto; padding-top:66px; color:#999; text-align:center;}
 
-.track-draggable-area {background-color:#d9f3fe; border:dashed 1px #CCC; padding:.30rem .60rem; vertical-align:top; }
-.draggable-track {border-radius:2px; background-color:#fff; margin:7px 0; padding:6px;  cursor:grab;}
+.audio-drop-area {
+  border: solid 1px #ccc;
+  width: 100%;
+  height: 190px;
+  background-color: #d9f3fe;
+}
+.audio-drop-area span {
+  display: block;
+  margin: 0 auto;
+  padding-top: 66px;
+  color: #999;
+  text-align: center;
+}
 
-input[type=file] {opacity: 0.0; position: absolute; top:0; left: 0; bottom: 0; right:0; width: 100%; height:100%; cursor:pointer;}
+.track-draggable-area {
+  background-color: #d9f3fe;
+  border: dashed 1px #ccc;
+  padding: 0.3rem 0.6rem;
+  vertical-align: top;
+}
+.draggable-track {
+  border-radius: 2px;
+  background-color: #fff;
+  margin: 7px 0;
+  padding: 6px;
+  cursor: grab;
+}
 
-.sortable-audio-file {width:100%; padding:6px; border-radius:2px; box-shadow:none!important; background-color:#fff; display:inline-flex; vertical-align:middle; border:1px dashed #CCC; cursor:grab;}
-.sortable-audio-file .material-icons {padding-right:10px;}
-.sortable-audio-file span {line-height:24px;}
+input[type='file'] {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
 
+.sortable-audio-file {
+  width: 100%;
+  padding: 6px;
+  border-radius: 2px;
+  box-shadow: none !important;
+  background-color: #fff;
+  display: inline-flex;
+  vertical-align: middle;
+  border: 1px dashed #ccc;
+  cursor: grab;
+}
+.sortable-audio-file .material-icons {
+  padding-right: 10px;
+}
+.sortable-audio-file span {
+  line-height: 24px;
+}
 
-.table-section {display: flex; flex-direction: column; margin:0px 40px 40px 40px;}
-.table-section .nav-tabs {border-bottom:none;}
-.table-section .nav-link:first-child {margin-left:30px;}
-.table-section .nav-link.active {border:none;}
-.table-section .tab-pane {background-color:#FFF; padding:30px;}
+.table-section {
+  display: flex;
+  flex-direction: column;
+  margin: 0px 40px 40px 40px;
+}
+.table-section .nav-tabs {
+  border-bottom: none;
+}
+.table-section .nav-link:first-child {
+  margin-left: 30px;
+}
+.table-section .nav-link.active {
+  border: none;
+}
+.table-section .tab-pane {
+  background-color: #fff;
+  padding: 30px;
+}
 
-td.audio-file {background-color:#d9f3fe;}
+td.audio-file {
+  background-color: #d9f3fe;
+}
 
-.droppable {height: 30px;}
+.droppable {
+  height: 30px;
+}

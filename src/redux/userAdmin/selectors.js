@@ -3,16 +3,16 @@ import { createSelector } from 'reselect';
 export const selectorState = state => state.userAdmin;
 
 export const selectorData = createSelector(
-    selectorState,
-    state => state.data
+  selectorState,
+  state => state.data,
 );
 
 export const selectorError = createSelector(
-    selectorState,
-    state => state.error
+  selectorState,
+  state => state.error,
 );
 
 export const selectorSubmitting = createSelector(
-    selectorState,
-    state => state.submitting
+  selectorState,
+  state => state.submitting,
 );

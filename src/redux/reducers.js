@@ -5,11 +5,11 @@ import user from './user/reducer';
 import userAdmin from './userAdmin/reducer';
 
 export default asyncReducers => {
-    return combineReducers({
-        form: formReducer,
-        user,
-        userAdmin,
-        labels,
-        ...asyncReducers,
-    });
+  return combineReducers({
+    form: formReducer,
+    user,
+    userAdmin,
+    labels,
+    ...asyncReducers,
+  });
 };
