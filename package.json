@@ -27,7 +27,7 @@
     "uuid": "^3.3.3"
   },
   "scripts": {
-    "postinstall": "node ./node_modules/husky/lib/installer/bin install",
+    "prepare": "node ./node_modules/husky/lib/installer/bin install",
     "config": "node scripts/config.js",
     "env:dev": "NODE_ENV=dev node scripts/config.js && cp public/static/config/index.js public/static/config/index.dev.js",
     "env:qa": "NODE_ENV=qa node scripts/config.js && cp public/static/config/index.js public/static/config/index.qa.js",
