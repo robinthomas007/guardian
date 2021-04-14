@@ -1,4 +1,21 @@
-button.tooltip-btn {float:right; border-radius:100%; padding:0px; width:20px; height:20px; font-size:.8em; font-weight:700; background-color:#DDD; color:#333;}
-button.tooltip-btn:hover {background-color:#01579B;}
-div.tooltip {font-size:.9em;}
-div.tooltip-inner {max-width:340px; text-align:left;}
+button.tooltip-btn {
+  float: right;
+  border-radius: 100%;
+  padding: 0px;
+  width: 20px;
+  height: 20px;
+  font-size: 0.8em;
+  font-weight: 700;
+  background-color: #ddd;
+  color: #333;
+}
+button.tooltip-btn:hover {
+  background-color: #01579b;
+}
+div.tooltip {
+  font-size: 0.9em;
+}
+div.tooltip-inner {
+  max-width: 340px;
+  text-align: left;
+}

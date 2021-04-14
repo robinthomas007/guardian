@@ -1,63 +1,78 @@
 {
-    "name": "react-app",
-    "version": "0.1.0",
-    "private": true,
-    "dependencies": {
-        "@okta/okta-react": "^1.2.2",
-        "@okta/okta-signin-widget": "^2.21.0",
-        "core-js": "^3.6.4",
-        "dotenv": "^6.2.0",
-        "moment": "^2.25.3",
-        "noty": "^3.2.0-beta",
-        "npm": "^6.13.7",
-        "react": "^16.9.0",
-        "react-app-polyfill": "^1.0.6",
-        "react-bootstrap": "^1.0.0-beta.12",
-        "react-datepicker": "^2.15.0",
-        "react-dom": "^16.9.0",
-        "react-drag-and-drop": "^3.0.0",
-        "react-ga": "^2.7.0",
-        "react-redux": "^7.1.1",
-        "react-router-dom": "^4.3.1",
-        "react-scripts": "^2.1.8",
-        "react-sortable-hoc": "^1.10.1",
-        "redux": "^4.0.4",
-        "redux-form": "^8.2.6",
-        "redux-logger": "^3.0.6",
-        "redux-starter-kit": "^1.0.0",
-        "replace-in-file": "^3.4.4",
-        "universal-cookie": "^3.1.0",
-        "uuid": "^3.3.3"
-    },
-    "scripts": {
-        "config": "node scripts/config.js",
-        "env:dev": "NODE_ENV=dev node scripts/config.js && cp public/static/config/index.js public/static/config/index.dev.js",
-        "env:qa": "NODE_ENV=qa node scripts/config.js && cp public/static/config/index.js public/static/config/index.qa.js",
-        "env:sandbox": "NODE_ENV=sandbox node scripts/config.js && cp public/static/config/index.js public/static/config/index.sandbox.js",
-        "env:stage": "NODE_ENV=stage node scripts/config.js && cp public/static/config/index.js public/static/config/index.stage.js",
-        "env:test": "NODE_ENV=test node scripts/config.js && cp public/static/config/index.js public/static/config/index.test.js",
-        "env:prod": "NODE_ENV=prod node scripts/config.js && cp public/static/config/index.js public/static/config/index.prod.js",
-        "allenvs": "npm run env:sandbox && npm run env:prod && npm run env:qa && npm run env:stage && npm run env:test && npm run env:dev",
-        "start": "bash ./scripts/config && REACT_APP_CACHE_BUST=$(date +%s) react-scripts start",
-        "build": "REACT_APP_CACHE_BUST=$(date +%s) react-scripts build",
-        "start:win": "bash ./scripts/config && set REACT_APP_CACHE_BUST=%date:~0,2%%date:~3,2%%date:~6,8%%time:~0,2%%time:~3,2%%time:~6,2% && react-scripts start",
-        "build:win": "set REACT_APP_CACHE_BUST=%date:~0,2%%date:~3,2%%date:~6,8%%time:~0,2%%time:~3,2%%time:~6,2% && react-scripts build",
-        "test": "react-scripts test",
-        "eject": "react-scripts eject"
-    },
-    "eslintConfig": {
-        "extends": "react-app"
-    },
-    "browserslist": [
-        ">0.2%",
-        "not dead",
-        "not ie <= 11",
-        "not op_mini all"
-    ],
-    "devDependencies": {
-        "axios": "^0.19.0",
-        "fs": "0.0.1-security",
-        "redux-devtools-extension": "^2.13.8",
-        "terser": "^3.17.0"
+  "name": "guardian",
+  "version": "2.0.0",
+  "private": true,
+  "dependencies": {
+    "@okta/okta-react": "^1.2.2",
+    "@okta/okta-signin-widget": "^2.21.0",
+    "dotenv": "^6.2.0",
+    "moment": "^2.25.3",
+    "noty": "^3.2.0-beta",
+    "react": "^16.9.0",
+    "react-app-polyfill": "^1.0.6",
+    "react-bootstrap": "^1.0.0-beta.12",
+    "react-datepicker": "^2.15.0",
+    "react-dom": "^16.9.0",
+    "react-drag-and-drop": "^3.0.0",
+    "react-ga": "^2.7.0",
+    "react-redux": "^7.1.1",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "^2.1.8",
+    "react-sortable-hoc": "^1.10.1",
+    "redux": "^4.0.4",
+    "redux-form": "^8.2.6",
+    "redux-logger": "^3.0.6",
+    "redux-starter-kit": "^1.0.0",
+    "universal-cookie": "^3.1.0",
+    "uuid": "^3.3.3"
+  },
+  "scripts": {
+    "prepare": "node ./node_modules/husky/lib/installer/bin install",
+    "config": "node scripts/config.js",
+    "env:dev": "NODE_ENV=dev node scripts/config.js && cp public/static/config/index.js public/static/config/index.dev.js",
+    "env:qa": "NODE_ENV=qa node scripts/config.js && cp public/static/config/index.js public/static/config/index.qa.js",
+    "env:sandbox": "NODE_ENV=sandbox node scripts/config.js && cp public/static/config/index.js public/static/config/index.sandbox.js",
+    "env:stage": "NODE_ENV=stage node scripts/config.js && cp public/static/config/index.js public/static/config/index.stage.js",
+    "env:test": "NODE_ENV=test node scripts/config.js && cp public/static/config/index.js public/static/config/index.test.js",
+    "env:prod": "NODE_ENV=prod node scripts/config.js && cp public/static/config/index.js public/static/config/index.prod.js",
+    "allenvs": "npm run env:sandbox && npm run env:prod && npm run env:qa && npm run env:stage && npm run env:test && npm run env:dev",
+    "start": "bash ./scripts/config && REACT_APP_CACHE_BUST=$(date +%s) react-scripts start",
+    "build": "REACT_APP_CACHE_BUST=$(date +%s) react-scripts build",
+    "start:win": "bash ./scripts/config && set REACT_APP_CACHE_BUST=%date:~0,2%%date:~3,2%%date:~6,8%%time:~0,2%%time:~3,2%%time:~6,2% && react-scripts start",
+    "build:win": "set REACT_APP_CACHE_BUST=%date:~0,2%%date:~3,2%%date:~6,8%%time:~0,2%%time:~3,2%%time:~6,2% && react-scripts build",
+    "validate": "eslint src/",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 8",
+    "not op_mini all"
+  ],
+  "devDependencies": {
+    "axios": "^0.19.0",
+    "redux-devtools-extension": "^2.13.8",
+    "terser": "^3.17.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "husky": "^3.0.5",
+    "lint-staged": "^9.2.5",
+    "prettier": "1.18.2",
+    "pretty-quick": "^1.11.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged && lint-staged"
     }
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "engines": {
+    "node": ">=12.6.0"
+  },
+  "engineStrict": true
 }
