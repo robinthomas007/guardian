@@ -32,11 +32,13 @@ npm install
 
 We use [Vault](https://www.vaultproject.io/) in development for used identification (i.e. for additional security)
 
+- Make sure you are added to the Guardian Vault
 - [Install](https://learn.hashicorp.com/tutorials/vault/getting-started-install) vault depending on your OS
-- Set vault address `export VAULT_ADDR=https://vault.umusic.net`
+- Set vault address `export VAULT_ADDR=https://vault.umusic.net` in terminal
 - Only OIDC login in vault is enabled. So run `vault login -method=oidc -token-only`
-- Open the link in your browser
-- Copy & paste the token/code to the file `.vault-token` in home directory (i.e. `~/.vault-token`)
+- Open the link in your browser (if it doesn't open automatically in your default browser)
+- Create a file `.env` in the project root & copy environment variables from `.env-sample`
+- Set value for `VAULT_TOKEN` from the token you received from vault login.
 
 ## Development
 
