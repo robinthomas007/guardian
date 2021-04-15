@@ -14,10 +14,6 @@ class LabelsInput extends Component {
   };
 
   getLabelOptions = () => {
-    if (this.state.defaultLabels !== this.props.data && this.state.defaultLabels.length <= 0) {
-      this.setState({ defaultLabels: this.props.data });
-    }
-
     const labelOptions = this.state.defaultLabels.map((label, i) => {
       const index = i;
       return (
@@ -40,6 +36,20 @@ class LabelsInput extends Component {
     });
 
     return labelOptions;
+  };
+
+  componentDidMount() {
+    this.updateDefaultLabels();
+  }
+
+  componentDidUpdate() {
+    this.updateDefaultLabels();
+  }
+
+  updateDefaultLabels = () => {
+    if (this.state.defaultLabels !== this.props.data && this.state.defaultLabels.length <= 0) {
+      this.setState({ defaultLabels: this.props.data });
+    }
   };
 
   render() {
