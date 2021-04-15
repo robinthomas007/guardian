@@ -94,7 +94,7 @@ class IntroModal extends Component {
                       <input id="doNotShowIntro" type="checkbox" onChange={this.doNotShowAgain} />
                       <span className="checkmark "></span>
                     </label>
-                    <label htmlFor={'doNotShowIntro'} class="noshow-label">
+                    <label htmlFor={'doNotShowIntro'} className="noshow-label">
                       Do not show this anymore.
                     </label>
                   </div>
