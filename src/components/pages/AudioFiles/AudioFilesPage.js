@@ -7,7 +7,8 @@ import Noty from 'noty';
 import LoadingImg from '../../ui/LoadingImg';
 import AudioFilesTabbedTracks from '../AudioFiles/pageComponents/audioFilesTabbedTracks';
 import { isValidIsrc } from '../../Utils';
-
+import { connect } from 'react-redux';
+import { incrementUploadCount, decrementUploadCount } from 'redux/uploadProgressAlert/actions';
 class AudioFilesPage extends Component {
   constructor(props) {
     super(props);
@@ -206,6 +207,7 @@ class AudioFilesPage extends Component {
   }
 
   handleFileUpload(files, trackID) {
+    const { onUploadProgress, onUploadComplete } = this.props;
     const user = JSON.parse(sessionStorage.getItem('user'));
     const projectID = this.state.projectID ? this.state.projectID : '';
     const fetchHeaders = new Headers({
@@ -217,7 +219,7 @@ class AudioFilesPage extends Component {
     for (var i = 0; i < files.length; i++) {
       var formData = new FormData();
       formData.append('file', files[i]);
-
+      onUploadProgress();
       fetch(window.env.api.url + '/media/api/Upload', {
         method: 'POST',
         headers: fetchHeaders,
@@ -229,7 +231,8 @@ class AudioFilesPage extends Component {
         .then(responseJSON => {
           this.hideFileUploadingIndicator(responseJSON[0].fileName);
         })
-        .catch(error => console.error(error));
+        .catch(error => console.error(error))
+        .finally(() => onUploadComplete());
     }
   }
 
@@ -533,4 +536,12 @@ class AudioFilesPage extends Component {
   }
 }
 
-export default withRouter(AudioFilesPage);
+export default withRouter(
+  connect(
+    state => ({}),
+    {
+      onUploadProgress: incrementUploadCount,
+      onUploadComplete: decrementUploadCount,
+    },
+  )(AudioFilesPage),
+);

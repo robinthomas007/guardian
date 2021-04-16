@@ -8,6 +8,8 @@ import Noty from 'noty';
 import { withRouter } from 'react-router';
 import AudioFilesTabbedTracks from '../AudioFiles/pageComponents/audioFilesTabbedTracks';
 import { isFormValid, formatDateToYYYYMMDD, convertToLocaleTime } from '../../Utils';
+import { connect } from 'react-redux';
+import { incrementUploadCount, decrementUploadCount } from 'redux/uploadProgressAlert/actions';
 
 class TrackInformationPage extends Component {
   constructor(props) {
@@ -343,6 +345,7 @@ class TrackInformationPage extends Component {
   };
 
   handleFileUpload(files, track) {
+    const { onUploadProgress, onUploadComplete } = this.props;
     const user = JSON.parse(sessionStorage.getItem('user'));
     const projectID = this.state.project.Project.projectID
       ? this.state.project.Project.projectID
@@ -359,7 +362,7 @@ class TrackInformationPage extends Component {
     for (var i = 0; i < files.length; i++) {
       var formData = new FormData();
       formData.append('file', files[0]);
-
+      onUploadProgress();
       fetch(window.env.api.url + '/media/api/Upload', {
         method: 'POST',
         headers: fetchHeaders,
@@ -373,7 +376,8 @@ class TrackInformationPage extends Component {
         })
         .catch(error => {
           console.error(error);
-        });
+        })
+        .finally(() => onUploadComplete());
     }
   }
 
@@ -542,4 +546,12 @@ class TrackInformationPage extends Component {
   }
 }
 
-export default withRouter(TrackInformationPage);
+export default withRouter(
+  connect(
+    state => ({}),
+    {
+      onUploadProgress: incrementUploadCount,
+      onUploadComplete: decrementUploadCount,
+    },
+  )(TrackInformationPage),
+);
