@@ -76,4 +76,10 @@ For testing in editor, go [here](https://github.com/facebook/create-react-app/bl
 
 ## CI/CD
 
+
+### `npm run build` fails to minify
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
 ## Deployment
+

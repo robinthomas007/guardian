@@ -1,0 +1,17 @@
+{
+    "API": {
+        "Version": "v1",
+        "Pipeline": "poc-vault"
+    },
+    "Git": {
+        "Ref": "refs/heads/master",
+        "Revision": "master",
+        "URL": "https://github.com/umg/guardian.git"
+    },
+    "Image": {
+        "URL": "docker-registry.umusic.com/guardian/guardian-ui",
+        "Tag": "v0.0.1",
+        "Dockerfile": "devops/docker/Dockerfile",
+        "Context": ""
+    }
+}

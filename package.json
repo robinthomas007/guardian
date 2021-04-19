@@ -64,6 +64,7 @@
     "hooks": {
       "pre-commit": "pretty-quick --staged && lint-staged"
     }
+
   },
   "lint-staged": {
     "*.js": [
@@ -75,4 +76,5 @@
     "node": ">=12.6.0"
   },
   "engineStrict": true
+
 }
