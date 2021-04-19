@@ -1,3 +1,5 @@
+import Noty from 'noty';
+
 export const isFormValid = () => {
   let requiredInputs = document.getElementsByClassName('requiredInput');
 
@@ -127,3 +129,31 @@ export const isPreReleaseDate = projectData => {
     return true;
   }
 };
+
+export function isDuplicateTrackTitle() {
+  let trackTitles = document.getElementsByClassName('trackTitleField');
+  let titleValues = [];
+  let isDuplicate = false;
+
+  for (var i = 0; i < trackTitles.length; i++) {
+    const title = trackTitles[i].value;
+    if (title && titleValues.includes(title)) {
+      isDuplicate = true;
+      break;
+    } else {
+      titleValues.push(title);
+    }
+  }
+  return isDuplicate;
+}
+
+export function showNotyError(message) {
+  new Noty({
+    type: 'error',
+    text: message,
+    theme: 'bootstrap-v4',
+    layout: 'top',
+    timeout: false,
+    onClick: 'Noty.close();',
+  }).show();
+}

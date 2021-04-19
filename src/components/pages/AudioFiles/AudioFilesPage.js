@@ -6,7 +6,7 @@ import './AudioFiles.css';
 import Noty from 'noty';
 import LoadingImg from '../../ui/LoadingImg';
 import AudioFilesTabbedTracks from '../AudioFiles/pageComponents/audioFilesTabbedTracks';
-import { isValidIsrc } from '../../Utils';
+import { isValidIsrc, isDuplicateTrackTitle, showNotyError } from '../../Utils';
 
 class AudioFilesPage extends Component {
   constructor(props) {
@@ -349,7 +349,9 @@ class AudioFilesPage extends Component {
 
     let formIsValid = this.isValidForm();
 
-    if (formIsValid) {
+    if (isDuplicateTrackTitle()) {
+      showNotyError("You're attempting to enter a duplicate track title.");
+    } else if (formIsValid) {
       this.setState({ showLoader: true });
 
       const fetchHeaders = new Headers({
