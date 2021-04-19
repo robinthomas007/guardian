@@ -221,7 +221,7 @@ class TrackInformationDataTable extends Component {
                 id={'trackTitle'}
                 value={track.trackTitle}
                 onChange={evt => this.handleChange(evt, track, i)}
-                className={'requiredInput'}
+                className={'trackTitleField requiredInput'}
               ></Form.Control>
               <div className="invalid-tooltip">Invalid Track Title</div>
             </td>

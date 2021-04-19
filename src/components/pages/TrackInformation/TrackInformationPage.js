@@ -10,6 +10,13 @@ import AudioFilesTabbedTracks from '../AudioFiles/pageComponents/audioFilesTabbe
 import { isFormValid, formatDateToYYYYMMDD, convertToLocaleTime } from '../../Utils';
 import { connect } from 'react-redux';
 import { incrementUploadCount, decrementUploadCount } from 'redux/uploadProgressAlert/actions';
+import {
+  isFormValid,
+  formatDateToYYYYMMDD,
+  convertToLocaleTime,
+  isDuplicateTrackTitle,
+  showNotyError,
+} from '../../Utils';
 
 class TrackInformationPage extends Component {
   constructor(props) {
@@ -228,7 +235,9 @@ class TrackInformationPage extends Component {
   handleSubmit(e) {
     const saveAndContinue = e.target.classList.contains('saveAndContinueButton') ? true : false;
 
-    if (isFormValid() && this.isValidForm()) {
+    if (isDuplicateTrackTitle()) {
+      showNotyError("You're attempting to enter a duplicate track title.");
+    } else if (isFormValid() && this.isValidForm()) {
       this.setState({ showloader: true });
 
       const user = JSON.parse(sessionStorage.getItem('user'));
