@@ -12,11 +12,11 @@ export default class OktaSignInWidget extends Component {
         pkce: true,
       },
       features: {
-        registration: false,    // Enable self-service registration flow
-        rememberMe:true, 
+        registration: false, // Enable self-service registration flow
+        rememberMe: true,
       },
     });
-    this.widget.renderEl({el}, this.props.onSuccess, this.props.onError);
+    this.widget.renderEl({ el }, this.props.onSuccess, this.props.onError);
   }
 
   componentWillUnmount() {
@@ -24,20 +24,28 @@ export default class OktaSignInWidget extends Component {
   }
 
   render() {
-    return <section className="container-fluid landing okta">
-       <section className="logo"><img src="/static/images/guardian-logo.png" /></section>
+    return (
+      <section className="container-fluid landing okta">
+        <section className="logo">
+          <img src="/static/images/guardian-logo.png" />
+        </section>
 
         <section className="over-bar">
-                    <h1>WELCOME TO THE GUARDIAN</h1>
-                    <h2>CONTENT PROTECTION, LEAK DETECTION &amp; ANTI-PIRACY</h2>
-                    <span>
-                        <button id="loginRequestAccess" className="access btn" onClick={this.showRequestModal}>Request Access</button>
-                        <button id="loginLogIn" className="log-in btn" onClick={this.login}>Log In</button>
-                    </span>
-                </section>
-    
-                <section className="bar"></section>
-                <div className="fade modal-backdrop show"></div>
-    </section>;
+          <h1>WELCOME TO THE GUARDIAN</h1>
+          <h2>CONTENT PROTECTION, LEAK DETECTION &amp; ANTI-PIRACY</h2>
+          <span>
+            <button id="loginRequestAccess" className="access btn" onClick={this.showRequestModal}>
+              Request Access
+            </button>
+            <button id="loginLogIn" className="log-in btn" onClick={this.login}>
+              Log In
+            </button>
+          </span>
+        </section>
+
+        <section className="bar"></section>
+        <div className="fade modal-backdrop show"></div>
+      </section>
+    );
   }
-};
+}

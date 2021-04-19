@@ -1,69 +1,85 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Guardian
 
-## Available Scripts
+Created using [create-react-app](https://github.com/facebook/create-react-app/)
 
-In the project directory, you can run:
+## Pre-requisites
 
-### `npm start`
+- Node(see `package.json` - engine {} for version)
+- Git version >= 2.13.2
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Note: Git of a particular version is a dependency of [Husky](https://github.com/typicode/husky)
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+## Editor Integrations
 
-### `npm test`
+I personally use [Visual Studio Code](https://code.visualstudio.com/) which comes handy for react development. Install tools in your own editor for better development.
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- [ESLint](https://eslint.org) for linting.
+- [Prettier](https://github.com/prettier/prettier) for formatting the code automatically.
 
-### `npm run build`
+Note: Git hooks are set in place to format & lint code. See `package.json`
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Installation
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+Note: SSO is enabled with Github. So cloning with HTTP(S) requeires authentication headers. Use SSH.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+git clone git@github.com:umg/guardian.git
+cd guardian
+npm install
+```
 
-### `npm run eject`
+### Vault setup
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+We use [Vault](https://www.vaultproject.io/) in development for used identification (i.e. for additional security)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Make sure you are added to the Guardian Vault
+- [Install](https://learn.hashicorp.com/tutorials/vault/getting-started-install) vault depending on your OS
+- Set vault address `export VAULT_ADDR=https://vault.umusic.net` in terminal
+- Only OIDC login in vault is enabled. So run `vault login -method=oidc -token-only`
+- Open the link in your browser (if it doesn't open automatically in your default browser)
+- Create a file `.env` in the project root & copy environment variables from `.env-sample`
+- Set value for `VAULT_TOKEN` from the token you received from vault login.
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Development
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Before starting development, please go through [GUIDELINES](/GUIDELINES.md)
 
-## Learn More
+```bash
+npm start
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Note: See `scripts` in package.json for development in windows OS.
+The development server opens the app at http://localhost:3000 in your default browser.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Debugging
 
-### Code Splitting
+The browser's console is our best debugger. Yet download the developer tools for better debugging
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+- [React](https://github.com/facebook/react-devtools)
+- If you use `redux`, see [Redux](https://github.com/gaearon/redux-devtools)
 
-### Analyzing the Bundle Size
+Also use devtools corresponding to any other packages you use in future.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+For debugging in editor, go [here](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#debugging-in-the-editor)
 
-### Making a Progressive Web App
+## Pitfall/Caveats
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+## Testing
 
-### Advanced Configuration
+Before testing, make sure to install [watchman](https://github.com/facebook/watchman)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+```
+npm test
+```
 
-### Deployment
+For testing in editor, go [here](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#editor-integration)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+## CI/CD
+
 
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+## Deployment
 

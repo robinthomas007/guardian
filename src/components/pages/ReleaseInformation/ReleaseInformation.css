@@ -1,22 +1,95 @@
-.album-art-drop {border:solid 1px #CCC; background-color:#d9f3fe; height:190px; width:190px;}
-.album-art-drop span {display:block; margin:0 auto; padding-top:66px; color:#999; text-align:center;}
-.cover-art label {vertical-align:top; padding-top:5px;}
-			
-.notes-row label {vertical-align:top;}
-.notes-row > textarea {vertical-align:top; height:120px;}
+.album-art-drop {
+  border: solid 1px #ccc;
+  background-color: #d9f3fe;
+  height: 190px;
+  width: 190px;
+}
+.album-art-drop span {
+  display: block;
+  margin: 0 auto;
+  padding-top: 66px;
+  color: #999;
+  text-align: center;
+}
+.cover-art label {
+  vertical-align: top;
+  padding-top: 5px;
+}
 
-label.custom-checkbox {display:inline-block; vertical-align:middle;}
+.notes-row label {
+  vertical-align: top;
+}
+.notes-row > textarea {
+  vertical-align: top;
+  height: 120px;
+}
 
-.col-form-label.col-2.tbd {margin-left:30px; margin-right:-20px;}
-.col-3.notes.form-label {vertical-align: top;}
+label.custom-checkbox {
+  display: inline-block;
+  vertical-align: middle;
+}
 
-input[type=file] {opacity: 0.0; position: absolute; top:0; left: 0; bottom: 0; right:0; width: 100%; height:100%; cursor:pointer;}
+.col-form-label.col-2.tbd {
+  margin-left: 30px;
+  margin-right: -20px;
+}
+.col-3.notes.form-label {
+  vertical-align: top;
+}
 
-img.obj {position:absolute; top:0; left:0;}
-div.browse-btn {display:block; width:100px; border:1px solid #CCC; border-radius:2px; width:190px; margin-top: 80px; margin-left: -13px; text-align:center; cursor:pointer;}
-div.browse-btn span {position:absolute; width:180px; padding:8px; cursor:pointer;}
-div.browse-btn input {position:relative; height:36px!important; width:84px!important; padding:8px; cursor:pointer;}
+input[type='file'] {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
 
-button.btn.btn-secondary.action.remove-art {position:absolute; right:2px; z-index:1000; opacity:.9; border:solid 1px #ced4da; }
+img.obj {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+div.browse-btn {
+  display: block;
+  width: 100px;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  width: 190px;
+  margin-top: 80px;
+  margin-left: -13px;
+  text-align: center;
+  cursor: pointer;
+}
+div.browse-btn span {
+  position: absolute;
+  width: 180px;
+  padding: 8px;
+  cursor: pointer;
+}
+div.browse-btn input {
+  position: relative;
+  height: 36px !important;
+  width: 84px !important;
+  padding: 8px;
+  cursor: pointer;
+}
 
-#duplicateTitle .noty_body {text-align:center; font-weight:700; background-color:#7f1b2e; color:#fff;}
+button.btn.btn-secondary.action.remove-art {
+  position: absolute;
+  right: 2px;
+  z-index: 1000;
+  opacity: 0.9;
+  border: solid 1px #ced4da;
+}
+
+#duplicateTitle .noty_body {
+  text-align: center;
+  font-weight: 700;
+  background-color: #7f1b2e;
+  color: #fff;
+}
