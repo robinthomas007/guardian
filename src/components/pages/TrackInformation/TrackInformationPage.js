@@ -7,7 +7,6 @@ import './TrackInformation.css';
 import Noty from 'noty';
 import { withRouter } from 'react-router';
 import AudioFilesTabbedTracks from '../AudioFiles/pageComponents/audioFilesTabbedTracks';
-import { isFormValid, formatDateToYYYYMMDD, convertToLocaleTime } from '../../Utils';
 import { connect } from 'react-redux';
 import { incrementUploadCount, decrementUploadCount } from 'redux/uploadProgressAlert/actions';
 import {
