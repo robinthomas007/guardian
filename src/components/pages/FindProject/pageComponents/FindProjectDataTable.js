@@ -242,25 +242,7 @@ class FindProjectDataTable extends Component {
               onClick={() => this.handleRowClick(project.projectID)}
               className="status text-center"
             >
-              {this.checkProjectStepStatus(project.isReleaseInfoComplete)}
-            </td>
-            <td
-              onClick={() => this.handleRowClick(project.projectID)}
-              className="status text-center"
-            >
-              {this.checkProjectStepStatus(project.isProjectContactsComplete)}
-            </td>
-            <td
-              onClick={() => this.handleRowClick(project.projectID)}
-              className="status text-center"
-            >
               {this.checkProjectStepStatus(project.isAudioFilesComplete)}
-            </td>
-            <td
-              onClick={() => this.handleRowClick(project.projectID)}
-              className="status text-center"
-            >
-              {this.checkProjectStepStatus(project.isTrackInfoComplete)}
             </td>
             <td
               onClick={() => this.handleRowClick(project.projectID)}
@@ -364,12 +346,9 @@ class FindProjectDataTable extends Component {
             </i>
           </th>
 
-          <th className="status text-center">Project</th>
-          <th className="status text-center">Contacts</th>
-          <th className="status text-center">Audio</th>
-          <th className="status text-center">Tracks</th>
-          <th className="status text-center">Territories</th>
-          <th className="status text-center">Blocking</th>
+          <th className="status text-center">Has Audio</th>
+          <th className="status text-center">Has Rights</th>
+          <th className="status text-center">Has Blocking</th>
         </tr>
       </thead>
     );
