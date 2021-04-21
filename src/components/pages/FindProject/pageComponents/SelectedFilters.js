@@ -101,6 +101,21 @@ class SelectedFilters extends Component {
       : '';
   };
 
+  getRightsFilters = () => {
+    return this.props.filters.hasRightsName
+      ? this.getFilterBubbles(
+          'Has Rights',
+          <button
+            className="btn btn-sm btn-secondary"
+            onClick={() => this.props.removeRightsFilter()}
+          >
+            {this.props.filters.hasRightsName}
+            <i className="material-icons">close</i>
+          </button>,
+        )
+      : '';
+  };
+
   getStatusFilters = () => {
     return this.props.filters.statusName
       ? this.getFilterBubbles(
@@ -170,17 +185,26 @@ class SelectedFilters extends Component {
   getSelectedFilters = () => {
     const labelFilters = this.getLabelFilters();
     const audioFilters = this.getAudioFilters();
+    const rightsFilters = this.getRightsFilters();
     const statusFilters = this.getStatusFilters();
     const blockingFilters = this.getBlockingFilters();
     const dateFilters = this.getDatebubbles();
 
-    if (labelFilters || audioFilters || statusFilters || blockingFilters || dateFilters) {
+    if (
+      labelFilters ||
+      audioFilters ||
+      rightsFilters ||
+      statusFilters ||
+      blockingFilters ||
+      dateFilters
+    ) {
       return (
         <div className="selected-filters row d-flex flex-nowrap no-gutters">
           <div className="col-auto">Selected Filters:</div>
           <div className="col-10">
             {labelFilters}
             {audioFilters}
+            {rightsFilters}
             {statusFilters}
             {blockingFilters}
             {dateFilters}

@@ -3,6 +3,11 @@ import { Form } from 'react-bootstrap';
 import LabelsInput from '../pageComponents/LabelsInput';
 import NameIdDropdown from '../pageComponents/NameIdDropdown';
 
+// TODO: Remove hardcoded
+const HasRightsFacets = [
+  { id: '1', name: 'Has Rights', count: '132' },
+  { id: '0', name: 'Does Not Have Rights', count: '643' },
+];
 class SearchFilterModal extends Component {
   constructor(props) {
     super(props);
@@ -67,6 +72,19 @@ class SearchFilterModal extends Component {
               />
             </div>
 
+            <div className="col-2">
+              <label>Has Rights</label>
+            </div>
+            <div className="col-4">
+              <NameIdDropdown
+                data={this.props.data.Facets.HasRightsFacets || HasRightsFacets}
+                onChange={this.props.handleHasRightsFacetsChange}
+                defaultText="Select Option"
+                id={'filterHasRights'}
+              />
+            </div>
+          </div>
+          <div className="row no-gutters">
             <div className="col-2">
               <label>Last Updated</label>
             </div>
