@@ -235,7 +235,7 @@ class TrackInformationPage extends Component {
     const saveAndContinue = e.target.classList.contains('saveAndContinueButton') ? true : false;
 
     if (isDuplicateTrackTitle()) {
-      showNotyError("You're attempting to enter a duplicate track title.");
+      showNotyError("You're attempting to enter a duplicate track title. Click to close.");
     } else if (isFormValid() && this.isValidForm()) {
       this.setState({ showloader: true });
 

@@ -353,7 +353,7 @@ class AudioFilesPage extends Component {
     let formIsValid = this.isValidForm();
 
     if (isDuplicateTrackTitle()) {
-      showNotyError("You're attempting to enter a duplicate track title.");
+      showNotyError("You're attempting to enter a duplicate track title. Click to close.");
     } else if (formIsValid) {
       this.setState({ showLoader: true });
 
