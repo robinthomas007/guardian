@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { Collapse, ProgressBar } from 'react-bootstrap';
 
 export default function UploadProgressAlert() {
   const count = useSelector(state => state.uploadProgressAlert.count);
@@ -16,8 +17,27 @@ export default function UploadProgressAlert() {
     } else {
       window.removeEventListener('beforeunload', handleBeforeUnload);
     }
-    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
   }, [count]);
 
-  return <></>;
+  return (
+    <Collapse in={count > 0}>
+      <div
+        style={{
+          backgroundColor: '#7f1b2e',
+          textAlign: 'center',
+          color: '#fff',
+          paddingLeft: '20%',
+          paddingRight: '20%',
+          paddingTop: '5px',
+          paddingBottom: '10px',
+        }}
+      >
+        <h3>Upload in progress. Please do not leave the Guardian until it's complete.</h3>
+        <ProgressBar style={{ height: '0.7rem' }} striped animated variant="danger" now="50" />
+      </div>
+    </Collapse>
+  );
 }
