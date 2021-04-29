@@ -41,7 +41,7 @@ th.status {
 }
 td.status {
   width: 80px;
-  background-color: #f5f5f5;
+  /* background-color: #f5f5f5; */
 }
 td.status i {
   font-size: 20px;
