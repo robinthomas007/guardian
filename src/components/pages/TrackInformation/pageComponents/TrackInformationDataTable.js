@@ -73,9 +73,11 @@ class TrackInformationDataTable extends Component {
   }
 
   handleDateChange(date, track) {
+    console.log('date', date);
     const { DataRows } = this.state;
     const modifiedDataRows = DataRows;
-    const formattedDate = moment(date).format('MM/DD/YYYY');
+    const formattedDate = moment(date).format('MM/DD/YYYY HH:mm A');
+    console.log('formattedDate', formattedDate);
     track['trackReleaseDate'] = formattedDate;
     this.setState({ DataRows: modifiedDataRows });
     this.props.updateDiscData(this.props.discID, modifiedDataRows);
@@ -257,17 +259,9 @@ class TrackInformationDataTable extends Component {
               </label>
             </td>
             <td className="release-date-col">
-              {/* <Form.Control 
-                                discnumber={this.props.discID}
-                                className={'trackReleaseDateInput'}
-                                type="date" 
-                                id={'trackReleaseDate'}
-                                value={formatDateToYYYYMMDD(track.trackReleaseDate)}
-                                disabled={ (track.isSingle) ? false : true}
-                                onChange={(evt) => this.handleChange(evt, track, i)}
-                            /> */}
               <DatePicker
                 id={'trackReleaseDate'}
+                showTimeSelect
                 tabIndex={this.props.discID} // unable to add custom attribute in react-datepicker
                 className="trackReleaseDateInput"
                 selected={
@@ -276,8 +270,8 @@ class TrackInformationDataTable extends Component {
                     : null
                 }
                 disabled={track.isSingle ? false : true}
-                dateFormat="MM/dd/yyyy"
-                placeholderText="mm/dd/yyyy"
+                dateFormat="Pp"
+                placeholderText="Select release date"
                 onChange={date => this.handleDateChange(date, track)}
               />
               <label className="custom-checkbox">
