@@ -73,11 +73,9 @@ class TrackInformationDataTable extends Component {
   }
 
   handleDateChange(date, track) {
-    console.log('date', date);
     const { DataRows } = this.state;
     const modifiedDataRows = DataRows;
-    const formattedDate = moment(date).format('MM/DD/YYYY HH:mm A');
-    console.log('formattedDate', formattedDate);
+    const formattedDate = moment(date).format('MM/DD/YYYY HH:mm');
     track['trackReleaseDate'] = formattedDate;
     this.setState({ DataRows: modifiedDataRows });
     this.props.updateDiscData(this.props.discID, modifiedDataRows);
@@ -275,7 +273,6 @@ class TrackInformationDataTable extends Component {
                 onChange={date => this.handleDateChange(date, track)}
               />
               <label className="custom-checkbox">
-                 
                 <input
                   type="checkbox"
                   id={'tbdReleaseDate'}

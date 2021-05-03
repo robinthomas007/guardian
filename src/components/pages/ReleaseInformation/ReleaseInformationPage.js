@@ -105,8 +105,7 @@ class ReleaseinformationPage extends Component {
   handleDateChange(date) {
     let formattedDate = null;
     if (date !== null) {
-      formattedDate = moment(date).format('MM/DD/YYYY HH:mm A');
-      console.log('formattedDate', formattedDate);
+      formattedDate = moment(date).format('MM/DD/YYYY HH:mm');
     }
     this.setState({ formInputs: { ...this.state.formInputs, projectReleaseDate: formattedDate } });
   }
