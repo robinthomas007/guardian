@@ -3,6 +3,12 @@ import './polyfills';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+// import styles
+import 'css/index.css';
+import 'css/noty.css';
+import 'css/bootstrap-v4.css';
+import 'css/header.css';
+import 'css/okta-overide.css';
 
 import App from './App';
 import * as serviceWorker from './serviceWorker';

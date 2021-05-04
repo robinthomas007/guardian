@@ -1,0 +1,56 @@
+@charset "utf-8";
+
+/* CSS Document */
+
+#okta-sign-in.auth-container .okta-sign-in-header {
+  display: none;
+  border-bottom-color: #000;
+  background-image: url(/static/images/guardian-logo.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 80px;
+  background-color: #000;
+  background-size: contain;
+  padding: 10px 0;
+}
+
+#okta-sign-in,
+#okta-sign-in.auth-container .okta-form-input-field input,
+#okta-sign-in.auth-container input[type='submit'],
+#okta-sign-in.auth-container input[type='button'],
+::placeholder {
+  font-family: 'Roboto Condensed', sans-serif !important;
+}
+
+.container-fluid.landing.okta {
+  padding-top: 150px !important;
+}
+
+.container-fluid.landing.okta .logo {
+  margin-top: -130px !important;
+}
+
+#okta-sign-in.auth-container.main-container {
+  z-index: 10000 !important;
+}
+
+#okta-sign-in .custom-checkbox label {
+  position: fixed !important;
+}
+
+#okta-sign-in.auth-container .button-primary {
+  color: #fff !important;
+  background-color: #01579b !important;
+  background: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(#01579b),
+    to(#01579b)
+  ) !important;
+  background: -webkit-linear-gradient(#01579b, #01579b) !important;
+  background: linear-gradient(#01579b, #01579b) !important;
+  border-color: #01579b !important;
+  border-bottom-color: #01579b !important;
+  box-shadow: rgba(0, 0, 0, 0.15) 0 1px 0, rgba(255, 255, 255, 0.1) 0 1px 0 0 inset !important;
+}

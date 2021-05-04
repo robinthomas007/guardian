@@ -7,7 +7,7 @@
 }
 
 .noty_theme__bootstrap-v4.noty_bar .noty_body {
-  padding: .75rem 1.25rem;
+  padding: 0.75rem 1.25rem;
 }
 
 .noty_theme__bootstrap-v4.noty_bar .noty_buttons {
@@ -21,7 +21,7 @@
   color: #000;
   text-shadow: 0 1px 0 #fff;
   filter: alpha(opacity=20);
-  opacity: .5;
+  opacity: 0.5;
   background: transparent;
 }
 
@@ -30,7 +30,7 @@
   text-decoration: none;
   cursor: pointer;
   filter: alpha(opacity=50);
-  opacity: .75;
+  opacity: 0.75;
 }
 
 .noty_theme__bootstrap-v4.noty_type__alert,
