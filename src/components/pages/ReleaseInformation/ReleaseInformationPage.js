@@ -105,7 +105,7 @@ class ReleaseinformationPage extends Component {
   handleDateChange(date) {
     let formattedDate = null;
     if (date !== null) {
-      formattedDate = moment(date).format('MM/DD/YYYY');
+      formattedDate = moment(date).format('MM/DD/YYYY HH:mm');
     }
     this.setState({ formInputs: { ...this.state.formInputs, projectReleaseDate: formattedDate } });
   }
@@ -505,40 +505,27 @@ class ReleaseinformationPage extends Component {
                     message="Projects with a release date prior to today&#39;s date will be considered post-release. If the project&#39;s release date is to be determined, select TBD."
                   />
                 </div>
-                <div className="col-3 release-date">
-                  {/* <input
-                                        tabIndex='5+'
-                                        id="projectReleaseDate" 
-                                        className={this.state.releaseDateRequired ? 'form-control requiredInput' : 'form-control'} 
-                                        type='date'
-                                        value={formatDateToYYYYMMDD(this.state.formInputs.projectReleaseDate)} // yyyy-mm-dd
-                                        disabled={this.state.projectReleaseDateDisabled}
-                                        onChange={
-                                            (e) => {
-                                                this.handleChange(e)
-                                            }
-                                        }
-                                    /> */}
+                <div className="col-4 release-date">
                   <DatePicker
-                    tabIndex="5+"
+                    showTimeSelect
                     id="projectReleaseDate"
                     className={
                       this.state.releaseDateRequired ? 'form-control requiredInput' : 'form-control'
                     }
                     selected={
-                      this.state.formInputs.projectReleaseDate != null &&
-                      this.state.formInputs.projectReleaseDate != ''
+                      this.state.formInputs.projectReleaseDate !== null &&
+                      this.state.formInputs.projectReleaseDate !== ''
                         ? new Date(this.state.formInputs.projectReleaseDate)
                         : null
                     }
                     disabled={this.state.projectReleaseDateDisabled}
-                    dateFormat="MM/dd/yyyy"
-                    placeholderText="mm/dd/yyyy"
+                    dateFormat="Pp"
+                    placeholderText="Select release date"
                     onChange={this.handleDateChange}
                   />
                   <div className="invalid-tooltip">Release Date is Required if not TBD</div>
                 </div>
-                <div className="col-3">
+                <div className="col-auto">
                   <Form.Label className="col-form-label tbd text-nowrap">Release TBD</Form.Label>
                   <label className="custom-checkbox">
                     <input
@@ -553,7 +540,6 @@ class ReleaseinformationPage extends Component {
                     <span className="checkmark "></span>
                   </label>
                 </div>
-                <div className="col-auto"></div>
               </Form.Group>
 
               <Form.Group className="row d-flex no-gutters">
