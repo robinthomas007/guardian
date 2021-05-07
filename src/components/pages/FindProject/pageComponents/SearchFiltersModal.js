@@ -68,6 +68,19 @@ class SearchFilterModal extends Component {
             </div>
 
             <div className="col-2">
+              <label>Has Rights</label>
+            </div>
+            <div className="col-4">
+              <NameIdDropdown
+                data={this.props.data.Facets.HasRightsFacets}
+                onChange={this.props.handleHasRightsFacetsChange}
+                defaultText="Select Option"
+                id={'filterHasRights'}
+              />
+            </div>
+          </div>
+          <div className="row no-gutters">
+            <div className="col-2">
               <label>Last Updated</label>
             </div>
 

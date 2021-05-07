@@ -27,6 +27,8 @@ class FindProjectPage extends Component {
           labelIds: [],
           hasAudio: '',
           hasAudioName: '',
+          hasRights: '',
+          hasRightsName: '',
           hasBlocking: '',
           hasBlockingName: '',
           statusID: '',
@@ -156,6 +158,20 @@ class FindProjectPage extends Component {
     let modifiedFilter = filter;
     modifiedFilter.hasAudio = data.id;
     modifiedFilter.hasAudioName = data.id !== '' ? data.name : '';
+
+    this.setState(
+      currentState => ({ filter: modifiedFilter }),
+      () => {
+        this.handleProjectSearch();
+      },
+    );
+  };
+
+  handleHasRightsFacetsChange = data => {
+    const { filter } = this.state.searchCriteria;
+    let modifiedFilter = filter;
+    modifiedFilter.hasRights = data.id;
+    modifiedFilter.hasRightsName = data.id !== '' ? data.name : '';
 
     this.setState(
       currentState => ({ filter: modifiedFilter }),
@@ -303,6 +319,25 @@ class FindProjectPage extends Component {
     modifiedFilter.hasAudioName = '';
 
     var filterInputObj = document.getElementById('filterHasAudio');
+    filterInputObj.innerHTML = 'Select Option';
+
+    this.setState(
+      {
+        filter: modifiedFilter,
+      },
+      () => {
+        this.handleProjectSearch();
+      },
+    );
+  };
+
+  removeRightsFilter = () => {
+    const { filter } = this.state.searchCriteria;
+    let modifiedFilter = filter;
+    modifiedFilter.hasRights = '';
+    modifiedFilter.hasRightsName = '';
+
+    var filterInputObj = document.getElementById('filterHasRights');
     filterInputObj.innerHTML = 'Select Option';
 
     this.setState(
@@ -481,6 +516,7 @@ class FindProjectPage extends Component {
           handleStatusFacetsChange={this.handleStatusFacetsChange}
           handleHasAudioFacetsChange={this.handleHasAudioFacetsChange}
           handleHasBlockingFacetsChange={this.handleHasBlockingFacetsChange}
+          handleHasRightsFacetsChange={this.handleHasRightsFacetsChange}
           setDateFilter={this.setDateFilter}
         />
 
@@ -490,6 +526,7 @@ class FindProjectPage extends Component {
           removeLabelsFilter={this.removeLabelsFilter}
           removeAudioFilter={this.removeAudioFilter}
           removeBlockingFilter={this.removeBlockingFilter}
+          removeRightsFilter={this.removeRightsFilter}
           removeStatusFilter={this.removeStatusFilter}
           removeToDateFilter={this.removeToDateFilter}
           removeFromDateFilter={this.removeFromDateFilter}
