@@ -8,7 +8,7 @@ import Noty from 'noty';
 import { withRouter } from 'react-router';
 import AudioFilesTabbedTracks from '../AudioFiles/pageComponents/audioFilesTabbedTracks';
 import { connect } from 'react-redux';
-import { incrementUploadCount, decrementUploadCount } from 'redux/uploadProgressAlert/actions';
+import { incrementUploadCount, clearUploadCount } from 'redux/uploadProgressAlert/actions';
 import {
   isFormValid,
   formatDateToYYYYMMDD,
@@ -559,7 +559,7 @@ export default withRouter(
     state => ({}),
     {
       onUploadProgress: incrementUploadCount,
-      onUploadComplete: decrementUploadCount,
+      onUploadComplete: clearUploadCount,
     },
   )(TrackInformationPage),
 );
