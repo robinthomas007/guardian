@@ -505,7 +505,7 @@ class ReleaseinformationPage extends Component {
                     message="Projects with a release date prior to today&#39;s date will be considered post-release. If the project&#39;s release date is to be determined, select TBD."
                   />
                 </div>
-                <div className="col-4 release-date">
+                <div className="col-6 release-date">
                   <DatePicker
                     showTimeSelect
                     id="projectReleaseDate"
