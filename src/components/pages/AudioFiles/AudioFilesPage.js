@@ -161,7 +161,7 @@ class AudioFilesPage extends Component {
     updatedDiscs[this.state.activeTab].Tracks[this.state.replaceTrackIndex].fileUpload = true;
 
     const trackID = updatedDiscs[this.state.activeTab].Tracks[this.state.replaceTrackIndex].trackID;
-    this.handleFileUpload(newFiles, trackID);
+    this.handleFileUpload(newFiles, trackID, this.state.replaceTrackIndex);
     this.setState({
       discs: updatedDiscs,
       replaceTrackIndex: null,
@@ -200,24 +200,16 @@ class AudioFilesPage extends Component {
     this.setState({ discs: modifiedDiscs });
   }
 
-  hideFileUploadingIndicator(fileName) {
-    let uploadingIndicator = document.getElementById(fileName + '_ico');
-
+  hideFileUploadingIndicator(fileName, index) {
+    let uploadingIndicator = document.getElementById(`${fileName}_${index}_ico`);
     if (uploadingIndicator) {
       uploadingIndicator.style.display = 'none';
     }
   }
 
-  handleFileUpload(files, trackID) {
+  handleFileUpload(files, trackID, index) {
     const { onUploadProgress, onUploadComplete } = this.props;
-    const user = JSON.parse(sessionStorage.getItem('user'));
     const projectID = this.state.projectID ? this.state.projectID : '';
-    const fetchHeaders = new Headers({
-      Authorization: sessionStorage.getItem('accessToken'),
-      'Project-Id': projectID,
-      'Track-Id': trackID ? trackID : '',
-    });
-
     for (var i = 0; i < files.length; i++) {
       var formData = new FormData();
       formData.append('file', files[i]);
@@ -230,39 +222,21 @@ class AudioFilesPage extends Component {
       request.upload.addEventListener('progress', function(e) {
         // upload progress as percentage
         let percent_completed = (e.loaded / e.total) * 100;
-        console.log(Math.round(percent_completed), 'percent_completed');
         onUploadProgress(Math.round(percent_completed));
       });
 
       // request finished event
       request.addEventListener('load', e => {
         // HTTP status message (200, 404 etc)
-        console.log(request.status, 'load');
         if (request.status === 200) {
           const responseJSON = JSON.parse(request.response);
-          this.hideFileUploadingIndicator(responseJSON[0].fileName);
+          this.hideFileUploadingIndicator(responseJSON[0].fileName, index);
           onUploadComplete();
         } else {
           console.log('Audio upload error');
         }
       });
-
       request.send(formData);
-
-      // onUploadProgress();
-      // fetch(window.env.api.url + '/media/api/Upload', {
-      //   method: 'POST',
-      //   headers: fetchHeaders,
-      //   body: formData,
-      // })
-      //   .then(response => {
-      //     return response.json();
-      //   })
-      //   .then(responseJSON => {
-      //     this.hideFileUploadingIndicator(responseJSON[0].fileName);
-      //   })
-      //   .catch(error => console.error(error))
-      //   .finally(() => onUploadComplete());
     }
   }
 

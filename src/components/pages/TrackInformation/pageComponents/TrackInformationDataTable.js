@@ -211,7 +211,7 @@ class TrackInformationDataTable extends Component {
             </td>
             <td className="text-center">
               {track.hasUpload ? <i className="material-icons purple-icon">audiotrack</i> : ''}
-              <span className="loading-sm" id={track.fileName + '_ico'}>
+              <span className="loading-sm" id={`${track.fileName}_${i}_ico`}>
                 <LoadingImgSm show={track.fileUpload} />
               </span>
             </td>
