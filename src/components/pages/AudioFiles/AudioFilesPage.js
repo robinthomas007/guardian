@@ -161,7 +161,7 @@ class AudioFilesPage extends Component {
     updatedDiscs[this.state.activeTab].Tracks[this.state.replaceTrackIndex].fileUpload = true;
 
     const trackID = updatedDiscs[this.state.activeTab].Tracks[this.state.replaceTrackIndex].trackID;
-    this.handleFileUpload(newFiles, trackID, this.state.replaceTrackIndex);
+    this.handleFileUpload(newFiles, trackID);
     this.setState({
       discs: updatedDiscs,
       replaceTrackIndex: null,
@@ -200,14 +200,14 @@ class AudioFilesPage extends Component {
     this.setState({ discs: modifiedDiscs });
   }
 
-  hideFileUploadingIndicator(fileName, index) {
-    let uploadingIndicator = document.getElementById(`${fileName}_${index}_ico`);
+  hideFileUploadingIndicator(fileName) {
+    let uploadingIndicator = document.getElementById(`${fileName}_ico`);
     if (uploadingIndicator) {
       uploadingIndicator.style.display = 'none';
     }
   }
 
-  handleFileUpload(files, trackID, index) {
+  handleFileUpload(files, trackID) {
     const { onUploadProgress, onUploadComplete } = this.props;
     const projectID = this.state.projectID ? this.state.projectID : '';
     for (var i = 0; i < files.length; i++) {
@@ -230,7 +230,7 @@ class AudioFilesPage extends Component {
         // HTTP status message (200, 404 etc)
         if (request.status === 200) {
           const responseJSON = JSON.parse(request.response);
-          this.hideFileUploadingIndicator(responseJSON[0].fileName, index);
+          this.hideFileUploadingIndicator(responseJSON[0].fileName);
           onUploadComplete();
         } else {
           console.log('Audio upload error');
