@@ -5,10 +5,12 @@ import { withRouter } from 'react-router';
 import './AudioFiles.css';
 import Noty from 'noty';
 import LoadingImg from '../../ui/LoadingImg';
+import { reduxForm } from 'redux-form';
 import AudioFilesTabbedTracks from '../AudioFiles/pageComponents/audioFilesTabbedTracks';
 import { connect } from 'react-redux';
-import { incrementUploadCount, decrementUploadCount } from 'redux/uploadProgressAlert/actions';
+import { incrementUploadCount, clearUploadCount } from 'redux/uploadProgressAlert/actions';
 import { isDuplicateTrackTitle, showNotyError } from '../../Utils';
+
 class AudioFilesPage extends Component {
   constructor(props) {
     super(props);
@@ -199,8 +201,7 @@ class AudioFilesPage extends Component {
   }
 
   hideFileUploadingIndicator(fileName) {
-    let uploadingIndicator = document.getElementById(fileName + '_ico');
-
+    let uploadingIndicator = document.getElementById(`${fileName}_ico`);
     if (uploadingIndicator) {
       uploadingIndicator.style.display = 'none';
     }
@@ -208,31 +209,34 @@ class AudioFilesPage extends Component {
 
   handleFileUpload(files, trackID) {
     const { onUploadProgress, onUploadComplete } = this.props;
-    const user = JSON.parse(sessionStorage.getItem('user'));
     const projectID = this.state.projectID ? this.state.projectID : '';
-    const fetchHeaders = new Headers({
-      Authorization: sessionStorage.getItem('accessToken'),
-      'Project-Id': projectID,
-      'Track-Id': trackID ? trackID : '',
-    });
-
     for (var i = 0; i < files.length; i++) {
       var formData = new FormData();
       formData.append('file', files[i]);
-      onUploadProgress();
-      fetch(window.env.api.url + '/media/api/Upload', {
-        method: 'POST',
-        headers: fetchHeaders,
-        body: formData,
-      })
-        .then(response => {
-          return response.json();
-        })
-        .then(responseJSON => {
+      let request = new XMLHttpRequest();
+      request.open('POST', window.env.api.url + '/media/api/Upload');
+      request.setRequestHeader('Authorization', sessionStorage.getItem('accessToken'));
+      request.setRequestHeader('Project-Id', projectID);
+      request.setRequestHeader('Track-Id', trackID ? trackID : '');
+      // upload progress event
+      request.upload.addEventListener('progress', function(e) {
+        // upload progress as percentage
+        let percent_completed = (e.loaded / e.total) * 100;
+        onUploadProgress(Math.round(percent_completed));
+      });
+
+      // request finished event
+      request.addEventListener('load', e => {
+        // HTTP status message (200, 404 etc)
+        if (request.status === 200) {
+          const responseJSON = JSON.parse(request.response);
           this.hideFileUploadingIndicator(responseJSON[0].fileName);
-        })
-        .catch(error => console.error(error))
-        .finally(() => onUploadComplete());
+          onUploadComplete();
+        } else {
+          console.log('Audio upload error');
+        }
+      });
+      request.send(formData);
     }
   }
 
@@ -538,12 +542,22 @@ class AudioFilesPage extends Component {
   }
 }
 
+AudioFilesPage = reduxForm({
+  form: 'AudioFilesPageForm',
+})(AudioFilesPage);
+
+const mapDispatchToProps = dispatch => ({
+  onUploadProgress: val => dispatch(incrementUploadCount(val)),
+  onUploadComplete: () => dispatch(clearUploadCount()),
+});
+
+const mapStateToProps = state => ({
+  formValues: state.form.AudioFilesPageForm,
+});
+
 export default withRouter(
   connect(
-    state => ({}),
-    {
-      onUploadProgress: incrementUploadCount,
-      onUploadComplete: decrementUploadCount,
-    },
+    mapStateToProps,
+    mapDispatchToProps,
   )(AudioFilesPage),
 );

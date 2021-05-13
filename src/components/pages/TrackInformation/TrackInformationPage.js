@@ -8,7 +8,9 @@ import Noty from 'noty';
 import { withRouter } from 'react-router';
 import AudioFilesTabbedTracks from '../AudioFiles/pageComponents/audioFilesTabbedTracks';
 import { connect } from 'react-redux';
-import { incrementUploadCount, decrementUploadCount } from 'redux/uploadProgressAlert/actions';
+import { incrementUploadCount, clearUploadCount } from 'redux/uploadProgressAlert/actions';
+import { reduxForm } from 'redux-form';
+
 import {
   isFormValid,
   formatDateToYYYYMMDD,
@@ -358,34 +360,36 @@ class TrackInformationPage extends Component {
     const projectID = this.state.project.Project.projectID
       ? this.state.project.Project.projectID
       : '';
-    const fetchHeaders = new Headers({
-      Authorization: sessionStorage.getItem('accessToken'),
-      'User-Email': user.email,
-      'Project-Id': projectID,
-      'Track-Id': track.trackID ? track.trackID : '',
-    });
-
-    this.handleFileUploadView(track.trackNumber, true);
-
     for (var i = 0; i < files.length; i++) {
       var formData = new FormData();
-      formData.append('file', files[0]);
-      onUploadProgress();
-      fetch(window.env.api.url + '/media/api/Upload', {
-        method: 'POST',
-        headers: fetchHeaders,
-        body: formData,
-      })
-        .then(response => {
-          return response.json();
-        })
-        .then(responseJSON => {
+      formData.append('file', files[i]);
+      let request = new XMLHttpRequest();
+      request.open('POST', window.env.api.url + '/media/api/Upload');
+      request.setRequestHeader('Authorization', sessionStorage.getItem('accessToken'));
+      request.setRequestHeader('User-Email', user.email);
+      request.setRequestHeader('Project-Id', projectID);
+      request.setRequestHeader('Track-Id', track.trackID ? track.trackID : '');
+      this.handleFileUploadView(track.trackNumber, true);
+
+      // upload progress event
+      request.upload.addEventListener('progress', function(e) {
+        // upload progress as percentage
+        let percent_completed = (e.loaded / e.total) * 100;
+        onUploadProgress(Math.round(percent_completed));
+      });
+
+      // request finished event
+      request.addEventListener('load', e => {
+        // HTTP status message (200, 404 etc)
+        if (request.status === 200) {
+          const responseJSON = JSON.parse(request.response);
           this.handleFileUploadView(track.trackNumber, false);
-        })
-        .catch(error => {
-          console.error(error);
-        })
-        .finally(() => onUploadComplete());
+          onUploadComplete();
+        } else {
+          console.log('Audio upload error');
+        }
+      });
+      request.send(formData);
     }
   }
 
@@ -554,12 +558,22 @@ class TrackInformationPage extends Component {
   }
 }
 
+TrackInformationPage = reduxForm({
+  form: 'TrackInformationPageForm',
+})(TrackInformationPage);
+
+const mapDispatchToProps = dispatch => ({
+  onUploadProgress: val => dispatch(incrementUploadCount(val)),
+  onUploadComplete: () => dispatch(clearUploadCount()),
+});
+
+const mapStateToProps = state => ({
+  formValues: state.form.TrackInformationPageForm,
+});
+
 export default withRouter(
   connect(
-    state => ({}),
-    {
-      onUploadProgress: incrementUploadCount,
-      onUploadComplete: decrementUploadCount,
-    },
+    mapStateToProps,
+    mapDispatchToProps,
   )(TrackInformationPage),
 );

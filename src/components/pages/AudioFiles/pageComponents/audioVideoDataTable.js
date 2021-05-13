@@ -25,7 +25,7 @@ class AudioVideoDataTable extends Component {
           <th className="text-center">#</th>
           <th>Audio File</th>
           <th>
-            Track Title 
+            Track Title
             <i>
               <span className="required-ind">(Required)</span>
             </i>
@@ -135,7 +135,7 @@ class AudioVideoDataTable extends Component {
                   <li>{track.fileName}</li>
                   <li>
                     {track.fileUpload ? (
-                      <span className="loading-sm" id={track.fileName + '_ico'}>
+                      <span className="loading-sm" id={`${track.fileName}_ico`}>
                         <LoadingImgSm show={true} />
                       </span>
                     ) : (

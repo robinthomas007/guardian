@@ -1,9 +1,10 @@
-import { INCREMENT, DECREMENT } from './constants';
+import { INCREMENT, CLEAR } from './constants';
 
-export const incrementUploadCount = () => ({
+export const incrementUploadCount = val => ({
+  progress: val,
   type: INCREMENT,
 });
 
-export const decrementUploadCount = () => ({
-  type: DECREMENT,
+export const clearUploadCount = () => ({
+  type: CLEAR,
 });

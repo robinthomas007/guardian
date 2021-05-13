@@ -1,15 +1,15 @@
 import { createReducer } from 'redux-starter-kit';
-import { INCREMENT, DECREMENT } from './constants';
+import { INCREMENT, CLEAR } from './constants';
 
 export const initialState = {
-  count: 0,
+  progress: 0,
 };
 
 export default createReducer(initialState, {
-  [INCREMENT]: state => {
-    state.count = state.count + 1;
+  [INCREMENT]: (state, action) => {
+    state.progress = action.progress;
   },
-  [DECREMENT]: state => {
-    state.count = state.count > 0 ? state.count - 1 : 0;
+  [CLEAR]: state => {
+    state.progress = 0;
   },
 });
