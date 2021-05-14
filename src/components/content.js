@@ -337,6 +337,6 @@ class Content extends Component {
 }
 export default withAuth(
   connect(state => ({
-    progress: state.uploadProgressAlert.progress,
+    progress: Object.keys(state.uploadProgressAlert.uploads).length,
   }))(Content),
 );

@@ -8,7 +8,7 @@ import LoadingImg from '../../ui/LoadingImg';
 import { reduxForm } from 'redux-form';
 import AudioFilesTabbedTracks from '../AudioFiles/pageComponents/audioFilesTabbedTracks';
 import { connect } from 'react-redux';
-import { incrementUploadCount, clearUploadCount } from 'redux/uploadProgressAlert/actions';
+import { startUpload, setUploadProgress, endUpload } from 'redux/uploadProgressAlert/actions';
 import { isDuplicateTrackTitle, showNotyError } from '../../Utils';
 
 class AudioFilesPage extends Component {
@@ -208,11 +208,13 @@ class AudioFilesPage extends Component {
   }
 
   handleFileUpload(files, trackID) {
-    const { onUploadProgress, onUploadComplete } = this.props;
+    const { onUploadStart, onUploadProgress, onUploadComplete } = this.props;
     const projectID = this.state.projectID ? this.state.projectID : '';
-    for (var i = 0; i < files.length; i++) {
-      var formData = new FormData();
-      formData.append('file', files[i]);
+    files.map(file => {
+      const uniqFileName = `${file.name}-${new Date().getTime()}`;
+      onUploadStart(uniqFileName);
+      let formData = new FormData();
+      formData.append('file', file);
       let request = new XMLHttpRequest();
       request.open('POST', window.env.api.url + '/media/api/Upload');
       request.setRequestHeader('Authorization', sessionStorage.getItem('accessToken'));
@@ -222,22 +224,21 @@ class AudioFilesPage extends Component {
       request.upload.addEventListener('progress', function(e) {
         // upload progress as percentage
         let percent_completed = (e.loaded / e.total) * 100;
-        onUploadProgress(Math.round(percent_completed));
+        onUploadProgress(uniqFileName, Math.round(percent_completed));
       });
 
       // request finished event
       request.addEventListener('load', e => {
-        // HTTP status message (200, 404 etc)
-        if (request.status === 200) {
-          const responseJSON = JSON.parse(request.response);
-          this.hideFileUploadingIndicator(responseJSON[0].fileName);
-          onUploadComplete();
-        } else {
-          console.log('Audio upload error');
+        const responseJSON = JSON.parse(request.response);
+        this.hideFileUploadingIndicator(responseJSON[0].fileName);
+        onUploadComplete(uniqFileName);
+        if (request.status >= 300) {
+          showNotyError('Uploading audio file(s) failed. Please try again. Click to close.');
         }
       });
+
       request.send(formData);
-    }
+    });
   }
 
   resequencePageTableData(dragSource, dragTarget) {
@@ -546,18 +547,13 @@ AudioFilesPage = reduxForm({
   form: 'AudioFilesPageForm',
 })(AudioFilesPage);
 
-const mapDispatchToProps = dispatch => ({
-  onUploadProgress: val => dispatch(incrementUploadCount(val)),
-  onUploadComplete: () => dispatch(clearUploadCount()),
-});
-
-const mapStateToProps = state => ({
-  formValues: state.form.AudioFilesPageForm,
-});
-
 export default withRouter(
   connect(
-    mapStateToProps,
-    mapDispatchToProps,
+    state => ({ formValues: state.form.AudioFilesPageForm }),
+    {
+      onUploadStart: startUpload,
+      onUploadProgress: setUploadProgress,
+      onUploadComplete: endUpload,
+    },
   )(AudioFilesPage),
 );
