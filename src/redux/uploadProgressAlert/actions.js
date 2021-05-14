@@ -1,10 +1,17 @@
-import { INCREMENT, CLEAR } from './constants';
+import { START, SET, END } from './constants';
 
-export const incrementUploadCount = val => ({
-  progress: val,
-  type: INCREMENT,
+export const startUpload = name => ({
+  type: START,
+  name,
 });
 
-export const clearUploadCount = () => ({
-  type: CLEAR,
+export const setUploadProgress = (name, progress) => ({
+  type: SET,
+  name,
+  progress,
+});
+
+export const endUpload = name => ({
+  type: END,
+  name,
 });

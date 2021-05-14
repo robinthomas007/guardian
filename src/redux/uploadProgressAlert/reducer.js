@@ -1,15 +1,33 @@
 import { createReducer } from 'redux-starter-kit';
-import { INCREMENT, CLEAR } from './constants';
+import { START, SET, END } from './constants';
 
 export const initialState = {
-  progress: 0,
+  uploads: {},
+};
+
+const handleBeforeUnload = event => {
+  const message = 'Are you sure? \n Upload in progress.';
+  event.preventDefault();
+  event.returnValue = message;
+  return message;
 };
 
 export default createReducer(initialState, {
-  [INCREMENT]: (state, action) => {
-    state.progress = action.progress;
+  [START]: (state, action) => {
+    if (Object.keys(state.uploads).length === 0) {
+      window.addEventListener('beforeunload', handleBeforeUnload);
+    }
+    state.uploads = { ...state.uploads, [action.name]: 0 };
   },
-  [CLEAR]: state => {
-    state.progress = 0;
+  [SET]: (state, action) => {
+    state.uploads = { ...state.uploads, [action.name]: action.progress };
+  },
+  [END]: (state, action) => {
+    let uploads = { ...state.uploads };
+    delete uploads[action.name];
+    if (Object.keys(uploads).length === 0) {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    }
+    state.uploads = uploads;
   },
 });

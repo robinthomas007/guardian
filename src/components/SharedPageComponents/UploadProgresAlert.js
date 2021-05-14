@@ -1,39 +1,30 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
-import { Collapse, ProgressBar } from 'react-bootstrap';
+import { ProgressBar } from 'react-bootstrap';
 
 export default function UploadProgressAlert() {
-  const progress = useSelector(state => state.uploadProgressAlert.progress);
-  const handleBeforeUnload = event => {
-    const message = 'Are you sure? \n Upload in progress.';
-    event.preventDefault();
-    event.returnValue = message;
-    return message;
-  };
-
-  useEffect(() => {
-    if (progress > 0) {
-      window.addEventListener('beforeunload', handleBeforeUnload);
-    } else {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
+  const uploads = useSelector(state => state.uploadProgressAlert.uploads);
+  const uploadCount = Object.keys(uploads).length;
+  let progress = 0;
+  if (uploadCount > 0) {
+    // TODO: Extract this to a funtion which returns average
+    for (const key in uploads) {
+      progress += uploads[key];
     }
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-    };
-  }, [progress]);
+    progress = progress / uploadCount;
+  }
 
   return (
-    <Collapse in={progress > 0}>
-      <div className="upload-progress-bar">
-        <h3>Upload in progress. Please do not leave the Guardian until it's complete.</h3>
-        <ProgressBar
-          style={{ height: '0.7rem' }}
-          striped
-          animated
-          variant="danger"
-          now={progress}
-        />
-      </div>
-    </Collapse>
+    <div style={{ display: uploadCount > 0 ? 'block' : 'none' }} className="upload-progress-bar">
+      <h3>Upload in progress. Please do not leave the Guardian until it's complete.</h3>
+      <ProgressBar
+        style={{ height: '0.7rem' }}
+        striped
+        animated
+        variant="danger"
+        now={progress}
+        label={`${uploadCount} FILE(S)`}
+      />
+    </div>
   );
 }
