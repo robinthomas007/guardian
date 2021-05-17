@@ -4,6 +4,22 @@ import { withAuth } from '@okta/okta-react';
 import RecentProjectsDrop from '../Header/RecentProjectsDrop';
 import { isPreReleaseDate } from '../../Utils.js';
 import VideoTutorialModal from '../../modals/VideoTutorialModal';
+import CommentBox from '../../pages/CommentSlider';
+
+const notiObj = [
+  {
+    alias: 'RT',
+    name: 'Robin Thomas',
+    project: 'My Sweet Project',
+    time: '2 Hours Ago',
+  },
+  {
+    alias: 'CR',
+    name: 'Christy Robin',
+    project: 'My Awesome Project',
+    time: '3 Days Ago',
+  },
+];
 
 export default withRouter(
   class Header extends Component {
@@ -19,6 +35,9 @@ export default withRouter(
         compactViewPages: {
           findProject: {
             titleText: 'Find A Project',
+          },
+          inbox: {
+            titleText: 'Project Inbox',
           },
           admin: {
             titleText: 'User Administration',
@@ -124,6 +143,8 @@ export default withRouter(
           },
         ],
         showVideoTutorialModal: false,
+        notifications: false,
+        showCommentBox: false,
       };
     }
 
@@ -184,7 +205,6 @@ export default withRouter(
         ? this.state.navSteps
         : this.state.navSteps.filter(step => step.preRelease);
       const activeNav = this.getActiveNav();
-
       return (
         <ul className="d-flex justify-content-center align-items-stretch">
           {navToUse.map((navLink, i) => {
@@ -192,6 +212,7 @@ export default withRouter(
               <React.Fragment key={i}>
                 <li key={i} id={'step-' + (i + 1)}>
                   <NavLink
+                    className={activeNav === i ? 'active' : ''}
                     onClick={e => this.setNavClickable(e, navLink, activeNav)}
                     to={{
                       pathname:
@@ -387,15 +408,56 @@ export default withRouter(
       this.setState({ showVideoTutorialModal: false });
     };
 
+    openNotifivations = () => {
+      this.setState({ notifications: !this.state.notifications });
+    };
+
+    showCommentBox = () => {
+      this.setState({ showCommentBox: true });
+    };
+
+    hideCommentBox = () => {
+      this.setState({ showCommentBox: false });
+    };
+
+    getNotifications = () => {
+      return (
+        <div className="notification-content">
+          <ul className="content-list">
+            {notiObj.map((noti, i) => {
+              return (
+                <li>
+                  <div className="content-divider">
+                    <div className="lft-col">
+                      <span>{noti.alias}</span>
+                    </div>
+                    <div className="rgt-col">
+                      <p>
+                        <strong className="bold">{noti.name}</strong> left you a comment on the
+                        project
+                        <strong className="bold">"{noti.project}"</strong> ({noti.time})
+                      </p>
+                    </div>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      );
+    };
+
     render() {
       const isPreRelease = isPreReleaseDate(this.props.projectData);
       const navToUse = isPreRelease
         ? this.state.navSteps
         : this.state.navSteps.filter(step => step.preRelease);
       const activeNav = this.getActiveNav();
+      const { notifications } = this.state;
+      const { showCommentBox } = this.state;
       if (this.props.projectData.Project) {
         return (
-          <>
+          <React.Fragment>
             {activeNav !== null && (
               <VideoTutorialModal
                 showModal={this.state.showVideoTutorialModal}
@@ -403,6 +465,11 @@ export default withRouter(
                 navSteps={navToUse}
                 activeNav={activeNav}
               />
+            )}
+            {showCommentBox && (
+              <div className="comment-slider-wrap">
+                <CommentBox handleClose={this.hideCommentBox} />
+              </div>
             )}
             <header
               className={
@@ -430,6 +497,11 @@ export default withRouter(
                         </NavLink>
                       </li>
                       <li>
+                        <NavLink className="steps" to={{ pathname: '/inbox' }}>
+                          Inbox
+                        </NavLink>
+                      </li>
+                      <li>
                         <NavLink className="steps" to={{ pathname: '/findProject' }}>
                           Find A Project
                         </NavLink>
@@ -447,6 +519,13 @@ export default withRouter(
                         </li>
                       ) : null}
                       <li> | </li>
+                      <li className="notification-li">
+                        <div className="notify-wrapper" onClick={this.openNotifivations}>
+                          <i className="material-icons">notifications</i>
+                          <span>10</span>
+                        </div>
+                        {notifications && this.getNotifications()}
+                      </li>
                       <li>Welcome, {this.props.userData.name}</li>
                       <li>
                         <span className="btn-log" onClick={e => this.props.handleLogoutClick(e)}>
@@ -474,6 +553,15 @@ export default withRouter(
                   ) : null}
                   <li>
                     <button
+                      className="btn btn-sm btn-secondary btn-collapse"
+                      onClick={this.showCommentBox}
+                      title="Comment"
+                    >
+                      <i className={'material-icons'}>message</i>
+                    </button>
+                  </li>
+                  <li>
+                    <button
                       className="btn btn-sm btn-secondary btn-video"
                       onClick={this.showVideoTutorialModal}
                       title="Tutorial Video"
@@ -493,7 +581,7 @@ export default withRouter(
                 </ul>
               </div>
             </header>
-          </>
+          </React.Fragment>
         );
       }
     }

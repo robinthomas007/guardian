@@ -228,3 +228,157 @@ div.row.d-flex.steps-bar ul li a.active span.step-arrow {
   border-right: 15px solid transparent;
   border-bottom: 15px solid #fff;
 }
+
+.notify-wrapper {
+  position: relative;
+  cursor: pointer;
+  border-radius: 50%;
+  background: #333333;
+  padding: 4px;
+}
+
+.notify-wrapper span {
+  position: absolute;
+  background: #ff25a8;
+  color: #fff;
+  border-radius: 50%;
+  padding: 2px 4px;
+  font-size: 10px;
+  left: 25px;
+  top: -8px;
+}
+
+.notify-wrapper i {
+  font-size: 20px;
+}
+
+.notification-li {
+  position: relative;
+}
+
+.notification-content {
+  position: absolute;
+  background: #fff;
+  left: 20px;
+  border-radius: 2px;
+  top: 36px;
+  min-width: 320px;
+  box-shadow: 0px 1px 2px 2px #dddddd;
+  color: #000;
+  z-index: 999;
+}
+
+.content-list {
+  padding: 2px;
+  color: #000;
+}
+
+.content-divider {
+  display: flex;
+  align-items: center;
+}
+
+.lft-col {
+  width: 22%;
+}
+
+.lft-col span {
+  padding: 10px;
+  background: red;
+  border-radius: 50px;
+  color: fff;
+  font-weight: bold;
+}
+
+.rgt-col p {
+  padding-left: 6px;
+  font-size: 12px;
+  color: #000;
+  margin: 0px;
+}
+
+.content-list li {
+  margin: 0px;
+  padding: 10px;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.notify-wrapper {
+  position: relative;
+  cursor: pointer;
+  border-radius: 50%;
+  background: #333333;
+  padding: 4px;
+}
+
+.notify-wrapper span {
+  position: absolute;
+  background: #ff25a8;
+  color: #fff;
+  border-radius: 50%;
+  padding: 2px 4px;
+  font-size: 10px;
+  left: 25px;
+  top: -8px;
+}
+
+.notify-wrapper i {
+  font-size: 20px;
+}
+
+.notification-li {
+  position: relative;
+}
+
+.notification-content {
+  position: absolute;
+  background: #fff;
+  left: 20px;
+  border-radius: 2px;
+  top: 36px;
+  min-width: 320px;
+  box-shadow: 0px 1px 2px 2px #dddddd;
+  color: #000;
+  z-index: 999;
+}
+
+.content-list {
+  padding: 2px;
+  color: #000;
+}
+
+.content-divider {
+  display: flex;
+  align-items: center;
+}
+
+.lft-col {
+  width: 22%;
+}
+
+.lft-col span {
+  padding: 10px;
+  background: red;
+  border-radius: 50px;
+  color: fff;
+  font-weight: bold;
+}
+
+.rgt-col p {
+  padding-left: 6px;
+  font-size: 12px;
+  color: #000;
+  margin: 0px;
+}
+
+.content-list li {
+  margin: 0px;
+  padding: 10px;
+}
+
+.bold {
+  font-weight: bold;
+}

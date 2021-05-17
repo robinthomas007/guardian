@@ -13,6 +13,8 @@ import HelpGuide from './pages/HelpGuide/HelpGuidePage';
 import UserAdmin from './pages/UserAdmin/UserAdmin';
 import { withAuth } from '@okta/okta-react';
 import { connect } from 'react-redux';
+import ProjectInbox from './pages/ProjectInbox';
+
 class Content extends Component {
   constructor(props) {
     const uuidv4 = require('uuid/v4');
@@ -228,6 +230,17 @@ class Content extends Component {
                     user={this.state.user}
                     clearProject={this.state.clearProject}
                     data={this.state.project.Project}
+                    setProjectID={this.setProjectID}
+                    setHeaderProjectData={this.setHeaderProjectData}
+                    serverTimeDate={this.state.serverTimeDate}
+                  />
+                )}
+              />
+              <SecureRoute
+                path="/inbox"
+                render={() => (
+                  <ProjectInbox
+                    user={this.state.user}
                     setProjectID={this.setProjectID}
                     setHeaderProjectData={this.setHeaderProjectData}
                     serverTimeDate={this.state.serverTimeDate}
