@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ProjectInboxDataTable from './pageComponents/projectInboxTable';
 import TablePager from '../FindProject/pageComponents/TablePager';
 import ProjectsViewDropDown from '../FindProject/pageComponents/ProjectsViewDropDown';
+import Filter from './inboxFilter';
 
 export default class ProjectInbox extends Component {
   constructor(props) {
@@ -93,7 +94,7 @@ export default class ProjectInbox extends Component {
           </li>
           <li className="col-2 d-flex"></li>
         </ul>
-
+        <Filter />
         {/*<SearchFilterModal
           showFilterModal={this.state.showFilterModal}
           data={this.state.project}

@@ -1,5 +1,4 @@
 @charset "utf-8";
-
 /* CSS Document */
 
 html {
@@ -17,6 +16,7 @@ body {
 /*** Bootstrap Theming ***/
 
 /* Template DOMs */
+
 .container-fluid {
   padding: 0;
 }
@@ -40,6 +40,7 @@ input.nested {
 }
 
 /* Custom Checkbox Inputs*/
+
 input[type='checkbox'] {
   height: 22px;
   width: 22px;
@@ -55,6 +56,7 @@ label.custom-checkbox {
 }
 
 /* Keep it vertically aligned in table rows */
+
 .custom-checkbox {
   display: block;
   position: relative;
@@ -79,6 +81,7 @@ label.custom-checkbox {
 }
 
 /* Hides the browsers version */
+
 .checkmark {
   position: absolute;
   top: 0;
@@ -91,12 +94,14 @@ label.custom-checkbox {
 }
 
 /* Creates new checkmark */
+
 .custom-checkbox:hover input ~ .checkmark {
   background-color: #666;
   border: solid 1px #666;
 }
 
 /* Adds hover color to the box */
+
 .custom-checkbox input:checked ~ .checkmark {
   background-color: #666;
   border: solid 1px #666;
@@ -111,11 +116,13 @@ label.custom-checkbox {
 }
 
 /* Creates the checkmark indicator (hidden when not checked) */
+
 .custom-checkbox input:checked ~ .checkmark:after {
   display: block;
 }
 
 /* Show the checkmark when checked */
+
 .custom-checkbox .checkmark:after {
   left: 9px;
   top: 5px;
@@ -151,6 +158,7 @@ label.custom-checkbox {
 }
 
 /* Creates new checkmark */
+
 .custom-checkbox input:checked ~ .static-checkmark {
   display: block;
   background-color: #fff;
@@ -158,6 +166,7 @@ label.custom-checkbox {
 }
 
 /* Adds blue background color to the box when checked */
+
 .static-checkmark:after {
   content: '';
   position: absolute;
@@ -165,11 +174,13 @@ label.custom-checkbox {
 }
 
 /* Creates the checkmark indicator (hidden when not checked) */
+
 .custom-checkbox input:checked ~ .static-checkmark:after {
   display: block;
 }
 
 /* Show the checkmark when checked */
+
 .custom-checkbox .static-checkmark:after {
   left: 9px;
   top: 5px;
@@ -250,6 +261,7 @@ button.tooltip-btn {
 /*	.form-group .invalid-tooltip {position:relative; top:-44px; right:-65%; max-width:200px;} */
 
 /* Custom Default Links*/
+
 a {
   color: #01579b;
   cursor: pointer;
@@ -261,6 +273,7 @@ a {
 }
 
 /* .btn-sm {padding: .15rem .50rem .05rem .50rem; line-height: 0.3;} */
+
 .btn-primary {
   background-color: #01579b;
   color: #fff;
@@ -473,6 +486,7 @@ h3 .material-icons {
 /*** End Bootstrap Theming ***/
 
 /* External Template */
+
 .logo {
   position: fixed;
   height: 102px;
@@ -530,11 +544,9 @@ span.btn-log {
   0% {
     opacity: 0;
   }
-
   50% {
     opacity: 0;
   }
-
   100% {
     opacity: 1;
   }
@@ -551,11 +563,9 @@ span.btn-log {
   0% {
     opacity: 0;
   }
-
   50% {
     opacity: 0;
   }
-
   100% {
     opacity: 1;
   }
@@ -573,7 +583,6 @@ span.btn-log {
     height: 0px;
     opacity: 0;
   }
-
   100% {
     height: 200px;
     opacity: 0.7;
@@ -596,11 +605,9 @@ span.btn-log {
   0% {
     opacity: 0;
   }
-
   50% {
     opacity: 0;
   }
-
   100% {
     opacity: 1;
   }
@@ -950,6 +957,7 @@ span.loading-sm {
 }
 
 /* Territorial Rights & Blocking Polcies */
+
 div.table-responsive.d-flex.row.no-gutters {
   overflow: inherit;
 }
@@ -1145,6 +1153,7 @@ table.blocking-set .track-draggable-area.territory-tracks {
 }
 
 /* Review & Submit */
+
 div.page-container.review-section {
   margin-top: 60px;
 }
@@ -1340,4 +1349,15 @@ th.sortable {
   height: 54px;
   width: 100%;
   z-index: 10000;
+}
+
+/* filter css */
+
+.assigned_inbox_filter_field {
+  display: flex;
+}
+
+.assigned_inbox_filter_field .labels {
+  width: 50% !important;
+  padding-left: 20px;
 }
