@@ -466,11 +466,7 @@ export default withRouter(
                 activeNav={activeNav}
               />
             )}
-            {showCommentBox && (
-              <div className="comment-slider-wrap">
-                <CommentBox handleClose={this.hideCommentBox} />
-              </div>
-            )}
+            {showCommentBox && <CommentBox handleClose={this.hideCommentBox} />}
             <header
               className={
                 this.state.pageViewCompact
@@ -551,15 +547,17 @@ export default withRouter(
                       </button>
                     </li>
                   ) : null}
-                  <li>
-                    <button
-                      className="btn btn-sm btn-secondary btn-collapse"
-                      onClick={this.showCommentBox}
-                      title="Comment"
-                    >
-                      <i className={'material-icons'}>message</i>
-                    </button>
-                  </li>
+                  {parseInt(activeNav) >= 0 && (
+                    <li>
+                      <button
+                        className="btn btn-sm btn-secondary btn-collapse"
+                        onClick={this.showCommentBox}
+                        title="Comment"
+                      >
+                        <i className={'material-icons'}>message</i>
+                      </button>
+                    </li>
+                  )}
                   <li>
                     <button
                       className="btn btn-sm btn-secondary btn-video"

@@ -1,4 +1,5 @@
 import Noty from 'noty';
+import React from 'react';
 
 export const isFormValid = () => {
   let requiredInputs = document.getElementsByClassName('requiredInput');
@@ -157,3 +158,16 @@ export function showNotyError(message) {
     onClick: 'Noty.close();',
   }).show();
 }
+
+export const CustomInput = props => {
+  return (
+    <div className="custom-date-picker">
+      <input onClick={props.onClick} value={props.value} type="text" readOnly={props.isreadOnly} />
+      {!props.value && (
+        <i onClick={props.onClick} aria-hidden="true" class="material-icons calendar">
+          date_range
+        </i>
+      )}
+    </div>
+  );
+};

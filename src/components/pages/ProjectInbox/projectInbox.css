@@ -1,0 +1,32 @@
+.message-wrapper {
+  background: #f5f5f5;
+  box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
+  padding: 10px 10px 10px 20px;
+}
+
+.message-wrapper strong {
+  font-weight: bold;
+}
+
+.pad-lft-25 {
+  padding-left: 25px !important;
+}
+
+.message-wrapper .close {
+  background: #ffffff;
+}
+
+.each-message {
+  display: flex;
+  line-height: 30px;
+}
+
+.message-name {
+  width: 28%;
+}
+
+.comments-list {
+  height: 120px;
+  overflow: scroll;
+  margin-bottom: 15px;
+}

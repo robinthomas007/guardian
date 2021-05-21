@@ -3,14 +3,14 @@ import { Table } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import Noty from 'noty';
 import LoadingImg from '../../../ui/LoadingImg';
-import CommentBox from '../../CommentSlider/';
+import CommentBox from '../message';
 
 class ProjectInboxDataTable extends Component {
   constructor(props) {
     super(props);
     this.state = {
       data: [],
-      activeSortColumn: 'recieved',
+      activeSortColumn: 'received',
       activeSortDesc: true,
       activeHover: null,
       showloader: false,
@@ -259,14 +259,14 @@ class ProjectInboxDataTable extends Component {
           <th className="col-1"></th>
           <th
             className="col-1 sortable"
-            onMouseOver={(e, columnID) => this.handleMouseOver(e, 'recieved')}
-            onMouseOut={(e, columnID) => this.handleMouseOut(e, 'recieved')}
-            onClick={id => this.handleTableSort('recieved')}
+            onMouseOver={(e, columnID) => this.handleMouseOver(e, 'received')}
+            onMouseOut={(e, columnID) => this.handleMouseOut(e, 'received')}
+            onClick={id => this.handleTableSort('received')}
           >
-            Recieved{this.handleSortDisplay('recieved')}
+            Received{this.handleSortDisplay('received')}
             <i
               className={
-                this.state.activeHover === 'recieved' ? 'material-icons' : 'material-icons d-none'
+                this.state.activeHover === 'received' ? 'material-icons' : 'material-icons d-none'
               }
             >
               arrow_drop_down

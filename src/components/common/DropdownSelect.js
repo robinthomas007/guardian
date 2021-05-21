@@ -14,6 +14,7 @@ class SelectInput extends Component {
       options,
       label,
       placeholder,
+      strong,
       meta: { touched, error },
       showLoading,
       readOnly,
@@ -23,12 +24,20 @@ class SelectInput extends Component {
       classes,
     } = this.props;
 
+    let labelStrong;
+
+    if (strong && label) {
+      labelStrong = <strong>{label}</strong>;
+    } else {
+      labelStrong = label;
+    }
+
     return (
       <div className="input_field">
         <div className="labels">
           {label && (
             <label>
-              {label} {required && <em>*</em>}
+              {labelStrong} {required && <em>*</em>}
             </label>
           )}
           {tooltip && <ToolTip tabIndex="-1" message={tooltip} />}

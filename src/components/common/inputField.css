@@ -67,3 +67,11 @@ input[type='checkbox']:checked {
 input[type='checkbox']:focus {
   outline: rgb(211, 18, 69) 1px solid;
 }
+
+.input_field strong {
+  font-weight: bold !important;
+}
+
+.input_holder.no-label {
+  width: 100%;
+}

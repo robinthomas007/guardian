@@ -4,6 +4,7 @@
   height: 190px;
   width: 190px;
 }
+
 .album-art-drop span {
   display: block;
   margin: 0 auto;
@@ -11,6 +12,7 @@
   color: #999;
   text-align: center;
 }
+
 .cover-art label {
   vertical-align: top;
   padding-top: 5px;
@@ -19,6 +21,7 @@
 .notes-row label {
   vertical-align: top;
 }
+
 .notes-row > textarea {
   vertical-align: top;
   height: 120px;
@@ -33,6 +36,7 @@ label.custom-checkbox {
   margin-left: 30px;
   margin-right: -20px;
 }
+
 .col-3.notes.form-label {
   vertical-align: top;
 }
@@ -54,6 +58,7 @@ img.obj {
   top: 0;
   left: 0;
 }
+
 div.browse-btn {
   display: block;
   width: 100px;
@@ -65,12 +70,14 @@ div.browse-btn {
   text-align: center;
   cursor: pointer;
 }
+
 div.browse-btn span {
   position: absolute;
   width: 180px;
   padding: 8px;
   cursor: pointer;
 }
+
 div.browse-btn input {
   position: relative;
   height: 36px !important;
@@ -92,4 +99,30 @@ button.btn.btn-secondary.action.remove-art {
   font-weight: 700;
   background-color: #7f1b2e;
   color: #fff;
+}
+
+.release-date {
+  position: relative;
+}
+
+.release-date .react-datepicker-wrapper {
+  width: 50%;
+}
+
+.custom-date-picker {
+  border: 1px solid #ddd;
+  padding: 4px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.custom-date-picker input {
+  border: none;
+  width: 100%;
+  padding: 3px;
+  outline: none;
+}
+
+.react-datepicker-popper {
+  z-index: 9999;
 }

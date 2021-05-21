@@ -5,7 +5,7 @@ import './ReleaseInformation.css';
 import { withRouter } from 'react-router-dom';
 import Noty from 'noty';
 import LoadingImg from '../../ui/LoadingImg';
-import { resetDatePicker, isFormValid } from '../../Utils.js';
+import { resetDatePicker, isFormValid, CustomInput } from '../../Utils.js';
 import moment from 'moment';
 
 import ReleasingLabelsInput from '../ReleaseInformation/pageComponents/ReleasingLabelsInput';
@@ -522,6 +522,8 @@ class ReleaseinformationPage extends Component {
                     dateFormat="Pp"
                     placeholderText="Select release date"
                     onChange={this.handleDateChange}
+                    customInput={<CustomInput />}
+                    isClearable={true}
                   />
                   <div className="invalid-tooltip">Release Date is Required if not TBD</div>
                 </div>

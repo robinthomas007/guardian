@@ -4,6 +4,7 @@ import ToolTip from '../../../ui/Tooltip';
 import LoadingImgSm from '../../../ui/LoadingImgSm';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
+import { CustomInput } from '../../../Utils.js';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -73,9 +74,12 @@ class TrackInformationDataTable extends Component {
   }
 
   handleDateChange(date, track) {
+    let formattedDate = null;
     const { DataRows } = this.state;
     const modifiedDataRows = DataRows;
-    const formattedDate = moment(date).format('MM/DD/YYYY HH:mm');
+    if (date !== null) {
+      formattedDate = moment(date).format('MM/DD/YYYY HH:mm');
+    }
     track['trackReleaseDate'] = formattedDate;
     this.setState({ DataRows: modifiedDataRows });
     this.props.updateDiscData(this.props.discID, modifiedDataRows);
@@ -271,6 +275,8 @@ class TrackInformationDataTable extends Component {
                 dateFormat="Pp"
                 placeholderText="Select release date"
                 onChange={date => this.handleDateChange(date, track)}
+                customInput={<CustomInput />}
+                isClearable={true}
               />
               <label className="custom-checkbox">
                 <input

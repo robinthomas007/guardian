@@ -7,11 +7,16 @@ import InputField from '../../common/InputField';
 import TextArea from '../../common/texarea';
 import Dropdown from '../../common/DropdownSelect';
 import * as commentAction from 'actions/commentAction';
+import { Rnd } from 'react-rnd';
 
 const steps = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' },
+  { value: '1', label: 'Release Information' },
+  { value: '2', label: 'Contacts' },
+  { value: '3', label: 'Audio' },
+  { value: '4', label: 'Tracks' },
+  { value: '5', label: 'Territorial Rights' },
+  { value: '6', label: 'UGC Blocking' },
+  { value: '7', label: 'Review' },
 ];
 
 const CommentSlider = props => {
@@ -29,26 +34,47 @@ const CommentSlider = props => {
   };
 
   return (
-    <div className="comment-slider">
-      <span class="material-icons close" onClick={handleClose}>
-        close
-      </span>
-      <ul>
-        <li>02/04/20 - Ethan Karp - Release Notes Is this the correct label for this project?</li>
-        <li>02/04/20 - Matt Conlon - Release Notes Yes this is the correct label! Sheesh.</li>
-        <li>02/04/20 - Ethan Karp - Release Notes Is this the correct label for this project?</li>
-      </ul>
-      <form onSubmit={handleSubmit(formSubmit)}>
-        <Field name="assign_to" component={InputField} label="Assign To" />
-        <Field name="step" component={Dropdown} label="Step#" options={steps} />
-        <Field id="comment" name="comment" component={TextArea} />
-        <div className="text-right">
-          <button type="submit" class="btn btn-primary">
-            Comment
-          </button>
-        </div>
-      </form>
-    </div>
+    <Rnd
+      default={{
+        x: 1120,
+        y: 275,
+        width: 300,
+        height: 390,
+      }}
+      minWidth={300}
+      minHeight={390}
+      bounds="window"
+    >
+      <div className="comment-slider">
+        <span class="material-icons close" onClick={handleClose}>
+          close
+        </span>
+        <ul>
+          <li>
+            <strong>02/04/20 - Ethan Karp - Release Notes</strong>
+            <br /> Is this the correct label for this project?
+          </li>
+          <li>
+            <strong>02/04/20 - Matt Conlon - Release Notes</strong>
+            <br /> Yes this is the correct label! Sheesh.
+          </li>
+          <li>
+            <strong>02/04/20 - Ethan Karp - Release Notes</strong>
+            <br /> Is this the correct label for this project?
+          </li>
+        </ul>
+        <form onSubmit={handleSubmit(formSubmit)}>
+          <Field strong={true} name="assign_to" component={InputField} label="Assign To" />
+          <Field strong={true} name="step" component={Dropdown} label="Step#" options={steps} />
+          <Field id="comment" name="comment" component={TextArea} />
+          <div className="text-right">
+            <button type="submit" class="btn btn-primary">
+              Comment
+            </button>
+          </div>
+        </form>
+      </div>
+    </Rnd>
   );
 };
 
