@@ -63,8 +63,8 @@ class TrackInformationDataTable extends Component {
             tabIndex="-1"
             message="Indicate a single’s release date here if different from album release date."
           />
-          <span>TBD </span>
         </th>
+        <th>TBD</th>
         <th className="text-center">Actions</th>
       </tr>
     );
@@ -287,6 +287,8 @@ class TrackInformationDataTable extends Component {
                 customInput={<CustomInput />}
                 isClearable={true}
               />
+            </td>
+            <td>
               <label className="custom-checkbox">
                 <input
                   type="checkbox"

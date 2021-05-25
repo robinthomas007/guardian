@@ -78,11 +78,11 @@ table.table.track-information button.btn.btn-secondary.action {
 }
 
 .release-date-col > span {
-  margin-left: 74px;
+  /* margin-left: 84px; */
 }
 
 .release-date-col label {
-  margin-left: 20px;
+  /* margin-left: 20px; */
 }
 
 .react-datepicker__tab-loop,
@@ -93,4 +93,8 @@ table.table.track-information button.btn.btn-secondary.action {
 
 .tab-pane > .table-responsive {
   overflow-x: unset;
+}
+
+.react-datepicker {
+  display: flex;
 }

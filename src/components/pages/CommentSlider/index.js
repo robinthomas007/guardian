@@ -43,7 +43,8 @@ const CommentSlider = props => {
       }}
       minWidth={300}
       minHeight={390}
-      bounds="window"
+      bounds="parent"
+      cancel="#commentForm"
     >
       <div className="comment-slider">
         <span class="material-icons close" onClick={handleClose}>
@@ -63,7 +64,7 @@ const CommentSlider = props => {
             <br /> Is this the correct label for this project?
           </li>
         </ul>
-        <form onSubmit={handleSubmit(formSubmit)}>
+        <form onSubmit={handleSubmit(formSubmit)} id="commentForm">
           <Field strong={true} name="assign_to" component={InputField} label="Assign To" />
           <Field strong={true} name="step" component={Dropdown} label="Step#" options={steps} />
           <Field id="comment" name="comment" component={TextArea} />
