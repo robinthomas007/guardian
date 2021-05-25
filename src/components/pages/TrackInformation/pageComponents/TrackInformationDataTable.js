@@ -45,6 +45,15 @@ class TrackInformationDataTable extends Component {
             tabIndex="-1"
             message="You may include ISRC here if known, necessary for completion of Step 3 (Audio Files)."
           />
+          <button
+            style={{ float: 'right' }}
+            className="btn btn-sm btn-secondary"
+            // onClick={this.showCommentBox}
+            title="Comment"
+          >
+            <i className={'material-icons'}>search</i>
+            Check ISRCs
+          </button>
         </th>
         <th>Artist </th>
         <th className="text-center">Single</th>
