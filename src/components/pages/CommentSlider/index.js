@@ -37,7 +37,7 @@ const CommentSlider = props => {
     <Rnd
       default={{
         x: 1120,
-        y: 275,
+        y: 275 + window.scrollY,
         width: 300,
         height: 390,
       }}
