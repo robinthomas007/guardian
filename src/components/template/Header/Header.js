@@ -341,7 +341,7 @@ class Header extends Component {
     this.props.setPageViewType(this.state.pageViewCompact);
 
     interval = setInterval(() => {
-      this.props.getAllNotifications();
+      // this.props.getAllNotifications();
     }, 10000);
   };
 

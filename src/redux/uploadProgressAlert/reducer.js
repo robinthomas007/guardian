@@ -1,8 +1,9 @@
 import { createReducer } from 'redux-starter-kit';
-import { START, SET, END } from './constants';
+import { START, SET, END, SAVE_DISC } from './constants';
 
 export const initialState = {
   uploads: {},
+  discs: [],
 };
 
 const handleBeforeUnload = event => {
@@ -29,5 +30,9 @@ export default createReducer(initialState, {
       window.removeEventListener('beforeunload', handleBeforeUnload);
     }
     state.uploads = uploads;
+    state.discs = [];
+  },
+  [SAVE_DISC]: (state, action) => {
+    state.discs = action.discs;
   },
 });

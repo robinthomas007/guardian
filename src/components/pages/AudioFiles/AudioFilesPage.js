@@ -8,7 +8,12 @@ import LoadingImg from '../../ui/LoadingImg';
 import { reduxForm } from 'redux-form';
 import AudioFilesTabbedTracks from '../AudioFiles/pageComponents/audioFilesTabbedTracks';
 import { connect } from 'react-redux';
-import { startUpload, setUploadProgress, endUpload } from 'redux/uploadProgressAlert/actions';
+import {
+  startUpload,
+  setUploadProgress,
+  endUpload,
+  saveDisc,
+} from 'redux/uploadProgressAlert/actions';
 import { isDuplicateTrackTitle, showNotyError } from '../../Utils';
 
 class AudioFilesPage extends Component {
@@ -166,6 +171,7 @@ class AudioFilesPage extends Component {
       discs: updatedDiscs,
       replaceTrackIndex: null,
     });
+    this.props.saveDiscs(updatedDiscs);
     this.hideReplaceAudioModal();
   };
 
@@ -185,6 +191,7 @@ class AudioFilesPage extends Component {
           this.getTrack(newTrack, modifiedDiscs[activeTab].Tracks.length),
         );
         this.setState({ discs: modifiedDiscs });
+        this.props.saveDiscs(modifiedDiscs);
       } else {
         //remove this from the file stack
         newFiles.splice(i, 1);
@@ -230,7 +237,7 @@ class AudioFilesPage extends Component {
       // request finished event
       request.addEventListener('load', e => {
         const responseJSON = JSON.parse(request.response);
-        this.hideFileUploadingIndicator(responseJSON[0].fileName);
+        // this.hideFileUploadingIndicator(responseJSON[0].fileName);
         onUploadComplete(uniqFileName);
         if (request.status >= 300) {
           showNotyError('Uploading audio file(s) failed. Please try again. Click to close.');
@@ -271,7 +278,7 @@ class AudioFilesPage extends Component {
 
   handleDataLoad() {
     const user = JSON.parse(sessionStorage.getItem('user'));
-    const { pageTableData } = this.state;
+    const { pageTableData, discs } = this.state;
     const fetchHeaders = new Headers({
       Authorization: sessionStorage.getItem('accessToken'),
     });
@@ -296,9 +303,13 @@ class AudioFilesPage extends Component {
         });
         if (responseJSON.Discs && responseJSON.Discs.length > 0) {
           this.setState({
-            discs: responseJSON.Discs,
             pageTableData: responseJSON.Discs[this.state.activeTab].Tracks,
           });
+          if (discs.length === 0) {
+            this.setState({
+              discs: responseJSON.Discs,
+            });
+          }
         } else {
           this.addDisc();
         }
@@ -395,9 +406,13 @@ class AudioFilesPage extends Component {
   }
 
   componentDidMount() {
-    if (this.props.match.params && this.props.match.params.projectID) {
-      this.handleDataLoad();
-      this.props.setProjectID(this.props.match.params.projectID, this.props.match.url);
+    if (this.props.discs.length > 0) {
+      this.setState({ discs: this.props.discs });
+    } else {
+      if (this.props.match.params && this.props.match.params.projectID) {
+        this.handleDataLoad();
+        this.props.setProjectID(this.props.match.params.projectID, this.props.match.url);
+      }
     }
   }
 
@@ -442,6 +457,7 @@ class AudioFilesPage extends Component {
   }
 
   render() {
+    const { uploads } = this.props;
     return (
       <div className="col-10">
         <HaveAudioModal projectID={this.props.projectID} />
@@ -518,6 +534,7 @@ class AudioFilesPage extends Component {
           addDisc={this.addDisc}
           showReplaceModal={(track, i) => this.showReplaceModal(track, i)}
           hideReplaceAudioModal={(track, i) => this.hideReplaceAudioModal(track, i)}
+          uploads={uploads}
         />
 
         <section className="row no-gutters save-buttons">
@@ -549,11 +566,16 @@ AudioFilesPage = reduxForm({
 
 export default withRouter(
   connect(
-    state => ({ formValues: state.form.AudioFilesPageForm }),
+    state => ({
+      formValues: state.form.AudioFilesPageForm,
+      uploads: state.uploadProgressAlert.uploads,
+      discs: state.uploadProgressAlert.discs,
+    }),
     {
       onUploadStart: startUpload,
       onUploadProgress: setUploadProgress,
       onUploadComplete: endUpload,
+      saveDiscs: saveDisc,
     },
   )(AudioFilesPage),
 );

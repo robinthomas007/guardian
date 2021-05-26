@@ -15,6 +15,7 @@ class AudioFilesTabbedTracks extends Component {
         return (
           <Tab key={i} eventKey={i} title={'Disc ' + count}>
             <AudioVideoDataTable
+              uploads={this.props.uploads}
               data={disc}
               deleteRow={this.props.deleteRow}
               handleChange={this.props.handleChange}

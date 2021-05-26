@@ -68,7 +68,7 @@ class ProjectContactsPage extends Component {
           project: responseJSON,
           showloader: false,
         });
-        this.props.setHeaderProjectData(this.state.project);
+        this.props.setHeaderProjectData(responseJSON);
       })
       .catch(error => {
         console.error(error);
