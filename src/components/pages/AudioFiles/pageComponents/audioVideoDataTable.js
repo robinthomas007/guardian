@@ -107,7 +107,9 @@ class AudioVideoDataTable extends Component {
     const { uploads } = this.props;
     const trackArr = {};
     Object.entries(uploads).forEach(([key, value]) => {
-      trackArr[key.slice(0, -14)] = value;
+      const trackIds = key.split('/');
+      trackArr[trackIds[0].slice(0, -14)] = value;
+      trackArr['trackId'] = trackIds.length > 0 ? trackIds[1] : null;
     });
 
     if (this.props.data.Tracks) {
@@ -119,6 +121,7 @@ class AudioVideoDataTable extends Component {
           trackTitle: track.trackTitle,
           artist: track.artist,
         };
+
         return (
           <tr key={i}>
             <td className="text-center">{i + 1}</td>
@@ -138,7 +141,7 @@ class AudioVideoDataTable extends Component {
                   </li>
                   <li>{track.fileName}</li>
                   <li>
-                    {trackArr[track.fileName] ? (
+                    {trackArr[track.fileName] && track.trackID === trackArr['trackId'] ? (
                       <span className="loading-sm" id={`${track.fileName}_ico`}>
                         <LoadingImgSm show={true} />
                       </span>

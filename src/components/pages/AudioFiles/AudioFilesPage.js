@@ -15,6 +15,7 @@ import {
   saveDisc,
 } from 'redux/uploadProgressAlert/actions';
 import { isDuplicateTrackTitle, showNotyError } from '../../Utils';
+import _ from 'lodash';
 
 class AudioFilesPage extends Component {
   constructor(props) {
@@ -171,7 +172,7 @@ class AudioFilesPage extends Component {
       discs: updatedDiscs,
       replaceTrackIndex: null,
     });
-    this.props.saveDiscs(updatedDiscs);
+    this.props.saveDiscs(_.cloneDeep(updatedDiscs));
     this.hideReplaceAudioModal();
   };
 
@@ -191,7 +192,7 @@ class AudioFilesPage extends Component {
           this.getTrack(newTrack, modifiedDiscs[activeTab].Tracks.length),
         );
         this.setState({ discs: modifiedDiscs });
-        this.props.saveDiscs(modifiedDiscs);
+        this.props.saveDiscs(_.cloneDeep(modifiedDiscs));
       } else {
         //remove this from the file stack
         newFiles.splice(i, 1);
@@ -218,8 +219,8 @@ class AudioFilesPage extends Component {
     const { onUploadStart, onUploadProgress, onUploadComplete } = this.props;
     const projectID = this.state.projectID ? this.state.projectID : '';
     files.map(file => {
-      const uniqFileName = `${file.name}-${new Date().getTime()}`;
-      onUploadStart(uniqFileName);
+      const uniqFileName = `${file.name}-${new Date().getTime()}/${trackID ? trackID : ''}`;
+      onUploadStart(uniqFileName, trackID);
       let formData = new FormData();
       formData.append('file', file);
       let request = new XMLHttpRequest();
@@ -407,7 +408,8 @@ class AudioFilesPage extends Component {
 
   componentDidMount() {
     if (this.props.discs.length > 0) {
-      this.setState({ discs: this.props.discs });
+      const { discs } = this.props;
+      this.setState({ discs: _.cloneDeep(discs) });
     } else {
       if (this.props.match.params && this.props.match.params.projectID) {
         this.handleDataLoad();
