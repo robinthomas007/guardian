@@ -5,6 +5,7 @@ import user from './user/reducer';
 import userAdmin from './userAdmin/reducer';
 import uploadProgressAlert from './uploadProgressAlert/reducer';
 import headerReducer from './../reducers/headerReducer';
+import commentReducer from '../reducers/commentReducer';
 
 export default asyncReducers => {
   return combineReducers({
@@ -14,6 +15,7 @@ export default asyncReducers => {
     labels,
     uploadProgressAlert,
     headerReducer,
+    commentReducer,
     ...asyncReducers,
   });
 };

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { reduxForm, Field } from 'redux-form';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import './CommentSlider.css';
 import InputField from '../../common/InputField';
@@ -8,6 +8,7 @@ import TextArea from '../../common/texarea';
 import Dropdown from '../../common/DropdownSelect';
 import * as commentAction from 'actions/commentAction';
 import { Rnd } from 'react-rnd';
+import _ from 'lodash';
 
 const steps = [
   { value: '1', label: 'Release Information' },
@@ -21,16 +22,31 @@ const steps = [
 
 const CommentSlider = props => {
   const { handleClose, handleSubmit } = props;
+  const comments = useSelector(state => state.commentReducer.comments);
 
   useEffect(() => {
-    // if (props.step === 0) {
-    props.test(21);
-    // }
+    // props.getComments()
   }, []);
 
   const formSubmit = val => {
-    props.postComment(val);
-    console.log(val, 'form submit');
+    props.postComment({ comment: val });
+  };
+
+  const renderComments = () => {
+    return (
+      <ul>
+        {_.map(comments, (obj, key) => {
+          return (
+            <li key={key}>
+              <strong>
+                {obj.date} - {obj.name} - {obj.step}
+              </strong>
+              <br /> {obj.comment}
+            </li>
+          );
+        })}
+      </ul>
+    );
   };
 
   return (
@@ -47,23 +63,11 @@ const CommentSlider = props => {
       cancel="#commentForm"
     >
       <div className="comment-slider">
-        <span class="material-icons close" onClick={handleClose}>
+        <span className="material-icons close" onClick={handleClose}>
           close
         </span>
-        <ul>
-          <li>
-            <strong>02/04/20 - Ethan Karp - Release Notes</strong>
-            <br /> Is this the correct label for this project?
-          </li>
-          <li>
-            <strong>02/04/20 - Matt Conlon - Release Notes</strong>
-            <br /> Yes this is the correct label! Sheesh.
-          </li>
-          <li>
-            <strong>02/04/20 - Ethan Karp - Release Notes</strong>
-            <br /> Is this the correct label for this project?
-          </li>
-        </ul>
+        {renderComments()}
+
         <form onSubmit={handleSubmit(formSubmit)} id="commentForm">
           <Field strong={true} name="assign_to" component={InputField} label="Assign To" />
           <Field strong={true} name="step" component={Dropdown} label="Step#" options={steps} />
@@ -88,9 +92,6 @@ const CommentSliderComp = reduxForm({
 })(CommentSlider);
 
 const mapDispatchToProps = dispatch => ({
-  test: id => {
-    console.log('Test coming ');
-  },
   postComment: val => dispatch(commentAction.postComment(val)),
 });
 

@@ -1,10 +1,10 @@
 import * as actions from 'types/comments.types';
 import Api from 'lib/api';
 
-export const commentSuccess = data => {
+export const commentSuccess = comment => {
   return {
     type: actions.COMMENT_SUCCESS,
-    data,
+    comment,
   };
 };
 
@@ -15,10 +15,10 @@ export const commentFailure = error => {
   };
 };
 
-export const commentRequest = isLoading => {
+export const commentRequest = loading => {
   return {
     type: actions.COMMENT_REQUEST,
-    isLoading,
+    loading,
   };
 };
 
@@ -29,8 +29,7 @@ export const postComment = data => {
       .then(response => response.json())
       .then(response => {
         if (response.status === 200) {
-          let data = response.data;
-          dispatch(commentSuccess(data));
+          dispatch(commentSuccess(response));
         } else {
           dispatch(commentFailure(response.message));
         }
