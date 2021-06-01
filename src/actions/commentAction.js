@@ -25,7 +25,7 @@ export const commentRequest = loading => {
 export const postComment = data => {
   return dispatch => {
     dispatch(commentRequest(true));
-    return Api.post('/project/search', data)
+    return Api.post('/comment/create', data)
       .then(response => response.json())
       .then(response => {
         if (response.status === 200) {

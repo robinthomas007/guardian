@@ -9,15 +9,16 @@ import Dropdown from '../../common/DropdownSelect';
 import * as commentAction from 'actions/commentAction';
 import { Rnd } from 'react-rnd';
 import _ from 'lodash';
+import { withRouter } from 'react-router-dom';
 
 const steps = [
-  { value: '1', label: 'Release Information' },
-  { value: '2', label: 'Contacts' },
-  { value: '3', label: 'Audio' },
-  { value: '4', label: 'Tracks' },
-  { value: '5', label: 'Territorial Rights' },
-  { value: '6', label: 'UGC Blocking' },
-  { value: '7', label: 'Review' },
+  { value: 'Release Information', label: 'Release Information' },
+  { value: 'Contacts', label: 'Contacts' },
+  { value: 'Audio', label: 'Audio' },
+  { value: 'Tracks', label: 'Tracks' },
+  { value: 'Territorial Rights', label: 'Territorial Rights' },
+  { value: 'UGC Blocking', label: 'UGC Blocking' },
+  { value: 'Review', label: 'Review' },
 ];
 
 const CommentSlider = props => {
@@ -29,7 +30,11 @@ const CommentSlider = props => {
   }, []);
 
   const formSubmit = val => {
-    props.postComment({ comment: val });
+    let reqObj = _.cloneDeep(val);
+
+    reqObj['ProjectId'] = props.projectID;
+    reqObj['Step'] = val.Step.value;
+    props.postComment({ Comment: reqObj, User: { email: 'Robin.Thomas@umusic.com' } });
   };
 
   const renderComments = () => {
@@ -53,12 +58,12 @@ const CommentSlider = props => {
     <Rnd
       default={{
         x: 1120,
-        y: 275 + window.scrollY,
+        y: 270 + window.scrollY,
         width: 300,
-        height: 390,
+        height: 440,
       }}
       minWidth={300}
-      minHeight={390}
+      minHeight={440}
       bounds="parent"
       cancel="#commentForm"
     >
@@ -69,9 +74,9 @@ const CommentSlider = props => {
         {renderComments()}
 
         <form onSubmit={handleSubmit(formSubmit)} id="commentForm">
-          <Field strong={true} name="assign_to" component={InputField} label="Assign To" />
-          <Field strong={true} name="step" component={Dropdown} label="Step#" options={steps} />
-          <Field id="comment" name="comment" component={TextArea} />
+          <Field strong={true} name="AssignedToEmail" component={InputField} label="Assign To" />
+          <Field strong={true} name="Step" component={Dropdown} label="Step#" options={steps} />
+          <Field id="comment" name="Text" component={TextArea} />
           <div className="text-right">
             <button type="submit" class="btn btn-primary">
               Comment
@@ -99,7 +104,9 @@ const mapStateToProps = state => ({
   formValues: state.form.CommentSliderForm,
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(CommentSliderComp);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  )(CommentSliderComp),
+);

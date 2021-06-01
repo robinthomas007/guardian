@@ -6,7 +6,12 @@ import { withRouter } from 'react-router';
 import './ProjectContacts.css';
 import LoadingImg from '../../ui/LoadingImg';
 import Noty from 'noty';
-import { isFormValid, formatDateToYYYYMMDD, convertToLocaleTime } from '../../Utils.js';
+import {
+  isFormValid,
+  formatDateToYYYYMMDD,
+  convertToLocaleTime,
+  isPreReleaseDate,
+} from '../../Utils.js';
 
 class ProjectContactsPage extends Component {
   constructor(props) {
@@ -89,8 +94,7 @@ class ProjectContactsPage extends Component {
         if (saveAndContinue) {
           if (
             !this.state.project.Project.projectReleaseDateTBD &&
-            formatDateToYYYYMMDD(convertToLocaleTime(this.props.serverTimeDate)) >
-              formatDateToYYYYMMDD(this.state.project.Project.projectReleaseDate)
+            !isPreReleaseDate(this.state.project)
           ) {
             this.props.history.push({
               pathname: '/trackInformation/' + projectID,

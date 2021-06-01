@@ -458,7 +458,12 @@ class Header extends Component {
               activeNav={activeNav}
             />
           )}
-          {showCommentBox && <CommentBox handleClose={this.hideCommentBox} />}
+          {showCommentBox && (
+            <CommentBox
+              projectID={this.props.projectData.Project.projectID}
+              handleClose={this.hideCommentBox}
+            />
+          )}
           <header
             className={
               this.state.pageViewCompact ? 'row d-flex no-gutters compact' : 'row d-flex no-gutters'

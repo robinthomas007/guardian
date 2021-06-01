@@ -1,5 +1,6 @@
 import Noty from 'noty';
 import React from 'react';
+import moment from 'moment';
 
 export const isFormValid = () => {
   let requiredInputs = document.getElementsByClassName('requiredInput');
@@ -115,14 +116,11 @@ export const isPreReleaseDate = projectData => {
   const user = JSON.parse(sessionStorage.getItem('user'));
 
   if (user && projectData && projectData.Project && projectData.Project.projectReleaseDate) {
-    const projectReleaseDate = parseInt(
-      projectData.Project.projectReleaseDate
-        ? new Date(projectData.Project.projectReleaseDate).getTime()
-        : '',
-    );
-    const serverDate = parseInt(user.UtcDateTime ? new Date(user.UtcDateTime).getTime() : '');
-    if (!Number.isNaN(projectReleaseDate)) {
-      return projectReleaseDate > serverDate;
+    if (
+      moment(projectData.Project.projectReleaseDate).format('YYYY-MM-DD h:mm') <
+      moment(user.UtcDateTime).format('YYYY-MM-DD h:mm')
+    ) {
+      return false;
     } else {
       return true;
     }

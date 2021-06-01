@@ -16,6 +16,7 @@ import {
   convertToLocaleTime,
   isDuplicateTrackTitle,
   showNotyError,
+  isPreReleaseDate,
 } from '../../Utils';
 
 class TrackInformationPage extends Component {
@@ -144,8 +145,7 @@ class TrackInformationPage extends Component {
         if (saveAndContinue) {
           if (
             !this.state.project.Project.projectReleaseDateTBD &&
-            formatDateToYYYYMMDD(convertToLocaleTime(this.props.serverTimeDate)) >
-              formatDateToYYYYMMDD(this.state.project.Project.projectReleaseDate)
+            !isPreReleaseDate(this.state.project)
           ) {
             this.props.history.push({
               pathname: '/blockingPolicies/' + this.props.match.params.projectID,
@@ -477,11 +477,7 @@ class TrackInformationPage extends Component {
       this.state.project.Project &&
       this.state.project.Project.projectReleaseDate
     ) {
-      const stepNumber =
-        formatDateToYYYYMMDD(convertToLocaleTime(serverTimeDate)) >
-        formatDateToYYYYMMDD(this.state.project.Project.projectReleaseDate)
-          ? 3
-          : 4;
+      const stepNumber = !isPreReleaseDate(this.state.project) ? 3 : 4;
       return stepNumber;
     }
   };
