@@ -42,16 +42,17 @@ class InputField extends Component {
 
     return (
       <div className="input_field">
-        <div className="labels">
-          {label && (
+        {label && (
+          <div className="labels">
             <label>
               {labelStrong}
               {required && <em>*</em>}
             </label>
-          )}
-          {tooltip && <ToolTip tabIndex="-1" message={tooltip} />}
-        </div>
-        <div className={`${classes} input_holder`}>
+
+            {tooltip && <ToolTip tabIndex="-1" message={tooltip} />}
+          </div>
+        )}
+        <div className={`${classes ? classes : ''} input_holder`}>
           <input
             id={id}
             {...input}

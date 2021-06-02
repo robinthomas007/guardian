@@ -24,6 +24,9 @@ class inputDateField extends Component {
     } else {
       this.props.input.onChange(null);
     }
+    if (this.props.handleOnSelect) {
+      this.props.handleOnSelect(date, this.props.input.name);
+    }
   }
 
   render() {
@@ -97,12 +100,13 @@ export default inputDateField;
 
 const CustomInput = props => {
   return (
-    <input
-      onClick={props.onClick}
-      value={props.value}
-      type="text"
-      placeholder={props.placeholder}
-      readOnly={props.isreadOnly}
-    />
+    <div className="custom-date-picker">
+      <input onClick={props.onClick} value={props.value} type="text" readOnly={props.isreadOnly} />
+      {!props.value && (
+        <i onClick={props.onClick} aria-hidden="true" class="material-icons calendar">
+          date_range
+        </i>
+      )}
+    </div>
   );
 };

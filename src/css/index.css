@@ -1245,8 +1245,8 @@ ul.search-row li i {
 }
 
 #collapsePanel.search-filters i {
-  font-size: 18px;
-  margin-right: -5px;
+  /* font-size: 18px;
+  margin-right: -5px; */
 }
 
 div.selected-filters {

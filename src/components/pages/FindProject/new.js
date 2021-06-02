@@ -2,16 +2,16 @@ import React, { Component } from 'react';
 import './FindProject.css';
 import IntroModal from '../../modals/IntroModal';
 import FindProjectDataTable from './pageComponents/FindProjectDataTable';
+import SearchFilterModal from './pageComponents/SearchFiltersModal';
 import ProjectsViewDropDown from './pageComponents/ProjectsViewDropDown';
+import SelectedFilters from './pageComponents/SelectedFilters';
 import TablePager from './pageComponents/TablePager';
+import { resetDatePicker } from '../../Utils';
 import { withRouter } from 'react-router';
 import LoadingImg from '../../ui/LoadingImg';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import * as findProjectAction from 'actions/findProjectAction';
 import Filter from './findProjectFilter';
-import { reduxForm, Field } from 'redux-form';
-import InputField from '../../common/InputField';
-import _ from 'lodash';
 
 class FindProjectPage extends Component {
   constructor(props) {
@@ -55,7 +55,6 @@ class FindProjectPage extends Component {
       currentPageNumber: 1,
       showLoader: false,
     };
-    this.formSubmit = this.formSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -66,58 +65,8 @@ class FindProjectPage extends Component {
     this.props.handleProjectSearch({ searchCriteria: searchCriteria });
   }
 
-  getToDate(date) {
-    if (!date) return '';
-    let toDate = new Date(date);
-    toDate.setHours(23, 59, 59);
-    toDate.setDate(toDate.getDate() + 1);
-    toDate = toDate.toISOString().replace('Z', '');
-    return toDate;
-  }
-
-  getFromDate(date) {
-    if (!date) return '';
-    let toDate = new Date(date);
-    toDate.setHours(0, 0, 1);
-
-    toDate = toDate.toISOString().replace('Z', '');
-    return toDate;
-  }
-
-  formSubmit(values) {
-    const formData = _.cloneDeep(values);
-    _.forOwn(formData, function(item, key) {
-      if (!item) {
-        formData[key] = '';
-      }
-      if (item && item.value) {
-        formData[key] = item.value;
-      } else {
-        if (Array.isArray(item)) {
-          formData[key] = _.map(item, 'value');
-        }
-        if (key === 'from') {
-          formData[key] = this.getFromDate(item);
-        }
-        if (key === 'to') {
-          formData[key] = this.getToDate(item);
-        }
-      }
-    });
-
-    delete formData['searchTerm'];
-
-    const searchCriteria = {
-      itemsPerPage: '10',
-      pageNumber: '1',
-      searchTerm: values.searchTerm,
-      filter: { ...formData },
-    };
-    this.props.handleProjectSearch({ searchCriteria: searchCriteria });
-  }
-
   render() {
-    const { loading, result, handleSubmit } = this.props;
+    const { loading, result } = this.props;
     return (
       <div className="col-10">
         <IntroModal />
@@ -137,40 +86,66 @@ class FindProjectPage extends Component {
         </div>
         <br />
         <br />
-        <form onSubmit={handleSubmit(this.formSubmit)}>
-          <ul className="row search-row">
-            <li className="col-2 d-flex"></li>
-            <li className="col-8 d-flex justify-content-center">
-              <button
-                onClick={this.handleFilterModalView}
-                className="btn btn-secondary "
-                type="button"
-                id="dropdownMenuButton"
-                data-toggle="collapse"
-                data-target="#collapsePanel"
-                aria-expanded="false"
-                aria-controls="collapsePanel"
-              >
-                <i className="material-icons">settings</i> Filters
-              </button>
-              <div className="search-bar">
-                <Field name="searchTerm" component={InputField} />
-              </div>
-              <button id="projectSearchButton" className="btn btn-primary">
-                <i className="material-icons">search</i> Search
-              </button>
-            </li>
-            <li className="col-2 d-flex"></li>
-          </ul>
+        <ul className="row search-row">
+          <li className="col-2 d-flex"></li>
+          <li className="col-8 d-flex justify-content-center">
+            <button
+              onClick={this.handleFilterModalView}
+              className="btn btn-secondary "
+              type="button"
+              id="dropdownMenuButton"
+              data-toggle="collapse"
+              data-target="#collapsePanel"
+              aria-expanded="false"
+              aria-controls="collapsePanel"
+            >
+              <i className="material-icons">settings</i> Filters
+            </button>
 
-          <Filter
-            getFromDate={this.getFromDate}
-            getToDate={this.getToDate}
-            {...this.props}
-            data={result}
-            handleProjectSearch={this.props.handleProjectSearch}
-          />
-        </form>
+            <input
+              id="projectSearchInput"
+              className="form-control"
+              type="search"
+              onChange={this.handleChange}
+              onKeyUp={this.handleKeyUp}
+            />
+            <button
+              id="projectSearchButton"
+              className="btn btn-primary"
+              type="button"
+              onClick={this.handleProjectSearch}
+            >
+              <i className="material-icons">search</i> Search
+            </button>
+          </li>
+          <li className="col-2 d-flex"></li>
+        </ul>
+
+        <Filter data={result} handleProjectSearch={this.props.handleProjectSearch} />
+
+        {/*result.Facets && <SearchFilterModal
+          showFilterModal={this.state.showFilterModal}
+          data={result}
+          labels={this.state.defaultLabels}
+          handleLabelFacetsChange={(e, i) => this.handleLabelFacetsChange(e, i)}
+          handleStatusFacetsChange={this.handleStatusFacetsChange}
+          handleHasAudioFacetsChange={this.handleHasAudioFacetsChange}
+          handleHasBlockingFacetsChange={this.handleHasBlockingFacetsChange}
+          handleHasRightsFacetsChange={this.handleHasRightsFacetsChange}
+          setDateFilter={this.setDateFilter}
+        />}
+
+        <SelectedFilters
+          labelFilters={this.state.defaultLabels}
+          filters={this.state.searchCriteria.filter}
+          removeLabelsFilter={this.removeLabelsFilter}
+          removeAudioFilter={this.removeAudioFilter}
+          removeBlockingFilter={this.removeBlockingFilter}
+          removeRightsFilter={this.removeRightsFilter}
+          removeStatusFilter={this.removeStatusFilter}
+          removeToDateFilter={this.removeToDateFilter}
+          removeFromDateFilter={this.removeFromDateFilter}
+        />*/}
 
         <ul className="row results-controls">
           <li className="col-4 d-flex">
@@ -209,10 +184,6 @@ class FindProjectPage extends Component {
   }
 }
 
-FindProjectPage = reduxForm({
-  form: 'FindProjectPageForm',
-})(FindProjectPage);
-
 const mapDispatchToProps = dispatch => ({
   handleProjectSearch: val => dispatch(findProjectAction.fetchProjects(val)),
 });
@@ -220,7 +191,6 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = state => ({
   result: state.findProjectReducer.result,
   loading: state.findProjectReducer.loading,
-  formValues: state.form.FindProjectPageForm,
 });
 
 export default withRouter(

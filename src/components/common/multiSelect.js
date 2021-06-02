@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
-import Select from 'react-select';
+// import Select from 'react-select';
 import ToolTip from '../ui/Tooltip';
+import ReactMultiSelectCheckboxes from 'react-multiselect-checkboxes';
 
-class SelectInput extends Component {
+class MultiSelect extends Component {
   onChange(data) {
     this.props.input.onChange(data);
-    if (this.props.handleOnSelect) {
-      this.props.handleOnSelect(data, this.props.input.name);
-    }
   }
 
   render() {
@@ -25,7 +23,6 @@ class SelectInput extends Component {
       required,
       tooltip,
       classes,
-      isMulti,
     } = this.props;
 
     let labelStrong;
@@ -47,7 +44,7 @@ class SelectInput extends Component {
           {tooltip && <ToolTip tabIndex="-1" message={tooltip} />}
         </div>
         <div className={`${classes} input_holder`}>
-          <Select
+          <ReactMultiSelectCheckboxes
             {...this.props}
             value={input.value || ''}
             onBlur={() => {
@@ -56,7 +53,6 @@ class SelectInput extends Component {
             onFocus={() => {
               input.onFocus();
             }}
-            isMulti={isMulti}
             openOnFocus={true}
             onChange={this.onChange.bind(this)}
             isClearable={clearable}
@@ -75,4 +71,4 @@ class SelectInput extends Component {
   }
 }
 
-export default SelectInput;
+export default MultiSelect;
