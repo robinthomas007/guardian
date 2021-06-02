@@ -117,8 +117,8 @@ export const isPreReleaseDate = projectData => {
 
   if (user && projectData && projectData.Project && projectData.Project.projectReleaseDate) {
     if (
-      moment(projectData.Project.projectReleaseDate).format('YYYY-MM-DD h:mm') <
-      moment(user.UtcDateTime).format('YYYY-MM-DD h:mm')
+      moment(projectData.Project.projectReleaseDate).format('YYYY-MM-DD') <=
+      moment(user.UtcDateTime).format('YYYY-MM-DD')
     ) {
       return false;
     } else {
