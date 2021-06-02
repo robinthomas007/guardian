@@ -246,6 +246,7 @@ class TrackInformationDataTable extends Component {
                 className={'trackIsrcField'}
                 onChange={evt => this.handleChange(evt, track, i)}
                 onBlur={e => this.handleOnBlur(e)}
+                maxlength={12}
               ></Form.Control>
               <div className="invalid-tooltip">Invalid Isrc</div>
             </td>

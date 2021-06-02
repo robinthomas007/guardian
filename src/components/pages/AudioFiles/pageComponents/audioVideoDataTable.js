@@ -177,6 +177,7 @@ class AudioVideoDataTable extends Component {
                 value={this.state.tableData[i].isrc}
                 className={'trackIsrcField'}
                 onBlur={e => this.handleOnBlur(e)}
+                maxlength={12}
               />
               <div className="invalid-tooltip">Invalid ISRC</div>
             </td>
