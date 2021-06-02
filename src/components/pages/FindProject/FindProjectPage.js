@@ -59,11 +59,37 @@ class FindProjectPage extends Component {
   }
 
   componentDidMount() {
-    const searchCriteria = {
-      itemsPerPage: '10',
-      pageNumber: '1',
+    const searchCriteria = _.cloneDeep(this.props.searchCriteria.filter);
+    this.props.initialize(this.props.searchCriteria.filter);
+    _.forOwn(searchCriteria, function(item, key) {
+      if (!item) {
+        searchCriteria[key] = '';
+      }
+      if (item && item.value) {
+        searchCriteria[key] = item.value;
+      } else {
+        if (Array.isArray(item)) {
+          searchCriteria[key] = _.map(item, 'value');
+        }
+        if (key === 'from') {
+          searchCriteria[key] = this.getFromDate(item);
+        }
+        if (key === 'to') {
+          searchCriteria[key] = this.getToDate(item);
+        }
+      }
+    });
+
+    delete searchCriteria['searchTerm'];
+
+    const searchData = {
+      itemsPerPage: this.props.searchCriteria.itemsPerPage,
+      pageNumber: this.props.searchCriteria.pageNumber,
+      searchTerm: this.props.searchCriteria.searchTerm ? this.props.searchCriteria.searchTerm : '',
+      filter: searchCriteria,
     };
-    this.props.handleProjectSearch({ searchCriteria: searchCriteria });
+
+    this.props.handleProjectSearch({ searchCriteria: searchData });
   }
 
   getToDate(date) {
@@ -169,6 +195,7 @@ class FindProjectPage extends Component {
             {...this.props}
             data={result}
             handleProjectSearch={this.props.handleProjectSearch}
+            saveFilters={this.props.saveFilters}
           />
         </form>
 
@@ -215,12 +242,14 @@ FindProjectPage = reduxForm({
 
 const mapDispatchToProps = dispatch => ({
   handleProjectSearch: val => dispatch(findProjectAction.fetchProjects(val)),
+  saveFilters: filters => dispatch(findProjectAction.saveFilters(filters)),
 });
 
 const mapStateToProps = state => ({
   result: state.findProjectReducer.result,
   loading: state.findProjectReducer.loading,
   formValues: state.form.FindProjectPageForm,
+  searchCriteria: state.findProjectReducer.searchCriteria,
 });
 
 export default withRouter(

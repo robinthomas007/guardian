@@ -16,12 +16,7 @@ const selectedFilter = [
 ];
 
 const Filter = props => {
-  const { handleClose, handleSubmit } = props;
   useEffect(() => {}, []);
-
-  const formSubmit = val => {
-    console.log(val, 'form submit');
-  };
 
   const values = props.formValues && props.formValues.values;
 
@@ -33,8 +28,6 @@ const Filter = props => {
       }
     });
 
-    console.log(hasFilter, 'hasFilterhasFilter');
-
     if (!hasFilter) {
       return false;
     }
@@ -43,7 +36,6 @@ const Filter = props => {
       if (Array.isArray(values[item.name]) && values[item.name].length > 0) {
         return (
           <span>
-            xfdfdfd
             <label>{item.label}:</label>
             {_.map(values[item.name], (val, index) => {
               return (
@@ -76,8 +68,10 @@ const Filter = props => {
   };
 
   const handleOnSelect = (data, name) => {
-    let values = _.get(props, 'formValues.values', {});
-
+    let values = _.cloneDeep(_.get(props, 'formValues.values', {}));
+    const obj = {};
+    obj[name] = data;
+    props.saveFilters({ ...props.formValues.values, ...obj });
     _.forOwn(values, function(item, key) {
       if (!item) {
         values[key] = '';

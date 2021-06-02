@@ -40,3 +40,8 @@ export const fetchProjects = data => {
       });
   };
 };
+
+export const saveFilters = filters => ({
+  type: actions.SAVE_FILTERS,
+  filters,
+});
