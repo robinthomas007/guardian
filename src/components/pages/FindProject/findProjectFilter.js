@@ -102,20 +102,20 @@ const Filter = props => {
           : props.getToDate(data);
     }
 
-    const searchCriteria = {
-      itemsPerPage: '10',
-      pageNumber: '1',
+    const searchData = {
+      itemsPerPage: props.searchCriteria.itemsPerPage,
+      pageNumber: props.searchCriteria.pageNumber,
       searchTerm: values.searchTerm,
       filter: { ...values },
     };
-    props.handleProjectSearch({ searchCriteria: searchCriteria });
+    props.handleProjectSearch({ searchCriteria: searchData });
   };
 
-  const LabelFacets = formatSelectArray(_.get(props, 'data.Facets.LabelFacets', []));
-  const StatusFacets = formatSelectArray(_.get(props, 'data.Facets.StatusFacets', []));
-  const HasAudioFacets = formatSelectArray(_.get(props, 'data.Facets.HasAudioFacets', []));
-  const HasBlockingFacets = formatSelectArray(_.get(props, 'data.Facets.HasBlockingFacets', []));
-  const HasRightsFacets = formatSelectArray(_.get(props, 'data.Facets.HasRightsFacets', []));
+  const LabelFacets = formatSelectArray(_.get(props, 'data.LabelFacets', []));
+  const StatusFacets = formatSelectArray(_.get(props, 'data.StatusFacets', []));
+  const HasAudioFacets = formatSelectArray(_.get(props, 'data.HasAudioFacets', []));
+  const HasBlockingFacets = formatSelectArray(_.get(props, 'data.HasBlockingFacets', []));
+  const HasRightsFacets = formatSelectArray(_.get(props, 'data.HasRightsFacets', []));
 
   return (
     <div>

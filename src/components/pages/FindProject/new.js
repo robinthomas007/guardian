@@ -2,71 +2,127 @@ import React, { Component } from 'react';
 import './FindProject.css';
 import IntroModal from '../../modals/IntroModal';
 import FindProjectDataTable from './pageComponents/FindProjectDataTable';
-import SearchFilterModal from './pageComponents/SearchFiltersModal';
 import ProjectsViewDropDown from './pageComponents/ProjectsViewDropDown';
-import SelectedFilters from './pageComponents/SelectedFilters';
 import TablePager from './pageComponents/TablePager';
-import { resetDatePicker } from '../../Utils';
 import { withRouter } from 'react-router';
 import LoadingImg from '../../ui/LoadingImg';
-import { connect, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import * as findProjectAction from 'actions/findProjectAction';
 import Filter from './findProjectFilter';
+import { reduxForm, Field } from 'redux-form';
+import InputField from '../../common/InputField';
+import _ from 'lodash';
+import { getSearchCriteria, getToDate, getFromDate } from '../../common/commonHelper.js';
 
 class FindProjectPage extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      searchResults: {},
-      searchCriteria: {
-        searchTerm: '',
-        searchId: '',
-        itemsPerPage: '10',
-        pageNumber: '1',
-        sortColumn: '',
-        sortOrder: '',
-        filter: {
-          labels: [],
-          labelIds: [],
-          hasAudio: '',
-          hasAudioName: '',
-          hasRights: '',
-          hasRightsName: '',
-          hasBlocking: '',
-          hasBlockingName: '',
-          statusID: '',
-          statusName: '',
-          from: '',
-          to: '',
-        },
-      },
-
-      project: {
-        Projects: [],
-
-        Facets: {
-          LabelFacets: [],
-        },
-      },
-
-      labels: [],
-      defaultLabels: [],
-      showFilterModal: false,
-      currentPageNumber: 1,
-      showLoader: false,
-    };
+    this.formSubmit = this.formSubmit.bind(this);
+    this.handlePaginationChange = this.handlePaginationChange.bind(this);
+    this.setProjectsView = this.setProjectsView.bind(this);
+    this.handleColumnSort = this.handleColumnSort.bind(this);
   }
 
   componentDidMount() {
-    const searchCriteria = {
-      itemsPerPage: '10',
-      pageNumber: '1',
+    const searchCriteria = _.cloneDeep(this.props.searchCriteria.filter);
+    this.props.initialize(this.props.searchCriteria.filter);
+    // if seach keyword also should remains then add the below code for searchTerm
+    //  this.props.searchCriteria.searchTerm ? this.props.searchCriteria.searchTerm :
+    const searchData = {
+      itemsPerPage: this.props.searchCriteria.itemsPerPage,
+      pageNumber: this.props.searchCriteria.pageNumber,
+      searchTerm: '',
+      filter: getSearchCriteria(searchCriteria),
     };
+
+    this.props.handleProjectSearch({ searchCriteria: searchData });
+  }
+
+  formSubmit(values) {
+    const formData = _.cloneDeep(values);
+    const searchCriteria = {
+      itemsPerPage: this.props.searchCriteria.itemsPerPage,
+      pageNumber: this.props.searchCriteria.pageNumber,
+      searchTerm: values.searchTerm ? values.searchTerm : '',
+      filter: getSearchCriteria(formData),
+    };
+
     this.props.handleProjectSearch({ searchCriteria: searchCriteria });
   }
 
+  handlePaginationChange(newPage) {
+    const searchCriteria = _.cloneDeep(this.props.formValues.values);
+    const searchTerm = _.get(this.props, 'formValues.values.searchTerm', '');
+    const searchData = {
+      itemsPerPage: this.props.searchCriteria.itemsPerPage,
+      pageNumber: newPage,
+      searchTerm: searchTerm,
+      filter: getSearchCriteria(searchCriteria),
+    };
+    this.props.handleProjectSearch({ searchCriteria: searchData });
+    this.props.changePageNumber(newPage);
+  }
+
+  setProjectsView(count) {
+    const searchCriteria = _.cloneDeep(this.props.formValues.values);
+    const searchTerm = _.get(this.props, 'formValues.values.searchTerm', '');
+    const searchData = {
+      itemsPerPage: count,
+      pageNumber: this.props.searchCriteria.pageNumber,
+      searchTerm: searchTerm,
+      filter: getSearchCriteria(searchCriteria),
+    };
+    this.props.handleProjectSearch({ searchCriteria: searchData });
+    this.props.changeItemsPerPage(count);
+  }
+
+  handleColumnSort = (columnID, columnSortOrder) => {
+    const searchCriteria = _.cloneDeep(this.props.formValues.values);
+    const searchTerm = _.get(this.props, 'formValues.values.searchTerm', '');
+    const searchData = {
+      itemsPerPage: this.props.searchCriteria.itemsPerPage,
+      pageNumber: this.props.searchCriteria.pageNumber,
+      searchTerm: searchTerm,
+      filter: getSearchCriteria(searchCriteria),
+      sortOrder: columnSortOrder,
+      sortColumn: columnID,
+    };
+    this.props.handleProjectSearch({ searchCriteria: searchData });
+  };
+
+  handleAdminStatusChange = (data, project) => {
+    this.setState({ showLoader: true });
+    const user = JSON.parse(sessionStorage.getItem('user'));
+    const fetchHeaders = new Headers({
+      'Content-Type': 'application/json',
+      Authorization: sessionStorage.getItem('accessToken'),
+    });
+
+    const fetchBody = JSON.stringify({
+      ProjectID: project.projectID,
+      StatusID: data.id,
+    });
+
+    fetch(window.env.api.url + '/project/status', {
+      method: 'POST',
+      headers: fetchHeaders,
+      body: fetchBody,
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(responseJSON => {
+        this.handleProjectSearch();
+        this.setState({ showLoader: false });
+      })
+      .catch(error => {
+        this.setState({ showLoader: false });
+        console.error(error);
+      });
+  };
+
   render() {
-    const { loading, result } = this.props;
+    const { loading, result, handleSubmit, searchCriteria, facets } = this.props;
     return (
       <div className="col-10">
         <IntroModal />
@@ -86,72 +142,48 @@ class FindProjectPage extends Component {
         </div>
         <br />
         <br />
-        <ul className="row search-row">
-          <li className="col-2 d-flex"></li>
-          <li className="col-8 d-flex justify-content-center">
-            <button
-              onClick={this.handleFilterModalView}
-              className="btn btn-secondary "
-              type="button"
-              id="dropdownMenuButton"
-              data-toggle="collapse"
-              data-target="#collapsePanel"
-              aria-expanded="false"
-              aria-controls="collapsePanel"
-            >
-              <i className="material-icons">settings</i> Filters
-            </button>
+        <form onSubmit={handleSubmit(this.formSubmit)}>
+          <ul className="row search-row">
+            <li className="col-2 d-flex"></li>
+            <li className="col-8 d-flex justify-content-center">
+              <button
+                onClick={this.handleFilterModalView}
+                className="btn btn-secondary "
+                type="button"
+                id="dropdownMenuButton"
+                data-toggle="collapse"
+                data-target="#collapsePanel"
+                aria-expanded="false"
+                aria-controls="collapsePanel"
+              >
+                <i className="material-icons">settings</i> Filters
+              </button>
+              <div className="search-bar">
+                <Field name="searchTerm" component={InputField} />
+              </div>
+              <button id="projectSearchButton" className="btn btn-primary">
+                <i className="material-icons">search</i> Search
+              </button>
+            </li>
+            <li className="col-2 d-flex"></li>
+          </ul>
 
-            <input
-              id="projectSearchInput"
-              className="form-control"
-              type="search"
-              onChange={this.handleChange}
-              onKeyUp={this.handleKeyUp}
-            />
-            <button
-              id="projectSearchButton"
-              className="btn btn-primary"
-              type="button"
-              onClick={this.handleProjectSearch}
-            >
-              <i className="material-icons">search</i> Search
-            </button>
-          </li>
-          <li className="col-2 d-flex"></li>
-        </ul>
-
-        <Filter data={result} handleProjectSearch={this.props.handleProjectSearch} />
-
-        {/*result.Facets && <SearchFilterModal
-          showFilterModal={this.state.showFilterModal}
-          data={result}
-          labels={this.state.defaultLabels}
-          handleLabelFacetsChange={(e, i) => this.handleLabelFacetsChange(e, i)}
-          handleStatusFacetsChange={this.handleStatusFacetsChange}
-          handleHasAudioFacetsChange={this.handleHasAudioFacetsChange}
-          handleHasBlockingFacetsChange={this.handleHasBlockingFacetsChange}
-          handleHasRightsFacetsChange={this.handleHasRightsFacetsChange}
-          setDateFilter={this.setDateFilter}
-        />}
-
-        <SelectedFilters
-          labelFilters={this.state.defaultLabels}
-          filters={this.state.searchCriteria.filter}
-          removeLabelsFilter={this.removeLabelsFilter}
-          removeAudioFilter={this.removeAudioFilter}
-          removeBlockingFilter={this.removeBlockingFilter}
-          removeRightsFilter={this.removeRightsFilter}
-          removeStatusFilter={this.removeStatusFilter}
-          removeToDateFilter={this.removeToDateFilter}
-          removeFromDateFilter={this.removeFromDateFilter}
-        />*/}
+          <Filter
+            getFromDate={getFromDate}
+            getToDate={getToDate}
+            {...this.props}
+            data={facets}
+            handleProjectSearch={this.props.handleProjectSearch}
+            saveFilters={this.props.saveFilters}
+            searchCriteria={searchCriteria}
+          />
+        </form>
 
         <ul className="row results-controls">
           <li className="col-4 d-flex">
             <span className="viewing">Viewing</span>
             <ProjectsViewDropDown
-              itemsPerPage={this.state.searchCriteria.itemsPerPage}
+              itemsPerPage={searchCriteria.itemsPerPage}
               onChange={this.setProjectsView}
             />
             <span className="viewing">of {result.TotalItems} Results</span>
@@ -159,11 +191,11 @@ class FindProjectPage extends Component {
           <li className="col-4 d-flex justify-content-center">
             <nav aria-label="Page navigation example">
               <TablePager
-                activePage={this.state.searchCriteria.pageNumber}
+                activePage={searchCriteria.pageNumber}
                 totalItems={result.TotalItems}
                 itemsPerPage={result.ItemsPerPage}
                 handlePaginationChange={this.handlePaginationChange}
-                projectViewCount={this.state.searchCriteria.itemsPerPage}
+                projectViewCount={searchCriteria.itemsPerPage}
               />
             </nav>
           </li>
@@ -184,13 +216,23 @@ class FindProjectPage extends Component {
   }
 }
 
+FindProjectPage = reduxForm({
+  form: 'FindProjectPageForm',
+})(FindProjectPage);
+
 const mapDispatchToProps = dispatch => ({
   handleProjectSearch: val => dispatch(findProjectAction.fetchProjects(val)),
+  saveFilters: filters => dispatch(findProjectAction.saveFilters(filters)),
+  changePageNumber: pageNo => dispatch(findProjectAction.changePageNumber(pageNo)),
+  changeItemsPerPage: limit => dispatch(findProjectAction.changeItemsPerPage(limit)),
 });
 
 const mapStateToProps = state => ({
   result: state.findProjectReducer.result,
   loading: state.findProjectReducer.loading,
+  formValues: state.form.FindProjectPageForm,
+  searchCriteria: state.findProjectReducer.searchCriteria,
+  facets: state.findProjectReducer.facets,
 });
 
 export default withRouter(

@@ -12,138 +12,97 @@ import Filter from './findProjectFilter';
 import { reduxForm, Field } from 'redux-form';
 import InputField from '../../common/InputField';
 import _ from 'lodash';
+import { getSearchCriteria, getToDate, getFromDate } from '../../common/commonHelper.js';
 
 class FindProjectPage extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      searchResults: {},
-      searchCriteria: {
-        searchTerm: '',
-        searchId: '',
-        itemsPerPage: '10',
-        pageNumber: '1',
-        sortColumn: '',
-        sortOrder: '',
-        filter: {
-          labels: [],
-          labelIds: [],
-          hasAudio: '',
-          hasAudioName: '',
-          hasRights: '',
-          hasRightsName: '',
-          hasBlocking: '',
-          hasBlockingName: '',
-          statusID: '',
-          statusName: '',
-          from: '',
-          to: '',
-        },
-      },
-
-      project: {
-        Projects: [],
-
-        Facets: {
-          LabelFacets: [],
-        },
-      },
-
-      labels: [],
-      defaultLabels: [],
-      showFilterModal: false,
-      currentPageNumber: 1,
-      showLoader: false,
-    };
     this.formSubmit = this.formSubmit.bind(this);
+    this.handlePaginationChange = this.handlePaginationChange.bind(this);
+    this.setProjectsView = this.setProjectsView.bind(this);
+    this.handleColumnSort = this.handleColumnSort.bind(this);
   }
 
   componentDidMount() {
     const searchCriteria = _.cloneDeep(this.props.searchCriteria.filter);
     this.props.initialize(this.props.searchCriteria.filter);
-    _.forOwn(searchCriteria, function(item, key) {
-      if (!item) {
-        searchCriteria[key] = '';
-      }
-      if (item && item.value) {
-        searchCriteria[key] = item.value;
-      } else {
-        if (Array.isArray(item)) {
-          searchCriteria[key] = _.map(item, 'value');
-        }
-        if (key === 'from') {
-          searchCriteria[key] = this.getFromDate(item);
-        }
-        if (key === 'to') {
-          searchCriteria[key] = this.getToDate(item);
-        }
-      }
-    });
-
-    delete searchCriteria['searchTerm'];
-
+    // if seach keyword also should remains then add the below code for searchTerm
+    //  this.props.searchCriteria.searchTerm ? this.props.searchCriteria.searchTerm :
     const searchData = {
       itemsPerPage: this.props.searchCriteria.itemsPerPage,
       pageNumber: this.props.searchCriteria.pageNumber,
-      searchTerm: this.props.searchCriteria.searchTerm ? this.props.searchCriteria.searchTerm : '',
-      filter: searchCriteria,
+      searchTerm: '',
+      filter: getSearchCriteria(searchCriteria),
     };
 
     this.props.handleProjectSearch({ searchCriteria: searchData });
   }
 
-  getToDate(date) {
-    if (!date) return '';
-    let toDate = new Date(date);
-    toDate.setHours(23, 59, 59);
-    toDate.setDate(toDate.getDate() + 1);
-    toDate = toDate.toISOString().replace('Z', '');
-    return toDate;
-  }
-
-  getFromDate(date) {
-    if (!date) return '';
-    let toDate = new Date(date);
-    toDate.setHours(0, 0, 1);
-
-    toDate = toDate.toISOString().replace('Z', '');
-    return toDate;
-  }
-
   formSubmit(values) {
     const formData = _.cloneDeep(values);
-    _.forOwn(formData, function(item, key) {
-      if (!item) {
-        formData[key] = '';
-      }
-      if (item && item.value) {
-        formData[key] = item.value;
-      } else {
-        if (Array.isArray(item)) {
-          formData[key] = _.map(item, 'value');
-        }
-        if (key === 'from') {
-          formData[key] = this.getFromDate(item);
-        }
-        if (key === 'to') {
-          formData[key] = this.getToDate(item);
-        }
-      }
-    });
-
-    delete formData['searchTerm'];
-
     const searchCriteria = {
-      itemsPerPage: '10',
-      pageNumber: '1',
-      searchTerm: values.searchTerm,
-      filter: { ...formData },
+      itemsPerPage: this.props.searchCriteria.itemsPerPage,
+      pageNumber: this.props.searchCriteria.pageNumber,
+      searchTerm: values.searchTerm ? values.searchTerm : '',
+      filter: getSearchCriteria(formData),
     };
+
     this.props.handleProjectSearch({ searchCriteria: searchCriteria });
   }
 
+  handlePaginationChange(newPage) {
+    const searchCriteria = _.cloneDeep(this.props.formValues.values);
+    const searchTerm = _.get(this.props, 'formValues.values.searchTerm', '');
+    const searchData = {
+      itemsPerPage: this.props.searchCriteria.itemsPerPage,
+      pageNumber: newPage,
+      searchTerm: searchTerm,
+      filter: getSearchCriteria(searchCriteria),
+    };
+    this.props.handleProjectSearch({ searchCriteria: searchData });
+    this.props.changePageNumber(newPage);
+  }
+
+  setProjectsView(count) {
+    const searchCriteria = _.cloneDeep(this.props.formValues.values);
+    const searchTerm = _.get(this.props, 'formValues.values.searchTerm', '');
+    const searchData = {
+      itemsPerPage: count,
+      pageNumber: this.props.searchCriteria.pageNumber,
+      searchTerm: searchTerm,
+      filter: getSearchCriteria(searchCriteria),
+    };
+    this.props.handleProjectSearch({ searchCriteria: searchData });
+    this.props.changeItemsPerPage(count);
+  }
+
+  handleColumnSort = (columnID, columnSortOrder) => {
+    const searchCriteria = _.cloneDeep(this.props.formValues.values);
+    const searchTerm = _.get(this.props, 'formValues.values.searchTerm', '');
+    const searchData = {
+      itemsPerPage: this.props.searchCriteria.itemsPerPage,
+      pageNumber: this.props.searchCriteria.pageNumber,
+      searchTerm: searchTerm,
+      filter: getSearchCriteria(searchCriteria),
+      sortOrder: columnSortOrder,
+      sortColumn: columnID,
+    };
+    this.props.handleProjectSearch({ searchCriteria: searchData });
+  };
+
+  handleAdminStatusChange = (data, project) => {
+    this.props
+      .adminStatusChange({
+        ProjectID: project.projectID,
+        StatusID: data.id,
+      })
+      .then(function(response) {
+        // this.props.handleProjectSearch() can be called but not required
+      });
+  };
+
   render() {
-    const { loading, result, handleSubmit } = this.props;
+    const { loading, result, handleSubmit, searchCriteria, facets } = this.props;
     return (
       <div className="col-10">
         <IntroModal />
@@ -190,12 +149,13 @@ class FindProjectPage extends Component {
           </ul>
 
           <Filter
-            getFromDate={this.getFromDate}
-            getToDate={this.getToDate}
+            getFromDate={getFromDate}
+            getToDate={getToDate}
             {...this.props}
-            data={result}
+            data={facets}
             handleProjectSearch={this.props.handleProjectSearch}
             saveFilters={this.props.saveFilters}
+            searchCriteria={searchCriteria}
           />
         </form>
 
@@ -203,7 +163,7 @@ class FindProjectPage extends Component {
           <li className="col-4 d-flex">
             <span className="viewing">Viewing</span>
             <ProjectsViewDropDown
-              itemsPerPage={this.state.searchCriteria.itemsPerPage}
+              itemsPerPage={searchCriteria.itemsPerPage}
               onChange={this.setProjectsView}
             />
             <span className="viewing">of {result.TotalItems} Results</span>
@@ -211,11 +171,11 @@ class FindProjectPage extends Component {
           <li className="col-4 d-flex justify-content-center">
             <nav aria-label="Page navigation example">
               <TablePager
-                activePage={this.state.searchCriteria.pageNumber}
+                activePage={searchCriteria.pageNumber}
                 totalItems={result.TotalItems}
                 itemsPerPage={result.ItemsPerPage}
                 handlePaginationChange={this.handlePaginationChange}
-                projectViewCount={this.state.searchCriteria.itemsPerPage}
+                projectViewCount={searchCriteria.itemsPerPage}
               />
             </nav>
           </li>
@@ -243,6 +203,9 @@ FindProjectPage = reduxForm({
 const mapDispatchToProps = dispatch => ({
   handleProjectSearch: val => dispatch(findProjectAction.fetchProjects(val)),
   saveFilters: filters => dispatch(findProjectAction.saveFilters(filters)),
+  changePageNumber: pageNo => dispatch(findProjectAction.changePageNumber(pageNo)),
+  changeItemsPerPage: limit => dispatch(findProjectAction.changeItemsPerPage(limit)),
+  adminStatusChange: val => dispatch(findProjectAction.adminStatusChange(val)),
 });
 
 const mapStateToProps = state => ({
@@ -250,6 +213,7 @@ const mapStateToProps = state => ({
   loading: state.findProjectReducer.loading,
   formValues: state.form.FindProjectPageForm,
   searchCriteria: state.findProjectReducer.searchCriteria,
+  facets: state.findProjectReducer.facets,
 });
 
 export default withRouter(
