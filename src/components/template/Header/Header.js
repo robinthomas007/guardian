@@ -445,9 +445,9 @@ class Header extends Component {
       : this.state.navSteps.filter(step => step.preRelease);
     const activeNav = this.getActiveNav();
     const { notifify } = this.state;
-    const { notifications } = this.props;
+    const { notifications, projectData } = this.props;
     const { showCommentBox } = this.state;
-    if (this.props.projectData.Project) {
+    if (projectData.Project) {
       return (
         <React.Fragment>
           {activeNav !== null && (
@@ -458,9 +458,9 @@ class Header extends Component {
               activeNav={activeNav}
             />
           )}
-          {showCommentBox && (
+          {showCommentBox && projectData.Project.projectID && (
             <CommentBox
-              projectID={this.props.projectData.Project.projectID}
+              projectID={projectData.Project.projectID}
               handleClose={this.hideCommentBox}
             />
           )}
@@ -542,7 +542,7 @@ class Header extends Component {
                     </button>
                   </li>
                 ) : null}
-                {parseInt(activeNav) >= 0 && (
+                {parseInt(activeNav) >= 0 && projectData.Project.projectID && (
                   <li>
                     <button
                       className="btn btn-sm btn-secondary btn-collapse"

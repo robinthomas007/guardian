@@ -10,6 +10,7 @@ import * as commentAction from 'actions/commentAction';
 import { Rnd } from 'react-rnd';
 import _ from 'lodash';
 import { withRouter } from 'react-router-dom';
+import LoadingImg from '../../ui/LoadingImgSm';
 
 const steps = [
   { value: 'Release Information', label: 'Release Information' },
@@ -24,32 +25,48 @@ const steps = [
 const CommentSlider = props => {
   const { handleClose, handleSubmit } = props;
   const comments = useSelector(state => state.commentReducer.comments);
+  const loading = useSelector(state => state.commentReducer.loading);
 
   useEffect(() => {
-    // props.getComments()
+    if (props.projectID) props.getComments({ ProjectId: props.projectID });
   }, []);
+
+  useEffect(() => {
+    const node = document.querySelector('.comment-section-wrap');
+    if (node) {
+      node.scrollTop = node.scrollHeight;
+    }
+  }, [comments]);
 
   const formSubmit = val => {
     let reqObj = _.cloneDeep(val);
-
     reqObj['ProjectId'] = props.projectID;
     reqObj['Step'] = val.Step.value;
-    props.postComment({ Comment: reqObj, User: { email: 'Robin.Thomas@umusic.com' } });
+    props
+      .postComment({ Comment: reqObj, User: { email: 'Robin.Thomas@umusic.com' } })
+      .then(function(response) {
+        if (response.Comment) {
+          props.initialize({});
+        }
+      });
   };
 
   const renderComments = () => {
     return (
-      <ul>
+      <ul className="comment-section-wrap">
         {_.map(comments, (obj, key) => {
           return (
             <li key={key}>
               <strong>
-                {obj.date} - {obj.name} - {obj.step}
+                {obj.CreatedDateTime} - {obj.AssignedByName} - {obj.Step}
               </strong>
-              <br /> {obj.comment}
+              <br /> {obj.Text}
             </li>
           );
         })}
+        <div className="loader-img">
+          <LoadingImg show={loading} />
+        </div>
       </ul>
     );
   };
@@ -57,12 +74,12 @@ const CommentSlider = props => {
   return (
     <Rnd
       default={{
-        x: 1120,
+        x: 1080,
         y: 270 + window.scrollY,
-        width: 300,
+        width: 350,
         height: 440,
       }}
-      minWidth={300}
+      minWidth={350}
       minHeight={440}
       bounds="parent"
       cancel="#commentForm"
@@ -72,13 +89,12 @@ const CommentSlider = props => {
           close
         </span>
         {renderComments()}
-
         <form onSubmit={handleSubmit(formSubmit)} id="commentForm">
           <Field strong={true} name="AssignedToEmail" component={InputField} label="Assign To" />
           <Field strong={true} name="Step" component={Dropdown} label="Step#" options={steps} />
           <Field id="comment" name="Text" component={TextArea} />
           <div className="text-right">
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" class="btn btn-primary" disabled={loading}>
               Comment
             </button>
           </div>
@@ -98,6 +114,7 @@ const CommentSliderComp = reduxForm({
 
 const mapDispatchToProps = dispatch => ({
   postComment: val => dispatch(commentAction.postComment(val)),
+  getComments: val => dispatch(commentAction.getComments(val)),
 });
 
 const mapStateToProps = state => ({

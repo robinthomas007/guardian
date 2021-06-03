@@ -28,8 +28,36 @@ export const postComment = data => {
     return Api.post('/comment/create', data)
       .then(response => response.json())
       .then(response => {
-        if (response.status === 200) {
-          dispatch(commentSuccess(response));
+        if (response && response.Comment) {
+          dispatch(commentSuccess(response.Comment));
+        } else {
+          dispatch(commentFailure(response.message));
+        }
+        return response;
+      })
+      .catch(error => {
+        console.log('error', error);
+        dispatch(commentFailure(error));
+        return error;
+      });
+  };
+};
+
+export const getCommentSuccess = comments => {
+  return {
+    type: actions.GET_COMMENT_SUCCESS,
+    comments,
+  };
+};
+
+export const getComments = data => {
+  return dispatch => {
+    dispatch(commentRequest(true));
+    return Api.post('/comments', data)
+      .then(response => response.json())
+      .then(response => {
+        if (response && response.Comments) {
+          dispatch(getCommentSuccess(response.Comments));
         } else {
           dispatch(commentFailure(response.message));
         }

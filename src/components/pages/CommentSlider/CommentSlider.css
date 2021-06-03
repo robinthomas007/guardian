@@ -23,12 +23,15 @@
 
 .comment-slider ul {
   padding: 0;
+  height: 210px;
+  overflow: scroll;
+  margin-bottom: 15px;
 }
 
 .comment-slider ul li {
   list-style-type: none !important;
   margin: 8px auto;
-  font-size: 15px;
+  font-size: 13px;
 }
 
 .comment-slider ul li strong {
@@ -47,4 +50,8 @@
 
 .react-draggable {
   z-index: 9999 !important;
+}
+
+.loader-img {
+  text-align: center;
 }
