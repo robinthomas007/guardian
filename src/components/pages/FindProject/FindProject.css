@@ -174,3 +174,9 @@ ul.row.search-row div.col-2 label {
 .search-bar .input_field {
   margin: 0px;
 }
+
+.multi-select button {
+  width: 100%;
+  border: 1px solid #ddd;
+  margin: 0px !important;
+}

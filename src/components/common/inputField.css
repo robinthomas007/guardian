@@ -57,11 +57,11 @@ input[type='checkbox']:disabled {
 }
 
 input[type='checkbox']:checked {
-  background: rgba(211, 18, 69);
+  background: rgb(167, 167, 167);
   outline: none;
-  box-shadow: 0px 0px 2px 1px #00000012;
   content: '✔';
-  outline: rgba(211, 18, 69) 2px solid;
+  width: 20px;
+  height: 20px;
 }
 
 input[type='checkbox']:focus {

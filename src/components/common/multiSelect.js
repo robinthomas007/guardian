@@ -6,6 +6,9 @@ import ReactMultiSelectCheckboxes from 'react-multiselect-checkboxes';
 class MultiSelect extends Component {
   onChange(data) {
     this.props.input.onChange(data);
+    if (this.props.handleOnSelect) {
+      this.props.handleOnSelect(data, this.props.input.name);
+    }
   }
 
   render() {

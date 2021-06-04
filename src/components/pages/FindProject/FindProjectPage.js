@@ -156,6 +156,7 @@ class FindProjectPage extends Component {
             handleProjectSearch={this.props.handleProjectSearch}
             saveFilters={this.props.saveFilters}
             searchCriteria={searchCriteria}
+            getSearchCriteria={getSearchCriteria}
           />
         </form>
 

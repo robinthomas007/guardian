@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Field } from 'redux-form';
 import Dropdown from '../../common/DropdownSelect';
+import multiSelect from '../../common/multiSelect';
 import DateTimePicker from '../../common/DateTimePicker';
 import _ from 'lodash';
 import { formatSelectArray } from '../../common/commonHelper';
@@ -19,6 +20,26 @@ const Filter = props => {
   useEffect(() => {}, []);
 
   const values = props.formValues && props.formValues.values;
+
+  const deleteSelected = (val, name) => {
+    let newVal = _.cloneDeep(values);
+    if (name === 'labelIds') {
+      let arr = _.filter(values.labelIds, function(e) {
+        return !_.isEqual(e, val);
+      });
+      newVal[name] = arr;
+    } else {
+      newVal[name] = null;
+    }
+    props.initialize(newVal);
+    const searchData = {
+      itemsPerPage: props.searchCriteria.itemsPerPage,
+      pageNumber: props.searchCriteria.pageNumber,
+      searchTerm: '',
+      filter: props.getSearchCriteria(newVal),
+    };
+    props.handleProjectSearch({ searchCriteria: searchData });
+  };
 
   const getSelectedFilters = () => {
     let hasFilter = false;
@@ -39,7 +60,11 @@ const Filter = props => {
             <label>{item.label}:</label>
             {_.map(values[item.name], (val, index) => {
               return (
-                <button type="button" class="btn btn-sm btn-secondary">
+                <button
+                  type="button"
+                  onClick={() => deleteSelected(val, item.name)}
+                  class="btn btn-sm btn-secondary"
+                >
                   {val.label}
                   <i class="material-icons">close</i>
                 </button>
@@ -51,7 +76,11 @@ const Filter = props => {
         return (
           <span>
             <label>{item.label}:</label>
-            <button type="button" class="btn btn-sm btn-secondary">
+            <button
+              type="button"
+              class="btn btn-sm btn-secondary"
+              onClick={() => deleteSelected(values[item.name], item.name)}
+            >
               {values[item.name].label ? values[item.name].label : values[item.name]}
               <i class="material-icons">close</i>
             </button>
@@ -129,9 +158,9 @@ const Filter = props => {
                 label="By Label"
                 name="labelIds"
                 handleOnSelect={handleOnSelect}
-                component={Dropdown}
-                isMulti={true}
+                component={multiSelect}
                 options={LabelFacets}
+                classes={'multi-select'}
               />
             </div>
             <div className="col-2"></div>
