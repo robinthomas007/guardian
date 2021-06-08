@@ -36,7 +36,7 @@ const Filter = props => {
       itemsPerPage: props.searchCriteria.itemsPerPage,
       pageNumber: props.searchCriteria.pageNumber,
       searchTerm: '',
-      filter: props.getSearchCriteria(newVal),
+      filter: props.getSearchCriteria(values),
     };
     props.handleProjectSearch({ searchCriteria: searchData });
   };
