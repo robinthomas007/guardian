@@ -7,6 +7,7 @@ import uploadProgressAlert from './uploadProgressAlert/reducer';
 import headerReducer from './../reducers/headerReducer';
 import commentReducer from '../reducers/commentReducer';
 import findProjectReducer from '../reducers/findProjectReducer';
+import ProjectInboxReducer from '../reducers/ProjectInboxReducer';
 
 export default asyncReducers => {
   return combineReducers({
@@ -18,6 +19,7 @@ export default asyncReducers => {
     headerReducer,
     commentReducer,
     findProjectReducer,
+    ProjectInboxReducer,
     ...asyncReducers,
   });
 };
