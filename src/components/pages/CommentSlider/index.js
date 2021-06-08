@@ -11,16 +11,7 @@ import { Rnd } from 'react-rnd';
 import _ from 'lodash';
 import { withRouter } from 'react-router-dom';
 import LoadingImg from '../../ui/LoadingImgSm';
-
-const steps = [
-  { value: 'Release Information', label: 'Release Information' },
-  { value: 'Contacts', label: 'Contacts' },
-  { value: 'Audio', label: 'Audio' },
-  { value: 'Tracks', label: 'Tracks' },
-  { value: 'Territorial Rights', label: 'Territorial Rights' },
-  { value: 'UGC Blocking', label: 'UGC Blocking' },
-  { value: 'Review', label: 'Review' },
-];
+import { steps } from '../../common/commonHelper';
 
 const CommentSlider = props => {
   const { handleClose, handleSubmit } = props;
@@ -42,13 +33,11 @@ const CommentSlider = props => {
     let reqObj = _.cloneDeep(val);
     reqObj['ProjectId'] = props.projectID;
     reqObj['Step'] = val.Step.value;
-    props
-      .postComment({ Comment: reqObj, User: { email: 'Robin.Thomas@umusic.com' } })
-      .then(function(response) {
-        if (response.Comment) {
-          props.initialize({});
-        }
-      });
+    props.postComment({ Comment: reqObj }).then(function(response) {
+      if (response.Comment) {
+        props.initialize({});
+      }
+    });
   };
 
   const renderComments = () => {

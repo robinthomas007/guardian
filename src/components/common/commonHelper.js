@@ -49,3 +49,13 @@ export const getFromDate = date => {
   toDate = toDate.toISOString().replace('Z', '');
   return toDate;
 };
+
+export const steps = [
+  { value: 'Release Information', label: 'Release Information' },
+  { value: 'Contacts', label: 'Contacts' },
+  { value: 'Audio', label: 'Audio' },
+  { value: 'Tracks', label: 'Tracks' },
+  { value: 'Territorial Rights', label: 'Territorial Rights' },
+  { value: 'UGC Blocking', label: 'UGC Blocking' },
+  { value: 'Review', label: 'Review' },
+];

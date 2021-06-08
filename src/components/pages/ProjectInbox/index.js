@@ -90,7 +90,7 @@ class ProjectInbox extends Component {
 
   render() {
     const { loading, result, handleSubmit, searchCriteria, facets } = this.props;
-
+    console.log(result, 'resultresult');
     return (
       <div className="col-10">
         <LoadingImg show={loading} />

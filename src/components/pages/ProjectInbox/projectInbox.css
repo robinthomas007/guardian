@@ -17,16 +17,22 @@
 }
 
 .each-message {
+  width: 100%;
   display: flex;
-  line-height: 30px;
+  line-height: 28px;
+  justify-content: start;
 }
 
 .message-name {
-  width: 28%;
+  width: 28.5%;
+}
+
+.message-content {
+  width: 68%;
 }
 
 .comments-list {
-  height: 120px;
+  height: 150px;
   overflow: scroll;
   margin-bottom: 15px;
 }
