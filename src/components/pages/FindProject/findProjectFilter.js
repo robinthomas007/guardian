@@ -5,6 +5,7 @@ import multiSelect from '../../common/multiSelect';
 import DateTimePicker from '../../common/DateTimePicker';
 import _ from 'lodash';
 import { formatSelectArray } from '../../common/commonHelper';
+import moment from 'moment';
 
 const selectedFilter = [
   { name: 'labelIds', label: 'Labels' },
@@ -36,7 +37,7 @@ const Filter = props => {
       itemsPerPage: props.searchCriteria.itemsPerPage,
       pageNumber: props.searchCriteria.pageNumber,
       searchTerm: '',
-      filter: props.getSearchCriteria(values),
+      filter: props.getSearchCriteria(_.cloneDeep(values)),
     };
     props.handleProjectSearch({ searchCriteria: searchData });
   };
@@ -81,7 +82,9 @@ const Filter = props => {
               class="btn btn-sm btn-secondary"
               onClick={() => deleteSelected(values[item.name], item.name)}
             >
-              {values[item.name].label ? values[item.name].label : values[item.name]}
+              {values[item.name].label
+                ? values[item.name].label
+                : moment(values[item.name]).format('YYYY-MM-DD')}
               <i class="material-icons">close</i>
             </button>
           </span>
