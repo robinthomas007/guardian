@@ -22,15 +22,14 @@ export const notificationRequest = isLoading => {
   };
 };
 
-export const getNotifications = () => {
+export const getNotifications = val => {
   return dispatch => {
     dispatch(notificationRequest(true));
-    return Api.get('/notifications')
+    return Api.post('/notification/search', val)
       .then(response => response.json())
       .then(response => {
-        if (response.status === 200) {
-          let data = response.data;
-          dispatch(notificationSuccess(data));
+        if (response.Notifications) {
+          dispatch(notificationSuccess(response.Notifications));
         } else {
           dispatch(notificationFailure(response.message));
         }

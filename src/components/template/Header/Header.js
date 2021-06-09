@@ -2,13 +2,28 @@ import React, { Component } from 'react';
 import { BrowserRouter as Route, NavLink, withRouter } from 'react-router-dom';
 import { withAuth } from '@okta/okta-react';
 import RecentProjectsDrop from '../Header/RecentProjectsDrop';
-import { isPreReleaseDate } from '../../Utils.js';
+import { isPreReleaseDate, getAlias } from '../../Utils.js';
 import VideoTutorialModal from '../../modals/VideoTutorialModal';
 import CommentBox from '../../pages/CommentSlider';
 import { connect } from 'react-redux';
 import * as headerActions from './../../../actions/headerActions';
+import moment from 'moment';
 
 let interval = null;
+const hexArray = [
+  '#636393',
+  '#b5222d',
+  '#d4953c',
+  '#609491',
+  '#26A4FF',
+  '#CE53FA',
+  '#636393',
+  '#b5222d',
+  '#d4953c',
+  '#609491',
+  '#26A4FF',
+  '#CE53FA',
+];
 
 class Header extends Component {
   constructor(props) {
@@ -339,10 +354,11 @@ class Header extends Component {
 
     this.setHeaderView();
     this.props.setPageViewType(this.state.pageViewCompact);
+    this.props.getAllNotifications({ searchCriteria: { filter: { IsRead: 'false' } } });
 
     interval = setInterval(() => {
-      // this.props.getAllNotifications();
-    }, 10000);
+      this.props.getAllNotifications({ searchCriteria: { filter: { IsRead: 'false' } } });
+    }, 20000);
   };
 
   componentWillUnmount() {
@@ -418,18 +434,23 @@ class Header extends Component {
           {notifications.map((noti, i) => {
             return (
               <li>
-                <div className="content-divider">
+                <NavLink
+                  className="content-divider"
+                  to={{ pathname: '/inbox' }}
+                  onClick={() => this.openNotifivations()}
+                >
                   <div className="lft-col">
-                    <span>{noti.alias}</span>
+                    <span style={{ background: hexArray[i] }}>{getAlias(noti.AssignedTo)}</span>
                   </div>
                   <div className="rgt-col">
                     <p>
-                      <strong className="bold">{noti.name}</strong> left you a comment on the
+                      <strong className="bold">{noti.AssignedTo}</strong> left you a comment on the
                       project
-                      <strong className="bold">"{noti.project}"</strong> ({noti.time})
+                      <strong className="bold"> "{noti.ProjectTitle}" </strong> (
+                      {moment(noti.DateCreated).fromNow()})
                     </p>
                   </div>
-                </div>
+                </NavLink>
               </li>
             );
           })}
@@ -581,7 +602,7 @@ class Header extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  getAllNotifications: () => dispatch(headerActions.getNotifications()),
+  getAllNotifications: val => dispatch(headerActions.getNotifications(val)),
 });
 
 const mapStateToProps = state => ({

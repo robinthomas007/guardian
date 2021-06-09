@@ -102,7 +102,15 @@ class ProjectInboxDataTable extends Component {
       data.Notifications.map((project, i) => {
         return (
           <React.Fragment>
-            <tr className="d-flex w-100" key={i}>
+            <tr
+              className="d-flex w-100"
+              key={i}
+              onMouseLeave={() =>
+                project.IsRead === '0'
+                  ? this.props.readNotification({ NotificationId: project.Id })
+                  : null
+              }
+            >
               <td className="col-1 text-center">
                 <button
                   className="btn btn-sm btn-secondary btn-collapse"

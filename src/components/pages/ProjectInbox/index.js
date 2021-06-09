@@ -90,7 +90,6 @@ class ProjectInbox extends Component {
 
   render() {
     const { loading, result, handleSubmit, searchCriteria, facets } = this.props;
-    console.log(result, 'resultresult');
     return (
       <div className="col-10">
         <LoadingImg show={loading} />
@@ -174,7 +173,7 @@ class ProjectInbox extends Component {
             handleColumnSort={(columnID, columnSortOrder) =>
               this.handleColumnSort(columnID, columnSortOrder)
             }
-            handleAdminStatusChange={this.handleAdminStatusChange}
+            readNotification={this.props.readNotification}
           />
         </div>
       </div>
@@ -191,6 +190,7 @@ const mapDispatchToProps = dispatch => ({
   saveFilters: filters => dispatch(projectInboxAction.saveFilters(filters)),
   changePageNumber: pageNo => dispatch(projectInboxAction.changePageNumber(pageNo)),
   changeItemsPerPage: limit => dispatch(projectInboxAction.changeItemsPerPage(limit)),
+  readNotification: id => dispatch(projectInboxAction.readNotification(id)),
 });
 
 const mapStateToProps = state => ({

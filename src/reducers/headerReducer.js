@@ -6,26 +6,13 @@ import {
 } from '../types/notifications.types';
 
 export const initialState = {
-  notifications: [
-    {
-      alias: 'RT',
-      name: 'Robin Thomas',
-      project: 'My Sweet Project',
-      time: '2 Hours Ago',
-    },
-    {
-      alias: 'CR',
-      name: 'Christy Robin',
-      project: 'My Awesome Project',
-      time: '3 Days Ago',
-    },
-  ],
+  notifications: [],
 };
 
 export default createReducer(initialState, {
   [NOTIFICATION_REQUEST]: (state, action) => {},
   [NOTIFICATION_SUCCESS]: (state, action) => {
-    state.notifications = action.notifications;
+    state.notifications = action.data;
   },
   [NOTIFICATION_FAILURE]: (state, action) => {},
 });

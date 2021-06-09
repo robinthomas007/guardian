@@ -169,3 +169,16 @@ export const CustomInput = props => {
     </div>
   );
 };
+
+export const getAlias = name => {
+  if (name) {
+    const nameArr = name.split(' ');
+    if (nameArr.length > 1) {
+      return nameArr[0].charAt().toUpperCase() + nameArr[1].charAt().toUpperCase();
+    } else if (nameArr.length === 1) {
+      return nameArr[0].charAt().toUpperCase() + nameArr[0].charAt(1).toUpperCase();
+    }
+    return name.charAt().toUpperCase() + nameArr.charAt(1).toUpperCase();
+  }
+  return 'UK';
+};
