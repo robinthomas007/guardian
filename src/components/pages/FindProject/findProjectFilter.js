@@ -25,21 +25,22 @@ const Filter = props => {
   const deleteSelected = (val, name) => {
     let newVal = _.cloneDeep(values);
     if (name === 'labelIds') {
-      let arr = _.filter(values.labelIds, function(e) {
+      let arr = _.filter(newVal.labelIds, function(e) {
         return !_.isEqual(e, val);
       });
-      newVal[name] = arr;
+      newVal[name] = _.cloneDeep(arr);
     } else {
       newVal[name] = null;
     }
-    props.initialize(newVal);
     const searchData = {
       itemsPerPage: props.searchCriteria.itemsPerPage,
       pageNumber: props.searchCriteria.pageNumber,
       searchTerm: '',
-      filter: props.getSearchCriteria(_.cloneDeep(values)),
+      filter: props.getSearchCriteria(_.cloneDeep(newVal)),
     };
     props.handleProjectSearch({ searchCriteria: searchData });
+    props.initialize(newVal);
+    props.saveFilters(newVal);
   };
 
   const getSelectedFilters = () => {
