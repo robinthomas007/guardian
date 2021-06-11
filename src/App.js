@@ -7,6 +7,13 @@ import Login from './login';
 import Content from './components/content';
 import { Security, SecureRoute, ImplicitCallback } from '@okta/okta-react';
 import UploadProgressAlert from './components/SharedPageComponents/UploadProgresAlert';
+import Zendesk from 'react-zendesk';
+
+const setting = {
+  color: {
+    theme: '#01579B',
+  },
+};
 
 const config = Object.freeze(window.env);
 
@@ -29,6 +36,12 @@ class App extends Component {
     return (
       <>
         <UploadProgressAlert />
+        <Zendesk
+          defer
+          zendeskKey={'1a91aa50-32e8-4499-a3e4-4643aad1353f'}
+          {...setting}
+          onLoaded={() => console.log('is loaded')}
+        />
         <Router>
           <Security
             issuer={config.okta.issuer}
