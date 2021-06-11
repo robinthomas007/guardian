@@ -21,20 +21,13 @@ const Filter = props => {
 
   const deleteSelected = (val, name) => {
     let newVal = _.cloneDeep(values);
-    if (name === 'labelIds') {
-      let arr = _.filter(values.labelIds, function(e) {
-        return !_.isEqual(e, val);
-      });
-      newVal[name] = arr;
-    } else {
-      newVal[name] = null;
-    }
+    newVal[name] = null;
     props.initialize(newVal);
     const searchData = {
       itemsPerPage: props.searchCriteria.itemsPerPage,
       pageNumber: props.searchCriteria.pageNumber,
       searchTerm: '',
-      filter: props.getSearchCriteria(values),
+      filter: props.getSearchCriteria(newVal),
     };
     props.handleInboxSearch({ searchCriteria: searchData });
   };

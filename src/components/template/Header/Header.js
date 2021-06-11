@@ -149,6 +149,7 @@ class Header extends Component {
       notifify: false,
       showCommentBox: false,
     };
+    this.handleClickOutside = this.handleClickOutside.bind(this);
   }
 
   getStepIcon = (navLink, navIndex) => {
@@ -267,6 +268,15 @@ class Header extends Component {
     });
   };
 
+  handleClickOutside(event) {
+    const { notifify } = this.state;
+    const elem = document.querySelector('.notification-wrapper-div');
+    if (elem && !elem.contains(event.target) && notifify && event.target.id !== 'notify-wrapper') {
+      this.setState({ notifify: false });
+      event.preventDefault();
+    }
+  }
+
   setHeaderView = () => {
     const isCompactView = this.handleHeaderViewType();
 
@@ -359,10 +369,12 @@ class Header extends Component {
     interval = setInterval(() => {
       this.props.getAllNotifications({ searchCriteria: { filter: { IsRead: 'false' } } });
     }, 20000);
+    document.addEventListener('mousedown', this.handleClickOutside);
   };
 
   componentWillUnmount() {
     clearInterval(interval);
+    document.removeEventListener('mousedown', this.handleClickOutside);
   }
 
   getHeaderContent = () => {
@@ -532,11 +544,19 @@ class Header extends Component {
                     ) : null}
                     <li> | </li>
                     <li className="notification-li">
-                      <div className="notify-wrapper" onClick={this.openNotifivations}>
-                        <i className="material-icons">notifications</i>
+                      <div
+                        id="notify-wrapper"
+                        className="notify-wrapper"
+                        onClick={this.openNotifivations}
+                      >
+                        <i id="notify-wrapper" className="material-icons">
+                          notifications
+                        </i>
                         {notifications.length > 0 && <span>{notifications.length}</span>}
                       </div>
-                      {notifify && notifications.length > 0 && this.getNotifications()}
+                      <div className="notification-wrapper-div">
+                        {notifify && notifications.length > 0 && this.getNotifications()}
+                      </div>
                     </li>
                     <li>Welcome, {this.props.userData.name}</li>
                     <li>
