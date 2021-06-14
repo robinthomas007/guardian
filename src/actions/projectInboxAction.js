@@ -61,15 +61,15 @@ export const markAsRead = id => ({
   id,
 });
 
-export const readNotification = id => {
+export const readNotification = obj => {
   return dispatch => {
     dispatch(fetchRequest(true));
-    return Api.post('/notification/read', id)
+    return Api.post('/notification/read', obj)
       .then(response => response.json())
       .then(response => {
         if (response) {
           dispatch(fetchRequest(false));
-          dispatch(markAsRead(id.NotificationId));
+          dispatch(markAsRead(obj.Notification.Id));
         }
       })
       .catch(error => {

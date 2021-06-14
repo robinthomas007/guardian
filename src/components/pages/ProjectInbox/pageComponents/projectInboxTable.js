@@ -118,7 +118,6 @@ class ProjectInboxDataTable extends Component {
                   title="Comment"
                 >
                   <i className={'material-icons'}>message</i>
-                  {project.IsRead}
                 </button>
               </td>
               <td className="col-1 text-center">{convertToLocaleTime(project.DateCreated)}</td>
