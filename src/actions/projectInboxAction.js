@@ -56,15 +56,20 @@ export const changeItemsPerPage = limit => ({
   limit,
 });
 
+export const markAsRead = id => ({
+  type: actions.MARK_AS_READ,
+  id,
+});
+
 export const readNotification = id => {
   return dispatch => {
     dispatch(fetchRequest(true));
-    return Api.post('/notifications/read', id)
+    return Api.post('/notification/read', id)
       .then(response => response.json())
       .then(response => {
         if (response) {
           dispatch(fetchRequest(false));
-          console.log(response, 'response for read');
+          dispatch(markAsRead(id.NotificationId));
         }
       })
       .catch(error => {

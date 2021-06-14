@@ -1,4 +1,5 @@
 import { createReducer } from 'redux-starter-kit';
+import _ from 'lodash';
 import {
   GET_INBOX_FAILURE,
   GET_INBOX_REQUEST,
@@ -6,6 +7,7 @@ import {
   CHANGE_LIMIT_INBOX,
   SAVE_FILTERS_INBOX,
   CHANGE_PAGE_NO_INBOX,
+  MARK_AS_READ,
 } from '../types/inbox.types';
 
 export const initialState = {
@@ -43,5 +45,15 @@ export default createReducer(initialState, {
   },
   [CHANGE_LIMIT_INBOX]: (state, action) => {
     state.searchCriteria.itemsPerPage = action.limit;
+  },
+  [MARK_AS_READ]: (state, action) => {
+    let temp = _.cloneDeep(state.result.Notifications);
+    let newRes = _.map(temp, data => {
+      if (data.Id === action.id) {
+        data.IsRead = 'yes';
+      }
+      return data;
+    });
+    state.result.Notifications = newRes;
   },
 });

@@ -105,9 +105,9 @@ class ProjectInboxDataTable extends Component {
             <tr
               className="d-flex w-100"
               key={i}
-              onMouseLeave={() =>
-                project.IsRead === '0'
-                  ? this.props.readNotification({ NotificationId: project.Id })
+              onMouseEnter={() =>
+                project.IsRead === 'no'
+                  ? this.props.readNotification({ Notification: project })
                   : null
               }
             >
@@ -118,6 +118,7 @@ class ProjectInboxDataTable extends Component {
                   title="Comment"
                 >
                   <i className={'material-icons'}>message</i>
+                  {project.IsRead}
                 </button>
               </td>
               <td className="col-1 text-center">{convertToLocaleTime(project.DateCreated)}</td>
