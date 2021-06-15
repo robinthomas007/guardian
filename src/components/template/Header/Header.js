@@ -478,8 +478,9 @@ class Header extends Component {
       : this.state.navSteps.filter(step => step.preRelease);
     const activeNav = this.getActiveNav();
     const { notifify } = this.state;
-    const { notifications, projectData } = this.props;
+    const { notifications, projectData, readCount } = this.props;
     const { showCommentBox } = this.state;
+    let count = notifications && notifications.length ? notifications.length - readCount : 0;
     if (projectData.Project) {
       return (
         <React.Fragment>
@@ -552,10 +553,10 @@ class Header extends Component {
                         <i id="notify-wrapper" className="material-icons">
                           notifications
                         </i>
-                        {notifications.length > 0 && <span>{notifications.length}</span>}
+                        {count > 0 && <span>{count}</span>}
                       </div>
                       <div className="notification-wrapper-div">
-                        {notifify && notifications.length > 0 && this.getNotifications()}
+                        {notifify && count > 0 && this.getNotifications()}
                       </div>
                     </li>
                     <li>Welcome, {this.props.userData.name}</li>
@@ -627,6 +628,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
   notifications: state.headerReducer.notifications,
+  readCount: state.ProjectInboxReducer.readCount,
 });
 
 export default withRouter(

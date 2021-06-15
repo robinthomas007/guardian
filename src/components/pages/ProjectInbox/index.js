@@ -36,6 +36,10 @@ class ProjectInbox extends Component {
     this.props.handleInboxSearch({ searchCriteria: searchData });
   }
 
+  componentWillMount() {
+    this.props.clearReadCount();
+  }
+
   formSubmit(values) {
     const formData = _.cloneDeep(values);
     const searchCriteria = {
@@ -191,6 +195,7 @@ const mapDispatchToProps = dispatch => ({
   changePageNumber: pageNo => dispatch(projectInboxAction.changePageNumber(pageNo)),
   changeItemsPerPage: limit => dispatch(projectInboxAction.changeItemsPerPage(limit)),
   readNotification: id => dispatch(projectInboxAction.readNotification(id)),
+  clearReadCount: () => dispatch(projectInboxAction.clearReadCount()),
 });
 
 const mapStateToProps = state => ({

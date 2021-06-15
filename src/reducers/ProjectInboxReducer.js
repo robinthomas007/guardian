@@ -8,6 +8,7 @@ import {
   SAVE_FILTERS_INBOX,
   CHANGE_PAGE_NO_INBOX,
   MARK_AS_READ,
+  CLEAR_READ_COUNT,
 } from '../types/inbox.types';
 
 export const initialState = {
@@ -20,6 +21,7 @@ export const initialState = {
     pageNumber: '1',
     filter: {},
   },
+  readCount: 0,
 };
 
 export default createReducer(initialState, {
@@ -55,5 +57,9 @@ export default createReducer(initialState, {
       return data;
     });
     state.result.Notifications = newRes;
+    state.readCount = state.readCount + 1;
+  },
+  [CLEAR_READ_COUNT]: (state, action) => {
+    state.readCount = 0;
   },
 });

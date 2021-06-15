@@ -79,3 +79,7 @@ export const readNotification = obj => {
       });
   };
 };
+
+export const clearReadCount = () => ({
+  type: actions.CLEAR_READ_COUNT,
+});
