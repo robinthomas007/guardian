@@ -511,39 +511,38 @@ class Header extends Component {
                 </div>
                 <div className="nav-bg"></div>
                 <nav className="col-8 d-flex no-gutters justify-content-end">
-                  <ul>
+                  <ul className="menu-items">
+                    {this.props.userData.IsAdmin ? (
+                      <li>
+                        <NavLink className="steps" to={{ pathname: '/userAdmin' }}>
+                          <i class="material-icons">supervised_user_circle</i> Admin
+                        </NavLink>
+                      </li>
+                    ) : null}
                     <li>
                       <NavLink
                         className="steps"
                         to={{ pathname: '/releaseInformation' }}
                         onClick={() => this.props.clearProject()}
                       >
-                        New Project
-                      </NavLink>
-                    </li>
-                    <li>
-                      <NavLink className="steps" to={{ pathname: '/inbox' }}>
-                        Inbox
+                        <i class="material-icons">library_music</i> New Project
                       </NavLink>
                     </li>
                     <li>
                       <NavLink className="steps" to={{ pathname: '/findProject' }}>
-                        Find A Project
+                        <i class="material-icons">search</i> Project Search
                       </NavLink>
                     </li>
                     <li>
+                      <NavLink className="steps" to={{ pathname: '/inbox' }}>
+                        <i class="material-icons">email</i> Inbox
+                      </NavLink>
+                    </li>
+                    {/*<li>
                       <RecentProjectsDrop
                         updateHistory={projectID => this.props.updateHistory(projectID)}
                       />
-                    </li>
-                    {this.props.userData.IsAdmin ? (
-                      <li>
-                        <NavLink className="steps" to={{ pathname: '/userAdmin' }}>
-                          Admin
-                        </NavLink>
-                      </li>
-                    ) : null}
-                    <li> | </li>
+                    </li>*/}
                     <li className="notification-li">
                       <div
                         id="notify-wrapper"
@@ -559,6 +558,7 @@ class Header extends Component {
                         {notifify && count > 0 && this.getNotifications()}
                       </div>
                     </li>
+                    <li> | </li>
                     <li>Welcome, {this.props.userData.name}</li>
                     <li>
                       <span className="btn-log" onClick={e => this.props.handleLogoutClick(e)}>
@@ -584,6 +584,15 @@ class Header extends Component {
                     </button>
                   </li>
                 ) : null}
+                <li>
+                  <button
+                    className="btn btn-sm btn-secondary btn-video"
+                    onClick={this.showVideoTutorialModal}
+                    title="Tutorial Video"
+                  >
+                    <i className={'material-icons'}>videocam</i>
+                  </button>
+                </li>
                 {parseInt(activeNav) >= 0 && projectData.Project.projectID && (
                   <li>
                     <button
@@ -597,20 +606,11 @@ class Header extends Component {
                 )}
                 <li>
                   <button
-                    className="btn btn-sm btn-secondary btn-video"
-                    onClick={this.showVideoTutorialModal}
-                    title="Tutorial Video"
-                  >
-                    <i className={'material-icons'}>videocam</i> Tutorials
-                  </button>
-                </li>
-                <li>
-                  <button
-                    className="btn btn-sm btn-primary btn-help"
+                    className="btn btn-sm btn-secondary btn-help"
                     onClick={this.handleHelpClick}
                     title="Help/FAQs"
                   >
-                    <i className={'material-icons'}>contact_support</i> Help
+                    <i className={'material-icons'}>help</i>
                   </button>
                 </li>
               </ul>

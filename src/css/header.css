@@ -322,22 +322,6 @@ div.row.d-flex.steps-bar ul li a.active span.step-arrow {
   font-weight: bold;
 }
 
-/* .content-list li:nth-child(1) .lft-col span {
-  background: #636393;
-}
-
-.content-list li:nth-child(2) .lft-col span {
-  background: #b5222d;
-}
-
-.content-list li:nth-child(3) a.lft-col span {
-  background: #d4953c;
-}
-
-.content-list li:nth-child(4) .lft-col span {
-  background: #609491;
-} */
-
 .content-list li {
   margin: 0px;
   padding: 10px;
@@ -345,4 +329,10 @@ div.row.d-flex.steps-bar ul li a.active span.step-arrow {
 
 .bold {
   font-weight: bold;
+}
+
+.menu-items li i.material-icons {
+  display: inline-flex;
+  vertical-align: top;
+  margin-right: 3px;
 }
