@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import OktaSignIn from '@okta/okta-signin-widget';
 import '@okta/okta-signin-widget/dist/css/okta-sign-in.min.css';
 import '@okta/okta-signin-widget/dist/css/okta-theme.css';
+import GuardianLogo from 'images/guardian-logo.png';
+
 export default class OktaSignInWidget extends Component {
   componentDidMount() {
     const el = ReactDOM.findDOMNode(this);
@@ -27,7 +29,7 @@ export default class OktaSignInWidget extends Component {
     return (
       <section className="container-fluid landing okta">
         <section className="logo">
-          <img src="/static/images/guardian-logo.png" />
+          <img src={GuardianLogo} alt="guardian-logo" />
         </section>
 
         <section className="over-bar">

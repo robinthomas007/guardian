@@ -3,6 +3,7 @@ import RequestAccessModal from '../../modals/RequestAccessModal';
 import Noty from 'noty';
 import './HomePage.css';
 import { withAuth } from '@okta/okta-react';
+import GuardianLogo from 'images/guardian-logo.png';
 
 export default withAuth(
   class HomePage extends Component {
@@ -92,7 +93,7 @@ export default withAuth(
             handleClose={this.hideRequestModal}
           />
           <section className="logo">
-            <img src="/static/images/guardian-logo.png" />
+            <img src={GuardianLogo} alt="guardian-logo" />
           </section>
           <nav className="top-nav ext">
             <ul>
