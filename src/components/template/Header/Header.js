@@ -8,6 +8,7 @@ import CommentBox from '../../pages/CommentSlider';
 import { connect } from 'react-redux';
 import * as headerActions from './../../../actions/headerActions';
 import moment from 'moment';
+import * as projectInboxAction from 'actions/projectInboxAction';
 
 let interval = null;
 const hexArray = [
@@ -368,6 +369,7 @@ class Header extends Component {
 
     interval = setInterval(() => {
       this.props.getAllNotifications({ searchCriteria: { filter: { IsRead: 'false' } } });
+      this.props.clearReadCount();
     }, 20000);
     document.addEventListener('mousedown', this.handleClickOutside);
   };
@@ -386,7 +388,7 @@ class Header extends Component {
             <div className="col-10 align-self-start">
               <h1>
                 {this.props.projectData.Project && this.props.projectData.Project.projectTitle
-                  ? this.props.projectData.Project.projectTitle
+                  ? `${this.props.projectData.Project.projectArtistName} - ${this.props.projectData.Project.projectTitle}`
                   : this.getDefaultPageTitle('New Project')}
               </h1>
             </div>
@@ -452,11 +454,11 @@ class Header extends Component {
                   onClick={() => this.openNotifivations()}
                 >
                   <div className="lft-col">
-                    <span style={{ background: hexArray[i] }}>{getAlias(noti.AssignedTo)}</span>
+                    <span style={{ background: hexArray[i] }}>{getAlias(noti.AssignedBy)}</span>
                   </div>
                   <div className="rgt-col">
                     <p>
-                      <strong className="bold">{noti.AssignedTo}</strong> left you a comment on the
+                      <strong className="bold">{noti.AssignedBy}</strong> left you a comment on the
                       project
                       <strong className="bold"> "{noti.ProjectTitle}" </strong> (
                       {moment(noti.DateCreated).fromNow()})
@@ -480,6 +482,7 @@ class Header extends Component {
     const { notifify } = this.state;
     const { notifications, projectData, readCount } = this.props;
     const { showCommentBox } = this.state;
+    console.log(notifications.length, readCount, '==========================');
     let count = notifications && notifications.length ? notifications.length - readCount : 0;
     if (projectData.Project) {
       return (
@@ -507,7 +510,9 @@ class Header extends Component {
               <div className="row d-flex no-gutters">
                 <div className="col-1"></div>
                 <div className="col-2">
-                  <span className="guardian-logo"></span>
+                  <NavLink to={{ pathname: '/findProject' }}>
+                    <span className="guardian-logo"></span>
+                  </NavLink>
                 </div>
                 <div className="nav-bg"></div>
                 <nav className="col-8 d-flex no-gutters justify-content-end">
@@ -624,6 +629,7 @@ class Header extends Component {
 
 const mapDispatchToProps = dispatch => ({
   getAllNotifications: val => dispatch(headerActions.getNotifications(val)),
+  clearReadCount: () => dispatch(projectInboxAction.clearReadCount()),
 });
 
 const mapStateToProps = state => ({

@@ -521,7 +521,7 @@ class BlockingPoliciesPage extends Component {
               className="btn btn-primary saveAndContinueButton"
               onClick={e => this.handleSubmit(e)}
             >
-              Request Approval
+              Save & Continue
             </button>
           </div>
         </div>

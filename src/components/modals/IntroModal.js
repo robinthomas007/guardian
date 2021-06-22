@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import './IntroModal.css';
 import Cookies from 'universal-cookie';
+import { NavLink } from 'react-router-dom';
 
 class IntroModal extends Component {
   constructor(props, context) {
@@ -81,8 +82,9 @@ class IntroModal extends Component {
                   to help you achieve success for your artists!
                   <br />
                   <br />
-                  Have a question or need help getting started? <a href="#">Click Here</a> or
-                  contact us directly at{' '}
+                  Have a question or need help getting started?{' '}
+                  <NavLink to={{ pathname: '/helpGuide' }}>Click Here </NavLink>or contact us
+                  directly at{' '}
                   <a href="mailto:guardian-support@umusic.com">guardian-support@umusic.com</a>
                   <br />
                   <br />

@@ -36,7 +36,7 @@ class ProjectInbox extends Component {
     this.props.handleInboxSearch({ searchCriteria: searchData });
   }
 
-  componentWillMount() {
+  componentWillUnmount() {
     this.props.clearReadCount();
   }
 
