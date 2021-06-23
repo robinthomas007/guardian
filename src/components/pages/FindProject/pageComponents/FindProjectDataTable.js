@@ -1,15 +1,6 @@
 import React, { Component } from 'react';
 import { convertToLocaleTime } from '../../../Utils';
-import {
-  Table,
-  Grid,
-  Button,
-  Form,
-  Pagination,
-  Dropdown,
-  DropdownButton,
-  Alert,
-} from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import AdminStatusDropdown from '../pageComponents/AdminStatusDropdown';
 import Noty from 'noty';
@@ -218,6 +209,9 @@ class FindProjectDataTable extends Component {
             <td onClick={() => this.handleRowClick(project.projectID)} className="col-1">
               {project.projectReleasingLabel}
             </td>
+            <td onClick={() => this.handleRowClick(project.projectID)} className="col-1">
+              {project.projectReleasingDate}
+            </td>
             <td
               onClick={() =>
                 !this.props.userData.IsAdmin ? this.handleRowClick(project.projectID) : null
@@ -243,6 +237,12 @@ class FindProjectDataTable extends Component {
               className="status text-center"
             >
               {this.checkProjectStepStatus(project.isAudioFilesComplete)}
+            </td>
+            <td
+              onClick={() => this.handleRowClick(project.projectID)}
+              className="status text-center"
+            >
+              {this.checkProjectStepStatus(project.isTrackInfoComplete)}
             </td>
             <td
               onClick={() => this.handleRowClick(project.projectID)}
@@ -332,6 +332,23 @@ class FindProjectDataTable extends Component {
           </th>
           <th
             className="col-1 sortable"
+            onMouseOver={(e, columnID) => this.handleMouseOver(e, 'release_dates')}
+            onMouseOut={(e, columnID) => this.handleMouseOut(e, 'release_dates')}
+            onClick={id => this.handleTableSort('release_dates')}
+          >
+            Release Dates{this.handleSortDisplay('release_dates')}
+            <i
+              className={
+                this.state.activeHover === 'release_dates'
+                  ? 'material-icons'
+                  : 'material-icons d-none'
+              }
+            >
+              arrow_drop_up
+            </i>
+          </th>
+          <th
+            className="col-1 sortable"
             onMouseOver={(e, columnID) => this.handleMouseOver(e, 'status')}
             onMouseOut={(e, columnID) => this.handleMouseOut(e, 'status')}
             onClick={id => this.handleTableSort('status')}
@@ -347,6 +364,7 @@ class FindProjectDataTable extends Component {
           </th>
 
           <th className="status text-center">Has Audio</th>
+          <th className="status text-center">Has Tracks</th>
           <th className="status text-center">Has Rights</th>
           <th className="status text-center">Has Blocking</th>
         </tr>
