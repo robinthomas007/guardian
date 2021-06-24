@@ -26,6 +26,11 @@
   height: 210px;
   overflow: scroll;
   margin-bottom: 15px;
+  overflow-x: hidden;
+}
+
+.comment-slider ul::-webkit-scrollbar {
+  display: none;
 }
 
 .comment-slider ul li {
