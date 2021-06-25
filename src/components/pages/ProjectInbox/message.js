@@ -10,6 +10,7 @@ import { steps } from '../../common/commonHelper';
 import _ from 'lodash';
 import LoadingImg from '../../ui/LoadingImgSm';
 import * as commentAction from 'actions/commentAction';
+import moment from 'moment';
 
 const Message = props => {
   const { handleClose, handleSubmit } = props;
@@ -46,7 +47,8 @@ const Message = props => {
             <div className="each-message">
               <div className="message-name">
                 <strong>
-                  {obj.CreatedDateTime} - {obj.AssignedByName} - {obj.Step}
+                  {moment(obj.CreatedDateTime).format('DD/MM/YYYY hh:mm A')} - {obj.AssignedByName}{' '}
+                  - {obj.Step}
                 </strong>
               </div>
               <div className="message-content">{obj.Text}</div>

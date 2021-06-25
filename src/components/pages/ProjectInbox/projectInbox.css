@@ -24,7 +24,9 @@
 }
 
 .message-name {
-  width: 28.5%;
+  white-space: nowrap;
+  margin-right: 10px;
+  width: 28%;
 }
 
 .message-content {
@@ -35,4 +37,17 @@
   height: 150px;
   overflow: scroll;
   margin-bottom: 15px;
+}
+
+.inbox-table td {
+  color: rgb(113 113 113);
+}
+
+.unread {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.unread td {
+  font-weight: bold;
+  color: #000;
 }

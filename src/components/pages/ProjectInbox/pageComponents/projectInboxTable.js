@@ -103,7 +103,7 @@ class ProjectInboxDataTable extends Component {
         return (
           <React.Fragment>
             <tr
-              className="d-flex w-100"
+              className={`${project.IsRead === 'no' ? 'unread' : ''} d-flex w-100 inbox-table`}
               key={i}
               onMouseEnter={() =>
                 project.IsRead === 'no'

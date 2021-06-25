@@ -8,7 +8,12 @@ import * as projectInboxAction from 'actions/projectInboxAction';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import LoadingImg from '../../ui/LoadingImg';
-import { getSearchCriteria, getFromDate, getToDate } from '../../common/commonHelper.js';
+import {
+  getSearchCriteria,
+  getFromDate,
+  getToDate,
+  fomatDates,
+} from '../../common/commonHelper.js';
 import InputField from '../../common/InputField';
 import _ from 'lodash';
 
@@ -32,11 +37,17 @@ class ProjectInbox extends Component {
       searchTerm: '',
       filter: getSearchCriteria(searchCriteria),
     };
-
-    this.props.handleInboxSearch({ searchCriteria: searchData });
+    this.props.handleInboxSearch({ searchCriteria: fomatDates(_.cloneDeep(searchData)) });
+    this.unlisten = this.props.history.listen((location, action) => {
+      if (location.pathname === '/inbox') {
+        this.props.handleInboxSearch({ searchCriteria: fomatDates(_.cloneDeep(searchData)) });
+      }
+      console.log('on route change', location, action);
+    });
   }
 
   componentWillUnmount() {
+    this.unlisten();
     this.props.clearReadCount();
   }
 
@@ -49,7 +60,7 @@ class ProjectInbox extends Component {
       filter: getSearchCriteria(formData),
     };
 
-    this.props.handleInboxSearch({ searchCriteria: searchCriteria });
+    this.props.handleInboxSearch({ searchCriteria: fomatDates(_.cloneDeep(searchCriteria)) });
   }
 
   handlePaginationChange(newPage) {
@@ -61,7 +72,7 @@ class ProjectInbox extends Component {
       searchTerm: searchTerm,
       filter: getSearchCriteria(searchCriteria),
     };
-    this.props.handleInboxSearch({ searchCriteria: searchData });
+    this.props.handleInboxSearch({ searchCriteria: fomatDates(_.cloneDeep(searchData)) });
     this.props.changePageNumber(newPage);
   }
 
@@ -74,7 +85,7 @@ class ProjectInbox extends Component {
       searchTerm: searchTerm,
       filter: getSearchCriteria(searchCriteria),
     };
-    this.props.handleInboxSearch({ searchCriteria: searchData });
+    this.props.handleInboxSearch({ searchCriteria: fomatDates(_.cloneDeep(searchData)) });
     this.props.changeItemsPerPage(count);
   }
 
@@ -89,7 +100,7 @@ class ProjectInbox extends Component {
       sortOrder: columnSortOrder,
       sortColumn: columnID,
     };
-    this.props.handleInboxSearch({ searchCriteria: searchData });
+    this.props.handleInboxSearch({ searchCriteria: fomatDates(_.cloneDeep(searchData)) });
   };
 
   render() {

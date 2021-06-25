@@ -4,7 +4,7 @@ import Dropdown from '../../common/DropdownSelect';
 import multiSelect from '../../common/multiSelect';
 import DateTimePicker from '../../common/DateTimePicker';
 import _ from 'lodash';
-import { formatSelectArray } from '../../common/commonHelper';
+import { formatSelectArray, fomatDates } from '../../common/commonHelper';
 
 const selectedFilter = [
   { name: 'ProjectArtist', label: 'Project Artist' },
@@ -29,7 +29,8 @@ const Filter = props => {
       searchTerm: '',
       filter: props.getSearchCriteria(newVal),
     };
-    props.handleInboxSearch({ searchCriteria: searchData });
+    props.handleInboxSearch({ searchCriteria: fomatDates(_.cloneDeep(searchData)) });
+    props.saveFilters(newVal);
   };
 
   const getSelectedFilters = () => {
@@ -90,7 +91,13 @@ const Filter = props => {
   const handleOnSelect = (data, name) => {
     let values = _.cloneDeep(_.get(props, 'formValues.values', {}));
     const obj = {};
-    obj[name] = data;
+    if (name === 'To') {
+      obj[name] = props.getToDate(data, true);
+    } else if (name === 'From') {
+      obj[name] = props.getFromDate(data, true);
+    } else {
+      obj[name] = data;
+    }
     props.saveFilters({ ...props.formValues.values, ...obj });
     _.forOwn(values, function(item, key) {
       if (!item) {
@@ -100,10 +107,10 @@ const Filter = props => {
         values[key] = item.value;
       } else {
         if (key === 'From') {
-          values[key] = props.getFromDate(item);
+          values[key] = props.getFromDate(item, true);
         }
         if (key === 'To') {
-          values[key] = props.getToDate(item);
+          values[key] = props.getToDate(item, true);
         }
       }
     });
@@ -115,8 +122,8 @@ const Filter = props => {
         data && data.value
           ? data.value
           : name === 'from'
-          ? props.getFromDate(data)
-          : props.getToDate(data);
+          ? props.getFromDate(data, true)
+          : props.getToDate(data, true);
     }
 
     const searchData = {

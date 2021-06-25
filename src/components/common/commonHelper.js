@@ -32,22 +32,29 @@ export const getSearchCriteria = searchCriteria => {
   return searchCriteria;
 };
 
-export const getToDate = date => {
+export const getToDate = (date, iso) => {
   if (!date) return '';
   let toDate = new Date(date);
   toDate.setHours(23, 59, 59);
   toDate.setDate(toDate.getDate() + 1);
-  toDate = toDate.toISOString().replace('Z', '');
+  if (iso) {
+    toDate = toDate.toISOString();
+  } else {
+    toDate = toDate.toISOString().replace('Z', '');
+  }
   return toDate;
 };
 
-export const getFromDate = date => {
+export const getFromDate = (date, iso) => {
   if (!date) return '';
-  let toDate = new Date(date);
-  toDate.setHours(0, 0, 1);
-
-  toDate = toDate.toISOString().replace('Z', '');
-  return toDate;
+  let fromDate = new Date(date);
+  fromDate.setHours(0, 0, 1);
+  if (iso) {
+    fromDate = fromDate.toISOString();
+  } else {
+    fromDate = fromDate.toISOString().replace('Z', '');
+  }
+  return fromDate;
 };
 
 export const steps = [
@@ -59,3 +66,11 @@ export const steps = [
   { value: 'UGC Blocking', label: 'UGC Blocking' },
   { value: 'Review', label: 'Review' },
 ];
+
+export const fomatDates = searchData => {
+  if (searchData.filter) {
+    if (searchData.filter.From) searchData.filter.From = getFromDate(searchData.filter.From, true);
+    if (searchData.filter.To) searchData.filter.To = getToDate(searchData.filter.To, true);
+  }
+  return searchData;
+};

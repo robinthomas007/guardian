@@ -368,9 +368,9 @@ class Header extends Component {
     this.props.getAllNotifications({ searchCriteria: { filter: { IsRead: 'false' } } });
 
     interval = setInterval(() => {
-      this.props.getAllNotifications({ searchCriteria: { filter: { IsRead: 'false' } } });
       this.props.clearReadCount();
-    }, 20000);
+      this.props.getAllNotifications({ searchCriteria: { filter: { IsRead: 'false' } } });
+    }, 60000);
     document.addEventListener('mousedown', this.handleClickOutside);
   };
 
@@ -482,7 +482,6 @@ class Header extends Component {
     const { notifify } = this.state;
     const { notifications, projectData, readCount } = this.props;
     const { showCommentBox } = this.state;
-    console.log(notifications.length, readCount, '==========================');
     let count = notifications && notifications.length ? notifications.length - readCount : 0;
     if (projectData.Project) {
       return (
