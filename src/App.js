@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
 import ReactGA from 'react-ga';
 
 import LoginPage from './components/pages/HomePage/HomePage';
@@ -8,6 +8,9 @@ import Content from './components/content';
 import { Security, SecureRoute, ImplicitCallback } from '@okta/okta-react';
 import UploadProgressAlert from './components/SharedPageComponents/UploadProgresAlert';
 import Zendesk from 'react-zendesk';
+import { createBrowserHistory } from 'history';
+
+const history = createBrowserHistory();
 
 const setting = {
   color: {
@@ -25,12 +28,15 @@ class App extends Component {
   componentDidMount() {
     //clear the local storage
     localStorage.removeItem('projectData');
+    this.initializeReactGA();
   }
 
-  initializeReactGA() {
+  initializeReactGA = () => {
     ReactGA.initialize('UA-150085816-1');
-    ReactGA.pageview('/');
-  }
+    history.listen(location => {
+      ReactGA.pageview(location.pathname);
+    });
+  };
 
   render() {
     return (
@@ -42,7 +48,7 @@ class App extends Component {
           {...setting}
           onLoaded={() => console.log('is loaded')}
         />
-        <Router>
+        <Router history={history}>
           <Security
             issuer={config.okta.issuer}
             client_id={config.okta.client_id}

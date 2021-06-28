@@ -12,8 +12,7 @@ import 'css/okta-overide.css';
 
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-
-import configureStore, { browserHistory } from './redux/store';
+import configureStore from './redux/store';
 
 const store = configureStore();
 
