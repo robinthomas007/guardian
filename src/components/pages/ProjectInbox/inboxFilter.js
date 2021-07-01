@@ -121,11 +121,10 @@ const Filter = props => {
       values[name] =
         data && data.value
           ? data.value
-          : name === 'from'
+          : name === 'From'
           ? props.getFromDate(data, true)
           : props.getToDate(data, true);
     }
-
     const searchData = {
       itemsPerPage: props.searchCriteria.itemsPerPage,
       pageNumber: props.searchCriteria.pageNumber,

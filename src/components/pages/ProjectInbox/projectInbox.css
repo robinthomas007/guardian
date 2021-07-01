@@ -26,11 +26,7 @@
 .message-name {
   white-space: nowrap;
   margin-right: 10px;
-  width: 28%;
-}
-
-.message-content {
-  width: 68%;
+  min-width: 34%;
 }
 
 .comments-list {

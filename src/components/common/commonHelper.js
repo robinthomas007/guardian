@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import moment from 'moment';
 
 export const formaterForSelect = data => ({
   label: data.name,
@@ -38,7 +39,8 @@ export const getToDate = (date, iso) => {
   toDate.setHours(23, 59, 59);
   toDate.setDate(toDate.getDate() + 1);
   if (iso) {
-    toDate = toDate.toISOString();
+    toDate = moment(toDate).format('YYYY-MM-DD');
+    toDate = `${toDate}T00:00:00.000Z`;
   } else {
     toDate = toDate.toISOString().replace('Z', '');
   }
@@ -48,9 +50,9 @@ export const getToDate = (date, iso) => {
 export const getFromDate = (date, iso) => {
   if (!date) return '';
   let fromDate = new Date(date);
-  fromDate.setHours(0, 0, 1);
   if (iso) {
-    fromDate = fromDate.toISOString();
+    fromDate = moment(fromDate).format('YYYY-MM-DD');
+    fromDate = `${fromDate}T00:00:00.000Z`;
   } else {
     fromDate = fromDate.toISOString().replace('Z', '');
   }
