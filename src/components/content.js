@@ -142,12 +142,15 @@ class Content extends Component {
   }
 
   setProjectID(pid, pagePath) {
-    if (this.state.projectID !== pid) {
+    if (!pid) {
+      this.setState({ projectID: '' });
+    }
+    if (pid && this.state.projectID !== pid) {
       this.setState({ projectID: pid }, () => {
         this.handleProjectDataLoad(pagePath);
       });
     } else {
-      if (this.state.pagePath !== pagePath) {
+      if (pagePath && this.state.pagePath !== pagePath) {
         //For blocking, We can't call the review api on the submit and preview page. So we are calling here.
         if (this.state.pagePath.includes('blockingPolicies')) {
           this.setState({ pagePath: pagePath }, () => {

@@ -34,6 +34,9 @@ class ReviewAndSubmitPage extends Component {
       project: this.props.data,
       showloader: false,
     });
+    if (this.props.match && this.props.match.params && this.props.match.params.projectID) {
+      this.props.setProjectID(this.props.match.params.projectID, this.props.match.url);
+    }
   }
 
   handleProjectCategoryClick(category) {
@@ -105,12 +108,6 @@ class ReviewAndSubmitPage extends Component {
         console.error(error);
         this.setState({ showloader: false });
       });
-  }
-
-  componentDidUpdate() {
-    if (this.props.match && this.props.match.params && this.props.match.params.projectID) {
-      this.props.setProjectID(this.props.match.params.projectID, this.props.match.url);
-    }
   }
 
   getStepNumber() {

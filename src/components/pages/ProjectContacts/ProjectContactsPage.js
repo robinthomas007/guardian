@@ -205,7 +205,12 @@ class ProjectContactsPage extends Component {
                 project: responseJSON,
                 showloader: false,
               },
-              () => this.showNotification(e, responseJSON.Project.projectID, saveAndContinue),
+              () =>
+                this.showNotification(
+                  e,
+                  responseJSON.Project ? responseJSON.Project.projectID : null,
+                  saveAndContinue,
+                ),
             );
             this.props.setHeaderProjectData(responseJSON);
 

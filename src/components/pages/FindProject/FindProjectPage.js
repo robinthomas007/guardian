@@ -34,7 +34,7 @@ class FindProjectPage extends Component {
       searchTerm: '',
       filter: getSearchCriteria(searchCriteria),
     };
-
+    this.props.setProjectID('', '/findProject');
     this.props.handleProjectSearch({ searchCriteria: searchData });
   }
 
