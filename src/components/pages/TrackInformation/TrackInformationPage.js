@@ -17,6 +17,7 @@ import {
   isDuplicateTrackTitle,
   showNotyError,
   isPreReleaseDate,
+  showNotyWarning,
 } from '../../Utils';
 
 class TrackInformationPage extends Component {
@@ -235,9 +236,12 @@ class TrackInformationPage extends Component {
   handleSubmit(e) {
     const saveAndContinue = e.target.classList.contains('saveAndContinueButton') ? true : false;
 
-    if (isDuplicateTrackTitle()) {
-      showNotyError("You're attempting to enter a duplicate track title. Click to close.");
-    } else if (isFormValid() && this.isValidForm()) {
+    if (isFormValid() && this.isValidForm()) {
+      if (isDuplicateTrackTitle()) {
+        showNotyWarning(
+          "You're attempting to enter a duplicate track title / isrc. Click to close.",
+        );
+      }
       this.setState({ showloader: true });
 
       const user = JSON.parse(sessionStorage.getItem('user'));

@@ -14,7 +14,7 @@ import {
   endUpload,
   saveDisc,
 } from 'redux/uploadProgressAlert/actions';
-import { isDuplicateTrackTitle, showNotyError } from '../../Utils';
+import { isDuplicateTrackTitle, showNotyError, showNotyWarning } from '../../Utils';
 import _ from 'lodash';
 
 class AudioFilesPage extends Component {
@@ -369,9 +369,12 @@ class AudioFilesPage extends Component {
 
     let formIsValid = this.isValidForm();
 
-    if (isDuplicateTrackTitle()) {
-      showNotyError("You're attempting to enter a duplicate track title. Click to close.");
-    } else if (formIsValid) {
+    if (formIsValid) {
+      if (isDuplicateTrackTitle()) {
+        showNotyWarning(
+          "You're attempting to enter a duplicate track title / isrc. Click to close.",
+        );
+      }
       this.setState({ showLoader: true });
 
       const fetchHeaders = new Headers({

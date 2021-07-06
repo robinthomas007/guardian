@@ -414,7 +414,9 @@ class Header extends Component {
   };
 
   handleHelpClick = () => {
-    this.props.history.push({ pathname: '/helpGuide/' });
+    const win = window.open('/helpGuide', '_blank');
+    win.focus();
+    // this.props.history.push({ pathname: '/helpGuide/' });
   };
 
   showVideoTutorialModal = () => {

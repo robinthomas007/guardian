@@ -143,6 +143,18 @@ export function isDuplicateTrackTitle() {
       titleValues.push(title);
     }
   }
+
+  let trackIsrc = document.getElementsByClassName('trackIsrcField');
+  let isrcValues = [];
+  for (var i = 0; i < trackIsrc.length; i++) {
+    const title = trackIsrc[i].value;
+    if (title && title.length === 12 && isrcValues.includes(title)) {
+      isDuplicate = true;
+      break;
+    } else {
+      isrcValues.push(title);
+    }
+  }
   return isDuplicate;
 }
 
@@ -153,6 +165,17 @@ export function showNotyError(message) {
     theme: 'bootstrap-v4',
     layout: 'top',
     timeout: false,
+    onClick: 'Noty.close();',
+  }).show();
+}
+
+export function showNotyWarning(message) {
+  new Noty({
+    type: 'warning',
+    text: message,
+    theme: 'bootstrap-v4',
+    layout: 'top',
+    timeout: '3000',
     onClick: 'Noty.close();',
   }).show();
 }
