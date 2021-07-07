@@ -145,6 +145,13 @@ class Header extends Component {
             'https://guardian.umusic.com/static/videos/The-Guardian-Training-Video-Review-(Review-&-Submit)-Step-7.mp4',
           modalHeader: 'Review and Submit',
         },
+        {
+          description: 'Find a Project',
+          path: '/findProject/',
+          tutorialVideoLink:
+            'https://guardian.umusic.com/static/videos/The-Guardian-Training-Video-Find-A-Project.mp4',
+          modalHeader: 'Find a Project',
+        },
       ],
       showVideoTutorialModal: false,
       notifify: false,
