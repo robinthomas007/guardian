@@ -69,7 +69,7 @@ export const readNotification = obj => {
       .then(response => {
         if (response) {
           dispatch(fetchRequest(false));
-          dispatch(markAsRead(obj.Notification.Id));
+          dispatch(markAsRead(obj.NotificationId));
         }
       })
       .catch(error => {

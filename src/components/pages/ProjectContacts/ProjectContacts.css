@@ -3,8 +3,20 @@
   margin-left: 15px;
   vertical-align: top;
 }
+
 .additional-contacts textarea {
   height: 120px;
   margin-left: -5px;
   width: 97.5%;
+}
+
+button.btn.btn-sm.btn-secondary.email-bubble {
+  margin: 15px 12px 15px 0px;
+  border-radius: 50px;
+}
+
+button.btn.btn-sm.btn-secondary.email-bubble.invalid-email {
+  border: 1px solid #db4437;
+  background: #db4437;
+  color: #fff;
 }

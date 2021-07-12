@@ -512,7 +512,7 @@ class BlockingPoliciesPage extends Component {
               className="btn btn-secondary saveButton"
               onClick={e => this.handleSubmit(e)}
             >
-              Save
+              Save Draft
             </button>
             <button
               tabIndex="6+"

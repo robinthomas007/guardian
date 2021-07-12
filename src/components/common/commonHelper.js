@@ -60,13 +60,13 @@ export const getFromDate = (date, iso) => {
 };
 
 export const steps = [
-  { value: 'Release Information', label: 'Step 1 - Release Information' },
-  { value: 'Contacts', label: 'Step 2 - Contacts' },
-  { value: 'Audio', label: 'Step 3 - Audio' },
-  { value: 'Tracks', label: 'Step 4 - Tracks' },
-  { value: 'Territorial Rights', label: 'Step 5 - Territorial Rights' },
-  { value: 'UGC Blocking', label: 'Step 6 - UGC Blocking' },
-  { value: 'Review', label: 'Step 7 - Review' },
+  { value: 'Step 1 - Release Information', label: 'Step 1 - Release Information' },
+  { value: 'Step 2 - Contacts', label: 'Step 2 - Contacts' },
+  { value: 'Step 3 - Audio', label: 'Step 3 - Audio' },
+  { value: 'Step 4 - Tracks', label: 'Step 4 - Tracks' },
+  { value: 'Step 5 - Territorial Rights', label: 'Step 5 - Territorial Rights' },
+  { value: 'Step 6 - UGC Blocking', label: 'Step 6 - UGC Blocking' },
+  { value: 'Step 7 - Review', label: 'Step 7 - Review' },
 ];
 
 export const fomatDates = searchData => {

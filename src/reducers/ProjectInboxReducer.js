@@ -52,7 +52,7 @@ export default createReducer(initialState, {
     let temp = _.cloneDeep(state.result.Notifications);
     let newRes = _.map(temp, data => {
       if (data.Id === action.id) {
-        data.IsRead = 'yes';
+        data.IsRead = true;
       }
       return data;
     });

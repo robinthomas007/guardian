@@ -25,7 +25,7 @@ export const notificationRequest = isLoading => {
 export const getNotifications = val => {
   return dispatch => {
     dispatch(notificationRequest(true));
-    return Api.post('/notification/search', val)
+    return Api.post('/notifications/unread', val)
       .then(response => response.json())
       .then(response => {
         if (response.Notifications) {

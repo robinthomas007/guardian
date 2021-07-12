@@ -103,12 +103,10 @@ class ProjectInboxDataTable extends Component {
         return (
           <React.Fragment>
             <tr
-              className={`${project.IsRead === 'no' ? 'unread' : ''} d-flex w-100 inbox-table`}
+              className={`${!project.IsRead ? 'unread' : ''} d-flex w-100 inbox-table`}
               key={i}
               onMouseEnter={() =>
-                project.IsRead === 'no'
-                  ? this.props.readNotification({ Notification: project })
-                  : null
+                !project.IsRead ? this.props.readNotification({ NotificationId: project.Id }) : null
               }
             >
               <td className="col-1 text-center">
@@ -130,11 +128,7 @@ class ProjectInboxDataTable extends Component {
             </tr>
             {showCommentBox && i === index && (
               <div className="">
-                {/* hard coded project id now, this should come from the back end  */}
-                <CommentBox
-                  projectID={project.projectID || '552'}
-                  handleClose={this.hideCommentBox}
-                />
+                <CommentBox projectID={project.ProjectId} handleClose={this.hideCommentBox} />
               </div>
             )}
           </React.Fragment>

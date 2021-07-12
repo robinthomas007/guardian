@@ -372,11 +372,11 @@ class Header extends Component {
 
     this.setHeaderView();
     this.props.setPageViewType(this.state.pageViewCompact);
-    this.props.getAllNotifications({ searchCriteria: { filter: { IsRead: 'false' } } });
+    this.props.getAllNotifications({});
 
     interval = setInterval(() => {
       this.props.clearReadCount();
-      this.props.getAllNotifications({ searchCriteria: { filter: { IsRead: 'false' } } });
+      this.props.getAllNotifications({});
     }, 60000);
     document.addEventListener('mousedown', this.handleClickOutside);
   };

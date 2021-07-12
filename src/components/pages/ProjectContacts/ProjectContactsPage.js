@@ -29,6 +29,7 @@ class ProjectContactsPage extends Component {
       projectAdditionalContactsValid: '',
       project: {},
       showloader: false,
+      emails: [],
     };
 
     if (this.props.match.params.projectID) {
@@ -225,6 +226,44 @@ class ProjectContactsPage extends Component {
     }
   }
 
+  validateEmail(email) {
+    var re = /\S+@\S+\.\S+/;
+    return re.test(email);
+  }
+
+  handleKeyUp = evt => {
+    if (evt.key === 'Backspace') {
+      let clear = document.querySelector('#projectAdditionalContacts').value;
+      if (clear === '') {
+        this.setState({
+          emails: [],
+        });
+      }
+    }
+    if (['Enter', 'Tab', ',', ' ', 'Backspace'].includes(evt.key)) {
+      let email = document.querySelector('#projectAdditionalContacts').value;
+      email = email.split(/(?:,| )+/);
+      email = email.filter(i => i);
+      if (email) {
+        this.setState({
+          emails: email,
+        });
+      }
+    }
+  };
+
+  removeEmail = email => {
+    const { formInputs, emails } = this.state;
+    let removedString = formInputs.projectAdditionalContacts.replace(email, '');
+    removedString = removedString.replace(/.$/, '');
+    removedString = removedString.replace(/.$/g, '');
+
+    formInputs.projectAdditionalContacts = removedString;
+    let arr = emails.filter(e => e !== email);
+    this.setState({ emails: arr });
+    this.setState({ formInputs });
+  };
+
   componentDidUpdate = () => {
     if (this.props.match.params.projectID) {
       this.props.setProjectID(this.props.match.params.projectID, this.props.match.url);
@@ -338,6 +377,21 @@ class ProjectContactsPage extends Component {
                   />
                 </div>
                 <div className="col-10">
+                  {this.state.emails.map(email => (
+                    <button
+                      type="button"
+                      key={email}
+                      className={`btn btn-sm btn-secondary email-bubble ${
+                        this.validateEmail(email) ? 'valid-email' : 'invalid-email'
+                      }`}
+                    >
+                      {email}
+                      <i class="material-icons" onClick={() => this.removeEmail(email)}>
+                        close
+                      </i>
+                    </button>
+                  ))}
+
                   <Form.Control
                     id="projectAdditionalContacts"
                     className={
@@ -349,6 +403,7 @@ class ProjectContactsPage extends Component {
                     rows="5"
                     value={this.state.formInputs.projectAdditionalContacts}
                     onChange={this.handleChange}
+                    onKeyUp={this.handleKeyUp}
                   />
                   <div className="invalid-tooltip">Incorrectly formatted email addresse(s)</div>
                 </div>
