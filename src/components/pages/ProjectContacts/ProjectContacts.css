@@ -11,12 +11,37 @@
 }
 
 button.btn.btn-sm.btn-secondary.email-bubble {
-  margin: 15px 12px 15px 0px;
-  border-radius: 50px;
+  margin: 7px 2px 4px 6px;
+  border-radius: 2px;
+  box-shadow: 2px 2px 2px #f5f5f5;
+  flex: 0 1 auto;
 }
 
 button.btn.btn-sm.btn-secondary.email-bubble.invalid-email {
   border: 1px solid #db4437;
-  background: #db4437;
-  color: #fff;
+  color: #db4437;
+  border-radius: 2px;
+  box-shadow: 2px 2px 2px #f5f5f5;
+  flex: 0 1 auto;
+}
+
+.bubule-email-field {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  border: 1px solid #ccc;
+  padding: 0px 10px;
+}
+
+textarea#projectAdditionalContacts {
+  border: none;
+  background: #fff;
+  outline: none;
+  flex: 1;
+  resize: none;
+  white-space: pre;
+}
+
+textarea#projectAdditionalContacts:focus {
+  box-shadow: none;
 }

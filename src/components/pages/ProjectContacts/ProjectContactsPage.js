@@ -12,6 +12,7 @@ import {
   convertToLocaleTime,
   isPreReleaseDate,
 } from '../../Utils.js';
+import _ from 'lodash';
 
 class ProjectContactsPage extends Component {
   constructor(props) {
@@ -69,10 +70,13 @@ class ProjectContactsPage extends Component {
       .then(responseJSON => {
         const { formInputs } = this.state;
         let modifiedFormInputs = responseJSON.Project;
+        let emails = modifiedFormInputs.projectAdditionalContacts.split(',');
+        modifiedFormInputs.projectAdditionalContacts = '';
         this.setState({
           formInputs: modifiedFormInputs,
           project: responseJSON,
           showloader: false,
+          emails: emails,
         });
         this.props.setHeaderProjectData(responseJSON);
       })
@@ -144,8 +148,9 @@ class ProjectContactsPage extends Component {
       Authorization: sessionStorage.getItem('accessToken'),
     });
     const fetchBody = JSON.stringify({
-      emails: this.state.formInputs.projectAdditionalContacts,
+      emails: this.state.emails.join(),
     });
+
     fetch(window.env.api.url + '/project/validate/emails', {
       method: 'POST',
       headers: fetchHeaders,
@@ -167,18 +172,17 @@ class ProjectContactsPage extends Component {
   }
 
   handleSubmit(e, saveAndContinue) {
+    const formInputs = _.cloneDeep(this.state.formInputs);
     const isValidForm = isFormValid();
 
     if (isValidForm) {
       this.setState({ showloader: true });
-
+      formInputs.projectAdditionalContacts = this.state.emails.join();
       const releaseInformationInputs = JSON.parse(localStorage.getItem('projectData'));
       const user = JSON.parse(sessionStorage.getItem('user'));
       const projectID = this.props.match.params.projectID;
 
-      const projectFields = projectID
-        ? this.state.formInputs
-        : { ...releaseInformationInputs, ...this.state.formInputs };
+      const projectFields = projectID ? formInputs : { ...releaseInformationInputs, ...formInputs };
 
       const fetchHeaders = new Headers({
         'Content-Type': 'application/json',
@@ -232,36 +236,43 @@ class ProjectContactsPage extends Component {
   }
 
   handleKeyUp = evt => {
+    const { formInputs, emails } = this.state;
     if (evt.key === 'Backspace') {
       let clear = document.querySelector('#projectAdditionalContacts').value;
       if (clear === '') {
+        emails.pop();
         this.setState({
-          emails: [],
+          emails: emails,
         });
       }
     }
-    if (['Enter', 'Tab', ',', ' ', 'Backspace'].includes(evt.key)) {
+    if (['Enter', 'Tab', ',', ' '].includes(evt.key)) {
       let email = document.querySelector('#projectAdditionalContacts').value;
+      email = email.trim();
       email = email.split(/(?:,| )+/);
-      email = email.filter(i => i);
+      email = email[0];
+      formInputs.projectAdditionalContacts = '';
       if (email) {
         this.setState({
-          emails: email,
+          emails: [...emails, email],
+          formInputs: formInputs,
         });
       }
     }
   };
 
-  removeEmail = email => {
-    const { formInputs, emails } = this.state;
-    let removedString = formInputs.projectAdditionalContacts.replace(email, '');
-    removedString = removedString.replace(/.$/, '');
-    removedString = removedString.replace(/.$/g, '');
-
-    formInputs.projectAdditionalContacts = removedString;
+  updateEmail = email => {
+    const { emails, formInputs } = this.state;
     let arr = emails.filter(e => e !== email);
     this.setState({ emails: arr });
-    this.setState({ formInputs });
+    formInputs.projectAdditionalContacts = email;
+    this.setState({ formInputs: formInputs });
+  };
+
+  removeEmail = email => {
+    const { emails } = this.state;
+    let arr = emails.filter(e => e !== email);
+    this.setState({ emails: arr });
   };
 
   componentDidUpdate = () => {
@@ -376,11 +387,12 @@ class ProjectContactsPage extends Component {
                     message="Additional contacts or users that youd like to share this project with may be added here. You can copy and paste from Outlook, or separate a list of users to be added by commas, spaces, semi-colons or any combination of these."
                   />
                 </div>
-                <div className="col-10">
+                <div className="col-10 bubule-email-field">
                   {this.state.emails.map(email => (
                     <button
                       type="button"
                       key={email}
+                      onClick={() => this.updateEmail(email)}
                       className={`btn btn-sm btn-secondary email-bubble ${
                         this.validateEmail(email) ? 'valid-email' : 'invalid-email'
                       }`}
@@ -400,7 +412,7 @@ class ProjectContactsPage extends Component {
                     }
                     tabIndex="4+"
                     as="textarea"
-                    rows="5"
+                    rows="1"
                     value={this.state.formInputs.projectAdditionalContacts}
                     onChange={this.handleChange}
                     onKeyUp={this.handleKeyUp}
