@@ -392,12 +392,11 @@ class ProjectContactsPage extends Component {
                     <button
                       type="button"
                       key={email}
-                      onClick={() => this.updateEmail(email)}
                       className={`btn btn-sm btn-secondary email-bubble ${
                         this.validateEmail(email) ? 'valid-email' : 'invalid-email'
                       }`}
                     >
-                      {email}
+                      <span onClick={() => this.updateEmail(email)}>{email}</span>
                       <i class="material-icons" onClick={() => this.removeEmail(email)}>
                         close
                       </i>
