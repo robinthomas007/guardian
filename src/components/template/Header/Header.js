@@ -38,7 +38,7 @@ class Header extends Component {
       },
       compactViewPages: {
         findProject: {
-          titleText: 'Find A Project',
+          titleText: 'Project Search',
         },
         inbox: {
           titleText: 'Project Inbox',
@@ -467,8 +467,8 @@ class Header extends Component {
                   </div>
                   <div className="rgt-col">
                     <p>
-                      <strong className="bold">{noti.AssignedBy}</strong> left you a comment on the
-                      project
+                      <strong className="bold">{noti.AssignedBy}</strong> left you a comment on the{' '}
+                      <strong className="bold">{noti.Step} </strong>for the project
                       <strong className="bold"> "{noti.ProjectTitle}" </strong> (
                       {moment(noti.DateCreated).fromNow()})
                     </p>
@@ -491,7 +491,7 @@ class Header extends Component {
     const { notifify } = this.state;
     const { notifications, projectData, readCount } = this.props;
     const { showCommentBox } = this.state;
-    let count = notifications && notifications.length ? notifications.length - readCount : 0;
+    let count = notifications && notifications.length > 0 ? notifications.length - readCount : 0;
     if (projectData.Project) {
       return (
         <React.Fragment>

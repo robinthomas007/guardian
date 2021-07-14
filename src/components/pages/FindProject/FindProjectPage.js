@@ -110,7 +110,7 @@ class FindProjectPage extends Component {
 
         <div className="row d-flex no-gutters">
           <div className="col-12">
-            <h2>Find A Project</h2>
+            <h2>Project Search</h2>
             <p>
               Search for an existing project or release in the search bar below. Projects can be
               located by Artist, Track, ISRC or Project Title (Album, Compilation, EP, or Single
