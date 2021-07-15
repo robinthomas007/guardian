@@ -246,10 +246,10 @@ class ProjectContactsPage extends Component {
         });
       }
     }
-    if (['Enter', 'Tab', ',', ' '].includes(evt.key)) {
+    if (['Enter', ',', ' ', ';'].includes(evt.key)) {
       let email = document.querySelector('#projectAdditionalContacts').value;
       email = email.trim();
-      email = email.split(/(?:,| )+/);
+      email = email.split(/(?:,| |;)+/);
       email = email[0];
       formInputs.projectAdditionalContacts = '';
       if (email) {
@@ -273,6 +273,21 @@ class ProjectContactsPage extends Component {
     const { emails } = this.state;
     let arr = emails.filter(e => e !== email);
     this.setState({ emails: arr });
+  };
+
+  onPasteEmail = e => {
+    const { formInputs } = this.state;
+    let email = e.clipboardData.getData('Text');
+    email = email.trim();
+    email = email.split(/(?:,| |;)+/);
+    formInputs.projectAdditionalContacts = '';
+    if (email) {
+      this.setState({
+        emails: email,
+        formInputs: formInputs,
+      });
+    }
+    e.preventDefault();
   };
 
   componentDidUpdate = () => {
@@ -415,6 +430,7 @@ class ProjectContactsPage extends Component {
                     value={this.state.formInputs.projectAdditionalContacts}
                     onChange={this.handleChange}
                     onKeyUp={this.handleKeyUp}
+                    onPaste={this.onPasteEmail}
                   />
                   <div className="invalid-tooltip">Incorrectly formatted email addresse(s)</div>
                 </div>
