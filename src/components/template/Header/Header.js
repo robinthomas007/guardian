@@ -72,6 +72,7 @@ class Header extends Component {
           tutorialVideoLink:
             'https://guardian.umusic.com/static/videos/The-Guardian-Training-Video-Release-Information-Step-1.mp4',
           modalHeader: 'Release Information',
+          isNav: true,
         },
         {
           description: 'Contacts',
@@ -84,6 +85,7 @@ class Header extends Component {
           tutorialVideoLink:
             'https://guardian.umusic.com/static/videos/The-Guardian-Training-Video-Project-Contact-Information-Step-2.mp4',
           modalHeader: 'Project Contacts',
+          isNav: true,
         },
         {
           description: 'Audio Files',
@@ -96,6 +98,7 @@ class Header extends Component {
           tutorialVideoLink:
             'https://guardian.umusic.com/static/videos/The-Guardian-Training-Video-Audio-Files-Part-1-Step-3.mp4',
           modalHeader: 'Audio Files',
+          isNav: true,
         },
         {
           description: 'Track Info',
@@ -108,6 +111,7 @@ class Header extends Component {
           tutorialVideoLink:
             'https://guardian.umusic.com/static/videos/The-Guardian-Training-Video-Track-Information-Step-4.mp4',
           modalHeader: 'Track Information',
+          isNav: true,
         },
         {
           description: 'Rights',
@@ -120,6 +124,7 @@ class Header extends Component {
           tutorialVideoLink:
             'https://guardian.umusic.com/static/videos/The-Guardian-Training-Video-Territorial-Rights-Step-5.mp4',
           modalHeader: 'Territorial Rights',
+          isNav: true,
         },
         {
           description: 'Blocking',
@@ -132,6 +137,7 @@ class Header extends Component {
           tutorialVideoLink:
             'https://guardian.umusic.com/static/videos/The-Guardian-Training-Video-Project-Blocking-Policies-Step-6.mp4',
           modalHeader: 'Post-Release UGC Blocking',
+          isNav: true,
         },
         {
           description: 'Review',
@@ -144,6 +150,7 @@ class Header extends Component {
           tutorialVideoLink:
             'https://guardian.umusic.com/static/videos/The-Guardian-Training-Video-Review-(Review-&-Submit)-Step-7.mp4',
           modalHeader: 'Review and Submit',
+          isNav: true,
         },
         {
           description: 'Find a Project',
@@ -151,6 +158,7 @@ class Header extends Component {
           tutorialVideoLink:
             'https://guardian.umusic.com/static/videos/The-Guardian-Training-Video-Find-A-Project.mp4',
           modalHeader: 'Find a Project',
+          isNav: false,
         },
       ],
       showVideoTutorialModal: false,
@@ -201,9 +209,12 @@ class Header extends Component {
   };
 
   getActiveNav = () => {
+    if (this.props.pagePath === '/findProject') {
+      return this.getNavIndex(this.state.navSteps);
+    }
     const isPreRelease = isPreReleaseDate(this.props.projectData);
     const navToUse = isPreRelease
-      ? this.state.navSteps
+      ? this.state.navSteps.filter(step => step.isNav)
       : this.state.navSteps.filter(step => step.preRelease);
     const activeNav = this.getNavIndex(navToUse);
     return activeNav;
@@ -214,7 +225,7 @@ class Header extends Component {
     //If prerelease date is on, We need 7 steps. Otherwise we need only 5 steps.
     //This can be differentiate based on the flag preRelease
     const navToUse = isPreRelease
-      ? this.state.navSteps
+      ? this.state.navSteps.filter(step => step.isNav)
       : this.state.navSteps.filter(step => step.preRelease);
     const activeNav = this.getActiveNav();
     return (
