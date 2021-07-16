@@ -7,12 +7,14 @@ import {
 
 export const initialState = {
   notifications: [],
+  count: 0,
 };
 
 export default createReducer(initialState, {
   [NOTIFICATION_REQUEST]: (state, action) => {},
   [NOTIFICATION_SUCCESS]: (state, action) => {
     state.notifications = action.data;
+    state.count = action.count;
   },
   [NOTIFICATION_FAILURE]: (state, action) => {},
 });

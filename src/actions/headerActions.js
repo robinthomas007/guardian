@@ -5,6 +5,7 @@ export const notificationSuccess = data => {
   return {
     type: actions.NOTIFICATION_SUCCESS,
     data,
+    count: data.length,
   };
 };
 

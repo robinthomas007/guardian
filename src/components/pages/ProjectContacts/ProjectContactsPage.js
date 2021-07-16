@@ -276,18 +276,31 @@ class ProjectContactsPage extends Component {
   };
 
   onPasteEmail = e => {
-    const { formInputs } = this.state;
+    const { formInputs, emails } = this.state;
     let email = e.clipboardData.getData('Text');
-    email = email.trim();
-    email = email.split(/(?:,| |;)+/);
+    const copiedEmail = this.extract(['<', '>'])(email);
+    if (copiedEmail && copiedEmail.length > 0) {
+      email = copiedEmail;
+    } else {
+      email = email.trim();
+      email = email.split(/(?:,| |;)+/);
+    }
     formInputs.projectAdditionalContacts = '';
     if (email) {
       this.setState({
-        emails: email,
+        emails: [...emails, ...email],
         formInputs: formInputs,
       });
     }
     e.preventDefault();
+  };
+
+  extract = ([beg, end]) => {
+    const matcher = new RegExp(`${beg}(.*?)${end}`, 'gm');
+    const normalise = str => str.slice(beg.length, end.length * -1);
+    return function(str) {
+      if (str.match(matcher)) return str.match(matcher).map(normalise);
+    };
   };
 
   componentDidUpdate = () => {
@@ -426,7 +439,7 @@ class ProjectContactsPage extends Component {
                     }
                     tabIndex="4+"
                     as="textarea"
-                    rows="1"
+                    rows="4"
                     value={this.state.formInputs.projectAdditionalContacts}
                     onChange={this.handleChange}
                     onKeyUp={this.handleKeyUp}

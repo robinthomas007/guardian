@@ -1,6 +1,6 @@
 import * as actions from 'types/inbox.types';
 import Api from 'lib/api';
-
+import { notificationSuccess } from './../actions/headerActions';
 export const fetchSuccess = result => {
   return {
     type: actions.GET_INBOX_SUCCESS,
@@ -30,6 +30,7 @@ export const fetchInboxNotifications = data => {
       .then(response => {
         if (response) {
           dispatch(fetchSuccess(response));
+          dispatch(notificationSuccess(response.UnreadNotifications));
         } else {
           dispatch(fetchFailure(response.message));
         }
@@ -70,6 +71,7 @@ export const readNotification = obj => {
         if (response) {
           dispatch(fetchRequest(false));
           dispatch(markAsRead(obj.NotificationId));
+          dispatch(notificationSuccess(response.UnreadNotifications));
         }
       })
       .catch(error => {
@@ -79,7 +81,3 @@ export const readNotification = obj => {
       });
   };
 };
-
-export const clearReadCount = () => ({
-  type: actions.CLEAR_READ_COUNT,
-});

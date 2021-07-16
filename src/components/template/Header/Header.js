@@ -386,7 +386,6 @@ class Header extends Component {
     this.props.getAllNotifications({});
 
     interval = setInterval(() => {
-      this.props.clearReadCount();
       this.props.getAllNotifications({});
     }, 60000);
     document.addEventListener('mousedown', this.handleClickOutside);
@@ -500,9 +499,9 @@ class Header extends Component {
       : this.state.navSteps.filter(step => step.preRelease);
     const activeNav = this.getActiveNav();
     const { notifify } = this.state;
-    const { notifications, projectData, readCount } = this.props;
+    const { projectData, count } = this.props;
     const { showCommentBox } = this.state;
-    let count = notifications && notifications.length > 0 ? notifications.length - readCount : 0;
+
     if (projectData.Project) {
       return (
         <React.Fragment>
@@ -648,12 +647,11 @@ class Header extends Component {
 
 const mapDispatchToProps = dispatch => ({
   getAllNotifications: val => dispatch(headerActions.getNotifications(val)),
-  clearReadCount: () => dispatch(projectInboxAction.clearReadCount()),
 });
 
 const mapStateToProps = state => ({
   notifications: state.headerReducer.notifications,
-  readCount: state.ProjectInboxReducer.readCount,
+  count: state.headerReducer.count,
 });
 
 export default withRouter(

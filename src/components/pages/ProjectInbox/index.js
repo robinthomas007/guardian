@@ -48,7 +48,6 @@ class ProjectInbox extends Component {
 
   componentWillUnmount() {
     this.unlisten();
-    this.props.clearReadCount();
   }
 
   formSubmit(values) {
@@ -206,7 +205,6 @@ const mapDispatchToProps = dispatch => ({
   changePageNumber: pageNo => dispatch(projectInboxAction.changePageNumber(pageNo)),
   changeItemsPerPage: limit => dispatch(projectInboxAction.changeItemsPerPage(limit)),
   readNotification: id => dispatch(projectInboxAction.readNotification(id)),
-  clearReadCount: () => dispatch(projectInboxAction.clearReadCount()),
 });
 
 const mapStateToProps = state => ({

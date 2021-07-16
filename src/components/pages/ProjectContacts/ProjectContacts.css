@@ -27,7 +27,7 @@ button.btn.btn-sm.btn-secondary.email-bubble.invalid-email {
 
 .bubule-email-field {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   flex-wrap: wrap;
   border: 1px solid #ccc;
   padding: 0px 10px;
