@@ -494,14 +494,14 @@ class Header extends Component {
 
   render() {
     const isPreRelease = isPreReleaseDate(this.props.projectData);
-    const navToUse = isPreRelease
-      ? this.state.navSteps
-      : this.state.navSteps.filter(step => step.preRelease);
     const activeNav = this.getActiveNav();
+    let navToUse =
+      isPreRelease || activeNav === 7
+        ? this.state.navSteps
+        : this.state.navSteps.filter(step => step.preRelease);
     const { notifify } = this.state;
     const { projectData, count } = this.props;
     const { showCommentBox } = this.state;
-
     if (projectData.Project) {
       return (
         <React.Fragment>
