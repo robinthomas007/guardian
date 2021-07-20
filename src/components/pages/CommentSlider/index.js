@@ -12,6 +12,7 @@ import _ from 'lodash';
 import { withRouter } from 'react-router-dom';
 import LoadingImg from '../../ui/LoadingImgSm';
 import { steps } from '../../common/commonHelper';
+import moment from 'moment';
 
 const CommentSlider = props => {
   const { handleClose, handleSubmit } = props;
@@ -47,7 +48,11 @@ const CommentSlider = props => {
           return (
             <li key={key}>
               <strong>
-                {obj.CreatedDateTime} - {obj.AssignedByName} - {obj.Step}
+                {moment
+                  .utc(obj.CreatedDateTime)
+                  .local()
+                  .format('MM/DD/YYYY hh:mm A')}{' '}
+                - {obj.AssignedByName} - {obj.Step}
               </strong>
               <br /> {obj.Text}
             </li>

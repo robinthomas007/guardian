@@ -3,7 +3,7 @@ import { Table } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import LoadingImg from '../../../ui/LoadingImg';
 import CommentBox from '../message';
-import { convertToLocaleTime } from '../../../Utils';
+import moment from 'moment';
 
 class ProjectInboxDataTable extends Component {
   constructor(props) {
@@ -101,7 +101,7 @@ class ProjectInboxDataTable extends Component {
       data.Notifications &&
       data.Notifications.map((project, i) => {
         return (
-          <React.Fragment>
+          <React.Fragment key={i}>
             <tr
               className={`${!project.IsRead ? 'unread' : ''} d-flex w-100 inbox-table`}
               key={i}
@@ -118,12 +118,17 @@ class ProjectInboxDataTable extends Component {
                   <i className={'material-icons'}>message</i>
                 </button>
               </td>
-              <td className="col-1 text-center">{convertToLocaleTime(project.DateCreated)}</td>
+              <td className="col-1">
+                {moment
+                  .utc(project.CreatedDateTime)
+                  .local()
+                  .format('MM/DD/YYYY')}
+              </td>
               <td className="col-2">{project.AssignedBy} </td>
               <td className="col-2">{project.ProjectTitle}</td>
-              <td className="col-1 status text-nowrap">{project.ProjectArtist}</td>
-              <td className="status text-center"> {project.ProjectLabel}</td>
-              <td className="status text-center">{project.Step}</td>
+              <td className="col-2 status text-nowrap">{project.ProjectArtist}</td>
+              <td className="status"> {project.ProjectLabel}</td>
+              <td className="status">{project.Step}</td>
               <td className="status text-center">{project.Text}</td>
             </tr>
             {showCommentBox && i === index && (

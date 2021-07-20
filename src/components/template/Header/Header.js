@@ -538,7 +538,7 @@ class Header extends Component {
                     {this.props.userData.IsAdmin ? (
                       <li>
                         <NavLink className="steps" to={{ pathname: '/userAdmin' }}>
-                          <i class="material-icons">supervised_user_circle</i> Admin
+                          <i className="material-icons">supervised_user_circle</i> Admin
                         </NavLink>
                       </li>
                     ) : null}
@@ -548,17 +548,17 @@ class Header extends Component {
                         to={{ pathname: '/releaseInformation' }}
                         onClick={() => this.props.clearProject()}
                       >
-                        <i class="material-icons">library_music</i> New Project
+                        <i className="material-icons">library_music</i> New Project
                       </NavLink>
                     </li>
                     <li>
                       <NavLink className="steps" to={{ pathname: '/findProject' }}>
-                        <i class="material-icons">search</i> Project Search
+                        <i className="material-icons">search</i> Project Search
                       </NavLink>
                     </li>
                     <li>
                       <NavLink className="steps" to={{ pathname: '/inbox' }}>
-                        <i class="material-icons">email</i> Inbox
+                        <i className="material-icons">email</i> Inbox
                       </NavLink>
                     </li>
                     {/*<li>

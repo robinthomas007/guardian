@@ -44,11 +44,14 @@ const Message = props => {
       <div className="comments-list">
         {_.map(comments, (obj, key) => {
           return (
-            <div className="each-message">
+            <div key={key} className="each-message">
               <div className="message-name">
                 <strong>
-                  {moment(obj.CreatedDateTime).format('DD/MM/YYYY hh:mm A')} - {obj.AssignedByName}{' '}
-                  - {obj.Step}
+                  {moment
+                    .utc(obj.CreatedDateTime)
+                    .local()
+                    .format('MM/DD/YYYY hh:mm A')}{' '}
+                  - {obj.AssignedByName} - {obj.Step}
                 </strong>
               </div>
               <div className="message-content">{obj.Text}</div>
