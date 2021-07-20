@@ -64,6 +64,7 @@ class InputField extends Component {
             autoFocus={autoFocus}
             maxLength={maxLength}
           />
+          {touched && error && <p className="error_message">{error}</p>}
         </div>
       </div>
     );

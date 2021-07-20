@@ -12,6 +12,21 @@ import LoadingImg from '../../ui/LoadingImgSm';
 import * as commentAction from 'actions/commentAction';
 import moment from 'moment';
 
+const validate = values => {
+  const errors = {};
+  if (!values.AssignedToEmail) {
+    errors.AssignedToEmail = ' Assign To is required.';
+  }
+  if (!values.Step) {
+    errors.Step = 'Step is required';
+  }
+
+  if (!values.Text) {
+    errors.Text = 'Comment is required';
+  }
+  return errors;
+};
+
 const Message = props => {
   const { handleClose, handleSubmit } = props;
   const comments = useSelector(state => state.commentReducer.comments);
@@ -97,6 +112,7 @@ Message.propTypes = {
 
 const MessageComp = reduxForm({
   form: 'MessageForm',
+  // validate
 })(Message);
 
 const mapDispatchToProps = dispatch => ({

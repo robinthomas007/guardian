@@ -14,6 +14,21 @@ import LoadingImg from '../../ui/LoadingImgSm';
 import { steps } from '../../common/commonHelper';
 import moment from 'moment';
 
+const validate = values => {
+  const errors = {};
+  if (!values.AssignedToEmail) {
+    errors.AssignedToEmail = ' Assign To is required.';
+  }
+  if (!values.Step) {
+    errors.Step = 'Step is required';
+  }
+
+  if (!values.Text) {
+    errors.Text = 'Comment is required';
+  }
+  return errors;
+};
+
 const CommentSlider = props => {
   const { handleClose, handleSubmit } = props;
   const comments = useSelector(state => state.commentReducer.comments);
@@ -104,6 +119,7 @@ CommentSlider.propTypes = {
 
 const CommentSliderComp = reduxForm({
   form: 'CommentSliderForm',
+  // validate
 })(CommentSlider);
 
 const mapDispatchToProps = dispatch => ({

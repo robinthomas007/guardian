@@ -13,7 +13,7 @@ import {
   isDuplicateTrackTitle,
   showNotyError,
   isPreReleaseDate,
-  showNotyWarning,
+  // showNotyWarning,
 } from '../../Utils';
 import { showNotyInfo, showNotyAutoError } from 'components/Utils';
 
@@ -216,47 +216,59 @@ class TrackInformationPage extends Component {
     return isValidForm;
   }
 
+  saveTrackApi(saveAndContinue) {
+    this.setState({ showloader: true });
+
+    const user = JSON.parse(sessionStorage.getItem('user'));
+    const fetchHeaders = new Headers({
+      'Content-Type': 'application/json',
+      Authorization: sessionStorage.getItem('accessToken'),
+    });
+    const fetchBody = JSON.stringify({
+      User: {
+        email: user.email,
+      },
+      projectID: this.props.match.params.projectID,
+      isAudioPage: false,
+      Discs: this.state.project.Discs,
+    });
+
+    fetch(window.env.api.url + '/project/track', {
+      method: 'POST',
+      headers: fetchHeaders,
+      body: fetchBody,
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(responseJSON => {
+        this.setState({ showloader: false });
+        this.showNotification(saveAndContinue);
+        this.props.setHeaderProjectData(this.state.project);
+      })
+      .catch(error => {
+        this.setState({ showloader: false });
+      });
+  }
+
   handleSubmit(e) {
     const saveAndContinue = e.target.classList.contains('saveAndContinueButton') ? true : false;
-
     if (isFormValid() && this.isValidForm()) {
       if (isDuplicateTrackTitle()) {
-        showNotyWarning(
-          "You're attempting to enter a duplicate track title / isrc. Click to close.",
-        );
+        new Noty({
+          type: 'warning',
+          text: "You're attempting to enter a duplicate track title / isrc. Click to close.",
+          theme: 'bootstrap-v4',
+          layout: 'top',
+          onClick: 'Noty.close();',
+        })
+          .on('afterClose', () => {
+            this.saveTrackApi(saveAndContinue);
+          })
+          .show();
+      } else {
+        this.saveTrackApi(saveAndContinue);
       }
-      this.setState({ showloader: true });
-
-      const user = JSON.parse(sessionStorage.getItem('user'));
-      const fetchHeaders = new Headers({
-        'Content-Type': 'application/json',
-        Authorization: sessionStorage.getItem('accessToken'),
-      });
-      const fetchBody = JSON.stringify({
-        User: {
-          email: user.email,
-        },
-        projectID: this.props.match.params.projectID,
-        isAudioPage: false,
-        Discs: this.state.project.Discs,
-      });
-
-      fetch(window.env.api.url + '/project/track', {
-        method: 'POST',
-        headers: fetchHeaders,
-        body: fetchBody,
-      })
-        .then(response => {
-          return response.json();
-        })
-        .then(responseJSON => {
-          this.setState({ showloader: false });
-          this.showNotification(saveAndContinue);
-          this.props.setHeaderProjectData(this.state.project);
-        })
-        .catch(error => {
-          this.setState({ showloader: false });
-        });
     }
   }
 

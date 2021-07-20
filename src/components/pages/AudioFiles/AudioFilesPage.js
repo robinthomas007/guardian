@@ -351,9 +351,42 @@ class AudioFilesPage extends Component {
     return isValidForm;
   }
 
-  handleDataSubmit(e) {
-    const user = JSON.parse(sessionStorage.getItem('user'));
+  saveAudioApi(saveAndContinue) {
     const projectID = this.state.projectID ? this.state.projectID : '';
+
+    this.setState({ showLoader: true });
+
+    const fetchHeaders = new Headers({
+      'Content-Type': 'application/json',
+      Authorization: sessionStorage.getItem('accessToken'),
+    });
+
+    const fetchBody = JSON.stringify({
+      projectID: projectID,
+      isAudioPage: true,
+      Discs: this.state.discs,
+    });
+
+    fetch(window.env.api.url + '/project/track', {
+      method: 'POST',
+      headers: fetchHeaders,
+      body: fetchBody,
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(responseJSON => {
+        this.showNotification(saveAndContinue);
+        this.setState({ showLoader: false });
+        this.props.setHeaderProjectData(this.state.project);
+      })
+      .catch(error => {
+        this.setState({ showLoader: false });
+        console.error(error);
+      });
+  }
+
+  handleDataSubmit(e) {
     const saveAndContinue = e.target.classList.contains('saveAndContinueButton') ? true : false;
 
     this.setTrackSequence();
@@ -362,41 +395,20 @@ class AudioFilesPage extends Component {
 
     if (formIsValid) {
       if (isDuplicateTrackTitle()) {
-        showNotyWarning(
-          "You're attempting to enter a duplicate track title / isrc. Click to close.",
-        );
+        new Noty({
+          type: 'warning',
+          text: "You're attempting to enter a duplicate track title / isrc. Click to close.",
+          theme: 'bootstrap-v4',
+          layout: 'top',
+          onClick: 'Noty.close();',
+        })
+          .on('afterClose', () => {
+            this.saveAudioApi(saveAndContinue);
+          })
+          .show();
+      } else {
+        this.saveAudioApi(saveAndContinue);
       }
-      this.setState({ showLoader: true });
-
-      const fetchHeaders = new Headers({
-        'Content-Type': 'application/json',
-        Authorization: sessionStorage.getItem('accessToken'),
-      });
-
-      const fetchBody = JSON.stringify({
-        projectID: projectID,
-        isAudioPage: true,
-        Discs: this.state.discs,
-      });
-
-      fetch(window.env.api.url + '/project/track', {
-        method: 'POST',
-        headers: fetchHeaders,
-        body: fetchBody,
-      })
-        .then(response => {
-          return response.json();
-        })
-        .then(responseJSON => {
-          this.showNotification(saveAndContinue);
-          this.setState({ showLoader: false });
-          this.props.setHeaderProjectData(this.state.project);
-        })
-        .catch(error => {
-          this.setState({ showLoader: false });
-          console.error(error);
-        });
-    } else {
     }
   }
 

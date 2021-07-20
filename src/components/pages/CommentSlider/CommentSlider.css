@@ -67,3 +67,8 @@
   width: 92%;
   bottom: 10px;
 }
+
+.error_message {
+  color: #dd3644;
+  margin: 0px;
+}

@@ -214,8 +214,8 @@ class ProjectContactsPage extends Component {
     return re.test(email);
   }
 
-  handleKeyUp = evt => {
-    const { formInputs, emails } = this.state;
+  handleKeyDown = evt => {
+    const { emails } = this.state;
     if (evt.key === 'Backspace') {
       let clear = document.querySelector('#projectAdditionalContacts').value;
       if (clear === '') {
@@ -225,6 +225,10 @@ class ProjectContactsPage extends Component {
         });
       }
     }
+  };
+
+  handleKeyUp = evt => {
+    const { formInputs, emails } = this.state;
     if (['Enter', ',', ' ', ';'].includes(evt.key)) {
       let email = document.querySelector('#projectAdditionalContacts').value;
       email = email.trim();
@@ -422,6 +426,7 @@ class ProjectContactsPage extends Component {
                     value={this.state.formInputs.projectAdditionalContacts}
                     onChange={this.handleChange}
                     onKeyUp={this.handleKeyUp}
+                    onKeyDown={this.handleKeyDown}
                     onPaste={this.onPasteEmail}
                   />
                   <div className="invalid-tooltip">Incorrectly formatted email addresse(s)</div>

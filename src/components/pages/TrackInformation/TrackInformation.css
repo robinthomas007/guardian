@@ -98,3 +98,10 @@ table.table.track-information button.btn.btn-secondary.action {
 .react-datepicker {
   display: flex;
 }
+
+.noty_theme__bootstrap-v4.noty_type__warning {
+  background-color: #01579b !important;
+  color: #fff;
+  border-color: #faebcc;
+  text-align: center;
+}
