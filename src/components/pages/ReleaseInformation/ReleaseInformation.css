@@ -94,13 +94,6 @@ button.btn.btn-secondary.action.remove-art {
   border: solid 1px #ced4da;
 }
 
-#duplicateTitle .noty_body {
-  text-align: center;
-  font-weight: 700;
-  background-color: #7f1b2e;
-  color: #fff;
-}
-
 .release-date {
   position: relative;
 }
