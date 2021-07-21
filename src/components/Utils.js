@@ -1,4 +1,3 @@
-import Noty from 'noty';
 import React from 'react';
 import moment from 'moment';
 import { toast } from 'react-toastify';
@@ -160,50 +159,18 @@ export function isDuplicateTrackTitle() {
 }
 
 export function showNotyError(message, afterClose) {
-  // new Noty({
-  //   type: 'error',
-  //   text: message,
-  //   theme: 'bootstrap-v4',
-  //   layout: 'top',
-  //   timeout: false,
-  //   onClick: 'Noty.close();',
-  // }).show();
   toast.error(message, { onClose: afterClose });
 }
 
 export function showNotyAutoError(message, afterClose) {
-  // new Noty({
-  //   type: 'error',
-  //   text: message,
-  //   theme: 'bootstrap-v4',
-  //   layout: 'top',
-  //   timeout: false,
-  //   onClick: 'Noty.close();',
-  // }).show();
   toast.error(message, { autoClose: 3000, onClose: afterClose });
 }
 
 export function showNotyWarning(message, afterClose) {
-  // new Noty({
-  //   type: 'warning',
-  //   text: message,
-  //   theme: 'bootstrap-v4',
-  //   layout: 'top',
-  //   timeout: '3000',
-  //   onClick: 'Noty.close();',
-  // }).show();
   toast.warn(message, { autoClose: 3000, onClose: afterClose });
 }
 
 export function showNotyInfo(message, afterClose) {
-  // new Noty({
-  //   type: 'warning',
-  //   text: message,
-  //   theme: 'bootstrap-v4',
-  //   layout: 'top',
-  //   timeout: '3000',
-  //   onClick: 'Noty.close();',
-  // }).show();
   toast.info(message, { autoClose: 3000, onClose: afterClose });
 }
 

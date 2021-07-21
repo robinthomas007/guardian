@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import { Table, Grid, Button, Form, Tabs, Tab } from 'react-bootstrap';
 import LoadingImg from '../../ui/LoadingImg';
 import PageHeader from '../PageHeader/PageHeader';
-import Noty from 'noty';
 import AudioFilesTabsContainer from '../ReviewAndSubmit/pageComponents/AudioFileTabsContainer';
 import TerritorialRightsTable from '../ReviewAndSubmit/pageComponents/TerritorialRightsTable';
 import BlockingPoliciesDataTable from '../ReviewAndSubmit/pageComponents/BlockingPoliciesDataTable';
@@ -95,18 +93,6 @@ class ReviewAndSubmitPage extends Component {
         showNotyInfo('Your project has been successfully saved and submitted for review.', () => {
           return this.props.history.push({ pathname: '/findProject/' });
         });
-        // new Noty({
-        //   type: 'success',
-        //   id: 'tracksSaved',
-        //   text: 'Your project has been successfully saved and submitted for review.',
-        //   theme: 'bootstrap-v4',
-        //   layout: 'top',
-        //   timeout: '5000',
-        // })
-        //   .on('afterClose', () => {
-        //     return this.props.history.push({ pathname: '/findProject/' });
-        //   })
-        //   .show();
       })
       .catch(error => {
         console.error(error);

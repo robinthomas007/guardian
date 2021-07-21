@@ -4,16 +4,12 @@ import TabbedTracks from '../TrackInformation/pageComponents/TabbedTracks';
 import ReplaceAudioModal from '../../modals/ReplaceAudioModal';
 import LoadingImg from '../../ui/LoadingImg';
 import './TrackInformation.css';
-import Noty from 'noty';
 import { withRouter } from 'react-router';
-import AudioFilesTabbedTracks from '../AudioFiles/pageComponents/audioFilesTabbedTracks';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 import { startUpload, setUploadProgress, endUpload } from 'redux/uploadProgressAlert/actions';
 import {
   isFormValid,
-  formatDateToYYYYMMDD,
-  convertToLocaleTime,
   isDuplicateTrackTitle,
   showNotyError,
   isPreReleaseDate,
@@ -153,43 +149,9 @@ class TrackInformationPage extends Component {
         }
       },
     );
-    // new Noty({
-    //   type: 'success',
-    //   id: 'tracksSaved',
-    //   text:
-    //     'Your track information has been successfully saved and submitted for intial protection.',
-    //   theme: 'bootstrap-v4',
-    //   layout: 'top',
-    //   timeout: '3000',
-    // })
-    //   .on('afterClose', () => {
-    //     if (saveAndContinue) {
-    //       if (
-    //         !this.state.project.Project.projectReleaseDateTBD &&
-    //         !isPreReleaseDate(this.state.project)
-    //       ) {
-    //         this.props.history.push({
-    //           pathname: '/blockingPolicies/' + this.props.match.params.projectID,
-    //         });
-    //       } else {
-    //         this.props.history.push({
-    //           pathname: '/territorialRights/' + this.props.match.params.projectID,
-    //         });
-    //       }
-    //     }
-    //   })
-    //   .show();
   }
 
   showNotSavedNotification(e) {
-    // new Noty({
-    //   type: 'error',
-    //   id: 'projectSaved',
-    //   text: 'Your tracks were NOT successfully saved. Please try again.',
-    //   theme: 'bootstrap-v4',
-    //   layout: 'top',
-    //   timeout: '3000',
-    // }).show();
     showNotyAutoError('Your tracks were NOT successfully saved. Please try again.');
   }
 

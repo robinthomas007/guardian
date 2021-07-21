@@ -5,13 +5,7 @@ import BootStrapDropDownInput from '../ProjectContacts/pageComponents/BootStrapD
 import { withRouter } from 'react-router';
 import './ProjectContacts.css';
 import LoadingImg from '../../ui/LoadingImg';
-import Noty from 'noty';
-import {
-  isFormValid,
-  formatDateToYYYYMMDD,
-  convertToLocaleTime,
-  isPreReleaseDate,
-} from '../../Utils.js';
+import { isFormValid, isPreReleaseDate } from '../../Utils.js';
 import _ from 'lodash';
 import { showNotyInfo, showNotyAutoError } from 'components/Utils';
 
@@ -104,42 +98,9 @@ class ProjectContactsPage extends Component {
         }
       }
     });
-    // new Noty({
-    //   type: 'success',
-    //   id: 'projectSaved',
-    //   text: 'Your project has been successfully saved',
-    //   theme: 'bootstrap-v4',
-    //   layout: 'top',
-    //   timeout: '3000',
-    // })
-    //   .on('afterClose', () => {
-    //     if (saveAndContinue) {
-    //       if (
-    //         !this.state.project.Project.projectReleaseDateTBD &&
-    //         !isPreReleaseDate(this.state.project)
-    //       ) {
-    //         this.props.history.push({
-    //           pathname: '/trackInformation/' + projectID,
-    //         });
-    //       } else {
-    //         this.props.history.push({
-    //           pathname: '/audioFiles/' + projectID,
-    //         });
-    //       }
-    //     }
-    //   })
-    //   .show();
   }
 
   showNotSavedNotification(e) {
-    // new Noty({
-    //   type: 'error',
-    //   id: 'projectSaved',
-    //   text: 'Your project has NOT been successfully saved',
-    //   theme: 'bootstrap-v4',
-    //   layout: 'top',
-    //   timeout: '3000',
-    // }).show();
     showNotyAutoError('Your project has NOT been successfully saved');
   }
 

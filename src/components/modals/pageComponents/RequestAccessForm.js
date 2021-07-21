@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { Form, Button, Spinner } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 // import LabelsDropDown from 'components/modals/pageComponents/LabelsDropDown';
 import ReleasingLabelsInput from '../../../components/pages/ReleaseInformation/pageComponents/ReleasingLabelsInput.js';
 import { isFormValid } from '../../../components/Utils';
-import Noty from 'noty';
 import { showNotyInfo, showNotyError } from 'components/Utils';
 
 class RequestAccessForm extends Component {
@@ -63,14 +62,6 @@ class RequestAccessForm extends Component {
   };
 
   handleAccessSuccess = () => {
-    // new Noty({
-    //   type: 'success',
-    //   id: 'requestAccessSent',
-    //   text: '',
-    //   theme: 'bootstrap-v4',
-    //   layout: 'top',
-    //   timeout: '3000',
-    // }).show();
     showNotyInfo('Your request for access to the Guardian has been successfully sent.');
   };
 
@@ -83,22 +74,6 @@ class RequestAccessForm extends Component {
         this.setState({ submitDisabled: false });
       },
     );
-    // new Noty({
-    //   type: 'error',
-    //   id: 'requestAccessError',
-    //   text:
-    //     'This &nbsp;' +
-    //     message +
-    //     '&nbsp; We cannot accept your request at this time. &nbsp; Click to close.',
-    //   theme: 'bootstrap-v4',
-    //   layout: 'top',
-    //   timeout: false,
-    //   onClick: 'Noty.close();',
-    // })
-    // .on('afterClose', () => {
-    //   this.setState({ submitDisabled: false });
-    // })
-    //   .show();
   };
 
   sumbitRequestAccess = () => {

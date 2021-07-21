@@ -3,7 +3,6 @@ import { convertToLocaleTime } from '../../../Utils';
 import { Table } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import AdminStatusDropdown from '../pageComponents/AdminStatusDropdown';
-import Noty from 'noty';
 import LoadingImg from '../../../ui/LoadingImg';
 import { showNotyInfo, showNotyAutoError } from 'components/Utils';
 
@@ -139,27 +138,11 @@ class FindProjectDataTable extends Component {
       })
       .then(responseJSON => {
         this.setState({ showloader: false });
-        // new Noty({
-        //   type: 'success',
-        //   id: 'projectReminderSent',
-        //   text: 'Your project reminder has been successfully sent.',
-        //   theme: 'bootstrap-v4',
-        //   layout: 'top',
-        //   timeout: '3000',
-        // }).show();
         showNotyInfo('Your project reminder has been successfully sent.');
       })
       .catch(error => {
         console.error(error);
         this.setState({ showloader: false });
-        // new Noty({
-        //   type: 'error',
-        //   id: 'projectReminderNotSent',
-        //   text: 'Your project reminder encountered an error, please try again.',
-        //   theme: 'bootstrap-v4',
-        //   layout: 'top',
-        //   timeout: '3000',
-        // }).show();
         showNotyAutoError('Your project reminder encountered an error, please try again.');
       });
   };

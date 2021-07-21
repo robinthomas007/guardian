@@ -3,7 +3,6 @@ import HaveAudioModal from '../../modals/HaveAudioModal';
 import ReplaceAudioModal from '../../modals/ReplaceAudioModal';
 import { withRouter } from 'react-router';
 import './AudioFiles.css';
-import Noty from 'noty';
 import LoadingImg from '../../ui/LoadingImg';
 import { reduxForm } from 'redux-form';
 import AudioFilesTabbedTracks from '../AudioFiles/pageComponents/audioFilesTabbedTracks';
@@ -132,23 +131,6 @@ class AudioFilesPage extends Component {
         });
       }
     });
-
-    // new Noty({
-    //   type: 'success',
-    //   id: 'tracksSaved',
-    //   text: ,
-    //   theme: 'bootstrap-v4',
-    //   layout: 'top',
-    //   timeout: '3000',
-    // })
-    //   .on('afterClose', () => {
-    //     if (saveAndContinue) {
-    //       this.props.history.push({
-    //         pathname: '/trackInformation/' + projectID,
-    //       });
-    //     }
-    //   })
-    //   .show();
   }
 
   isValidAudioType(fileName) {

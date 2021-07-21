@@ -3,11 +3,9 @@ import { Button, Form } from 'react-bootstrap';
 import ToolTip from '../../ui/Tooltip';
 import './ReleaseInformation.css';
 import { withRouter } from 'react-router-dom';
-import Noty from 'noty';
 import LoadingImg from '../../ui/LoadingImg';
 import { resetDatePicker, isFormValid, CustomInput } from '../../Utils.js';
 import moment from 'moment';
-
 import ReleasingLabelsInput from '../ReleaseInformation/pageComponents/ReleasingLabelsInput';
 import ProjectTypesInput from '../ReleaseInformation/pageComponents/ProjectTypesInput';
 import DatePicker from 'react-datepicker';
@@ -199,20 +197,6 @@ class ReleaseinformationPage extends Component {
               this.props.history.push('/projectContacts');
             } else {
               this.setState({ showloader: false });
-              // new Noty({
-              //   type: 'error',
-              //   id: 'duplicateTitle',
-              //   text:
-              //     'The project title ' +
-              //     responseJSON.projectTitle +
-              //     ' by ' +
-              //     responseJSON.projectArtist +
-              //     ' already exists. Please enter a new title. Click to close.',
-              //   theme: 'bootstrap-v4',
-              //   layout: 'top',
-              //   timeout: false,
-              //   onClick: 'Noty.close();',
-              // }).show();
               showNotyError(
                 'The project title ' +
                   responseJSON.projectTitle +

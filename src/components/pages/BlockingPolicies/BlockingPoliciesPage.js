@@ -6,13 +6,7 @@ import TracksWithoutRights from '../TerritorialRights/pageComponents/TracksWitho
 import BlockingPolicySets from '../BlockingPolicies/pageComponents/blockingPolicySets';
 import LoadingImg from '../../ui/LoadingImg';
 import { withRouter } from 'react-router-dom';
-import Noty from 'noty';
-import {
-  formatDateToYYYYMMDD,
-  formatDateToDDMMYYYY,
-  convertToLocaleTime,
-  resetDatePickerByObj,
-} from '../../Utils';
+import { formatDateToYYYYMMDD, convertToLocaleTime, resetDatePickerByObj } from '../../Utils';
 import { showNotyInfo, showNotyAutoError } from 'components/Utils';
 
 class BlockingPoliciesPage extends Component {
@@ -375,33 +369,9 @@ class BlockingPoliciesPage extends Component {
         });
       }
     });
-    // new Noty({
-    //   type: 'success',
-    //   id: 'blockingSaved',
-    //   text: 'Your blocking policies have been successfully saved',
-    //   theme: 'bootstrap-v4',
-    //   layout: 'top',
-    //   timeout: '3000',
-    // })
-    //   .on('afterClose', () => {
-    //     if (saveAndContinue) {
-    //       this.props.history.push({
-    //         pathname: '/reviewSubmit/' + projectID,
-    //       });
-    //     }
-    //   })
-    //   .show();
   }
 
   showNotSavedNotification(e) {
-    // new Noty({
-    //   type: 'error',
-    //   id: 'blockingnotSaved',
-    //   text: 'Your blocking policies have NOT been successfully saved',
-    //   theme: 'bootstrap-v4',
-    //   layout: 'top',
-    //   timeout: '3000',
-    // }).show();
     showNotyAutoError('Your blocking policies have NOT been successfully saved.');
   }
 
