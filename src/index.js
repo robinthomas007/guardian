@@ -9,6 +9,8 @@ import 'css/noty.css';
 import 'css/bootstrap-v4.css';
 import 'css/header.css';
 import 'css/okta-overide.css';
+import 'react-toastify/dist/ReactToastify.css';
+import 'css/react-toastify-override.css';
 
 import App from './App';
 import * as serviceWorker from './serviceWorker';
