@@ -9,6 +9,7 @@ import Noty from 'noty';
 import './TerritorialRights.css';
 import { withRouter } from 'react-router';
 import { Alert } from 'react-bootstrap';
+import { showNotyInfo, showNotyAutoError } from 'components/Utils';
 
 class TerritorialRightsPage extends Component {
   constructor(props) {
@@ -171,53 +172,71 @@ class TerritorialRightsPage extends Component {
   };
 
   showNotification(saveAndContinue, projectID) {
-    new Noty({
-      type: 'success',
-      id: 'rightsSaved',
-      text: 'Your rights policies have been successfully saved',
-      theme: 'bootstrap-v4',
-      layout: 'top',
-      timeout: '3000',
-    })
-      .on('afterClose', () => {
-        if (saveAndContinue) {
-          this.props.history.push({
-            pathname: '/blockingPolicies/' + projectID,
-          });
-        }
-      })
-      .show();
+    showNotyInfo('Your rights policies have been successfully saved', () => {
+      if (saveAndContinue) {
+        this.props.history.push({
+          pathname: '/blockingPolicies/' + projectID,
+        });
+      }
+    });
+    // new Noty({
+    //   type: 'success',
+    //   id: 'rightsSaved',
+    //   text: 'Your rights policies have been successfully saved',
+    //   theme: 'bootstrap-v4',
+    //   layout: 'top',
+    //   timeout: '3000',
+    // })
+    //   .on('afterClose', () => {
+    //     if (saveAndContinue) {
+    //       this.props.history.push({
+    //         pathname: '/blockingPolicies/' + projectID,
+    //       });
+    //     }
+    //   })
+    //   .show();
   }
 
   showNotSavedNotification(e) {
-    new Noty({
-      type: 'error',
-      id: 'rightsnotSaved',
-      text: 'Your rights policies have NOT been successfully saved',
-      theme: 'bootstrap-v4',
-      layout: 'top',
-      timeout: '3000',
-    }).show();
+    // new Noty({
+    //   type: 'error',
+    //   id: 'rightsnotSaved',
+    //   text: 'Your rights policies have NOT been successfully saved',
+    //   theme: 'bootstrap-v4',
+    //   layout: 'top',
+    //   timeout: '3000',
+    // }).show();
+    showNotyAutoError('Your rights policies have NOT been successfully saved');
   }
 
   showUnassignedTracksNotification(saveAndContinue, projectID) {
-    new Noty({
-      type: 'error',
-      id: 'rightsnotSaved',
-      text:
-        ' Your rights policies have been successfully saved however, all Unassigned Tracks must be assigned to 1 or more sets for this step to be complete.',
-      theme: 'bootstrap-v4',
-      layout: 'top',
-      timeout: '3000',
-    })
-      .on('afterClose', () => {
+    showNotyAutoError(
+      'Your rights policies have been successfully saved however, all Unassigned Tracks must be assigned to 1 or more sets for this step to be complete.',
+      () => {
         if (saveAndContinue) {
           this.props.history.push({
             pathname: '/blockingPolicies/' + projectID,
           });
         }
-      })
-      .show();
+      },
+    );
+    // new Noty({
+    //   type: 'error',
+    //   id: 'rightsnotSaved',
+    //   text:
+    //     ' Your rights policies have been successfully saved however, all Unassigned Tracks must be assigned to 1 or more sets for this step to be complete.',
+    //   theme: 'bootstrap-v4',
+    //   layout: 'top',
+    //   timeout: '3000',
+    // })
+    //   .on('afterClose', () => {
+    //     if (saveAndContinue) {
+    //       this.props.history.push({
+    //         pathname: '/blockingPolicies/' + projectID,
+    //       });
+    //     }
+    //   })
+    //   .show();
   }
 
   handleSubmit = e => {

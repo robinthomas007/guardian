@@ -13,6 +13,7 @@ import {
   convertToLocaleTime,
   resetDatePickerByObj,
 } from '../../Utils';
+import { showNotyInfo, showNotyAutoError } from 'components/Utils';
 
 class BlockingPoliciesPage extends Component {
   constructor(props) {
@@ -367,33 +368,41 @@ class BlockingPoliciesPage extends Component {
   }
 
   showNotification(e, projectID, saveAndContinue) {
-    new Noty({
-      type: 'success',
-      id: 'blockingSaved',
-      text: 'Your blocking policies have been successfully saved',
-      theme: 'bootstrap-v4',
-      layout: 'top',
-      timeout: '3000',
-    })
-      .on('afterClose', () => {
-        if (saveAndContinue) {
-          this.props.history.push({
-            pathname: '/reviewSubmit/' + projectID,
-          });
-        }
-      })
-      .show();
+    showNotyInfo('Your track information has been successfully saved.', () => {
+      if (saveAndContinue) {
+        this.props.history.push({
+          pathname: '/reviewSubmit/' + projectID,
+        });
+      }
+    });
+    // new Noty({
+    //   type: 'success',
+    //   id: 'blockingSaved',
+    //   text: 'Your blocking policies have been successfully saved',
+    //   theme: 'bootstrap-v4',
+    //   layout: 'top',
+    //   timeout: '3000',
+    // })
+    //   .on('afterClose', () => {
+    //     if (saveAndContinue) {
+    //       this.props.history.push({
+    //         pathname: '/reviewSubmit/' + projectID,
+    //       });
+    //     }
+    //   })
+    //   .show();
   }
 
   showNotSavedNotification(e) {
-    new Noty({
-      type: 'error',
-      id: 'blockingnotSaved',
-      text: 'Your blocking policies have NOT been successfully saved',
-      theme: 'bootstrap-v4',
-      layout: 'top',
-      timeout: '3000',
-    }).show();
+    // new Noty({
+    //   type: 'error',
+    //   id: 'blockingnotSaved',
+    //   text: 'Your blocking policies have NOT been successfully saved',
+    //   theme: 'bootstrap-v4',
+    //   layout: 'top',
+    //   timeout: '3000',
+    // }).show();
+    showNotyAutoError('Your blocking policies have NOT been successfully saved.');
   }
 
   getStepNumber() {

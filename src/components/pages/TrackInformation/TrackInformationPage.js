@@ -19,6 +19,7 @@ import {
   isPreReleaseDate,
   showNotyWarning,
 } from '../../Utils';
+import { showNotyInfo, showNotyAutoError } from 'components/Utils';
 
 class TrackInformationPage extends Component {
   constructor(props) {
@@ -133,16 +134,9 @@ class TrackInformationPage extends Component {
   }
 
   showNotification(saveAndContinue) {
-    new Noty({
-      type: 'success',
-      id: 'tracksSaved',
-      text:
-        'Your track information has been successfully saved and submitted for intial protection.',
-      theme: 'bootstrap-v4',
-      layout: 'top',
-      timeout: '3000',
-    })
-      .on('afterClose', () => {
+    showNotyInfo(
+      'Your track information has been successfully saved and submitted for intial protection.',
+      () => {
         if (saveAndContinue) {
           if (
             !this.state.project.Project.projectReleaseDateTBD &&
@@ -157,19 +151,46 @@ class TrackInformationPage extends Component {
             });
           }
         }
-      })
-      .show();
+      },
+    );
+    // new Noty({
+    //   type: 'success',
+    //   id: 'tracksSaved',
+    //   text:
+    //     'Your track information has been successfully saved and submitted for intial protection.',
+    //   theme: 'bootstrap-v4',
+    //   layout: 'top',
+    //   timeout: '3000',
+    // })
+    //   .on('afterClose', () => {
+    //     if (saveAndContinue) {
+    //       if (
+    //         !this.state.project.Project.projectReleaseDateTBD &&
+    //         !isPreReleaseDate(this.state.project)
+    //       ) {
+    //         this.props.history.push({
+    //           pathname: '/blockingPolicies/' + this.props.match.params.projectID,
+    //         });
+    //       } else {
+    //         this.props.history.push({
+    //           pathname: '/territorialRights/' + this.props.match.params.projectID,
+    //         });
+    //       }
+    //     }
+    //   })
+    //   .show();
   }
 
   showNotSavedNotification(e) {
-    new Noty({
-      type: 'error',
-      id: 'projectSaved',
-      text: 'Your tracks were NOT successfully saved. Please try again.',
-      theme: 'bootstrap-v4',
-      layout: 'top',
-      timeout: '3000',
-    }).show();
+    // new Noty({
+    //   type: 'error',
+    //   id: 'projectSaved',
+    //   text: 'Your tracks were NOT successfully saved. Please try again.',
+    //   theme: 'bootstrap-v4',
+    //   layout: 'top',
+    //   timeout: '3000',
+    // }).show();
+    showNotyAutoError('Your tracks were NOT successfully saved. Please try again.');
   }
 
   handleDiscUpdate(i, updatedDisc) {

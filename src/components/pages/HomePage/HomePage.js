@@ -4,6 +4,7 @@ import Noty from 'noty';
 import './HomePage.css';
 import { withAuth } from '@okta/okta-react';
 import GuardianLogo from 'images/guardian-logo.png';
+import { showNotyInfo, showNotyAutoError } from 'components/Utils';
 
 export default withAuth(
   class HomePage extends Component {
@@ -57,26 +58,30 @@ export default withAuth(
     }
 
     showRequestAccessSent(e) {
-      new Noty({
-        type: 'success',
-        id: 'requestAccessSent',
-        text: 'Your request for access to the Guardian has been successfully sent.',
-        theme: 'bootstrap-v4',
-        layout: 'top',
-        timeout: '3000',
-      }).show();
+      // new Noty({
+      //   type: 'success',
+      //   id: 'requestAccessSent',
+      //   text: 'Your request for access to the Guardian has been successfully sent.',
+      //   theme: 'bootstrap-v4',
+      //   layout: 'top',
+      //   timeout: '3000',
+      // }).show();
+      showNotyInfo('Your request for access to the Guardian has been successfully sent.');
     }
 
     showRequestAccessError(e) {
-      new Noty({
-        type: 'error',
-        id: 'requestAccessError',
-        text:
-          'Your request for access to the Guardian has encountered an error, please try again. Or contact the Guardian team for assistance.',
-        theme: 'bootstrap-v4',
-        layout: 'top',
-        timeout: '3000',
-      }).show();
+      // new Noty({
+      //   type: 'error',
+      //   id: 'requestAccessError',
+      //   text:
+      //     'Your request for access to the Guardian has encountered an error, please try again. Or contact the Guardian team for assistance.',
+      //   theme: 'bootstrap-v4',
+      //   layout: 'top',
+      //   timeout: '3000',
+      // }).show();
+      showNotyAutoError(
+        'Your request for access to the Guardian has encountered an error, please try again. Or contact the Guardian team for assistance.',
+      );
     }
 
     handleHelpClick = () => {

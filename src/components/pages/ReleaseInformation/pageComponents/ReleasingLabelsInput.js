@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Table, Grid, Button, Form, Alert } from 'react-bootstrap';
 import Noty from 'noty';
+import { showNotyInfo } from 'components/Utils';
 
 class ReleasingLabelsInput extends Component {
   constructor(props) {
@@ -28,15 +29,18 @@ class ReleasingLabelsInput extends Component {
   }
 
   showNotification() {
-    new Noty({
-      type: 'success',
-      id: 'tracksSaved',
-      text:
-        'Your track information has been successfully saved and submitted for intial protection.',
-      theme: 'bootstrap-v4',
-      layout: 'top',
-      timeout: '3000',
-    }).show();
+    // new Noty({
+    //   type: 'success',
+    //   id: 'tracksSaved',
+    //   text:
+    //     'Your track information has been successfully saved and submitted for intial protection.',
+    //   theme: 'bootstrap-v4',
+    //   layout: 'top',
+    //   timeout: '3000',
+    // }).show();
+    showNotyInfo(
+      'Your track information has been successfully saved and submitted for intial protection.',
+    );
   }
 
   render() {

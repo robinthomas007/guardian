@@ -16,6 +16,7 @@ import {
 } from 'redux/uploadProgressAlert/actions';
 import { isDuplicateTrackTitle, showNotyError, showNotyWarning } from '../../Utils';
 import _ from 'lodash';
+import { showNotyInfo } from 'components/Utils';
 
 class AudioFilesPage extends Component {
   constructor(props) {
@@ -124,22 +125,30 @@ class AudioFilesPage extends Component {
   showNotification(saveAndContinue) {
     const projectID = this.state.projectID ? this.state.projectID : '';
 
-    new Noty({
-      type: 'success',
-      id: 'tracksSaved',
-      text: 'Your track information has been successfully saved.',
-      theme: 'bootstrap-v4',
-      layout: 'top',
-      timeout: '3000',
-    })
-      .on('afterClose', () => {
-        if (saveAndContinue) {
-          this.props.history.push({
-            pathname: '/trackInformation/' + projectID,
-          });
-        }
-      })
-      .show();
+    showNotyInfo('Your track information has been successfully saved.', () => {
+      if (saveAndContinue) {
+        this.props.history.push({
+          pathname: '/trackInformation/' + projectID,
+        });
+      }
+    });
+
+    // new Noty({
+    //   type: 'success',
+    //   id: 'tracksSaved',
+    //   text: ,
+    //   theme: 'bootstrap-v4',
+    //   layout: 'top',
+    //   timeout: '3000',
+    // })
+    //   .on('afterClose', () => {
+    //     if (saveAndContinue) {
+    //       this.props.history.push({
+    //         pathname: '/trackInformation/' + projectID,
+    //       });
+    //     }
+    //   })
+    //   .show();
   }
 
   isValidAudioType(fileName) {

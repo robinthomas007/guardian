@@ -11,8 +11,8 @@ import moment from 'moment';
 import ReleasingLabelsInput from '../ReleaseInformation/pageComponents/ReleasingLabelsInput';
 import ProjectTypesInput from '../ReleaseInformation/pageComponents/ProjectTypesInput';
 import DatePicker from 'react-datepicker';
-
 import 'react-datepicker/dist/react-datepicker.css';
+import { showNotyError } from 'components/Utils';
 
 class ReleaseinformationPage extends Component {
   constructor(props) {
@@ -199,21 +199,27 @@ class ReleaseinformationPage extends Component {
               this.props.history.push('/projectContacts');
             } else {
               this.setState({ showloader: false });
-
-              new Noty({
-                type: 'error',
-                id: 'duplicateTitle',
-                text:
-                  'The project title ' +
+              // new Noty({
+              //   type: 'error',
+              //   id: 'duplicateTitle',
+              //   text:
+              //     'The project title ' +
+              //     responseJSON.projectTitle +
+              //     ' by ' +
+              //     responseJSON.projectArtist +
+              //     ' already exists. Please enter a new title. Click to close.',
+              //   theme: 'bootstrap-v4',
+              //   layout: 'top',
+              //   timeout: false,
+              //   onClick: 'Noty.close();',
+              // }).show();
+              showNotyError(
+                'The project title ' +
                   responseJSON.projectTitle +
                   ' by ' +
                   responseJSON.projectArtist +
                   ' already exists. Please enter a new title. Click to close.',
-                theme: 'bootstrap-v4',
-                layout: 'top',
-                timeout: false,
-                onClick: 'Noty.close();',
-              }).show();
+              );
             }
           })
           .catch(error => console.log(error));

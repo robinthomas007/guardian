@@ -10,6 +10,7 @@ import { withRouter } from 'react-router-dom';
 import SubmitProjectModal from '../../modals/SubmitProjectModal';
 import IncompleteProjectModal from '../../modals/IncompleteProjectModal';
 import { formatDateToYYYYMMDD, convertToLocaleTime, isPreReleaseDate } from '../../Utils';
+import { showNotyInfo } from 'components/Utils';
 
 class ReviewAndSubmitPage extends Component {
   constructor(props) {
@@ -91,18 +92,21 @@ class ReviewAndSubmitPage extends Component {
       })
       .then(responseJSON => {
         this.setState({ showloader: false });
-        new Noty({
-          type: 'success',
-          id: 'tracksSaved',
-          text: 'Your project has been successfully saved and submitted for review.',
-          theme: 'bootstrap-v4',
-          layout: 'top',
-          timeout: '5000',
-        })
-          .on('afterClose', () => {
-            return this.props.history.push({ pathname: '/findProject/' });
-          })
-          .show();
+        showNotyInfo('Your project has been successfully saved and submitted for review.', () => {
+          return this.props.history.push({ pathname: '/findProject/' });
+        });
+        // new Noty({
+        //   type: 'success',
+        //   id: 'tracksSaved',
+        //   text: 'Your project has been successfully saved and submitted for review.',
+        //   theme: 'bootstrap-v4',
+        //   layout: 'top',
+        //   timeout: '5000',
+        // })
+        //   .on('afterClose', () => {
+        //     return this.props.history.push({ pathname: '/findProject/' });
+        //   })
+        //   .show();
       })
       .catch(error => {
         console.error(error);
