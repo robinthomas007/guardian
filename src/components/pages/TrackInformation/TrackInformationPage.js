@@ -8,13 +8,9 @@ import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 import { startUpload, setUploadProgress, endUpload } from 'redux/uploadProgressAlert/actions';
-import {
-  isFormValid,
-  isDuplicateTrackTitle,
-  showNotyError,
-  isPreReleaseDate,
-  // showNotyWarning,
-} from '../../Utils';
+import { isFormValid, isDuplicateTrackTitle, showNotyError, isPreReleaseDate } from '../../Utils';
+import { toast } from 'react-toastify';
+
 import { showNotyInfo, showNotyAutoError } from 'components/Utils';
 
 class TrackInformationPage extends Component {
@@ -255,17 +251,11 @@ class TrackInformationPage extends Component {
     const saveAndContinue = e.target.classList.contains('saveAndContinueButton') ? true : false;
     if (isFormValid() && this.isValidForm()) {
       if (isDuplicateTrackTitle()) {
-        new Noty({
-          type: 'warning',
-          text: "You're attempting to enter a duplicate track title / isrc. Click to close.",
-          theme: 'bootstrap-v4',
-          layout: 'top',
-          onClick: 'Noty.close();',
-        })
-          .on('afterClose', () => {
+        toast.info("You're attempting to enter a duplicate track title / isrc. Click to close.", {
+          onClose: () => {
             this.saveTrackApi(saveAndContinue);
-          })
-          .show();
+          },
+        });
       } else {
         this.saveTrackApi(saveAndContinue);
       }

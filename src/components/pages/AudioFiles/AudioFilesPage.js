@@ -16,6 +16,7 @@ import {
 import { isDuplicateTrackTitle, showNotyError, showNotyWarning } from '../../Utils';
 import _ from 'lodash';
 import { showNotyInfo } from 'components/Utils';
+import { toast } from 'react-toastify';
 
 class AudioFilesPage extends Component {
   constructor(props) {
@@ -395,17 +396,11 @@ class AudioFilesPage extends Component {
 
     if (formIsValid) {
       if (isDuplicateTrackTitle()) {
-        new Noty({
-          type: 'warning',
-          text: "You're attempting to enter a duplicate track title / isrc. Click to close.",
-          theme: 'bootstrap-v4',
-          layout: 'top',
-          onClick: 'Noty.close();',
-        })
-          .on('afterClose', () => {
+        toast.info("You're attempting to enter a duplicate track title / isrc. Click to close.", {
+          onClose: () => {
             this.saveAudioApi(saveAndContinue);
-          })
-          .show();
+          },
+        });
       } else {
         this.saveAudioApi(saveAndContinue);
       }
