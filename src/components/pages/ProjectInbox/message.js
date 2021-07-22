@@ -14,13 +14,6 @@ import moment from 'moment';
 
 const validate = values => {
   const errors = {};
-  if (!values.AssignedToEmail) {
-    errors.AssignedToEmail = ' Assign To is required.';
-  }
-  if (!values.Step) {
-    errors.Step = 'Step is required';
-  }
-
   if (!values.Text) {
     errors.Text = 'Comment is required';
   }
@@ -46,7 +39,7 @@ const Message = props => {
   const formSubmit = val => {
     let reqObj = _.cloneDeep(val);
     reqObj['ProjectId'] = props.projectID || '552'; // TODO
-    reqObj['Step'] = val.Step.value;
+    reqObj['Step'] = val.Step ? val.Step.value : '';
     props.postComment({ Comment: reqObj }).then(function(response) {
       if (response.Comment) {
         props.initialize({});
@@ -112,7 +105,7 @@ Message.propTypes = {
 
 const MessageComp = reduxForm({
   form: 'MessageForm',
-  // validate
+  validate,
 })(Message);
 
 const mapDispatchToProps = dispatch => ({

@@ -16,12 +16,6 @@ import moment from 'moment';
 
 const validate = values => {
   const errors = {};
-  if (!values.AssignedToEmail) {
-    errors.AssignedToEmail = ' Assign To is required.';
-  }
-  if (!values.Step) {
-    errors.Step = 'Step is required';
-  }
 
   if (!values.Text) {
     errors.Text = 'Comment is required';
@@ -48,7 +42,7 @@ const CommentSlider = props => {
   const formSubmit = val => {
     let reqObj = _.cloneDeep(val);
     reqObj['ProjectId'] = props.projectID;
-    reqObj['Step'] = val.Step.value;
+    reqObj['Step'] = val.Step ? val.Step.value : '';
     props.postComment({ Comment: reqObj }).then(function(response) {
       if (response.Comment) {
         props.initialize({});
@@ -119,7 +113,7 @@ CommentSlider.propTypes = {
 
 const CommentSliderComp = reduxForm({
   form: 'CommentSliderForm',
-  // validate
+  validate,
 })(CommentSlider);
 
 const mapDispatchToProps = dispatch => ({
