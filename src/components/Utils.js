@@ -136,6 +136,7 @@ export function isDuplicateTrackTitle() {
 
   for (var i = 0; i < trackTitles.length; i++) {
     const title = trackTitles[i].value;
+    title = title.toUpperCase();
     if (title && titleValues.includes(title)) {
       isDuplicate = true;
       break;

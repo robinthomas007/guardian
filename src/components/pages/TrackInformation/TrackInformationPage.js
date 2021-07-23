@@ -248,13 +248,18 @@ class TrackInformationPage extends Component {
   }
 
   handleSubmit(e) {
+    let count = document.getElementsByClassName('toast-warn-custom-track');
+    toast.dismiss();
     const saveAndContinue = e.target.classList.contains('saveAndContinueButton') ? true : false;
     if (isFormValid() && this.isValidForm()) {
       if (isDuplicateTrackTitle()) {
         toast.info("You're attempting to enter a duplicate track title / isrc. Click to close.", {
           onClose: () => {
-            this.saveTrackApi(saveAndContinue);
+            if (count.length === 1 && isDuplicateTrackTitle()) {
+              this.saveTrackApi(saveAndContinue);
+            }
           },
+          className: 'toast-warn-custom-track',
         });
       } else {
         this.saveTrackApi(saveAndContinue);

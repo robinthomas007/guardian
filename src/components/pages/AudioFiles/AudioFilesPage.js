@@ -388,18 +388,22 @@ class AudioFilesPage extends Component {
   }
 
   handleDataSubmit(e) {
+    let count = document.getElementsByClassName('toast-warn-custom-audio');
+
+    toast.dismiss();
     const saveAndContinue = e.target.classList.contains('saveAndContinueButton') ? true : false;
-
     this.setTrackSequence();
-
     let formIsValid = this.isValidForm();
 
     if (formIsValid) {
       if (isDuplicateTrackTitle()) {
         toast.info("You're attempting to enter a duplicate track title / isrc. Click to close.", {
           onClose: () => {
-            this.saveAudioApi(saveAndContinue);
+            if (count.length === 1 && isDuplicateTrackTitle()) {
+              this.saveAudioApi(saveAndContinue);
+            }
           },
+          className: 'toast-warn-custom-audio',
         });
       } else {
         this.saveAudioApi(saveAndContinue);
