@@ -12,14 +12,14 @@ import * as projectInboxAction from 'actions/projectInboxAction';
 
 let interval = null;
 const hexArray = [
-  '#636393',
-  '#b5222d',
-  '#d4953c',
-  '#609491',
+  '#FF26A8',
   '#26A4FF',
   '#CE53FA',
-  '#636393',
-  '#b5222d',
+  '#609491',
+  '#26A4FF',
+  '#FF26A8',
+  '#26A4FF',
+  '#CE53FA',
   '#d4953c',
   '#609491',
   '#26A4FF',
@@ -477,7 +477,7 @@ class Header extends Component {
                   </div>
                   <div className="rgt-col">
                     <p>
-                      <strong className="bold">{noti.AssignedBy}</strong> left you a comment on the{' '}
+                      <strong className="bold">{noti.AssignedBy}</strong> left you a comment on{' '}
                       <strong className="bold">{noti.Step} </strong>for the project
                       <strong className="bold"> "{noti.ProjectTitle}" </strong> (
                       {moment(noti.DateCreated).fromNow()})

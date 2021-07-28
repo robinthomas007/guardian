@@ -2,11 +2,86 @@ import React, { Component } from 'react';
 import { Accordion, Card, Button, Tab, Tabs } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import './HelpGuide.css';
+import VideoTutorialModal from '../../modals/VideoTutorialModal';
 
 class HelpGuide extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showVideoTutorialModal: false,
+      activeVideo: null,
+      videos: [
+        {
+          description: 'Guardian Complete Introduction',
+          tutorialVideoLink:
+            'https://guardian.umusic.com/static/videos/The-Guardian-Training-Video-Find-A-Project.mp4',
+          modalHeader: 'Guardian Complete Introduction',
+        },
+        {
+          description: 'Release Info',
+          tutorialVideoLink:
+            'https://guardian.umusic.com/static/videos/The-Guardian-Training-Video-Release-Information-Step-1.mp4',
+          modalHeader: 'Release Information',
+        },
+        {
+          description: 'Contacts',
+          tutorialVideoLink:
+            'https://guardian.umusic.com/static/videos/The-Guardian-Training-Video-Project-Contact-Information-Step-2.mp4',
+          modalHeader: 'Project Contacts',
+        },
+        {
+          description: 'Audio Files',
+          tutorialVideoLink:
+            'https://guardian.umusic.com/static/videos/The-Guardian-Training-Video-Audio-Files-Part-1-Step-3.mp4',
+          modalHeader: 'Audio Files',
+        },
+        {
+          description: 'Track Info',
+          tutorialVideoLink:
+            'https://guardian.umusic.com/static/videos/The-Guardian-Training-Video-Track-Information-Step-4.mp4',
+          modalHeader: 'Track Information',
+        },
+        {
+          tutorialVideoLink:
+            'https://guardian.umusic.com/static/videos/The-Guardian-Training-Video-Territorial-Rights-Step-5.mp4',
+          modalHeader: 'Territorial Rights',
+        },
+        {
+          description: 'Blocking',
+          tutorialVideoLink:
+            'https://guardian.umusic.com/static/videos/The-Guardian-Training-Video-Project-Blocking-Policies-Step-6.mp4',
+          modalHeader: 'Post-Release UGC Blocking',
+        },
+        {
+          description: 'Review',
+          tutorialVideoLink:
+            'https://guardian.umusic.com/static/videos/The-Guardian-Training-Video-Review-(Review-&-Submit)-Step-7.mp4',
+          modalHeader: 'Review and Submit',
+        },
+      ],
+    };
+  }
+
+  showVideoTutorialModal = val => {
+    this.setState({ showVideoTutorialModal: true, activeVideo: val });
+  };
+
+  hideVideoTutorialModal = () => {
+    this.setState({ showVideoTutorialModal: false });
+  };
+
   render() {
+    const { videos, activeVideo, showVideoTutorialModal } = this.state;
     return (
       <div className="col-10">
+        {activeVideo !== null && (
+          <VideoTutorialModal
+            showModal={showVideoTutorialModal}
+            handleClose={this.hideVideoTutorialModal}
+            navSteps={videos}
+            activeNav={activeVideo}
+          />
+        )}
         <h2>Help / FAQs</h2>
         <div className="row no-gutters">
           If you can't locate an answer to your support question below please feel free to email us
@@ -657,6 +732,105 @@ class HelpGuide extends Component {
           </Tab>
           <Tab eventKey="Videos" title="Tutorial Videos">
             <span className="instructions">Click on a video below to view a tutorial.</span>
+            <div className="row d-flex">
+              <div className="col-3">
+                <div className="video-grid">
+                  <div
+                    className="vd-thmb-box"
+                    onClick={() => {
+                      this.showVideoTutorialModal(0);
+                    }}
+                  ></div>
+                  <h3>Guardian Complete Introduction</h3>
+                  <p>A complete guide to the Guardian.</p>
+                </div>
+              </div>
+              <div className="col-3">
+                <div className="video-grid">
+                  <div
+                    className="vd-thmb-box"
+                    onClick={() => {
+                      this.showVideoTutorialModal(1);
+                    }}
+                  ></div>
+                  <h3>Release Information</h3>
+                  <p>Covers the release information in step 1.</p>
+                </div>
+              </div>
+
+              <div className="col-3">
+                <div className="video-grid">
+                  <div
+                    className="vd-thmb-box"
+                    onClick={() => {
+                      this.showVideoTutorialModal(2);
+                    }}
+                  ></div>
+                  <h3>Contact Information</h3>
+                  <p>Reviews the contact information step.</p>
+                </div>
+              </div>
+              <div className="col-3">
+                <div className="video-grid">
+                  <div
+                    className="vd-thmb-box"
+                    onClick={() => {
+                      this.showVideoTutorialModal(3);
+                    }}
+                  ></div>
+                  <h3>Audio Files</h3>
+                  <p>Instructions for uploading and saving audio files in the Guardian. </p>
+                </div>
+              </div>
+              <div className="col-3">
+                <div className="video-grid">
+                  <div
+                    className="vd-thmb-box"
+                    onClick={() => {
+                      this.showVideoTutorialModal(4);
+                    }}
+                  ></div>
+                  <h3>Track Information</h3>
+                  <p>This video covers entering track information in the Guardian. </p>
+                </div>
+              </div>
+              <div className="col-3">
+                <div className="video-grid">
+                  <div
+                    className="vd-thmb-box"
+                    onClick={() => {
+                      this.showVideoTutorialModal(5);
+                    }}
+                  ></div>
+                  <h3>Territorial Rights</h3>
+                  <p>A complete guide to establishing rights information in the Guardian.</p>
+                </div>
+              </div>
+              <div className="col-3">
+                <div className="video-grid">
+                  <div
+                    className="vd-thmb-box"
+                    onClick={() => {
+                      this.showVideoTutorialModal(6);
+                    }}
+                  ></div>
+                  <h3>UGC Blocking</h3>
+                  <p>How to set up post release UGC blocking in the Guardian.</p>
+                </div>
+              </div>
+              <div className="col-3">
+                <div className="video-grid">
+                  <div
+                    className="vd-thmb-box"
+                    onClick={() => {
+                      this.showVideoTutorialModal(7);
+                    }}
+                  ></div>
+                  <h3>Review and Submit</h3>
+                  <p>How to review and submit the project.</p>
+                </div>
+              </div>
+            </div>
           </Tab>
         </Tabs>
       </div>
