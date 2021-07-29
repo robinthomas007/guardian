@@ -126,10 +126,10 @@ class ProjectInboxDataTable extends Component {
               </td>
               <td className="col-2">{project.AssignedBy} </td>
               <td className="col-2">{project.ProjectTitle}</td>
-              <td className="col-2 status text-nowrap">{project.ProjectArtist}</td>
-              <td className="status"> {project.ProjectLabel}</td>
-              <td className="status">{project.Step}</td>
-              <td className="status text-center">{project.Text}</td>
+              <td className="col-1 status text-nowrap">{project.ProjectArtist}</td>
+              <td className="col-1 status"> {project.ProjectLabel}</td>
+              <td className="col-2 status">{project.Step}</td>
+              <td className="col-2 status">{project.Text}</td>
             </tr>
             {showCommentBox && i === index && (
               <div className="">
@@ -195,7 +195,7 @@ class ProjectInboxDataTable extends Component {
             </i>
           </th>
           <th
-            className="col-2 sortable"
+            className="col-1 sortable"
             onMouseOver={(e, columnID) => this.handleMouseOver(e, 'artist')}
             onMouseOut={(e, columnID) => this.handleMouseOut(e, 'artist')}
             onClick={id => this.handleTableSort('artist')}
@@ -224,8 +224,8 @@ class ProjectInboxDataTable extends Component {
               arrow_drop_up
             </i>
           </th>
-          <th className="status text-center">Section/Tag</th>
-          <th className="status text-center">Comment</th>
+          <th className="col-2 status">Section/Tag</th>
+          <th className="col-2 status">Comment</th>
         </tr>
       </thead>
     );

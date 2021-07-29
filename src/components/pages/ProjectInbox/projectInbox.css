@@ -24,9 +24,33 @@
 }
 
 .message-name {
-  white-space: nowrap;
   margin-right: 10px;
   min-width: 34%;
+  white-space: nowrap;
+}
+
+@media screen and (max-width: 1650px) and (min-width: 1550px) {
+  .message-name {
+    min-width: 36%;
+  }
+}
+
+@media screen and (max-width: 1550px) and (min-width: 1450px) {
+  .message-name {
+    min-width: 38%;
+  }
+}
+
+@media screen and (max-width: 1450px) and (min-width: 1350px) {
+  .message-name {
+    min-width: 42%;
+  }
+}
+
+@media screen and (max-width: 1350px) and (min-width: 1150px) {
+  .message-name {
+    min-width: 48%;
+  }
 }
 
 .comments-list {
