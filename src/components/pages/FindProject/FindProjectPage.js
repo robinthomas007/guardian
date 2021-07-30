@@ -13,6 +13,7 @@ import { reduxForm, Field } from 'redux-form';
 import InputField from '../../common/InputField';
 import _ from 'lodash';
 import { getSearchCriteria, getToDate, getFromDate } from '../../common/commonHelper.js';
+import ExportCSV from './pageComponents/ExportCSV';
 
 class FindProjectPage extends Component {
   constructor(props) {
@@ -158,6 +159,8 @@ class FindProjectPage extends Component {
             searchCriteria={searchCriteria}
             getSearchCriteria={getSearchCriteria}
           />
+
+          <ExportCSV formValues={this.props.formValues} getSearchCriteria={getSearchCriteria} />
         </form>
 
         <ul className="row results-controls">
