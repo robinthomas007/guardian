@@ -30,7 +30,18 @@ class AudioVideoDataTable extends Component {
               <span className="required-ind">(Required)</span>
             </i>
           </th>
-          <th>ISRC</th>
+          <th>
+            ISRC
+            <button
+              style={{ float: 'right' }}
+              className="btn btn-sm btn-secondary"
+              // onClick={this.showCommentBox}
+              title="Comment"
+            >
+              <i className={'material-icons'}>search</i>
+              Check ISRCs
+            </button>
+          </th>
           <th>Artist</th>
           <th className="text-center">Actions</th>
         </tr>

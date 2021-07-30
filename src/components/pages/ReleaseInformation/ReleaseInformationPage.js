@@ -29,6 +29,7 @@ class ReleaseinformationPage extends Component {
         projectNotes: '',
         projectCoverArtFileName: '',
         projectCoverArtBase64Data: '',
+        // upc: ''
       },
       project: {
         Project: {
@@ -384,6 +385,35 @@ class ReleaseinformationPage extends Component {
         <Form>
           <div className="row d-flex">
             <div className="col-9">
+              <Form.Group className="row d-flex no-gutters">
+                <div className="col-3">
+                  <Form.Label className="col-form-label">UPC</Form.Label>
+                  <ToolTip tabIndex="-1" message="UPC" />
+                </div>
+                <div className="col-3">
+                  <Form.Control
+                    tabIndex="1+"
+                    id="upc"
+                    className="form-control"
+                    type="text"
+                    placeholder="UPC"
+                    // value={this.state.formInputs.upc}
+                    // onChange={this.handleChange}
+                  />
+                </div>
+                <div className="col-1">
+                  <button
+                    style={{ marginLeft: '10px', padding: '7px 10px' }}
+                    className="btn btn-sm btn-secondary"
+                    // onClick={this.showCommentBox}
+                    title="Comment"
+                    type="button"
+                  >
+                    <i className={'material-icons'}>search</i>
+                    Find UPC
+                  </button>
+                </div>
+              </Form.Group>
               <Form.Group className="row d-flex no-gutters">
                 <div className="col-3">
                   <Form.Control

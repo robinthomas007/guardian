@@ -65,7 +65,9 @@ class ProjectContactsPage extends Component {
       .then(responseJSON => {
         const { formInputs } = this.state;
         let modifiedFormInputs = responseJSON.Project;
-        let emails = modifiedFormInputs.projectAdditionalContacts.split(',');
+        let emails = modifiedFormInputs.projectAdditionalContacts
+          ? modifiedFormInputs.projectAdditionalContacts.split(',')
+          : [];
         modifiedFormInputs.projectAdditionalContacts = '';
         this.setState({
           formInputs: modifiedFormInputs,
