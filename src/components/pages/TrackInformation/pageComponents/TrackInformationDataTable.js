@@ -4,7 +4,7 @@ import ToolTip from '../../../ui/Tooltip';
 import LoadingImgSm from '../../../ui/LoadingImgSm';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
-import { CustomInput } from '../../../Utils.js';
+import { CustomInput, isPreReleaseDate } from '../../../Utils.js';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -200,6 +200,8 @@ class TrackInformationDataTable extends Component {
   getTrackRows() {
     if (this.props.data.Discs.length > 0 && this.props.data.Discs[this.props.discID].Tracks) {
       let tableRows = this.props.data.Discs[this.props.discID].Tracks.map((track, i) => {
+        const pre = isPreReleaseDate(this.props.data);
+
         return (
           <tr
             className={'draggable-track'}
@@ -305,6 +307,8 @@ class TrackInformationDataTable extends Component {
             <td className="text-center">
               <button
                 className="btn btn-secondary action"
+                disabled={!pre}
+                title={!pre ? `Audio is not required for post release projects` : ''}
                 onClick={() => this.props.showReplaceModal(track, i)}
               >
                 <i className="material-icons">publish</i>
