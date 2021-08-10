@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Tabs, Tab } from 'react-bootstrap';
-import UserDataTable from './pageComponents/UserDataTable';
-import ViewCountDropDown from './pageComponents/ViewCountDropDown';
-import TablePager from '../FindProject/pageComponents/TablePager';
 import LoadingImg from '../../ui/LoadingImg';
 import UserEditModal from './pageComponents/UserEditModal';
 import UserSearchFilterModal from './pageComponents/UserSearchFilterModal';
 import SelectedFilters from './pageComponents/SelectedFilters';
 import RequestingAccessTab from './pageComponents/RequestingAccessTab';
 import ExistingUsersTab from './pageComponents/ExistingUsersTab';
-import { resetDatePicker, resetDatePickerByObj } from '../../Utils';
+import { resetDatePicker } from '../../Utils';
 class UserAdmin extends Component {
   constructor(props) {
     super(props);
@@ -93,7 +90,6 @@ class UserAdmin extends Component {
 
   fetchUsers = () => {
     this.setState({ showloader: true });
-    const user = JSON.parse(sessionStorage.getItem('user'));
     const fetchHeaders = new Headers({
       'Content-Type': 'application/json',
       Authorization: sessionStorage.getItem('accessToken'),
@@ -187,7 +183,6 @@ class UserAdmin extends Component {
   };
 
   fetchReleasingLabels = () => {
-    const user = JSON.parse(sessionStorage.getItem('user'));
     const fetchHeaders = new Headers({
       'Content-Type': 'application/json',
     });
@@ -267,7 +262,6 @@ class UserAdmin extends Component {
 
   approveDenyUser = (action, request) => {
     this.setState({ showloader: true });
-    const user = JSON.parse(sessionStorage.getItem('user'));
     const fetchHeaders = new Headers({
       'Content-Type': 'application/json',
       Authorization: sessionStorage.getItem('accessToken'),

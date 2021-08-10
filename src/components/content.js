@@ -105,7 +105,7 @@ class Content extends Component {
   }
 
   handleProjectDataLoad = pagePath => {
-    if (pagePath && pagePath !== '' && this.state.projectID != '') {
+    if (pagePath && pagePath !== '' && this.state.projectID !== '') {
       const fetchHeaders = new Headers({
         'Content-Type': 'application/json',
         Authorization: sessionStorage.getItem('accessToken'),

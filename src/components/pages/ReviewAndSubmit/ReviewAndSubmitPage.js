@@ -65,7 +65,6 @@ class ReviewAndSubmitPage extends Component {
   };
 
   handleSubmitProjectClick() {
-    const user = JSON.parse(sessionStorage.getItem('user'));
     const fetchHeaders = new Headers({
       'Content-Type': 'application/json',
       Authorization: sessionStorage.getItem('accessToken'),

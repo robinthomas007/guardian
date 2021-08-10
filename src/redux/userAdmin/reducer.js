@@ -32,7 +32,6 @@ import {
 export const initialState = {
   searchTerm: '',
   tab: 'requesting',
-  error: '',
   isShowingModal: false,
   userToEdit: {
     userID: '',

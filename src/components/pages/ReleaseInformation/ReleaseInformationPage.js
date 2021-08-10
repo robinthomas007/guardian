@@ -72,7 +72,8 @@ class ReleaseinformationPage extends Component {
 
   handleReleaseTBDChange = e => {
     let { formInputs } = this.state;
-    this.state.formInputs.projectReleaseDate = null;
+    formInputs.projectReleaseDate = null;
+    this.setState({ formInputs: formInputs });
 
     if (e.target.checked) {
       this.setState({

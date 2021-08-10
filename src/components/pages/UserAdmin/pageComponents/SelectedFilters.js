@@ -75,7 +75,6 @@ class SelectedFilters extends Component {
   };
 
   getLabelFilters = () => {
-    let count = 0;
     const labels = this.props.filters.labelIds.map((labelID, i) => {
       let labelName = this.isSelectedLabel(labelID);
       return labelName ? (

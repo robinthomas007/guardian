@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { Field } from 'redux-form';
 import Dropdown from '../../common/DropdownSelect';
-import multiSelect from '../../common/multiSelect';
 import DateTimePicker from '../../common/DateTimePicker';
 import _ from 'lodash';
 import { formatSelectArray, fomatDates } from '../../common/commonHelper';

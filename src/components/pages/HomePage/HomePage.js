@@ -85,13 +85,19 @@ export default withAuth(
           <nav className="top-nav ext">
             <ul>
               <li>
-                <a onClick={this.handleHelpClick}>Help Guide</a>
+                <a href onClick={this.handleHelpClick}>
+                  Help Guide
+                </a>
               </li>
               <li>
-                <a onClick={this.showRequestModal}>Request Access</a>
+                <a href onClick={this.showRequestModal}>
+                  Request Access
+                </a>
               </li>
               <li>
-                <a onClick={this.login}>Log In</a>
+                <a href onClick={this.login}>
+                  Log In
+                </a>
               </li>
             </ul>
           </nav>
