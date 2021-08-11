@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Modal } from 'react-bootstrap';
 import './VideoTutorialModal.css';
+import { NavLink } from 'react-router-dom';
 
 class VideoTutorialModal extends Component {
   constructor(props) {
@@ -24,11 +25,16 @@ class VideoTutorialModal extends Component {
   }
 
   render() {
-    const { navSteps, activeNav } = this.props;
+    const { navSteps, activeNav, MoreVideos } = this.props;
     return (
       <Modal id="VideoTutorialModal" show={this.props.showModal} onHide={this.handleClose}>
         <Modal.Header closeButton>
           <h3>{navSteps[activeNav].modalHeader}</h3>
+          {MoreVideos && (
+            <NavLink to={{ pathname: '/helpGuide/2' }} onClick={this.handleClose} target="_blank">
+              More Video's{' '}
+            </NavLink>
+          )}
         </Modal.Header>
         <Modal.Body>
           <video controls autoPlay>

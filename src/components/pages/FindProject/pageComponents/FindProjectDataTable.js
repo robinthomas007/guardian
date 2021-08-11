@@ -87,6 +87,8 @@ class FindProjectDataTable extends Component {
   };
 
   handleProjectDownload = (projectID, projectFileName) => {
+    this.setState({ showloader: true });
+
     const user = JSON.parse(sessionStorage.getItem('user'));
 
     fetch(window.env.api.url + '/media/api/Submit?projectid=' + projectID, {
@@ -107,6 +109,7 @@ class FindProjectDataTable extends Component {
         document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
         a.click();
         a.remove(); //afterwards we remove the element again
+        this.setState({ showloader: false });
       });
   };
 

@@ -10,6 +10,7 @@ class HelpGuide extends Component {
     this.state = {
       showVideoTutorialModal: false,
       activeVideo: null,
+      key: 'FAQs',
       videos: [
         {
           description: 'Guardian Complete Introduction',
@@ -70,8 +71,23 @@ class HelpGuide extends Component {
     this.setState({ showVideoTutorialModal: false });
   };
 
+  setKey = key => {
+    this.setState({ key: key });
+  };
+
+  componentDidMount() {
+    console.log(this.props.match.params.id, 'this.props.match.params.id');
+    if (
+      this.props.match &&
+      this.props.match.params &&
+      this.props.match.params.id &&
+      this.props.match.params.id === '2'
+    )
+      this.setState({ key: 'Videos' });
+  }
+
   render() {
-    const { videos, activeVideo, showVideoTutorialModal } = this.state;
+    const { videos, activeVideo, showVideoTutorialModal, key } = this.state;
     return (
       <div className="col-10">
         {activeVideo !== null && (
@@ -80,6 +96,7 @@ class HelpGuide extends Component {
             handleClose={this.hideVideoTutorialModal}
             navSteps={videos}
             activeNav={activeVideo}
+            MoreVideos={false}
           />
         )}
         <h2>Help / FAQs</h2>
@@ -90,7 +107,7 @@ class HelpGuide extends Component {
         <br />
         <br />
 
-        <Tabs>
+        <Tabs activeKey={key} onSelect={k => this.setKey(k)}>
           <Tab eventKey="FAQs" title="FAQs">
             <div className="row d-flex w-100">
               <div className="flex-fill col-xl-6 col-lg-6 col-md-12 col-sm-12">

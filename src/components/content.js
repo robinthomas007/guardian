@@ -340,7 +340,7 @@ class Content extends Component {
                   />
                 )}
               />
-              <SecureRoute path="/helpGuide" render={() => <HelpGuide />} />
+              <SecureRoute path="/helpGuide/:id?" render={() => <HelpGuide />} />
               <SecureRoute
                 path="/userAdmin"
                 render={() => (

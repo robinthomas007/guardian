@@ -511,6 +511,7 @@ class Header extends Component {
               handleClose={this.hideVideoTutorialModal}
               navSteps={navToUse}
               activeNav={activeNav}
+              MoreVideos={true}
             />
           )}
           {showCommentBox && projectData.Project.projectID && (

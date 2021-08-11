@@ -2,3 +2,12 @@
   display: flex;
   width: 100%;
 }
+
+#VideoTutorialModal .modal-header {
+  padding-bottom: 0px;
+}
+
+#VideoTutorialModal .modal-header .close {
+  margin: 0px;
+  padding: 0px;
+}
