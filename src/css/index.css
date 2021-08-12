@@ -893,6 +893,9 @@ label.col-form-label.tbd.text-nowrap.form-label {
   padding: 6px;
   box-shadow: none !important;
   cursor: grab;
+}
+
+.sticky-box .draggable-track {
   display: flex;
   align-items: center;
   justify-content: flex-start;
