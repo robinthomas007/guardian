@@ -6,6 +6,7 @@ import LoadingImg from '../../ui/LoadingImg';
 import './TerritorialRights.css';
 import { withRouter } from 'react-router';
 import { showNotyInfo, showNotyAutoError } from 'components/Utils';
+import _ from 'lodash';
 
 class TerritorialRightsPage extends Component {
   constructor(props) {
@@ -16,7 +17,7 @@ class TerritorialRightsPage extends Component {
         UnassignedTerritorialRightsSetTracks: [],
         TerritorialRightsSets: [],
       },
-      dragSource: null,
+      dragSource: [],
       showloader: false,
       combinedTracks: [],
     };
@@ -123,47 +124,76 @@ class TerritorialRightsPage extends Component {
     // }, () => alert(this.state.project.UnassignedTracks));
   };
 
-  handleNoRightsTracksRemove = i => {
+  handleNoRightsTracksRemove = (i, trackID) => {
     const { UnassignedTerritorialRightsSetTracks } = this.state.project;
     let modifiedUnassignedTracks = UnassignedTerritorialRightsSetTracks;
-    modifiedUnassignedTracks.splice(i, 1);
-    this.setState({ UnassignedTerritorialRightsSetTracks: modifiedUnassignedTracks });
+    if (i) {
+      modifiedUnassignedTracks.splice(i, 1);
+      this.setState({
+        project: {
+          ...this.state.project,
+          UnassignedTerritorialRightsSetTracks: modifiedUnassignedTracks,
+        },
+      });
+    } else {
+      modifiedUnassignedTracks = _.filter(
+        UnassignedTerritorialRightsSetTracks,
+        val => !trackID.includes(val.trackID),
+      );
+      this.setState({
+        project: {
+          ...this.state.project,
+          UnassignedTerritorialRightsSetTracks: modifiedUnassignedTracks,
+        },
+      });
+    }
   };
 
   handleDropAdd = e => {
-    const setIndex = this.state.dragSource.getAttribute('setindex');
-    const trackId = this.state.dragSource.getAttribute('trackid');
-    const trackTitle = this.state.dragSource.getAttribute('trackTitle');
-    const trackIndex = this.state.dragSource.getAttribute('trackindex');
+    const { dragSource } = this.state;
+    for (let i = 0; i < dragSource.length; i++) {
+      const setIndex = dragSource[i].getAttribute('setindex');
+      const trackId = dragSource[i].getAttribute('trackid');
+      const trackTitle = dragSource[i].getAttribute('trackTitle');
+      //restrict dropping to just the set tracks
+      if (
+        (dragSource[i] && !dragSource[i].classList.contains('unassignedTrack')) ||
+        !e.target.classList.contains('unassignedTrack')
+      ) {
+        //add the selection to the unassigned tracks
+        const { UnassignedTerritorialRightsSetTracks } = this.state.project;
+        let modifiedUnassignedTracks = UnassignedTerritorialRightsSetTracks;
+        modifiedUnassignedTracks.push({ trackID: trackId, trackTitle: trackTitle });
 
-    //restrict dropping to just the set tracks
-    if (
-      (this.state.dragSource && !this.state.dragSource.classList.contains('unassignedTrack')) ||
-      !e.target.classList.contains('unassignedTrack')
-    ) {
-      //add the selection to the unassigned tracks
-      const { UnassignedTerritorialRightsSetTracks } = this.state.project;
-      let modifiedUnassignedTracks = UnassignedTerritorialRightsSetTracks;
-      modifiedUnassignedTracks.push({ trackID: trackId, trackTitle: trackTitle });
-      this.setState({ UnassignedTerritorialRightsSetTracks: modifiedUnassignedTracks });
-
-      //remove the selection from the set's assigned tracks
-      const { TerritorialRightsSets } = this.state.project;
-      let modifiedTerritorialRightsSets = TerritorialRightsSets;
-      modifiedTerritorialRightsSets[setIndex].tracks.splice(trackIndex, 1);
-      this.setState({ TerritorialRightsSets: modifiedTerritorialRightsSets });
+        //remove the selection from the set's assigned tracks
+        const { TerritorialRightsSets } = this.state.project;
+        let modifiedTerritorialRightsSets = TerritorialRightsSets;
+        modifiedTerritorialRightsSets[setIndex].tracks = _.filter(
+          TerritorialRightsSets[setIndex].tracks,
+          val => val.trackID !== trackId,
+        );
+        this.setState({
+          project: {
+            ...this.state.project,
+            TerritorialRightsSets: modifiedTerritorialRightsSets,
+            UnassignedTerritorialRightsSetTracks: modifiedUnassignedTracks,
+          },
+        });
+      }
     }
   };
 
   handleChildDrag = e => {
-    this.setState({ dragSource: e.target });
+    this.setState({ dragSource: e });
   };
 
   handleChildDrop = (e, i) => {
-    let dragTrackIndex = this.state.dragSource
-      ? this.state.dragSource.getAttribute('trackindex')
-      : null;
-    this.handleNoRightsTracksRemove(i ? i : dragTrackIndex);
+    const { dragSource } = this.state;
+    let dragTrackId = [];
+    for (let j = 0; j < dragSource.length; j++) {
+      dragTrackId.push(dragSource[j] ? dragSource[j].getAttribute('trackId') : []);
+    }
+    this.handleNoRightsTracksRemove(i, dragTrackId);
     this.setState({ dragSource: null });
   };
 
@@ -310,7 +340,7 @@ class TerritorialRightsPage extends Component {
               handleChange={this.handleChange}
               dragSource={this.state.dragSource}
               handleChildDrop={(e, i) => this.handleChildDrop(e, i)}
-              handleChildDrag={e => this.handleChildDrag(e)}
+              handleChildDrag={this.handleChildDrag}
               handleSetDelete={i => this.handleSetDelete(i)}
               dragSource={this.state.dragSource}
               addRightsSet={this.addRightsSet}

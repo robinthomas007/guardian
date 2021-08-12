@@ -44,11 +44,12 @@ class TracksRightsSets extends Component {
     const { TerritorialRightsSets } = this.props.data;
     var data = e.dataTransfer.getData('text/html');
     let modifiedTerritorialRightsSets = TerritorialRightsSets;
-    modifiedTerritorialRightsSets[i].tracks.push({
-      trackID: this.props.dragSource.getAttribute('trackid'),
-      trackTitle: this.props.dragSource.getAttribute('tracktitle'),
-    });
-
+    for (let j = 0; j < this.props.dragSource.length; j++) {
+      modifiedTerritorialRightsSets[i].tracks.push({
+        trackID: this.props.dragSource[j].getAttribute('trackid'),
+        trackTitle: this.props.dragSource[j].getAttribute('tracktitle'),
+      });
+    }
     this.props.handleChange(modifiedTerritorialRightsSets);
     this.props.handleChildDrop(i);
   }
@@ -164,7 +165,7 @@ class TracksRightsSets extends Component {
                       handleDrop={this.handleDrop}
                       setIndex={i}
                       handleChildDrop={(e, i) => this.handleDrop()}
-                      handleChildDrag={e => this.props.handleChildDrag(e)}
+                      handleChildDrag={this.props.handleChildDrag}
                       dragSource={this.props.dragSource}
                     />
                   </td>

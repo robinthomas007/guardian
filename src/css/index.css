@@ -893,6 +893,13 @@ label.col-form-label.tbd.text-nowrap.form-label {
   padding: 6px;
   box-shadow: none !important;
   cursor: grab;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.draggable-track .track-multi-drag-check {
+  margin-right: 8px;
 }
 
 .droppable-cell {

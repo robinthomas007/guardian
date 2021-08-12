@@ -15,9 +15,30 @@ class TracksWithoutRights extends Component {
   };
 
   handleDrag(e, i, track) {
-    this.props.handleChildDrag(e);
-    e.dataTransfer.setData('text/html', e.target);
+    let selectedArr = [];
+    for (let i = 0; i < this.props.data.length; i++) {
+      if (this.state[`check_${this.props.data[i].trackID}`]) {
+        selectedArr.push(document.querySelector(`#check_${this.props.data[i].trackID}`));
+        let checkName = `check_${this.props.data[i].trackID}`;
+        this.setState({ [checkName]: null });
+      }
+    }
+    if (selectedArr.length > 0) {
+      for (let j = 0; j < selectedArr.length; j++) {
+        e.dataTransfer.setData('text/html', selectedArr[j]);
+      }
+      this.props.handleChildDrag(selectedArr);
+    } else {
+      this.props.handleChildDrag([e.target]);
+      e.dataTransfer.setData('text/html', e.target);
+    }
   }
+
+  toggleChange = e => {
+    this.setState({
+      [e.target.name]: !this.state[e.target.name],
+    });
+  };
 
   getTracksList = () => {
     if (this.props.data) {
@@ -31,7 +52,16 @@ class TracksWithoutRights extends Component {
             trackid={track.trackID}
             tracktitle={track.trackTitle}
             onDragStart={e => this.handleDrag(e, i, track)}
+            id={`check_${track.trackID}`}
           >
+            <input
+              onChange={this.toggleChange}
+              className="track-multi-drag-check"
+              checked={this.state[`check_${track.trackID}`]}
+              type="checkbox"
+              id={`check_${track.trackID}`}
+              name={`check_${track.trackID}`}
+            />
             <i className="material-icons">dehaze</i>&nbsp;&nbsp;{track.trackTitle}
           </div>
         );

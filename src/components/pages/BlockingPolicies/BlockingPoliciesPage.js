@@ -8,6 +8,7 @@ import LoadingImg from '../../ui/LoadingImg';
 import { withRouter } from 'react-router-dom';
 import { formatDateToYYYYMMDD, convertToLocaleTime, resetDatePickerByObj } from '../../Utils';
 import { showNotyInfo, showNotyAutoError } from 'components/Utils';
+import _ from 'lodash';
 
 class BlockingPoliciesPage extends Component {
   constructor(props) {
@@ -17,7 +18,7 @@ class BlockingPoliciesPage extends Component {
         BlockingPolicySets: [],
         UnassignedBlockingPolicySetTracks: [],
       },
-      dragSource: null,
+      dragSource: [],
       showLoader: false,
     };
     this.handleChange = this.handleChange.bind(this);
@@ -250,34 +251,36 @@ class BlockingPoliciesPage extends Component {
   };
 
   handleChildDrag = e => {
-    this.setState({ dragSource: e.target });
+    this.setState({ dragSource: e });
   };
 
   handleChildDrop = (e, i) => {
-    const { UnassignedBlockingPolicySetTracks } = this.state.project;
-    const { tracks } = this.state.project.BlockingPolicySets[i];
-    let dragTrackIndex = this.state.dragSource
-      ? this.state.dragSource.getAttribute('trackindex')
-      : null;
+    const { dragSource } = this.state;
+    const { UnassignedBlockingPolicySetTracks, BlockingPolicySets } = this.state.project;
+
+    let dragTrackId = [];
+    for (let j = 0; j < dragSource.length; j++) {
+      dragTrackId.push(dragSource[j] ? dragSource[j].getAttribute('trackid') : []);
+      BlockingPolicySets[i].tracks.push({
+        trackID: dragSource[j].getAttribute('trackid'),
+        trackTitle: dragSource[j].getAttribute('tracktitle'),
+      });
+    }
 
     let modifiedUnassignedBlockingPolicySetTracks = UnassignedBlockingPolicySetTracks;
-    modifiedUnassignedBlockingPolicySetTracks.splice(dragTrackIndex, 1);
-
-    let modifiedTracks = tracks;
-    modifiedTracks.push({
-      trackID: this.state.dragSource.getAttribute('trackid'),
-      trackTitle: this.state.dragSource.getAttribute('tracktitle'),
-    });
+    modifiedUnassignedBlockingPolicySetTracks = _.filter(
+      UnassignedBlockingPolicySetTracks,
+      val => !dragTrackId.includes(val.trackID),
+    );
 
     this.setState({
-      UnassignedBlockingPolicySetTracks: modifiedUnassignedBlockingPolicySetTracks,
-      tracks: modifiedTracks,
-      dragSource: null,
+      project: {
+        ...this.state.project,
+        BlockingPolicySets: BlockingPolicySets,
+        UnassignedBlockingPolicySetTracks: modifiedUnassignedBlockingPolicySetTracks,
+        dragSource: null,
+      },
     });
-  };
-
-  handleChildDrag = e => {
-    this.setState({ dragSource: e.target });
   };
 
   handleTrackSelect = e => {
@@ -302,31 +305,45 @@ class BlockingPoliciesPage extends Component {
   };
 
   handleDropAdd = e => {
-    const setIndex = this.state.dragSource.getAttribute('setindex');
-    const trackId = this.state.dragSource.getAttribute('trackid');
-    const trackTitle = this.state.dragSource.getAttribute('trackTitle');
-    const trackIndex = this.state.dragSource.getAttribute('trackindex');
+    const { dragSource } = this.state;
+    for (let i = 0; i < dragSource.length; i++) {
+      const setIndex = dragSource[i].getAttribute('setindex');
+      const trackId = dragSource[i].getAttribute('trackid');
+      const trackTitle = dragSource[i].getAttribute('trackTitle');
+      const trackIndex = dragSource[i].getAttribute('trackindex');
 
-    // restrict dropping to just the set tracks
-    if (
-      (this.state.dragSource && !this.state.dragSource.classList.contains('unassignedTrack')) ||
-      !e.target.classList.contains('unassignedTrack')
-    ) {
-      //add the selection to the unassigned tracks
-      const { UnassignedBlockingPolicySetTracks } = this.state.project;
+      // restrict dropping to just the set tracks
+      if (
+        (dragSource[i] && !dragSource[i].classList.contains('unassignedTrack')) ||
+        !e.target.classList.contains('unassignedTrack')
+      ) {
+        //add the selection to the unassigned tracks
+        const { UnassignedBlockingPolicySetTracks } = this.state.project;
 
-      let modifiedUnassignedBlockingPolicySetTracks = UnassignedBlockingPolicySetTracks;
-      modifiedUnassignedBlockingPolicySetTracks.push({ trackID: trackId, trackTitle: trackTitle });
+        let modifiedUnassignedBlockingPolicySetTracks = UnassignedBlockingPolicySetTracks;
+        modifiedUnassignedBlockingPolicySetTracks.push({
+          trackID: trackId,
+          trackTitle: trackTitle,
+        });
 
-      //remove the selection from the set's assigned tracks
-      const { BlockingPolicySets } = this.state.project;
+        //remove the selection from the set's assigned tracks
+        const { BlockingPolicySets } = this.state.project;
 
-      let modifiedBlockingPolicySets = BlockingPolicySets;
-      modifiedBlockingPolicySets[setIndex].tracks.splice(trackIndex, 1);
-      this.setState({
-        BlockingPolicySets: modifiedBlockingPolicySets,
-        UnassignedBlockingPolicySetTracks: modifiedUnassignedBlockingPolicySetTracks,
-      });
+        let modifiedBlockingPolicySets = BlockingPolicySets;
+
+        modifiedBlockingPolicySets[setIndex].tracks = _.filter(
+          BlockingPolicySets[setIndex].tracks,
+          val => val.trackID !== trackId,
+        );
+
+        this.setState({
+          project: {
+            ...this.state.project,
+            BlockingPolicySets: modifiedBlockingPolicySets,
+            UnassignedBlockingPolicySetTracks: modifiedUnassignedBlockingPolicySetTracks,
+          },
+        });
+      }
     }
   };
 
