@@ -151,3 +151,18 @@ button.btn.btn-secondary.action.align-middle {
   margin-left: 4px;
   height: 1.9rem;
 }
+
+.select-all {
+  display: flex;
+  align-items: center;
+  padding-left: 6px;
+}
+
+.select-all span {
+  padding-left: 10px;
+}
+
+.rightsSetTracks .custom-checkbox,
+.unassignedTrack .custom-checkbox {
+  margin: 0 6px;
+}

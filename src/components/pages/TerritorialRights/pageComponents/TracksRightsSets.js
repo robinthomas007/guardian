@@ -3,6 +3,7 @@ import MultiSelectDropDown from '../../../SharedPageComponents/multiSelectDropdo
 import TracksRightsRule from '../../TerritorialRights/pageComponents/TracksRightsRule';
 import TracksSelectDropDown from '../../TerritorialRights/pageComponents/TracksSelectDropDown';
 import TracksDropArea from '../../TerritorialRights/pageComponents/TracksDropArea';
+import _ from 'lodash';
 
 class TracksRightsSets extends Component {
   constructor(props) {
@@ -78,7 +79,7 @@ class TracksRightsSets extends Component {
     // if(wwIndex >= 0) {
     //     inputValue = this.handleCountrySelect(inputValue, wwIndex);
     // }
-
+    inputValue = _.union(inputValue);
     let formattedInputValues = inputValue.map(countryID => {
       return this.getCountryNameByID(countryID);
     });
@@ -92,8 +93,20 @@ class TracksRightsSets extends Component {
   handleRightsRuleChange = (inputValue, setIndex) => {
     const { TerritorialRightsSets } = this.props.data;
     let modifiedTerritorialRightsSets = TerritorialRightsSets;
+    console.log(modifiedTerritorialRightsSets, 'modifiedTerritorialRightsSets');
     modifiedTerritorialRightsSets[setIndex].hasRights = inputValue;
+    if (modifiedTerritorialRightsSets[setIndex].countries.length === 0) {
+      modifiedTerritorialRightsSets[setIndex].countries.push({
+        id: 'WW',
+        name: 'Worldwide',
+      });
+    }
     this.props.handleChange(modifiedTerritorialRightsSets);
+
+    if (!inputValue) {
+      modifiedTerritorialRightsSets[setIndex].countries = [];
+      this.props.handleChange(modifiedTerritorialRightsSets);
+    }
   };
 
   handleDeleteButton = i => {
@@ -179,6 +192,7 @@ class TracksRightsSets extends Component {
                   <td className="col-4">
                     <div className="dropdown">
                       <MultiSelectDropDown
+                        disabled={!rightsSet.hasRights}
                         placeHolder={'Select Country'}
                         optionList={this.props.data.Countries}
                         value={this.getCountryIDs(rightsSet.countries)}

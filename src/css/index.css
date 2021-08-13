@@ -1382,3 +1382,7 @@ th.sortable {
   width: 50% !important;
   padding-left: 20px;
 }
+
+.multi-select button#dropdownMenuButton:disabled {
+  background-color: #6c757d !important;
+}

@@ -63,8 +63,12 @@ class TerritorialRightsPage extends Component {
   };
 
   handleChange = modifiedTerritorialRightsSets => {
-    const { TerritorialRightsSets } = this.state.project;
-    this.setState({ TerritorialRightsSets: modifiedTerritorialRightsSets });
+    this.setState({
+      project: {
+        ...this.state.project,
+        TerritorialRightsSets: modifiedTerritorialRightsSets,
+      },
+    });
   };
 
   getRightsSet(set, index) {

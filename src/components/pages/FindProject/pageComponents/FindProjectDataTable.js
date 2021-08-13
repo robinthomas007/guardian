@@ -187,7 +187,7 @@ class FindProjectDataTable extends Component {
               onClick={() => this.handleRowClick(project.projectID)}
               className="col-1 text-center"
             >
-              {convertToLocaleTime(project.projectLastModified)}
+              {convertToLocaleTime(project.projectLastModified)} UTC
             </td>
             <td onClick={() => this.handleRowClick(project.projectID)} className="col-2">
               {project.projectTitle}

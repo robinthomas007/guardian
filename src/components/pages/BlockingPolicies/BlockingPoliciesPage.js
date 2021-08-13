@@ -379,7 +379,7 @@ class BlockingPoliciesPage extends Component {
   }
 
   showNotification(e, projectID, saveAndContinue) {
-    showNotyInfo('Your track information has been successfully saved.', () => {
+    showNotyInfo('Your blocking preferences have been successfully saved.', () => {
       if (saveAndContinue) {
         this.props.history.push({
           pathname: '/reviewSubmit/' + projectID,

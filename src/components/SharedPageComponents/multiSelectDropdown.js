@@ -84,6 +84,7 @@ class MultiSelectDropDown extends Component {
           aria-expanded="false"
           onClick={this.toggleShow}
           onBlur={this.hide}
+          disabled={this.props.disabled}
         >
           {this.props.placeHolder}
         </button>

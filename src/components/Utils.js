@@ -178,7 +178,14 @@ export function showNotyInfo(message, afterClose) {
 export const CustomInput = props => {
   return (
     <div className="custom-date-picker">
-      <input onClick={props.onClick} value={props.value} type="text" readOnly={props.isreadOnly} />
+      <input
+        onClick={props.onClick}
+        className={props.adClass}
+        tabIndex={props.tabIndex}
+        value={props.value}
+        type="text"
+        readOnly={props.isreadOnly}
+      />
       {!props.value && (
         <i onClick={props.onClick} aria-hidden="true" class="material-icons calendar">
           date_range

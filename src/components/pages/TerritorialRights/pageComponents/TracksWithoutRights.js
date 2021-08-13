@@ -3,7 +3,9 @@ import React, { Component } from 'react';
 class TracksWithoutRights extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      selectAllNoRights: false,
+    };
   }
 
   handleAllowDrop(e) {
@@ -32,11 +34,27 @@ class TracksWithoutRights extends Component {
       this.props.handleChildDrag([e.target]);
       e.dataTransfer.setData('text/html', e.target);
     }
+    this.setState({ selectAllNoRights: false });
   }
 
   toggleChange = e => {
     this.setState({
       [e.target.name]: !this.state[e.target.name],
+    });
+  };
+
+  selectAll = e => {
+    const { selectAllNoRights } = this.state;
+    for (let i = 0; i < this.props.data.length; i++) {
+      let checkName = `check_${this.props.data[i].trackID}`;
+      if (!selectAllNoRights) {
+        this.setState({ [checkName]: true });
+      } else {
+        this.setState({ [checkName]: false });
+      }
+    }
+    this.setState({
+      selectAllNoRights: !selectAllNoRights,
     });
   };
 
@@ -54,14 +72,17 @@ class TracksWithoutRights extends Component {
             onDragStart={e => this.handleDrag(e, i, track)}
             id={`check_${track.trackID}`}
           >
-            <input
-              onChange={this.toggleChange}
-              className="track-multi-drag-check"
-              checked={this.state[`check_${track.trackID}`]}
-              type="checkbox"
-              id={`check_${track.trackID}`}
-              name={`check_${track.trackID}`}
-            />
+            <label className="custom-checkbox">
+              <input
+                onChange={this.toggleChange}
+                className="track-multi-drag-check"
+                checked={this.state[`check_${track.trackID}`]}
+                type="checkbox"
+                id={`check_${track.trackID}`}
+                name={`check_${track.trackID}`}
+              />
+              <span className="checkmark "></span>
+            </label>
             <i className="material-icons">dehaze</i>&nbsp;&nbsp;{track.trackTitle}
           </div>
         );
@@ -71,12 +92,30 @@ class TracksWithoutRights extends Component {
   };
 
   render() {
+    const { selectAllNoRights } = this.state;
+    const { data } = this.props;
     return (
       <div
         className="track-draggable-area d-flex flex-column h-100 unassignedTrack"
         onDrop={e => this.handleDrop(e)}
         onDragOver={this.handleAllowDrop}
       >
+        {data && data.length > 1 && (
+          <div className="select-all">
+            <label className="custom-checkbox">
+              <input
+                onChange={this.selectAll}
+                className="track-multi-drag-check"
+                checked={selectAllNoRights}
+                type="checkbox"
+                id="selectAllNoRights"
+                name="selectAllNoRights"
+              />
+              <span className="checkmark "></span>
+            </label>
+            <span>Selecl All</span>
+          </div>
+        )}
         <div className="sticky-box">{this.getTracksList()}</div>
       </div>
     );

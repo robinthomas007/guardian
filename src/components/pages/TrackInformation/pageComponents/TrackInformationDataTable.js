@@ -104,6 +104,7 @@ class TrackInformationDataTable extends Component {
     let datePickers = document.getElementsByClassName('trackReleaseDateInput');
     let sortedInputs = [];
     for (var i = 0; i < datePickers.length; i++) {
+      console.log(datePickers[i].getAttribute('tabIndex'), this.props.discID, 'Asddasd');
       if (parseInt(datePickers[i].getAttribute('tabIndex')) === parseInt(this.props.discID)) {
         sortedInputs.push(datePickers[i]);
       }
@@ -277,7 +278,6 @@ class TrackInformationDataTable extends Component {
                 id={'trackReleaseDate'}
                 showTimeSelect
                 tabIndex={this.props.discID} // unable to add custom attribute in react-datepicker
-                className="trackReleaseDateInput"
                 selected={
                   track.trackReleaseDate && track.trackReleaseDate != ''
                     ? new Date(track.trackReleaseDate)
@@ -287,7 +287,9 @@ class TrackInformationDataTable extends Component {
                 dateFormat="Pp"
                 placeholderText="Select release date"
                 onChange={date => this.handleDateChange(date, track)}
-                customInput={<CustomInput />}
+                customInput={
+                  <CustomInput tabIndex={this.props.discID} adClass="trackReleaseDateInput" />
+                }
                 isClearable={true}
               />
             </td>
@@ -298,7 +300,7 @@ class TrackInformationDataTable extends Component {
                   id={'tbdReleaseDate'}
                   checked={this.handleTBDCheckedLoad(track)}
                   value={this.handleTBDCheckedLoad(track)}
-                  disabled={track.isTbdDisabled}
+                  disabled={track.isTbdDisabled || !pre}
                   onChange={evt => this.handleTBDClick(evt, track, i)}
                 />
                 <span className="checkmark"></span>
