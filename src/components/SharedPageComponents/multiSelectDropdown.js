@@ -72,6 +72,16 @@ class MultiSelectDropDown extends Component {
     this.setState({ value: this.props.value });
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.clear !== nextProps.clear) {
+      if (!nextProps.clear) {
+        this.setState({ value: [] });
+      } else {
+        this.setState({ value: nextProps.value });
+      }
+    }
+  }
+
   render() {
     return (
       <div className="multi-select dropdown">

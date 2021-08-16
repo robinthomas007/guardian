@@ -93,7 +93,6 @@ class TracksRightsSets extends Component {
   handleRightsRuleChange = (inputValue, setIndex) => {
     const { TerritorialRightsSets } = this.props.data;
     let modifiedTerritorialRightsSets = TerritorialRightsSets;
-    console.log(modifiedTerritorialRightsSets, 'modifiedTerritorialRightsSets');
     modifiedTerritorialRightsSets[setIndex].hasRights = inputValue;
     if (modifiedTerritorialRightsSets[setIndex].countries.length === 0) {
       modifiedTerritorialRightsSets[setIndex].countries.push({
@@ -192,7 +191,7 @@ class TracksRightsSets extends Component {
                   <td className="col-4">
                     <div className="dropdown">
                       <MultiSelectDropDown
-                        disabled={!rightsSet.hasRights}
+                        clear={rightsSet.hasRights}
                         placeHolder={'Select Country'}
                         optionList={this.props.data.Countries}
                         value={this.getCountryIDs(rightsSet.countries)}

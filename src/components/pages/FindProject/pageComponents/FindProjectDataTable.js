@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { convertToLocaleTime } from '../../../Utils';
 import { Table } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import AdminStatusDropdown from '../pageComponents/AdminStatusDropdown';
 import LoadingImg from '../../../ui/LoadingImg';
 import { showNotyInfo, showNotyAutoError } from 'components/Utils';
+import moment from 'moment';
 
 class FindProjectDataTable extends Component {
   constructor(props) {
@@ -183,16 +183,13 @@ class FindProjectDataTable extends Component {
         return (
           <tr className="d-flex w-100" key={i}>
             {this.props.userData.IsAdmin ? this.getAdminButtons(project) : null}
-            <td
-              onClick={() => this.handleRowClick(project.projectID)}
-              className="col-1 text-center"
-            >
-              {convertToLocaleTime(project.projectLastModified)} UTC
+            <td onClick={() => this.handleRowClick(project.projectID)} className="col-2">
+              {moment.utc(project.projectLastModified).format('DD-MM-YYYY hh:mm A')} UTC
             </td>
             <td onClick={() => this.handleRowClick(project.projectID)} className="col-2">
               {project.projectTitle}
             </td>
-            <td onClick={() => this.handleRowClick(project.projectID)} className="col-2">
+            <td onClick={() => this.handleRowClick(project.projectID)} className="col-1">
               {project.projectArtistName}
             </td>
             <td onClick={() => this.handleRowClick(project.projectID)} className="col-1">
@@ -223,25 +220,25 @@ class FindProjectDataTable extends Component {
             </td>
             <td
               onClick={() => this.handleRowClick(project.projectID)}
-              className="status text-center"
+              className="col-1 status text-center"
             >
               {this.checkProjectStepStatus(project.isAudioFilesComplete)}
             </td>
             <td
               onClick={() => this.handleRowClick(project.projectID)}
-              className="status text-center"
+              className="col-1 status text-center"
             >
               {this.checkProjectStepStatus(project.isTrackInfoComplete)}
             </td>
             <td
               onClick={() => this.handleRowClick(project.projectID)}
-              className="status text-center"
+              className="col-1 status text-center"
             >
               {this.checkProjectStepStatus(project.isTerritorialRightsComplete)}
             </td>
             <td
               onClick={() => this.handleRowClick(project.projectID)}
-              className="status text-center"
+              className="col-1 status text-center"
             >
               {this.checkProjectStepStatus(project.isBlockingPoliciesComplete)}
             </td>
@@ -258,7 +255,7 @@ class FindProjectDataTable extends Component {
         <tr className="d-flex w-100">
           {this.props.userData.IsAdmin ? <th className="col-1 text-center">Actions</th> : null}
           <th
-            className="col-1 sortable"
+            className="col-2 sortable"
             onMouseOver={(e, columnID) => this.handleMouseOver(e, 'last_updated')}
             onMouseOut={(e, columnID) => this.handleMouseOut(e, 'last_updated')}
             onClick={id => this.handleTableSort('last_updated')}
@@ -290,7 +287,7 @@ class FindProjectDataTable extends Component {
             </i>
           </th>
           <th
-            className="col-2 sortable"
+            className="col-1 sortable"
             onMouseOver={(e, columnID) => this.handleMouseOver(e, 'artist')}
             onMouseOut={(e, columnID) => this.handleMouseOut(e, 'artist')}
             onClick={id => this.handleTableSort('artist')}
@@ -352,10 +349,10 @@ class FindProjectDataTable extends Component {
             </i>
           </th>
 
-          <th className="status text-center">Has Audio</th>
-          <th className="status text-center">Has Tracks</th>
-          <th className="status text-center">Has Rights</th>
-          <th className="status text-center">Has Blocking</th>
+          <th className="col-1 status text-center">Has Audio</th>
+          <th className="col-1 status text-center">Has Tracks</th>
+          <th className="col-1 status text-center">Has Rights</th>
+          <th className="col-1 status text-center">Has Blocking</th>
         </tr>
       </thead>
     );

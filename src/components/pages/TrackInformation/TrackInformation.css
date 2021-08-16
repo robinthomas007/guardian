@@ -98,3 +98,12 @@ table.table.track-information button.btn.btn-secondary.action {
 .react-datepicker {
   display: flex;
 }
+
+span.checkmark.disabled {
+  background: #a0a6aa;
+}
+
+.custom-checkbox:hover input ~ .checkmark.disabled {
+  background-color: #ccc;
+  border: solid 1px #ccc;
+}

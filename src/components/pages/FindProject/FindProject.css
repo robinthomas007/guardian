@@ -180,3 +180,7 @@ ul.row.search-row div.col-2 label {
   border: 1px solid #ddd;
   margin: 0px !important;
 }
+
+.full-width-table {
+  padding: 0px 110px;
+}

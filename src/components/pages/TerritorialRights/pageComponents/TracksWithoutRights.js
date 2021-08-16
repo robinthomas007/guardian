@@ -113,7 +113,7 @@ class TracksWithoutRights extends Component {
               />
               <span className="checkmark "></span>
             </label>
-            <span>Selecl All</span>
+            <span>Select All</span>
           </div>
         )}
         <div className="sticky-box">{this.getTracksList()}</div>

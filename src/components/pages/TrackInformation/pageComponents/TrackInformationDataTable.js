@@ -303,7 +303,9 @@ class TrackInformationDataTable extends Component {
                   disabled={track.isTbdDisabled || !pre}
                   onChange={evt => this.handleTBDClick(evt, track, i)}
                 />
-                <span className="checkmark"></span>
+                <span
+                  className={`checkmark ${track.isTbdDisabled || !pre ? 'disabled' : ''}`}
+                ></span>
               </label>
             </td>
             <td className="text-center">

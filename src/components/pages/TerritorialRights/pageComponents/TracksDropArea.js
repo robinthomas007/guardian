@@ -124,7 +124,7 @@ class TracksDropArea extends Component {
               />
               <span className="checkmark "></span>
             </label>
-            <span>Selecl All</span>
+            <span>Select All</span>
           </div>
         )}
 
