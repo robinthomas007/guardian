@@ -6,6 +6,7 @@
   height: 190px;
   background-color: #d9f3fe;
 }
+
 .audio-drop-area span {
   display: block;
   margin: 0 auto;
@@ -20,6 +21,7 @@
   padding: 0.3rem 0.6rem;
   vertical-align: top;
 }
+
 .draggable-track {
   border-radius: 2px;
   background-color: #fff;
@@ -51,9 +53,11 @@ input[type='file'] {
   border: 1px dashed #ccc;
   cursor: grab;
 }
+
 .sortable-audio-file .material-icons {
   padding-right: 10px;
 }
+
 .sortable-audio-file span {
   line-height: 24px;
 }
@@ -63,15 +67,19 @@ input[type='file'] {
   flex-direction: column;
   margin: 0px 40px 40px 40px;
 }
+
 .table-section .nav-tabs {
   border-bottom: none;
 }
+
 .table-section .nav-link:first-child {
   margin-left: 30px;
 }
+
 .table-section .nav-link.active {
   border: none;
 }
+
 .table-section .tab-pane {
   background-color: #fff;
   padding: 30px;
