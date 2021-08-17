@@ -150,6 +150,12 @@ class FindProjectDataTable extends Component {
       });
   };
 
+  checkboxChange = e => {
+    this.setState({
+      [e.target.name]: !this.state[e.target.name],
+    });
+  };
+
   getAdminButtons = project => {
     return (
       <td className="col-1 text-center">
@@ -182,6 +188,22 @@ class FindProjectDataTable extends Component {
       const tableRows = this.props.data.Projects.map((project, i) => {
         return (
           <tr className="d-flex w-100" key={i}>
+            <td>
+              {' '}
+              <div className="select-all">
+                <label className="custom-checkbox">
+                  <input
+                    onChange={this.checkboxChange}
+                    className="track-multi-drag-check"
+                    checked={this.state[`check_${project.projectID}`]}
+                    type="checkbox"
+                    id="selectAll"
+                    name={`check_${project.projectID}`}
+                  />
+                  <span className="checkmark "></span>
+                </label>
+              </div>
+            </td>
             {this.props.userData.IsAdmin ? this.getAdminButtons(project) : null}
             <td onClick={() => this.handleRowClick(project.projectID)} className="col-2">
               {moment.utc(project.projectLastModified).format('DD-MM-YYYY hh:mm A')} UTC
@@ -249,11 +271,42 @@ class FindProjectDataTable extends Component {
     }
   }
 
+  selectAll = e => {
+    const { selectAllItem } = this.state;
+    const { Projects } = this.props.data;
+    for (let i = 0; i < Projects.length; i++) {
+      let checkName = `check_${Projects[i].projectID}`;
+      if (!selectAllItem) {
+        this.setState({ [checkName]: true });
+      } else {
+        this.setState({ [checkName]: false });
+      }
+    }
+    this.setState({
+      selectAllItem: !selectAllItem,
+    });
+  };
+
   getDataTable = () => {
     return (
       <thead>
         <tr className="d-flex w-100">
           {this.props.userData.IsAdmin ? <th className="col-1 text-center">Actions</th> : null}
+          <th>
+            <div className="select-all">
+              <label className="custom-checkbox">
+                <input
+                  onChange={this.selectAll}
+                  className="track-multi-drag-check"
+                  checked={this.state.selectAllItem}
+                  type="checkbox"
+                  id="selectAll"
+                  name="selectAll"
+                />
+                <span className="checkmark "></span>
+              </label>
+            </div>
+          </th>
           <th
             className="col-2 sortable"
             onMouseOver={(e, columnID) => this.handleMouseOver(e, 'last_updated')}

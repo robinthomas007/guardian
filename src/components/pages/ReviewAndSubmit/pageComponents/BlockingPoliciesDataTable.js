@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { formatDateToYYYYMMDD } from '../../../Utils';
+import moment from 'moment';
 
 class BlockingPoliciesDataTable extends Component {
   constructor(props) {
@@ -15,7 +15,9 @@ class BlockingPoliciesDataTable extends Component {
         : 'Block All Until ' + platform.expirationDate
       : 'Block ' +
           platform.duration +
-          (platform.expirationDate ? ' Until ' + platform.expirationDate : ' Always ');
+          (platform.expirationDate
+            ? ' Until ' + moment(platform.expirationDate).format('DD-MM-YYYY')
+            : ' Always ');
   };
 
   getTrackPolicies = platforms => {
