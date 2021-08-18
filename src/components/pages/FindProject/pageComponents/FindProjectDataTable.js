@@ -188,7 +188,7 @@ class FindProjectDataTable extends Component {
       const tableRows = this.props.data.Projects.map((project, i) => {
         return (
           <tr className="d-flex w-100" key={i}>
-            <td>
+            <td className="col-1 col-1-small">
               {' '}
               <div className="select-all">
                 <label className="custom-checkbox">
@@ -205,10 +205,10 @@ class FindProjectDataTable extends Component {
               </div>
             </td>
             {this.props.userData.IsAdmin ? this.getAdminButtons(project) : null}
-            <td onClick={() => this.handleRowClick(project.projectID)} className="col-2">
-              {moment.utc(project.projectLastModified).format('DD-MM-YYYY hh:mm A')} (UTC)
+            <td onClick={() => this.handleRowClick(project.projectID)} className="col-1">
+              {moment.utc(project.projectLastModified).format('DD-MM-YYYY hh:mm A')} UTC
             </td>
-            <td onClick={() => this.handleRowClick(project.projectID)} className="col-2">
+            <td onClick={() => this.handleRowClick(project.projectID)} className="col-1">
               {project.projectTitle}
             </td>
             <td onClick={() => this.handleRowClick(project.projectID)} className="col-1">
@@ -218,13 +218,13 @@ class FindProjectDataTable extends Component {
               {project.projectReleasingLabel}
             </td>
             <td onClick={() => this.handleRowClick(project.projectID)} className="col-1">
-              {project.projectReleasingDate}
+              {moment.utc(project.projectReleaseDate).format('DD-MM-YYYY hh:mm A')} UTC
             </td>
             <td
               onClick={() =>
                 !this.props.userData.IsAdmin ? this.handleRowClick(project.projectID) : null
               }
-              className="col-1 status text-nowrap"
+              className="col-1 col-1-big status text-nowrap"
             >
               <span>
                 {this.props.userData.IsAdmin ? (
@@ -291,8 +291,7 @@ class FindProjectDataTable extends Component {
     return (
       <thead>
         <tr className="d-flex w-100">
-          {this.props.userData.IsAdmin ? <th className="col-1 text-center">Actions</th> : null}
-          <th>
+          <th className="col-1 col-1-small">
             <div className="select-all">
               <label className="custom-checkbox">
                 <input
@@ -307,8 +306,9 @@ class FindProjectDataTable extends Component {
               </label>
             </div>
           </th>
+          {this.props.userData.IsAdmin ? <th className="col-1 text-center">Actions</th> : null}
           <th
-            className="col-2 sortable"
+            className="col-1 sortable"
             onMouseOver={(e, columnID) => this.handleMouseOver(e, 'last_updated')}
             onMouseOut={(e, columnID) => this.handleMouseOut(e, 'last_updated')}
             onClick={id => this.handleTableSort('last_updated')}
@@ -325,7 +325,7 @@ class FindProjectDataTable extends Component {
             </i>
           </th>
           <th
-            className="col-2 text-nowrap sortable"
+            className="col-1 text-nowrap sortable"
             onMouseOver={(e, columnID) => this.handleMouseOver(e, 'title')}
             onMouseOut={(e, columnID) => this.handleMouseOut(e, 'title')}
             onClick={id => this.handleTableSort('title')}
@@ -375,7 +375,7 @@ class FindProjectDataTable extends Component {
             onMouseOut={(e, columnID) => this.handleMouseOut(e, 'release_dates')}
             onClick={id => this.handleTableSort('release_dates')}
           >
-            Release Dates{this.handleSortDisplay('release_dates')}
+            Release Date{this.handleSortDisplay('release_dates')}
             <i
               className={
                 this.state.activeHover === 'release_dates'
@@ -387,7 +387,7 @@ class FindProjectDataTable extends Component {
             </i>
           </th>
           <th
-            className="col-1 sortable"
+            className="col-1 col-1-big sortable"
             onMouseOver={(e, columnID) => this.handleMouseOver(e, 'status')}
             onMouseOut={(e, columnID) => this.handleMouseOut(e, 'status')}
             onClick={id => this.handleTableSort('status')}
@@ -422,7 +422,7 @@ class FindProjectDataTable extends Component {
     return (
       <div>
         <LoadingImg show={this.state.showloader} />
-        <Table className="search-table">
+        <Table className="search-table find-a-project-table">
           {this.getDataTable()}
           <tbody>{this.renderProjects()}</tbody>
         </Table>

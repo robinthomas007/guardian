@@ -182,5 +182,19 @@ ul.row.search-row div.col-2 label {
 }
 
 .full-width-table {
-  padding: 0px 110px;
+  padding: 0px 90px;
+}
+
+.col-1-small {
+  flex: 0 0 5.333333%;
+  max-width: 5.333333%;
+}
+
+.col-1-big {
+  flex: 0 0 11.333333%;
+  max-width: 11.333333%;
+}
+
+.find-a-project-table th.col-1.sortable {
+  white-space: nowrap;
 }
