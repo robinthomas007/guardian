@@ -131,7 +131,7 @@ class TerritorialRightsPage extends Component {
   handleNoRightsTracksRemove = (i, trackID) => {
     const { UnassignedTerritorialRightsSetTracks } = this.state.project;
     let modifiedUnassignedTracks = UnassignedTerritorialRightsSetTracks;
-    if (i) {
+    if (i || i >= 0) {
       modifiedUnassignedTracks.splice(i, 1);
       this.setState({
         project: {
@@ -185,6 +185,7 @@ class TerritorialRightsPage extends Component {
         });
       }
     }
+    this.setState({ dragSource: [] });
   };
 
   handleChildDrag = e => {
@@ -198,7 +199,7 @@ class TerritorialRightsPage extends Component {
       dragTrackId.push(dragSource[j] ? dragSource[j].getAttribute('trackId') : []);
     }
     this.handleNoRightsTracksRemove(i, dragTrackId);
-    this.setState({ dragSource: null });
+    this.setState({ dragSource: [] });
   };
 
   showNotification(saveAndContinue, projectID) {
