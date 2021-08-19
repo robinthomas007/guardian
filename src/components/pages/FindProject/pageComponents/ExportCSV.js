@@ -49,7 +49,7 @@ export default class ExportCSV extends React.Component {
   render() {
     const { loading, data, headers } = this.state;
     return (
-      <div style={{ float: 'right' }}>
+      <div style={{ textAlign: 'right', width: '100%' }}>
         <button
           onClick={this.exportToCSV}
           className="btn btn-secondary"

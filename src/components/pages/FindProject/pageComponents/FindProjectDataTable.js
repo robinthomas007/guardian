@@ -387,7 +387,7 @@ class FindProjectDataTable extends Component {
             </i>
           </th>
           <th
-            className="col-1 col-1-big sortable"
+            className="col-1 col-1-big sortable pad-lft-20"
             onMouseOver={(e, columnID) => this.handleMouseOver(e, 'status')}
             onMouseOut={(e, columnID) => this.handleMouseOut(e, 'status')}
             onClick={id => this.handleTableSort('status')}

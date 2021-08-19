@@ -105,91 +105,87 @@ class FindProjectPage extends Component {
   render() {
     const { loading, result, handleSubmit, searchCriteria, facets } = this.props;
     return (
-      <div className="row">
-        <div className="col-1"></div>
-        <div className="col-10">
-          <IntroModal />
-          <LoadingImg show={loading} />
+      <div className="col-10">
+        <IntroModal />
+        <LoadingImg show={loading} />
 
-          <div className="row d-flex no-gutters">
-            <div className="col-12">
-              <h2>Project Search</h2>
-              <p>
-                Search for an existing project or release in the search bar below. Projects can be
-                located by Artist, Track, ISRC or Project Title (Album, Compilation, EP, or Single
-                name). <br />
-                Can't find what you're looking for? Email us at{' '}
-                <a href="mailto:guardian-support@umusic.com">guardian-support@umusic.com</a>.
-              </p>
-            </div>
+        <div className="row d-flex no-gutters">
+          <div className="col-12">
+            <h2>Project Search</h2>
+            <p>
+              Search for an existing project or release in the search bar below. Projects can be
+              located by Artist, Track, ISRC or Project Title (Album, Compilation, EP, or Single
+              name). <br />
+              Can't find what you're looking for? Email us at{' '}
+              <a href="mailto:guardian-support@umusic.com">guardian-support@umusic.com</a>.
+            </p>
           </div>
-          <br />
-          <br />
-          <form onSubmit={handleSubmit(this.formSubmit)}>
-            <ul className="row search-row">
-              <li className="col-2 d-flex"></li>
-              <li className="col-8 d-flex justify-content-center">
-                <button
-                  onClick={this.handleFilterModalView}
-                  className="btn btn-secondary "
-                  type="button"
-                  id="dropdownMenuButton"
-                  data-toggle="collapse"
-                  data-target="#collapsePanel"
-                  aria-expanded="false"
-                  aria-controls="collapsePanel"
-                >
-                  <i className="material-icons">settings</i> Filters
-                </button>
-                <div className="search-bar">
-                  <Field name="searchTerm" component={InputField} />
-                </div>
-                <button id="projectSearchButton" className="btn btn-primary">
-                  <i className="material-icons">search</i> Search
-                </button>
-              </li>
-              <li className="col-2 d-flex"></li>
-            </ul>
-
-            <Filter
-              getFromDate={getFromDate}
-              getToDate={getToDate}
-              {...this.props}
-              data={facets}
-              handleProjectSearch={this.props.handleProjectSearch}
-              saveFilters={this.props.saveFilters}
-              searchCriteria={searchCriteria}
-              getSearchCriteria={getSearchCriteria}
-            />
-
-            <ExportCSV formValues={this.props.formValues} getSearchCriteria={getSearchCriteria} />
-          </form>
-
-          <ul className="row results-controls">
-            <li className="col-4 d-flex">
-              <span className="viewing">Viewing</span>
-              <ProjectsViewDropDown
-                itemsPerPage={searchCriteria.itemsPerPage}
-                onChange={this.setProjectsView}
-              />
-              <span className="viewing">of {result.TotalItems} Results</span>
-            </li>
-            <li className="col-4 d-flex justify-content-center">
-              <nav aria-label="Page navigation example">
-                <TablePager
-                  activePage={searchCriteria.pageNumber}
-                  totalItems={result.TotalItems}
-                  itemsPerPage={result.ItemsPerPage}
-                  handlePaginationChange={this.handlePaginationChange}
-                  projectViewCount={searchCriteria.itemsPerPage}
-                />
-              </nav>
-            </li>
-            <li className="col-4 d-flex"></li>
-          </ul>
         </div>
-        <div className="col-1"></div>
-        <div className="table-responsive col-12 full-width-table">
+        <br />
+        <br />
+        <form onSubmit={handleSubmit(this.formSubmit)}>
+          <ul className="row search-row">
+            <li className="col-2 d-flex"></li>
+            <li className="col-8 d-flex justify-content-center">
+              <button
+                onClick={this.handleFilterModalView}
+                className="btn btn-secondary "
+                type="button"
+                id="dropdownMenuButton"
+                data-toggle="collapse"
+                data-target="#collapsePanel"
+                aria-expanded="false"
+                aria-controls="collapsePanel"
+              >
+                <i className="material-icons">settings</i> Filters
+              </button>
+              <div className="search-bar">
+                <Field name="searchTerm" component={InputField} />
+              </div>
+              <button id="projectSearchButton" className="btn btn-primary">
+                <i className="material-icons">search</i> Search
+              </button>
+            </li>
+            <li className="col-2 d-flex"></li>
+          </ul>
+
+          <Filter
+            getFromDate={getFromDate}
+            getToDate={getToDate}
+            {...this.props}
+            data={facets}
+            handleProjectSearch={this.props.handleProjectSearch}
+            saveFilters={this.props.saveFilters}
+            searchCriteria={searchCriteria}
+            getSearchCriteria={getSearchCriteria}
+          />
+        </form>
+
+        <ul className="row results-controls">
+          <li className="col-4 d-flex">
+            <span className="viewing">Viewing</span>
+            <ProjectsViewDropDown
+              itemsPerPage={searchCriteria.itemsPerPage}
+              onChange={this.setProjectsView}
+            />
+            <span className="viewing">of {result.TotalItems} Results</span>
+          </li>
+          <li className="col-4 d-flex justify-content-center pagination-wrap">
+            <nav aria-label="Page navigation example">
+              <TablePager
+                activePage={searchCriteria.pageNumber}
+                totalItems={result.TotalItems}
+                itemsPerPage={result.ItemsPerPage}
+                handlePaginationChange={this.handlePaginationChange}
+                projectViewCount={searchCriteria.itemsPerPage}
+              />
+            </nav>
+          </li>
+          <li className="col-4 d-flex">
+            <ExportCSV formValues={this.props.formValues} getSearchCriteria={getSearchCriteria} />
+          </li>
+        </ul>
+        <div className="table-responsive row">
           <FindProjectDataTable
             userData={JSON.parse(sessionStorage.getItem('user'))}
             data={result}

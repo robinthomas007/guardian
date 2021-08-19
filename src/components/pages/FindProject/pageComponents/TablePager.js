@@ -4,9 +4,7 @@ import ReactPaginate from 'react-paginate';
 class TablePager extends Component {
   handlePageClick = data => {
     let selected = data.selected;
-    if (selected > 0) {
-      this.props.handlePaginationChange(selected + 1);
-    }
+    this.props.handlePaginationChange(selected + 1);
   };
 
   render() {
@@ -21,7 +19,7 @@ class TablePager extends Component {
         breakClassName={'page-item'}
         pageCount={buttonCount}
         marginPagesDisplayed={1}
-        pageRangeDisplayed={5}
+        pageRangeDisplayed={3}
         onPageChange={this.handlePageClick}
         containerClassName={'pagination'}
         subContainerClassName={'pages pagination'}
