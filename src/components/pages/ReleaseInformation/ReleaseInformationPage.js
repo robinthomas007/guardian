@@ -11,6 +11,9 @@ import ProjectTypesInput from '../ReleaseInformation/pageComponents/ProjectTypes
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { showNotyError } from 'components/Utils';
+import { reduxForm, Field } from 'redux-form';
+import { connect } from 'react-redux';
+import * as releaseAction from './releaseAction';
 
 class ReleaseinformationPage extends Component {
   constructor(props) {
@@ -29,7 +32,7 @@ class ReleaseinformationPage extends Component {
         projectNotes: '',
         projectCoverArtFileName: '',
         projectCoverArtBase64Data: '',
-        // upc: ''
+        upc: '',
       },
       project: {
         Project: {
@@ -88,6 +91,10 @@ class ReleaseinformationPage extends Component {
       });
     }
     this.handleChange(e);
+  };
+
+  findUpc = () => {
+    this.props.findUpc(1);
   };
 
   handleChange(e) {
@@ -398,15 +405,15 @@ class ReleaseinformationPage extends Component {
                     className="form-control"
                     type="text"
                     placeholder="UPC"
-                    // value={this.state.formInputs.upc}
-                    // onChange={this.handleChange}
+                    value={this.state.formInputs.upc}
+                    onChange={this.handleChange}
                   />
                 </div>
                 <div className="col-1">
                   <button
                     style={{ marginLeft: '10px', padding: '7px 10px' }}
                     className="btn btn-sm btn-secondary"
-                    // onClick={this.showCommentBox}
+                    onClick={this.findUpc}
                     title="Comment"
                     type="button"
                   >
@@ -633,4 +640,20 @@ class ReleaseinformationPage extends Component {
   }
 }
 
-export default withRouter(ReleaseinformationPage);
+ReleaseinformationPage = reduxForm({
+  form: 'ReleaseinformationPageForm',
+  enableReinitialize: true,
+})(ReleaseinformationPage);
+
+const mapDispatchToProps = dispatch => ({
+  findUpc: val => dispatch(releaseAction.findUpc(val)),
+});
+
+const mapStateToProps = (state, ownProps) => {};
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  )(ReleaseinformationPage),
+);

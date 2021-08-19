@@ -1,0 +1,8 @@
+// export const PROJECT_SUCCESS = 'PROJECT_SUCCESS';
+// export const PROJECT_FAILURE = 'PROJECT_FAILURE';
+// export const PROJECT_REQUEST = 'PROJECT_REQUEST';
+// export const PROJECT_INITIALIZE = 'PROJECT_INITIALIZE';
+
+export const UPC_SUCCESS = 'UPC_SUCCESS';
+export const UPC_FAILURE = 'UPC_FAILURE';
+export const UPC_REQUEST = 'UPC_REQUEST';
