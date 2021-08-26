@@ -8,6 +8,7 @@ import headerReducer from './../reducers/headerReducer';
 import commentReducer from '../reducers/commentReducer';
 import findProjectReducer from '../reducers/findProjectReducer';
 import ProjectInboxReducer from '../reducers/ProjectInboxReducer';
+import releaseReducer from '../components/pages/ReleaseInformation/releaseReducer';
 
 export default asyncReducers => {
   return combineReducers({
@@ -20,6 +21,7 @@ export default asyncReducers => {
     commentReducer,
     findProjectReducer,
     ProjectInboxReducer,
+    releaseReducer,
     ...asyncReducers,
   });
 };

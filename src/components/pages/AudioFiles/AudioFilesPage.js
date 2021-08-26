@@ -17,6 +17,7 @@ import { isDuplicateTrackTitle, showNotyError, showNotyWarning } from '../../Uti
 import _ from 'lodash';
 import { showNotyInfo } from 'components/Utils';
 import { toast } from 'react-toastify';
+import * as releaseAction from './../ReleaseInformation/releaseAction';
 
 class AudioFilesPage extends Component {
   constructor(props) {
@@ -380,6 +381,8 @@ class AudioFilesPage extends Component {
         this.showNotification(saveAndContinue);
         this.setState({ showLoader: false });
         this.props.setHeaderProjectData(this.state.project);
+        localStorage.removeItem('upc');
+        this.props.initializeUpcData();
       })
       .catch(error => {
         this.setState({ showLoader: false });
@@ -419,6 +422,38 @@ class AudioFilesPage extends Component {
       if (this.props.match.params && this.props.match.params.projectID) {
         this.handleDataLoad();
         this.props.setProjectID(this.props.match.params.projectID, this.props.match.url);
+      }
+    }
+
+    if (localStorage.upc) {
+      if (this.props.upcData && this.props.upcData.ExDiscs) {
+        const upcDisc = [];
+        this.props.upcData.ExDiscs.forEach(disc => {
+          const obj = {};
+          obj['discNumber'] = disc.discNumber;
+          obj['Tracks'] = disc.ExTracks;
+          upcDisc.push(obj);
+        });
+        this.setState({ discs: _.cloneDeep(upcDisc) });
+      } else {
+        this.props.findUpc(localStorage.upc);
+      }
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log(this.props.upcData !== nextProps.upcData);
+    if (this.props.upcData !== nextProps.upcData) {
+      const { discs } = this.state;
+      if (nextProps.upcData.ExDiscs && nextProps.upcData.ExDiscs.length > 0) {
+        const upcDisc = [];
+        nextProps.upcData.ExDiscs.forEach(disc => {
+          const obj = {};
+          obj['discNumber'] = disc.discNumber;
+          obj['Tracks'] = disc.ExTracks;
+          upcDisc.push(obj);
+        });
+        this.setState({ discs: _.cloneDeep(upcDisc) });
       }
     }
   }
@@ -577,12 +612,15 @@ export default withRouter(
       formValues: state.form.AudioFilesPageForm,
       uploads: state.uploadProgressAlert.uploads,
       discs: state.uploadProgressAlert.discs,
+      upcData: state.releaseReducer.upcData,
     }),
-    {
+    dispatch => ({
       onUploadStart: startUpload,
       onUploadProgress: setUploadProgress,
       onUploadComplete: endUpload,
       saveDiscs: saveDisc,
-    },
+      findUpc: val => dispatch(releaseAction.findUpc(val)),
+      initializeUpcData: () => dispatch(releaseAction.initializeUpcData()),
+    }),
   )(AudioFilesPage),
 );

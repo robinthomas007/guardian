@@ -2,6 +2,7 @@ import * as actions from './release.types';
 import Api from '../../../lib/api';
 import history from '../../../history';
 import { toast } from 'react-toastify';
+import { showNotyError } from 'components/Utils';
 
 // export const projectSuccess = data => {
 //   return {
@@ -140,13 +141,16 @@ import { toast } from 'react-toastify';
 export const findUpc = val => {
   return dispatch => {
     dispatch(upcRequest(true));
-    return Api.post('/project/validate/upc', { upc: val })
+    return Api.post('/project/upc', { upc: val })
       .then(res => res.json())
       .then(response => {
-        if (response) {
-          console.log(response, 'response UPC');
-          dispatch(upcSuccess(false));
+        if (response && response.Status === 'OK') {
+          dispatch(upcSuccess(response));
+        } else {
+          showNotyError('No matching UPC found.');
+          localStorage.removeItem('upc');
         }
+        dispatch(upcRequest(false));
       })
       .catch(error => {
         console.log('error', error);
@@ -174,5 +178,17 @@ export const upcRequest = isLoading => {
   return {
     type: actions.UPC_REQUEST,
     isLoading,
+  };
+};
+
+export const initialize = () => {
+  return {
+    type: actions.UPC_INITIALIZE,
+  };
+};
+
+export const initializeUpcData = () => {
+  return dispatch => {
+    dispatch(initialize());
   };
 };

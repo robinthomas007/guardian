@@ -94,7 +94,11 @@ class ReleaseinformationPage extends Component {
   };
 
   findUpc = () => {
-    this.props.findUpc(1);
+    const { upc } = this.state.formInputs;
+    if (upc) {
+      this.props.findUpc(upc);
+      localStorage.setItem('upc', upc);
+    }
   };
 
   handleChange(e) {
@@ -332,6 +336,17 @@ class ReleaseinformationPage extends Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.upcData !== nextProps.upcData) {
+      if (nextProps.upcData.Title) {
+        const { formInputs } = this.state;
+        formInputs['projectTitle'] = nextProps.upcData.Title;
+        formInputs['projectArtistName'] = nextProps.upcData.Artist;
+        this.setState({ formInputs });
+      }
+    }
+  }
+
   handleDataLoad() {
     this.setState({ showloader: true });
 
@@ -374,7 +389,7 @@ class ReleaseinformationPage extends Component {
   render() {
     return (
       <div className="col-10">
-        <LoadingImg show={this.state.showloader} />
+        <LoadingImg show={this.state.showloader || this.props.loading} />
 
         <div className="row d-flex no-gutters step-description">
           <div className="col-12">
@@ -649,7 +664,10 @@ const mapDispatchToProps = dispatch => ({
   findUpc: val => dispatch(releaseAction.findUpc(val)),
 });
 
-const mapStateToProps = (state, ownProps) => {};
+const mapStateToProps = state => ({
+  upcData: state.releaseReducer.upcData,
+  loading: state.releaseReducer.loading,
+});
 
 export default withRouter(
   connect(

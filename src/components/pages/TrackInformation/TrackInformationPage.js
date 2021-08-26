@@ -10,7 +10,8 @@ import { reduxForm } from 'redux-form';
 import { startUpload, setUploadProgress, endUpload } from 'redux/uploadProgressAlert/actions';
 import { isFormValid, isDuplicateTrackTitle, showNotyError, isPreReleaseDate } from '../../Utils';
 import { toast } from 'react-toastify';
-
+import * as releaseAction from './../ReleaseInformation/releaseAction';
+import _ from 'lodash';
 import { showNotyInfo, showNotyAutoError } from 'components/Utils';
 
 class TrackInformationPage extends Component {
@@ -118,11 +119,48 @@ class TrackInformationPage extends Component {
           showloader: false,
         });
         this.props.setHeaderProjectData(this.state.project);
+        this.checkUpcData();
       })
       .catch(error => {
         console.error(error);
         this.setState({ showloader: false });
       });
+  }
+
+  checkUpcData() {
+    if (localStorage.upc) {
+      const { project } = this.state;
+      if (this.props.upcData && this.props.upcData.ExDiscs) {
+        const upcDisc = [];
+        this.props.upcData.ExDiscs.forEach(disc => {
+          const obj = {};
+          obj['discNumber'] = disc.discNumber;
+          obj['Tracks'] = disc.ExTracks;
+          upcDisc.push(obj);
+        });
+        project.Discs = _.cloneDeep(upcDisc);
+        this.setState({ project });
+      } else {
+        this.props.findUpc(localStorage.upc);
+      }
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.upcData !== nextProps.upcData) {
+      const { project } = this.state;
+      if (nextProps.upcData.ExDiscs && nextProps.upcData.ExDiscs.length > 0) {
+        const upcDisc = [];
+        nextProps.upcData.ExDiscs.forEach(disc => {
+          const obj = {};
+          obj['discNumber'] = disc.discNumber;
+          obj['Tracks'] = disc.ExTracks;
+          upcDisc.push(obj);
+        });
+        project.Discs = _.cloneDeep(upcDisc);
+        this.setState({ project });
+      }
+    }
   }
 
   showNotification(saveAndContinue) {
@@ -551,11 +589,16 @@ TrackInformationPage = reduxForm({
 
 export default withRouter(
   connect(
-    state => ({ formValues: state.form.TrackInformationPageForm }),
-    {
+    state => ({
+      formValues: state.form.TrackInformationPageForm,
+      upcData: state.releaseReducer.upcData,
+    }),
+    dispatch => ({
       onUploadStart: startUpload,
       onUploadProgress: setUploadProgress,
       onUploadComplete: endUpload,
-    },
+      findUpc: val => dispatch(releaseAction.findUpc(val)),
+      initializeUpcData: () => dispatch(releaseAction.initializeUpcData()),
+    }),
   )(TrackInformationPage),
 );
