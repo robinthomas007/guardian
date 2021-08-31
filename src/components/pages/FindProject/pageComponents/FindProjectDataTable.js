@@ -114,7 +114,17 @@ class FindProjectDataTable extends Component {
   };
 
   handleAdminStatusChange = (data, project) => {
-    this.props.handleAdminStatusChange(data, project);
+    const projectIds = [];
+    this.props.data.Projects.forEach(item => {
+      let checkName = `check_${item.projectID}`;
+      if (this.state[checkName]) {
+        projectIds.push(item.projectID);
+      }
+    });
+    this.props.handleAdminStatusChange(
+      data,
+      projectIds.length > 0 ? projectIds : project.projectID,
+    );
   };
 
   handleProjectReminder = projectID => {

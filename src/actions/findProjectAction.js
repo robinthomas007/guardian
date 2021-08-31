@@ -56,14 +56,15 @@ export const changeItemsPerPage = limit => ({
   limit,
 });
 
-export const adminStatusChange = data => {
+export const adminStatusChange = (data, searchData) => {
   return dispatch => {
     dispatch(fetchRequest(true));
     return Api.post('/project/status', data)
       .then(response => response.json())
       .then(response => {
-        if (response) {
+        if (response.success) {
           dispatch(fetchRequest(false));
+          dispatch(fetchProjects({ searchCriteria: searchData }));
         } else {
           dispatch(fetchRequest(false));
         }

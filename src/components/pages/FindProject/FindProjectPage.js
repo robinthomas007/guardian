@@ -91,15 +91,17 @@ class FindProjectPage extends Component {
     this.props.handleProjectSearch({ searchCriteria: searchData });
   };
 
-  handleAdminStatusChange = (data, project) => {
-    this.props
-      .adminStatusChange({
-        ProjectID: project.projectID,
-        StatusID: data.id,
-      })
-      .then(function(response) {
-        // this.props.handleProjectSearch() can be called but not required
-      });
+  handleAdminStatusChange = (data, projectID) => {
+    const searchCriteria = _.cloneDeep(this.props.formValues.values);
+    const searchTerm = _.get(this.props, 'formValues.values.searchTerm', '');
+    const searchData = {
+      itemsPerPage: this.props.searchCriteria.itemsPerPage,
+      pageNumber: this.props.searchCriteria.pageNumber,
+      searchTerm: searchTerm,
+      filter: getSearchCriteria(searchCriteria),
+    };
+
+    this.props.adminStatusChange({ ProjectID: projectID, StatusID: data.id }, searchData);
   };
 
   render() {
@@ -209,7 +211,8 @@ const mapDispatchToProps = dispatch => ({
   saveFilters: filters => dispatch(findProjectAction.saveFilters(filters)),
   changePageNumber: pageNo => dispatch(findProjectAction.changePageNumber(pageNo)),
   changeItemsPerPage: limit => dispatch(findProjectAction.changeItemsPerPage(limit)),
-  adminStatusChange: val => dispatch(findProjectAction.adminStatusChange(val)),
+  adminStatusChange: (val, searchData) =>
+    dispatch(findProjectAction.adminStatusChange(val, searchData)),
 });
 
 const mapStateToProps = state => ({
