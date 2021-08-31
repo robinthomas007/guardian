@@ -552,9 +552,6 @@ class ReleaseinformationPage extends Component {
                   <DatePicker
                     showTimeSelect
                     id="projectReleaseDate"
-                    className={
-                      this.state.releaseDateRequired ? 'form-control requiredInput' : 'form-control'
-                    }
                     selected={
                       this.state.formInputs.projectReleaseDate !== null &&
                       this.state.formInputs.projectReleaseDate !== ''
@@ -565,10 +562,17 @@ class ReleaseinformationPage extends Component {
                     dateFormat="Pp"
                     placeholderText="Select release date"
                     onChange={this.handleDateChange}
-                    customInput={<CustomInput />}
+                    customInput={
+                      <CustomInput
+                        adClass={
+                          this.state.releaseDateRequired
+                            ? 'form-control requiredInput'
+                            : 'form-control'
+                        }
+                      />
+                    }
                     isClearable={true}
                   />
-                  <div className="invalid-tooltip">Release Date is Required if not TBD</div>
                 </div>
                 <div className="col-auto">
                   <Form.Label className="col-form-label tbd text-nowrap">Release TBD</Form.Label>

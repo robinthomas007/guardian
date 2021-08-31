@@ -191,6 +191,7 @@ export const CustomInput = props => {
           date_range
         </i>
       )}
+      <div className="invalid-tooltip">Release Date is Required if not TBD</div>
     </div>
   );
 };

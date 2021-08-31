@@ -119,3 +119,11 @@ button.btn.btn-secondary.action.remove-art {
 .react-datepicker-popper {
   z-index: 9999;
 }
+
+.custom-date-picker input.is-invalid {
+  border: 1px solid #dc3545;
+}
+
+.custom-date-picker .invalid-tooltip {
+  right: 30px;
+}
