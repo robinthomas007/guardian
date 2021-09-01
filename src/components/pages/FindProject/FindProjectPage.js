@@ -100,8 +100,7 @@ class FindProjectPage extends Component {
       searchTerm: searchTerm,
       filter: getSearchCriteria(searchCriteria),
     };
-
-    this.props.adminStatusChange({ ProjectID: projectID, StatusID: data.id }, searchData);
+    this.props.adminStatusChange({ ProjectIds: projectID, StatusID: data.id }, searchData);
   };
 
   render() {
