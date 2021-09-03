@@ -2,7 +2,7 @@ import * as actions from './release.types';
 import Api from '../../../lib/api';
 import history from '../../../history';
 import { toast } from 'react-toastify';
-import { showNotyError } from 'components/Utils';
+import { showNotyAutoError } from 'components/Utils';
 
 // export const projectSuccess = data => {
 //   return {
@@ -147,7 +147,7 @@ export const findUpc = val => {
         if (response && response.Status === 'OK') {
           dispatch(upcSuccess(response));
         } else {
-          showNotyError('No matching UPC found.');
+          showNotyAutoError('No matching UPC found.');
           localStorage.removeItem('upc');
         }
         dispatch(upcRequest(false));

@@ -410,7 +410,9 @@ class ReleaseinformationPage extends Component {
             <div className="col-9">
               <Form.Group className="row d-flex no-gutters">
                 <div className="col-3">
-                  <Form.Label className="col-form-label">UPC</Form.Label>
+                  <Form.Label className="col-form-label">
+                    UPC <i> (Optional)</i>
+                  </Form.Label>
                   <ToolTip tabIndex="-1" message="UPC" />
                 </div>
                 <div className="col-3">
