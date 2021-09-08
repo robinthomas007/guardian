@@ -198,6 +198,15 @@ class FindProjectDataTable extends Component {
   renderProjects() {
     if (this.props.data.Projects) {
       const tableRows = this.props.data.Projects.map((project, i) => {
+        let colour = '';
+        if (project.projectReleaseDate && project.projectCreatedDate) {
+          if (
+            moment(project.projectReleaseDate).format('YYYY-MM-DD') <=
+            moment(project.projectCreatedDate).format('YYYY-MM-DD')
+          ) {
+            colour = 'gray-shade';
+          }
+        }
         return (
           <tr key={i}>
             <td>
@@ -251,7 +260,7 @@ class FindProjectDataTable extends Component {
             </td>
             <td
               onClick={() => this.handleRowClick(project.projectID)}
-              className="status text-center"
+              className={`status text-center ${colour}`}
             >
               {this.checkProjectStepStatus(project.isAudioFilesComplete)}
             </td>
@@ -263,7 +272,7 @@ class FindProjectDataTable extends Component {
             </td>
             <td
               onClick={() => this.handleRowClick(project.projectID)}
-              className="status text-center"
+              className={`status text-center ${colour}`}
             >
               {this.checkProjectStepStatus(project.isTerritorialRightsComplete)}
             </td>

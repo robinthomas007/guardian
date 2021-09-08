@@ -206,3 +206,7 @@ ul.row.search-row div.col-2 label {
 li.col-4.d-flex.justify-content-center.pagination-wrap {
   z-index: 999;
 }
+
+.gray-shade .material-icons {
+  color: #807f7f !important;
+}
