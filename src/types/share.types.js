@@ -1,0 +1,3 @@
+export const SHARE_SUCCESS = 'SHARE_SUCCESS';
+export const SHARE_FAILURE = 'SHARE_FAILURE';
+export const SHARE_REQUEST = 'SHARE_REQUEST';

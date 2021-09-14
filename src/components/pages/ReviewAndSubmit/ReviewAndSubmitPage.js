@@ -6,6 +6,7 @@ import TerritorialRightsTable from '../ReviewAndSubmit/pageComponents/Territoria
 import BlockingPoliciesDataTable from '../ReviewAndSubmit/pageComponents/BlockingPoliciesDataTable';
 import { withRouter } from 'react-router-dom';
 import SubmitProjectModal from '../../modals/SubmitProjectModal';
+import ShareModal from '../../modals/shareModal';
 import IncompleteProjectModal from '../../modals/IncompleteProjectModal';
 import { formatDateToYYYYMMDD, convertToLocaleTime, isPreReleaseDate } from '../../Utils';
 import { showNotyInfo } from 'components/Utils';
@@ -18,6 +19,7 @@ class ReviewAndSubmitPage extends Component {
       showloader: false,
       showRequestModal: false,
       showIncompleteProjectModal: false,
+      shareModal: false,
     };
     this.handleSubmitProjectClick = this.handleSubmitProjectClick.bind(this);
     this.handleProjectCategoryClick = this.handleProjectCategoryClick.bind(this);
@@ -26,6 +28,8 @@ class ReviewAndSubmitPage extends Component {
     this.showIncompleteProjectModal = this.showIncompleteProjectModal.bind(this);
     this.hideIncompleteProjectModal = this.hideIncompleteProjectModal.bind(this);
     this.getStepNumber = this.getStepNumber.bind(this);
+    this.showShareModal = this.showShareModal.bind(this);
+    this.hideShareModal = this.hideShareModal.bind(this);
   }
 
   componentDidMount() {
@@ -46,6 +50,14 @@ class ReviewAndSubmitPage extends Component {
     this.setState({ showRequestModal: true });
   }
 
+  showShareModal() {
+    this.setState({ shareModal: true });
+  }
+
+  hideShareModal() {
+    this.setState({ shareModal: false });
+  }
+
   hideProjectSubmitModal() {
     this.setState({ showRequestModal: false });
   }
@@ -63,6 +75,10 @@ class ReviewAndSubmitPage extends Component {
       ? this.showProjectSubmitModal()
       : this.showIncompleteProjectModal();
   };
+
+  handleSubmitShareClick() {
+    console.log('asdadadada adada');
+  }
 
   handleSubmitProjectClick() {
     const fetchHeaders = new Headers({
@@ -131,13 +147,20 @@ class ReviewAndSubmitPage extends Component {
             handleSubmitProjectClick={this.handleSubmitProjectClick}
           />
 
+          <ShareModal
+            showModal={this.showShareModal}
+            handleClose={this.hideShareModal}
+            show={this.state.shareModal}
+            handleSubmitProjectClick={this.handleSubmitShareClick}
+          />
+
           <IncompleteProjectModal
             handleClose={this.hideIncompleteProjectModal}
             show={this.state.showIncompleteProjectModal}
           />
 
           <div className="row no-gutters step-description review">
-            <div className="col-11">
+            <div className="col-10">
               <h2>
                 Step <span className="count-circle">{this.getStepNumber()}</span> Review and Submit
               </h2>
@@ -149,7 +172,10 @@ class ReviewAndSubmitPage extends Component {
                 unlock the project for additional editing.
               </p>
             </div>
-            <div className="col-1">
+            <div className="col-2">
+              <button className="btn btn-secondary align-content-end" onClick={this.showShareModal}>
+                <i className="material-icons">share</i> Share
+              </button>
               {parseInt(this.props.data.Project.projectStatusID) === 1 ? (
                 <button
                   type="button"
