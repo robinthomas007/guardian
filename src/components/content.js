@@ -15,6 +15,8 @@ import { withAuth } from '@okta/okta-react';
 import { connect } from 'react-redux';
 import ProjectInbox from './pages/ProjectInbox';
 import { ToastContainer } from 'react-toastify';
+import ErrorBoundary from './common/ErrorBoundary';
+
 class Content extends Component {
   constructor(props) {
     const uuidv4 = require('uuid/v4');
@@ -207,15 +209,17 @@ class Content extends Component {
       return (
         <div className="row d-flex no-gutters">
           <div className="col-12" style={{ marginTop: this.props.progress > 0 ? '54px' : '0' }}>
-            <Header
-              userData={this.state.user}
-              projectData={this.state.project}
-              pagePath={this.props.location.pathname}
-              setPageViewType={this.setPageViewType}
-              updateHistory={this.updateHistory}
-              clearProject={this.clearProject}
-              handleLogoutClick={this.handleLogoutClick}
-            />
+            <ErrorBoundary>
+              <Header
+                userData={this.state.user}
+                projectData={this.state.project}
+                pagePath={this.props.location.pathname}
+                setPageViewType={this.setPageViewType}
+                updateHistory={this.updateHistory}
+                clearProject={this.clearProject}
+                handleLogoutClick={this.handleLogoutClick}
+              />
+            </ErrorBoundary>
             <ToastContainer
               style={{ marginTop: this.props.progress > 0 ? '101px' : '45px' }}
               closeButton={false}
