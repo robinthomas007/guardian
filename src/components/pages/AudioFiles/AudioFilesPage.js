@@ -7,12 +7,7 @@ import LoadingImg from '../../ui/LoadingImg';
 import { reduxForm } from 'redux-form';
 import AudioFilesTabbedTracks from '../AudioFiles/pageComponents/audioFilesTabbedTracks';
 import { connect } from 'react-redux';
-import {
-  startUpload,
-  setUploadProgress,
-  endUpload,
-  saveDisc,
-} from 'redux/uploadProgressAlert/actions';
+import * as uploadProgressActions from 'redux/uploadProgressAlert/actions';
 import { isDuplicateTrackTitle, showNotyError, showNotyWarning } from '../../Utils';
 import _ from 'lodash';
 import { showNotyInfo } from 'components/Utils';
@@ -615,10 +610,12 @@ export default withRouter(
       upcData: state.releaseReducer.upcData,
     }),
     dispatch => ({
-      onUploadStart: startUpload,
-      onUploadProgress: setUploadProgress,
-      onUploadComplete: endUpload,
-      saveDiscs: saveDisc,
+      onUploadStart: (uniqFileName, trackID) =>
+        dispatch(uploadProgressActions.startUpload(uniqFileName, trackID)),
+      onUploadProgress: (uniqFileName, percent_completed) =>
+        dispatch(uploadProgressActions.setUploadProgress(uniqFileName, percent_completed)),
+      onUploadComplete: uniqFileName => dispatch(uploadProgressActions.endUpload(uniqFileName)),
+      saveDiscs: updatedDiscs => dispatch(uploadProgressActions.saveDisc(updatedDiscs)),
       findUpc: val => dispatch(releaseAction.findUpc(val)),
       initializeUpcData: () => dispatch(releaseAction.initializeUpcData()),
     }),

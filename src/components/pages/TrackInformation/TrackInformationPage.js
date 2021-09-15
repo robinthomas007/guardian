@@ -7,7 +7,7 @@ import './TrackInformation.css';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
-import { startUpload, setUploadProgress, endUpload } from 'redux/uploadProgressAlert/actions';
+import * as uploadProgressActions from 'redux/uploadProgressAlert/actions';
 import { isFormValid, isDuplicateTrackTitle, showNotyError, isPreReleaseDate } from '../../Utils';
 import { toast } from 'react-toastify';
 import * as releaseAction from './../ReleaseInformation/releaseAction';
@@ -594,9 +594,10 @@ export default withRouter(
       upcData: state.releaseReducer.upcData,
     }),
     dispatch => ({
-      onUploadStart: startUpload,
-      onUploadProgress: setUploadProgress,
-      onUploadComplete: endUpload,
+      onUploadStart: uniqFileName => dispatch(uploadProgressActions.startUpload(uniqFileName)),
+      onUploadProgress: (uniqFileName, percent_completed) =>
+        dispatch(uploadProgressActions.setUploadProgress(uniqFileName, percent_completed)),
+      onUploadComplete: uniqFileName => dispatch(uploadProgressActions.endUpload(uniqFileName)),
       findUpc: val => dispatch(releaseAction.findUpc(val)),
       initializeUpcData: () => dispatch(releaseAction.initializeUpcData()),
     }),
