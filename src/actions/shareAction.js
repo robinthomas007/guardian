@@ -25,7 +25,7 @@ export const shareRequest = loading => {
 export const postEmails = data => {
   return dispatch => {
     dispatch(shareRequest(true));
-    return Api.post('/project/SendEmails', data)
+    return Api.post('/project/SendEmailtrack', data)
       .then(response => response.json())
       .then(response => {
         if (response) {

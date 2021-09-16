@@ -28,17 +28,27 @@ const ShareProjectModal = props => {
   };
 
   const formSubmit = val => {
+    const user = JSON.parse(sessionStorage.getItem('user'));
+
     if (val.emails) {
       const emails = val.emails.split(/(?:,| |;)+/);
-      console.log(emails, 'Value');
       let isEmailsValid = true;
+      console.log(emails, 'emailsemailsemails');
       if (emails.length > 0) {
         emails.forEach(email => {
           if (!validateEmail(email)) {
             isEmailsValid = false;
           }
         });
-        isEmailsValid && props.postEmails(emails);
+        console.log(isEmailsValid, 'isEmailsValid');
+        isEmailsValid &&
+          props.postEmails({
+            emails: emails,
+            projectID: props.projectId,
+            User: {
+              email: user.email,
+            },
+          });
       }
     }
   };

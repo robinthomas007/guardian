@@ -152,6 +152,7 @@ class ReviewAndSubmitPage extends Component {
             handleClose={this.hideShareModal}
             show={this.state.shareModal}
             handleSubmitProjectClick={this.handleSubmitShareClick}
+            projectId={this.props.data.Project.projectID}
           />
 
           <IncompleteProjectModal
