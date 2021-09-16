@@ -159,7 +159,10 @@ class ProjectContactsPage extends Component {
     if (isValidForm) {
       this.setState({ showloader: true });
       formInputs.projectAdditionalContacts = this.state.emails.join();
-      const releaseInformationInputs = JSON.parse(localStorage.getItem('projectData'));
+      let releaseInformationInputs = JSON.parse(localStorage.getItem('projectData'));
+      if (this.props.data && this.props.data.projectID) {
+        releaseInformationInputs = this.props.data;
+      }
       const user = JSON.parse(sessionStorage.getItem('user'));
       const projectID = this.props.match.params.projectID;
 
@@ -201,7 +204,7 @@ class ProjectContactsPage extends Component {
             this.props.setHeaderProjectData(responseJSON);
 
             //clear the local storage
-            localStorage.removeItem('projectData');
+            saveAndContinue && localStorage.removeItem('projectData');
           }
         })
         .catch(error => {

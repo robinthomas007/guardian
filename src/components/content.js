@@ -188,7 +188,7 @@ class Content extends Component {
   };
 
   setHeaderProjectData = projectData => {
-    if (this.state.project !== projectData) {
+    if (this.state.project !== projectData && projectData.Project) {
       this.setState({ project: projectData });
     }
   };
@@ -207,9 +207,9 @@ class Content extends Component {
   render() {
     if (this.state.userLoaded) {
       return (
-        <div className="row d-flex no-gutters">
-          <div className="col-12" style={{ marginTop: this.props.progress > 0 ? '54px' : '0' }}>
-            <ErrorBoundary>
+        <ErrorBoundary>
+          <div className="row d-flex no-gutters">
+            <div className="col-12" style={{ marginTop: this.props.progress > 0 ? '54px' : '0' }}>
               <Header
                 userData={this.state.user}
                 projectData={this.state.project}
@@ -219,147 +219,148 @@ class Content extends Component {
                 clearProject={this.clearProject}
                 handleLogoutClick={this.handleLogoutClick}
               />
-            </ErrorBoundary>
-            <ToastContainer
-              style={{ marginTop: this.props.progress > 0 ? '101px' : '45px' }}
-              closeButton={false}
-              position="top-right"
-              autoClose={false}
-              hideProgressBar={false}
-              closeOnClick
-              rtl={false}
-              draggable={false}
-              pauseOnFocusLoss={false}
-              pauseOnHover={false}
-            />
-            <div
-              className={
-                this.state.pageViewCompact
-                  ? 'row d-flex no-gutters content compact'
-                  : 'row d-flex no-gutters content'
-              }
-            >
-              <div className="col-1"></div>
+              <ToastContainer
+                style={{ marginTop: this.props.progress > 0 ? '101px' : '45px' }}
+                closeButton={false}
+                position="top-right"
+                autoClose={false}
+                hideProgressBar={false}
+                closeOnClick
+                rtl={false}
+                draggable={false}
+                pauseOnFocusLoss={false}
+                pauseOnHover={false}
+              />
+              <div
+                className={
+                  this.state.pageViewCompact
+                    ? 'row d-flex no-gutters content compact'
+                    : 'row d-flex no-gutters content'
+                }
+              >
+                <div className="col-1"></div>
 
-              <SecureRoute
-                path="/releaseInformation/:projectID?"
-                render={() => (
-                  <ReleaseInformationPage
-                    user={this.state.user}
-                    clearProject={this.state.clearProject}
-                    data={this.state.project.Project}
-                    setProjectID={this.setProjectID}
-                    setHeaderProjectData={this.setHeaderProjectData}
-                    serverTimeDate={this.state.serverTimeDate}
-                  />
-                )}
-              />
-              <SecureRoute
-                path="/inbox"
-                render={() => (
-                  <ProjectInbox
-                    user={this.state.user}
-                    setProjectID={this.setProjectID}
-                    setHeaderProjectData={this.setHeaderProjectData}
-                    serverTimeDate={this.state.serverTimeDate}
-                  />
-                )}
-              />
-              <SecureRoute
-                path="/projectContacts/:projectID?"
-                render={() => (
-                  <ProjectContactsPage
-                    user={this.state.user}
-                    setProjectID={this.setProjectID}
-                    setHeaderProjectData={this.setHeaderProjectData}
-                    serverTimeDate={this.state.serverTimeDate}
-                  />
-                )}
-              />
-              <SecureRoute
-                path="/trackInformation/:projectID?"
-                render={() => (
-                  <TrackInformationPage
-                    user={this.state.user}
-                    setProjectID={this.setProjectID}
-                    setHeaderProjectData={this.setHeaderProjectData}
-                    serverTimeDate={this.state.serverTimeDate}
-                  />
-                )}
-              />
-              <SecureRoute
-                path="/territorialRights/:projectID?"
-                render={() => (
-                  <TerritorialRightsPage
-                    user={this.state.user}
-                    setProjectID={this.setProjectID}
-                    setHeaderProjectData={this.setHeaderProjectData}
-                    serverTimeDate={this.state.serverTimeDate}
-                  />
-                )}
-              />
-              <SecureRoute
-                path="/blockingPolicies/:projectID?"
-                render={() => (
-                  <BlockingPoliciesPage
-                    user={this.state.user}
-                    setProjectID={this.setProjectID}
-                    setHeaderProjectData={this.setHeaderProjectData}
-                    serverTimeDate={this.state.serverTimeDate}
-                  />
-                )}
-              />
-              <SecureRoute
-                path="/audioFiles/:projectID?"
-                render={() => (
-                  <AudioFilesPage
-                    user={this.state.user}
-                    setProjectID={this.setProjectID}
-                    setHeaderProjectData={this.setHeaderProjectData}
-                    serverTimeDate={this.state.serverTimeDate}
-                  />
-                )}
-              />
-              <SecureRoute
-                path="/reviewSubmit/:projectID?"
-                render={() => (
-                  <ReviewAndSubmitPage
-                    user={this.state.user}
-                    setProjectID={this.setProjectID}
-                    projectID={this.state.project.Project.projectID}
-                    data={this.state.project}
-                    setHeaderProjectData={this.setHeaderProjectData}
-                    serverTimeDate={this.state.serverTimeDate}
-                  />
-                )}
-              />
-              <SecureRoute
-                path="/findProject"
-                render={() => (
-                  <FindProjectPage
-                    user={this.state.user}
-                    setProjectID={this.setProjectID}
-                    setHeaderProjectData={this.setHeaderProjectData}
-                    serverTimeDate={this.state.serverTimeDate}
-                  />
-                )}
-              />
-              <SecureRoute path="/helpGuide/:id?" render={() => <HelpGuide />} />
-              <SecureRoute
-                path="/userAdmin"
-                render={() => (
-                  <UserAdmin
-                    user={this.state.user}
-                    setProjectID={this.setProjectID}
-                    setHeaderProjectData={this.setHeaderProjectData}
-                    serverTimeDate={this.state.serverTimeDate}
-                  />
-                )}
-              />
-              <div className="col-1"></div>
+                <SecureRoute
+                  path="/releaseInformation/:projectID?"
+                  render={() => (
+                    <ReleaseInformationPage
+                      user={this.state.user}
+                      clearProject={this.state.clearProject}
+                      data={this.state.project.Project}
+                      setProjectID={this.setProjectID}
+                      setHeaderProjectData={this.setHeaderProjectData}
+                      serverTimeDate={this.state.serverTimeDate}
+                    />
+                  )}
+                />
+                <SecureRoute
+                  path="/inbox"
+                  render={() => (
+                    <ProjectInbox
+                      user={this.state.user}
+                      setProjectID={this.setProjectID}
+                      setHeaderProjectData={this.setHeaderProjectData}
+                      serverTimeDate={this.state.serverTimeDate}
+                    />
+                  )}
+                />
+                <SecureRoute
+                  path="/projectContacts/:projectID?"
+                  render={() => (
+                    <ProjectContactsPage
+                      user={this.state.user}
+                      setProjectID={this.setProjectID}
+                      setHeaderProjectData={this.setHeaderProjectData}
+                      serverTimeDate={this.state.serverTimeDate}
+                      data={this.state.project.Project}
+                    />
+                  )}
+                />
+                <SecureRoute
+                  path="/trackInformation/:projectID?"
+                  render={() => (
+                    <TrackInformationPage
+                      user={this.state.user}
+                      setProjectID={this.setProjectID}
+                      setHeaderProjectData={this.setHeaderProjectData}
+                      serverTimeDate={this.state.serverTimeDate}
+                    />
+                  )}
+                />
+                <SecureRoute
+                  path="/territorialRights/:projectID?"
+                  render={() => (
+                    <TerritorialRightsPage
+                      user={this.state.user}
+                      setProjectID={this.setProjectID}
+                      setHeaderProjectData={this.setHeaderProjectData}
+                      serverTimeDate={this.state.serverTimeDate}
+                    />
+                  )}
+                />
+                <SecureRoute
+                  path="/blockingPolicies/:projectID?"
+                  render={() => (
+                    <BlockingPoliciesPage
+                      user={this.state.user}
+                      setProjectID={this.setProjectID}
+                      setHeaderProjectData={this.setHeaderProjectData}
+                      serverTimeDate={this.state.serverTimeDate}
+                    />
+                  )}
+                />
+                <SecureRoute
+                  path="/audioFiles/:projectID?"
+                  render={() => (
+                    <AudioFilesPage
+                      user={this.state.user}
+                      setProjectID={this.setProjectID}
+                      setHeaderProjectData={this.setHeaderProjectData}
+                      serverTimeDate={this.state.serverTimeDate}
+                    />
+                  )}
+                />
+                <SecureRoute
+                  path="/reviewSubmit/:projectID?"
+                  render={() => (
+                    <ReviewAndSubmitPage
+                      user={this.state.user}
+                      setProjectID={this.setProjectID}
+                      projectID={this.state.project.Project.projectID}
+                      data={this.state.project}
+                      setHeaderProjectData={this.setHeaderProjectData}
+                      serverTimeDate={this.state.serverTimeDate}
+                    />
+                  )}
+                />
+                <SecureRoute
+                  path="/findProject"
+                  render={() => (
+                    <FindProjectPage
+                      user={this.state.user}
+                      setProjectID={this.setProjectID}
+                      setHeaderProjectData={this.setHeaderProjectData}
+                      serverTimeDate={this.state.serverTimeDate}
+                    />
+                  )}
+                />
+                <SecureRoute path="/helpGuide/:id?" render={() => <HelpGuide />} />
+                <SecureRoute
+                  path="/userAdmin"
+                  render={() => (
+                    <UserAdmin
+                      user={this.state.user}
+                      setProjectID={this.setProjectID}
+                      setHeaderProjectData={this.setHeaderProjectData}
+                      serverTimeDate={this.state.serverTimeDate}
+                    />
+                  )}
+                />
+                <div className="col-1"></div>
+              </div>
             </div>
           </div>
-        </div>
+        </ErrorBoundary>
       );
     } else {
       return <div className="row d-flex no-gutters"></div>;
