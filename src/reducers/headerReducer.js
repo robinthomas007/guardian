@@ -8,6 +8,7 @@ import {
 export const initialState = {
   notifications: [],
   count: 0,
+  error: null,
 };
 
 export default createReducer(initialState, {
@@ -15,6 +16,9 @@ export default createReducer(initialState, {
   [NOTIFICATION_SUCCESS]: (state, action) => {
     state.notifications = action.data;
     state.count = action.count;
+    state.error = null;
   },
-  [NOTIFICATION_FAILURE]: (state, action) => {},
+  [NOTIFICATION_FAILURE]: (state, action) => {
+    state.error = action.message;
+  },
 });

@@ -391,6 +391,12 @@ class Header extends Component {
     document.addEventListener('mousedown', this.handleClickOutside);
   };
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.error !== nextProps.error && nextProps.error) {
+      clearInterval(interval);
+    }
+  }
+
   componentWillUnmount() {
     clearInterval(interval);
     document.removeEventListener('mousedown', this.handleClickOutside);
@@ -653,6 +659,7 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = state => ({
   notifications: state.headerReducer.notifications,
   count: state.headerReducer.count,
+  error: state.headerReducer.error,
 });
 
 export default withRouter(
