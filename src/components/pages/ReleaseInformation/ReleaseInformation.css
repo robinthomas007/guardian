@@ -127,3 +127,10 @@ button.btn.btn-secondary.action.remove-art {
 .custom-date-picker .invalid-tooltip {
   right: 30px;
 }
+
+.multi-select-search-input {
+  width: 90%;
+  padding: 8px;
+  margin: 2px 5%;
+  text-align: left !important;
+}

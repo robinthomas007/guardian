@@ -6,14 +6,16 @@ class MultiSelectDropDown extends Component {
     this.state = {
       value: [],
       show: false,
+      search: '',
     };
     this.handleChange = this.handleChange.bind(this);
     this.toggleShow = this.toggleShow.bind(this);
     this.hide = this.hide.bind(this);
+    this.handleSearchChange = this.handleSearchChange.bind(this);
   }
 
   toggleShow() {
-    this.setState({ show: !this.state.show });
+    this.setState({ show: !this.state.show, search: '' });
   }
 
   hide(e) {
@@ -45,22 +47,31 @@ class MultiSelectDropDown extends Component {
     let labelOptions = '';
     if (this.props.optionList) {
       labelOptions = this.props.optionList.map((option, i) => {
-        return (
-          <a className="dropdown-item" key={i} onClick={null}>
-            <label className="custom-checkbox">
-              <input
-                onChange={e => this.handleChange(e)}
-                type="checkbox"
-                id={this.props.id + '_check_' + i}
-                value={option.id}
-                checked={this.props.value.includes(option.id)}
-              />
-              <span className="checkmark "></span>
-            </label>
+        console.log(option.name, this.state.search, 'this.state.search');
+        console.log(option.name.includes(this.state.search));
+        if (
+          this.state.search === '' ||
+          (this.state.search !== '' &&
+            option.name &&
+            option.name.toLocaleLowerCase().includes(this.state.search.toLocaleLowerCase()))
+        ) {
+          return (
+            <a className="dropdown-item" key={i} onClick={null}>
+              <label className="custom-checkbox">
+                <input
+                  onChange={e => this.handleChange(e)}
+                  type="checkbox"
+                  id={this.props.id + '_check_' + i}
+                  value={option.id}
+                  checked={this.props.value.includes(option.id)}
+                />
+                <span className="checkmark "></span>
+              </label>
 
-            <label htmlFor={this.props.id + '_check_' + i}>{option.name}</label>
-          </a>
-        );
+              <label htmlFor={this.props.id + '_check_' + i}>{option.name}</label>
+            </a>
+          );
+        }
       });
       return labelOptions;
     } else {
@@ -69,7 +80,7 @@ class MultiSelectDropDown extends Component {
   };
 
   componentDidMount() {
-    this.setState({ value: this.props.value });
+    this.setState({ value: this.props.value, search: '' });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -80,6 +91,11 @@ class MultiSelectDropDown extends Component {
         this.setState({ value: nextProps.value });
       }
     }
+  }
+
+  handleSearchChange(e) {
+    const searchValue = e.target.value;
+    this.setState({ search: searchValue });
   }
 
   render() {
@@ -100,6 +116,12 @@ class MultiSelectDropDown extends Component {
         </button>
 
         <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <input
+            className="multi-select-search-input"
+            type="text"
+            value={this.state.search}
+            onChange={this.handleSearchChange}
+          />
           {this.getInputOptions()}
         </div>
       </div>
