@@ -3,7 +3,7 @@
 export VAULT_ADDR=https://vault.umusic.net
 
 if [[ -z $VAULT_TOKEN ]]; then
-    CLUSTER_NAME="aws44-global-tools"
+    CLUSTER_NAME="aws44-devops-eks-prod-v3"
     KUBE_TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)
     export VAULT_TOKEN=$(curl --request POST \
         --data '{"jwt": "'"$KUBE_TOKEN"'", "role": "guardian-cicd"}' \
