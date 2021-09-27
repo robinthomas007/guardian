@@ -9,6 +9,7 @@ import commentReducer from '../reducers/commentReducer';
 import findProjectReducer from '../reducers/findProjectReducer';
 import ProjectInboxReducer from '../reducers/ProjectInboxReducer';
 import releaseReducer from '../components/pages/ReleaseInformation/releaseReducer';
+import audioReducer from './../reducers/audioReducer';
 
 export default asyncReducers => {
   return combineReducers({
@@ -22,6 +23,7 @@ export default asyncReducers => {
     findProjectReducer,
     ProjectInboxReducer,
     releaseReducer,
+    audioReducer,
     ...asyncReducers,
   });
 };

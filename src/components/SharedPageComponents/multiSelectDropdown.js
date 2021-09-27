@@ -47,8 +47,6 @@ class MultiSelectDropDown extends Component {
     let labelOptions = '';
     if (this.props.optionList) {
       labelOptions = this.props.optionList.map((option, i) => {
-        console.log(option.name, this.state.search, 'this.state.search');
-        console.log(option.name.includes(this.state.search));
         if (
           this.state.search === '' ||
           (this.state.search !== '' &&

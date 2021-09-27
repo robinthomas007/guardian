@@ -13,6 +13,7 @@ import { toast } from 'react-toastify';
 import * as releaseAction from './../ReleaseInformation/releaseAction';
 import _ from 'lodash';
 import { showNotyInfo, showNotyAutoError } from 'components/Utils';
+import * as AudioActions from '../../../actions/audioActions';
 
 class TrackInformationPage extends Component {
   constructor(props) {
@@ -69,6 +70,24 @@ class TrackInformationPage extends Component {
     this.showReplaceModal = this.showReplaceModal.bind(this);
     this.handleChildDrag = this.handleChildDrag.bind(this);
     this.getStepNumber = this.getStepNumber.bind(this);
+    this.checkIsrc = this.checkIsrc.bind(this);
+  }
+
+  checkIsrc() {
+    const { project, activeDiscTab } = this.state;
+    const user = JSON.parse(sessionStorage.getItem('user'));
+    let isrcs = _.map(project.Discs[activeDiscTab - 1].Tracks, 'isrc');
+    let isrcsField = document.getElementsByClassName('trackIsrcField');
+    let isValidForm = true;
+    isrcs = isrcs.filter(n => n);
+    for (var i = 0; i < isrcsField.length; i++) {
+      if (!this.isValidIsrc(isrcsField[i].value)) {
+        isValidForm = false;
+      }
+    }
+    isrcs.length > 0 &&
+      isValidForm &&
+      this.props.isrcCheck({ User: { email: user.email }, isrcs: isrcs });
   }
 
   setActiveDiscTab(tabID) {
@@ -157,6 +176,27 @@ class TrackInformationPage extends Component {
           obj['Tracks'] = disc.ExTracks;
           upcDisc.push(obj);
         });
+        project.Discs = _.cloneDeep(upcDisc);
+        this.setState({ project });
+      }
+    }
+
+    if (this.props.ExTracks !== nextProps.ExTracks) {
+      const { project, activeDiscTab } = this.state;
+      if (nextProps.ExTracks && nextProps.ExTracks.length > 0) {
+        const upcDisc = project.Discs;
+        const tracks = [];
+        upcDisc[activeDiscTab - 1].Tracks.forEach(track => {
+          let trackObj = track;
+          let matchTrack = _.filter(nextProps.ExTracks, val => val.isrc === track.isrc);
+          if (matchTrack && matchTrack[0]) {
+            trackObj.artist = matchTrack[0].artist;
+            trackObj.isrc = matchTrack[0].isrc;
+            trackObj.trackTitle = matchTrack[0].trackTitle;
+          }
+          tracks.push(trackObj);
+        });
+        upcDisc[activeDiscTab - 1].Tracks = tracks;
         project.Discs = _.cloneDeep(upcDisc);
         this.setState({ project });
       }
@@ -517,7 +557,7 @@ class TrackInformationPage extends Component {
   render() {
     return (
       <div className="col-10">
-        <LoadingImg show={this.state.showloader} />
+        <LoadingImg show={this.state.showloader || this.props.loading} />
 
         <ReplaceAudioModal
           showModal={this.state.showReplaceAudioModal}
@@ -557,6 +597,7 @@ class TrackInformationPage extends Component {
           hideReplaceAudioModal={(track, i) => this.hideReplaceAudioModal(track, i)}
           handleChildDrag={(e, i) => this.handleChildDrag(e, i)}
           handleChildDrop={(e, i) => this.handleChildDrop(e, i)}
+          checkIsrc={this.checkIsrc}
         />
 
         <section className="row save-buttons">
@@ -592,6 +633,8 @@ export default withRouter(
     state => ({
       formValues: state.form.TrackInformationPageForm,
       upcData: state.releaseReducer.upcData,
+      ExTracks: state.audioReducer.ExTracks,
+      loading: state.audioReducer.loading,
     }),
     dispatch => ({
       onUploadStart: uniqFileName => dispatch(uploadProgressActions.startUpload(uniqFileName)),
@@ -600,6 +643,7 @@ export default withRouter(
       onUploadComplete: uniqFileName => dispatch(uploadProgressActions.endUpload(uniqFileName)),
       findUpc: val => dispatch(releaseAction.findUpc(val)),
       initializeUpcData: () => dispatch(releaseAction.initializeUpcData()),
+      isrcCheck: isrc => dispatch(AudioActions.isrcCheck(isrc)),
     }),
   )(TrackInformationPage),
 );

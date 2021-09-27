@@ -22,6 +22,7 @@ class AudioFilesTabbedTracks extends Component {
               resequencePageTableData={this.props.resequencePageTableData}
               showReplaceModal={(track, i) => this.props.showReplaceModal(track, i)}
               hideReplaceAudioModal={(track, i) => this.props.hideReplaceAudioModal(track, i)}
+              checkIsrc={this.props.checkIsrc}
             />
           </Tab>
         );

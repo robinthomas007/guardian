@@ -13,6 +13,7 @@ import _ from 'lodash';
 import { showNotyInfo } from 'components/Utils';
 import { toast } from 'react-toastify';
 import * as releaseAction from './../ReleaseInformation/releaseAction';
+import * as AudioActions from '../../../actions/audioActions';
 
 class AudioFilesPage extends Component {
   constructor(props) {
@@ -67,6 +68,25 @@ class AudioFilesPage extends Component {
 
     this.addTrack = this.addTrack.bind(this);
     this.addDisc = this.addDisc.bind(this);
+    this.checkIsrc = this.checkIsrc.bind(this);
+  }
+
+  checkIsrc() {
+    const { discs, activeTab } = this.state;
+    let isrcs = _.map(discs[activeTab].Tracks, 'isrc');
+    const user = JSON.parse(sessionStorage.getItem('user'));
+    let isrcsField = document.getElementsByClassName('trackIsrcField');
+    let isValidForm = true;
+    isrcs = isrcs.filter(n => n);
+
+    for (var i = 0; i < isrcsField.length; i++) {
+      if (!this.isValidIsrc(isrcsField[i].value)) {
+        isValidForm = false;
+      }
+    }
+    isrcs.length > 0 &&
+      isValidForm &&
+      this.props.isrcCheck({ User: { email: user.email }, isrcs: isrcs });
   }
 
   showReplaceModal(track, i) {
@@ -437,7 +457,6 @@ class AudioFilesPage extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(this.props.upcData !== nextProps.upcData);
     if (this.props.upcData !== nextProps.upcData) {
       const { discs } = this.state;
       if (nextProps.upcData.ExDiscs && nextProps.upcData.ExDiscs.length > 0) {
@@ -448,6 +467,25 @@ class AudioFilesPage extends Component {
           obj['Tracks'] = disc.ExTracks;
           upcDisc.push(obj);
         });
+        this.setState({ discs: _.cloneDeep(upcDisc) });
+      }
+    }
+    if (this.props.ExTracks !== nextProps.ExTracks) {
+      const { discs, activeTab } = this.state;
+      if (nextProps.ExTracks && nextProps.ExTracks.length > 0) {
+        const upcDisc = discs;
+        const tracks = [];
+        discs[activeTab].Tracks.forEach(track => {
+          let trackObj = track;
+          let matchTrack = _.filter(nextProps.ExTracks, val => val.isrc === track.isrc);
+          if (matchTrack && matchTrack[0]) {
+            trackObj.artist = matchTrack[0].artist;
+            trackObj.isrc = matchTrack[0].isrc;
+            trackObj.trackTitle = matchTrack[0].trackTitle;
+          }
+          tracks.push(trackObj);
+        });
+        upcDisc[activeTab].Tracks = tracks;
         this.setState({ discs: _.cloneDeep(upcDisc) });
       }
     }
@@ -494,12 +532,12 @@ class AudioFilesPage extends Component {
   }
 
   render() {
-    const { uploads } = this.props;
+    const { uploads, loading } = this.props;
     return (
       <div className="col-10">
         <HaveAudioModal projectID={this.props.projectID} />
 
-        <LoadingImg show={this.state.showLoader} />
+        <LoadingImg show={this.state.showLoader || loading} />
 
         <ReplaceAudioModal
           showModal={this.state.showReplaceAudioModal}
@@ -572,6 +610,7 @@ class AudioFilesPage extends Component {
           showReplaceModal={(track, i) => this.showReplaceModal(track, i)}
           hideReplaceAudioModal={(track, i) => this.hideReplaceAudioModal(track, i)}
           uploads={uploads}
+          checkIsrc={this.checkIsrc}
         />
 
         <section className="row no-gutters save-buttons">
@@ -608,6 +647,8 @@ export default withRouter(
       uploads: state.uploadProgressAlert.uploads,
       discs: state.uploadProgressAlert.discs,
       upcData: state.releaseReducer.upcData,
+      ExTracks: state.audioReducer.ExTracks,
+      loading: state.audioReducer.loading,
     }),
     dispatch => ({
       onUploadStart: (uniqFileName, trackID) =>
@@ -618,6 +659,7 @@ export default withRouter(
       saveDiscs: updatedDiscs => dispatch(uploadProgressActions.saveDisc(updatedDiscs)),
       findUpc: val => dispatch(releaseAction.findUpc(val)),
       initializeUpcData: () => dispatch(releaseAction.initializeUpcData()),
+      isrcCheck: isrc => dispatch(AudioActions.isrcCheck(isrc)),
     }),
   )(AudioFilesPage),
 );

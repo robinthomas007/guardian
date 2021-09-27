@@ -35,7 +35,7 @@ class AudioVideoDataTable extends Component {
             <button
               style={{ float: 'right' }}
               className="btn btn-sm btn-secondary"
-              // onClick={this.showCommentBox}
+              onClick={this.props.checkIsrc}
               title="Comment"
             >
               <i className={'material-icons'}>search</i>
