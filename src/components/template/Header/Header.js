@@ -482,12 +482,38 @@ class Header extends Component {
                     <span style={{ background: hexArray[i] }}>{getAlias(noti.AssignedBy)}</span>
                   </div>
                   <div className="rgt-col">
-                    <p>
-                      <strong className="bold">{noti.AssignedBy}</strong> left you a comment on{' '}
-                      <strong className="bold">{noti.Step} </strong>for the project
-                      <strong className="bold"> "{noti.ProjectTitle}" </strong> (
-                      {moment(noti.DateCreated).fromNow()})
-                    </p>
+                    {noti.NotificationType === 'Comment' && (
+                      <p>
+                        <strong className="bold">{noti.AssignedBy}</strong> left you a comment on{' '}
+                        <strong className="bold">{noti.Step} </strong>for the project
+                        <strong className="bold"> "{noti.ProjectTitle}" </strong> (
+                        {moment(noti.DateCreated).fromNow()})
+                      </p>
+                    )}
+                    {noti.NotificationType === 'Audio' && (
+                      <p>
+                        <strong className="bold">{noti.AssignedBy}</strong> uploaded audio files for
+                        the project
+                        <strong className="bold"> "{noti.ProjectTitle}" </strong> (
+                        {moment(noti.DateCreated).fromNow()})
+                      </p>
+                    )}
+                    {noti.NotificationType === 'Submit' && (
+                      <p>
+                        <strong className="bold">{noti.AssignedBy}</strong> completed and submitted
+                        the project
+                        <strong className="bold"> "{noti.ProjectTitle}" </strong> (
+                        {moment(noti.DateCreated).fromNow()})
+                      </p>
+                    )}
+                    {noti.NotificationType === 'Tracks' && (
+                      <p>
+                        <strong className="bold">{noti.AssignedBy}</strong> completed the{' '}
+                        <strong className="bold">{noti.Step} </strong>for the project
+                        <strong className="bold"> "{noti.ProjectTitle}" </strong> (
+                        {moment(noti.DateCreated).fromNow()})
+                      </p>
+                    )}
                   </div>
                 </NavLink>
               </li>
