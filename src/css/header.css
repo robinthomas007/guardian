@@ -266,6 +266,14 @@ div.row.d-flex.steps-bar ul li a.active span.step-arrow {
   box-shadow: 0px 1px 2px 2px #dddddd;
   color: #000;
   z-index: 999;
+  max-height: 400px;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+.notification-content::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }
 
 .content-divider {
@@ -300,7 +308,6 @@ div.row.d-flex.steps-bar ul li a.active span.step-arrow {
 .content-list {
   padding: 2px;
   color: #000;
-  overflow: scroll;
 }
 
 .content-divider {
