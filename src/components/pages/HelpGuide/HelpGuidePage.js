@@ -102,7 +102,7 @@ class HelpGuide extends Component {
         <h2>Help / FAQs</h2>
         <div className="row no-gutters">
           If you can't locate an answer to your support question below please feel free to email us
-          at <a href="mailto:guardian-support@umusic.com">guardian-support@umusic.com</a>
+          at <a href="mailto:guardian-support@umusic.com">&nbsp;guardian-support@umusic.com</a>
         </div>
         <br />
         <br />

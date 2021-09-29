@@ -32,7 +32,7 @@ class VideoTutorialModal extends Component {
           <h3>{navSteps[activeNav].modalHeader}</h3>
           {MoreVideos && (
             <NavLink to={{ pathname: '/helpGuide/2' }} onClick={this.handleClose} target="_blank">
-              More Video's{' '}
+              More Videos{' '}
             </NavLink>
           )}
         </Modal.Header>
