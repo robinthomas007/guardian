@@ -66,14 +66,9 @@ class RequestAccessForm extends Component {
   };
 
   handleAccessError = message => {
-    showNotyError(
-      'This &nbsp;' +
-        message +
-        '&nbsp; We cannot accept your request at this time. &nbsp; Click to close.',
-      () => {
-        this.setState({ submitDisabled: false });
-      },
-    );
+    showNotyError(message + ' Click to close.', () => {
+      this.setState({ submitDisabled: false });
+    });
   };
 
   sumbitRequestAccess = () => {
