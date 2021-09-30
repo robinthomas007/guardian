@@ -1,5 +1,6 @@
 import * as actions from 'types/share.types';
 import Api from 'lib/api';
+import { showNotyInfo, showNotyAutoError } from './../components/Utils';
 
 export const shareSuccess = comment => {
   return {
@@ -25,12 +26,14 @@ export const shareRequest = loading => {
 export const postEmails = data => {
   return dispatch => {
     dispatch(shareRequest(true));
-    return Api.post('/project/SendEmailTrack', data)
+    return Api.post('/project/sendemailtrack', data)
       .then(response => response.json())
       .then(response => {
-        if (response) {
+        if (response.result) {
+          showNotyInfo(response.message);
           dispatch(shareSuccess(response.Comment));
         } else {
+          showNotyAutoError('Error sending email');
           dispatch(shareFailure(response.message));
         }
         return response;
