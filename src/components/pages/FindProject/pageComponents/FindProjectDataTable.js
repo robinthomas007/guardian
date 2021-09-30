@@ -236,7 +236,9 @@ class FindProjectDataTable extends Component {
               {project.projectReleasingLabel}
             </td>
             <td onClick={() => this.handleRowClick(project.projectID)}>
-              {moment.utc(project.projectReleaseDate).format('DD-MM-YYYY hh:mm A')} UTC
+              {project.projectReleaseDate
+                ? `${moment.utc(project.projectReleaseDate).format('DD-MM-YYYY hh:mm A')} UTC`
+                : 'TBD'}
             </td>
             <td
               onClick={() =>
