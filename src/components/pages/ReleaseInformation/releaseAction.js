@@ -189,6 +189,7 @@ export const initialize = () => {
 
 export const initializeUpcData = () => {
   return dispatch => {
+    localStorage.removeItem('upc');
     dispatch(initialize());
   };
 };

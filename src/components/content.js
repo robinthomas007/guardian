@@ -16,6 +16,7 @@ import { connect } from 'react-redux';
 import ProjectInbox from './pages/ProjectInbox';
 import { ToastContainer } from 'react-toastify';
 import ErrorBoundary from './common/ErrorBoundary';
+import * as releaseAction from './pages/ReleaseInformation/releaseAction';
 
 class Content extends Component {
   constructor(props) {
@@ -176,6 +177,8 @@ class Content extends Component {
       Project: {},
     };
     localStorage.removeItem('projectData');
+    localStorage.removeItem('upc');
+    this.props.initializeUpcData();
     this.setState({ project: blankProject, clearProject: true }, () =>
       this.setState({ clearProject: false }),
     );
@@ -367,8 +370,14 @@ class Content extends Component {
     }
   }
 }
+
 export default withAuth(
-  connect(state => ({
-    progress: Object.keys(state.uploadProgressAlert.uploads).length,
-  }))(Content),
+  connect(
+    state => ({
+      progress: Object.keys(state.uploadProgressAlert.uploads).length,
+    }),
+    dispatch => ({
+      initializeUpcData: () => dispatch(releaseAction.initializeUpcData()),
+    }),
+  )(Content),
 );

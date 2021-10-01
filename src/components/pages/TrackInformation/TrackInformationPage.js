@@ -319,6 +319,8 @@ class TrackInformationPage extends Component {
         this.setState({ showloader: false });
         this.showNotification(saveAndContinue);
         this.props.setHeaderProjectData(this.state.project);
+        localStorage.removeItem('upc');
+        this.props.initializeUpcData();
       })
       .catch(error => {
         this.setState({ showloader: false });
