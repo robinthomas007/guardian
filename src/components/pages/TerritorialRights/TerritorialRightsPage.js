@@ -6,6 +6,8 @@ import LoadingImg from '../../ui/LoadingImg';
 import './TerritorialRights.css';
 import { withRouter } from 'react-router';
 import { showNotyInfo, showNotyAutoError } from 'components/Utils';
+import { connect } from 'react-redux';
+import * as territorialRightsAction from '../../../actions/territorialRightsAction';
 import _ from 'lodash';
 
 class TerritorialRightsPage extends Component {
@@ -50,6 +52,16 @@ class TerritorialRightsPage extends Component {
       })
       .then(responseJSON => {
         this.setState({ project: responseJSON });
+        if (responseJSON.Discs) {
+          let isrcs = [];
+          responseJSON.Discs.forEach(element => {
+            let arr = _.map(element.Tracks, 'isrc');
+            isrcs = _.concat(isrcs, arr);
+          });
+          console.log(responseJSON.Discs, 'responseJSON', isrcs);
+          this.props.getRights({ User: { email: user.email }, isrcs: isrcs });
+        }
+
         if (!responseJSON.TerritorialRightsSets || !responseJSON.TerritorialRightsSets.length) {
           this.addRightsSet();
         }
@@ -379,4 +391,15 @@ class TerritorialRightsPage extends Component {
   }
 }
 
-export default withRouter(TerritorialRightsPage);
+const mapDispatchToProps = dispatch => ({
+  getRights: val => dispatch(territorialRightsAction.getRights(val)),
+});
+
+const mapStateToProps = state => ({});
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  )(TerritorialRightsPage),
+);
