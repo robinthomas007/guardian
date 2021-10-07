@@ -52,16 +52,6 @@ class TerritorialRightsPage extends Component {
       })
       .then(responseJSON => {
         this.setState({ project: responseJSON });
-        if (responseJSON.Discs) {
-          let isrcs = [];
-          responseJSON.Discs.forEach(element => {
-            let arr = _.map(element.Tracks, 'isrc');
-            isrcs = _.concat(isrcs, arr);
-          });
-          console.log(responseJSON.Discs, 'responseJSON', isrcs);
-          this.props.getRights({ User: { email: user.email }, isrcs: isrcs });
-        }
-
         if (!responseJSON.TerritorialRightsSets || !responseJSON.TerritorialRightsSets.length) {
           this.addRightsSet();
         }
@@ -290,12 +280,34 @@ class TerritorialRightsPage extends Component {
   componentDidMount() {
     if (this.props.match.params.projectID) {
       this.handlePageDataLoad();
+      const user = JSON.parse(sessionStorage.getItem('user'));
+      this.props.getRights({
+        User: { email: user.email },
+        projectID: this.props.match.params.projectID,
+      });
     }
   }
 
   componentDidUpdate() {
     if (this.props.match.params.projectID) {
       this.props.setProjectID(this.props.match.params.projectID, this.props.match.url);
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (
+      this.props.TerritorialRightsSets !== nextProps.TerritorialRightsSets ||
+      this.props.UnassignedTracks !== nextProps.UnassignedTracks
+    ) {
+      if (nextProps.TerritorialRightsSets.length > 0 || nextProps.UnassignedTracks.length > 0) {
+        this.setState({
+          project: {
+            ...this.state.project,
+            TerritorialRightsSets: nextProps.TerritorialRightsSets,
+            UnassignedTerritorialRightsSetTracks: nextProps.UnassignedTracks,
+          },
+        });
+      }
     }
   }
 
@@ -395,7 +407,10 @@ const mapDispatchToProps = dispatch => ({
   getRights: val => dispatch(territorialRightsAction.getRights(val)),
 });
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  TerritorialRightsSets: state.territorialRightsReducer.TerritorialRightsSets,
+  UnassignedTracks: state.territorialRightsReducer.UnassignedTracks,
+});
 
 export default withRouter(
   connect(

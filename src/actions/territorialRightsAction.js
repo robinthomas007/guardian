@@ -1,46 +1,44 @@
-import * as actions from 'types/notifications.types';
+import * as actions from 'types/rights.types';
 import Api from 'lib/api';
 import { showNotyAutoError } from './../components/Utils';
 
-// export const notificationSuccess = data => {
-//   return {
-//     type: actions.NOTIFICATION_SUCCESS,
-//     data,
-//     count: data.length,
-//   };
-// };
+export const rightsSuccess = (TerritorialRightsSets, UnassignedTracks) => {
+  return {
+    type: actions.RIGHTS_SUCCESS,
+    TerritorialRightsSets,
+    UnassignedTracks,
+  };
+};
 
-// export const notificationFailure = error => {
-//   return {
-//     type: actions.NOTIFICATION_FAILURE,
-//     message: error,
-//   };
-// };
+export const rightsFailure = error => {
+  return {
+    type: actions.RIGHTS_FAILURE,
+    message: error,
+  };
+};
 
-// export const notificationRequest = isLoading => {
-//   return {
-//     type: actions.NOTIFICATION_REQUEST,
-//     isLoading,
-//   };
-// };
+export const rightRequest = isLoading => {
+  return {
+    type: actions.RIGHTS_REQUEST,
+    isLoading,
+  };
+};
 
 export const getRights = val => {
   return dispatch => {
-    // dispatch(notificationRequest(true));
+    dispatch(rightRequest(true));
     return Api.post('/project/ugcrights', val)
       .then(response => response.json())
       .then(response => {
-        if (response.Notifications) {
-          //   dispatch(notificationSuccess(response.Notifications));
+        if (response.Status === 'OK') {
+          dispatch(rightsSuccess(response.TerritorialRightsSets, response.UnassignedTracks));
         } else {
-          //   showNotyAutoError('Something went wrong, please refresh the browser');
-          //   dispatch(notificationFailure(response.message));
+          dispatch(rightsFailure(response.message));
         }
       })
       .catch(error => {
         console.log('error', error);
-        showNotyAutoError('Something went wrong, please refresh the browser');
-        // dispatch(notificationFailure(error));
+        dispatch(rightsFailure(error));
       });
   };
 };

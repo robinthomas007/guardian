@@ -11,6 +11,7 @@ import ProjectInboxReducer from '../reducers/ProjectInboxReducer';
 import releaseReducer from '../components/pages/ReleaseInformation/releaseReducer';
 import audioReducer from './../reducers/audioReducer';
 import shareReducer from './../reducers/shareReducer';
+import territorialRightsReducer from './../reducers/territorialRightsReducer';
 
 export default asyncReducers => {
   return combineReducers({
@@ -26,6 +27,7 @@ export default asyncReducers => {
     releaseReducer,
     audioReducer,
     shareReducer,
+    territorialRightsReducer,
     ...asyncReducers,
   });
 };
