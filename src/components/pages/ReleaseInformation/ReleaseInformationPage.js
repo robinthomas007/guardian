@@ -159,32 +159,16 @@ class ReleaseinformationPage extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-
     if (isFormValid()) {
       this.setState({ showloader: true });
-      const projectID = this.state.projectID;
-      const fetchHeaders = new Headers({
-        'Content-Type': 'application/json',
-        Authorization: sessionStorage.getItem('accessToken'),
-      });
-
-      const fetchBody = JSON.stringify({
-        Project: this.state.formInputs,
-      });
-
-      //if this is an existing project we need to skip validation and save
       if (this.state.formInputs.projectID !== '') {
-        fetch(window.env.api.url + '/project', {
-          method: 'POST',
-          headers: fetchHeaders,
-          body: fetchBody,
-        })
-          .then(response => {
-            return response.json();
+        this.props
+          .submitProjectDetails({
+            Project: this.state.formInputs,
           })
+          .then(response => response.json())
           .then(responseJSON => {
             this.setState({ showloader: false });
-
             if (responseJSON.errorMessage) {
             } else {
               this.props.setHeaderProjectData(responseJSON);
@@ -192,18 +176,16 @@ class ReleaseinformationPage extends Component {
               this.props.history.push('/projectContacts/' + responseJSON.Project.projectID);
             }
           })
-          .catch(error => console.error(error));
+          .catch(error => {
+            console.error(error);
+            this.setState({ showloader: false });
+          });
       } else {
-        //if this is a new project we need to go the validator path
-
-        fetch(window.env.api.url + '/project/validate', {
-          method: 'POST',
-          headers: fetchHeaders,
-          body: fetchBody,
-        })
-          .then(response => {
-            return response.json();
+        this.props
+          .validateProjectDetails({
+            Project: this.state.formInputs,
           })
+          .then(response => response.json())
           .then(responseJSON => {
             if (responseJSON.IsValid) {
               localStorage.setItem('projectData', JSON.stringify(this.state.formInputs));
@@ -219,7 +201,10 @@ class ReleaseinformationPage extends Component {
               );
             }
           })
-          .catch(error => console.log(error));
+          .catch(error => {
+            console.error(error);
+            this.setState({ showloader: false });
+          });
       }
     }
   }
@@ -349,26 +334,12 @@ class ReleaseinformationPage extends Component {
 
   handleDataLoad() {
     this.setState({ showloader: true });
-
-    const user = JSON.parse(sessionStorage.getItem('user'));
-    const fetchHeaders = new Headers({
-      'Content-Type': 'application/json',
-      Authorization: sessionStorage.getItem('accessToken'),
-    });
-
-    const fetchBody = JSON.stringify({
-      PagePath: this.props.match.url ? this.props.match.url : '',
-      ProjectID: this.props.match.params.projectID,
-    });
-
-    fetch(window.env.api.url + '/project/review', {
-      method: 'POST',
-      headers: fetchHeaders,
-      body: fetchBody,
-    })
-      .then(response => {
-        return response.json();
+    this.props
+      .getProjectDetails({
+        PagePath: this.props.match.url ? this.props.match.url : '',
+        ProjectID: this.props.match.params.projectID,
       })
+      .then(response => response.json())
       .then(responseJSON => {
         if (responseJSON.Project.projectReleaseDateTBD === true) {
           this.setState({ projectReleaseDateDisabled: true, releaseDateRequired: false });
@@ -668,6 +639,9 @@ ReleaseinformationPage = reduxForm({
 
 const mapDispatchToProps = dispatch => ({
   findUpc: val => dispatch(releaseAction.findUpc(val)),
+  getProjectDetails: data => dispatch(releaseAction.getProjectDetails(data)),
+  submitProjectDetails: data => dispatch(releaseAction.submitProjectDetails(data)),
+  validateProjectDetails: data => dispatch(releaseAction.validateProjectDetails(data)),
 });
 
 const mapStateToProps = state => ({

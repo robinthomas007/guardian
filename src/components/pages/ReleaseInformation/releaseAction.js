@@ -4,46 +4,23 @@ import history from '../../../history';
 import { toast } from 'react-toastify';
 import { showNotyAutoError } from 'components/Utils';
 
-// export const projectSuccess = data => {
-//   return {
-//     type: actions.PROJECT_SUCCESS,
-//     data,
-//   };
-// };
+export const getProjectDetails = data => {
+  return () => {
+    return Api.post('/project/review', data);
+  };
+};
 
-// export const projectFailure = error => {
-//   return {
-//     type: actions.PROJECT_FAILURE,
-//     message: error,
-//   };
-// };
+export const submitProjectDetails = data => {
+  return () => {
+    return Api.post('/project', data);
+  };
+};
 
-// export const projectRequest = isLoading => {
-//   return {
-//     type: actions.PROJECT_REQUEST,
-//     isLoading,
-//   };
-// };
-
-// export const getProjectDetails = data => {
-//   return dispatch => {
-//     dispatch(projectRequest(true));
-//     return Api.post('/project/review', data)
-//       .then(response => response.json())
-//       .then(response => {
-//         if (response) {
-//           dispatch(projectSuccess(response));
-//           localStorage.removeItem('projectData');
-//         } else {
-//           dispatch(projectFailure(response.message));
-//         }
-//       })
-//       .catch(error => {
-//         console.log('error', error);
-//         dispatch(projectFailure(error));
-//       });
-//   };
-// };
+export const validateProjectDetails = data => {
+  return () => {
+    return Api.post('/project/validate', data);
+  };
+};
 
 // export const createReleaseInfo = data => {
 //   return dispatch => {
