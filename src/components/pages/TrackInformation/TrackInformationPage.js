@@ -319,6 +319,7 @@ class TrackInformationPage extends Component {
         this.setState({ showloader: false });
         this.showNotification(saveAndContinue);
         this.props.setHeaderProjectData(this.state.project);
+        localStorage.setItem('step', 4);
         localStorage.removeItem('upc');
         this.props.initializeUpcData();
       })

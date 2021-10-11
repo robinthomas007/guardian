@@ -269,6 +269,7 @@ class TerritorialRightsPage extends Component {
           this.props.setHeaderProjectData(this.state.project);
         }
         this.setState({ showLoader: false });
+        localStorage.removeItem('step');
       })
       .catch(error => {
         console.error(error);
@@ -284,6 +285,7 @@ class TerritorialRightsPage extends Component {
       this.props.getRights({
         User: { email: user.email },
         projectID: this.props.match.params.projectID,
+        step: localStorage.step === '4' ? 4 : 6,
       });
     }
   }
@@ -299,6 +301,7 @@ class TerritorialRightsPage extends Component {
       this.props.TerritorialRightsSets !== nextProps.TerritorialRightsSets ||
       this.props.UnassignedTracks !== nextProps.UnassignedTracks
     ) {
+      console.log(nextProps.TerritorialRightsSets, 'nextProps.TerritorialRightsSets');
       if (nextProps.TerritorialRightsSets.length > 0 || nextProps.UnassignedTracks.length > 0) {
         this.setState({
           project: {

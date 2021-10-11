@@ -15,7 +15,7 @@ const validate = values => {
   if (!values.emails) {
     errors.emails = 'Emails are required';
   }
-  return errors;
+  // return errors;
 };
 
 const ShareProjectModal = props => {
@@ -24,6 +24,7 @@ const ShareProjectModal = props => {
   const success = useSelector(state => state.shareReducer.success);
 
   const [isEmailsValid, setEmailValid] = useState(true);
+  const [emails, setEmails] = useState([]);
 
   const validateEmail = email => {
     var re = /\S+@\S+\.\S+/;
@@ -36,11 +37,10 @@ const ShareProjectModal = props => {
     }
   }, [success]);
 
-  const formSubmit = val => {
+  const formSubmit = () => {
     const user = JSON.parse(sessionStorage.getItem('user'));
 
-    if (val.emails) {
-      const emails = val.emails.split(/(?:,| |;)+/);
+    if (emails.length > 0) {
       let isValid = true;
       if (emails.length > 0) {
         emails.forEach(email => {
@@ -62,18 +62,102 @@ const ShareProjectModal = props => {
     }
   };
 
+  const onKeyUp = evt => {
+    if (['Enter', ',', ' ', ';'].includes(evt.key)) {
+      let email = document.querySelector('#shareEmailsIds').value;
+      email = email.trim();
+      email = email.split(/(?:,| |;)+/);
+      email = email[0];
+      props.initialize({
+        emails: null,
+      });
+      if (email) {
+        setEmails([...emails, email]);
+      }
+    }
+  };
+
+  const updateEmail = email => {
+    let arr = emails.filter(e => e !== email);
+    setEmails(arr);
+    props.initialize({
+      emails: email,
+    });
+  };
+
+  const removeEmail = email => {
+    let arr = emails.filter(e => e !== email);
+    setEmails(arr);
+  };
+  const handleKeyDown = evt => {
+    if (evt.key === 'Backspace') {
+      let clear = document.querySelector('#shareEmailsIds').value;
+      if (clear === '') {
+        const popElm = emails.pop();
+        removeEmail(popElm);
+      }
+    }
+  };
+
+  const onPasteEmail = e => {
+    let email = e.clipboardData.getData('Text');
+    const copiedEmail = extract(['<', '>'])(email);
+    if (copiedEmail && copiedEmail.length > 0) {
+      email = copiedEmail;
+    } else {
+      email = email.trim();
+      email = email.split(/(?:,| |;)+/);
+    }
+    props.initialize({
+      emails: null,
+    });
+    if (email) {
+      if (email) {
+        setEmails([...emails, ...email]);
+      }
+    }
+    e.preventDefault();
+  };
+
+  const extract = ([beg, end]) => {
+    const matcher = new RegExp(`${beg}(.*?)${end}`, 'gm');
+    const normalise = str => str.slice(beg.length, end.length * -1);
+    return function(str) {
+      if (str.match(matcher)) return str.match(matcher).map(normalise);
+    };
+  };
+
   return (
     <Modal id="shareProjectModal" show={props.show} onHide={handleClose}>
       <Modal.Body>
         <LoadingImg show={loading} />
         <form onSubmit={handleSubmit(formSubmit)}>
-          <div>
-            <label>Please enter email id's</label>
-            <Field id="share" name="emails" component={TextArea} />
-            {props.formValues &&
-              props.formValues.values &&
-              props.formValues.values.emails &&
-              !isEmailsValid && <span className="error_message">Email id's are not valid.</span>}
+          <label>Please enter email id's</label>
+          <div className="col-12 bubule-email-field">
+            {emails.map(email => (
+              <button
+                type="button"
+                key={email}
+                className={`btn btn-sm btn-secondary email-bubble ${
+                  validateEmail(email) ? 'valid-email' : 'invalid-email'
+                }`}
+              >
+                <span onClick={() => updateEmail(email)}>{email}</span>
+                <i class="material-icons" onClick={() => removeEmail(email)}>
+                  close
+                </i>
+              </button>
+            ))}
+            <Field
+              row="3"
+              id="share"
+              name="emails"
+              component={TextArea}
+              onKeyUp={onKeyUp}
+              id="shareEmailsIds"
+              onPaste={onPasteEmail}
+              onKeyDown={handleKeyDown}
+            />
           </div>
           <div className="submit-buttons float-right">
             <Button type="button" variant="secondary" onClick={handleClose}>

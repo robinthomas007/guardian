@@ -2,6 +2,16 @@ import React, { Component } from 'react';
 import ToolTip from '../ui/Tooltip';
 
 export default class RenderTextarea extends Component {
+  onKeyUp(event) {
+    this.props.onKeyUp(event);
+  }
+  onKeyDown(event) {
+    this.props.onKeyDown(event);
+  }
+  onPaste(event) {
+    this.props.onPaste(event);
+  }
+
   render() {
     let {
       id,
@@ -11,8 +21,12 @@ export default class RenderTextarea extends Component {
       col,
       readOnly,
       tooltip,
+      className,
+      rows,
+      cols,
       meta: { touched, error },
     } = this.props;
+
     return (
       <div className="input_field">
         {label && (
@@ -22,7 +36,17 @@ export default class RenderTextarea extends Component {
           </div>
         )}
         <div className={`input_holder ${label ? '' : 'no-label'}`}>
-          <textarea {...input} id={id} rows={row} cols={col} readOnly={readOnly} />
+          <textarea
+            {...input}
+            id={id}
+            className={className}
+            onKeyUp={this.onKeyUp.bind(this)}
+            onKeyDown={this.onKeyDown.bind(this)}
+            onPaste={this.onPaste.bind(this)}
+            rows={row}
+            cols={col}
+            readOnly={readOnly}
+          />
           {touched && error && <p className="error_message">{error}</p>}
         </div>
       </div>
