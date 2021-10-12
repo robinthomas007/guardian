@@ -168,12 +168,12 @@ class TerritorialRightsPage extends Component {
       ) {
         //add the selection to the unassigned tracks
         const { UnassignedTerritorialRightsSetTracks } = this.state.project;
-        let modifiedUnassignedTracks = _.cloneDeep(UnassignedTerritorialRightsSetTracks);
+        let modifiedUnassignedTracks = UnassignedTerritorialRightsSetTracks;
         modifiedUnassignedTracks.push({ trackID: trackId, trackTitle: trackTitle });
 
         //remove the selection from the set's assigned tracks
         const { TerritorialRightsSets } = this.state.project;
-        let modifiedTerritorialRightsSets = _.cloneDeep(TerritorialRightsSets);
+        let modifiedTerritorialRightsSets = TerritorialRightsSets;
         modifiedTerritorialRightsSets[setIndex].tracks = _.filter(
           TerritorialRightsSets[setIndex].tracks,
           val => val.trackID !== trackId,
@@ -305,8 +305,8 @@ class TerritorialRightsPage extends Component {
         this.setState({
           project: {
             ...this.state.project,
-            TerritorialRightsSets: nextProps.TerritorialRightsSets,
-            UnassignedTerritorialRightsSetTracks: nextProps.UnassignedTracks,
+            TerritorialRightsSets: _.cloneDeep(nextProps.TerritorialRightsSets),
+            UnassignedTerritorialRightsSetTracks: _.cloneDeep(nextProps.UnassignedTracks),
           },
         });
       }
