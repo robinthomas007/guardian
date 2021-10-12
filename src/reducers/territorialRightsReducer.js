@@ -9,7 +9,7 @@ export const initialState = {
 
 export default createReducer(initialState, {
   [RIGHTS_REQUEST]: (state, action) => {
-    state.loading = action.loading;
+    state.loading = action.isLoading;
   },
   [RIGHTS_SUCCESS]: (state, action) => {
     state.TerritorialRightsSets = action.TerritorialRightsSets;
