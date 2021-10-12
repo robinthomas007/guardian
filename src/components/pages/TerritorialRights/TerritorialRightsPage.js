@@ -301,8 +301,7 @@ class TerritorialRightsPage extends Component {
       this.props.TerritorialRightsSets !== nextProps.TerritorialRightsSets ||
       this.props.UnassignedTracks !== nextProps.UnassignedTracks
     ) {
-      console.log(nextProps.TerritorialRightsSets, 'nextProps.TerritorialRightsSets');
-      if (nextProps.TerritorialRightsSets.length > 0 || nextProps.UnassignedTracks.length > 0) {
+      if (nextProps.TerritorialRightsSets.length > 0) {
         this.setState({
           project: {
             ...this.state.project,

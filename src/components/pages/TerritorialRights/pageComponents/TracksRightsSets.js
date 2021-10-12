@@ -73,12 +73,12 @@ class TracksRightsSets extends Component {
 
   handleCountryChange = (inputValue, setIndex) => {
     const { TerritorialRightsSets } = this.props.data;
-    const stateContainsWW = TerritorialRightsSets[setIndex].countries.includes('WW');
     const wwIndex = inputValue.indexOf('WW');
 
-    // if(wwIndex >= 0) {
-    //     inputValue = this.handleCountrySelect(inputValue, wwIndex);
-    // }
+    if (wwIndex >= 0) {
+      inputValue = this.handleCountrySelect(inputValue, wwIndex);
+    }
+
     inputValue = _.union(inputValue);
     let formattedInputValues = inputValue.map(countryID => {
       return this.getCountryNameByID(countryID);

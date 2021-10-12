@@ -33,7 +33,13 @@ class MultiSelectDropDown extends Component {
     let inputValue = e.target.value;
 
     if (e.target.checked) {
-      modifiedValue.push(inputValue);
+      // modified for customization in trackRights
+      if (inputValue === 'WW' && this.props.clear) {
+        modifiedValue = [];
+        modifiedValue.push(inputValue);
+      } else {
+        modifiedValue.push(inputValue);
+      }
     } else {
       let index = modifiedValue.indexOf(inputValue);
       if (index !== -1) {

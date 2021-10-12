@@ -376,7 +376,7 @@ class ReviewAndSubmitPage extends Component {
             </div>
             <div className="col-12">
               <br />
-              <div className="review-card">
+              <div className="review-card territorial">
                 <TerritorialRightsTable data={this.props.data} />
               </div>
             </div>
