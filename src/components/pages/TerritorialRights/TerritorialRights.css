@@ -166,3 +166,13 @@ button.btn.btn-secondary.action.align-middle {
 .unassignedTrack .custom-checkbox {
   margin: 0 6px;
 }
+
+.country-list {
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+.country-list::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}

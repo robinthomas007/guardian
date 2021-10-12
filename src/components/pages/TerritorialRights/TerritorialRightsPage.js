@@ -168,12 +168,12 @@ class TerritorialRightsPage extends Component {
       ) {
         //add the selection to the unassigned tracks
         const { UnassignedTerritorialRightsSetTracks } = this.state.project;
-        let modifiedUnassignedTracks = UnassignedTerritorialRightsSetTracks;
+        let modifiedUnassignedTracks = _.cloneDeep(UnassignedTerritorialRightsSetTracks);
         modifiedUnassignedTracks.push({ trackID: trackId, trackTitle: trackTitle });
 
         //remove the selection from the set's assigned tracks
         const { TerritorialRightsSets } = this.state.project;
-        let modifiedTerritorialRightsSets = TerritorialRightsSets;
+        let modifiedTerritorialRightsSets = _.cloneDeep(TerritorialRightsSets);
         modifiedTerritorialRightsSets[setIndex].tracks = _.filter(
           TerritorialRightsSets[setIndex].tracks,
           val => val.trackID !== trackId,
@@ -317,7 +317,7 @@ class TerritorialRightsPage extends Component {
   render() {
     return (
       <div className="col-10">
-        <LoadingImg show={this.state.showLoader} />
+        <LoadingImg show={this.state.showLoader || this.props.loading} />
 
         <PageHeader data={this.state.project} />
 
@@ -413,6 +413,7 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = state => ({
   TerritorialRightsSets: state.territorialRightsReducer.TerritorialRightsSets,
   UnassignedTracks: state.territorialRightsReducer.UnassignedTracks,
+  loading: state.territorialRightsReducer.loading,
 });
 
 export default withRouter(

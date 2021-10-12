@@ -140,6 +140,7 @@ class TracksRightsSets extends Component {
 
   getSetsList = () => {
     const rightsSets = this.props.data.TerritorialRightsSets.map((rightsSet, i) => {
+      const trackHeight = rightsSet.tracks.length > 3 ? rightsSet.tracks.length * 35 : 80;
       return (
         <div key={i} className="set-card">
           <div className="row d-flex col-12 no-gutters">
@@ -201,7 +202,7 @@ class TracksRightsSets extends Component {
                     </div>
                     <br />
                     <br />
-                    <div>
+                    <div className="country-list" style={{ maxHeight: trackHeight }}>
                       {this.listOfCountries(rightsSet.countries)
                         .toString()
                         .replace(/,/g, ', ')}
