@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { reduxForm, Field } from 'redux-form';
 import { connect, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -27,6 +27,7 @@ const CommentSlider = props => {
   const { handleClose, handleSubmit } = props;
   const comments = useSelector(state => state.commentReducer.comments);
   const loading = useSelector(state => state.commentReducer.loading);
+  const [height, setHeight] = useState(210);
 
   useEffect(() => {
     if (props.projectID) props.getComments({ ProjectId: props.projectID });
@@ -51,8 +52,9 @@ const CommentSlider = props => {
   };
 
   const renderComments = () => {
+    console.log(height, 'height from state....');
     return (
-      <ul className="comment-section-wrap">
+      <ul className="comment-section-wrap" style={{ height: height + 'px' }}>
         {_.map(comments, (obj, key) => {
           return (
             <li key={key}>
@@ -86,6 +88,13 @@ const CommentSlider = props => {
       minHeight={440}
       bounds="parent"
       cancel="#commentForm"
+      onResizeStop={(e, direction, ref, delta, position) => {
+        if (ref.style.height) {
+          let conHeight = ref.style.height.split('px')[0];
+          conHeight = parseInt(conHeight) - 230;
+          setHeight(conHeight);
+        }
+      }}
     >
       <div className="comment-slider">
         <span className="material-icons close" onClick={handleClose}>
