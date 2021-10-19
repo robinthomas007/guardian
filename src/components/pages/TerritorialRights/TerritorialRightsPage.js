@@ -306,7 +306,7 @@ class TerritorialRightsPage extends Component {
       if (nextProps.TerritorialRightsSets.length > 0) {
         TerritorialRightsSets = _.cloneDeep(nextProps.TerritorialRightsSets);
       }
-      if (nextProps.NoRightsTracks.length > 0) {
+      if (nextProps.NoRightsTracks && nextProps.NoRightsTracks.length > 0) {
         let NoRightsTracks = _.cloneDeep(nextProps.NoRightsTracks);
         NoRightsTracks = _.map(NoRightsTracks, o => _.extend({ hasRights: false }, o));
         UnassignedTracks = _.cloneDeep(nextProps.UnassignedTracks).concat(NoRightsTracks);

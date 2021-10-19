@@ -141,6 +141,10 @@ class TracksRightsSets extends Component {
   getSetsList = () => {
     const rightsSets = this.props.data.TerritorialRightsSets.map((rightsSet, i) => {
       const trackHeight = rightsSet.tracks.length > 3 ? rightsSet.tracks.length * 35 : 80;
+      const dropDownVal = _.filter(
+        this.props.data.UnassignedTerritorialRightsSetTracks,
+        val => val.hasRights !== false,
+      );
       return (
         <div key={i} className="set-card">
           <div className="row d-flex col-12 no-gutters">
@@ -168,7 +172,7 @@ class TracksRightsSets extends Component {
                 <tr className="d-flex row no-gutters">
                   <td className="col-4">
                     <TracksSelectDropDown
-                      data={this.props.data.UnassignedTerritorialRightsSetTracks}
+                      data={dropDownVal}
                       onChange={e => this.handleTrackSelect(e, rightsSet)}
                       setIndex={i}
                     />
