@@ -301,15 +301,23 @@ class TerritorialRightsPage extends Component {
       this.props.TerritorialRightsSets !== nextProps.TerritorialRightsSets ||
       this.props.UnassignedTracks !== nextProps.UnassignedTracks
     ) {
+      let TerritorialRightsSets = [];
+      let UnassignedTracks = [];
       if (nextProps.TerritorialRightsSets.length > 0) {
-        this.setState({
-          project: {
-            ...this.state.project,
-            TerritorialRightsSets: _.cloneDeep(nextProps.TerritorialRightsSets),
-            UnassignedTerritorialRightsSetTracks: _.cloneDeep(nextProps.UnassignedTracks),
-          },
-        });
+        TerritorialRightsSets = _.cloneDeep(nextProps.TerritorialRightsSets);
       }
+      if (nextProps.NoRightsTracks.length > 0) {
+        let NoRightsTracks = _.cloneDeep(nextProps.NoRightsTracks);
+        NoRightsTracks = _.map(NoRightsTracks, o => _.extend({ hasRights: false }, o));
+        UnassignedTracks = _.cloneDeep(nextProps.UnassignedTracks).concat(NoRightsTracks);
+      }
+      this.setState({
+        project: {
+          ...this.state.project,
+          TerritorialRightsSets: TerritorialRightsSets,
+          UnassignedTerritorialRightsSetTracks: UnassignedTracks,
+        },
+      });
     }
   }
 
@@ -412,6 +420,7 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = state => ({
   TerritorialRightsSets: state.territorialRightsReducer.TerritorialRightsSets,
   UnassignedTracks: state.territorialRightsReducer.UnassignedTracks,
+  NoRightsTracks: state.territorialRightsReducer.NoRightsTracks,
   loading: state.territorialRightsReducer.loading,
 });
 

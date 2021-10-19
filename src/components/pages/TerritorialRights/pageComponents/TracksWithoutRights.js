@@ -19,7 +19,10 @@ class TracksWithoutRights extends Component {
   handleDrag(e, i, track) {
     let selectedArr = [];
     for (let i = 0; i < this.props.data.length; i++) {
-      if (this.state[`check_${this.props.data[i].trackID}`]) {
+      if (
+        this.state[`check_${this.props.data[i].trackID}`] &&
+        this.props.data[i].hasRights !== false
+      ) {
         selectedArr.push(document.querySelector(`#check_${this.props.data[i].trackID}`));
         let checkName = `check_${this.props.data[i].trackID}`;
         this.setState({ [checkName]: null });
@@ -31,8 +34,10 @@ class TracksWithoutRights extends Component {
       }
       this.props.handleChildDrag(selectedArr);
     } else {
-      this.props.handleChildDrag([e.target]);
-      e.dataTransfer.setData('text/html', e.target);
+      if (track.hasRights !== false) {
+        this.props.handleChildDrag([e.target]);
+        e.dataTransfer.setData('text/html', e.target);
+      }
     }
     this.setState({ selectAllNoRights: false });
   }
@@ -46,11 +51,13 @@ class TracksWithoutRights extends Component {
   selectAll = e => {
     const { selectAllNoRights } = this.state;
     for (let i = 0; i < this.props.data.length; i++) {
-      let checkName = `check_${this.props.data[i].trackID}`;
-      if (!selectAllNoRights) {
-        this.setState({ [checkName]: true });
-      } else {
-        this.setState({ [checkName]: false });
+      if (this.props.data[i].hasRights !== false) {
+        let checkName = `check_${this.props.data[i].trackID}`;
+        if (!selectAllNoRights) {
+          this.setState({ [checkName]: true });
+        } else {
+          this.setState({ [checkName]: false });
+        }
       }
     }
     this.setState({
@@ -77,6 +84,7 @@ class TracksWithoutRights extends Component {
                 onChange={this.toggleChange}
                 className="track-multi-drag-check"
                 checked={this.state[`check_${track.trackID}`]}
+                disabled={track.hasRights === false ? true : false}
                 type="checkbox"
                 id={`check_${track.trackID}`}
                 name={`check_${track.trackID}`}

@@ -2,11 +2,12 @@ import * as actions from 'types/rights.types';
 import Api from 'lib/api';
 import { showNotyAutoError } from './../components/Utils';
 
-export const rightsSuccess = (TerritorialRightsSets, UnassignedTracks) => {
+export const rightsSuccess = (TerritorialRightsSets, UnassignedTracks, NoRightsTracks) => {
   return {
     type: actions.RIGHTS_SUCCESS,
     TerritorialRightsSets,
     UnassignedTracks,
+    NoRightsTracks,
   };
 };
 
@@ -31,7 +32,16 @@ export const getRights = val => {
       .then(response => response.json())
       .then(response => {
         if (response.Status === 'OK') {
-          dispatch(rightsSuccess(response.TerritorialRightsSets, response.UnassignedTracks));
+          if (response.NoRightsTracks && response.NoRightsTracks.length > 0) {
+            showNotyAutoError("Some of the ISRC's are not having rights");
+          }
+          dispatch(
+            rightsSuccess(
+              response.TerritorialRightsSets,
+              response.UnassignedTracks,
+              response.NoRightsTracks,
+            ),
+          );
         } else {
           dispatch(rightsFailure(response.message));
         }

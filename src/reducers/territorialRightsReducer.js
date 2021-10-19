@@ -5,6 +5,7 @@ export const initialState = {
   loading: false,
   TerritorialRightsSets: [],
   UnassignedTracks: [],
+  NoRightsTracks: [],
 };
 
 export default createReducer(initialState, {
@@ -14,6 +15,7 @@ export default createReducer(initialState, {
   [RIGHTS_SUCCESS]: (state, action) => {
     state.TerritorialRightsSets = action.TerritorialRightsSets;
     state.UnassignedTracks = action.UnassignedTracks;
+    state.NoRightsTracks = action.NoRightsTracks;
     state.loading = false;
   },
   [RIGHTS_FAILURE]: (state, action) => {
