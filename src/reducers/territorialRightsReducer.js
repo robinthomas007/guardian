@@ -1,5 +1,10 @@
 import { createReducer } from 'redux-starter-kit';
-import { RIGHTS_SUCCESS, RIGHTS_FAILURE, RIGHTS_REQUEST } from '../types/rights.types';
+import {
+  RIGHTS_SUCCESS,
+  RIGHTS_FAILURE,
+  RIGHTS_REQUEST,
+  INITIALIZE_RIGHTS,
+} from '../types/rights.types';
 
 export const initialState = {
   loading: false,
@@ -20,5 +25,10 @@ export default createReducer(initialState, {
   },
   [RIGHTS_FAILURE]: (state, action) => {
     state.loading = false;
+  },
+  [INITIALIZE_RIGHTS]: (state, action) => {
+    state.TerritorialRightsSets = [];
+    state.UnassignedTracks = [];
+    state.NoRightsTracks = [];
   },
 });

@@ -198,3 +198,7 @@ button.btn.btn-secondary.action.align-middle {
   width: 0;
   height: 0;
 }
+
+.unassignedTrack-red {
+  color: #e74c3c;
+}

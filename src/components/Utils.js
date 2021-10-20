@@ -163,8 +163,8 @@ export function showNotyError(message, afterClose) {
   toast.error(message, { onClose: afterClose });
 }
 
-export function showNotyAutoError(message, afterClose) {
-  toast.error(message, { autoClose: 3000, onClose: afterClose });
+export function showNotyAutoError(message, afterClose, timer) {
+  toast.error(message, { autoClose: timer || 3000, onClose: afterClose });
 }
 
 export function showNotyWarning(message, afterClose) {

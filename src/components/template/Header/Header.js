@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import * as headerActions from './../../../actions/headerActions';
 import moment from 'moment';
 import * as projectInboxAction from 'actions/projectInboxAction';
+import _ from 'lodash';
 
 let interval = null;
 const hexArray = [
@@ -326,7 +327,7 @@ class Header extends Component {
   handleNavLoadByStatus = () => {
     const projectStatusID = parseInt(this.props.projectData.Project.projectStatusID);
     //When project ID is there, we are fetching Navlinks and update.
-    if (!projectStatusID || projectStatusID === 1) {
+    if (!projectStatusID || projectStatusID === 1 || projectStatusID === 4) {
       this.getNavLinks();
     } else {
       //If no project ID, We are loading normal header without status and other new project releated settings.
@@ -403,6 +404,10 @@ class Header extends Component {
   }
 
   getHeaderContent = () => {
+    let Projectstatus = _.get(this.props.projectData, 'Project.projectStatus', 'In Progress');
+    if (this.props.NoRightsTracks && this.props.NoRightsTracks.length > 0) {
+      Projectstatus = 'No Rights';
+    }
     return (
       <div className="row d-flex no-gutters project-title">
         <div className="col-2"></div>
@@ -416,12 +421,7 @@ class Header extends Component {
               </h1>
             </div>
             <div className="col-2 align-self-start">
-              {this.state.showProjectStatus
-                ? 'STATUS: ' +
-                  (this.props.projectData.Project && this.props.projectData.Project.projectStatus
-                    ? this.props.projectData.Project.projectStatus
-                    : 'In Progress')
-                : null}
+              {this.state.showProjectStatus ? 'STATUS: ' + Projectstatus : null}
             </div>
           </div>
           <div className="col-1"></div>
@@ -686,6 +686,7 @@ const mapStateToProps = state => ({
   notifications: state.headerReducer.notifications,
   count: state.headerReducer.count,
   error: state.headerReducer.error,
+  NoRightsTracks: state.territorialRightsReducer.NoRightsTracks,
 });
 
 export default withRouter(

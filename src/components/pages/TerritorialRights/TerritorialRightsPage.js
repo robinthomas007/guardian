@@ -285,7 +285,7 @@ class TerritorialRightsPage extends Component {
       this.props.getRights({
         User: { email: user.email },
         projectID: this.props.match.params.projectID,
-        step: localStorage.step === '4' ? 4 : 6,
+        previousPage: localStorage.step === '4' ? 'trackInformation' : 'blockingPolicies',
       });
     }
   }

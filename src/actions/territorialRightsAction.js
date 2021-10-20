@@ -1,6 +1,6 @@
 import * as actions from 'types/rights.types';
 import Api from 'lib/api';
-import { showNotyError } from './../components/Utils';
+import { showNotyAutoError } from './../components/Utils';
 
 export const rightsSuccess = (TerritorialRightsSets, UnassignedTracks, NoRightsTracks) => {
   return {
@@ -25,6 +25,12 @@ export const rightRequest = isLoading => {
   };
 };
 
+export const updateProjectStatus = data => {
+  return () => {
+    return Api.post('/project/status', data);
+  };
+};
+
 export const getRights = val => {
   return dispatch => {
     dispatch(rightRequest(true));
@@ -33,7 +39,17 @@ export const getRights = val => {
       .then(response => {
         if (response.Status === 'OK') {
           if (response.NoRightsTracks && response.NoRightsTracks.length > 0) {
-            showNotyError("Some of the ISRC's are not having rights");
+            showNotyAutoError(
+              'We do not own the rights to one or more of the tracks in your project. They are displayed in the left column in red and can not be assigned to a rights template. Please remove them from your project or correct the rights status outside of the Guardian to continue.',
+              '',
+              5000,
+            );
+            dispatch(updateProjectStatus({ ProjectIds: [val.projectID], StatusID: '4' }))
+              .then(response => response.json())
+              .then(response => {})
+              .catch(error => {
+                console.error(error);
+              });
           }
           dispatch(
             rightsSuccess(

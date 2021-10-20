@@ -72,12 +72,16 @@ class TracksWithoutRights extends Component {
           <div
             key={i}
             draggable="true"
-            className="draggable-track unassignedTrack"
             trackindex={i}
             trackid={track.trackID}
             tracktitle={track.trackTitle}
             onDragStart={e => this.handleDrag(e, i, track)}
             id={`check_${track.trackID}`}
+            className={`${
+              track.hasRights !== false
+                ? 'draggable-track unassignedTrack'
+                : 'draggable-track unassignedTrack unassignedTrack-red'
+            }`}
           >
             <label className="custom-checkbox">
               <input
