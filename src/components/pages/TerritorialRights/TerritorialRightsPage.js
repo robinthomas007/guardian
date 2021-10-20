@@ -244,6 +244,7 @@ class TerritorialRightsPage extends Component {
     const fetchBody = JSON.stringify({
       projectID: this.props.match.params.projectID,
       TerritorialRightsSets: this.state.project.TerritorialRightsSets,
+      NoRightsTracks: this.props.NoRightsTracks,
     });
 
     fetch(window.env.api.url + '/project/territorialrights', {
