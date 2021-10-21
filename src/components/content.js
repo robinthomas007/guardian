@@ -12,11 +12,12 @@ import FindProjectPage from './pages/FindProject/FindProjectPage';
 import HelpGuide from './pages/HelpGuide/HelpGuidePage';
 import UserAdmin from './pages/UserAdmin/UserAdmin';
 import { withAuth } from '@okta/okta-react';
-import { connect } from 'react-redux';
+import { connect, createDispatchHook } from 'react-redux';
 import ProjectInbox from './pages/ProjectInbox';
 import { ToastContainer } from 'react-toastify';
 import ErrorBoundary from './common/ErrorBoundary';
 import * as releaseAction from './pages/ReleaseInformation/releaseAction';
+import * as territorialRightsAction from '../actions/territorialRightsAction';
 
 class Content extends Component {
   constructor(props) {
@@ -179,6 +180,7 @@ class Content extends Component {
     localStorage.removeItem('projectData');
     localStorage.removeItem('upc');
     this.props.initializeUpcData();
+    this.props.initializeRightsData();
     this.setState({ project: blankProject, clearProject: true }, () =>
       this.setState({ clearProject: false }),
     );
@@ -378,6 +380,7 @@ export default withAuth(
     }),
     dispatch => ({
       initializeUpcData: () => dispatch(releaseAction.initializeUpcData()),
+      initializeRightsData: () => dispatch(territorialRightsAction.initializeRightsData()),
     }),
   )(Content),
 );

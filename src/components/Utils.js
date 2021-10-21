@@ -160,11 +160,13 @@ export function isDuplicateTrackTitle() {
 }
 
 export function showNotyError(message, afterClose) {
+  toast.dismiss();
   toast.error(message, { onClose: afterClose });
 }
 
-export function showNotyAutoError(message, afterClose, timer) {
-  toast.error(message, { autoClose: timer || 3000, onClose: afterClose });
+export function showNotyAutoError(message, afterClose) {
+  toast.dismiss();
+  toast.error(message, { autoClose: 3000, onClose: afterClose });
 }
 
 export function showNotyWarning(message, afterClose) {

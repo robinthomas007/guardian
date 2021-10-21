@@ -84,7 +84,7 @@ class MultiSelectDropDown extends Component {
   };
 
   componentDidMount() {
-    this.setState({ value: this.props.value, search: '' });
+    this.setState({ search: '' });
   }
 
   componentWillReceiveProps(nextProps) {

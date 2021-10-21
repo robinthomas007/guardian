@@ -1,6 +1,6 @@
 import * as actions from 'types/rights.types';
 import Api from 'lib/api';
-import { showNotyAutoError } from './../components/Utils';
+import { showNotyError } from './../components/Utils';
 
 export const rightsSuccess = (TerritorialRightsSets, UnassignedTracks, NoRightsTracks) => {
   return {
@@ -39,7 +39,7 @@ export const getRights = val => {
       .then(response => {
         if (response.Status === 'OK') {
           if (response.NoRightsTracks && response.NoRightsTracks.length > 0) {
-            showNotyAutoError(
+            showNotyError(
               'We do not own the rights to one or more of the tracks in your project. They are displayed in the left column in red and can not be assigned to a rights template. Please remove them from your project or correct the rights status outside of the Guardian to continue.',
               '',
               5000,
@@ -66,5 +66,17 @@ export const getRights = val => {
         console.log('error', error);
         dispatch(rightsFailure(error));
       });
+  };
+};
+
+export const initializeRights = () => {
+  return {
+    type: actions.INITIALIZE_RIGHTS,
+  };
+};
+
+export const initializeRightsData = () => {
+  return dispatch => {
+    dispatch(initializeRights());
   };
 };

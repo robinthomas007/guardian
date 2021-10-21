@@ -57,6 +57,11 @@ class TerritorialRightsPage extends Component {
         }
         this.setState({ showLoader: false });
         this.props.setHeaderProjectData(this.state.project);
+        this.props.getRights({
+          User: { email: user.email },
+          projectID: this.props.match.params.projectID,
+          previousPage: localStorage.step === '4' ? 'trackInformation' : 'blockingPolicies',
+        });
       })
       .catch(error => {
         console.error(error);
@@ -268,6 +273,7 @@ class TerritorialRightsPage extends Component {
             this.showNotification(saveAndContinue, this.props.match.params.projectID);
           }
           this.props.setHeaderProjectData(this.state.project);
+          this.props.initializeRightsData();
         }
         this.setState({ showLoader: false });
         localStorage.removeItem('step');
@@ -282,12 +288,6 @@ class TerritorialRightsPage extends Component {
   componentDidMount() {
     if (this.props.match.params.projectID) {
       this.handlePageDataLoad();
-      const user = JSON.parse(sessionStorage.getItem('user'));
-      this.props.getRights({
-        User: { email: user.email },
-        projectID: this.props.match.params.projectID,
-        previousPage: localStorage.step === '4' ? 'trackInformation' : 'blockingPolicies',
-      });
     }
   }
 
@@ -312,13 +312,18 @@ class TerritorialRightsPage extends Component {
         NoRightsTracks = _.map(NoRightsTracks, o => _.extend({ hasRights: false }, o));
         UnassignedTracks = _.cloneDeep(nextProps.UnassignedTracks).concat(NoRightsTracks);
       }
-      this.setState({
-        project: {
-          ...this.state.project,
-          TerritorialRightsSets: TerritorialRightsSets,
-          UnassignedTerritorialRightsSetTracks: UnassignedTracks,
-        },
-      });
+      if (
+        nextProps.TerritorialRightsSets.length > 0 ||
+        (nextProps.NoRightsTracks && nextProps.NoRightsTracks.length > 0)
+      ) {
+        this.setState({
+          project: {
+            ...this.state.project,
+            TerritorialRightsSets: TerritorialRightsSets,
+            UnassignedTerritorialRightsSetTracks: UnassignedTracks,
+          },
+        });
+      }
     }
   }
 
@@ -416,6 +421,7 @@ class TerritorialRightsPage extends Component {
 
 const mapDispatchToProps = dispatch => ({
   getRights: val => dispatch(territorialRightsAction.getRights(val)),
+  initializeRightsData: () => dispatch(territorialRightsAction.initializeRightsData()),
 });
 
 const mapStateToProps = state => ({

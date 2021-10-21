@@ -3,7 +3,6 @@ import Api from '../../../lib/api';
 import history from '../../../history';
 import { toast } from 'react-toastify';
 import { showNotyAutoError } from 'components/Utils';
-import * as rightsActions from '../../../types/rights.types';
 
 export const getProjectDetails = data => {
   return () => {
@@ -165,16 +164,9 @@ export const initialize = () => {
   };
 };
 
-export const initializeRights = () => {
-  return {
-    type: rightsActions.INITIALIZE_RIGHTS,
-  };
-};
-
 export const initializeUpcData = () => {
   return dispatch => {
     localStorage.removeItem('upc');
     dispatch(initialize());
-    dispatch(initializeRights());
   };
 };
