@@ -94,6 +94,10 @@ class TerritorialRightsPage extends Component {
     };
   }
 
+  componentWillUnmount() {
+    this.props.initializeRightsData();
+  }
+
   addRightsSet = () => {
     const { TerritorialRightsSets } = this.state.project;
     let modifiedTerritorialRightsSets = TerritorialRightsSets;
@@ -302,7 +306,7 @@ class TerritorialRightsPage extends Component {
       this.props.TerritorialRightsSets !== nextProps.TerritorialRightsSets ||
       this.props.UnassignedTracks !== nextProps.UnassignedTracks
     ) {
-      let TerritorialRightsSets = [];
+      let { TerritorialRightsSets } = this.state.project;
       let UnassignedTracks = [];
       if (nextProps.TerritorialRightsSets.length > 0) {
         TerritorialRightsSets = _.cloneDeep(nextProps.TerritorialRightsSets);

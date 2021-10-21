@@ -41,8 +41,6 @@ export const getRights = val => {
           if (response.NoRightsTracks && response.NoRightsTracks.length > 0) {
             showNotyError(
               'We do not own the rights to one or more of the tracks in your project. They are displayed in the left column in red and can not be assigned to a rights template. Please remove them from your project or correct the rights status outside of the Guardian to continue.',
-              '',
-              5000,
             );
             dispatch(updateProjectStatus({ ProjectIds: [val.projectID], StatusID: '4' }))
               .then(response => response.json())
@@ -50,6 +48,8 @@ export const getRights = val => {
               .catch(error => {
                 console.error(error);
               });
+          } else {
+            dispatch(updateProjectStatus({ ProjectIds: [val.projectID], StatusID: '1' }));
           }
           dispatch(
             rightsSuccess(
