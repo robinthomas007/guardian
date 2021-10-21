@@ -389,6 +389,7 @@ class TerritorialRightsPage extends Component {
               handleSetDelete={i => this.handleSetDelete(i)}
               dragSource={this.state.dragSource}
               addRightsSet={this.addRightsSet}
+              handleNoRightsTracksRemove={this.handleNoRightsTracksRemove}
             />
           </div>
         </div>

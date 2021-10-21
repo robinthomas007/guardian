@@ -29,16 +29,14 @@ class TracksRightsSets extends Component {
 
   handleTrackSelect = e => {
     const setIndex = parseInt(e.target.getAttribute('setindex'));
-    const trackIndex = parseInt(e.target.getAttribute('optionindex'));
     const { TerritorialRightsSets } = this.props.data;
     let modifiedTerritorialRightsSets = TerritorialRightsSets;
     modifiedTerritorialRightsSets[setIndex].tracks.push({
       trackID: e.target.getAttribute('trackid'),
       trackTitle: e.target.getAttribute('tracktitle'),
     });
-
     this.props.handleChange(modifiedTerritorialRightsSets);
-    this.props.handleChildDrop(e, trackIndex);
+    this.props.handleNoRightsTracksRemove(undefined, e.target.getAttribute('trackid'));
   };
 
   handleDrop(e, i) {
