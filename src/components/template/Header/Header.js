@@ -405,8 +405,8 @@ class Header extends Component {
 
   getHeaderContent = () => {
     let Projectstatus = _.get(this.props.projectData, 'Project.projectStatus', 'In Progress');
-    if (this.props.NoRightsTracks && this.props.NoRightsTracks.length > 0) {
-      Projectstatus = 'No Rights';
+    if (this.props.status) {
+      Projectstatus = this.props.status;
     }
     return (
       <div className="row d-flex no-gutters project-title">
@@ -686,7 +686,7 @@ const mapStateToProps = state => ({
   notifications: state.headerReducer.notifications,
   count: state.headerReducer.count,
   error: state.headerReducer.error,
-  NoRightsTracks: state.territorialRightsReducer.NoRightsTracks,
+  status: state.territorialRightsReducer.status,
 });
 
 export default withRouter(

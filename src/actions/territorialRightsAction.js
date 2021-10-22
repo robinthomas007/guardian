@@ -25,9 +25,16 @@ export const rightRequest = isLoading => {
   };
 };
 
+export const projectStatusUpdate = status => {
+  return {
+    type: actions.STATUS_UPDATE,
+    status,
+  };
+};
+
 export const updateProjectStatus = data => {
   return () => {
-    return Api.post('/project/status', data);
+    return Api.post('/project/statusnonadmin', data);
   };
 };
 
@@ -42,14 +49,43 @@ export const getRights = val => {
             showNotyError(
               'We do not own the rights to one or more of the tracks in your project. They are displayed in the left column in red and can not be assigned to a rights template. Please remove them from your project or correct the rights status outside of the Guardian to continue.',
             );
-            dispatch(updateProjectStatus({ ProjectIds: [val.projectID], StatusID: '4' }))
+            dispatch(
+              updateProjectStatus({
+                ProjectId: val.projectID,
+                StatusId: '4',
+                User: {
+                  email: val.User.email,
+                },
+              }),
+            )
               .then(response => response.json())
-              .then(response => {})
+              .then(response => {
+                if (response.success) {
+                  dispatch(projectStatusUpdate('No Rights'));
+                }
+              })
               .catch(error => {
                 console.error(error);
               });
           } else {
-            dispatch(updateProjectStatus({ ProjectIds: [val.projectID], StatusID: '1' }));
+            dispatch(
+              updateProjectStatus({
+                ProjectId: val.projectID,
+                StatusId: '1',
+                User: {
+                  email: val.User.email,
+                },
+              }),
+            )
+              .then(response => response.json())
+              .then(response => {
+                if (response.success) {
+                  dispatch(projectStatusUpdate('In Progress'));
+                }
+              })
+              .catch(error => {
+                console.error(error);
+              });
           }
           dispatch(
             rightsSuccess(
