@@ -1,6 +1,7 @@
 import * as actions from 'types/rights.types';
 import Api from 'lib/api';
 import { showNotyError } from './../components/Utils';
+import React from 'react';
 
 export const rightsSuccess = (TerritorialRightsSets, UnassignedTracks, NoRightsTracks) => {
   return {
@@ -47,7 +48,12 @@ export const getRights = val => {
         if (response.Status === 'OK') {
           if (response.NoRightsTracks && response.NoRightsTracks.length > 0) {
             showNotyError(
-              'We do not own the rights to one or more of the tracks in your project. They are displayed in the left column in red and can not be assigned to a rights template. Please remove them from your project or correct the rights status outside of the Guardian to continue.',
+              <span>
+                We do not own the rights to one or more of the tracks in your project. They are
+                displayed in the left column in red and can not be assigned to a rights template.
+                <br /> Please remove them from your project or correct the rights status outside of
+                the Guardian to continue.
+              </span>,
             );
             dispatch(
               updateProjectStatus({

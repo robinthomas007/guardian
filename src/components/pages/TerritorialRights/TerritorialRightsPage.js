@@ -306,15 +306,23 @@ class TerritorialRightsPage extends Component {
       this.props.TerritorialRightsSets !== nextProps.TerritorialRightsSets ||
       this.props.UnassignedTracks !== nextProps.UnassignedTracks
     ) {
-      let { TerritorialRightsSets } = this.state.project;
+      let { TerritorialRightsSets, UnassignedTerritorialRightsSetTracks } = this.state.project;
       let UnassignedTracks = [];
-      if (nextProps.TerritorialRightsSets.length > 0) {
+      if (TerritorialRightsSets.length == 0 && nextProps.TerritorialRightsSets.length > 0) {
         TerritorialRightsSets = _.cloneDeep(nextProps.TerritorialRightsSets);
       }
       if (nextProps.NoRightsTracks && nextProps.NoRightsTracks.length > 0) {
         let NoRightsTracks = _.cloneDeep(nextProps.NoRightsTracks);
         NoRightsTracks = _.map(NoRightsTracks, o => _.extend({ hasRights: false }, o));
-        UnassignedTracks = _.cloneDeep(nextProps.UnassignedTracks).concat(NoRightsTracks);
+        if (UnassignedTerritorialRightsSetTracks.length == 0) {
+          UnassignedTracks = _.cloneDeep(nextProps.UnassignedTracks).concat(NoRightsTracks);
+        } else {
+          UnassignedTracks = _.unionBy(
+            NoRightsTracks,
+            UnassignedTerritorialRightsSetTracks,
+            'trackID',
+          );
+        }
       }
       if (
         nextProps.TerritorialRightsSets.length > 0 ||
