@@ -59,8 +59,8 @@ class TerritorialRightsPage extends Component {
         this.props.setHeaderProjectData(this.state.project);
         this.props.getRights({
           User: { email: user.email },
-          projectID: this.props.match.params.projectID,
-          previousPage: localStorage.step === '4' ? 'trackInformation' : 'blockingPolicies',
+          ProjectId: this.props.match.params.projectID,
+          IsNewUgcRights: localStorage.step === '4' ? true : false,
         });
       })
       .catch(error => {
@@ -307,16 +307,67 @@ class TerritorialRightsPage extends Component {
       this.props.UnassignedTracks !== nextProps.UnassignedTracks
     ) {
       let { TerritorialRightsSets, UnassignedTerritorialRightsSetTracks } = this.state.project;
+      console.log(
+        UnassignedTerritorialRightsSetTracks,
+        'UnassignedTerritorialRightsSetTracksUnassignedTerritorialRightsSetTracks',
+      );
       let UnassignedTracks = [];
-      if (TerritorialRightsSets.length == 0 && nextProps.TerritorialRightsSets.length > 0) {
-        TerritorialRightsSets = _.cloneDeep(nextProps.TerritorialRightsSets);
+      if (nextProps.TerritorialRightsSets.length > 0) {
+        if (
+          TerritorialRightsSets.length === 1 &&
+          !TerritorialRightsSets[0].territorialRightsSetID
+        ) {
+          TerritorialRightsSets = _.cloneDeep(nextProps.TerritorialRightsSets);
+        } else {
+          TerritorialRightsSets.forEach((data, i) => {
+            let a = _.filter(nextProps.TerritorialRightsSets, v => v.sequence === data.sequence);
+            if (a && a.length > 0) {
+              let newTracks = _.unionBy(data.tracks, a[0].tracks, 'trackID');
+              TerritorialRightsSets[i].tracks = _.cloneDeep(newTracks);
+              _.map(UnassignedTerritorialRightsSetTracks, (n, key) => {
+                let commonTrack = _.filter(a[0].tracks, val => val.trackID === n.trackID);
+                if (commonTrack.length > 0) {
+                  UnassignedTerritorialRightsSetTracks = _.filter(
+                    UnassignedTerritorialRightsSetTracks,
+                    val => val.trackID !== n.trackID,
+                  );
+                }
+              });
+            }
+          });
+          let seqIds = _.map(nextProps.TerritorialRightsSets, 'sequence');
+          seqIds.forEach(id => {
+            let b = _.filter(TerritorialRightsSets, v => v.sequence === id);
+            // if it is a new set then adding new tracks
+            if (b.length === 0) {
+              let newSet = _.filter(nextProps.TerritorialRightsSets, v => v.sequence === id);
+              TerritorialRightsSets = _.cloneDeep(TerritorialRightsSets).concat(
+                _.cloneDeep(newSet),
+              );
+            }
+          });
+        }
       }
       if (nextProps.NoRightsTracks && nextProps.NoRightsTracks.length > 0) {
         let NoRightsTracks = _.cloneDeep(nextProps.NoRightsTracks);
         NoRightsTracks = _.map(NoRightsTracks, o => _.extend({ hasRights: false }, o));
-        if (UnassignedTerritorialRightsSetTracks.length == 0) {
+        if (UnassignedTerritorialRightsSetTracks.length === 0) {
           UnassignedTracks = _.cloneDeep(nextProps.UnassignedTracks).concat(NoRightsTracks);
         } else {
+          let rightTracksList = _.map(TerritorialRightsSets, 'tracks');
+          rightTracksList = rightTracksList.reduce((a, b) => a.concat(b), []);
+          _.map(rightTracksList, (n, key) => {
+            let commonTrack = _.filter(
+              UnassignedTerritorialRightsSetTracks,
+              val => val.trackID === n.trackID,
+            );
+            if (commonTrack.length > 0) {
+              UnassignedTerritorialRightsSetTracks = _.filter(
+                UnassignedTerritorialRightsSetTracks,
+                val => val.trackID !== n.trackID,
+              );
+            }
+          });
           UnassignedTracks = _.unionBy(
             NoRightsTracks,
             UnassignedTerritorialRightsSetTracks,

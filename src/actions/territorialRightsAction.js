@@ -57,7 +57,7 @@ export const getRights = val => {
             );
             dispatch(
               updateProjectStatus({
-                ProjectId: val.projectID,
+                ProjectId: val.ProjectId,
                 StatusId: '4',
                 User: {
                   email: val.User.email,
@@ -76,7 +76,7 @@ export const getRights = val => {
           } else {
             dispatch(
               updateProjectStatus({
-                ProjectId: val.projectID,
+                ProjectId: val.ProjectId,
                 StatusId: '1',
                 User: {
                   email: val.User.email,
