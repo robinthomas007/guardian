@@ -307,11 +307,7 @@ class TerritorialRightsPage extends Component {
       this.props.UnassignedTracks !== nextProps.UnassignedTracks
     ) {
       let { TerritorialRightsSets, UnassignedTerritorialRightsSetTracks } = this.state.project;
-      console.log(
-        UnassignedTerritorialRightsSetTracks,
-        'UnassignedTerritorialRightsSetTracksUnassignedTerritorialRightsSetTracks',
-      );
-      let UnassignedTracks = [];
+      let UnassignedTracks = UnassignedTerritorialRightsSetTracks;
       if (nextProps.TerritorialRightsSets.length > 0) {
         if (
           TerritorialRightsSets.length === 1 &&
@@ -335,6 +331,7 @@ class TerritorialRightsPage extends Component {
               });
             }
           });
+
           let seqIds = _.map(nextProps.TerritorialRightsSets, 'sequence');
           seqIds.forEach(id => {
             let b = _.filter(TerritorialRightsSets, v => v.sequence === id);
@@ -348,7 +345,11 @@ class TerritorialRightsPage extends Component {
           });
         }
       }
-      if (nextProps.NoRightsTracks && nextProps.NoRightsTracks.length > 0) {
+
+      if (
+        (nextProps.NoRightsTracks && nextProps.NoRightsTracks.length > 0) ||
+        (nextProps.UnassignedTracks && nextProps.UnassignedTracks.length > 0)
+      ) {
         let NoRightsTracks = _.cloneDeep(nextProps.NoRightsTracks);
         NoRightsTracks = _.map(NoRightsTracks, o => _.extend({ hasRights: false }, o));
         if (UnassignedTerritorialRightsSetTracks.length === 0) {
