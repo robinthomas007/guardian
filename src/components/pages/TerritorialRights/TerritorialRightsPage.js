@@ -346,7 +346,7 @@ class TerritorialRightsPage extends Component {
         }
       });
 
-      if (rightSets.length > 0 && (noRights && noRights.length > 0)) {
+      if (rightSets.length > 0 && noRights.length > 0) {
         this.setState({
           project: {
             ...this.state.project,
@@ -355,10 +355,19 @@ class TerritorialRightsPage extends Component {
           },
         });
       }
-      if (rightSets.length === 0 && noRights && noRights.length > 0) {
+      if (rightSets.length === 0 && noRights.length > 0) {
         this.setState({
           project: {
             ...this.state.project,
+            UnassignedTerritorialRightsSetTracks: unAssigned.concat(noRights),
+          },
+        });
+      }
+      if (rightSets.length > 0 && (noRights.length === 0 || unAssigned.length > 0)) {
+        this.setState({
+          project: {
+            ...this.state.project,
+            TerritorialRightsSets: rightSets,
             UnassignedTerritorialRightsSetTracks: unAssigned.concat(noRights),
           },
         });
