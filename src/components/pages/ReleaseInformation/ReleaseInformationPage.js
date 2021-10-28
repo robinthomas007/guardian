@@ -96,8 +96,9 @@ class ReleaseinformationPage extends Component {
   findUpc = () => {
     const { upc } = this.state.formInputs;
     if (upc) {
-      this.props.findUpc(upc);
-      localStorage.setItem('upc', upc);
+      const upcTrimmed = upc.trim();
+      this.props.findUpc(upcTrimmed);
+      localStorage.setItem('upc', upcTrimmed);
     }
   };
 
