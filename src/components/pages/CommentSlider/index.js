@@ -52,7 +52,6 @@ const CommentSlider = props => {
   };
 
   const renderComments = () => {
-    console.log(height, 'height from state....');
     return (
       <ul className="comment-section-wrap" style={{ height: height + 'px' }}>
         {_.map(comments, (obj, key) => {

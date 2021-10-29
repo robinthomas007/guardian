@@ -487,7 +487,7 @@ class Header extends Component {
                         <strong className="bold">{noti.AssignedBy}</strong> left you a comment on{' '}
                         <strong className="bold">{noti.Step} </strong>for the project
                         <strong className="bold"> "{noti.ProjectTitle}" </strong> (
-                        {moment(noti.DateCreated).fromNow()})
+                        {moment.utc(noti.DateCreated).fromNow()})
                       </p>
                     )}
                     {noti.NotificationType === 'Audio' && (
@@ -495,7 +495,7 @@ class Header extends Component {
                         <strong className="bold">{noti.AssignedBy}</strong> uploaded audio files for
                         the project
                         <strong className="bold"> "{noti.ProjectTitle}" </strong> (
-                        {moment(noti.DateCreated).fromNow()})
+                        {moment.utc(noti.DateCreated).fromNow()})
                       </p>
                     )}
                     {noti.NotificationType === 'Submit' && (
@@ -503,7 +503,7 @@ class Header extends Component {
                         <strong className="bold">{noti.AssignedBy}</strong> completed and submitted
                         the project
                         <strong className="bold"> "{noti.ProjectTitle}" </strong> (
-                        {moment(noti.DateCreated).fromNow()})
+                        {moment.utc(noti.DateCreated).fromNow()})
                       </p>
                     )}
                     {noti.NotificationType === 'Tracks' && (
@@ -511,7 +511,7 @@ class Header extends Component {
                         <strong className="bold">{noti.AssignedBy}</strong> completed the{' '}
                         <strong className="bold">{noti.Step} </strong>for the project
                         <strong className="bold"> "{noti.ProjectTitle}" </strong> (
-                        {moment(noti.DateCreated).fromNow()})
+                        {moment.utc(noti.DateCreated).fromNow()})
                       </p>
                     )}
                   </div>

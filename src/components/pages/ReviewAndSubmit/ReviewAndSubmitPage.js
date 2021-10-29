@@ -253,7 +253,9 @@ class ReviewAndSubmitPage extends Component {
                     <label>Release Date:</label>
                     <span>
                       {' '}
-                      {this.props.data.Project ? this.props.data.Project.projectReleaseDate : ''}
+                      {this.props.data.Project && this.props.data.Project.projectReleaseDate
+                        ? this.props.data.Project.projectReleaseDate
+                        : 'TBD'}
                     </span>
                   </div>
                   <div className="col-12">

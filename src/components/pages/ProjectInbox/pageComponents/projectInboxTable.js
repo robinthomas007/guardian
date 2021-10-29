@@ -105,7 +105,7 @@ class ProjectInboxDataTable extends Component {
             <tr
               className={`${!project.IsRead ? 'unread' : ''} d-flex w-100 inbox-table`}
               key={i}
-              onMouseEnter={() =>
+              onClick={() =>
                 !project.IsRead ? this.props.readNotification({ NotificationId: project.Id }) : null
               }
             >

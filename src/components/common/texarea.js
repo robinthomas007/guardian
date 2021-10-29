@@ -3,13 +3,13 @@ import ToolTip from '../ui/Tooltip';
 
 export default class RenderTextarea extends Component {
   onKeyUp(event) {
-    this.props.onKeyUp(event);
+    if (this.props.onKeyUp) this.props.onKeyUp(event);
   }
   onKeyDown(event) {
-    this.props.onKeyDown(event);
+    if (this.props.onKeyDown) this.props.onKeyDown(event);
   }
   onPaste(event) {
-    this.props.onPaste(event);
+    if (this.props.onPaste) this.props.onPaste(event);
   }
 
   render() {
