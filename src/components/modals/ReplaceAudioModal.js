@@ -31,11 +31,15 @@ class ReplaceAudioModal extends Component {
     return (
       <Modal id="ReplaceAudioModal" show={this.props.showModal} onHide={this.handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Replace Audio File</Modal.Title>
+          <Modal.Title>{this.props.modalAction} Audio File</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <ul>
-            <li>Use the area below to replace the corresponding audio file.</li>
+            <li>
+              Use the area below to{' '}
+              {this.props.modalAction ? this.props.modalAction.toLocaleLowerCase() : 'replace'} the
+              corresponding audio file.
+            </li>
             <li>
               <div className="audio-drop-area d-flex justify-content-center">
                 <span className="align-self-center">

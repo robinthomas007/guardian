@@ -47,7 +47,7 @@ class TrackInformationDataTable extends Component {
           />
           <button
             style={{ float: 'right' }}
-            className="btn btn-sm btn-secondary"
+            className="btn btn-sm btn-primary"
             onClick={this.props.checkIsrc}
             title="Comment"
           >

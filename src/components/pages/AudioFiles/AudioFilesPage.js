@@ -29,6 +29,7 @@ class AudioFilesPage extends Component {
       projectID: '',
       showReplaceAudioModal: false,
       replaceTrackIndex: null,
+      modalAction: 'Replace',
       showLoader: false,
       project: {
         Project: {
@@ -89,15 +90,16 @@ class AudioFilesPage extends Component {
       this.props.isrcCheck({ User: { email: user.email }, isrcs: isrcs });
   }
 
-  showReplaceModal(track, i) {
+  showReplaceModal(track, i, upload) {
     this.setState({
       showReplaceAudioModal: true,
       replaceTrackIndex: i,
+      modalAction: upload ? upload : 'Replace',
     });
   }
 
   hideReplaceAudioModal() {
-    this.setState({ showReplaceAudioModal: false });
+    this.setState({ showReplaceAudioModal: false, modalAction: 'Replace' });
   }
 
   getTrack(track, trackIndex) {
@@ -285,6 +287,34 @@ class AudioFilesPage extends Component {
     this.setState({ discs: sortedDiscs });
   }
 
+  setifUpcData() {
+    if (this.props.upcData) {
+      const { discs, project } = this.state;
+      const { upcData } = this.props;
+      if (upcData.ExDiscs && upcData.ExDiscs.length > 0) {
+        const upcDisc = [];
+        upcData.ExDiscs.forEach((disc, i) => {
+          let existingDisc = _.filter(discs, val => val.discNumber === disc.discNumber);
+          const obj = {};
+          obj['discNumber'] = disc.discNumber;
+          obj['Tracks'] = _.cloneDeep(disc.ExTracks);
+          disc.ExTracks.forEach((track, i) => {
+            if (project.Project.projectReleaseDate) {
+              obj['Tracks'][i].trackReleaseDate = project.Project.projectReleaseDate;
+            } else {
+              obj['Tracks'][i].isTbdDisabled = true;
+            }
+          });
+          if (existingDisc.length > 0) {
+            obj['Tracks'].push(...existingDisc[0].Tracks);
+          }
+          upcDisc.push(obj);
+        });
+        this.setState({ discs: _.cloneDeep(upcDisc) });
+      }
+    }
+  }
+
   handleDataLoad() {
     const user = JSON.parse(sessionStorage.getItem('user'));
     const { pageTableData, discs } = this.state;
@@ -323,6 +353,7 @@ class AudioFilesPage extends Component {
           this.addDisc();
         }
         this.props.setHeaderProjectData(this.state.project);
+        this.setifUpcData();
       })
       .catch(error => console.error(error));
   }
@@ -458,13 +489,24 @@ class AudioFilesPage extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.upcData !== nextProps.upcData) {
-      const { discs } = this.state;
+      const { discs, project } = this.state;
       if (nextProps.upcData.ExDiscs && nextProps.upcData.ExDiscs.length > 0) {
         const upcDisc = [];
-        nextProps.upcData.ExDiscs.forEach(disc => {
+        nextProps.upcData.ExDiscs.forEach((disc, i) => {
+          let existingDisc = _.filter(discs, val => val.discNumber === disc.discNumber);
           const obj = {};
           obj['discNumber'] = disc.discNumber;
-          obj['Tracks'] = disc.ExTracks;
+          obj['Tracks'] = _.cloneDeep(disc.ExTracks);
+          disc.ExTracks.forEach((track, i) => {
+            if (project.Project.projectReleaseDate) {
+              obj['Tracks'][i].trackReleaseDate = project.Project.projectReleaseDate;
+            } else {
+              obj['Tracks'][i].isTbdDisabled = true;
+            }
+          });
+          if (existingDisc.length > 0) {
+            obj['Tracks'].push(...existingDisc[0].Tracks);
+          }
           upcDisc.push(obj);
         });
         this.setState({ discs: _.cloneDeep(upcDisc) });
@@ -532,6 +574,7 @@ class AudioFilesPage extends Component {
   }
 
   render() {
+    const { project } = this.state;
     const { uploads, loading } = this.props;
     return (
       <div className="col-10">
@@ -543,6 +586,7 @@ class AudioFilesPage extends Component {
           showModal={this.state.showReplaceAudioModal}
           handleClose={this.hideReplaceAudioModal}
           onChange={e => this.updateFile(e)}
+          modalAction={this.state.modalAction}
         />
 
         <div className="row no-gutters step-description">
@@ -607,10 +651,11 @@ class AudioFilesPage extends Component {
           isValidIsrc={this.isValidIsrc}
           isValidTitle={this.isValidTitle}
           addDisc={this.addDisc}
-          showReplaceModal={(track, i) => this.showReplaceModal(track, i)}
+          showReplaceModal={(track, i, upload) => this.showReplaceModal(track, i, upload)}
           hideReplaceAudioModal={(track, i) => this.hideReplaceAudioModal(track, i)}
           uploads={uploads}
           checkIsrc={this.checkIsrc}
+          upc={project.Project.upc ? true : false}
         />
 
         <section className="row no-gutters save-buttons">

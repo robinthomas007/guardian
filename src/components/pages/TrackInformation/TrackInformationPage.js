@@ -108,6 +108,33 @@ class TrackInformationPage extends Component {
     this.setState({ showReplaceModal: false });
   }
 
+  setifUpcData() {
+    if (this.props.upcData) {
+      const { upcData } = this.props;
+      const { project } = this.state;
+      if (upcData.ExDiscs && upcData.ExDiscs.length > 0) {
+        alert('came');
+
+        const upcDisc = [];
+        upcData.ExDiscs.forEach((disc, index) => {
+          const obj = {};
+          obj['discNumber'] = disc.discNumber;
+          obj['Tracks'] = _.cloneDeep(disc.ExTracks);
+          disc.ExTracks.forEach((track, i) => {
+            if (project.Project.projectReleaseDate) {
+              obj['Tracks'][i].trackReleaseDate = project.Project.projectReleaseDate;
+            } else {
+              obj['Tracks'][i].isTbdDisabled = true;
+            }
+          });
+          upcDisc.push(obj);
+        });
+        project.Discs = _.cloneDeep(upcDisc);
+        this.setState({ project });
+      }
+    }
+  }
+
   handlePageDataLoad() {
     this.setState({ showloader: true });
     const user = JSON.parse(sessionStorage.getItem('user'));
@@ -139,6 +166,7 @@ class TrackInformationPage extends Component {
         });
         this.props.setHeaderProjectData(this.state.project);
         this.checkUpcData();
+        this.setifUpcData();
       })
       .catch(error => {
         console.error(error);
@@ -170,10 +198,17 @@ class TrackInformationPage extends Component {
       const { project } = this.state;
       if (nextProps.upcData.ExDiscs && nextProps.upcData.ExDiscs.length > 0) {
         const upcDisc = [];
-        nextProps.upcData.ExDiscs.forEach(disc => {
+        nextProps.upcData.ExDiscs.forEach((disc, index) => {
           const obj = {};
           obj['discNumber'] = disc.discNumber;
-          obj['Tracks'] = disc.ExTracks;
+          obj['Tracks'] = _.cloneDeep(disc.ExTracks);
+          disc.ExTracks.forEach((track, i) => {
+            if (project.Project.projectReleaseDate) {
+              obj['Tracks'][i].trackReleaseDate = project.Project.projectReleaseDate;
+            } else {
+              obj['Tracks'][i].isTbdDisabled = true;
+            }
+          });
           upcDisc.push(obj);
         });
         project.Discs = _.cloneDeep(upcDisc);

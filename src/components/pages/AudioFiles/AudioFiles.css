@@ -92,3 +92,18 @@ td.audio-file {
 .droppable {
   height: 30px;
 }
+
+.upc-uploader-audio button {
+  width: 100%;
+  background: #fff;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  border: 1px dotted #00589b;
+}
+
+.upc-uploader-audio button i {
+  color: #00589b;
+  padding-right: 10px;
+}
