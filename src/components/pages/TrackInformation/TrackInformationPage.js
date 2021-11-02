@@ -113,8 +113,6 @@ class TrackInformationPage extends Component {
       const { upcData } = this.props;
       const { project } = this.state;
       if (upcData.ExDiscs && upcData.ExDiscs.length > 0) {
-        alert('came');
-
         const upcDisc = [];
         upcData.ExDiscs.forEach((disc, index) => {
           const obj = {};
