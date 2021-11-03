@@ -108,13 +108,14 @@ class TrackInformationPage extends Component {
     this.setState({ showReplaceModal: false });
   }
 
-  setifUpcData() {
+  setifUpcData(data) {
     if (this.props.upcData) {
       const { upcData } = this.props;
       const { project } = this.state;
       if (upcData.ExDiscs && upcData.ExDiscs.length > 0) {
         const upcDisc = [];
         upcData.ExDiscs.forEach((disc, index) => {
+          let existingDisc = _.filter(data, val => val.discNumber === disc.discNumber);
           const obj = {};
           obj['discNumber'] = disc.discNumber;
           obj['Tracks'] = _.cloneDeep(disc.ExTracks);
@@ -125,6 +126,10 @@ class TrackInformationPage extends Component {
               obj['Tracks'][i].isTbdDisabled = true;
             }
           });
+          if (existingDisc.length > 0) {
+            obj['Tracks'].push(...existingDisc[0].Tracks);
+          }
+
           upcDisc.push(obj);
         });
         project.Discs = _.cloneDeep(upcDisc);
@@ -159,12 +164,12 @@ class TrackInformationPage extends Component {
       })
       .then(responseJSON => {
         this.setState({
-          project: responseJSON,
+          project: _.cloneDeep(responseJSON),
           showloader: false,
         });
         this.props.setHeaderProjectData(this.state.project);
         this.checkUpcData();
-        this.setifUpcData();
+        this.setifUpcData(_.cloneDeep(responseJSON.Discs));
       })
       .catch(error => {
         console.error(error);
@@ -197,6 +202,7 @@ class TrackInformationPage extends Component {
       if (nextProps.upcData.ExDiscs && nextProps.upcData.ExDiscs.length > 0) {
         const upcDisc = [];
         nextProps.upcData.ExDiscs.forEach((disc, index) => {
+          let existingDisc = _.filter(project.Discs, val => val.discNumber === disc.discNumber);
           const obj = {};
           obj['discNumber'] = disc.discNumber;
           obj['Tracks'] = _.cloneDeep(disc.ExTracks);
@@ -207,6 +213,9 @@ class TrackInformationPage extends Component {
               obj['Tracks'][i].isTbdDisabled = true;
             }
           });
+          if (existingDisc.length > 0) {
+            obj['Tracks'].push(...existingDisc[0].Tracks);
+          }
           upcDisc.push(obj);
         });
         project.Discs = _.cloneDeep(upcDisc);
@@ -593,7 +602,7 @@ class TrackInformationPage extends Component {
   render() {
     return (
       <div className="col-10">
-        <LoadingImg show={this.state.showloader || this.props.loading} />
+        <LoadingImg show={this.state.showloader || this.props.loading || this.props.upcLoading} />
 
         <ReplaceAudioModal
           showModal={this.state.showReplaceAudioModal}
@@ -671,6 +680,7 @@ export default withRouter(
       upcData: state.releaseReducer.upcData,
       ExTracks: state.audioReducer.ExTracks,
       loading: state.audioReducer.loading,
+      upcLoading: state.releaseReducer.loading,
     }),
     dispatch => ({
       onUploadStart: uniqFileName => dispatch(uploadProgressActions.startUpload(uniqFileName)),

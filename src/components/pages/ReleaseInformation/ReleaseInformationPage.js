@@ -96,9 +96,8 @@ class ReleaseinformationPage extends Component {
   findUpc = () => {
     const { upc } = this.state.formInputs;
     if (upc) {
-      const upcTrimmed = upc.trim();
-      this.props.findUpc(upcTrimmed);
-      localStorage.setItem('upc', upcTrimmed);
+      this.props.findUpc(upc);
+      localStorage.setItem('upc', upc);
     }
   };
 
@@ -293,6 +292,7 @@ class ReleaseinformationPage extends Component {
       projectNotes: '',
       projectCoverArtFileName: '',
       projectCoverArtBase64Data: '',
+      upc: '',
     };
   };
 
@@ -401,7 +401,7 @@ class ReleaseinformationPage extends Component {
                 <div className="col-1">
                   <button
                     style={{ marginLeft: '10px', padding: '7px 10px' }}
-                    className="btn btn-sm btn-secondary"
+                    className="btn btn-sm btn-primary"
                     onClick={this.findUpc}
                     title="Comment"
                     type="button"

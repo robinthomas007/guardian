@@ -132,7 +132,6 @@ class AudioVideoDataTable extends Component {
           trackTitle: track.trackTitle,
           artist: track.artist,
         };
-        console.log(track, 'tracktracktrack');
         return (
           <tr key={i}>
             <td className="text-center">{i + 1}</td>
@@ -145,23 +144,33 @@ class AudioVideoDataTable extends Component {
                 <div
                   draggable="true"
                   onDragStart={e => this.drag(e, i, track)}
-                  className="sortable-audio-file"
+                  className="sortable-audio-file upc-uploader-audio"
                 >
-                  <ul className="audio-file-info">
-                    <li>
-                      <i className="material-icons">format_line_spacing</i>
-                    </li>
-                    <li>{track.fileName}</li>
-                    <li>
-                      {trackArr[track.fileName] && track.trackID === trackArr['trackId'] ? (
-                        <span className="loading-sm" id={`${track.fileName}_ico`}>
-                          <LoadingImgSm show={true} />
-                        </span>
-                      ) : (
-                        ''
-                      )}
-                    </li>
-                  </ul>
+                  {track.fileName ? (
+                    <ul className="audio-file-info">
+                      <li>
+                        <i className="material-icons">format_line_spacing</i>
+                      </li>
+                      <li>{track.fileName}</li>
+                      <li>
+                        {trackArr[track.fileName] && track.trackID === trackArr['trackId'] ? (
+                          <span className="loading-sm" id={`${track.fileName}_ico`}>
+                            <LoadingImgSm show={true} />
+                          </span>
+                        ) : (
+                          ''
+                        )}
+                      </li>
+                    </ul>
+                  ) : (
+                    <button
+                      className="btn"
+                      onClick={() => this.props.showReplaceModal(track, i, 'Upload')}
+                    >
+                      <i className="material-icons">publish</i>
+                      <span>Upload Audio File</span>
+                    </button>
+                  )}
                   <Form.Control
                     type="hidden"
                     id="fileName"
@@ -172,15 +181,47 @@ class AudioVideoDataTable extends Component {
               </td>
             )}
             {this.props.upc && !track.fileUpload && !track.hasUpload && (
-              <td className="audio-file">
-                <div className="upc-uploader-audio">
-                  <button
-                    className="btn"
-                    onClick={() => this.props.showReplaceModal(track, i, 'Upload')}
-                  >
-                    <i className="material-icons">publish</i>
-                    <span>Upload Audio File</span>
-                  </button>
+              <td
+                className="audio-file"
+                onDrop={e => this.drop(e, i, track)}
+                onDragOver={this.allowDrop}
+              >
+                <div
+                  className="upc-uploader-audio sortable-audio-file"
+                  draggable="true"
+                  onDragStart={e => this.drag(e, i, track)}
+                >
+                  {track.fileName ? (
+                    <ul className="audio-file-info">
+                      <li>
+                        <i className="material-icons">format_line_spacing</i>
+                      </li>
+                      <li>{track.fileName}</li>
+                      <li>
+                        {trackArr[track.fileName] && track.trackID === trackArr['trackId'] ? (
+                          <span className="loading-sm" id={`${track.fileName}_ico`}>
+                            <LoadingImgSm show={true} />
+                          </span>
+                        ) : (
+                          ''
+                        )}
+                      </li>
+                    </ul>
+                  ) : (
+                    <button
+                      className="btn"
+                      onClick={() => this.props.showReplaceModal(track, i, 'Upload')}
+                    >
+                      <i className="material-icons">publish</i>
+                      <span>Upload Audio File</span>
+                    </button>
+                  )}
+                  <Form.Control
+                    type="hidden"
+                    id="fileName"
+                    onChange={e => this.handleChange(e, track, i)}
+                    value={this.state.tableData[i].fileName}
+                  />
                 </div>
               </td>
             )}
