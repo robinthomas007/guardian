@@ -76,10 +76,6 @@ class ReviewAndSubmitPage extends Component {
       : this.showIncompleteProjectModal();
   };
 
-  handleSubmitShareClick() {
-    console.log('asdadadada adada');
-  }
-
   handleSubmitProjectClick() {
     const fetchHeaders = new Headers({
       'Content-Type': 'application/json',
@@ -151,7 +147,6 @@ class ReviewAndSubmitPage extends Component {
             showModal={this.showShareModal}
             handleClose={this.hideShareModal}
             show={this.state.shareModal}
-            handleSubmitProjectClick={this.handleSubmitShareClick}
             projectId={this.props.data.Project.projectID}
           />
 

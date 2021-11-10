@@ -63,7 +63,7 @@ const ShareProjectModal = props => {
   };
 
   const onKeyUp = evt => {
-    if (['Enter', ',', ' ', ';'].includes(evt.key)) {
+    if (['Enter', ',', ' ', ';', 'Tab'].includes(evt.key)) {
       let email = document.querySelector('#shareEmailsIds').value;
       email = email.trim();
       email = email.split(/(?:,| |;)+/);
@@ -90,6 +90,9 @@ const ShareProjectModal = props => {
     setEmails(arr);
   };
   const handleKeyDown = evt => {
+    if (evt.key === 'Tab') {
+      evt.preventDefault();
+    }
     if (evt.key === 'Backspace') {
       let clear = document.querySelector('#shareEmailsIds').value;
       if (clear === '') {
