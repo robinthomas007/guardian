@@ -107,7 +107,7 @@ export default withAuth(
                 </a>
               </li>
               <li>
-                <a href onClick={this.login}>
+                <a style={{ color: 'green' }} href onClick={this.login}>
                   Log In
                 </a>
               </li>
