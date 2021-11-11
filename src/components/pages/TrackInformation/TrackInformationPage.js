@@ -128,6 +128,8 @@ class TrackInformationPage extends Component {
           });
           if (existingDisc.length > 0) {
             obj['Tracks'].push(...existingDisc[0].Tracks);
+            // avoiding duplicate tracks
+            obj['Tracks'] = _.uniqBy(obj['Tracks'], v => [v.isrc, v.trackTitle].join());
           }
 
           upcDisc.push(obj);
@@ -215,6 +217,8 @@ class TrackInformationPage extends Component {
           });
           if (existingDisc.length > 0) {
             obj['Tracks'].push(...existingDisc[0].Tracks);
+            // avoiding duplicate tracks
+            obj['Tracks'] = _.uniqBy(obj['Tracks'], v => [v.isrc, v.trackTitle].join());
           }
           upcDisc.push(obj);
         });

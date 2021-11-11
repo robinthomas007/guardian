@@ -287,14 +287,14 @@ class AudioFilesPage extends Component {
     this.setState({ discs: sortedDiscs });
   }
 
-  setifUpcData() {
+  setifUpcData(data) {
     if (this.props.upcData) {
-      const { discs, project } = this.state;
+      const { project } = this.state;
       const { upcData } = this.props;
       if (upcData.ExDiscs && upcData.ExDiscs.length > 0) {
         const upcDisc = [];
         upcData.ExDiscs.forEach((disc, i) => {
-          let existingDisc = _.filter(discs, val => val.discNumber === disc.discNumber);
+          let existingDisc = _.filter(data, val => val.discNumber === disc.discNumber);
           const obj = {};
           obj['discNumber'] = disc.discNumber;
           obj['Tracks'] = _.cloneDeep(disc.ExTracks);
@@ -307,6 +307,8 @@ class AudioFilesPage extends Component {
           });
           if (existingDisc.length > 0) {
             obj['Tracks'].push(...existingDisc[0].Tracks);
+            // avoiding duplicate tracks
+            obj['Tracks'] = _.uniqBy(obj['Tracks'], v => [v.isrc, v.trackTitle].join());
           }
           upcDisc.push(obj);
         });
@@ -337,7 +339,7 @@ class AudioFilesPage extends Component {
       })
       .then(responseJSON => {
         this.setState({
-          project: responseJSON,
+          project: _.cloneDeep(responseJSON),
           projectData: responseJSON.Project,
         });
         if (responseJSON.Discs && responseJSON.Discs.length > 0) {
@@ -352,8 +354,9 @@ class AudioFilesPage extends Component {
         } else {
           this.addDisc();
         }
+
         this.props.setHeaderProjectData(this.state.project);
-        this.setifUpcData();
+        this.setifUpcData(_.cloneDeep(responseJSON.Discs));
       })
       .catch(error => console.error(error));
   }
@@ -506,6 +509,8 @@ class AudioFilesPage extends Component {
           });
           if (existingDisc.length > 0) {
             obj['Tracks'].push(...existingDisc[0].Tracks);
+            // avoiding duplicate tracks
+            obj['Tracks'] = _.uniqBy(obj['Tracks'], v => [v.isrc, v.trackTitle].join());
           }
           upcDisc.push(obj);
         });
