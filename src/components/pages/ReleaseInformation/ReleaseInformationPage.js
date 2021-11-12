@@ -299,6 +299,12 @@ class ReleaseinformationPage extends Component {
   componentDidUpdate() {
     if (this.props.clearProject) {
       const blankInputs = this.getBlankFormInputs();
+      this.setState({
+        releaseDateRequired: true,
+        showloader: false,
+        projectReleaseDateDisabled: false,
+        projectReleaseDateReset: false,
+      });
       if (this.state.formInputs !== blankInputs) {
         this.setState({ formInputs: blankInputs }, () => this.setCoverArt());
       }
