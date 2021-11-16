@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Table } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
-import LoadingImg from '../../../ui/LoadingImg';
+import LoadingImg from 'component_library/LoadingImg';
 import CommentBox from '../message';
 import moment from 'moment';
 

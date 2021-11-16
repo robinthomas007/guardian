@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PageHeader from '../PageHeader/PageHeader';
 import TracksWithoutRights from '../TerritorialRights/pageComponents/TracksWithoutRights';
 import TracksRightsSets from '../TerritorialRights/pageComponents/TracksRightsSets';
-import LoadingImg from '../../ui/LoadingImg';
+import LoadingImg from 'component_library/LoadingImg';
 import './TerritorialRights.css';
 import { withRouter } from 'react-router';
 import { showNotyInfo, showNotyAutoError } from 'components/Utils';

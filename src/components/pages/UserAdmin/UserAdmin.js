@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Tabs, Tab } from 'react-bootstrap';
-import LoadingImg from '../../ui/LoadingImg';
+import LoadingImg from 'component_library/LoadingImg';
 import UserEditModal from './pageComponents/UserEditModal';
 import UserSearchFilterModal from './pageComponents/UserSearchFilterModal';
 import SelectedFilters from './pageComponents/SelectedFilters';

@@ -4,7 +4,7 @@ import PageHeader from '../PageHeader/PageHeader';
 import './BlockingPolicies.css';
 import TracksWithoutRights from '../TerritorialRights/pageComponents/TracksWithoutRights';
 import BlockingPolicySets from '../BlockingPolicies/pageComponents/blockingPolicySets';
-import LoadingImg from '../../ui/LoadingImg';
+import LoadingImg from 'component_library/LoadingImg';
 import { withRouter } from 'react-router-dom';
 import { formatDateToYYYYMMDD, convertToLocaleTime, resetDatePickerByObj } from '../../Utils';
 import { showNotyInfo, showNotyAutoError } from 'components/Utils';

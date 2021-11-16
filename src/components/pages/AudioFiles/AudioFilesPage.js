@@ -3,7 +3,7 @@ import HaveAudioModal from '../../modals/HaveAudioModal';
 import ReplaceAudioModal from '../../modals/ReplaceAudioModal';
 import { withRouter } from 'react-router';
 import './AudioFiles.css';
-import LoadingImg from '../../ui/LoadingImg';
+import LoadingImg from 'component_library/LoadingImg';
 import { reduxForm } from 'redux-form';
 import AudioFilesTabbedTracks from '../AudioFiles/pageComponents/audioFilesTabbedTracks';
 import { connect } from 'react-redux';

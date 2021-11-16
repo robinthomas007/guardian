@@ -7,7 +7,7 @@ import { reduxForm, Field } from 'redux-form';
 import * as projectInboxAction from 'actions/projectInboxAction';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import LoadingImg from '../../ui/LoadingImg';
+import LoadingImg from 'component_library/LoadingImg';
 import {
   getSearchCriteria,
   getFromDate,

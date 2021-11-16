@@ -7,7 +7,7 @@ import TextArea from '../common/texarea';
 import * as shareAction from 'actions/shareAction';
 import _ from 'lodash';
 import { withRouter } from 'react-router-dom';
-import LoadingImg from '../ui/LoadingImg';
+import LoadingImg from 'component_library/LoadingImg';
 
 const validate = values => {
   const errors = {};

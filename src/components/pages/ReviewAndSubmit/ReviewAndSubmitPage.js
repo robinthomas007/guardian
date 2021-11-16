@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import LoadingImg from '../../ui/LoadingImg';
+import LoadingImg from 'component_library/LoadingImg';
 import PageHeader from '../PageHeader/PageHeader';
 import AudioFilesTabsContainer from '../ReviewAndSubmit/pageComponents/AudioFileTabsContainer';
 import TerritorialRightsTable from '../ReviewAndSubmit/pageComponents/TerritorialRightsTable';

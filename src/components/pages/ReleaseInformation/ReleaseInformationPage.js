@@ -3,7 +3,7 @@ import { Button, Form } from 'react-bootstrap';
 import ToolTip from '../../ui/Tooltip';
 import './ReleaseInformation.css';
 import { withRouter } from 'react-router-dom';
-import LoadingImg from '../../ui/LoadingImg';
+import LoadingImg from 'component_library/LoadingImg';
 import { resetDatePicker, isFormValid, CustomInput } from '../../Utils.js';
 import moment from 'moment';
 import ReleasingLabelsInput from '../ReleaseInformation/pageComponents/ReleasingLabelsInput';

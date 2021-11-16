@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PageHeader from '../PageHeader/PageHeader';
 import TabbedTracks from '../TrackInformation/pageComponents/TabbedTracks';
 import ReplaceAudioModal from '../../modals/ReplaceAudioModal';
-import LoadingImg from '../../ui/LoadingImg';
+import LoadingImg from 'component_library/LoadingImg';
 import './TrackInformation.css';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';

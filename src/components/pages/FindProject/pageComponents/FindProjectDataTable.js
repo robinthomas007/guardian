@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Table } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import AdminStatusDropdown from '../pageComponents/AdminStatusDropdown';
-import LoadingImg from '../../../ui/LoadingImg';
+import LoadingImg from 'component_library/LoadingImg';
 import { showNotyInfo, showNotyAutoError } from 'components/Utils';
 import moment from 'moment';
 

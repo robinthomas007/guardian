@@ -8,7 +8,7 @@ import SelectedFilters from './pageComponents/SelectedFilters';
 import TablePager from './pageComponents/TablePager';
 import { resetDatePicker } from '../../Utils';
 import { withRouter } from 'react-router';
-import LoadingImg from '../../ui/LoadingImg';
+import LoadingImg from 'component_library/LoadingImg';
 
 class FindProjectPage extends Component {
   constructor(props) {

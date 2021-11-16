@@ -5,7 +5,7 @@ import FindProjectDataTable from './pageComponents/FindProjectDataTable';
 import ProjectsViewDropDown from './pageComponents/ProjectsViewDropDown';
 import TablePager from './pageComponents/TablePager';
 import { withRouter } from 'react-router';
-import LoadingImg from '../../ui/LoadingImg';
+import LoadingImg from 'component_library/LoadingImg';
 import { connect } from 'react-redux';
 import * as findProjectAction from 'actions/findProjectAction';
 import Filter from './findProjectFilter';

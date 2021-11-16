@@ -4,7 +4,7 @@ import ToolTip from '../../ui/Tooltip';
 import BootStrapDropDownInput from '../ProjectContacts/pageComponents/BootStrapDropDownInput';
 import { withRouter } from 'react-router';
 import './ProjectContacts.css';
-import LoadingImg from '../../ui/LoadingImg';
+import LoadingImg from 'component_library/LoadingImg';
 import { isFormValid, isPreReleaseDate } from '../../Utils.js';
 import _ from 'lodash';
 import { showNotyInfo, showNotyAutoError } from 'components/Utils';
