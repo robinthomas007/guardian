@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Form } from 'react-bootstrap';
-import ToolTip from '../../ui/Tooltip';
+import ToolTip from 'component_library/Tooltip';
 import BootStrapDropDownInput from '../ProjectContacts/pageComponents/BootStrapDropDownInput';
 import { withRouter } from 'react-router';
 import './ProjectContacts.css';

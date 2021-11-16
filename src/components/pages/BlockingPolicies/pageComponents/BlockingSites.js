@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Table, Grid, Button, Form } from 'react-bootstrap';
-import ToolTip from '../../../ui/Tooltip';
+import ToolTip from 'component_library/Tooltip';
 import BlockingPolicDurationInput from '../pageComponents/blockingPolicyDurationInput';
 import BlockingPolicyDateInput from '../pageComponents/BlockingPolicyDateInput';
 import TracksDropArea from '../../TerritorialRights/pageComponents/TracksDropArea';

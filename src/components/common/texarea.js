@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ToolTip from '../ui/Tooltip';
+import ToolTip from 'component_library/Tooltip';
 
 export default class RenderTextarea extends Component {
   onKeyUp(event) {

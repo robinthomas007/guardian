@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
-import ToolTip from '../ui/Tooltip';
+import ToolTip from 'component_library/Tooltip';
 
 class inputDateField extends Component {
   onChange(date) {

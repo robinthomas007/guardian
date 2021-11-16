@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Table, Form } from 'react-bootstrap';
-import ToolTip from '../../../ui/Tooltip';
+import ToolTip from 'component_library/Tooltip';
 import AudioLoader from 'component_library/AudioLoader';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';

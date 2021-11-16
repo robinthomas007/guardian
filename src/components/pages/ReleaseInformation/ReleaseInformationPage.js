@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Form } from 'react-bootstrap';
-import ToolTip from '../../ui/Tooltip';
+import ToolTip from 'component_library/Tooltip';
 import './ReleaseInformation.css';
 import { withRouter } from 'react-router-dom';
 import LoadingImg from 'component_library/LoadingImg';

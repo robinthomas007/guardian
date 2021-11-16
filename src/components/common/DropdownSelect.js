@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Select from 'react-select';
-import ToolTip from '../ui/Tooltip';
+import ToolTip from 'component_library/Tooltip';
 
 class SelectInput extends Component {
   onChange(data) {

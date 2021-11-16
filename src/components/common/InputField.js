@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './inputField.css';
-import ToolTip from '../ui/Tooltip';
+import ToolTip from 'component_library/Tooltip';
 
 class InputField extends Component {
   onChange(event) {
