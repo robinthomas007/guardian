@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
 import ReactGA from 'react-ga';
-
 import LoginPage from './components/pages/HomePage/HomePage';
 import Login from './login';
 import Content from './components/content';

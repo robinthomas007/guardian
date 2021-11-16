@@ -4,7 +4,6 @@ import './HomePage.css';
 import { withAuth } from '@okta/okta-react';
 import GuardianLogo from 'images/guardian-logo.png';
 import { showNotyInfo, showNotyAutoError } from 'components/Utils';
-import { ToastContainer } from 'react-toastify';
 
 export default withAuth(
   class HomePage extends Component {
@@ -76,17 +75,6 @@ export default withAuth(
 
       return (
         <section className="container-fluid landing">
-          <ToastContainer
-            closeButton={false}
-            position="top-right"
-            autoClose={false}
-            hideProgressBar={false}
-            closeOnClick
-            rtl={false}
-            draggable={false}
-            pauseOnFocusLoss={false}
-            pauseOnHover={false}
-          />
           <RequestAccessModal
             showModal={this.state.showRequestModal}
             handleClose={this.hideRequestModal}

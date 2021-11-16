@@ -14,7 +14,6 @@ import UserAdmin from './pages/UserAdmin/UserAdmin';
 import { withAuth } from '@okta/okta-react';
 import { connect, createDispatchHook } from 'react-redux';
 import ProjectInbox from './pages/ProjectInbox';
-import { ToastContainer } from 'react-toastify';
 import ErrorBoundary from './common/ErrorBoundary';
 import * as releaseAction from './pages/ReleaseInformation/releaseAction';
 import * as territorialRightsAction from '../actions/territorialRightsAction';
@@ -223,18 +222,6 @@ class Content extends Component {
                 updateHistory={this.updateHistory}
                 clearProject={this.clearProject}
                 handleLogoutClick={this.handleLogoutClick}
-              />
-              <ToastContainer
-                style={{ marginTop: this.props.progress > 0 ? '101px' : '45px' }}
-                closeButton={false}
-                position="top-right"
-                autoClose={false}
-                hideProgressBar={false}
-                closeOnClick
-                rtl={false}
-                draggable={false}
-                pauseOnFocusLoss={false}
-                pauseOnHover={false}
               />
               <div
                 className={
