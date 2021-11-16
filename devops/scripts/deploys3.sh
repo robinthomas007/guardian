@@ -32,11 +32,11 @@ aws_assume_role
 
 aws sts get-caller-identity
 
-echo S3_BUCKET=$S3_BUCKET
+echo Syncing public assets S3_BUCKET=$S3_BUCKET
+aws s3 sync . s3://$S3_BUCKET --delete  --exclude "static/*" --cache-control "public,max-age=0,must-revalidate" > /dev/null
 
-aws s3 sync \
-    --delete \
-    . s3://$S3_BUCKET
+echo Syncing static assets S3_BUCKET=$S3_BUCKET
+aws s3 sync ./static s3://$S3_BUCKET/static --cache-control "max-age=31536000,public,immutable" > /dev/null
 
 echo Invalidate CloudFront Cache
 aws configure set preview.cloudfront true
