@@ -6,17 +6,10 @@ import Login from './login';
 import Content from './components/content';
 import { Security, SecureRoute, ImplicitCallback } from '@okta/okta-react';
 import UploadProgressAlert from './components/SharedPageComponents/UploadProgresAlert';
-import Zendesk from 'react-zendesk';
 import { createBrowserHistory } from 'history';
+import Toaster from 'component_library/Toaster';
 
 const history = createBrowserHistory();
-
-const setting = {
-  color: {
-    theme: '#01579B',
-  },
-};
-
 const config = Object.freeze(window.env);
 
 function onAuthRequired({ history }) {
@@ -31,7 +24,7 @@ class App extends Component {
   }
 
   initializeReactGA = () => {
-    ReactGA.initialize('UA-150085816-1');
+    ReactGA.initialize(process.env.REACT_APP_GA_KEY);
     history.listen(location => {
       ReactGA.pageview(location.pathname);
     });
@@ -41,12 +34,7 @@ class App extends Component {
     return (
       <>
         <UploadProgressAlert />
-        <Zendesk
-          defer
-          zendeskKey={'1a91aa50-32e8-4499-a3e4-4643aad1353f'}
-          {...setting}
-          onLoaded={() => console.log('is loaded')}
-        />
+        <Toaster />
         <Router history={history}>
           <Security
             issuer={config.okta.issuer}
