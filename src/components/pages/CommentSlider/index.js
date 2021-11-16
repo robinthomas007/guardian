@@ -10,7 +10,7 @@ import * as commentAction from 'actions/commentAction';
 import { Rnd } from 'react-rnd';
 import _ from 'lodash';
 import { withRouter } from 'react-router-dom';
-import LoadingImg from '../../ui/LoadingImgSm';
+import AudioLoader from 'component_library/AudioLoader';
 import { steps } from '../../common/commonHelper';
 import moment from 'moment';
 
@@ -69,7 +69,7 @@ const CommentSlider = props => {
           );
         })}
         <div className="loader-img">
-          <LoadingImg show={loading} />
+          <AudioLoader show={loading} />
         </div>
       </ul>
     );

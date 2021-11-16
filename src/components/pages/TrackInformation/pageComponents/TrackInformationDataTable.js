@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Table, Form } from 'react-bootstrap';
 import ToolTip from '../../../ui/Tooltip';
-import LoadingImgSm from '../../../ui/LoadingImgSm';
+import AudioLoader from 'component_library/AudioLoader';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import { CustomInput, isPreReleaseDate } from '../../../Utils.js';
@@ -228,7 +228,7 @@ class TrackInformationDataTable extends Component {
             <td className="text-center">
               {track.hasUpload ? <i className="material-icons purple-icon">audiotrack</i> : ''}
               <span className="loading-sm" id={`${track.fileName}_${i}_ico`}>
-                <LoadingImgSm show={track.fileUpload} />
+                <AudioLoader show={track.fileUpload} />
               </span>
             </td>
             <td>

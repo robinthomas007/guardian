@@ -8,7 +8,7 @@ import TextArea from '../../common/texarea';
 import Dropdown from '../../common/DropdownSelect';
 import { steps } from '../../common/commonHelper';
 import _ from 'lodash';
-import LoadingImg from '../../ui/LoadingImgSm';
+import AudioLoader from 'component_library/AudioLoader';
 import * as commentAction from 'actions/commentAction';
 import moment from 'moment';
 
@@ -67,7 +67,7 @@ const Message = props => {
           );
         })}
         <div className="loader-img">
-          <LoadingImg show={loading} />
+          <AudioLoader show={loading} />
         </div>
       </div>
     );

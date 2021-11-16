@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Form, Table, Tabs, Tab, Alert } from 'react-bootstrap';
-import LoadingImgSm from '../../../ui/LoadingImgSm';
+import AudioLoader from 'component_library/AudioLoader';
 
 class AudioVideoDataTable extends Component {
   constructor(props) {
@@ -155,7 +155,7 @@ class AudioVideoDataTable extends Component {
                       <li>
                         {trackArr[track.fileName] && track.trackID === trackArr['trackId'] ? (
                           <span className="loading-sm" id={`${track.fileName}_ico`}>
-                            <LoadingImgSm show={true} />
+                            <AudioLoader show={true} />
                           </span>
                         ) : (
                           ''
@@ -200,7 +200,7 @@ class AudioVideoDataTable extends Component {
                       <li>
                         {trackArr[track.fileName] && track.trackID === trackArr['trackId'] ? (
                           <span className="loading-sm" id={`${track.fileName}_ico`}>
-                            <LoadingImgSm show={true} />
+                            <AudioLoader show={true} />
                           </span>
                         ) : (
                           ''
