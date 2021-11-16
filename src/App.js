@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
 import ReactGA from 'react-ga';
-import LoginPage from './components/pages/HomePage/HomePage';
+import Home from 'components/pages/HomePage/HomePage';
 import Login from './login';
-import Content from './components/content';
+import Content from 'components/content';
 import { Security, SecureRoute, ImplicitCallback } from '@okta/okta-react';
-import UploadProgressAlert from './components/SharedPageComponents/UploadProgresAlert';
+import UploadProgressAlert from 'components/SharedPageComponents/UploadProgresAlert';
 import { createBrowserHistory } from 'history';
 import Toaster from 'component_library/Toaster';
 
@@ -45,7 +45,7 @@ class App extends Component {
           >
             <Switch>
               <Route path="/implicit/callback" component={ImplicitCallback} />
-              <Route path="/" exact={true} component={LoginPage} />
+              <Route path="/" exact={true} component={Home} />
               <Route path="/login" render={() => <Login baseUrl={config.okta.base_url} />} />
 
               <SecureRoute path="/" component={Content} />
