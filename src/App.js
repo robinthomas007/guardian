@@ -49,7 +49,6 @@ class App extends Component {
               <Route path="/login" render={() => <Login baseUrl={config.okta.base_url} />} />
 
               <SecureRoute path="/" component={Content} />
-              <SecureRoute path="/" render={() => <Content props={this.props} />} />
             </Switch>
           </Security>
         </Router>
