@@ -37,8 +37,7 @@ We use [Vault](https://www.vaultproject.io/) in development for used identificat
 - Set vault address `export VAULT_ADDR=https://vault.umusic.net` in terminal
 - Only OIDC login in vault is enabled. So run `vault login -method=oidc -token-only`
 - Open the link in your browser (if it doesn't open automatically in your default browser)
-- Create a file `.env` in the project root & copy environment variables from `.env-sample`
-- Set value for `VAULT_TOKEN` from the token you received from vault login.
+- Set value for `VAULT_TOKEN` (in .env) from the token you received from vault login.
 
 ## Development
 
@@ -76,10 +75,8 @@ For testing in editor, go [here](https://github.com/facebook/create-react-app/bl
 
 ## CI/CD
 
-
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
 
 ## Deployment
-
