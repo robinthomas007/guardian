@@ -1,9 +1,7 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { ProgressBar } from 'react-bootstrap';
+import FixedProgress from 'component_library/FixedProgress';
 
-export default function UploadProgressAlert() {
-  const uploads = useSelector(state => state.uploadProgressAlert.uploads);
+export default function UploadProgressAlert({ uploads }) {
   const uploadCount = Object.keys(uploads).length;
   let progress = 0;
   if (uploadCount > 0) {
@@ -15,16 +13,11 @@ export default function UploadProgressAlert() {
   }
 
   return (
-    <div style={{ display: uploadCount > 0 ? 'block' : 'none' }} className="upload-progress-bar">
-      <h3>Upload in progress. Please do not leave the Guardian until it's complete.</h3>
-      <ProgressBar
-        style={{ height: '0.7rem' }}
-        striped
-        animated
-        variant="danger"
-        now={progress}
-        label={`${uploadCount} FILE(S)`}
-      />
-    </div>
+    <FixedProgress
+      title={"Upload in progress. Please do not leave the Guardian until it's complete."}
+      show={uploadCount > 0}
+      progress={progress}
+      label={`${uploadCount} FILE(S)`}
+    />
   );
 }

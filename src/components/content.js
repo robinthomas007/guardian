@@ -17,6 +17,7 @@ import ProjectInbox from './pages/ProjectInbox';
 import ErrorBoundary from './common/ErrorBoundary';
 import * as releaseAction from './pages/ReleaseInformation/releaseAction';
 import * as territorialRightsAction from '../actions/territorialRightsAction';
+import UploadProgressAlert from 'components/SharedPageComponents/UploadProgresAlert';
 
 class Content extends Component {
   constructor(props) {
@@ -212,8 +213,12 @@ class Content extends Component {
     if (this.state.userLoaded) {
       return (
         <ErrorBoundary>
+          <UploadProgressAlert uploads={this.props.uploads} />
           <div className="row d-flex no-gutters">
-            <div className="col-12" style={{ marginTop: this.props.progress > 0 ? '54px' : '0' }}>
+            <div
+              className="col-12"
+              style={{ marginTop: Object.keys(this.props.uploads).length > 0 ? '54px' : '0px' }}
+            >
               <Header
                 userData={this.state.user}
                 projectData={this.state.project}
@@ -363,7 +368,7 @@ class Content extends Component {
 export default withAuth(
   connect(
     state => ({
-      progress: Object.keys(state.uploadProgressAlert.uploads).length,
+      uploads: state.uploadProgressAlert.uploads,
     }),
     dispatch => ({
       initializeUpcData: () => dispatch(releaseAction.initializeUpcData()),

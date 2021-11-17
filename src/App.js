@@ -5,7 +5,6 @@ import Home from 'components/pages/HomePage/HomePage';
 import Login from './login';
 import Content from 'components/content';
 import { Security, SecureRoute, ImplicitCallback } from '@okta/okta-react';
-import UploadProgressAlert from 'components/SharedPageComponents/UploadProgresAlert';
 import { createBrowserHistory } from 'history';
 import Toaster from 'component_library/Toaster';
 
@@ -33,7 +32,6 @@ class App extends Component {
   render() {
     return (
       <>
-        <UploadProgressAlert />
         <Toaster />
         <Router history={history}>
           <Security

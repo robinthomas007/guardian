@@ -1361,18 +1361,6 @@ th.sortable {
   width: 100%;
 }
 
-.upload-progress-bar {
-  background-color: #7f1b2e;
-  text-align: center;
-  color: rgb(255, 255, 255);
-  padding: 5px 20% 10px;
-  position: fixed;
-  top: 0px;
-  height: 54px;
-  width: 100%;
-  z-index: 10000;
-}
-
 /* filter css */
 
 .assigned_inbox_filter_field {
