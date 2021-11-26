@@ -6,7 +6,6 @@ import { Provider } from 'react-redux';
 // import styles
 import 'css/index.css';
 import 'css/header.css';
-import 'css/okta-overide.css';
 
 import App from './App';
 import configureStore from './redux/store';

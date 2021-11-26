@@ -5,7 +5,7 @@
 #okta-sign-in.auth-container .okta-sign-in-header {
   display: none;
   border-bottom-color: #000;
-  background-image: url(../images/guardian-logo.png);
+  background-image: url('images/guardian-logo.png');
   background-repeat: no-repeat;
   background-position: center;
   height: 80px;
