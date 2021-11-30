@@ -8,7 +8,7 @@ import { reduxForm } from 'redux-form';
 import AudioFilesTabbedTracks from '../AudioFiles/pageComponents/audioFilesTabbedTracks';
 import { connect } from 'react-redux';
 import * as uploadProgressActions from 'redux/uploadProgressAlert/actions';
-import { isDuplicateTrackTitle, showNotyError, showNotyWarning } from '../../Utils';
+import { isDuplicateTrackTitle, showNotyError } from '../../Utils';
 import _ from 'lodash';
 import { showNotyInfo } from 'components/Utils';
 import { toast } from 'react-toastify';
@@ -26,7 +26,6 @@ class AudioFilesPage extends Component {
       discs: [],
       activeTab: 0,
       pageTableData: [],
-      projectID: '',
       showReplaceAudioModal: false,
       replaceTrackIndex: null,
       modalAction: 'Replace',
@@ -247,8 +246,6 @@ class AudioFilesPage extends Component {
 
       // request finished event
       request.addEventListener('load', e => {
-        const responseJSON = JSON.parse(request.response);
-        // this.hideFileUploadingIndicator(responseJSON[0].fileName);
         onUploadComplete(uniqFileName);
         if (request.status >= 300) {
           showNotyError('Uploading audio file(s) failed. Please try again. Click to close.');
@@ -318,8 +315,7 @@ class AudioFilesPage extends Component {
   }
 
   handleDataLoad() {
-    const user = JSON.parse(sessionStorage.getItem('user'));
-    const { pageTableData, discs } = this.state;
+    const { discs } = this.state;
     const fetchHeaders = new Headers({
       Authorization: sessionStorage.getItem('accessToken'),
     });
@@ -484,6 +480,16 @@ class AudioFilesPage extends Component {
           upcDisc.push(obj);
         });
         this.setState({ discs: _.cloneDeep(upcDisc) });
+        console.log(upcDisc, 'upcDisc');
+        const isrcs = [];
+        upcDisc.forEach(disc => {
+          let trackIsrcs = _.map(disc.Tracks, 'isrc');
+          isrcs.push(trackIsrcs);
+        });
+        this.props.getCisData({
+          Iscrs: ['USA171120048'], //isrcs,
+          ProjectId: this.props.match.params.projectID,
+        });
       } else {
         this.props.findUpc(localStorage.upc);
       }
@@ -495,6 +501,7 @@ class AudioFilesPage extends Component {
       const { discs, project } = this.state;
       if (nextProps.upcData.ExDiscs && nextProps.upcData.ExDiscs.length > 0) {
         const upcDisc = [];
+        const isrcs = [];
         nextProps.upcData.ExDiscs.forEach((disc, i) => {
           let existingDisc = _.filter(discs, val => val.discNumber === disc.discNumber);
           const obj = {};
@@ -513,8 +520,15 @@ class AudioFilesPage extends Component {
             obj['Tracks'] = _.uniqBy(obj['Tracks'], v => [v.isrc, v.trackTitle].join());
           }
           upcDisc.push(obj);
+          let trackIsrcs = _.map(disc.ExTracks, 'isrc');
+          isrcs.push(...trackIsrcs);
         });
         this.setState({ discs: _.cloneDeep(upcDisc) });
+
+        this.props.getCisData({
+          Iscrs: ['USA171120048'], //isrcs,
+          ProjectId: this.props.match.params.projectID,
+        });
       }
     }
     if (this.props.ExTracks !== nextProps.ExTracks) {
@@ -535,6 +549,28 @@ class AudioFilesPage extends Component {
         upcDisc[activeTab].Tracks = tracks;
         this.setState({ discs: _.cloneDeep(upcDisc) });
       }
+    }
+    if (this.props.cisData !== nextProps.cisData) {
+      const { discs } = this.state;
+      const allDiscs = [];
+      discs.forEach(disc => {
+        let discTab = disc;
+        const tracks = [];
+        disc.Tracks.forEach(track => {
+          let trackObj = track;
+          let cisTrack = _.filter(nextProps.cisData, val => val.isrc === track.isrc);
+          if (cisTrack.length > 0) {
+            trackObj.hasUpload = true;
+            trackObj.fileName = cisTrack[0].fileName;
+            trackObj.isCisAudio = cisTrack[0].isCisAudio;
+          }
+          tracks.push(trackObj);
+        });
+        discTab.Tracks = tracks;
+        allDiscs.push(discTab);
+      });
+      // console.log(allDiscs, "allDiscsallDiscsallDiscs")
+      this.setState({ discs: _.cloneDeep(allDiscs) });
     }
   }
 
@@ -583,7 +619,7 @@ class AudioFilesPage extends Component {
     const { uploads, loading } = this.props;
     return (
       <div className="col-10">
-        <HaveAudioModal projectID={this.props.projectID} />
+        {/* <HaveAudioModal projectID={this.props.projectID} />*/}
 
         <LoadingImg show={this.state.showLoader || loading} />
 
@@ -699,6 +735,7 @@ export default withRouter(
       upcData: state.releaseReducer.upcData,
       ExTracks: state.audioReducer.ExTracks,
       loading: state.audioReducer.loading,
+      cisData: state.audioReducer.cisData,
     }),
     dispatch => ({
       onUploadStart: (uniqFileName, trackID) =>
@@ -710,6 +747,7 @@ export default withRouter(
       findUpc: val => dispatch(releaseAction.findUpc(val)),
       initializeUpcData: () => dispatch(releaseAction.initializeUpcData()),
       isrcCheck: isrc => dispatch(AudioActions.isrcCheck(isrc)),
+      getCisData: (isrcs, ProjectId) => dispatch(AudioActions.getCisData(isrcs, ProjectId)),
     }),
   )(AudioFilesPage),
 );

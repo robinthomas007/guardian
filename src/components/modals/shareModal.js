@@ -5,7 +5,6 @@ import { connect, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import TextArea from '../common/texarea';
 import * as shareAction from 'actions/shareAction';
-import _ from 'lodash';
 import { withRouter } from 'react-router-dom';
 import LoadingImg from 'component_library/LoadingImg';
 
@@ -23,7 +22,6 @@ const ShareProjectModal = props => {
   const loading = useSelector(state => state.shareReducer.loading);
   const success = useSelector(state => state.shareReducer.success);
 
-  const [isEmailsValid, setEmailValid] = useState(true);
   const [emails, setEmails] = useState([]);
 
   const validateEmail = email => {
@@ -45,7 +43,6 @@ const ShareProjectModal = props => {
       if (emails.length > 0) {
         emails.forEach(email => {
           if (!validateEmail(email)) {
-            setEmailValid(false);
             isValid = false;
           }
         });

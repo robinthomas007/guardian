@@ -1,7 +1,5 @@
 import * as actions from './release.types';
 import Api from '../../../lib/api';
-import history from '../../../history';
-import { toast } from 'react-toastify';
 import { showNotyAutoError } from 'components/Utils';
 
 export const getProjectDetails = data => {
@@ -22,98 +20,11 @@ export const validateProjectDetails = data => {
   };
 };
 
-// export const createReleaseInfo = data => {
-//   return dispatch => {
-//     dispatch(projectRequest(true));
-//     return Api.post('/project/validate', data)
-//       .then(response => response.json())
-//       .then(response => {
-//         dispatch(projectRequest(false));
-//         localStorage.setItem('projectData', JSON.stringify(data));
-//         toast.success('Your project has been successfully saved', {
-//           position: toast.POSITION.TOP_CENTER,
-//           className: 'foo-bar',
-//         });
-//         history.push('/projectContacts');
-//       })
-//       .catch(error => {
-//         console.log('error', error);
-//         dispatch(projectRequest(false));
-//         dispatch(projectFailure(error));
-//       });
-//   };
-// };
-
-// export const updateReleaseInfo = (data, pathaname, clearLocal) => {
-//   return dispatch => {
-//     dispatch(projectRequest(true));
-//     return Api.post('/project', data)
-//       .then(response => response.json())
-//       .then(response => {
-//         if (response && response.Project && response.Project.projectID) {
-//           if (clearLocal) {
-//             localStorage.removeItem('projectData');
-//             dispatch(projectSuccess(response));
-//           } else {
-//             localStorage.setItem('projectData', JSON.stringify(data));
-//           }
-//           toast.success('Your project has been successfully saved', {
-//             position: toast.POSITION.TOP_CENTER,
-//             className: 'foo-bar',
-//           });
-//           history.push(`/${pathaname}/${response.Project.projectID}`);
-//         } else {
-//           toast.error('Your project has NOT been successfully saved', {
-//             position: toast.POSITION.TOP_CENTER,
-//           });
-//         }
-//         dispatch(projectRequest(false));
-//       })
-//       .catch(error => {
-//         console.log('error', error);
-//         toast.error('Your project has NOT been successfully saved', {
-//           position: toast.POSITION.TOP_CENTER,
-//         });
-//         dispatch(projectRequest(false));
-//         dispatch(projectFailure(error));
-//       });
-//   };
-// };
-
-// export const validateEmailAndSubmit = (data, pathaname) => {
-//   return dispatch => {
-//     dispatch(projectRequest(true));
-//     return Api.post('/project/validate/emails', { emails: data.projectAdditionalContacts })
-//       .then(response => response.json())
-//       .then(response => {
-//         if (response.IsValid) {
-//           dispatch(updateReleaseInfo({ Project: data }, pathaname, true));
-//         } else {
-//           toast.error('Your project has NOT been successfully saved', {
-//             position: toast.POSITION.TOP_CENTER,
-//           });
-//         }
-//         dispatch(projectRequest(false));
-//       })
-//       .catch(error => {
-//         console.log('error', error);
-//         dispatch(projectRequest(false));
-//         dispatch(projectFailure(error));
-//       });
-//   };
-// };
-
-// export const initialize = () => {
-//   return {
-//     type: actions.PROJECT_INITIALIZE,
-//   };
-// };
-
-// export const clearProject = () => {
-//   return dispatch => {
-//     dispatch(initialize());
-//   };
-// };
+export const validateEmails = data => {
+  return () => {
+    return Api.post('/project/validate/emails', data);
+  };
+};
 
 export const findUpc = val => {
   return dispatch => {

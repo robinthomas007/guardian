@@ -60,7 +60,7 @@ class MultiSelectDropDown extends Component {
             option.name.toLocaleLowerCase().includes(this.state.search.toLocaleLowerCase()))
         ) {
           return (
-            <a className="dropdown-item" key={i} onClick={null}>
+            <a href className="dropdown-item" key={i} onClick={null}>
               <label className="custom-checkbox">
                 <input
                   onChange={e => this.handleChange(e)}
@@ -75,6 +75,8 @@ class MultiSelectDropDown extends Component {
               <label htmlFor={this.props.id + '_check_' + i}>{option.name}</label>
             </a>
           );
+        } else {
+          return null;
         }
       });
       return labelOptions;

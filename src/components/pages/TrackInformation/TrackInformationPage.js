@@ -572,7 +572,6 @@ class TrackInformationPage extends Component {
     const { Discs } = this.state.project;
 
     let sourceTrack = Discs[this.state.activeDiscTab - 1].Tracks[sourceIndex];
-    let targetTrack = Discs[this.state.activeDiscTab - 1].Tracks[targetIndex];
 
     let modifiedDiscs = Discs;
     modifiedDiscs[this.state.activeDiscTab - 1].Tracks.splice(sourceIndex, 1);

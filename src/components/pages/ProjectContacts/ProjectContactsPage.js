@@ -8,6 +8,8 @@ import LoadingImg from 'component_library/LoadingImg';
 import { isFormValid, isPreReleaseDate } from '../../Utils.js';
 import _ from 'lodash';
 import { showNotyInfo, showNotyAutoError } from 'components/Utils';
+import { connect } from 'react-redux';
+import * as releaseAction from './../ReleaseInformation/releaseAction';
 
 class ProjectContactsPage extends Component {
   constructor(props) {
@@ -41,29 +43,13 @@ class ProjectContactsPage extends Component {
 
   handlePageDataLoad() {
     this.setState({ showloader: true });
-
-    const user = JSON.parse(sessionStorage.getItem('user'));
-    const projectID = this.props.match.params.projectID;
-    const fetchHeaders = new Headers({
-      'Content-Type': 'application/json',
-      Authorization: sessionStorage.getItem('accessToken'),
-    });
-
-    const fetchBody = JSON.stringify({
-      PagePath: this.props.match.url ? this.props.match.url : '',
-      ProjectID: projectID,
-    });
-
-    fetch(window.env.api.url + '/project/review', {
-      method: 'POST',
-      headers: fetchHeaders,
-      body: fetchBody,
-    })
-      .then(response => {
-        return response.json();
+    this.props
+      .getProjectDetails({
+        PagePath: this.props.match.url ? this.props.match.url : '',
+        ProjectID: this.props.match.params.projectID,
       })
+      .then(response => response.json())
       .then(responseJSON => {
-        const { formInputs } = this.state;
         let modifiedFormInputs = responseJSON.Project;
         let emails = modifiedFormInputs.projectAdditionalContacts
           ? modifiedFormInputs.projectAdditionalContacts.split(',')
@@ -122,24 +108,11 @@ class ProjectContactsPage extends Component {
 
   isAdditionalContactsValid(e) {
     const saveAndContinue = e.target.classList.contains('saveAndContinueButton') ? true : false;
-
-    const user = JSON.parse(sessionStorage.getItem('user'));
-    const fetchHeaders = new Headers({
-      'Content-Type': 'application/json',
-      Authorization: sessionStorage.getItem('accessToken'),
-    });
-    const fetchBody = JSON.stringify({
-      emails: this.state.emails.join(),
-    });
-
-    fetch(window.env.api.url + '/project/validate/emails', {
-      method: 'POST',
-      headers: fetchHeaders,
-      body: fetchBody,
-    })
-      .then(response => {
-        return response.json();
+    this.props
+      .validateEmails({
+        emails: this.state.emails.join(),
       })
+      .then(response => response.json())
       .then(responseJSON => {
         if (responseJSON.IsValid) {
           this.setState({ projectAdditionalContactsValid: '' }, e => {
@@ -149,7 +122,9 @@ class ProjectContactsPage extends Component {
           this.setState({ projectAdditionalContactsValid: ' is-invalid' });
         }
       })
-      .catch(error => console.error(error));
+      .catch(error => {
+        console.error(error);
+      });
   }
 
   handleSubmit(e, saveAndContinue) {
@@ -163,28 +138,15 @@ class ProjectContactsPage extends Component {
       if (this.props.data && this.props.data.projectID) {
         releaseInformationInputs = this.props.data;
       }
-      const user = JSON.parse(sessionStorage.getItem('user'));
       const projectID = this.props.match.params.projectID;
 
       const projectFields = projectID ? formInputs : { ...releaseInformationInputs, ...formInputs };
 
-      const fetchHeaders = new Headers({
-        'Content-Type': 'application/json',
-        Authorization: sessionStorage.getItem('accessToken'),
-      });
-
-      const fetchBody = JSON.stringify({
-        Project: projectFields,
-      });
-
-      fetch(window.env.api.url + '/project', {
-        method: 'POST',
-        headers: fetchHeaders,
-        body: fetchBody,
-      })
-        .then(response => {
-          return response.json();
+      this.props
+        .submitProjectDetails({
+          Project: projectFields,
         })
+        .then(response => response.json())
         .then(responseJSON => {
           if (responseJSON.errorMessage) {
             this.showNotSavedNotification();
@@ -468,4 +430,26 @@ class ProjectContactsPage extends Component {
   }
 }
 
-export default withRouter(ProjectContactsPage);
+// ProjectContactsPage = reduxForm({
+//   form: 'ProjectContactsPageForm',
+//   enableReinitialize: true,
+// })(ProjectContactsPage);
+
+const mapDispatchToProps = dispatch => ({
+  findUpc: val => dispatch(releaseAction.findUpc(val)),
+  getProjectDetails: data => dispatch(releaseAction.getProjectDetails(data)),
+  submitProjectDetails: data => dispatch(releaseAction.submitProjectDetails(data)),
+  validateEmails: data => dispatch(releaseAction.validateEmails(data)),
+});
+
+const mapStateToProps = state => ({
+  // upcData: state.releaseReducer.upcData,
+  // loading: state.releaseReducer.loading,
+});
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  )(ProjectContactsPage),
+);

@@ -168,7 +168,6 @@ class BlockingPoliciesPage extends Component {
   handlePageDataLoad = () => {
     this.setState({ showLoader: true });
 
-    const user = JSON.parse(sessionStorage.getItem('user'));
     const fetchHeaders = new Headers({
       'Content-Type': 'application/json',
       Authorization: sessionStorage.getItem('accessToken'),
@@ -215,7 +214,6 @@ class BlockingPoliciesPage extends Component {
   handleSubmit = e => {
     const saveAndContinue = e.target.classList.contains('saveAndContinueButton') ? true : false;
     this.setState({ showLoader: true });
-    const user = JSON.parse(sessionStorage.getItem('user'));
     const fetchHeaders = new Headers({
       'Content-Type': 'application/json',
       Authorization: sessionStorage.getItem('accessToken'),
@@ -310,7 +308,6 @@ class BlockingPoliciesPage extends Component {
       const setIndex = dragSource[i].getAttribute('setindex');
       const trackId = dragSource[i].getAttribute('trackid');
       const trackTitle = dragSource[i].getAttribute('trackTitle');
-      const trackIndex = dragSource[i].getAttribute('trackindex');
 
       // restrict dropping to just the set tracks
       if (

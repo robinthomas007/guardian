@@ -43,3 +43,43 @@ export const isrcCheck = data => {
       });
   };
 };
+
+export const cisFetchSuccess = result => {
+  return {
+    type: actions.CIS_SUCCESS,
+    result,
+  };
+};
+
+export const cisFetchFailure = error => {
+  return {
+    type: actions.CIS_FAILURE,
+    message: error,
+  };
+};
+
+export const cisFetchRequest = loading => {
+  return {
+    type: actions.CIS_REQUEST,
+    loading,
+  };
+};
+
+export const getCisData = data => {
+  return dispatch => {
+    dispatch(cisFetchRequest(true));
+    return Api.post('/media/api/cisupload', data)
+      .then(response => response.json())
+      .then(response => {
+        if (response && response.length > 0) {
+          dispatch(cisFetchSuccess(response));
+        } else {
+          dispatch(cisFetchFailure(response));
+        }
+      })
+      .catch(error => {
+        console.log('error', error);
+        dispatch(cisFetchFailure(error));
+      });
+  };
+};

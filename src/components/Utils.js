@@ -134,8 +134,8 @@ export function isDuplicateTrackTitle() {
   let titleValues = [];
   let isDuplicate = false;
 
-  for (var i = 0; i < trackTitles.length; i++) {
-    const title = trackTitles[i].value;
+  for (let i = 0; i < trackTitles.length; i++) {
+    let title = trackTitles[i].value;
     title = title.toUpperCase();
     if (title && titleValues.includes(title)) {
       isDuplicate = true;
@@ -147,7 +147,7 @@ export function isDuplicateTrackTitle() {
 
   let trackIsrc = document.getElementsByClassName('trackIsrcField');
   let isrcValues = [];
-  for (var i = 0; i < trackIsrc.length; i++) {
+  for (let i = 0; i < trackIsrc.length; i++) {
     const title = trackIsrc[i].value;
     if (title && title.length === 12 && isrcValues.includes(title)) {
       isDuplicate = true;
