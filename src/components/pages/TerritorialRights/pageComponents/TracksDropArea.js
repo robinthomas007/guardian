@@ -12,6 +12,12 @@ class TracksDropArea extends Component {
     e.preventDefault();
   }
 
+  handleDragEnd(e, i, track) {
+    const id = e.target.id;
+    const ele = document.querySelector(`#${id} .track-tit-name`);
+    ele.innerHTML = `${track.trackTitle}`;
+  }
+
   handleDrag(e, i, track) {
     let selectedArr = [];
     for (let i = 0; i < this.props.data.length; i++) {
@@ -25,6 +31,9 @@ class TracksDropArea extends Component {
       for (let j = 0; j < selectedArr.length; j++) {
         e.dataTransfer.setData('text/html', selectedArr[j]);
       }
+      const id = e.target.id;
+      const ele = document.querySelector(`#${id} .track-tit-name`);
+      ele.innerHTML = `You are dragging ${selectedArr.length} files`;
       this.props.handleChildDrag(selectedArr);
     } else {
       this.props.handleChildDrag([e.target]);
@@ -76,6 +85,7 @@ class TracksDropArea extends Component {
           draggable="true"
           className="draggable-track rightsSetTracks"
           onDragStart={e => this.handleDrag(e)}
+          onDragEnd={e => this.handleDragEnd(e, i, track)}
           setindex={this.props.setIndex}
           trackindex={i}
           trackid={track.trackID}
@@ -93,7 +103,8 @@ class TracksDropArea extends Component {
             />
             <span className="checkmark "></span>
           </label>
-          <i className="material-icons">dehaze</i>&nbsp;&nbsp;{track.trackTitle}
+          <i className="material-icons">dehaze</i>
+          <span className="track-tit-name">{track.trackTitle}</span>
         </div>
       );
     });

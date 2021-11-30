@@ -187,9 +187,16 @@ export const CustomInput = props => {
         value={props.value}
         type="text"
         readOnly={props.isreadOnly}
+        disabled={props.isreadOnly}
       />
       {!props.value && (
-        <i onClick={props.onClick} aria-hidden="true" class="material-icons calendar">
+        <i
+          onClick={!props.isreadOnly && props.onClick}
+          className={
+            props.isreadOnly ? 'disabled material-icons calendar' : 'material-icons calendar'
+          }
+          aria-hidden="true"
+        >
           date_range
         </i>
       )}

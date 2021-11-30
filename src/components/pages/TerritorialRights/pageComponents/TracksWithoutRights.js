@@ -16,6 +16,12 @@ class TracksWithoutRights extends Component {
     this.props.handleDropAdd(e);
   };
 
+  handleDragEnd(e, i, track) {
+    const id = e.target.id;
+    const ele = document.querySelector(`#${id} .track-tit-name`);
+    ele.innerHTML = `${track.trackTitle}`;
+  }
+
   handleDrag(e, i, track) {
     let selectedArr = [];
     for (let i = 0; i < this.props.data.length; i++) {
@@ -32,6 +38,9 @@ class TracksWithoutRights extends Component {
       for (let j = 0; j < selectedArr.length; j++) {
         e.dataTransfer.setData('text/html', selectedArr[j]);
       }
+      const id = e.target.id;
+      const ele = document.querySelector(`#${id} .track-tit-name`);
+      ele.innerHTML = `You are dragging ${selectedArr.length} files`;
       this.props.handleChildDrag(selectedArr);
     } else {
       if (track.hasRights !== false) {
@@ -76,6 +85,7 @@ class TracksWithoutRights extends Component {
             trackid={track.trackID}
             tracktitle={track.trackTitle}
             onDragStart={e => this.handleDrag(e, i, track)}
+            onDragEnd={e => this.handleDragEnd(e, i, track)}
             id={`check_${track.trackID}`}
             className={`${
               track.hasRights !== false
@@ -95,7 +105,8 @@ class TracksWithoutRights extends Component {
               />
               <span className="checkmark "></span>
             </label>
-            <i className="material-icons">dehaze</i>&nbsp;&nbsp;{track.trackTitle}
+            <i className="material-icons">dehaze</i>
+            <span className="track-tit-name">{track.trackTitle}</span>
           </div>
         );
       });

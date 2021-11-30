@@ -544,6 +544,7 @@ class ReleaseinformationPage extends Component {
                     onChange={this.handleDateChange}
                     customInput={
                       <CustomInput
+                        isreadOnly={this.state.projectReleaseDateDisabled}
                         adClass={
                           this.state.releaseDateRequired
                             ? 'form-control requiredInput'
@@ -553,6 +554,9 @@ class ReleaseinformationPage extends Component {
                     }
                     isClearable={true}
                   />
+                  <span>
+                    <i>&nbsp;&nbsp; (UTC)</i>
+                  </span>
                 </div>
                 <div className="col-auto">
                   <Form.Label className="col-form-label tbd text-nowrap">Release TBD</Form.Label>

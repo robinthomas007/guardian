@@ -13,6 +13,7 @@ export default class ExportCSV extends React.Component {
       { label: 'Project Title', key: 'projectTitle' },
       { label: 'Artist', key: 'projectArtistName' },
       { label: 'Label', key: 'projectReleasingLabel' },
+      { label: 'Release Date', key: 'projectReleaseDate' },
       { label: 'Status', key: 'status' },
       { label: 'Has Audio', key: 'isAudioFilesComplete' },
       { label: 'Has Tracks', key: 'isTrackInfoComplete' },

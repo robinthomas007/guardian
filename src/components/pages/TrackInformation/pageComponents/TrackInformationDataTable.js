@@ -283,14 +283,17 @@ class TrackInformationDataTable extends Component {
                     ? new Date(track.trackReleaseDate)
                     : null
                 }
-                disabled={track.isSingle ? false : true}
                 dateFormat="Pp"
                 placeholderText="Select release date"
                 onChange={date => this.handleDateChange(date, track)}
                 customInput={
-                  <CustomInput tabIndex={this.props.discID} adClass="trackReleaseDateInput" />
+                  <CustomInput
+                    isreadOnly={track.isSingle ? false : true}
+                    tabIndex={this.props.discID}
+                    adClass="trackReleaseDateInput"
+                  />
                 }
-                isClearable={true}
+                isClearable={track.isSingle ? true : false}
               />
             </td>
             <td>
