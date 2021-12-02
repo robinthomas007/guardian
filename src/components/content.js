@@ -129,6 +129,12 @@ class Content extends Component {
           return response.json();
         })
         .then(responseJSON => {
+          if (
+            responseJSON.Project.projectStatus !== 'In Progress' &&
+            !pagePath.includes('reviewSubmit')
+          ) {
+            this.props.history.push('/reviewSubmit/' + this.state.projectID);
+          }
           return this.state.project !== responseJSON
             ? this.setState({ project: responseJSON })
             : '';

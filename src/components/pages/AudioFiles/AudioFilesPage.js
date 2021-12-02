@@ -84,9 +84,13 @@ class AudioFilesPage extends Component {
         isValidForm = false;
       }
     }
-    isrcs.length > 0 &&
-      isValidForm &&
-      this.props.isrcCheck({ User: { email: user.email }, isrcs: isrcs });
+    if (isrcs.length > 0 && isValidForm) {
+      this.props.isrcCheck({ User: { email: user.email }, isrcs: isrcs }, false);
+      this.props.getCisData({
+        Iscrs: isrcs,
+        ProjectId: this.props.match.params.projectID,
+      });
+    }
   }
 
   showReplaceModal(track, i, upload) {
@@ -484,10 +488,10 @@ class AudioFilesPage extends Component {
         const isrcs = [];
         upcDisc.forEach(disc => {
           let trackIsrcs = _.map(disc.Tracks, 'isrc');
-          isrcs.push(trackIsrcs);
+          isrcs.push(...trackIsrcs);
         });
         this.props.getCisData({
-          Iscrs: ['USA171120048'], //isrcs,
+          Iscrs: isrcs,
           ProjectId: this.props.match.params.projectID,
         });
       } else {
@@ -524,9 +528,8 @@ class AudioFilesPage extends Component {
           isrcs.push(...trackIsrcs);
         });
         this.setState({ discs: _.cloneDeep(upcDisc) });
-
         this.props.getCisData({
-          Iscrs: ['USA171120048'], //isrcs,
+          Iscrs: isrcs,
           ProjectId: this.props.match.params.projectID,
         });
       }
@@ -746,7 +749,7 @@ export default withRouter(
       saveDiscs: updatedDiscs => dispatch(uploadProgressActions.saveDisc(updatedDiscs)),
       findUpc: val => dispatch(releaseAction.findUpc(val)),
       initializeUpcData: () => dispatch(releaseAction.initializeUpcData()),
-      isrcCheck: isrc => dispatch(AudioActions.isrcCheck(isrc)),
+      isrcCheck: (isrc, showLoader) => dispatch(AudioActions.isrcCheck(isrc, showLoader)),
       getCisData: (isrcs, ProjectId) => dispatch(AudioActions.getCisData(isrcs, ProjectId)),
     }),
   )(AudioFilesPage),

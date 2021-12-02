@@ -21,7 +21,7 @@ export default createReducer(initialState, {
   },
   [ISRC_CHECK_SUCCESS]: (state, action) => {
     state.ExTracks = action.result;
-    state.loading = false;
+    state.loading = action.loading;
   },
   [ISRC_CHECK_FAILURE]: (state, action) => {
     state.loading = false;

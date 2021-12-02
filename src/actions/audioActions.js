@@ -1,11 +1,12 @@
 import * as actions from 'types/audio.types';
 import Api from 'lib/api';
-import { showNotyAutoError } from './../components/Utils';
+import { showNotyAutoError, showNotyInfo } from './../components/Utils';
 
-export const fetchSuccess = result => {
+export const fetchSuccess = (result, showLoader) => {
   return {
     type: actions.ISRC_CHECK_SUCCESS,
     result,
+    loading: showLoader === false ? true : false,
   };
 };
 
@@ -23,15 +24,14 @@ export const fetchRequest = loading => {
   };
 };
 
-export const isrcCheck = data => {
+export const isrcCheck = (data, showLoader) => {
   return dispatch => {
     dispatch(fetchRequest(true));
     return Api.post('/project/isrc', data)
       .then(response => response.json())
       .then(response => {
         if (response.Status === 'OK' && response.ExTracks && response.ExTracks.length > 0) {
-          console.log('success');
-          dispatch(fetchSuccess(response.ExTracks));
+          dispatch(fetchSuccess(response.ExTracks, showLoader));
         } else {
           showNotyAutoError('No matching ISRC found');
           dispatch(fetchFailure(response.message));
@@ -73,6 +73,9 @@ export const getCisData = data => {
       .then(response => {
         if (response && response.length > 0) {
           dispatch(cisFetchSuccess(response));
+          showNotyInfo(
+            `We've found and uploaded ${response.length} Tracks from UMG's ASPEN repository`,
+          );
         } else {
           dispatch(cisFetchFailure(response));
         }
