@@ -18,6 +18,10 @@ import ExportCSV from './pageComponents/ExportCSV';
 class FindProjectPage extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      sortOrder: 'desc',
+      sortColumn: 'last_updated',
+    };
     this.formSubmit = this.formSubmit.bind(this);
     this.handlePaginationChange = this.handlePaginationChange.bind(this);
     this.setProjectsView = this.setProjectsView.bind(this);
@@ -59,6 +63,8 @@ class FindProjectPage extends Component {
       pageNumber: newPage,
       searchTerm: searchTerm,
       filter: getSearchCriteria(searchCriteria),
+      sortOrder: this.state.sortOrder,
+      sortColumn: this.state.sortColumn,
     };
     this.props.handleProjectSearch({ searchCriteria: searchData });
     this.props.changePageNumber(newPage);
@@ -80,6 +86,10 @@ class FindProjectPage extends Component {
   handleColumnSort = (columnID, columnSortOrder) => {
     const searchCriteria = _.cloneDeep(this.props.formValues.values);
     const searchTerm = _.get(this.props, 'formValues.values.searchTerm', '');
+    this.setState({
+      sortOrder: columnSortOrder,
+      sortColumn: columnID,
+    });
     const searchData = {
       itemsPerPage: this.props.searchCriteria.itemsPerPage,
       pageNumber: this.props.searchCriteria.pageNumber,

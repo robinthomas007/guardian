@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 
 class AudioFilesDataTable extends Component {
   constructor(props) {
@@ -28,7 +29,9 @@ class AudioFilesDataTable extends Component {
               </label>
             </td>
             <td className="col-2 text-center">
-              {track.isSingle || track.trackReleaseDate !== '' ? track.trackReleaseDate : 'TBD'}
+              {track.isSingle || track.trackReleaseDate !== ''
+                ? `${moment.utc(track.trackReleaseDate).format('MM-DD-YYYY hh:mm A')} UTC`
+                : 'TBD'}
             </td>
           </tr>
         );

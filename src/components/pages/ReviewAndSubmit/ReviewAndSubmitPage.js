@@ -10,6 +10,7 @@ import ShareModal from '../../modals/shareModal';
 import IncompleteProjectModal from '../../modals/IncompleteProjectModal';
 import { formatDateToYYYYMMDD, convertToLocaleTime, isPreReleaseDate } from '../../Utils';
 import { showNotyInfo } from 'components/Utils';
+import moment from 'moment';
 
 class ReviewAndSubmitPage extends Component {
   constructor(props) {
@@ -249,7 +250,9 @@ class ReviewAndSubmitPage extends Component {
                     <span>
                       {' '}
                       {this.props.data.Project && this.props.data.Project.projectReleaseDate
-                        ? this.props.data.Project.projectReleaseDate
+                        ? `${moment
+                            .utc(this.props.data.Project.projectReleaseDate)
+                            .format('MM-DD-YYYY hh:mm A')} UTC`
                         : 'TBD'}
                     </span>
                   </div>

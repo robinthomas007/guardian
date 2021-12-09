@@ -226,7 +226,7 @@ class FindProjectDataTable extends Component {
             </td>
             {this.props.userData.IsAdmin ? this.getAdminButtons(project) : null}
             <td onClick={() => this.handleRowClick(project.projectID)}>
-              {moment.utc(project.projectLastModified).format('DD-MM-YYYY hh:mm A')} UTC
+              {moment.utc(project.projectLastModified).format('MM-DD-YYYY hh:mm A')} UTC
             </td>
             <td onClick={() => this.handleRowClick(project.projectID)}>{project.projectTitle}</td>
             <td onClick={() => this.handleRowClick(project.projectID)}>
@@ -237,7 +237,7 @@ class FindProjectDataTable extends Component {
             </td>
             <td onClick={() => this.handleRowClick(project.projectID)}>
               {project.projectReleaseDate
-                ? `${moment.utc(project.projectReleaseDate).format('DD-MM-YYYY hh:mm A')} UTC`
+                ? `${moment.utc(project.projectReleaseDate).format('MM-DD-YYYY hh:mm A')} UTC`
                 : 'TBD'}
             </td>
             <td
