@@ -391,14 +391,14 @@ class FindProjectDataTable extends Component {
           </th>
           <th
             className="sortable"
-            onMouseOver={(e, columnID) => this.handleMouseOver(e, 'release_dates')}
-            onMouseOut={(e, columnID) => this.handleMouseOut(e, 'release_dates')}
-            onClick={id => this.handleTableSort('release_dates')}
+            onMouseOver={(e, columnID) => this.handleMouseOver(e, 'release_date')}
+            onMouseOut={(e, columnID) => this.handleMouseOut(e, 'release_date')}
+            onClick={id => this.handleTableSort('release_date')}
           >
-            Release Date{this.handleSortDisplay('release_dates')}
+            Release Date{this.handleSortDisplay('release_date')}
             <i
               className={
-                this.state.activeHover === 'release_dates'
+                this.state.activeHover === 'release_date'
                   ? 'material-icons'
                   : 'material-icons d-none'
               }
