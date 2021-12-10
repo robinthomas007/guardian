@@ -472,7 +472,7 @@ class Header extends Component {
         <ul className="content-list">
           {notifications.map((noti, i) => {
             return (
-              <li>
+              <li key={i}>
                 <NavLink
                   className="content-divider"
                   to={{ pathname: '/inbox' }}
