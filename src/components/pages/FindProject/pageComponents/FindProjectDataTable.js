@@ -79,7 +79,9 @@ class FindProjectDataTable extends Component {
   handleHoverDisplay = columnID => {
     return (
       <i
-        className={this.state.activeHover === columnID ? 'material-icons' : 'material-icons d-none'}
+        className={
+          this.state.activeHover === columnID ? 'material-icons' : 'material-icons invisible'
+        }
       >
         arrow_drop_up
       </i>
@@ -338,7 +340,7 @@ class FindProjectDataTable extends Component {
               className={
                 this.state.activeHover === 'last_updated'
                   ? 'material-icons'
-                  : 'material-icons d-none'
+                  : 'material-icons invisible'
               }
             >
               arrow_drop_down
@@ -353,7 +355,7 @@ class FindProjectDataTable extends Component {
             Project Title{this.handleSortDisplay('title')}
             <i
               className={
-                this.state.activeHover === 'title' ? 'material-icons' : 'material-icons d-none'
+                this.state.activeHover === 'title' ? 'material-icons' : 'material-icons invisible'
               }
             >
               arrow_drop_up
@@ -368,7 +370,7 @@ class FindProjectDataTable extends Component {
             Artist{this.handleSortDisplay('artist')}
             <i
               className={
-                this.state.activeHover === 'artist' ? 'material-icons' : 'material-icons d-none'
+                this.state.activeHover === 'artist' ? 'material-icons' : 'material-icons invisible'
               }
             >
               arrow_drop_up
@@ -383,7 +385,7 @@ class FindProjectDataTable extends Component {
             Label{this.handleSortDisplay('label')}
             <i
               className={
-                this.state.activeHover === 'label' ? 'material-icons' : 'material-icons d-none'
+                this.state.activeHover === 'label' ? 'material-icons' : 'material-icons invisible'
               }
             >
               arrow_drop_up
@@ -400,7 +402,7 @@ class FindProjectDataTable extends Component {
               className={
                 this.state.activeHover === 'release_date'
                   ? 'material-icons'
-                  : 'material-icons d-none'
+                  : 'material-icons invisible'
               }
             >
               arrow_drop_up
@@ -415,7 +417,7 @@ class FindProjectDataTable extends Component {
             Status{this.handleSortDisplay('status')}
             <i
               className={
-                this.state.activeHover === 'status' ? 'material-icons' : 'material-icons d-none'
+                this.state.activeHover === 'status' ? 'material-icons' : 'material-icons invisible'
               }
             >
               arrow_drop_up

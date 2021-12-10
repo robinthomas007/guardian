@@ -1387,3 +1387,7 @@ th.sortable {
 .multi-select button#dropdownMenuButton:disabled {
   background-color: #6c757d !important;
 }
+
+.invisible {
+  visibility: hidden;
+}
