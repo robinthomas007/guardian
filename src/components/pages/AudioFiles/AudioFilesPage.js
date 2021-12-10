@@ -87,6 +87,7 @@ class AudioFilesPage extends Component {
     if (isrcs.length > 0 && isValidForm) {
       this.props.isrcCheck({ User: { email: user.email }, isrcs: isrcs }, false);
       this.props.getCisData({
+        upc: _.get(this.state.project, 'Project.upc', ''),
         Iscrs: isrcs,
         ProjectId: this.props.match.params.projectID,
       });
@@ -314,6 +315,19 @@ class AudioFilesPage extends Component {
           upcDisc.push(obj);
         });
         this.setState({ discs: _.cloneDeep(upcDisc) });
+        const isrcs = [];
+        upcDisc.forEach(disc => {
+          let trackIsrcs = _.map(disc.Tracks, 'isrc');
+          isrcs.push(...trackIsrcs);
+        });
+        this.props.getCisData({
+          upc: _.get(project, 'Project.upc', ''),
+          Iscrs: isrcs,
+          ProjectId: this.props.match.params.projectID,
+        });
+      } else {
+        let upc = _.get(project, 'Project.upc', '');
+        upc && this.props.findUpc(upc);
       }
     }
   }
@@ -354,7 +368,6 @@ class AudioFilesPage extends Component {
         } else {
           this.addDisc();
         }
-
         this.props.setHeaderProjectData(this.state.project);
         this.setifUpcData(_.cloneDeep(responseJSON.Discs));
       })
@@ -473,31 +486,6 @@ class AudioFilesPage extends Component {
         this.props.setProjectID(this.props.match.params.projectID, this.props.match.url);
       }
     }
-
-    if (localStorage.upc) {
-      if (this.props.upcData && this.props.upcData.ExDiscs) {
-        const upcDisc = [];
-        this.props.upcData.ExDiscs.forEach(disc => {
-          const obj = {};
-          obj['discNumber'] = disc.discNumber;
-          obj['Tracks'] = disc.ExTracks;
-          upcDisc.push(obj);
-        });
-        this.setState({ discs: _.cloneDeep(upcDisc) });
-        console.log(upcDisc, 'upcDisc');
-        const isrcs = [];
-        upcDisc.forEach(disc => {
-          let trackIsrcs = _.map(disc.Tracks, 'isrc');
-          isrcs.push(...trackIsrcs);
-        });
-        this.props.getCisData({
-          Iscrs: isrcs,
-          ProjectId: this.props.match.params.projectID,
-        });
-      } else {
-        this.props.findUpc(localStorage.upc);
-      }
-    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -529,6 +517,7 @@ class AudioFilesPage extends Component {
         });
         this.setState({ discs: _.cloneDeep(upcDisc) });
         this.props.getCisData({
+          upc: _.get(this.state.project, 'Project.upc', ''),
           Iscrs: isrcs,
           ProjectId: this.props.match.params.projectID,
         });
@@ -700,6 +689,7 @@ class AudioFilesPage extends Component {
           uploads={uploads}
           checkIsrc={this.checkIsrc}
           upc={project.Project.upc ? true : false}
+          cis={this.props.cisData && this.props.cisData.length > 0 ? true : false}
         />
 
         <section className="row no-gutters save-buttons">

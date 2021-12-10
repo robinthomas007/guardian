@@ -209,8 +209,10 @@ class AudioVideoDataTable extends Component {
                     </ul>
                   ) : (
                     <button
-                      className="btn"
-                      onClick={() => this.props.showReplaceModal(track, i, 'Upload')}
+                      className={`${this.props.cis ? 'btn-disabled btn' : 'btn'} `}
+                      onClick={() =>
+                        !this.props.cis && this.props.showReplaceModal(track, i, 'Upload')
+                      }
                     >
                       <i className="material-icons">publish</i>
                       <span>Upload Audio File</span>
@@ -259,8 +261,12 @@ class AudioVideoDataTable extends Component {
             </td>
             <td className="text-center">
               <button
-                className="btn btn-secondary action"
-                onClick={() => this.props.showReplaceModal(track, i)}
+                className={`${
+                  this.props.cis
+                    ? 'btn-disabled btn btn-secondary action'
+                    : 'btn btn-secondary action'
+                } `}
+                onClick={() => !this.props.cis && this.props.showReplaceModal(track, i)}
               >
                 <i className="material-icons">publish</i>
               </button>

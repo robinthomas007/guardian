@@ -107,3 +107,7 @@ td.audio-file {
   color: #00589b;
   padding-right: 10px;
 }
+
+button.btn-disabled.btn.btn-secondary.action {
+  color: #817b7b;
+}
