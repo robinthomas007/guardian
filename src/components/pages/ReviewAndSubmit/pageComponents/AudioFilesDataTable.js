@@ -14,7 +14,9 @@ class AudioFilesDataTable extends Component {
         return (
           <tr key={i} className="row no-gutters">
             <td className="col-1 text-center">{track.trackNumber}</td>
-            <td className="col-2">{track.fileName}</td>
+            <td className="col-2 aud-fle-name" title={track.fileName}>
+              {track.fileName}
+            </td>
             <td className="col-2">{track.trackTitle}</td>
             <td className="col-2">{track.isrc}</td>
             <td className="col-2">{track.artist}</td>

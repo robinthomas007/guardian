@@ -314,7 +314,7 @@ class TrackInformationDataTable extends Component {
             <td className="text-center">
               <button
                 className="btn btn-secondary action"
-                disabled={!pre}
+                disabled={!pre || track.isCisAudio === true}
                 title={!pre ? `Audio is not required for post release projects` : ''}
                 onClick={() => this.props.showReplaceModal(track, i)}
               >

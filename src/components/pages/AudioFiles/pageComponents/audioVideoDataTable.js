@@ -261,12 +261,9 @@ class AudioVideoDataTable extends Component {
             </td>
             <td className="text-center">
               <button
-                className={`${
-                  this.props.cis
-                    ? 'btn-disabled btn btn-secondary action'
-                    : 'btn btn-secondary action'
-                } `}
-                onClick={() => !this.props.cis && this.props.showReplaceModal(track, i)}
+                className="btn btn-secondary action"
+                disabled={track.isCisAudio === true}
+                onClick={() => this.props.showReplaceModal(track, i)}
               >
                 <i className="material-icons">publish</i>
               </button>

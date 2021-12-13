@@ -111,3 +111,10 @@ td.audio-file {
 button.btn-disabled.btn.btn-secondary.action {
   color: #817b7b;
 }
+
+.aud-fle-name {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  padding-right: 2px !important;
+}
