@@ -164,7 +164,7 @@ class ProjectContactsPage extends Component {
                 ),
             );
             this.props.setHeaderProjectData(responseJSON);
-
+            localStorage.setItem('prevStep', 2);
             //clear the local storage
             saveAndContinue && localStorage.removeItem('projectData');
           }

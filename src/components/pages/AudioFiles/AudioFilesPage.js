@@ -299,7 +299,11 @@ class AudioFilesPage extends Component {
           let existingDisc = _.filter(data, val => val.discNumber === disc.discNumber);
           const obj = {};
           obj['discNumber'] = disc.discNumber;
-          obj['Tracks'] = _.cloneDeep(disc.ExTracks);
+          if (existingDisc.length > 0) {
+            obj['Tracks'] = _.cloneDeep(existingDisc[0].Tracks);
+          } else {
+            obj['Tracks'] = _.cloneDeep(disc.ExTracks);
+          }
           disc.ExTracks.forEach((track, i) => {
             if (project.Project.projectReleaseDate) {
               obj['Tracks'][i].trackReleaseDate = project.Project.projectReleaseDate;
@@ -307,11 +311,11 @@ class AudioFilesPage extends Component {
               obj['Tracks'][i].isTbdDisabled = true;
             }
           });
-          if (existingDisc.length > 0) {
-            obj['Tracks'].push(...existingDisc[0].Tracks);
-            // avoiding duplicate tracks
-            obj['Tracks'] = _.uniqBy(obj['Tracks'], v => [v.isrc, v.trackTitle].join());
-          }
+          // if (existingDisc.length > 0) {
+          // obj['Tracks'].push(...existingDisc[0].Tracks);
+          // avoiding duplicate tracks
+          // obj['Tracks'] = _.uniqBy(obj['Tracks'], v => [v.isrc, v.trackTitle].join());
+          // }
           upcDisc.push(obj);
         });
         this.setState({ discs: _.cloneDeep(upcDisc) });
@@ -320,11 +324,14 @@ class AudioFilesPage extends Component {
           let trackIsrcs = _.map(disc.Tracks, 'isrc');
           isrcs.push(...trackIsrcs);
         });
-        this.props.getCisData({
-          upc: _.get(project, 'Project.upc', ''),
-          Iscrs: isrcs,
-          ProjectId: this.props.match.params.projectID,
-        });
+        const prevPage = JSON.parse(localStorage.getItem('prevStep'));
+        if (prevPage <= 2) {
+          this.props.getCisData({
+            upc: _.get(project, 'Project.upc', ''),
+            Iscrs: isrcs,
+            ProjectId: this.props.match.params.projectID,
+          });
+        }
       } else {
         let upc = _.get(project, 'Project.upc', '');
         upc && this.props.findUpc(upc);
@@ -445,6 +452,7 @@ class AudioFilesPage extends Component {
         this.props.setHeaderProjectData(this.state.project);
         localStorage.removeItem('upc');
         this.props.initializeUpcData();
+        localStorage.setItem('prevStep', 3);
       })
       .catch(error => {
         this.setState({ showLoader: false });
@@ -498,7 +506,11 @@ class AudioFilesPage extends Component {
           let existingDisc = _.filter(discs, val => val.discNumber === disc.discNumber);
           const obj = {};
           obj['discNumber'] = disc.discNumber;
-          obj['Tracks'] = _.cloneDeep(disc.ExTracks);
+          if (existingDisc.length > 0) {
+            obj['Tracks'] = _.cloneDeep(existingDisc[0].Tracks);
+          } else {
+            obj['Tracks'] = _.cloneDeep(disc.ExTracks);
+          }
           disc.ExTracks.forEach((track, i) => {
             if (project.Project.projectReleaseDate) {
               obj['Tracks'][i].trackReleaseDate = project.Project.projectReleaseDate;
@@ -506,21 +518,24 @@ class AudioFilesPage extends Component {
               obj['Tracks'][i].isTbdDisabled = true;
             }
           });
-          if (existingDisc.length > 0) {
-            obj['Tracks'].push(...existingDisc[0].Tracks);
-            // avoiding duplicate tracks
-            obj['Tracks'] = _.uniqBy(obj['Tracks'], v => [v.isrc, v.trackTitle].join());
-          }
+          // if (existingDisc.length > 0) {
+          // obj['Tracks'].push(...existingDisc[0].Tracks);
+          // avoiding duplicate tracks
+          // obj['Tracks'] = _.uniqBy(obj['Tracks'], v => [v.isrc, v.trackTitle].join());
+          // }
           upcDisc.push(obj);
           let trackIsrcs = _.map(disc.ExTracks, 'isrc');
           isrcs.push(...trackIsrcs);
         });
         this.setState({ discs: _.cloneDeep(upcDisc) });
-        this.props.getCisData({
-          upc: _.get(this.state.project, 'Project.upc', ''),
-          Iscrs: isrcs,
-          ProjectId: this.props.match.params.projectID,
-        });
+        const prevPage = JSON.parse(localStorage.getItem('prevStep'));
+        if (prevPage <= 2) {
+          this.props.getCisData({
+            upc: _.get(this.state.project, 'Project.upc', ''),
+            Iscrs: isrcs,
+            ProjectId: this.props.match.params.projectID,
+          });
+        }
       }
     }
     if (this.props.ExTracks !== nextProps.ExTracks) {

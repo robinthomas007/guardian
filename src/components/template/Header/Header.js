@@ -185,13 +185,19 @@ class Header extends Component {
       navLink.stepValidation === 'audioFilesStatus' &&
       (this.props.projectData.Project['trackInfoStatus'] >= 2 || activeNav === 3)
     ) {
+      localStorage.setItem('prevStep', activeNav + 1);
       return null;
     } else {
-      return parseInt(this.props.projectData.Project[navLink.stepValidation]) < 2 ||
+      if (
+        parseInt(this.props.projectData.Project[navLink.stepValidation]) < 2 ||
         (!this.props.projectData.Project[navLink.stepValidation] &&
           navLink.stepValidation !== 'releaseInfoStatus')
-        ? e.preventDefault()
-        : null;
+      ) {
+        e.preventDefault();
+      } else {
+        localStorage.setItem('prevStep', activeNav + 1);
+        return null;
+      }
     }
   };
 

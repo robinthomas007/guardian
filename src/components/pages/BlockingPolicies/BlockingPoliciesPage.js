@@ -238,6 +238,7 @@ class BlockingPoliciesPage extends Component {
         } else {
           this.showNotification(null, this.props.match.params.projectID, saveAndContinue);
           this.props.setHeaderProjectData(this.state.project);
+          localStorage.setItem('prevStep', 6);
         }
         this.setState({ showLoader: false });
       })

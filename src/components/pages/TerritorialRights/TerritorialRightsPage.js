@@ -281,6 +281,7 @@ class TerritorialRightsPage extends Component {
           }
           this.props.setHeaderProjectData(this.state.project);
           this.props.initializeRightsData();
+          localStorage.setItem('prevStep', 5);
         }
         this.setState({ showLoader: false });
         localStorage.removeItem('step');

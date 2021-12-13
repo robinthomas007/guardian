@@ -368,6 +368,7 @@ class TrackInformationPage extends Component {
         localStorage.setItem('step', 4);
         localStorage.removeItem('upc');
         this.props.initializeUpcData();
+        localStorage.setItem('prevStep', 4);
       })
       .catch(error => {
         this.setState({ showloader: false });

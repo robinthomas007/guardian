@@ -40,6 +40,7 @@ class ReviewAndSubmitPage extends Component {
     });
     if (this.props.match && this.props.match.params && this.props.match.params.projectID) {
       this.props.setProjectID(this.props.match.params.projectID, this.props.match.url);
+      localStorage.setItem('prevStep', 7);
     }
   }
 
@@ -105,6 +106,7 @@ class ReviewAndSubmitPage extends Component {
         showNotyInfo('Your project has been successfully saved and submitted for review.', () => {
           return this.props.history.push({ pathname: '/findProject/' });
         });
+        localStorage.setItem('prevStep', 7);
       })
       .catch(error => {
         console.error(error);

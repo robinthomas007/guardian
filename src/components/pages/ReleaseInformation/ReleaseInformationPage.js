@@ -171,6 +171,7 @@ class ReleaseinformationPage extends Component {
             this.setState({ showloader: false });
             if (responseJSON.errorMessage) {
             } else {
+              localStorage.setItem('prevStep', 1);
               this.props.setHeaderProjectData(responseJSON);
               localStorage.setItem('projectData', JSON.stringify(this.state.formInputs));
               this.props.history.push('/projectContacts/' + responseJSON.Project.projectID);
@@ -189,6 +190,7 @@ class ReleaseinformationPage extends Component {
           .then(responseJSON => {
             if (responseJSON.IsValid) {
               localStorage.setItem('projectData', JSON.stringify(this.state.formInputs));
+              localStorage.setItem('prevStep', 1);
               this.props.history.push('/projectContacts');
             } else {
               this.setState({ showloader: false });
