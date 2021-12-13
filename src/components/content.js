@@ -131,6 +131,7 @@ class Content extends Component {
         .then(responseJSON => {
           if (
             responseJSON.Project.projectStatus !== 'In Progress' &&
+            responseJSON.Project.projectStatus !== 'No Rights' &&
             !pagePath.includes('reviewSubmit')
           ) {
             this.props.history.push('/reviewSubmit/' + this.state.projectID);

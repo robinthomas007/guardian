@@ -299,11 +299,7 @@ class AudioFilesPage extends Component {
           let existingDisc = _.filter(data, val => val.discNumber === disc.discNumber);
           const obj = {};
           obj['discNumber'] = disc.discNumber;
-          if (existingDisc.length > 0) {
-            obj['Tracks'] = _.cloneDeep(existingDisc[0].Tracks);
-          } else {
-            obj['Tracks'] = _.cloneDeep(disc.ExTracks);
-          }
+          obj['Tracks'] = _.cloneDeep(disc.ExTracks);
           disc.ExTracks.forEach((track, i) => {
             if (project.Project.projectReleaseDate) {
               obj['Tracks'][i].trackReleaseDate = project.Project.projectReleaseDate;
@@ -311,11 +307,10 @@ class AudioFilesPage extends Component {
               obj['Tracks'][i].isTbdDisabled = true;
             }
           });
-          // if (existingDisc.length > 0) {
-          // obj['Tracks'].push(...existingDisc[0].Tracks);
-          // avoiding duplicate tracks
-          // obj['Tracks'] = _.uniqBy(obj['Tracks'], v => [v.isrc, v.trackTitle].join());
-          // }
+          if (existingDisc.length > 0) {
+            obj['Tracks'] = [...new Set([...existingDisc[0].Tracks, ...obj['Tracks']])];
+            obj['Tracks'] = _.uniqBy(obj['Tracks'], v => [v.isrc, v.trackTitle].join());
+          }
           upcDisc.push(obj);
         });
         this.setState({ discs: _.cloneDeep(upcDisc) });
@@ -341,6 +336,7 @@ class AudioFilesPage extends Component {
 
   handleDataLoad() {
     const { discs } = this.state;
+    this.setState({ showLoader: true });
     const fetchHeaders = new Headers({
       Authorization: sessionStorage.getItem('accessToken'),
     });
@@ -377,8 +373,12 @@ class AudioFilesPage extends Component {
         }
         this.props.setHeaderProjectData(this.state.project);
         this.setifUpcData(_.cloneDeep(responseJSON.Discs));
+        this.setState({ showLoader: false });
       })
-      .catch(error => console.error(error));
+      .catch(error => {
+        this.setState({ showLoader: false });
+        console.error(error);
+      });
   }
 
   isValidIsrc(isrc) {
@@ -506,11 +506,7 @@ class AudioFilesPage extends Component {
           let existingDisc = _.filter(discs, val => val.discNumber === disc.discNumber);
           const obj = {};
           obj['discNumber'] = disc.discNumber;
-          if (existingDisc.length > 0) {
-            obj['Tracks'] = _.cloneDeep(existingDisc[0].Tracks);
-          } else {
-            obj['Tracks'] = _.cloneDeep(disc.ExTracks);
-          }
+          obj['Tracks'] = _.cloneDeep(disc.ExTracks);
           disc.ExTracks.forEach((track, i) => {
             if (project.Project.projectReleaseDate) {
               obj['Tracks'][i].trackReleaseDate = project.Project.projectReleaseDate;
@@ -518,11 +514,10 @@ class AudioFilesPage extends Component {
               obj['Tracks'][i].isTbdDisabled = true;
             }
           });
-          // if (existingDisc.length > 0) {
-          // obj['Tracks'].push(...existingDisc[0].Tracks);
-          // avoiding duplicate tracks
-          // obj['Tracks'] = _.uniqBy(obj['Tracks'], v => [v.isrc, v.trackTitle].join());
-          // }
+          if (existingDisc.length > 0) {
+            obj['Tracks'] = [...new Set([...existingDisc[0].Tracks, ...obj['Tracks']])];
+            obj['Tracks'] = _.uniqBy(obj['Tracks'], v => [v.isrc, v.trackTitle].join());
+          }
           upcDisc.push(obj);
           let trackIsrcs = _.map(disc.ExTracks, 'isrc');
           isrcs.push(...trackIsrcs);
@@ -704,7 +699,6 @@ class AudioFilesPage extends Component {
           uploads={uploads}
           checkIsrc={this.checkIsrc}
           upc={project.Project.upc ? true : false}
-          cis={this.props.cisData && this.props.cisData.length > 0 ? true : false}
         />
 
         <section className="row no-gutters save-buttons">

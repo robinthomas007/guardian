@@ -209,10 +209,9 @@ class AudioVideoDataTable extends Component {
                     </ul>
                   ) : (
                     <button
-                      className={`${this.props.cis ? 'btn-disabled btn' : 'btn'} `}
-                      onClick={() =>
-                        !this.props.cis && this.props.showReplaceModal(track, i, 'Upload')
-                      }
+                      className="btn"
+                      disabled={track.isCisAudio === true}
+                      onClick={() => this.props.showReplaceModal(track, i, 'Upload')}
                     >
                       <i className="material-icons">publish</i>
                       <span>Upload Audio File</span>
