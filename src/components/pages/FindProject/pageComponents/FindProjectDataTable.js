@@ -362,7 +362,7 @@ class FindProjectDataTable extends Component {
             </i>
           </th>
           <th
-            className="sortable"
+            className="text-nowrap sortable"
             onMouseOver={(e, columnID) => this.handleMouseOver(e, 'artist')}
             onMouseOut={(e, columnID) => this.handleMouseOut(e, 'artist')}
             onClick={id => this.handleTableSort('artist')}
@@ -377,7 +377,7 @@ class FindProjectDataTable extends Component {
             </i>
           </th>
           <th
-            className="sortable"
+            className="text-nowrap sortable"
             onMouseOver={(e, columnID) => this.handleMouseOver(e, 'label')}
             onMouseOut={(e, columnID) => this.handleMouseOut(e, 'label')}
             onClick={id => this.handleTableSort('label')}
@@ -392,7 +392,7 @@ class FindProjectDataTable extends Component {
             </i>
           </th>
           <th
-            className="sortable"
+            className="text-nowrap sortable"
             onMouseOver={(e, columnID) => this.handleMouseOver(e, 'release_date')}
             onMouseOut={(e, columnID) => this.handleMouseOut(e, 'release_date')}
             onClick={id => this.handleTableSort('release_date')}
@@ -409,7 +409,7 @@ class FindProjectDataTable extends Component {
             </i>
           </th>
           <th
-            className="sortable pad-lft-20"
+            className="text-nowrap text-center sortable"
             onMouseOver={(e, columnID) => this.handleMouseOver(e, 'status')}
             onMouseOut={(e, columnID) => this.handleMouseOut(e, 'status')}
             onClick={id => this.handleTableSort('status')}
