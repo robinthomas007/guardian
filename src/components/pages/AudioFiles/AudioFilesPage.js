@@ -618,12 +618,12 @@ class AudioFilesPage extends Component {
 
   render() {
     const { project } = this.state;
-    const { uploads, loading } = this.props;
+    const { uploads, loading, upcLoading } = this.props;
     return (
       <div className="col-10">
         {/* <HaveAudioModal projectID={this.props.projectID} />*/}
 
-        <LoadingImg show={this.state.showLoader || loading} />
+        <LoadingImg show={this.state.showLoader || loading || upcLoading} />
 
         <ReplaceAudioModal
           showModal={this.state.showReplaceAudioModal}
@@ -699,6 +699,7 @@ class AudioFilesPage extends Component {
           uploads={uploads}
           checkIsrc={this.checkIsrc}
           upc={project.Project.upc ? true : false}
+          cisLoading={this.props.cisLoading}
         />
 
         <section className="row no-gutters save-buttons">
@@ -738,6 +739,8 @@ export default withRouter(
       ExTracks: state.audioReducer.ExTracks,
       loading: state.audioReducer.loading,
       cisData: state.audioReducer.cisData,
+      cisLoading: state.audioReducer.cisLoading,
+      upcLoading: state.releaseReducer.upcLoading,
     }),
     dispatch => ({
       onUploadStart: (uniqFileName, trackID) =>

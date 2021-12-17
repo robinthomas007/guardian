@@ -99,7 +99,7 @@ td.audio-file {
   border-radius: 6px;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   border: 1px dotted #00589b;
 }
 
@@ -117,4 +117,8 @@ button.btn-disabled.btn.btn-secondary.action {
   white-space: nowrap;
   overflow: hidden;
   padding-right: 2px !important;
+}
+
+.uploading-pgs-loader {
+  display: inline-block;
 }

@@ -13,6 +13,7 @@ export const initialState = {
   result: {},
   loading: false,
   upcData: {},
+  upcLoading: false,
 };
 export default createReducer(initialState, {
   // [PROJECT_REQUEST]: (state, actions) => {
@@ -30,6 +31,7 @@ export default createReducer(initialState, {
   // },
   [UPC_REQUEST]: (state, actions) => {
     state.loading = actions.isLoading;
+    state.upcLoading = actions.isLoading;
   },
   [UPC_SUCCESS]: (state, action) => {
     state.upcData = action.data;

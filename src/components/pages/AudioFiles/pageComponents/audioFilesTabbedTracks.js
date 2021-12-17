@@ -24,6 +24,7 @@ class AudioFilesTabbedTracks extends Component {
               hideReplaceAudioModal={(track, i) => this.props.hideReplaceAudioModal(track, i)}
               checkIsrc={this.props.checkIsrc}
               upc={this.props.upc}
+              cisLoading={this.props.cisLoading}
             />
           </Tab>
         );

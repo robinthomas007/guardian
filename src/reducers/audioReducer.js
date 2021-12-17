@@ -13,6 +13,7 @@ export const initialState = {
   ExTracks: [],
   message: null,
   cisData: [],
+  cisLoading: false,
 };
 
 export default createReducer(initialState, {
@@ -28,14 +29,14 @@ export default createReducer(initialState, {
     state.message = action.message;
   },
   [CIS_REQUEST]: (state, action) => {
-    state.loading = action.loading;
+    state.cisLoading = action.loading;
   },
   [CIS_SUCCESS]: (state, action) => {
     state.cisData = action.result;
-    state.loading = false;
+    state.cisLoading = false;
   },
   [CIS_FAILURE]: (state, action) => {
-    state.loading = false;
+    state.cisLoading = false;
     state.message = action.message;
   },
 });
