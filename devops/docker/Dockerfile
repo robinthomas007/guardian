@@ -9,7 +9,7 @@ RUN apt-get update -y && apt-get install -y jq
 
 COPY . .
 
-RUN npm ci --ignore-scripts
+RUN npm install
 
 ENV NODE_PATH=src
 RUN bash devops/scripts/vaultconfig.sh && \
