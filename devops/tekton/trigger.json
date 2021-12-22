@@ -13,5 +13,9 @@
         "Tag": "v0.0.1",
         "Dockerfile": "devops/docker/Dockerfile",
         "Context": ""
+    },
+    "Config": {
+        "UserData": "",
+        "VaultKVPath": ""
     }
 }
