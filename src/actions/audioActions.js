@@ -1,7 +1,7 @@
 import * as actions from 'types/audio.types';
 import Api from 'lib/api';
 import { showNotyAutoError, showNotyInfo } from './../components/Utils';
-
+import { startUpload, setUploadProgress, endUpload } from './../redux/uploadProgressAlert/actions';
 export const fetchSuccess = (result, showLoader) => {
   return {
     type: actions.ISRC_CHECK_SUCCESS,
@@ -68,11 +68,18 @@ export const cisFetchRequest = loading => {
 export const getCisData = data => {
   return dispatch => {
     dispatch(cisFetchRequest(true));
+    for (let i = 0; i < data.Iscrs.length; i++) {
+      dispatch(startUpload('CIS' + i));
+      dispatch(setUploadProgress('CIS' + i, 100));
+    }
     return Api.post('/media/api/cisupload', data)
       .then(response => response.json())
       .then(response => {
         if (response && response.length > 0) {
           dispatch(cisFetchSuccess(response));
+          for (let i = 0; i < data.Iscrs.length; i++) {
+            dispatch(endUpload('CIS' + i));
+          }
           showNotyInfo(
             `We've found and uploaded ${response.length} Tracks from UMG's ASPEN repository`,
           );
