@@ -85,7 +85,7 @@ class AudioFilesPage extends Component {
       }
     }
     if (isrcs.length > 0 && isValidForm) {
-      this.props.isrcCheck({ User: { email: user.email }, isrcs: isrcs }, false);
+      this.props.isrcCheck({ User: { email: user.email }, isrcs: isrcs });
       this.props.getCisData({
         upc: _.get(this.state.project, 'Project.upc', ''),
         Iscrs: isrcs,
@@ -751,7 +751,7 @@ export default withRouter(
       saveDiscs: updatedDiscs => dispatch(uploadProgressActions.saveDisc(updatedDiscs)),
       findUpc: val => dispatch(releaseAction.findUpc(val)),
       initializeUpcData: () => dispatch(releaseAction.initializeUpcData()),
-      isrcCheck: (isrc, showLoader) => dispatch(AudioActions.isrcCheck(isrc, showLoader)),
+      isrcCheck: isrc => dispatch(AudioActions.isrcCheck(isrc)),
       getCisData: (isrcs, ProjectId) => dispatch(AudioActions.getCisData(isrcs, ProjectId)),
     }),
   )(AudioFilesPage),
