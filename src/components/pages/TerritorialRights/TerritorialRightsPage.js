@@ -238,6 +238,7 @@ class TerritorialRightsPage extends Component {
           this.props.history.push({
             pathname: '/blockingPolicies/' + projectID,
           });
+          this.props.initializeRightsData();
         }
       },
     );
@@ -280,7 +281,6 @@ class TerritorialRightsPage extends Component {
             this.showNotification(saveAndContinue, this.props.match.params.projectID);
           }
           this.props.setHeaderProjectData(this.state.project);
-          this.props.initializeRightsData();
           localStorage.setItem('prevStep', 5);
         }
         this.setState({ showLoader: false });
