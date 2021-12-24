@@ -84,6 +84,9 @@ export const getCisData = data => {
             `We've found and uploaded ${response.length} Tracks from UMG's ASPEN repository`,
           );
         } else {
+          for (let i = 0; i < data.Iscrs.length; i++) {
+            dispatch(endUpload('CIS' + i));
+          }
           dispatch(cisFetchFailure(response));
         }
       })
