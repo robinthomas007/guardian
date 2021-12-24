@@ -87,6 +87,7 @@ export const getCisData = data => {
           for (let i = 0; i < data.Iscrs.length; i++) {
             dispatch(endUpload('CIS' + i));
           }
+          showNotyInfo(`No files found from UMG's ASPEN repository`);
           dispatch(cisFetchFailure(response));
         }
       })
