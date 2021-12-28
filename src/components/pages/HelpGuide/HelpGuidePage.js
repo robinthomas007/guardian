@@ -15,48 +15,48 @@ class HelpGuide extends Component {
         {
           description: 'Guardian Complete Introduction',
           tutorialVideoLink:
-            'https://guardian.umusic.com/static/videos/The-Guardian-Training-Video-Find-A-Project.mp4',
+            'https://usaws03-guardian-media.s3.amazonaws.com/videos/The+Guardian+2021+pt.+17+Finding+a+Project.mp4',
           modalHeader: 'Guardian Complete Introduction',
         },
         {
           description: 'Release Info',
           tutorialVideoLink:
-            'https://guardian.umusic.com/static/videos/The-Guardian-Training-Video-Release-Information-Step-1.mp4',
+            'https://usaws03-guardian-media.s3.amazonaws.com/videos/The+Guardian+2021+pt.+4+Release+Information.mp4',
           modalHeader: 'Release Information',
         },
         {
           description: 'Contacts',
           tutorialVideoLink:
-            'https://guardian.umusic.com/static/videos/The-Guardian-Training-Video-Project-Contact-Information-Step-2.mp4',
+            'https://usaws03-guardian-media.s3.amazonaws.com/videos/The+Guardian+2021+pt.+5+Contact+Information.mp4',
           modalHeader: 'Project Contacts',
         },
         {
           description: 'Audio Files',
           tutorialVideoLink:
-            'https://guardian.umusic.com/static/videos/The-Guardian-Training-Video-Audio-Files-Part-1-Step-3.mp4',
+            'https://usaws03-guardian-media.s3.amazonaws.com/videos/The+Guardian+2021+pt.+3.5+Audio+Files.mp4',
           modalHeader: 'Audio Files',
         },
         {
           description: 'Track Info',
           tutorialVideoLink:
-            'https://guardian.umusic.com/static/videos/The-Guardian-Training-Video-Track-Information-Step-4.mp4',
+            'https://usaws03-guardian-media.s3.amazonaws.com/videos/The+Guardian+2021+pt.+9+Track+Information.mp4',
           modalHeader: 'Track Information',
         },
         {
           tutorialVideoLink:
-            'https://guardian.umusic.com/static/videos/The-Guardian-Training-Video-Territorial-Rights-Step-5.mp4',
+            'https://usaws03-guardian-media.s3.amazonaws.com/videos/The+Guardian+2021+pt.+10+Territorial+Rights.mp4',
           modalHeader: 'Territorial Rights',
         },
         {
           description: 'Blocking',
           tutorialVideoLink:
-            'https://guardian.umusic.com/static/videos/The-Guardian-Training-Video-Project-Blocking-Policies-Step-6.mp4',
+            'https://usaws03-guardian-media.s3.amazonaws.com/videos/The+Guardian+2021+pt.+12+Blocking+Policies.mp4',
           modalHeader: 'Post-Release UGC Blocking',
         },
         {
           description: 'Review',
           tutorialVideoLink:
-            'https://guardian.umusic.com/static/videos/The-Guardian-Training-Video-Review-(Review-&-Submit)-Step-7.mp4',
+            'https://usaws03-guardian-media.s3.amazonaws.com/videos/The+Guardian+2021+pt.+13+Review+%26+Submit.mp4',
           modalHeader: 'Review and Submit',
         },
       ],
