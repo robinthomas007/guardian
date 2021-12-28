@@ -3,6 +3,8 @@ import './polyfills';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import './i18n';
+
 // import styles
 import 'css/index.css';
 import 'css/header.css';

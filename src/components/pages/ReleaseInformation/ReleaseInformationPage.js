@@ -14,6 +14,8 @@ import { showNotyError } from 'components/Utils';
 import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
 import * as releaseAction from './releaseAction';
+import { withTranslation } from 'react-i18next';
+import { compose } from 'redux';
 
 class ReleaseinformationPage extends Component {
   constructor(props) {
@@ -370,6 +372,7 @@ class ReleaseinformationPage extends Component {
   }
 
   render() {
+    const { t } = this.props;
     return (
       <div className="col-10">
         <LoadingImg show={this.state.showloader || this.props.loading} />
@@ -377,13 +380,12 @@ class ReleaseinformationPage extends Component {
         <div className="row d-flex no-gutters step-description">
           <div className="col-12">
             <h2>
-              Step <span className="count-circle">1</span> Release Information
+              {t('releaseInfo:step')} <span className="count-circle">1</span>{' '}
+              {t('releaseInfo:ReleaseInformation')}
             </h2>
             <p>
-              In this step, you can create a new project by submitting basic release information for
-              the system. Required fields are indicated with an{' '}
-              <span className="required-ind">*</span>. This section must be completed by selecting
-              the 'Save &amp; Continue' button below.
+              {t('releaseInfo:DescriptionMain')} <span className="required-ind">*</span>.{' '}
+              {t('releaseInfo:DescriptionSub')}
             </p>
           </div>
         </div>
@@ -394,9 +396,9 @@ class ReleaseinformationPage extends Component {
               <Form.Group className="row d-flex no-gutters">
                 <div className="col-3">
                   <Form.Label className="col-form-label">
-                    UPC <i> (Optional)</i>
+                    {t('releaseInfo:UPC')} <i> ({t('releaseInfo:Optional')})</i>
                   </Form.Label>
-                  <ToolTip tabIndex="-1" message="UPC" />
+                  <ToolTip tabIndex="-1" message={t('releaseInfo:UPC')} />
                 </div>
                 <div className="col-3">
                   <Form.Control
@@ -404,7 +406,7 @@ class ReleaseinformationPage extends Component {
                     id="upc"
                     className="form-control"
                     type="text"
-                    placeholder="UPC"
+                    placeholder={t('releaseInfo:UPC')}
                     value={this.state.formInputs.upc}
                     onChange={this.handleChange}
                   />
@@ -418,7 +420,7 @@ class ReleaseinformationPage extends Component {
                     type="button"
                   >
                     <i className={'material-icons'}>search</i>
-                    Find UPC
+                    {t('releaseInfo:FindUPC')}
                   </button>
                 </div>
               </Form.Group>
@@ -431,7 +433,7 @@ class ReleaseinformationPage extends Component {
                   />
 
                   <Form.Label className="col-form-label">
-                    Project Title
+                    {t('releaseInfo:ProjectTitle')}
                     <span className="required-ind">*</span>
                   </Form.Label>
                   <ToolTip
@@ -445,7 +447,7 @@ class ReleaseinformationPage extends Component {
                     id="projectTitle"
                     className="form-control requiredInput"
                     type="text"
-                    placeholder="Enter a project title"
+                    placeholder={t('releaseInfo:EnterAProjectTitle')}
                     value={this.state.formInputs.projectTitle}
                     onChange={this.handleChange}
                   />
@@ -456,7 +458,7 @@ class ReleaseinformationPage extends Component {
               <Form.Group className="row d-flex no-gutters">
                 <div className="col-3">
                   <Form.Label className="col-form-label">
-                    Artist
+                    {t('releaseInfo:Artist')}
                     <span className="required-ind">*</span>
                   </Form.Label>
                   <ToolTip
@@ -470,7 +472,7 @@ class ReleaseinformationPage extends Component {
                     id="projectArtistName"
                     className="form-control requiredInput"
                     type="text"
-                    placeholder="Enter an artist name"
+                    placeholder={t('releaseInfo:EnterAnArtistName')}
                     value={this.state.formInputs.projectArtistName}
                     onChange={this.handleChange}
                   />
@@ -481,7 +483,7 @@ class ReleaseinformationPage extends Component {
               <Form.Group className="row d-flex no-gutters">
                 <div className="col-3">
                   <Form.Label className="col-form-label">
-                    Project Type
+                    {t('releaseInfo:ProjectType')}
                     <span className="required-ind">*</span>
                   </Form.Label>
                   <ToolTip
@@ -503,7 +505,7 @@ class ReleaseinformationPage extends Component {
               <Form.Group className="row d-flex no-gutters">
                 <div className="col-3">
                   <Form.Label className="col-form-label">
-                    Releasing Label
+                    {t('releaseInfo:ReleasingLabel')}
                     <span className="required-ind">*</span>
                   </Form.Label>
                   <ToolTip
@@ -525,7 +527,7 @@ class ReleaseinformationPage extends Component {
               <Form.Group className="row d-flex no-gutters">
                 <div className="col-3">
                   <Form.Label className="col-form-label">
-                    Release Date
+                    {t('releaseInfo:ReleaseDate')}
                     <span className="required-ind">*</span>
                   </Form.Label>
                   <ToolTip
@@ -564,7 +566,9 @@ class ReleaseinformationPage extends Component {
                   </span>
                 </div>
                 <div className="col-auto">
-                  <Form.Label className="col-form-label tbd text-nowrap">Release TBD</Form.Label>
+                  <Form.Label className="col-form-label tbd text-nowrap">
+                    {t('releaseInfo:ReleaseTBD')}
+                  </Form.Label>
                   <label className="custom-checkbox">
                     <input
                       tabIndex="6+"
@@ -582,7 +586,7 @@ class ReleaseinformationPage extends Component {
 
               <Form.Group className="row d-flex no-gutters">
                 <div className="col-3">
-                  <Form.Label className="notes">Notes</Form.Label>
+                  <Form.Label className="notes">{t('releaseInfo:Notes')}</Form.Label>
                   <ToolTip tabIndex="-1" message="Anything notable about this release?" />
                 </div>
                 <div className="col-9">
@@ -599,7 +603,9 @@ class ReleaseinformationPage extends Component {
             </div>
 
             <div className="col-3 row d-flex no-gutters">
-              <Form.Label className="col-form-label col-3 text-nowrap">Cover Art</Form.Label>
+              <Form.Label className="col-form-label col-3 text-nowrap">
+                {t('releaseInfo:CoverArt')}
+              </Form.Label>
               <div className="col-9 d-flex flex-fill justify-content-end">
                 <div id="preview" dropppable="true" className="form-control album-art-drop">
                   <Button
@@ -610,13 +616,13 @@ class ReleaseinformationPage extends Component {
                     <i className="material-icons">delete</i>
                   </Button>
                   <span>
-                    Click to Browse
+                    {t('releaseInfo:ClickToBrowse')}Click to Browse
                     <br />
-                    or Drag &amp; Drop
+                    {t('releaseInfo:orDrag')} &amp; {t('releaseInfo:Drop')}
                   </span>
                   <input id="projectCoverArt" type="file" onChange={this.albumArt} />
                   <div className="browse-btn">
-                    <span>Browse Files</span>
+                    <span>{t('releaseInfo:BrowseFiles')}</span>
                     <input
                       id="projectCoverArtData"
                       type="file"
@@ -638,7 +644,7 @@ class ReleaseinformationPage extends Component {
                 onClick={this.handleSubmit}
                 id="releaseInfoSaveAndContinue"
               >
-                Save &amp; Continue
+                {t('releaseInfo:Save')} &amp; {t('releaseInfo:Continue')}
               </button>
             </div>
           </section>
@@ -667,8 +673,11 @@ const mapStateToProps = state => ({
 });
 
 export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps,
+  compose(
+    withTranslation('releaseInfo'),
+    connect(
+      mapStateToProps,
+      mapDispatchToProps,
+    ),
   )(ReleaseinformationPage),
 );
