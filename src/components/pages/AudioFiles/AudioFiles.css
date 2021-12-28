@@ -122,3 +122,10 @@ button.btn-disabled.btn.btn-secondary.action {
 .uploading-pgs-loader {
   display: inline-block;
 }
+
+.audio-footer-action-fxd {
+  position: fixed;
+  bottom: 10px;
+  right: 145px;
+  background: transparent;
+}

@@ -22,7 +22,7 @@ class AudioVideoDataTable extends Component {
   AudioVideoDataHeader() {
     const { t } = this.props;
     return (
-      <thead>
+      <thead style={{ position: 'sticky', top: '240px', background: '#fff' }}>
         <tr>
           <th className="text-center">#</th>
           <th>{t('audio:AudioFiles')}</th>

@@ -710,7 +710,7 @@ class AudioFilesPage extends Component {
         />
 
         <section className="row no-gutters save-buttons">
-          <div className="col-12">
+          <div className="col-12 audio-footer-action-fxd">
             <button
               type="button"
               className="btn btn-secondary saveButton"
