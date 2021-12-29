@@ -10,6 +10,8 @@ import _ from 'lodash';
 import { showNotyInfo, showNotyAutoError } from 'components/Utils';
 import { connect } from 'react-redux';
 import * as releaseAction from './../ReleaseInformation/releaseAction';
+import { withTranslation } from 'react-i18next';
+import { compose } from 'redux';
 
 class ProjectContactsPage extends Component {
   constructor(props) {
@@ -266,19 +268,18 @@ class ProjectContactsPage extends Component {
   };
 
   render() {
+    const { t } = this.props;
     return (
       <div className="col-10">
         <LoadingImg show={this.state.showloader} />
         <div className="row d-flex no-gutters step-description">
           <div className="col-12">
             <h2>
-              Step <span className="count-circle">2</span> Project Contacts
+              {t('contact:step')} <span className="count-circle">2</span>{' '}
+              {t('contact:ProjectContacts')}
             </h2>
             <p>
-              In this step, you can choose which contacts will be associated with the project. You
-              can select the level of project security (i.e., who will be able to see the project)
-              and who should be contacted regarding this project, if necessary. Required fields are
-              indicated with an <span className="required-ind">*</span>.
+              {t('contact:DescriptionMain')} <span className="required-ind">*</span>.
             </p>
           </div>
         </div>
@@ -289,7 +290,7 @@ class ProjectContactsPage extends Component {
               <Form.Group className="row d-flex no-gutters">
                 <div className="col-2">
                   <Form.Label className="col-form-label">
-                    Project Security
+                    {t('contact:ProjectSecurity')}
                     <span className="required-ind">*</span>
                   </Form.Label>
                   <ToolTip
@@ -311,7 +312,7 @@ class ProjectContactsPage extends Component {
               <Form.Group className="row d-flex no-gutters">
                 <div className="col-2">
                   <Form.Label className="col-form-label">
-                    Primary Contact
+                    {t('contact:PrimaryContact')}
                     <span className="required-ind">*</span>
                   </Form.Label>
                   <ToolTip
@@ -335,7 +336,7 @@ class ProjectContactsPage extends Component {
               <Form.Group className="row d-flex no-gutters">
                 <div className="col-2">
                   <Form.Label className="col-form-label">
-                    Primary Contact Email
+                    {t('contact:PrimaryContactEmail')}
                     <span className="required-ind">*</span>
                   </Form.Label>
                   <ToolTip
@@ -359,7 +360,9 @@ class ProjectContactsPage extends Component {
 
               <Form.Group className="row d-flex no-gutters">
                 <div className="col-2">
-                  <Form.Label className="col-form-label align-top">Additional Contacts</Form.Label>
+                  <Form.Label className="col-form-label align-top">
+                    {t('contact:AdditionalContacts')}
+                  </Form.Label>
                   <ToolTip
                     tabIndex="-1"
                     message="Additional contacts or users that youd like to share this project with may be added here. You can copy and paste from Outlook, or separate a list of users to be added by commas, spaces, semi-colons or any combination of these."
@@ -411,7 +414,7 @@ class ProjectContactsPage extends Component {
                 className="btn btn-secondary saveButton"
                 onClick={this.isAdditionalContactsValid}
               >
-                Save
+                {t('contact:Save')}
               </button>
               <button
                 tabIndex="6+"
@@ -420,7 +423,7 @@ class ProjectContactsPage extends Component {
                 className="btn btn-primary saveAndContinueButton"
                 onClick={this.isAdditionalContactsValid}
               >
-                Save &amp; Continue
+                {t('contact:Save')} &amp; {t('contact:Continue')}
               </button>
             </div>
           </div>
@@ -448,8 +451,11 @@ const mapStateToProps = state => ({
 });
 
 export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps,
+  compose(
+    withTranslation('contact'),
+    connect(
+      mapStateToProps,
+      mapDispatchToProps,
+    ),
   )(ProjectContactsPage),
 );

@@ -1,0 +1,13 @@
+{
+  "step": "Step",
+  "ProjectContacts": "Project Contacts",
+  "DescriptionMain": "In this step, you can choose which contacts will be associated with the project. You can select the level of project security (i.e., who will be able to see the project) and who should be contacted regarding this project, if necessary. Required fields are indicated with an",
+  "ProjectSecurity": "Project Security",
+  "Private": "Private (Viewable ONLY by project contacts)",
+  "Public": "Public (Viewable by ALL label users)",
+  "PrimaryContact": "Primary Contact",
+  "PrimaryContactEmail": "Primary Contact Email",
+  "AdditionalContacts": "Additional Contacts",
+  "Save": "Save",
+  "Continue": "Continue"
+}

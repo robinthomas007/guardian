@@ -18,7 +18,6 @@ import ErrorBoundary from './common/ErrorBoundary';
 import * as releaseAction from './pages/ReleaseInformation/releaseAction';
 import * as territorialRightsAction from '../actions/territorialRightsAction';
 import UploadProgressAlert from 'components/SharedPageComponents/UploadProgresAlert';
-import i18n from '../i18n';
 
 class Content extends Component {
   constructor(props) {
@@ -217,10 +216,6 @@ class Content extends Component {
     //alert(this.props.location.pathname)
   };
 
-  changeLanguage = lng => {
-    i18n.changeLanguage(lng);
-  };
-
   render() {
     if (this.state.userLoaded) {
       return (
@@ -365,10 +360,6 @@ class Content extends Component {
                     />
                   )}
                 />
-                <div className="col-1">
-                  <button onClick={() => this.changeLanguage('sp')}>sp</button>
-                  <button onClick={() => this.changeLanguage('en')}>en</button>
-                </div>
               </div>
             </div>
           </div>

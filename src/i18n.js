@@ -8,15 +8,20 @@ import translationSP from 'locales/sp/translation.json';
 import releaseInforEN from 'locales/en/release.json';
 import releaseInforSP from 'locales/sp/release.json';
 
+import contactEN from 'locales/en/contact.json';
+import contactSP from 'locales/sp/contact.json';
+
 // the translations
 const resources = {
   en: {
     translation: translationEN,
     releaseInfo: releaseInforEN,
+    contact: contactEN,
   },
   sp: {
     translation: translationSP,
     releaseInfo: releaseInforSP,
+    contact: contactSP,
   },
 };
 
@@ -25,7 +30,7 @@ i18n
   .use(initReactI18next) // passes i18n down to react-i18next
   .init({
     resources,
-    ns: ['translations', 'releaseInfo'],
+    ns: ['translations', 'releaseInfo', 'contact'],
     lng: 'en',
     defaultNS: 'translations',
     keySeparator: false, // we do not use keys in form messages.welcome

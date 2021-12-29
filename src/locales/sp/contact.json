@@ -1,0 +1,13 @@
+{
+  "step": "Paso",
+  "ProjectContacts": "Contactos del proyecto",
+  "DescriptionMain": "En este paso, puede elegir qué contactos se asociarán con el proyecto. Puede seleccionar el nivel de seguridad del proyecto (es decir, quién podrá ver el proyecto) y quién debe ser contactado con respecto a este proyecto, si es necesario. Los campos obligatorios se indican con un",
+  "ProjectSecurity": "Proyecto Seguridad",
+  "Private": "Privado (visible SOLO por contactos del proyecto)",
+  "Public": "Público (visible para TODOS los usuarios de etiquetas)",
+  "PrimaryContact": "Contacto primario",
+  "PrimaryContactEmail": "Correo electrónico de contacto principal",
+  "AdditionalContacts": "Additional Contacts",
+  "Save": "Save",
+  "Continue": "Continue"
+}

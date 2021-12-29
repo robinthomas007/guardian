@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Route, NavLink, withRouter } from 'react-router-dom';
-import { withAuth } from '@okta/okta-react';
-import RecentProjectsDrop from '../Header/RecentProjectsDrop';
 import { isPreReleaseDate, getAlias } from '../../Utils.js';
 import VideoTutorialModal from '../../modals/VideoTutorialModal';
 import CommentBox from '../../pages/CommentSlider';
 import { connect } from 'react-redux';
 import * as headerActions from './../../../actions/headerActions';
 import moment from 'moment';
-import * as projectInboxAction from 'actions/projectInboxAction';
 import _ from 'lodash';
+import { Dropdown } from 'react-bootstrap';
+import i18n from './../../../i18n';
 
 let interval = null;
 const hexArray = [
@@ -165,8 +164,36 @@ class Header extends Component {
       showVideoTutorialModal: false,
       notifify: false,
       showCommentBox: false,
+      toggleValue:
+        '<img class="lang-img" src="https://img.icons8.com/color/48/000000/usa-circular.png"/> English',
+      options: [
+        {
+          label:
+            '<img class="lang-img" src="https://img.icons8.com/color/48/000000/usa-circular.png"/> English',
+          value: 'en',
+        },
+        {
+          label:
+            '<img class="lang-img" src="https://img.icons8.com/color/48/000000/spain-circular.png"/> Spanish',
+          value: 'sp',
+        },
+      ],
     };
     this.handleClickOutside = this.handleClickOutside.bind(this);
+  }
+
+  getTextValue(value) {
+    return this.state.options[value - 1];
+  }
+
+  changeLanguage = lng => {
+    i18n.changeLanguage(lng);
+  };
+
+  handleChange(value) {
+    const item = this.getTextValue(value);
+    this.setState({ toggleValue: item.label });
+    this.changeLanguage(item.value);
   }
 
   getStepIcon = (navLink, navIndex) => {
@@ -530,6 +557,19 @@ class Header extends Component {
     );
   };
 
+  getLanguageOptions = () => {
+    let options = this.state.options.map((option, i) => {
+      return (
+        <Dropdown.Item
+          key={i}
+          eventKey={i + 1}
+          dangerouslySetInnerHTML={{ __html: option.label }}
+        ></Dropdown.Item>
+      );
+    });
+    return options;
+  };
+
   render() {
     const isPreRelease = isPreReleaseDate(this.props.projectData);
     const activeNav = this.getActiveNav();
@@ -566,14 +606,14 @@ class Header extends Component {
             <div className="col-12 align-items-end flex-column flex-grow-1">
               <div className="row d-flex no-gutters">
                 <div className="col-1"></div>
-                <div className="col-2">
+                <div className="col-4">
                   <NavLink to={{ pathname: '/findProject' }}>
                     <span className="guardian-logo"></span>
                   </NavLink>
                 </div>
                 <div className="nav-bg"></div>
-                <nav className="col-8 d-flex no-gutters justify-content-end">
-                  <ul className="menu-items">
+                <nav className="col-6 d-flex no-gutters justify-content-end">
+                  <ul className="menu-items nav-header-menu">
                     {this.props.userData.IsAdmin ? (
                       <li>
                         <NavLink className="steps" to={{ pathname: '/userAdmin' }}>
@@ -621,6 +661,21 @@ class Header extends Component {
                       </div>
                     </li>
                     <li> | </li>
+                    <li>
+                      <Dropdown
+                        className="dropdown lang-dropdown"
+                        onSelect={e => this.handleChange(e)}
+                      >
+                        <Dropdown.Toggle
+                          id="dropdown-basic"
+                          dangerouslySetInnerHTML={{ __html: this.state.toggleValue }}
+                        ></Dropdown.Toggle>
+
+                        <input type="hidden" id={this.props.id} value={this.props.value} />
+
+                        <Dropdown.Menu>{this.getLanguageOptions()}</Dropdown.Menu>
+                      </Dropdown>
+                    </li>
                     <li>Welcome, {this.props.userData.name}</li>
                     <li>
                       <span className="btn-log" onClick={e => this.props.handleLogoutClick(e)}>
