@@ -4,6 +4,7 @@ import './IntroModal.css';
 import Cookies from 'universal-cookie';
 import { NavLink } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
+import VideoPlayer from 'components/template/VideoPlayer';
 
 class IntroModal extends Component {
   constructor(props, context) {
@@ -56,6 +57,12 @@ class IntroModal extends Component {
               <div className="purp-diag">
                 <Modal.Header closeButton>
                   <Modal.Title>{t('Guardian')}</Modal.Title>
+                  <span style={{ marginLeft: '20px', marginTop: '10px' }}>
+                    <VideoPlayer
+                      title="Introduction Video"
+                      link="https://usaws03-guardian-media.s3.amazonaws.com/videos/The+Guardian+2021+pt.+1+Introduction.mp4"
+                    />
+                  </span>
                 </Modal.Header>
 
                 <Modal.Body>
