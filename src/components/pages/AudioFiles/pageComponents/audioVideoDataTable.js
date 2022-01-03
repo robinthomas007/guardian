@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Form, Table, Tabs, Tab, Alert } from 'react-bootstrap';
 import AudioLoader from 'component_library/AudioLoader';
+import VideoPlayer from 'components/template/VideoPlayer';
 
 class AudioVideoDataTable extends Component {
   constructor(props) {
@@ -33,15 +34,20 @@ class AudioVideoDataTable extends Component {
           </th>
           <th>
             {t('audio:ISRC')}
-            <button
-              style={{ float: 'right' }}
-              className="btn btn-sm btn-primary"
-              onClick={this.props.checkIsrc}
-              title="Comment"
-            >
-              <i className={'material-icons'}>search</i>
-              {t('audio:CheckISRCs')}
-            </button>
+            <div style={{ float: 'right' }}>
+              <button
+                className="btn btn-sm btn-primary"
+                onClick={this.props.checkIsrc}
+                title="Comment"
+              >
+                <i className={'material-icons'}>search</i>
+                {t('audio:CheckISRCs')}
+              </button>
+              <VideoPlayer
+                title="Introduction Video"
+                link="https://usaws03-guardian-media.s3.amazonaws.com/videos/The+Guardian+2021+pt.+1+Introduction.mp4"
+              />
+            </div>
           </th>
           <th>{t('audio:Artist')}</th>
           <th className="text-center"> {t('audio:Actions')}</th>

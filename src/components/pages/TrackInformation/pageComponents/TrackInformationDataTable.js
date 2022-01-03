@@ -5,7 +5,7 @@ import AudioLoader from 'component_library/AudioLoader';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import { CustomInput, isPreReleaseDate } from '../../../Utils.js';
-
+import VideoPlayer from 'components/template/VideoPlayer';
 import 'react-datepicker/dist/react-datepicker.css';
 
 class TrackInformationDataTable extends Component {
@@ -43,15 +43,20 @@ class TrackInformationDataTable extends Component {
         <th>
           {t('track:ISRC ')}&nbsp;
           <ToolTip tabIndex="-1" message={t('track:CheckISRCsMsg')} />
-          <button
-            style={{ float: 'right' }}
-            className="btn btn-sm btn-primary"
-            onClick={this.props.checkIsrc}
-            title="Comment"
-          >
-            <i className={'material-icons'}>search</i>
-            {t('track:CheckISRCs')}
-          </button>
+          <div style={{ float: 'right' }}>
+            <button
+              className="btn btn-sm btn-primary"
+              onClick={this.props.checkIsrc}
+              title="Comment"
+            >
+              <i className={'material-icons'}>search</i>
+              {t('track:CheckISRCs')}
+            </button>
+            <VideoPlayer
+              title="Introduction Video"
+              link="https://usaws03-guardian-media.s3.amazonaws.com/videos/The+Guardian+2021+pt.+1+Introduction.mp4"
+            />
+          </div>
         </th>
         <th>{t('track:Artist')} </th>
         <th className="text-center">{t('track:Single')}</th>
