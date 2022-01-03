@@ -13,6 +13,7 @@ import { withRouter } from 'react-router-dom';
 import AudioLoader from 'component_library/AudioLoader';
 import { steps } from '../../common/commonHelper';
 import moment from 'moment';
+import VideoPlayer from 'components/template/VideoPlayer';
 
 const validate = values => {
   const errors = {};
@@ -96,6 +97,10 @@ const CommentSlider = props => {
       }}
     >
       <div className="comment-slider">
+        <VideoPlayer
+          title="Adding Comments"
+          link="https://usaws03-guardian-media.s3.amazonaws.com/videos/The+Guardian+2021+pt.+14+Adding+Comments.mp4"
+        />
         <span className="material-icons close" onClick={handleClose}>
           close
         </span>
