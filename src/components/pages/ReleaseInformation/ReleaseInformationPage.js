@@ -16,6 +16,7 @@ import { connect } from 'react-redux';
 import * as releaseAction from './releaseAction';
 import { withTranslation } from 'react-i18next';
 import { compose } from 'redux';
+import VideoPlayer from 'components/template/VideoPlayer';
 
 class ReleaseinformationPage extends Component {
   constructor(props) {
@@ -424,6 +425,12 @@ class ReleaseinformationPage extends Component {
                     <i className={'material-icons notranslate'}>search</i>
                     {t('releaseInfo:FindUPC')}
                   </button>
+                </div>
+                <div className="col-1" style={{ marginLeft: '20px' }}>
+                  <VideoPlayer
+                    title="UPC Flow"
+                    link="https://usaws03-guardian-media.s3.amazonaws.com/videos/The+Guardian+2021+pt.+11+Alternate+Workflow+-+UPC.mp4"
+                  />
                 </div>
               </Form.Group>
               <Form.Group className="row d-flex no-gutters">
