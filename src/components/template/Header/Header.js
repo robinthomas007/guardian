@@ -161,6 +161,14 @@ class Header extends Component {
           modalHeader: 'Find a Project',
           isNav: false,
         },
+        {
+          description: 'Project Inbox',
+          path: '/inbox',
+          tutorialVideoLink:
+            'https://usaws03-guardian-media.s3.amazonaws.com/videos/The+Guardian+2021+pt.+15+Project+Inbox.mp4',
+          modalHeader: 'Project Inbox',
+          isNav: false,
+        },
       ],
       showVideoTutorialModal: false,
       notifify: false,
@@ -217,6 +225,9 @@ class Header extends Component {
 
   getActiveNav = () => {
     if (this.props.pagePath === '/findProject') {
+      return this.getNavIndex(this.state.navSteps);
+    }
+    if (this.props.pagePath === '/inbox') {
       return this.getNavIndex(this.state.navSteps);
     }
     const isPreRelease = isPreReleaseDate(this.props.projectData);
