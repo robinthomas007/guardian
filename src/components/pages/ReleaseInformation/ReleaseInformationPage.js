@@ -419,7 +419,7 @@ class ReleaseinformationPage extends Component {
                     title="Comment"
                     type="button"
                   >
-                    <i className={'material-icons'}>search</i>
+                    <i className={'material-icons notranslate'}>search</i>
                     {t('releaseInfo:FindUPC')}
                   </button>
                 </div>
@@ -613,7 +613,7 @@ class ReleaseinformationPage extends Component {
                     className="btn btn-secondary action remove-art"
                     onClick={this.clearCoverArt}
                   >
-                    <i className="material-icons">delete</i>
+                    <i className="material-icons notranslate">delete</i>
                   </Button>
                   <span>
                     {t('releaseInfo:ClickToBrowse')}Click to Browse

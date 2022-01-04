@@ -95,7 +95,7 @@ class TracksRightsSets extends Component {
     if (modifiedTerritorialRightsSets[setIndex].countries.length === 0) {
       modifiedTerritorialRightsSets[setIndex].countries.push({
         id: 'WW',
-        name: 'Worldwide',
+        name: this.props.t('territorial:Worldwide'),
       });
     }
     this.props.handleChange(modifiedTerritorialRightsSets);
@@ -137,6 +137,7 @@ class TracksRightsSets extends Component {
   };
 
   getSetsList = () => {
+    const { t } = this.props;
     const rightsSets = this.props.data.TerritorialRightsSets.map((rightsSet, i) => {
       const trackHeight = rightsSet.tracks.length > 3 ? rightsSet.tracks.length * 35 : 80;
       const dropDownVal = _.filter(
@@ -156,13 +157,13 @@ class TracksRightsSets extends Component {
               <thead>
                 <tr className="d-flex row no-gutters">
                   <th className="col-4" nowrap="true">
-                    Tracks with this Rights Set
+                    {t('territorial:TrackswiththisRightsSet')}
                   </th>
                   <th className="col-4" nowrap="true">
-                    Rights Rule
+                    {t('territorial:RightsRule')}
                   </th>
                   <th className="col-4" nowrap="true">
-                    Select Countries
+                    {t('territorial:SelectCountries')}
                   </th>
                 </tr>
               </thead>
@@ -173,6 +174,7 @@ class TracksRightsSets extends Component {
                       data={dropDownVal}
                       onChange={e => this.handleTrackSelect(e, rightsSet)}
                       setIndex={i}
+                      t={t}
                     />
 
                     <TracksDropArea
@@ -182,6 +184,7 @@ class TracksRightsSets extends Component {
                       handleChildDrop={(e, i) => this.handleDrop()}
                       handleChildDrag={this.props.handleChildDrag}
                       dragSource={this.props.dragSource}
+                      t={t}
                     />
                   </td>
                   <td className="col-4">
@@ -189,13 +192,14 @@ class TracksRightsSets extends Component {
                       data={rightsSet.hasRights}
                       setIndex={i}
                       onChange={value => this.handleRightsRuleChange(value, i)}
+                      t={t}
                     />
                   </td>
                   <td className="col-4">
                     <div className="dropdown">
                       <MultiSelectDropDown
                         clear={rightsSet.hasRights}
-                        placeHolder={'Select Country'}
+                        placeHolder={t('territorial:SelectCountry')}
                         optionList={this.props.data.Countries}
                         value={this.getCountryIDs(rightsSet.countries)}
                         id={'territorialRightsCountry_' + i}

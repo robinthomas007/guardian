@@ -28,12 +28,13 @@ class TabbedTracks extends Component {
   }
 
   getDiscTabs = () => {
+    const { t } = this.props;
     if (this.props.data.Discs) {
       let discs = this.props.data.Discs.map((disc, i) => {
         const count = i + 1;
 
         return (
-          <Tab key={i} eventKey={count} title={'Disc ' + count}>
+          <Tab key={i} eventKey={count} title={t('track:Disc') + ' ' + count}>
             <TrackInformationDataTable
               data={this.props.data}
               discID={i}
@@ -46,6 +47,7 @@ class TabbedTracks extends Component {
               handleChildDrag={(e, i) => this.props.handleChildDrag(e, i)}
               handleChildDrop={(e, i) => this.props.handleChildDrop(e, i)}
               checkIsrc={this.props.checkIsrc}
+              t={t}
             />
           </Tab>
         );
@@ -60,6 +62,7 @@ class TabbedTracks extends Component {
   };
 
   render() {
+    const { t } = this.props;
     return (
       <div>
         <div className="row no-gutters d-flex">
@@ -72,7 +75,8 @@ class TabbedTracks extends Component {
                   className="btn btn-secondary btn-sm"
                   onClick={this.props.addDisc}
                 >
-                  <i className="material-icons">adjust</i>Add Disc
+                  <i className="material-icons">adjust</i>
+                  {t('track:AddDisc')}
                 </button>
               </li>
               <li>
@@ -81,7 +85,7 @@ class TabbedTracks extends Component {
                   className="btn btn-secondary btn-sm"
                   onClick={this.props.addTrack}
                 >
-                  <i className="material-icons">add</i> Add Track
+                  <i className="material-icons">add</i> {t('track:AddTrack')}
                 </button>
               </li>
             </ul>

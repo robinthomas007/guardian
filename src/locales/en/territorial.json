@@ -1,0 +1,21 @@
+{
+  "step": "Step",
+  "TerritorialRights": "Territorial Rights",
+  "DescriptionMain": "In this step, you can set the territorial/geographic rights for each track in the project. You can either drag & drop tracks from the list or select tracks from the 'Tracks with this Rights Set' dropdown before assigning rights to them. The section must be completed by assigning all tracks to a rights set and by selecting the 'Save & Continue' button below.",
+  "DescriptionSub": "",
+  "CreateNewRightsSet": "Create New Rights Set",
+  "TrackswithNoRightsApplied": "Tracks With No Rights Applied",
+  "SelectAll": "Select All",
+  "DragAudioFilesToTheRightsSet": "Drag Audio Files To The Rights Set",
+  "Set": "Set",
+  "TrackswiththisRightsSet": "Tracks with this Rights Set",
+  "SelectTracksorDragBelow": "Select Tracks or Drag Below",
+  "RightsRule": "Rights Rule",
+  "SelectCountries": "Select Countries",
+  "OnlyHasRightsIn": "Only Has Rights In",
+  "HasRightsEverywhereExcept": "Has Rights Everywhere Except",
+  "SelectCountry": "Select Country",
+  "Worldwide": "Worldwide",
+  "Save": "Save",
+  "SaveAndContinue": "Save & Continue"
+}

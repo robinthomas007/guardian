@@ -1,0 +1,21 @@
+{
+  "step": "Paso",
+  "TerritorialRights": "Derechos territoriales",
+  "DescriptionMain": "En este paso, puede establecer los derechos territoriales / geográficos para cada pista del proyecto. Puede arrastrar y soltar pistas de la lista o seleccionar pistas del menú desplegable 'Pistas con este conjunto de derechos' antes de asignarles derechos. La sección debe completarse asignando todas las pistas a un conjunto de derechos y seleccionando el botón 'Guardar y continuar' a continuación.",
+  "DescriptionSub": "",
+  "CreateNewRightsSet": "Crear nuevo conjunto de derechos",
+  "TrackswithNoRightsApplied": "Pistas sin derechos aplicados",
+  "SelectAll": "seleccionar todo",
+  "DragAudioFilesToTheRightsSet": "Arrastre archivos de audio al conjunto de derechos",
+  "Set": "Serie",
+  "TrackswiththisRightsSet": "Pistas con este conjunto de derechos",
+  "SelectTracksorDragBelow": "Seleccione pistas o arrastre a continuación",
+  "RightsRule": "Regla de derechos",
+  "SelectCountries": "Seleccionar países",
+  "OnlyHasRightsIn": "Solo tiene derechos en",
+  "HasRightsEverywhereExcept": "Tiene derechos en todas partes excepto",
+  "SelectCountry": "Seleccionar país",
+  "Worldwide": "Mundial",
+  "Save": "Ahorrar",
+  "SaveAndContinue": "Guardar Continuar"
+}

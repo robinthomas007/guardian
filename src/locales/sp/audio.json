@@ -1,0 +1,22 @@
+{
+  "step": "Paso",
+  "Audiofiles": "Archivos de audio",
+  "DescriptionMain": "En este paso, puede cargar MP3 / WAV para el filtrado previo al lanzamiento, ya sea arrastrando y soltando o haciendo clic para buscar archivos. Las pistas también se pueden reordenar mediante la función de arrastrar y soltar. Esta sección debe completarse haciendo clic en el botón 'Guardar y continuar' a continuación.",
+  "DescriptionSub": "",
+  "DragAndDrop": "Arrastra y suelta MP3 / WAV a continuación",
+  "ClickToBrowse": "Haga clic para examinar",
+  "orDrag": "o arrastrar",
+  "Drop": "soltar",
+  "Mp3OrWaves": " MP3 o WAV",
+  "Disc": "Disco",
+  "AudioFiles": "Archivos de sonido",
+  "TrackTitle": "Título de la pista",
+  "Required": "obligatorio",
+  "ISRC": "ISRC",
+  "CheckISRCs": "Verifique los ISRC",
+  "Artist": "Artista",
+  "Actions": "Comportamiento",
+  "AddDisc": "Agregar disco",
+  "Save": "Ahorrar",
+  "SaveAndContinue": "Guardar Continuar"
+}

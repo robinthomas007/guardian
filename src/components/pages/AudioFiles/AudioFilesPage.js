@@ -14,6 +14,8 @@ import { showNotyInfo } from 'components/Utils';
 import { toast } from 'react-toastify';
 import * as releaseAction from './../ReleaseInformation/releaseAction';
 import * as AudioActions from '../../../actions/audioActions';
+import { withTranslation } from 'react-i18next';
+import { compose } from 'redux';
 
 class AudioFilesPage extends Component {
   constructor(props) {
@@ -113,8 +115,8 @@ class AudioFilesPage extends Component {
       artist: track.artist
         ? track.artist
         : projectData.projectArtistName
-        ? projectData.projectArtistName
-        : '',
+          ? projectData.projectArtistName
+          : '',
       discNumber: track.discNumber ? track.discNumber : '',
       fileName: track.fileName ? track.fileName : '',
       hasUpload: track.hasUpload ? track.hasUpload : false,
@@ -243,7 +245,7 @@ class AudioFilesPage extends Component {
       request.setRequestHeader('Project-Id', projectID);
       request.setRequestHeader('Track-Id', trackID ? trackID : '');
       // upload progress event
-      request.upload.addEventListener('progress', function(e) {
+      request.upload.addEventListener('progress', function (e) {
         // upload progress as percentage
         let percent_completed = (e.loaded / e.total) * 100;
         onUploadProgress(uniqFileName, Math.round(percent_completed));
@@ -618,7 +620,7 @@ class AudioFilesPage extends Component {
 
   render() {
     const { project } = this.state;
-    const { uploads, loading, upcLoading } = this.props;
+    const { uploads, loading, upcLoading, t } = this.props;
     let isUpcProject = false;
     if (this.state.project && this.state.project.Project.projectID) {
       if (this.state.project.Project.upc) {
@@ -642,26 +644,21 @@ class AudioFilesPage extends Component {
         <div className="row no-gutters step-description">
           <div className="col-12">
             <h2>
-              Step <span className="count-circle">3</span> Audio Files
+              {t('audio:step')} <span className="count-circle">3</span> {t('audio:Audiofiles')}
             </h2>
-            <p>
-              In this step, you can upload MP3s/WAVs for pre-release filtering by either dragging
-              &amp; dropping or clicking to browse files. Tracks can be reordered using drag and
-              drop as well. This section must be completed by clicking on the 'Save &amp; Continue'
-              button below.
-            </p>
+            <p>{t('audio:DescriptionMain')}</p>
           </div>
         </div>
 
         <form>
           <section className="row">
             <div className="form-group col-12">
-              <label>Drag &amp; Drop MP3s/WAVs Below</label>
+              <label>{t('audio:DragAndDrop')}</label>
               <div droppable="true" className="form-control audio-drop-area col-12">
                 <span>
-                  Click to Browse
+                  {t('audio:ClickToBrowse')}
                   <br />
-                  or Drag &amp; Drop MP3s or WAVs
+                  {t('audio:orDrag')} &amp; {t('audio:Drop')} {t('audio:Mp3OrWaves')}
                 </span>
                 <input
                   type="file"
@@ -685,7 +682,8 @@ class AudioFilesPage extends Component {
                   className="btn btn-secondary btn-sm float-right"
                   onClick={this.addDisc}
                 >
-                  <i className="material-icons">adjust</i> Add Disc
+                  <i className="material-icons">adjust</i>
+                  {t('audio:AddDisc')}
                 </button>
               </li>
             </ul>
@@ -707,6 +705,7 @@ class AudioFilesPage extends Component {
           checkIsrc={this.checkIsrc}
           upc={project.Project.upc ? true : false}
           cisLoading={this.props.cisLoading}
+          t={t}
         />
 
         <section className="row no-gutters save-buttons">
@@ -716,14 +715,14 @@ class AudioFilesPage extends Component {
               className="btn btn-secondary saveButton"
               onClick={e => this.handleDataSubmit(e)}
             >
-              Save
+              {t('audio:Save')}
             </button>
             <button
               type="button"
               className="btn btn-primary saveAndContinueButton"
               onClick={e => this.handleDataSubmit(e)}
             >
-              Save &amp; Continue
+              {t('audio:SaveAndContinue')}
             </button>
           </div>
         </section>
@@ -737,29 +736,32 @@ AudioFilesPage = reduxForm({
 })(AudioFilesPage);
 
 export default withRouter(
-  connect(
-    state => ({
-      formValues: state.form.AudioFilesPageForm,
-      uploads: state.uploadProgressAlert.uploads,
-      discs: state.uploadProgressAlert.discs,
-      upcData: state.releaseReducer.upcData,
-      ExTracks: state.audioReducer.ExTracks,
-      loading: state.audioReducer.loading,
-      cisData: state.audioReducer.cisData,
-      cisLoading: state.audioReducer.cisLoading,
-      upcLoading: state.releaseReducer.upcLoading,
-    }),
-    dispatch => ({
-      onUploadStart: (uniqFileName, trackID) =>
-        dispatch(uploadProgressActions.startUpload(uniqFileName, trackID)),
-      onUploadProgress: (uniqFileName, percent_completed) =>
-        dispatch(uploadProgressActions.setUploadProgress(uniqFileName, percent_completed)),
-      onUploadComplete: uniqFileName => dispatch(uploadProgressActions.endUpload(uniqFileName)),
-      saveDiscs: updatedDiscs => dispatch(uploadProgressActions.saveDisc(updatedDiscs)),
-      findUpc: val => dispatch(releaseAction.findUpc(val)),
-      initializeUpcData: () => dispatch(releaseAction.initializeUpcData()),
-      isrcCheck: isrc => dispatch(AudioActions.isrcCheck(isrc)),
-      getCisData: (isrcs, ProjectId) => dispatch(AudioActions.getCisData(isrcs, ProjectId)),
-    }),
+  compose(
+    withTranslation('audio'),
+    connect(
+      state => ({
+        formValues: state.form.AudioFilesPageForm,
+        uploads: state.uploadProgressAlert.uploads,
+        discs: state.uploadProgressAlert.discs,
+        upcData: state.releaseReducer.upcData,
+        ExTracks: state.audioReducer.ExTracks,
+        loading: state.audioReducer.loading,
+        cisData: state.audioReducer.cisData,
+        cisLoading: state.audioReducer.cisLoading,
+        upcLoading: state.releaseReducer.upcLoading,
+      }),
+      dispatch => ({
+        onUploadStart: (uniqFileName, trackID) =>
+          dispatch(uploadProgressActions.startUpload(uniqFileName, trackID)),
+        onUploadProgress: (uniqFileName, percent_completed) =>
+          dispatch(uploadProgressActions.setUploadProgress(uniqFileName, percent_completed)),
+        onUploadComplete: uniqFileName => dispatch(uploadProgressActions.endUpload(uniqFileName)),
+        saveDiscs: updatedDiscs => dispatch(uploadProgressActions.saveDisc(updatedDiscs)),
+        findUpc: val => dispatch(releaseAction.findUpc(val)),
+        initializeUpcData: () => dispatch(releaseAction.initializeUpcData()),
+        isrcCheck: isrc => dispatch(AudioActions.isrcCheck(isrc)),
+        getCisData: (isrcs, ProjectId) => dispatch(AudioActions.getCisData(isrcs, ProjectId)),
+      }),
+    ),
   )(AudioFilesPage),
 );

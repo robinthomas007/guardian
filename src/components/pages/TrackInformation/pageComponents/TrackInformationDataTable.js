@@ -28,19 +28,20 @@ class TrackInformationDataTable extends Component {
   }
 
   trackInformationDataHeader = () => {
+    const { t } = this.props;
     return (
       <tr>
         <th className="text-center">#</th>
         <th className="text-center"></th>
         <th className="text-center"></th>
         <th>
-          Track Title{' '}
+          {t('track:TrackTitle')}{' '}
           <span className="required-ind">
-            <i>(Required)</i>
+            <i>({t('track:Required')})</i>
           </span>
         </th>
         <th>
-          ISRC &nbsp;
+          {t('track:ISRC ')}&nbsp;
           <ToolTip
             tabIndex="-1"
             message="You may include ISRC here if known, necessary for completion of Step 3 (Audio Files)."
@@ -52,20 +53,17 @@ class TrackInformationDataTable extends Component {
             title="Comment"
           >
             <i className={'material-icons'}>search</i>
-            Check ISRCs
+            {t('track:CheckISRCs')}
           </button>
         </th>
-        <th>Artist </th>
-        <th className="text-center">Single</th>
+        <th>{t('track:Artist')} </th>
+        <th className="text-center">{t('track:Single')}</th>
         <th className="release-date-col">
-          Release Date &nbsp;
-          <ToolTip
-            tabIndex="-1"
-            message="Indicate a single’s release date here if different from album release date."
-          />
+          {t('track:ReleaseDate')} &nbsp;
+          <ToolTip tabIndex="-1" message={t('track:ReleaseDateDescription')} />
         </th>
-        <th>TBD</th>
-        <th className="text-center">Actions</th>
+        <th>{t('track:TBD')}</th>
+        <th className="text-center"> {t('track:Actions')} Actions</th>
       </tr>
     );
   };

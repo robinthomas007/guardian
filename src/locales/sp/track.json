@@ -1,0 +1,22 @@
+{
+  "step": "Paso",
+  "TrackInformation": "Información de seguimiento",
+  "DescriptionMain": "En este paso, puede definir una lista de pistas y una secuencia y proporcionar metadatos para cada pista, incluidos los ISRC y las fechas de lanzamiento (si son diferentes del lanzamiento del álbum). Esta sección debe completarse seleccionando el botón Guardar y continuar a continuación.",
+  "DescriptionSub": "",
+  "Disc": "Disco",
+  "TrackTitle": "Título de la pista",
+  "Required": "obligatorio",
+  "ISRC": "ISRC",
+  "CheckISRCs": "Verifique los ISRC",
+  "Artist": "Artista",
+  "Single": "Único",
+  "ReleaseDate": "Fecha de lanzamiento",
+  "ReleaseDateDescription": "Indique aquí la fecha de lanzamiento de un sencillo si es diferente a la fecha de lanzamiento del álbum.",
+  "?": "?",
+  "TBD": "TBD",
+  "Actions": "Comportamiento",
+  "AddTrack": "Agregar pista",
+  "AddDisc": "Agregar disco",
+  "Save": "Ahorrar",
+  "SaveAndContinue": "Guardar Continuar"
+}

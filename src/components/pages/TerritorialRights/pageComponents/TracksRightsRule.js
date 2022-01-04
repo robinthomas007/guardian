@@ -21,6 +21,7 @@ class TracksRightsRule extends Component {
   }
 
   render() {
+    const { t } = this.props;
     return (
       <div>
         <input
@@ -31,7 +32,10 @@ class TracksRightsRule extends Component {
           checked={this.props.data}
           onChange={this.handleChange}
         />{' '}
-        <label htmlFor={'hasRightsTrue_' + this.props.setIndex}>Only Has Rights In</label>
+        <label htmlFor={'hasRightsTrue_' + this.props.setIndex}>
+          {' '}
+          {t('territorial:OnlyHasRightsIn')}
+        </label>
         <br />
         <input
           id={'hasRightsFalse_' + this.props.setIndex}
@@ -42,7 +46,7 @@ class TracksRightsRule extends Component {
           onChange={this.handleChange}
         />{' '}
         <label htmlFor={'hasRightsFalse_' + this.props.setIndex}>
-          Has Rights Everywhere Except
+          {t('territorial:HasRightsEverywhereExcept')}
         </label>
       </div>
     );

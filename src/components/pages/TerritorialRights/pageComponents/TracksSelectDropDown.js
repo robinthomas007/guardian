@@ -32,6 +32,7 @@ class TrackSelectDropDown extends Component {
   };
 
   render() {
+    const { t } = this.props;
     return (
       <div className="dropdown tracks-dropdown">
         <button
@@ -42,7 +43,7 @@ class TrackSelectDropDown extends Component {
           aria-haspopup="true"
           aria-expanded="false"
         >
-          Select Tracks or Drag Below
+          {t('territorial:SelectTracksorDragBelow')}
         </button>
         <ul className="dropdown-menu tracks" aria-labelledby="selectTracksDropdown">
           {this.getTracksOptions()}

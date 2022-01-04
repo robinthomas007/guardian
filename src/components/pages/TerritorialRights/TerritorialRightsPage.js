@@ -9,6 +9,8 @@ import { showNotyInfo, showNotyAutoError } from 'components/Utils';
 import { connect } from 'react-redux';
 import * as territorialRightsAction from '../../../actions/territorialRightsAction';
 import _ from 'lodash';
+import { withTranslation } from 'react-i18next';
+import { compose } from 'redux';
 
 class TerritorialRightsPage extends Component {
   constructor(props) {
@@ -82,11 +84,13 @@ class TerritorialRightsPage extends Component {
     return {
       territorialRightsSetID: set.id ? set.id : '',
       sequence: set.sequence ? set.sequence : index,
-      description: set.description ? set.description : 'Set # ' + index,
+      description: set.description
+        ? set.description
+        : `${this.props.t('territorial:Set')} #` + index,
       countries: [
         {
           id: 'WW',
-          name: 'Worldwide',
+          name: this.props.t('territorial:Worldwide'),
         },
       ],
       tracks: [],
@@ -109,7 +113,8 @@ class TerritorialRightsPage extends Component {
     const { TerritorialRightsSets } = this.state.project;
     let modifiedTerritorialRightsSets = TerritorialRightsSets;
     for (let i = 0; i < modifiedTerritorialRightsSets.length; i++) {
-      modifiedTerritorialRightsSets[i].description = 'Set # ' + (i + 1);
+      modifiedTerritorialRightsSets[i].description =
+        `${this.props.t('territorial:Set')} #` + (i + 1);
     }
     this.setState({ TerritorialRightsSets: modifiedTerritorialRightsSets });
   };
@@ -380,6 +385,7 @@ class TerritorialRightsPage extends Component {
   }
 
   render() {
+    const { t } = this.props;
     return (
       <div className="col-10">
         <LoadingImg show={this.state.showLoader || this.props.loading} />
@@ -389,32 +395,27 @@ class TerritorialRightsPage extends Component {
         <div className="row no-gutters step-description">
           <div className="col-12">
             <h2>
-              Step <span className="count-circle">5</span> Territorial Rights
+              {t('territorial:step')} <span className="count-circle">5</span>
+              {t('territorial:TerritorialRights')}
             </h2>
-            <p>
-              In this step, you can set the territorial/geographic rights for each track in the
-              project. You can either drag &amp; drop tracks from the list or select tracks from the
-              "Tracks with this Rights Set" dropdown before assigning rights to them. The section
-              must be completed by assigning all tracks to a rights set and by selecting the "Save
-              &amp; Continue" button below.
-            </p>
+            <p>{t('territorial:DescriptionMain')}</p>
           </div>
         </div>
 
         <div className="row no-gutters align-items-center">
           <div className="col-3">
-            <h3>Tracks With No Rights Applied</h3>
+            <h3>{t('territorial:TrackswithNoRightsApplied')}</h3>
           </div>
           <div className="col-9">
             <div className="row no-gutters align-items-center card-nav">
               <div className="col-4">
                 <span className="drag-drop-arrow float-left">
-                  <span nowrap="true">Drag Audio Files To The Rights Set</span>
+                  <span nowrap="true">{t('territorial:DragAudioFilesToTheRightsSet')}</span>
                 </span>
               </div>
               <div className="col-8">
                 <button onClick={this.addRightsSet} className="btn btn-primary">
-                  Create a New Rights Set
+                  {t('territorial:CreateNewRightsSet')}
                 </button>
 
                 {/* <TracksCustomRightsSet /> */}
@@ -429,6 +430,7 @@ class TerritorialRightsPage extends Component {
               handleChildDrag={this.handleChildDrag}
               dragSource={this.state.dragSource}
               handleDropAdd={this.handleDropAdd}
+              t={t}
             />
           </div>
           <div className="col-9">
@@ -442,6 +444,7 @@ class TerritorialRightsPage extends Component {
               dragSource={this.state.dragSource}
               addRightsSet={this.addRightsSet}
               handleNoRightsTracksRemove={this.handleNoRightsTracksRemove}
+              t={t}
             />
           </div>
         </div>
@@ -454,7 +457,7 @@ class TerritorialRightsPage extends Component {
               className="btn btn-secondary"
               onClick={this.handleSubmit}
             >
-              Save
+              {t('territorial:Save')}
             </button>
             <button
               tabIndex="6+"
@@ -463,7 +466,7 @@ class TerritorialRightsPage extends Component {
               className="btn btn-primary"
               onClick={this.handleSubmit}
             >
-              Save &amp; Continue
+              {t('territorial:SaveAndContinue')}
             </button>
           </div>
         </div>
@@ -485,8 +488,11 @@ const mapStateToProps = state => ({
 });
 
 export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps,
+  compose(
+    withTranslation('territorial'),
+    connect(
+      mapStateToProps,
+      mapDispatchToProps,
+    ),
   )(TerritorialRightsPage),
 );

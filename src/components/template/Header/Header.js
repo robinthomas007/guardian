@@ -201,9 +201,9 @@ class Header extends Component {
     if (!stepValidation || parseInt(stepValidation) === 1) {
       return navIndex + 1;
     } else if (parseInt(stepValidation) === 2) {
-      return <i className="material-icons">block</i>;
+      return <i className="material-icons notranslate">block</i>;
     } else {
-      return <i className="material-icons">check</i>;
+      return <i className="material-icons notranslate">check</i>;
     }
   };
 
@@ -617,7 +617,7 @@ class Header extends Component {
                     {this.props.userData.IsAdmin ? (
                       <li>
                         <NavLink className="steps" to={{ pathname: '/userAdmin' }}>
-                          <i className="material-icons">supervised_user_circle</i> Admin
+                          <i className="material-icons notranslate">supervised_user_circle</i> Admin
                         </NavLink>
                       </li>
                     ) : null}
@@ -627,17 +627,17 @@ class Header extends Component {
                         to={{ pathname: '/releaseInformation' }}
                         onClick={() => this.props.clearProject()}
                       >
-                        <i className="material-icons">library_music</i> New Project
+                        <i className="material-icons notranslate">library_music</i> New Project
                       </NavLink>
                     </li>
                     <li>
                       <NavLink className="steps" to={{ pathname: '/findProject' }}>
-                        <i className="material-icons">search</i> Project Search
+                        <i className="material-icons notranslate">search</i> Project Search
                       </NavLink>
                     </li>
                     <li>
                       <NavLink className="steps" to={{ pathname: '/inbox' }}>
-                        <i className="material-icons">email</i> Inbox
+                        <i className="material-icons notranslate">email</i> Inbox
                       </NavLink>
                     </li>
                     {/*<li>
@@ -651,7 +651,7 @@ class Header extends Component {
                         className="notify-wrapper"
                         onClick={this.openNotifivations}
                       >
-                        <i id="notify-wrapper" className="material-icons">
+                        <i id="notify-wrapper" className="material-icons notranslate">
                           notifications
                         </i>
                         {count > 0 && <span>{count}</span>}
@@ -661,6 +661,9 @@ class Header extends Component {
                       </div>
                     </li>
                     <li> | </li>
+                    <li>
+                      <div id="google_translate_element"></div>
+                    </li>
                     <li>
                       <Dropdown
                         className="dropdown lang-dropdown"
@@ -697,7 +700,7 @@ class Header extends Component {
                       onClick={this.headerToggle}
                       title="Collapse/Expand Header"
                     >
-                      <i className={'material-icons'}>unfold_more</i>
+                      <i className={'material-icons notranslate'}>unfold_more</i>
                     </button>
                   </li>
                 ) : null}
@@ -707,7 +710,7 @@ class Header extends Component {
                     onClick={this.showVideoTutorialModal}
                     title="Tutorial Video"
                   >
-                    <i className={'material-icons'}>videocam</i>
+                    <i className={'material-icons notranslate'}>videocam</i>
                   </button>
                 </li>
                 {parseInt(activeNav) >= 0 && projectData.Project.projectID && (
@@ -717,7 +720,7 @@ class Header extends Component {
                       onClick={this.showCommentBox}
                       title="Comment"
                     >
-                      <i className={'material-icons'}>message</i>
+                      <i className={'material-icons notranslate'}>message</i>
                     </button>
                   </li>
                 )}
@@ -727,7 +730,7 @@ class Header extends Component {
                     onClick={this.handleHelpClick}
                     title="Help/FAQs"
                   >
-                    <i className={'material-icons'}>help</i>
+                    <i className={'material-icons notranslate notranslate'}>help</i>
                   </button>
                 </li>
               </ul>

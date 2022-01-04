@@ -136,7 +136,7 @@ class TracksWithoutRights extends Component {
               />
               <span className="checkmark "></span>
             </label>
-            <span>Select All</span>
+            <span> {this.props.t('territorial:SelectAll')}</span>
           </div>
         )}
         <div className="sticky-box">{this.getTracksList()}</div>

@@ -113,7 +113,7 @@ class TracksDropArea extends Component {
   };
 
   render() {
-    const { data } = this.props;
+    const { data, t } = this.props;
     const { selectAllNoRights } = this.state;
     return (
       <div
@@ -135,7 +135,7 @@ class TracksDropArea extends Component {
               />
               <span className="checkmark "></span>
             </label>
-            <span>Select All</span>
+            <span>{t('territorial:SelectAll')}</span>
           </div>
         )}
 

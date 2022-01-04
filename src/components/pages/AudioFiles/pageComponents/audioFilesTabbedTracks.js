@@ -9,11 +9,12 @@ class AudioFilesTabbedTracks extends Component {
   }
 
   getDiscTabs = () => {
+    const { t } = this.props;
     if (this.props.data) {
       let discs = this.props.data.map((disc, i) => {
         const count = i + 1;
         return (
-          <Tab key={i} eventKey={i} title={'Disc ' + count}>
+          <Tab key={i} eventKey={i} title={t('audio:Disc') + ' ' + count}>
             <AudioVideoDataTable
               uploads={this.props.uploads}
               data={disc}
@@ -25,6 +26,7 @@ class AudioFilesTabbedTracks extends Component {
               checkIsrc={this.props.checkIsrc}
               upc={this.props.upc}
               cisLoading={this.props.cisLoading}
+              t={this.props.t}
             />
           </Tab>
         );

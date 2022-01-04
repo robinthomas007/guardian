@@ -14,6 +14,8 @@ import * as releaseAction from './../ReleaseInformation/releaseAction';
 import _ from 'lodash';
 import { showNotyInfo, showNotyAutoError } from 'components/Utils';
 import * as AudioActions from '../../../actions/audioActions';
+import { withTranslation } from 'react-i18next';
+import { compose } from 'redux';
 
 class TrackInformationPage extends Component {
   constructor(props) {
@@ -604,6 +606,7 @@ class TrackInformationPage extends Component {
   };
 
   render() {
+    const { t } = this.props;
     return (
       <div className="col-10">
         <LoadingImg show={this.state.showloader || this.props.loading || this.props.upcLoading} />
@@ -619,15 +622,11 @@ class TrackInformationPage extends Component {
         <div className="row no-gutters step-description">
           <div className="col-12">
             <h2>
-              Step{' '}
+              {t('track:step')}{' '}
               <span className="count-circle">{this.getStepNumber(this.props.serverTimeDate)}</span>{' '}
-              Track Information
+              {t('track:TrackInformation')}
             </h2>
-            <p>
-              In this step, you can define a tracklist and sequence and provide metadata for each
-              track including ISRCs and release dates (if different from the album release). This
-              section must be completed by selecting the Save &amp; Continue button below.
-            </p>
+            <p>{t('track:DescriptionMain')}</p>
           </div>
         </div>
 
@@ -647,6 +646,7 @@ class TrackInformationPage extends Component {
           handleChildDrag={(e, i) => this.handleChildDrag(e, i)}
           handleChildDrop={(e, i) => this.handleChildDrop(e, i)}
           checkIsrc={this.checkIsrc}
+          t={t}
         />
 
         <section className="row save-buttons">
@@ -657,14 +657,14 @@ class TrackInformationPage extends Component {
               className="btn btn-secondary saveButton"
               onClick={e => this.handleSubmit(e)}
             >
-              Save
+              {t('track:Save')}
             </button>
             <button
               type="button"
               className="btn btn-primary saveAndContinueButton"
               onClick={e => this.handleSubmit(e)}
             >
-              Save &amp; Continue
+              {t('track:SaveAndContinue')}
             </button>
           </div>
         </section>
@@ -678,22 +678,25 @@ TrackInformationPage = reduxForm({
 })(TrackInformationPage);
 
 export default withRouter(
-  connect(
-    state => ({
-      formValues: state.form.TrackInformationPageForm,
-      upcData: state.releaseReducer.upcData,
-      ExTracks: state.audioReducer.ExTracks,
-      loading: state.audioReducer.loading,
-      upcLoading: state.releaseReducer.loading,
-    }),
-    dispatch => ({
-      onUploadStart: uniqFileName => dispatch(uploadProgressActions.startUpload(uniqFileName)),
-      onUploadProgress: (uniqFileName, percent_completed) =>
-        dispatch(uploadProgressActions.setUploadProgress(uniqFileName, percent_completed)),
-      onUploadComplete: uniqFileName => dispatch(uploadProgressActions.endUpload(uniqFileName)),
-      findUpc: val => dispatch(releaseAction.findUpc(val)),
-      initializeUpcData: () => dispatch(releaseAction.initializeUpcData()),
-      isrcCheck: isrc => dispatch(AudioActions.isrcCheck(isrc)),
-    }),
+  compose(
+    withTranslation('track'),
+    connect(
+      state => ({
+        formValues: state.form.TrackInformationPageForm,
+        upcData: state.releaseReducer.upcData,
+        ExTracks: state.audioReducer.ExTracks,
+        loading: state.audioReducer.loading,
+        upcLoading: state.releaseReducer.loading,
+      }),
+      dispatch => ({
+        onUploadStart: uniqFileName => dispatch(uploadProgressActions.startUpload(uniqFileName)),
+        onUploadProgress: (uniqFileName, percent_completed) =>
+          dispatch(uploadProgressActions.setUploadProgress(uniqFileName, percent_completed)),
+        onUploadComplete: uniqFileName => dispatch(uploadProgressActions.endUpload(uniqFileName)),
+        findUpc: val => dispatch(releaseAction.findUpc(val)),
+        initializeUpcData: () => dispatch(releaseAction.initializeUpcData()),
+        isrcCheck: isrc => dispatch(AudioActions.isrcCheck(isrc)),
+      }),
+    ),
   )(TrackInformationPage),
 );

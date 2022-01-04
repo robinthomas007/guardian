@@ -19,19 +19,20 @@ class AudioVideoDataTable extends Component {
   }
 
   AudioVideoDataHeader() {
+    const { t } = this.props;
     return (
       <thead>
         <tr>
           <th className="text-center">#</th>
-          <th>Audio File</th>
+          <th>{t('audio:AudioFiles')}</th>
           <th>
-            Track Title
+            {t('audio:TrackTitle')}
             <i>
-              <span className="required-ind">(Required)</span>
+              <span className="required-ind"> ({t('audio:Required')})</span>
             </i>
           </th>
           <th>
-            ISRC
+            {t('audio:ISRC')}
             <button
               style={{ float: 'right' }}
               className="btn btn-sm btn-primary"
@@ -39,11 +40,11 @@ class AudioVideoDataTable extends Component {
               title="Comment"
             >
               <i className={'material-icons'}>search</i>
-              Check ISRCs
+              {t('audio:CheckISRCs')}
             </button>
           </th>
-          <th>Artist</th>
-          <th className="text-center">Actions</th>
+          <th>{t('audio:Artist')}</th>
+          <th className="text-center"> {t('audio:Actions')}</th>
         </tr>
       </thead>
     );

@@ -42,7 +42,7 @@ class TerritorialRightsTable extends Component {
         <tr key={i} className={'row no-gutters'}>
           <td className="col-3">{i === 0 ? 'Unassigned Tracks' : ''}</td>
           <td className="col-3">{track.trackTitle}</td>
-          <td className="col-3">Worldwide</td>
+          <td className="col-3">{this.props.t('territorial:Worldwide')}</td>
           <td className="col-3">&nbsp;</td>
         </tr>
       );

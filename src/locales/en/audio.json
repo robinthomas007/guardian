@@ -1,0 +1,22 @@
+{
+  "step": "Step",
+  "Audiofiles": "Audio Files",
+  "DescriptionMain": "In this step, you can upload MP3s/WAVs for pre-release filtering by either dragging & dropping or clicking to browse files. Tracks can be reordered using drag and drop as well. This section must be completed by clicking on the 'Save & Continue' button below.",
+  "DescriptionSub": "",
+  "DragAndDrop": "Drag & Drop MP3s/WAVs Below",
+  "ClickToBrowse": "Click to Browse",
+  "orDrag": "or Drag",
+  "Drop": "Drop",
+  "Mp3OrWaves": " MP3s or WAVs",
+  "Disc": "Disc",
+  "AudioFiles": "Audio Files",
+  "TrackTitle": "Track Title",
+  "Required": "Required",
+  "ISRC": "ISRC",
+  "CheckISRCs": "Check ISRCs",
+  "Artist": "Artist",
+  "Actions": "Actions",
+  "AddDisc": "Add Disc",
+  "Save": "Save",
+  "SaveAndContinue": "Save & Continue"
+}

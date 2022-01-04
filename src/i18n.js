@@ -11,17 +11,32 @@ import releaseInforSP from 'locales/sp/release.json';
 import contactEN from 'locales/en/contact.json';
 import contactSP from 'locales/sp/contact.json';
 
+import audioEN from 'locales/en/audio.json';
+import audioSP from 'locales/sp/audio.json';
+
+import trackEN from 'locales/en/track.json';
+import trackSP from 'locales/sp/track.json';
+
+import territorialEN from 'locales/en/territorial.json';
+import territorialSP from 'locales/sp/territorial.json';
+
 // the translations
 const resources = {
   en: {
     translation: translationEN,
     releaseInfo: releaseInforEN,
     contact: contactEN,
+    audio: audioEN,
+    track: trackEN,
+    territorial: territorialEN,
   },
   sp: {
     translation: translationSP,
     releaseInfo: releaseInforSP,
     contact: contactSP,
+    audio: audioSP,
+    track: trackSP,
+    territorial: territorialSP,
   },
 };
 
@@ -30,7 +45,7 @@ i18n
   .use(initReactI18next) // passes i18n down to react-i18next
   .init({
     resources,
-    ns: ['translations', 'releaseInfo', 'contact'],
+    ns: ['translations', 'releaseInfo', 'contact', 'audio', 'track', 'territorial'],
     lng: 'en',
     defaultNS: 'translations',
     keySeparator: false, // we do not use keys in form messages.welcome
