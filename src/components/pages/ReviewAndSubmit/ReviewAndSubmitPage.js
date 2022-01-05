@@ -11,6 +11,7 @@ import IncompleteProjectModal from '../../modals/IncompleteProjectModal';
 import { formatDateToYYYYMMDD, convertToLocaleTime, isPreReleaseDate } from '../../Utils';
 import { showNotyInfo } from 'components/Utils';
 import moment from 'moment';
+import { withTranslation } from 'react-i18next';
 
 class ReviewAndSubmitPage extends Component {
   constructor(props) {
@@ -131,7 +132,7 @@ class ReviewAndSubmitPage extends Component {
     return stepNumber;
   }
 
-  getPage = () => {
+  getPage = t => {
     return (
       <div>
         <div className="page-container">
@@ -161,7 +162,8 @@ class ReviewAndSubmitPage extends Component {
           <div className="row no-gutters step-description review">
             <div className="col-10">
               <h2>
-                Step <span className="count-circle">{this.getStepNumber()}</span> Review and Submit
+                {t('review:step')} <span className="count-circle">{this.getStepNumber()}</span>{' '}
+                Review and Submit
               </h2>
               <p>
                 In this FINAL step, please take some time to review the project for accuracy before
@@ -427,8 +429,12 @@ class ReviewAndSubmitPage extends Component {
   };
 
   render() {
-    return <div className="col-10">{this.props.data ? this.getPage() : null}</div>;
+    const { t } = this.props;
+    console.log('t', t);
+    return <div className="col-10">{this.props.data ? this.getPage(t) : null}</div>;
   }
 }
 
-export default withRouter(ReviewAndSubmitPage);
+const ReviewAndSubmitPageWithTranslation = withTranslation()(ReviewAndSubmitPage);
+
+export default withRouter(ReviewAndSubmitPageWithTranslation);

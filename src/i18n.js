@@ -20,6 +20,9 @@ import trackSP from 'locales/sp/track.json';
 import territorialEN from 'locales/en/territorial.json';
 import territorialSP from 'locales/sp/territorial.json';
 
+import reviewEN from 'locales/en/review.json';
+import reviewSP from 'locales/sp/review.json';
+
 // the translations
 const resources = {
   en: {
@@ -29,6 +32,7 @@ const resources = {
     audio: audioEN,
     track: trackEN,
     territorial: territorialEN,
+    review: reviewEN,
   },
   sp: {
     translation: translationSP,
@@ -37,6 +41,7 @@ const resources = {
     audio: audioSP,
     track: trackSP,
     territorial: territorialSP,
+    review: reviewSP,
   },
 };
 
@@ -45,8 +50,7 @@ i18n
   .use(initReactI18next) // passes i18n down to react-i18next
   .init({
     resources,
-    ns: ['translations', 'releaseInfo', 'contact', 'audio', 'track', 'territorial'],
-    lng: 'en',
+    ns: ['translations', 'releaseInfo', 'contact', 'audio', 'track', 'territorial', 'review'],
     defaultNS: 'translations',
     keySeparator: false, // we do not use keys in form messages.welcome
     fallbackLng: 'en',
