@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import moment from 'moment';
+import { withTranslation } from 'react-i18next';
 
 class AudioFilesDataTable extends Component {
   constructor(props) {
@@ -42,17 +43,18 @@ class AudioFilesDataTable extends Component {
   }
 
   render() {
+    const { t } = this.props;
     return (
       <table className="table">
         <thead>
           <tr className="row no-gutters">
             <th className="col-1 text-center">#</th>
-            <th className="col-2">Audio File</th>
-            <th className="col-2">Track Title</th>
-            <th className="col-2">ISRC</th>
-            <th className="col-2">Artist</th>
-            <th className="col-1 text-center">Single</th>
-            <th className="col-2 text-center">Release Date</th>
+            <th className="col-2">{t('review:AudioFile')}</th>
+            <th className="col-2">{t('review:TrackTitle')}</th>
+            <th className="col-2">{t('review:ISRC')}</th>
+            <th className="col-2">{t('review:Artist')}</th>
+            <th className="col-1 text-center">{t('review:Single')}</th>
+            <th className="col-2 text-center">{t('review:ReleaseDate')}</th>
           </tr>
         </thead>
         <tbody>{this.getAudioFileTableData()}</tbody>
@@ -61,4 +63,4 @@ class AudioFilesDataTable extends Component {
   }
 }
 
-export default AudioFilesDataTable;
+export default withTranslation()(AudioFilesDataTable);

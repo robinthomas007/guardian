@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment';
+import { withTranslation } from 'react-i18next';
+import { t } from 'i18next';
 
 class BlockingPoliciesDataTable extends Component {
   constructor(props) {
@@ -24,7 +26,9 @@ class BlockingPoliciesDataTable extends Component {
     return platforms.map((platform, i) => {
       return (
         <td key={i} className="align-items-center" nowrap="nowrap">
-          {platform.block ? this.getblockedPolicyText(platform) : 'Monetize All'}
+          {platform.block
+            ? this.getblockedPolicyText(platform)
+            : this.props.t('review:MonetizeAll')}
         </td>
       );
     });
@@ -54,12 +58,12 @@ class BlockingPoliciesDataTable extends Component {
     return this.props.data.UnassignedBlockingPolicySetTracks.map((track, i) => {
       return (
         <tr key={i}>
-          <td>{i === 0 ? 'Unassigned Tracks' : ''}</td>
+          <td>{i === 0 ? this.props.t('review:UnassignedTracks') : ''}</td>
           <td>{track.trackTitle}</td>
-          <td>Monetize All</td>
-          <td>Monetize All</td>
-          <td>Monetize All</td>
-          <td>Monetize All</td>
+          <td>{this.props.t('review:MonetizeAll')}</td>
+          <td>{this.props.t('review:MonetizeAll')}</td>
+          <td>{this.props.t('review:MonetizeAll')}</td>
+          <td>{this.props.t('review:MonetizeAll')}</td>
         </tr>
       );
     });
@@ -71,10 +75,10 @@ class BlockingPoliciesDataTable extends Component {
         <thead>
           <tr>
             <th className="align-text-bottom" nowrap="nowrap">
-              Blocking Policy Name
+              {this.props.t('review:BlockingPolicyName')}
             </th>
             <th className="align-text-bottom" nowrap="nowrap">
-              Tracks With This Policy
+              {this.props.t('review:TracksWithThisPolicy')}
             </th>
             <th className="align-items-center">
               <span className="platform-sprite small youtube"></span>
@@ -101,4 +105,4 @@ class BlockingPoliciesDataTable extends Component {
   }
 }
 
-export default BlockingPoliciesDataTable;
+export default withTranslation()(BlockingPoliciesDataTable);

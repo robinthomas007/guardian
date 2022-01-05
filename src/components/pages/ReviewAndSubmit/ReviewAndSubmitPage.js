@@ -132,7 +132,8 @@ class ReviewAndSubmitPage extends Component {
     return stepNumber;
   }
 
-  getPage = t => {
+  getPage = () => {
+    const { t } = this.props;
     return (
       <div>
         <div className="page-container">
@@ -162,20 +163,19 @@ class ReviewAndSubmitPage extends Component {
           <div className="row no-gutters step-description review">
             <div className="col-10">
               <h2>
-                {t('review:step')} <span className="count-circle">{this.getStepNumber()}</span>{' '}
-                Review and Submit
+                {t('review:step')}&nbsp;<span className="count-circle">{this.getStepNumber()}</span>
+                &nbsp;
+                {t('review:ReviewandSubmit')}
               </h2>
               <p>
-                In this FINAL step, please take some time to review the project for accuracy before
-                submitting. <br />
-                Click on any of the sections to return to the corresponding step and make changes.
-                Once a project is submitted as final in this step, only a Guardian administrator can
-                unlock the project for additional editing.
+                {t('review:DescriptionMain')}
+                <br />
+                {t('review:DescriptionSub')}
               </p>
             </div>
             <div className="col-2">
               <button className="btn btn-secondary align-content-end" onClick={this.showShareModal}>
-                <i className="material-icons">share</i> Share
+                <i className="material-icons">share</i> {t('review:Share')}
               </button>
               {parseInt(this.props.data.Project.projectStatusID) === 1 ? (
                 <button
@@ -183,7 +183,7 @@ class ReviewAndSubmitPage extends Component {
                   className="btn btn-primary float-right"
                   onClick={this.handlePreSubmitCheck}
                 >
-                  Submit Project
+                  {t('review:SubmitProject')}
                 </button>
               ) : null}
             </div>
@@ -193,7 +193,7 @@ class ReviewAndSubmitPage extends Component {
         <div className="page-container review-section">
           <div className="row no-gutters">
             <div className="col-10 justify-content-start">
-              <h2>Release Information</h2>
+              <h2>{t('review:ReleaseInformation')}</h2>
             </div>
             <div className="col-2 justify-content-end">
               {parseInt(this.props.data.Project.projectStatusID) === 1 ? (
@@ -201,7 +201,7 @@ class ReviewAndSubmitPage extends Component {
                   className="btn btn-secondary align-content-end float-right"
                   onClick={() => this.handleProjectCategoryClick('/releaseInformation/')}
                 >
-                  <i className="material-icons">edit</i> Edit
+                  <i className="material-icons">edit</i> {t('review:Edit')}
                 </button>
               ) : null}
             </div>
@@ -222,35 +222,35 @@ class ReviewAndSubmitPage extends Component {
               <div className="col-10">
                 <div className="row no-gutters">
                   <div className="col-6">
-                    <label>Project Title:</label>
+                    <label>{t('review:ProjectTitle')}:</label>
                     <span>
                       {' '}
                       {this.props.data.Project ? this.props.data.Project.projectTitle : ''}
                     </span>
                   </div>
                   <div className="col-6">
-                    <label>Artist:</label>
+                    <label>{t('review:Artist')}:</label>
                     <span>
                       {' '}
                       {this.props.data.Project ? this.props.data.Project.projectArtistName : ''}
                     </span>
                   </div>
                   <div className="col-6">
-                    <label>Project Type:</label>
+                    <label>{t('review:ProjectType')}:</label>
                     <span>
                       {' '}
                       {this.props.data.Project ? this.props.data.Project.projectType : ''}
                     </span>
                   </div>
                   <div className="col-6">
-                    <label>Label:</label>
+                    <label>{t('review:Label')}:</label>
                     <span>
                       {' '}
                       {this.props.data.Project ? this.props.data.Project.projectReleasingLabel : ''}
                     </span>
                   </div>
                   <div className="col-12">
-                    <label>Release Date:</label>
+                    <label>{t('review:ReleaseDate')}:</label>
                     <span>
                       {' '}
                       {this.props.data.Project && this.props.data.Project.projectReleaseDate
@@ -261,7 +261,7 @@ class ReviewAndSubmitPage extends Component {
                     </span>
                   </div>
                   <div className="col-12">
-                    <label>Notes:</label>
+                    <label>{t('review:Notes')}:</label>
                     <span>
                       {' '}
                       {this.props.data.Project ? this.props.data.Project.projectNotes : ''}
@@ -276,7 +276,7 @@ class ReviewAndSubmitPage extends Component {
         <div className="page-container review-section">
           <div className="row no-gutters">
             <div className="col-10 justify-content-start">
-              <h2>Project Contacts</h2>
+              <h2>{t('review:ProjectContacts')}</h2>
             </div>
             <div className="col-2 justify-content-end">
               {parseInt(this.props.data.Project.projectStatusID) === 1 ? (
@@ -284,7 +284,7 @@ class ReviewAndSubmitPage extends Component {
                   className="btn btn-secondary align-content-end float-right"
                   onClick={() => this.handleProjectCategoryClick('/projectContacts/')}
                 >
-                  <i className="material-icons">edit</i> Edit
+                  <i className="material-icons">edit</i> {t('review:Edit')}
                 </button>
               ) : null}
             </div>
@@ -293,21 +293,21 @@ class ReviewAndSubmitPage extends Component {
           <div className="review-card">
             <div className="row no-gutters">
               <div className="col-6">
-                <label>Primary Contact:</label>
+                <label>{t('review:PrimaryContact')}:</label>
                 <span>
                   {' '}
                   {this.props.data.Project ? this.props.data.Project.projectPrimaryContact : ''}
                 </span>
               </div>
               <div className="col-6">
-                <label>Project Security:</label>
+                <label>{t('review:ProjectSecurity')}:</label>
                 <span>
                   {' '}
                   {this.props.data.Project ? this.props.data.Project.projectSecurity : ''}
                 </span>
               </div>
               <div className="col-12">
-                <label>Primary Email:</label>
+                <label>{t('review:PrimaryEmail')}:</label>
                 <span>
                   {' '}
                   {this.props.data.Project
@@ -316,7 +316,7 @@ class ReviewAndSubmitPage extends Component {
                 </span>
               </div>
               <div className="col-12">
-                <label>Additional Contacts:</label>
+                <label>{t('review:AdditionalContacts')}:</label>
                 <span>
                   {' '}
                   {this.props.data.Project ? this.props.data.Project.projectAdditionalContacts : ''}
@@ -329,7 +329,7 @@ class ReviewAndSubmitPage extends Component {
         <div className="page-container review-section">
           <div className="row no-gutters">
             <div className="col-10 justify-content-start">
-              <h2>Audio Files &amp; Track Information</h2>
+              <h2>{t('review:AudioFiles&TrackInformation')}</h2>
             </div>
 
             <div className="col-2 justify-content-end">
@@ -339,7 +339,7 @@ class ReviewAndSubmitPage extends Component {
                   className="btn btn-secondary align-content-end float-right"
                   onClick={() => this.handleProjectCategoryClick('/audioFiles/')}
                 >
-                  <i className="material-icons">edit</i> Edit
+                  <i className="material-icons">edit</i> {t('review:Edit')}
                 </button>
               ) : null}
             </div>
@@ -365,7 +365,7 @@ class ReviewAndSubmitPage extends Component {
         <div className="page-container review-section">
           <div className="row no-gutters">
             <div className="col-10 justify-content-start">
-              <h2>Territorial Rights</h2>
+              <h2>{t('review:TerritorialRights')}</h2>
             </div>
             <div className="col-2 justify-content-end">
               {parseInt(this.props.data.Project.projectStatusID) === 1 &&
@@ -374,7 +374,7 @@ class ReviewAndSubmitPage extends Component {
                   className="btn btn-secondary align-content-end float-right"
                   onClick={() => this.handleProjectCategoryClick('/territorialRights/')}
                 >
-                  <i className="material-icons">edit</i> Edit
+                  <i className="material-icons">edit</i> {t('review:Edit')}
                 </button>
               ) : null}
             </div>
@@ -390,7 +390,7 @@ class ReviewAndSubmitPage extends Component {
         <div className="page-container review-section">
           <div className="row no-gutters">
             <div className="col-10 justify-content-start">
-              <h2>Blocking Polices</h2>
+              <h2>{t('review:BlockingPolices')}</h2>
             </div>
             <div className="col-2 justify-content-end">
               {parseInt(this.props.data.Project.projectStatusID) === 1 ? (
@@ -398,7 +398,7 @@ class ReviewAndSubmitPage extends Component {
                   className="btn btn-secondary align-content-end float-right"
                   onClick={() => this.handleProjectCategoryClick('/blockingPolicies/')}
                 >
-                  <i className="material-icons">edit</i> Edit
+                  <i className="material-icons">edit</i> {t('review:Edit')}
                 </button>
               ) : null}
             </div>
@@ -419,7 +419,7 @@ class ReviewAndSubmitPage extends Component {
                 className="btn btn-primary float-right"
                 onClick={this.handlePreSubmitCheck}
               >
-                Submit Project
+                {t('review:SubmitProject')}
               </button>
             ) : null}
           </div>
@@ -429,9 +429,7 @@ class ReviewAndSubmitPage extends Component {
   };
 
   render() {
-    const { t } = this.props;
-    console.log('t', t);
-    return <div className="col-10">{this.props.data ? this.getPage(t) : null}</div>;
+    return <div className="col-10">{this.props.data ? this.getPage() : null}</div>;
   }
 }
 

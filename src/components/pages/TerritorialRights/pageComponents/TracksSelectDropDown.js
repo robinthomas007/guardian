@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withTranslation } from 'react-i18next';
 
 class TrackSelectDropDown extends Component {
   constructor(props) {
@@ -53,4 +54,4 @@ class TrackSelectDropDown extends Component {
   }
 }
 
-export default TrackSelectDropDown;
+export default withTranslation()(TrackSelectDropDown);

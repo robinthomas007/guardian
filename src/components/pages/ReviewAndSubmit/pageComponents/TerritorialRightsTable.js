@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withTranslation } from 'react-i18next';
 
 class TerritorialRightsTable extends Component {
   constructor(props) {
@@ -40,7 +41,7 @@ class TerritorialRightsTable extends Component {
     return this.props.data.UnassignedTerritorialRightsSetTracks.map((track, i) => {
       return (
         <tr key={i} className={'row no-gutters'}>
-          <td className="col-3">{i === 0 ? 'Unassigned Tracks' : ''}</td>
+          <td className="col-3">{i === 0 ? this.props.t('review:UnassignedTracks') : ''}</td>
           <td className="col-3">{track.trackTitle}</td>
           <td className="col-3">{this.props.t('territorial:Worldwide')}</td>
           <td className="col-3">&nbsp;</td>
@@ -50,14 +51,15 @@ class TerritorialRightsTable extends Component {
   };
 
   render() {
+    const { t } = this.props;
     return (
       <table className="table">
         <thead>
           <tr className="row no-gutters">
-            <th className="col-3">Rights Policy Name</th>
-            <th className="col-3">Tracks With This Policy</th>
-            <th className="col-3">Has Rights In</th>
-            <th className="col-3">Has Rights Everywhere Except</th>
+            <th className="col-3">{t('review:RightsPolicyName')}</th>
+            <th className="col-3">{t('review:TracksWithThisPolicy')}</th>
+            <th className="col-3">{t('review:HasRightsIn')}</th>
+            <th className="col-3">{t('review:HasRightsEverywhereExcept')}</th>
           </tr>
         </thead>
         <tbody>
@@ -69,4 +71,4 @@ class TerritorialRightsTable extends Component {
   }
 }
 
-export default TerritorialRightsTable;
+export default withTranslation()(TerritorialRightsTable);

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import AudioFilesDataTable from '../pageComponents/AudioFilesDataTable';
 import { Table, Grid, Button, Form, Tabs, Tab } from 'react-bootstrap';
+import { withTranslation } from 'react-i18next';
 
 class AudioFilesTabsContainer extends Component {
   constructor(props) {
@@ -13,7 +14,7 @@ class AudioFilesTabsContainer extends Component {
     if (this.props.discs) {
       const discs = this.props.discs.map((disc, i) => {
         return (
-          <Tab key={i} eventKey={i + 1} title={'Disc ' + (i + 1)}>
+          <Tab key={i} eventKey={i + 1} title={this.props.t('review:Disc') + ' ' + (i + 1)}>
             <AudioFilesDataTable data={disc.Tracks} />
           </Tab>
         );
@@ -31,4 +32,4 @@ class AudioFilesTabsContainer extends Component {
   }
 }
 
-export default AudioFilesTabsContainer;
+export default withTranslation()(AudioFilesTabsContainer);
