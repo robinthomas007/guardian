@@ -17,7 +17,7 @@ const store = configureStore();
 ReactDOM.render(
   <Provider store={store}>
     <App />
-    <div id="google_translate_element"></div>
+    {/*<div id="google_translate_element"></div>*/}
   </Provider>,
   document.getElementById('root'),
 );

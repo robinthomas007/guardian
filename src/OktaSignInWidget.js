@@ -5,8 +5,9 @@ import '@okta/okta-signin-widget/dist/css/okta-sign-in.min.css';
 import '@okta/okta-signin-widget/dist/css/okta-theme.css';
 import GuardianLogo from 'images/guardian-logo.png';
 import './okta-overide.css';
+import { withTranslation } from 'react-i18next';
 
-export default class OktaSignInWidget extends Component {
+class OktaSignInWidget extends Component {
   componentDidMount() {
     const el = ReactDOM.findDOMNode(this);
     this.widget = new OktaSignIn({
@@ -27,6 +28,7 @@ export default class OktaSignInWidget extends Component {
   }
 
   render() {
+    const { t } = this.props;
     return (
       <section className="container-fluid landing okta">
         <section className="logo">
@@ -34,14 +36,14 @@ export default class OktaSignInWidget extends Component {
         </section>
 
         <section className="over-bar">
-          <h1>WELCOME TO THE GUARDIAN</h1>
-          <h2>CONTENT PROTECTION, LEAK DETECTION &amp; ANTI-PIRACY</h2>
+          <h1>{t('home:WelcomeToTheGuardian')} </h1>
+          <h2>{t('home:ContentProtection')}</h2>
           <span>
             <button id="loginRequestAccess" className="access btn" onClick={this.showRequestModal}>
-              Request Access
+              {t('home:RequestAccess')}
             </button>
             <button id="loginLogIn" className="log-in btn" onClick={this.login}>
-              Log In
+              {t('home:LogIn')}
             </button>
           </span>
         </section>
@@ -52,3 +54,5 @@ export default class OktaSignInWidget extends Component {
     );
   }
 }
+
+export default withTranslation('home')(OktaSignInWidget);

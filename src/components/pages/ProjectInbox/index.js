@@ -16,6 +16,8 @@ import {
 } from '../../common/commonHelper.js';
 import InputField from '../../common/InputField';
 import _ from 'lodash';
+import { withTranslation } from 'react-i18next';
+import { compose } from 'redux';
 
 class ProjectInbox extends Component {
   constructor(props) {
@@ -103,18 +105,14 @@ class ProjectInbox extends Component {
   };
 
   render() {
-    const { loading, result, handleSubmit, searchCriteria, facets } = this.props;
+    const { loading, result, handleSubmit, searchCriteria, facets, t } = this.props;
     return (
       <div className="col-10">
         <LoadingImg show={loading} />
         <div className="row d-flex no-gutters">
           <div className="col-12">
-            <h2>Project Inbox</h2>
-            <p>
-              Here you can utilize the search input and filters the same as you can on the find a
-              Project screen but the items below have been highlighted for you specifically to
-              review by your peers.
-            </p>
+            <h2>{t('inbox:ProjectInbox')}</h2>
+            <p>{t('inbox:Description')}</p>
           </div>
         </div>
         <br />
@@ -133,13 +131,13 @@ class ProjectInbox extends Component {
                 aria-expanded="false"
                 aria-controls="collapsePanel"
               >
-                <i className="material-icons">settings</i> Filters
+                <i className="material-icons">settings</i> {t('inbox:Filters')}
               </button>
               <div className="search-bar">
                 <Field name="searchTerm" component={InputField} />
               </div>
               <button id="projectSearchButton" className="btn btn-primary">
-                <i className="material-icons">search</i> Search
+                <i className="material-icons">search</i> {t('inbox:Search')}
               </button>
             </li>
             <li className="col-2 d-flex"></li>
@@ -160,12 +158,14 @@ class ProjectInbox extends Component {
 
         <ul className="row results-controls">
           <li className="col-4 d-flex">
-            <span className="viewing">Viewing</span>
+            <span className="viewing">{t('inbox:Viewing')} </span>
             <ProjectsViewDropDown
               itemsPerPage={searchCriteria.itemsPerPage}
               onChange={this.setProjectsView}
             />
-            <span className="viewing">of {result.TotalItems} Results</span>
+            <span className="viewing">
+              of {result.TotalItems} {t('inbox:Results')}
+            </span>
           </li>
           <li className="col-4 d-flex justify-content-center">
             <nav aria-label="Page navigation example">
@@ -175,6 +175,7 @@ class ProjectInbox extends Component {
                 itemsPerPage={result.ItemsPerPage}
                 handlePaginationChange={this.handlePaginationChange}
                 projectViewCount={searchCriteria.itemsPerPage}
+                t={t}
               />
             </nav>
           </li>
@@ -188,6 +189,7 @@ class ProjectInbox extends Component {
               this.handleColumnSort(columnID, columnSortOrder)
             }
             readNotification={this.props.readNotification}
+            t={t}
           />
         </div>
       </div>
@@ -216,8 +218,11 @@ const mapStateToProps = state => ({
 });
 
 export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps,
+  compose(
+    withTranslation('inbox'),
+    connect(
+      mapStateToProps,
+      mapDispatchToProps,
+    ),
   )(ProjectInbox),
 );

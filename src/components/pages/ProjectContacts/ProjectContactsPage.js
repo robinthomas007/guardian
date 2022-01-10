@@ -275,7 +275,7 @@ class ProjectContactsPage extends Component {
         <div className="row d-flex no-gutters step-description">
           <div className="col-12">
             <h2>
-              {t('contact:step')} <span className="count-circle">2</span>{' '}
+              {t('contact:step')} <span className="count-circle notranslate">2</span>{' '}
               {t('contact:ProjectContacts')}
             </h2>
             <p>

@@ -4,6 +4,7 @@ import Dropdown from '../../common/DropdownSelect';
 import DateTimePicker from '../../common/DateTimePicker';
 import _ from 'lodash';
 import { formatSelectArray, fomatDates } from '../../common/commonHelper';
+import { useTranslation } from 'react-i18next';
 
 const selectedFilter = [
   { name: 'ProjectArtist', label: 'Project Artist' },
@@ -15,7 +16,7 @@ const selectedFilter = [
 
 const Filter = props => {
   useEffect(() => {}, []);
-
+  const { t, i18n } = useTranslation();
   const values = props.formValues && props.formValues.values;
 
   const deleteSelected = (val, name) => {
@@ -141,19 +142,19 @@ const Filter = props => {
     <div>
       <div className="search-filters find-project-filter collapse" id="collapsePanel">
         <div className="card card-body">
-          <h5>Search Filters</h5>
+          <h5>{t('inbox:SearchFilters')}</h5>
           <br />
           <div className="row no-gutters">
             <div className="col-6">
               <div className="assigned_inbox_filter_field">
                 <Field
-                  label="Assigned"
+                  label={t('inbox:Assigned')}
                   name="From"
                   handleOnSelect={handleOnSelect}
                   component={DateTimePicker}
                 />
                 <Field
-                  label="To"
+                  label={t('inbox:To')}
                   name="To"
                   component={DateTimePicker}
                   handleOnSelect={handleOnSelect}
@@ -162,7 +163,7 @@ const Filter = props => {
             </div>
             <div className="col-6">
               <Field
-                label="Artist"
+                label={t('inbox:Artist')}
                 name="ProjectArtist"
                 handleOnSelect={handleOnSelect}
                 component={Dropdown}
@@ -174,7 +175,7 @@ const Filter = props => {
           <div className="row no-gutters">
             <div className="col-6">
               <Field
-                label="Assigned By"
+                label={t('inbox:AssignedBy')}
                 name="AssignedBy"
                 handleOnSelect={handleOnSelect}
                 component={Dropdown}
@@ -184,7 +185,7 @@ const Filter = props => {
             </div>
             <div className="col-6">
               <Field
-                label="Section"
+                label={t('inbox:Section/Tag')}
                 name="Step"
                 handleOnSelect={handleOnSelect}
                 component={Dropdown}

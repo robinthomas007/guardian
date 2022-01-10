@@ -7,8 +7,9 @@ import { connect } from 'react-redux';
 import * as headerActions from './../../../actions/headerActions';
 import moment from 'moment';
 import _ from 'lodash';
-import { Dropdown } from 'react-bootstrap';
-import i18n from './../../../i18n';
+import { withTranslation } from 'react-i18next';
+import { compose } from 'redux';
+import LanguageDropdown from '../../common/LanguageDropdown';
 
 let interval = null;
 const hexArray = [
@@ -62,7 +63,7 @@ class Header extends Component {
       utcDateTime: '',
       navSteps: [
         {
-          description: 'Release Info',
+          description: 'ReleaseInfo',
           path: '/releaseInformation/',
           complete: false,
           stepComplete: true,
@@ -88,7 +89,7 @@ class Header extends Component {
           isNav: true,
         },
         {
-          description: 'Audio Files',
+          description: 'AudioFiles',
           path: '/audioFiles/',
           complete: false,
           stepComplete: false,
@@ -101,7 +102,7 @@ class Header extends Component {
           isNav: true,
         },
         {
-          description: 'Track Info',
+          description: 'TrackInfo',
           path: '/trackInformation/',
           complete: false,
           stepComplete: false,
@@ -164,36 +165,8 @@ class Header extends Component {
       showVideoTutorialModal: false,
       notifify: false,
       showCommentBox: false,
-      toggleValue:
-        '<img class="lang-img" src="https://img.icons8.com/color/48/000000/usa-circular.png"/> English',
-      options: [
-        {
-          label:
-            '<img class="lang-img" src="https://img.icons8.com/color/48/000000/usa-circular.png"/> English',
-          value: 'en',
-        },
-        {
-          label:
-            '<img class="lang-img" src="https://img.icons8.com/color/48/000000/spain-circular.png"/> Spanish',
-          value: 'sp',
-        },
-      ],
     };
     this.handleClickOutside = this.handleClickOutside.bind(this);
-  }
-
-  getTextValue(value) {
-    return this.state.options[value - 1];
-  }
-
-  changeLanguage = lng => {
-    i18n.changeLanguage(lng);
-  };
-
-  handleChange(value) {
-    const item = this.getTextValue(value);
-    this.setState({ toggleValue: item.label });
-    this.changeLanguage(item.value);
   }
 
   getStepIcon = (navLink, navIndex) => {
@@ -279,7 +252,9 @@ class Header extends Component {
                         : ''),
                   }}
                 >
-                  <span className="step-description text-nowrap">{navLink.description}</span>
+                  <span className="step-description text-nowrap">
+                    {this.props.t(`header:${navLink.description}`)}
+                  </span>
                   <span className={activeNav && activeNav > i ? 'step past' : 'step'}>
                     {this.props.projectData.Project ? this.getStepIcon(navLink, i) : null}
                   </span>
@@ -437,7 +412,11 @@ class Header extends Component {
   }
 
   getHeaderContent = () => {
-    let Projectstatus = _.get(this.props.projectData, 'Project.projectStatus', 'In Progress');
+    let Projectstatus = _.get(
+      this.props.projectData,
+      'Project.projectStatus',
+      this.props.t('header:InProgress'),
+    );
     if (this.props.status) {
       Projectstatus = this.props.status;
     }
@@ -450,11 +429,13 @@ class Header extends Component {
               <h1>
                 {this.props.projectData.Project && this.props.projectData.Project.projectTitle
                   ? `${this.props.projectData.Project.projectArtistName} - ${this.props.projectData.Project.projectTitle}`
-                  : this.getDefaultPageTitle('New Project')}
+                  : this.getDefaultPageTitle(this.props.t('header:NewProject'))}
               </h1>
             </div>
             <div className="col-2 align-self-start">
-              {this.state.showProjectStatus ? 'STATUS: ' + Projectstatus : null}
+              {this.state.showProjectStatus
+                ? this.props.t('header:Status') + ': ' + Projectstatus
+                : null}
             </div>
           </div>
           <div className="col-1"></div>
@@ -557,20 +538,8 @@ class Header extends Component {
     );
   };
 
-  getLanguageOptions = () => {
-    let options = this.state.options.map((option, i) => {
-      return (
-        <Dropdown.Item
-          key={i}
-          eventKey={i + 1}
-          dangerouslySetInnerHTML={{ __html: option.label }}
-        ></Dropdown.Item>
-      );
-    });
-    return options;
-  };
-
   render() {
+    const { t } = this.props;
     const isPreRelease = isPreReleaseDate(this.props.projectData);
     const activeNav = this.getActiveNav();
     let navToUse =
@@ -617,7 +586,8 @@ class Header extends Component {
                     {this.props.userData.IsAdmin ? (
                       <li>
                         <NavLink className="steps" to={{ pathname: '/userAdmin' }}>
-                          <i className="material-icons notranslate">supervised_user_circle</i> Admin
+                          <i className="material-icons notranslate">supervised_user_circle</i>
+                          {t('header:Admin')}
                         </NavLink>
                       </li>
                     ) : null}
@@ -627,17 +597,19 @@ class Header extends Component {
                         to={{ pathname: '/releaseInformation' }}
                         onClick={() => this.props.clearProject()}
                       >
-                        <i className="material-icons notranslate">library_music</i> New Project
+                        <i className="material-icons notranslate">library_music</i>
+                        {t('header:NewProject')}
                       </NavLink>
                     </li>
                     <li>
                       <NavLink className="steps" to={{ pathname: '/findProject' }}>
-                        <i className="material-icons notranslate">search</i> Project Search
+                        <i className="material-icons notranslate">search</i>
+                        {t('header:ProjectSearch')}
                       </NavLink>
                     </li>
                     <li>
                       <NavLink className="steps" to={{ pathname: '/inbox' }}>
-                        <i className="material-icons notranslate">email</i> Inbox
+                        <i className="material-icons notranslate">email</i> {t('header:Inbox')}
                       </NavLink>
                     </li>
                     {/*<li>
@@ -662,27 +634,14 @@ class Header extends Component {
                     </li>
                     <li> | </li>
                     <li>
-                      <div id="google_translate_element"></div>
+                      <LanguageDropdown />
                     </li>
                     <li>
-                      <Dropdown
-                        className="dropdown lang-dropdown"
-                        onSelect={e => this.handleChange(e)}
-                      >
-                        <Dropdown.Toggle
-                          id="dropdown-basic"
-                          dangerouslySetInnerHTML={{ __html: this.state.toggleValue }}
-                        ></Dropdown.Toggle>
-
-                        <input type="hidden" id={this.props.id} value={this.props.value} />
-
-                        <Dropdown.Menu>{this.getLanguageOptions()}</Dropdown.Menu>
-                      </Dropdown>
+                      {t('header:Welcome')}, {this.props.userData.name}
                     </li>
-                    <li>Welcome, {this.props.userData.name}</li>
                     <li>
                       <span className="btn-log" onClick={e => this.props.handleLogoutClick(e)}>
-                        Log Out
+                        {t('header:Logout')}
                       </span>
                     </li>
                   </ul>
@@ -754,8 +713,11 @@ const mapStateToProps = state => ({
 });
 
 export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps,
+  compose(
+    withTranslation('header'),
+    connect(
+      mapStateToProps,
+      mapDispatchToProps,
+    ),
   )(Header),
 );

@@ -23,6 +23,15 @@ import territorialSP from 'locales/sp/territorial.json';
 import reviewEN from 'locales/en/review.json';
 import reviewSP from 'locales/sp/review.json';
 
+import headerEN from 'locales/en/header.json';
+import headerSP from 'locales/sp/header.json';
+
+import inboxEN from 'locales/en/inbox.json';
+import inboxSP from 'locales/sp/inbox.json';
+
+import homeEN from 'locales/en/home.json';
+import homeSP from 'locales/sp/home.json';
+
 // the translations
 const resources = {
   en: {
@@ -33,6 +42,9 @@ const resources = {
     track: trackEN,
     territorial: territorialEN,
     review: reviewEN,
+    header: headerEN,
+    inbox: inboxEN,
+    home: homeEN,
   },
   sp: {
     translation: translationSP,
@@ -42,6 +54,9 @@ const resources = {
     track: trackSP,
     territorial: territorialSP,
     review: reviewSP,
+    header: headerSP,
+    inbox: inboxSP,
+    home: homeSP,
   },
 };
 
@@ -50,7 +65,18 @@ i18n
   .use(initReactI18next) // passes i18n down to react-i18next
   .init({
     resources,
-    ns: ['translations', 'releaseInfo', 'contact', 'audio', 'track', 'territorial', 'review'],
+    ns: [
+      'translations',
+      'releaseInfo',
+      'contact',
+      'audio',
+      'track',
+      'territorial',
+      'review',
+      'header',
+      'inbox',
+      'home',
+    ],
     defaultNS: 'translations',
     keySeparator: false, // we do not use keys in form messages.welcome
     fallbackLng: 'en',

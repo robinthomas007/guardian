@@ -380,7 +380,7 @@ class ReleaseinformationPage extends Component {
         <div className="row d-flex no-gutters step-description">
           <div className="col-12">
             <h2>
-              {t('releaseInfo:step')} <span className="count-circle">1</span>{' '}
+              {t('releaseInfo:step')} <span className="count-circle notranslate">1</span>{' '}
               {t('releaseInfo:ReleaseInformation')}
             </h2>
             <p>

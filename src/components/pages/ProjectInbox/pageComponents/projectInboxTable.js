@@ -143,6 +143,7 @@ class ProjectInboxDataTable extends Component {
   }
 
   getDataTable = () => {
+    const { t } = this.props;
     return (
       <thead>
         <tr className="d-flex w-100">
@@ -153,7 +154,8 @@ class ProjectInboxDataTable extends Component {
             onMouseOut={(e, columnID) => this.handleMouseOut(e, 'received')}
             onClick={id => this.handleTableSort('received')}
           >
-            Received{this.handleSortDisplay('received')}
+            {t('inbox:Received')}
+            {this.handleSortDisplay('received')}
             <i
               className={
                 this.state.activeHover === 'received' ? 'material-icons' : 'material-icons d-none'
@@ -168,7 +170,8 @@ class ProjectInboxDataTable extends Component {
             onMouseOut={(e, columnID) => this.handleMouseOut(e, 'assigned_by')}
             onClick={id => this.handleTableSort('assigned_by')}
           >
-            Assigned By{this.handleSortDisplay('assigned_by')}
+            {t('inbox:AssignedBy')}
+            {this.handleSortDisplay('assigned_by')}
             <i
               className={
                 this.state.activeHover === 'assigned_by'
@@ -185,7 +188,8 @@ class ProjectInboxDataTable extends Component {
             onMouseOut={(e, columnID) => this.handleMouseOut(e, 'title')}
             onClick={id => this.handleTableSort('title')}
           >
-            Project Title{this.handleSortDisplay('title')}
+            {t('inbox:ProjectTitle')}
+            {this.handleSortDisplay('title')}
             <i
               className={
                 this.state.activeHover === 'title' ? 'material-icons' : 'material-icons d-none'
@@ -200,7 +204,8 @@ class ProjectInboxDataTable extends Component {
             onMouseOut={(e, columnID) => this.handleMouseOut(e, 'artist')}
             onClick={id => this.handleTableSort('artist')}
           >
-            Artist{this.handleSortDisplay('artist')}
+            {t('inbox:Artist')}
+            {this.handleSortDisplay('artist')}
             <i
               className={
                 this.state.activeHover === 'artist' ? 'material-icons' : 'material-icons d-none'
@@ -215,7 +220,8 @@ class ProjectInboxDataTable extends Component {
             onMouseOut={(e, columnID) => this.handleMouseOut(e, 'label')}
             onClick={id => this.handleTableSort('label')}
           >
-            Label{this.handleSortDisplay('label')}
+            {t('inbox:Label')}
+            {this.handleSortDisplay('label')}
             <i
               className={
                 this.state.activeHover === 'label' ? 'material-icons' : 'material-icons d-none'
@@ -224,8 +230,8 @@ class ProjectInboxDataTable extends Component {
               arrow_drop_up
             </i>
           </th>
-          <th className="col-2 status">Section/Tag</th>
-          <th className="col-2 status">Comment</th>
+          <th className="col-2 status">{t('inbox:Section/Tag')}</th>
+          <th className="col-2 status">{t('inbox:Comment')}</th>
         </tr>
       </thead>
     );
