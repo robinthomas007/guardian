@@ -175,6 +175,9 @@ class ReleaseinformationPage extends Component {
               this.props.setHeaderProjectData(responseJSON);
               localStorage.setItem('projectData', JSON.stringify(this.state.formInputs));
               this.props.history.push('/projectContacts/' + responseJSON.Project.projectID);
+              if (!responseJSON.Project.upc || responseJSON.Project.upc === '') {
+                this.props.initializeUpcData();
+              }
             }
           })
           .catch(error => {
@@ -655,6 +658,7 @@ const mapDispatchToProps = dispatch => ({
   getProjectDetails: data => dispatch(releaseAction.getProjectDetails(data)),
   submitProjectDetails: data => dispatch(releaseAction.submitProjectDetails(data)),
   validateProjectDetails: data => dispatch(releaseAction.validateProjectDetails(data)),
+  initializeUpcData: () => dispatch(releaseAction.initializeUpcData()),
 });
 
 const mapStateToProps = state => ({
