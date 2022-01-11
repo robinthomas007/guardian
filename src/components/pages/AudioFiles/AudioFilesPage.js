@@ -619,10 +619,17 @@ class AudioFilesPage extends Component {
   render() {
     const { project } = this.state;
     const { uploads, loading, upcLoading } = this.props;
+    let isUpcProject = false;
+    if (this.state.project && this.state.project.Project.projectID) {
+      if (this.state.project.Project.upc) {
+        isUpcProject = false;
+      } else {
+        isUpcProject = true;
+      }
+    }
     return (
       <div className="col-10">
-        {/* <HaveAudioModal projectID={this.props.projectID} />*/}
-
+        {isUpcProject && <HaveAudioModal projectID={this.props.projectID} />}
         <LoadingImg show={this.state.showLoader || loading || upcLoading} />
 
         <ReplaceAudioModal
