@@ -39,19 +39,19 @@ class Header extends Component {
       },
       compactViewPages: {
         findProject: {
-          titleText: 'Project Search',
+          titleText: 'ProjectSearch',
         },
         inbox: {
-          titleText: 'Project Inbox',
+          titleText: 'ProjectInbox',
         },
         admin: {
-          titleText: 'User Administration',
+          titleText: 'UserAdministration',
         },
         helpGuide: {
-          titleText: 'Help / FAQs',
+          titleText: 'Help/FAQs',
         },
         userAdmin: {
-          titleText: 'User Administration',
+          titleText: 'UserAdministration',
         },
       },
       projectID: '',
@@ -275,7 +275,9 @@ class Header extends Component {
 
   getDefaultPageTitle = defaultText => {
     const isDefaultCompactViewPage = this.state.compactViewPages[this.props.pagePath.split('/')[1]];
-    return isDefaultCompactViewPage ? isDefaultCompactViewPage.titleText : defaultText;
+    return isDefaultCompactViewPage
+      ? this.props.t(`header:${isDefaultCompactViewPage.titleText}`)
+      : defaultText;
   };
 
   handleHeaderViewType = () => {

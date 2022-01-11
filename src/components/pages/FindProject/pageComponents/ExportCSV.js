@@ -49,6 +49,7 @@ export default class ExportCSV extends React.Component {
 
   render() {
     const { loading, data, headers } = this.state;
+    const { t } = this.props;
     return (
       <div style={{ textAlign: 'right', width: '100%' }}>
         <button
@@ -59,11 +60,11 @@ export default class ExportCSV extends React.Component {
         >
           {loading ? (
             <span>
-              <i className="material-icons">description</i> Exporting...
+              <i className="material-icons">description</i> {t('search:Exporting')} ...
             </span>
           ) : (
             <span>
-              <i className="material-icons">description</i> Export
+              <i className="material-icons">description</i> {t('search:Export')}
             </span>
           )}
         </button>

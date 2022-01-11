@@ -310,6 +310,7 @@ class FindProjectDataTable extends Component {
   };
 
   getDataTable = () => {
+    const { t } = this.props;
     return (
       <thead>
         <tr>
@@ -335,7 +336,8 @@ class FindProjectDataTable extends Component {
             onMouseOut={(e, columnID) => this.handleMouseOut(e, 'last_updated')}
             onClick={id => this.handleTableSort('last_updated')}
           >
-            Last Update{this.handleSortDisplay('last_updated')}
+            {t('search:LastUpdate')}
+            {this.handleSortDisplay('last_updated')}
             <i
               className={
                 this.state.activeHover === 'last_updated'
@@ -352,7 +354,8 @@ class FindProjectDataTable extends Component {
             onMouseOut={(e, columnID) => this.handleMouseOut(e, 'title')}
             onClick={id => this.handleTableSort('title')}
           >
-            Project Title{this.handleSortDisplay('title')}
+            {t('search:ProjectTitle')}
+            {this.handleSortDisplay('title')}
             <i
               className={
                 this.state.activeHover === 'title' ? 'material-icons' : 'material-icons invisible'
@@ -367,7 +370,8 @@ class FindProjectDataTable extends Component {
             onMouseOut={(e, columnID) => this.handleMouseOut(e, 'artist')}
             onClick={id => this.handleTableSort('artist')}
           >
-            Artist{this.handleSortDisplay('artist')}
+            {t('search:Artist')}
+            {this.handleSortDisplay('artist')}
             <i
               className={
                 this.state.activeHover === 'artist' ? 'material-icons' : 'material-icons invisible'
@@ -382,7 +386,8 @@ class FindProjectDataTable extends Component {
             onMouseOut={(e, columnID) => this.handleMouseOut(e, 'label')}
             onClick={id => this.handleTableSort('label')}
           >
-            Label{this.handleSortDisplay('label')}
+            {t('search:Label')}
+            {this.handleSortDisplay('label')}
             <i
               className={
                 this.state.activeHover === 'label' ? 'material-icons' : 'material-icons invisible'
@@ -397,7 +402,8 @@ class FindProjectDataTable extends Component {
             onMouseOut={(e, columnID) => this.handleMouseOut(e, 'release_date')}
             onClick={id => this.handleTableSort('release_date')}
           >
-            Release Date{this.handleSortDisplay('release_date')}
+            {t('search:ReleaseDate')}
+            {this.handleSortDisplay('release_date')}
             <i
               className={
                 this.state.activeHover === 'release_date'
@@ -414,7 +420,8 @@ class FindProjectDataTable extends Component {
             onMouseOut={(e, columnID) => this.handleMouseOut(e, 'status')}
             onClick={id => this.handleTableSort('status')}
           >
-            Status{this.handleSortDisplay('status')}
+            {t('search:Status')}
+            {this.handleSortDisplay('status')}
             <i
               className={
                 this.state.activeHover === 'status' ? 'material-icons' : 'material-icons invisible'
@@ -424,10 +431,10 @@ class FindProjectDataTable extends Component {
             </i>
           </th>
 
-          <th className="status text-center">Audio</th>
-          <th className="status text-center">Tracks</th>
-          <th className="status text-center">Rights</th>
-          <th className="status text-center">Blocking</th>
+          <th className="status text-center">{t('search:Audio')}</th>
+          <th className="status text-center">{t('search:Tracks')}</th>
+          <th className="status text-center">{t('search:Rights')}</th>
+          <th className="status text-center">{t('search:Blocking')}</th>
         </tr>
       </thead>
     );

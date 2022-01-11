@@ -2,6 +2,7 @@
   "Admin": "Admin",
   "NewProject": "New Project",
   "ProjectSearch": "Project Search",
+  "ProjectInbox": "Project Inbox",
   "Inbox": "Inbox",
   "Welcome": "Welcome",
   "Logout": "Logout",
@@ -13,5 +14,7 @@
   "TrackInfo": "Track Info",
   "Rights": "Rights",
   "Blocking": "Blocking",
-  "Review": "Review"
+  "Review": "Review",
+  "Help/FAQs": "Help/FAQs",
+  "UserAdministration": "User Administration"
 }

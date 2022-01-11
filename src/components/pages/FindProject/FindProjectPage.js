@@ -14,6 +14,8 @@ import InputField from '../../common/InputField';
 import _ from 'lodash';
 import { getSearchCriteria, getToDate, getFromDate } from '../../common/commonHelper.js';
 import ExportCSV from './pageComponents/ExportCSV';
+import { withTranslation } from 'react-i18next';
+import { compose } from 'redux';
 
 class FindProjectPage extends Component {
   constructor(props) {
@@ -114,7 +116,7 @@ class FindProjectPage extends Component {
   };
 
   render() {
-    const { loading, result, handleSubmit, searchCriteria, facets } = this.props;
+    const { loading, result, handleSubmit, searchCriteria, facets, t } = this.props;
     return (
       <div className="col-10">
         <IntroModal />
@@ -122,13 +124,11 @@ class FindProjectPage extends Component {
 
         <div className="row d-flex no-gutters">
           <div className="col-12">
-            <h2>Project Search</h2>
+            <h2>{t('search:ProjectSearch')}</h2>
             <p>
-              Search for an existing project or release in the search bar below. Projects can be
-              located by Artist, Track, ISRC or Project Title (Album, Compilation, EP, or Single
-              name). <br />
-              Can't find what you're looking for? Email us at{' '}
-              <a href="mailto:guardian-support@umusic.com">guardian-support@umusic.com</a>.
+              {t('search:DescriptionMain')} <br />
+              {t('search:DescriptionSub')}{' '}
+              <a href="mailto:guardian-support@umusic.com">{t('search:Email')}</a>.
             </p>
           </div>
         </div>
@@ -148,13 +148,14 @@ class FindProjectPage extends Component {
                 aria-expanded="false"
                 aria-controls="collapsePanel"
               >
-                <i className="material-icons">settings</i> Filters
+                <i className="material-icons">settings</i>
+                {t('search:Filters')}
               </button>
               <div className="search-bar">
                 <Field name="searchTerm" component={InputField} />
               </div>
               <button id="projectSearchButton" className="btn btn-primary">
-                <i className="material-icons">search</i> Search
+                <i className="material-icons">search</i> {t('search:Search')}
               </button>
             </li>
             <li className="col-2 d-flex"></li>
@@ -174,12 +175,14 @@ class FindProjectPage extends Component {
 
         <ul className="row results-controls">
           <li className="col-4 d-flex">
-            <span className="viewing">Viewing</span>
+            <span className="viewing">{t('search:Viewing')}</span>
             <ProjectsViewDropDown
               itemsPerPage={searchCriteria.itemsPerPage}
               onChange={this.setProjectsView}
             />
-            <span className="viewing">of {result.TotalItems} Results</span>
+            <span className="viewing">
+              {t('search:of')} {result.TotalItems} {t('search:Results')}{' '}
+            </span>
           </li>
           <li className="col-4 d-flex justify-content-center pagination-wrap">
             <nav aria-label="Page navigation example">
@@ -193,11 +196,16 @@ class FindProjectPage extends Component {
             </nav>
           </li>
           <li className="col-4 d-flex">
-            <ExportCSV formValues={this.props.formValues} getSearchCriteria={getSearchCriteria} />
+            <ExportCSV
+              t={t}
+              formValues={this.props.formValues}
+              getSearchCriteria={getSearchCriteria}
+            />
           </li>
         </ul>
         <div className="table-responsive row">
           <FindProjectDataTable
+            t={t}
             userData={JSON.parse(sessionStorage.getItem('user'))}
             data={result}
             handleColumnSort={(columnID, columnSortOrder) =>
@@ -233,8 +241,11 @@ const mapStateToProps = state => ({
 });
 
 export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps,
+  compose(
+    withTranslation('search'),
+    connect(
+      mapStateToProps,
+      mapDispatchToProps,
+    ),
   )(FindProjectPage),
 );

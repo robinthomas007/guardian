@@ -2,6 +2,7 @@
   "Admin": "Administradora",
   "NewProject": "Nuevo proyecto",
   "ProjectSearch": "Búsqueda de proyectos",
+  "ProjectInbox": "Bandeja de entrada del proyecto",
   "Inbox": "Bandeja de entrada",
   "Welcome": "Bienvenidos",
   "Logout": "Cerrar sesión",
@@ -13,5 +14,7 @@
   "TrackInfo": "Información de seguimiento",
   "Rights": "Derechos",
   "Blocking": "Bloqueo",
-  "Review": "Revisar"
+  "Review": "Revisar",
+  "Help/FAQs": "Ayuda / Preguntas frecuentes",
+  "UserAdministration": "Administración de Usuario"
 }

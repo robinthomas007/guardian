@@ -6,6 +6,7 @@ import DateTimePicker from '../../common/DateTimePicker';
 import _ from 'lodash';
 import { formatSelectArray } from '../../common/commonHelper';
 import moment from 'moment';
+import { useTranslation } from 'react-i18next';
 
 const selectedFilter = [
   { name: 'labelIds', label: 'Labels' },
@@ -19,6 +20,7 @@ const selectedFilter = [
 
 const Filter = props => {
   useEffect(() => {}, []);
+  const { t, i18n } = useTranslation();
 
   const values = props.formValues && props.formValues.values;
 
@@ -154,12 +156,12 @@ const Filter = props => {
     <div>
       <div className="search-filters find-project-filter collapse" id="collapsePanel">
         <div className="card card-body">
-          <h5>Search Filters</h5>
+          <h5>{t('search:SearchFilters')}</h5>
           <br />
           <div className="row no-gutters">
             <div className="col-5">
               <Field
-                label="By Label"
+                label={t('search:ByLabel')}
                 name="labelIds"
                 handleOnSelect={handleOnSelect}
                 component={multiSelect}
@@ -170,7 +172,7 @@ const Filter = props => {
             <div className="col-2"></div>
             <div className="col-5">
               <Field
-                label="By Status"
+                label={t('search:ByStatus')}
                 name="statusID"
                 clearable={true}
                 handleOnSelect={handleOnSelect}
@@ -182,7 +184,7 @@ const Filter = props => {
           <div className="row no-gutters">
             <div className="col-5">
               <Field
-                label="Has Audio"
+                label={t('search:HasAudio')}
                 name="hasAudio"
                 clearable={true}
                 handleOnSelect={handleOnSelect}
@@ -193,7 +195,7 @@ const Filter = props => {
             <div className="col-2"></div>
             <div className="col-5">
               <Field
-                label="Has Blocking"
+                label={t('search:HasBlocking')}
                 name="hasBlocking"
                 clearable={true}
                 handleOnSelect={handleOnSelect}
@@ -205,7 +207,7 @@ const Filter = props => {
           <div className="row no-gutters">
             <div className="col-5">
               <Field
-                label="Has Rights"
+                label={t('search:HasRights')}
                 name="hasRights"
                 clearable={true}
                 handleOnSelect={handleOnSelect}
@@ -217,13 +219,13 @@ const Filter = props => {
           <div className="row no-gutters">
             <div className="col-10 last-up-date">
               <Field
-                label="Last Updated"
+                label={t('search:LastUpdated')}
                 name="from"
                 handleOnSelect={handleOnSelect}
                 component={DateTimePicker}
               />
               <Field
-                label="to"
+                label={t('search:to')}
                 name="to"
                 handleOnSelect={handleOnSelect}
                 component={DateTimePicker}
