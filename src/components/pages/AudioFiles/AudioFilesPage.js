@@ -346,6 +346,7 @@ class AudioFilesPage extends Component {
     const fetchBody = JSON.stringify({
       PagePath: this.props.match.url ? this.props.match.url : '',
       ProjectID: this.props.match.params.projectID ? this.props.match.params.projectID : '',
+      languagecode: localStorage.getItem('languageCode') || 'en',
     });
 
     fetch(window.env.api.url + '/project/review', {

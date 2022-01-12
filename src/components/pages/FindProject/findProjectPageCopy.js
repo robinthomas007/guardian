@@ -80,6 +80,7 @@ class FindProjectPage extends Component {
     this.setState({ showLoader: true });
     const fetchBody = JSON.stringify({
       SearchCriteria: this.state.searchCriteria,
+      languagecode: localStorage.getItem('languageCode') || 'en',
     });
 
     fetch(window.env.api.url + '/project/search', {

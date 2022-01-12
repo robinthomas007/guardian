@@ -36,6 +36,8 @@ import searchEN from 'locales/en/search.json';
 import searchSP from 'locales/sp/search.json';
 
 import helpEN from 'locales/en/help.json';
+import blockingEN from 'locales/en/blocking.json';
+import blockingSP from 'locales/sp/blocking.json';
 
 // the translations
 const resources = {
@@ -52,6 +54,7 @@ const resources = {
     home: homeEN,
     search: searchEN,
     help: helpEN,
+    blocking: blockingEN,
   },
   sp: {
     translation: translationSP,
@@ -65,6 +68,7 @@ const resources = {
     inbox: inboxSP,
     home: homeSP,
     search: searchSP,
+    blocking: blockingSP,
   },
 };
 
@@ -86,6 +90,7 @@ i18n
       'home',
       'search',
       'help',
+      'blocking',
     ],
     defaultNS: 'translations',
     keySeparator: false, // we do not use keys in form messages.welcome

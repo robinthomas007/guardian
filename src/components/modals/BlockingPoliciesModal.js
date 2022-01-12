@@ -70,31 +70,28 @@ class BlockingPoliciesModal extends Component {
   }
 
   render() {
+    const { t } = this.props;
     return (
-      <>
-        <Modal id="BlockingPolicies" show={this.state.show} onHide={this.handleClose}>
-          <Modal.Header>
-            <Modal.Title></Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            Do you wish to block on licensed platforms after commercial release?
-            <span>
-              <br />
-              <Button variant="primary" id="yesButton" onClick={this.handleClose}>
-                Yes
-              </Button>
-              <Button variant="primary" id="noButton" onClick={this.handleNoAudioClick}>
-                Skip
-              </Button>
-            </span>
-            <div className="alert alert-primary clearfix" role="alert">
-              Here you can choose to block content AFTER commercial release until a desired date. 
-              UMG’s default policy is to monetize content on licensed platforms upon commercial
-              release.
-            </div>
-          </Modal.Body>
-        </Modal>
-      </>
+      <Modal id="BlockingPolicies" show={this.state.show} onHide={this.handleClose}>
+        <Modal.Header>
+          <Modal.Title></Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {t('blocking:popupmessage')}
+          <span>
+            <br />
+            <Button variant="primary" id="yesButton" onClick={this.handleClose}>
+              {t('blocking:Yes')}
+            </Button>
+            <Button variant="primary" id="noButton" onClick={this.handleNoAudioClick}>
+              {t('blocking:Skip')}
+            </Button>
+          </span>
+          <div className="alert alert-primary clearfix" role="alert">
+            {t('blocking:PopupMessageDescriptionMain')}
+          </div>
+        </Modal.Body>
+      </Modal>
     );
   }
 }

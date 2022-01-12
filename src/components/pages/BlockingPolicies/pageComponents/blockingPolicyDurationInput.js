@@ -6,7 +6,7 @@ class BlockingPolicDurationInput extends Component {
     super(props);
     this.state = {
       options: [
-        { value: '', text: 'Select One', selected: true },
+        { value: '', text: props.t('blocking:SelectOne'), selected: true },
         { value: '> 30 sec', text: '> 30 sec', selected: false },
         { value: '> 1:00', text: '> 1:00', selected: false },
         { value: '> 1:30', text: '> 1:30', selected: false },
@@ -34,6 +34,21 @@ class BlockingPolicDurationInput extends Component {
 
   componentDidMount() {
     this.setState({ value: this.props.data });
+  }
+
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (nextProps.t !== this.props.t) {
+      this.setState({
+        options: [
+          { value: '', text: this.props.t('blocking:SelectOne'), selected: true },
+          { value: '> 30 sec', text: '> 30 sec', selected: false },
+          { value: '> 1:00', text: '> 1:00', selected: false },
+          { value: '> 1:30', text: '> 1:30', selected: false },
+          { value: '> 2:00', text: '> 2:00', selected: false },
+          { value: '> 2:30', text: '> 2:30', selected: false },
+        ],
+      });
+    }
   }
 
   render() {

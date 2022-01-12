@@ -49,6 +49,7 @@ class ProjectContactsPage extends Component {
       .getProjectDetails({
         PagePath: this.props.match.url ? this.props.match.url : '',
         ProjectID: this.props.match.params.projectID,
+        languagecode: localStorage.getItem('languageCode') || 'en',
       })
       .then(response => response.json())
       .then(responseJSON => {
@@ -147,6 +148,7 @@ class ProjectContactsPage extends Component {
       this.props
         .submitProjectDetails({
           Project: projectFields,
+          languagecode: localStorage.getItem('languageCode') || 'en',
         })
         .then(response => response.json())
         .then(responseJSON => {

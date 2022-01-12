@@ -62,6 +62,7 @@ class BlockingSites extends Component {
               inputTarget={'duration'}
               id={'duration'}
               disabled={site.block ? false : true}
+              t={this.props.t}
             />
           </td>
           <td>
@@ -84,42 +85,30 @@ class BlockingSites extends Component {
   };
 
   render() {
+    const { t } = this.props;
     return (
       <Table className="blocking-set">
         <thead>
           <tr>
             <th>
-              Tracks for Policy{' '}
-              <ToolTip
-                tabIndex="-1"
-                message="Drag and drop the tracks to include in the policy in the blue area below or select them from the dropdown."
-              />
+              {t('blocking:TracksforPolicy')}{' '}
+              <ToolTip tabIndex="-1" message={t('blocking:TracksforPolicyMessage')} />
             </th>
             <th>
-              Platform{' '}
-              <ToolTip
-                tabIndex="-1"
-                message="The UMG licensed platform to which the policy applies."
-              />
+              {t('blocking:Platform')}{' '}
+              <ToolTip tabIndex="-1" message={t('blocking:PlatformMessage')} />
             </th>
             <th>
-              Monetize{' '}
-              <ToolTip
-                tabIndex="-1"
-                message="No blocking will take place after commercial release."
-              />
+              {t('blocking:Monetize')}{' '}
+              <ToolTip tabIndex="-1" message={t('blocking:MonetizeMessage')} />
             </th>
             <th>
-              Block{' '}
-              <ToolTip tabIndex="-1" message="Blocking will continue after commercial release." />
+              {t('blocking:Block')} <ToolTip tabIndex="-1" message={t('blocking:BlockMessage')} />
             </th>
             <th></th>
             <th>
-              Blocked Until{' '}
-              <ToolTip
-                tabIndex="-1"
-                message="The expiration date for the block policy you submit.  If no date is selected, blocking will continue indefinitely."
-              />
+              {t('blocking:BlockedUntil')}{' '}
+              <ToolTip tabIndex="-1" message={t('blocking:BlockedUntilMessage')} />
             </th>
           </tr>
         </thead>
@@ -131,6 +120,7 @@ class BlockingSites extends Component {
                 data={this.props.UnassignedBlockingPolicySetTracks}
                 onChange={e => this.props.handleTrackSelect(e)}
                 setIndex={this.props.setIndex}
+                t={t}
               />
 
               <TracksDropArea

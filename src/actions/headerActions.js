@@ -28,13 +28,16 @@ export const getNotifications = val => {
   return dispatch => {
     dispatch(notificationRequest(true));
     return Api.post('/notifications/unread', val)
-
-      .then(response => response.json())
+      .then(response => {
+        if (response.status === 401) {
+          showNotyAutoError('Something went wrong, please refresh the browser');
+        }
+        return response.json();
+      })
       .then(response => {
         if (response.Notifications) {
           dispatch(notificationSuccess(response.Notifications));
         } else {
-          showNotyAutoError('Something went wrong, please refresh the browser');
           dispatch(notificationFailure(response.message));
         }
       })

@@ -76,7 +76,7 @@ class Content extends Component {
     }
   }
 
-  getUserData() {
+  getUserData(lang) {
     const user = JSON.parse(sessionStorage.getItem('user'));
     const fetchHeaders = new Headers({
       'Content-Type': 'application/json',
@@ -87,6 +87,7 @@ class Content extends Component {
       User: {
         email: this.state.user.email,
       },
+      languagecode: lang || localStorage.getItem('languageCode') || 'en',
     });
 
     fetch(window.env.api.url + '/login', {
@@ -118,6 +119,7 @@ class Content extends Component {
       const fetchBody = JSON.stringify({
         PagePath: pagePath,
         ProjectID: this.state.projectID ? this.state.projectID : '',
+        languagecode: localStorage.getItem('languageCode') || 'en',
       });
 
       fetch(window.env.api.url + '/project/review', {
@@ -234,6 +236,7 @@ class Content extends Component {
                 updateHistory={this.updateHistory}
                 clearProject={this.clearProject}
                 handleLogoutClick={this.handleLogoutClick}
+                getUserData={this.getUserData}
               />
               <div
                 className={

@@ -9,6 +9,7 @@ import { withRouter } from 'react-router-dom';
 import { formatDateToYYYYMMDD, convertToLocaleTime, resetDatePickerByObj } from '../../Utils';
 import { showNotyInfo, showNotyAutoError } from 'components/Utils';
 import _ from 'lodash';
+import { withTranslation } from 'react-i18next';
 
 class BlockingPoliciesPage extends Component {
   constructor(props) {
@@ -176,6 +177,7 @@ class BlockingPoliciesPage extends Component {
     const fetchBody = JSON.stringify({
       PagePath: this.props.match.url ? this.props.match.url : '',
       ProjectID: this.props.match.params.projectID,
+      languagecode: localStorage.getItem('languageCode') || 'en',
     });
 
     fetch(window.env.api.url + '/project/review', {
@@ -423,9 +425,10 @@ class BlockingPoliciesPage extends Component {
   }
 
   render() {
+    const { t } = this.props;
     return (
       <div className="col-10">
-        <BlockingPoliciesModal projectID={this.props.projectID} />
+        <BlockingPoliciesModal projectID={this.props.projectID} t={t} />
 
         <LoadingImg show={this.state.showLoader} />
 
@@ -434,37 +437,28 @@ class BlockingPoliciesPage extends Component {
         <div className="row no-gutters step-description">
           <div className="col-12">
             <h2>
-              Step <span className="count-circle">{this.getStepNumber()}</span> Post-Release UGC
-              Blocking <span className="option-text">(Optional)</span>
+              {t('blocking:Step')} <span className="count-circle">{this.getStepNumber()}</span>{' '}
+              {t('blocking:PostRelease')}{' '}
+              <span className="option-text">({t('blocking:Optional')})</span>
             </h2>
-            <p>
-              In this OPTIONAL step, you can choose to block content AFTER commercial release until
-              a desired date. UMG’s default policy is to monetize content on licensed platforms upon
-              commercial release. Here you can create a post-release block policy set, then drag
-              &amp; drop titles to assign specific tracks to that policy. This section can only be
-              completed by selecting the Request Approval button below.
-            </p>
-            <p>
-              Note: any post-release policies created in this section require approval and will not
-              be put into effect until approval is granted. Confirmation of approval will arrive via
-              email.
-            </p>
+            <p>{t('blocking:DescriptionMain')}</p>
+            <p>{t('blocking:NoteMessage')}</p>
           </div>
         </div>
         <div className="row no-gutters align-items-center">
           <div className="col-3">
-            <h2>Tracks With No Set Policy</h2>
+            <h2>{t('blocking:TracksWithNoSetPolicy')}</h2>
           </div>
           <div className="col-9">
             <div className="row no-gutters align-items-center card-nav">
               <div className="col-4">
                 <span className="drag-drop-arrow float-left">
-                  <span>Drag Audio Files To The Policy Set</span>
+                  <span>{t('blocking:DragAudioFilesToThePolicySet')}</span>
                 </span>
               </div>
               <div className="col-8">
                 <button className="btn btn-primary" onClick={this.addBlockingSet}>
-                  Create a New Blocking Policy
+                  {t('blocking:CreateANewBlockingPolicy')}
                 </button>
               </div>
             </div>
@@ -477,6 +471,7 @@ class BlockingPoliciesPage extends Component {
               dragSource={this.state.dragSource}
               handleDropAdd={this.handleDropAdd}
               handleChildDrag={this.handleChildDrag}
+              t={t}
             />
           </div>
           <div className="col-9">
@@ -493,6 +488,7 @@ class BlockingPoliciesPage extends Component {
               handleChildDrag={(e, i) => this.handleChildDrag(e)}
               handleTrackSelect={(e, i) => this.handleTrackSelect(e, i)}
               handleSetDelete={i => this.handleSetDelete(i)}
+              t={t}
             />
           </div>
         </div>
@@ -506,7 +502,7 @@ class BlockingPoliciesPage extends Component {
               className="btn btn-secondary saveButton"
               onClick={e => this.handleSubmit(e)}
             >
-              Save Draft
+              {t('blocking:Save')} {t('blocking:Draft')}
             </button>
             <button
               tabIndex="6+"
@@ -515,7 +511,7 @@ class BlockingPoliciesPage extends Component {
               className="btn btn-primary saveAndContinueButton"
               onClick={e => this.handleSubmit(e)}
             >
-              Save & Continue
+              {t('blocking:Save')} & {t('blocking:Continue')}
             </button>
           </div>
         </div>
@@ -524,4 +520,4 @@ class BlockingPoliciesPage extends Component {
   }
 }
 
-export default withRouter(BlockingPoliciesPage);
+export default withRouter(withTranslation('blocking')(BlockingPoliciesPage));

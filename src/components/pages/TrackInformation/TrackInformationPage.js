@@ -156,6 +156,7 @@ class TrackInformationPage extends Component {
       },
       PagePath: this.props.match.url ? this.props.match.url : '',
       ProjectID: projectID,
+      languagecode: localStorage.getItem('languageCode') || 'en',
     });
 
     fetch(window.env.api.url + '/project/review', {

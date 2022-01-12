@@ -13,11 +13,13 @@ export default class LanguageDropdown extends Component {
           label:
             '<img class="lang-img" src="https://img.icons8.com/color/48/000000/usa-circular.png"/> English',
           value: 'en',
+          languageCode: 'en',
         },
         {
           label:
             '<img class="lang-img" src="https://img.icons8.com/color/48/000000/spain-circular.png"/> Spanish',
           value: 'sp',
+          languageCode: 'es',
         },
       ],
     };
@@ -43,8 +45,9 @@ export default class LanguageDropdown extends Component {
     const item = this.getTextValue(value);
     this.setState({ toggleValue: item.label });
     this.changeLanguage(item.value);
-    localStorage.setItem('language', item.value);
+    localStorage.setItem('languageCode', item.languageCode);
     localStorage.setItem('langIndex', value);
+    this.props.getUserData(item.languageCode);
   }
 
   getLanguageOptions = () => {

@@ -167,6 +167,7 @@ class ReleaseinformationPage extends Component {
         this.props
           .submitProjectDetails({
             Project: this.state.formInputs,
+            languagecode: localStorage.getItem('languageCode') || 'en',
           })
           .then(response => response.json())
           .then(responseJSON => {
@@ -352,6 +353,7 @@ class ReleaseinformationPage extends Component {
       .getProjectDetails({
         PagePath: this.props.match.url ? this.props.match.url : '',
         ProjectID: this.props.match.params.projectID,
+        languagecode: localStorage.getItem('languageCode') || 'en',
       })
       .then(response => response.json())
       .then(responseJSON => {

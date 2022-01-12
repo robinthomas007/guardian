@@ -636,7 +636,7 @@ class Header extends Component {
                     </li>
                     <li> | </li>
                     <li>
-                      <LanguageDropdown />
+                      <LanguageDropdown getUserData={this.props.getUserData} />
                     </li>
                     <li>
                       {t('header:Welcome')}, {this.props.userData.name}

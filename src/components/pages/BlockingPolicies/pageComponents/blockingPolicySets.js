@@ -55,6 +55,7 @@ class BlockingPolicySets extends Component {
                 handleDateChange={(date, id, setIndex, siteIndex) =>
                   this.props.handleDateChange(date, id, setIndex, siteIndex)
                 }
+                t={this.props.t}
               />
             </div>
           </div>
