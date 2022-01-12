@@ -35,6 +35,8 @@ import homeSP from 'locales/sp/home.json';
 import searchEN from 'locales/en/search.json';
 import searchSP from 'locales/sp/search.json';
 
+import helpEN from 'locales/en/help.json';
+
 // the translations
 const resources = {
   en: {
@@ -49,6 +51,7 @@ const resources = {
     inbox: inboxEN,
     home: homeEN,
     search: searchEN,
+    help: helpEN,
   },
   sp: {
     translation: translationSP,
@@ -82,6 +85,7 @@ i18n
       'inbox',
       'home',
       'search',
+      'help',
     ],
     defaultNS: 'translations',
     keySeparator: false, // we do not use keys in form messages.welcome
