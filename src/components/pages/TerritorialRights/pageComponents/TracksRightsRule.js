@@ -28,7 +28,7 @@ class TracksRightsRule extends Component {
           name={'hasRights_' + this.props.setIndex}
           type="radio"
           value="true"
-          checked={this.state.hasRights}
+          checked={this.props.data}
           onChange={this.handleChange}
         />{' '}
         <label htmlFor={'hasRightsTrue_' + this.props.setIndex}>Only Has Rights In</label>
@@ -38,7 +38,7 @@ class TracksRightsRule extends Component {
           name={'hasRights_' + this.props.setIndex}
           type="radio"
           value="false"
-          checked={!this.state.hasRights}
+          checked={!this.props.data}
           onChange={this.handleChange}
         />{' '}
         <label htmlFor={'hasRightsFalse_' + this.props.setIndex}>
