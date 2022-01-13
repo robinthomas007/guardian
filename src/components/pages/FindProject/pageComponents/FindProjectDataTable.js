@@ -451,7 +451,7 @@ class FindProjectDataTable extends Component {
     return (
       <div>
         <LoadingImg show={this.state.showloader} />
-        <Table className="search-table find-a-project-table">
+        <Table className="search-table find-a-project-table responsive">
           {this.getDataTable()}
           <tbody>{this.renderProjects()}</tbody>
         </Table>
