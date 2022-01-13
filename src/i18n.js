@@ -36,6 +36,8 @@ import searchEN from 'locales/en/search.json';
 import searchSP from 'locales/sp/search.json';
 
 import helpEN from 'locales/en/help.json';
+import helpSP from 'locales/sp/help.json';
+
 import blockingEN from 'locales/en/blocking.json';
 import blockingSP from 'locales/sp/blocking.json';
 
@@ -68,6 +70,7 @@ const resources = {
     inbox: inboxSP,
     home: homeSP,
     search: searchSP,
+    help: helpSP,
     blocking: blockingSP,
   },
 };
