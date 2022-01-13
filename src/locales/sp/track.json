@@ -8,6 +8,7 @@
   "Required": "obligatorio",
   "ISRC": "ISRC",
   "CheckISRCs": "Verifique los ISRC",
+  "CheckISRCsMsg": "Puede incluir ISRC aquí si lo conoce, necesario para completar el Paso 3 (Archivos de audio).",
   "Artist": "Artista",
   "Single": "Único",
   "ReleaseDate": "Fecha de lanzamiento",

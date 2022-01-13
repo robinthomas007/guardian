@@ -8,6 +8,7 @@
   "Required": "Required",
   "ISRC": "ISRC",
   "CheckISRCs": "Check ISRCs",
+  "CheckISRCsMsg": "You may include ISRC here if known, necessary for completion of Step 3 (Audio Files).",
   "Artist": "Artist",
   "Single": "Single",
   "ReleaseDate": "Release Date",

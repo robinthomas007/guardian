@@ -605,10 +605,8 @@ class ReleaseinformationPage extends Component {
             </div>
 
             <div className="col-3 row d-flex no-gutters">
-              <Form.Label className="col-form-label col-3 text-nowrap">
-                {t('releaseInfo:CoverArt')}
-              </Form.Label>
               <div className="col-9 d-flex flex-fill justify-content-end">
+                <Form.Label className="cover-art-label">{t('releaseInfo:CoverArt')}</Form.Label>
                 <div id="preview" dropppable="true" className="form-control album-art-drop">
                   <Button
                     id="removeAlbumArt"
@@ -618,7 +616,7 @@ class ReleaseinformationPage extends Component {
                     <i className="material-icons notranslate">delete</i>
                   </Button>
                   <span>
-                    {t('releaseInfo:ClickToBrowse')}Click to Browse
+                    {t('releaseInfo:ClickToBrowse')}
                     <br />
                     {t('releaseInfo:orDrag')} &amp; {t('releaseInfo:Drop')}
                   </span>

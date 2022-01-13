@@ -70,31 +70,28 @@ class HaveAudioModal extends Component {
   }
 
   render() {
+    const { t } = this.props;
     return (
-      <>
-        <Modal id="HaveAudioModal" show={this.state.show} onHide={this.handleClose}>
-          <Modal.Header>
-            <Modal.Title></Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            Do you have audio files to upload?
-            <span>
-              <br />
-              <Button variant="primary" id="yesButton" onClick={this.handleClose}>
-                Yes
-              </Button>
-              <Button variant="primary" id="noButton" onClick={this.handleNoAudioClick}>
-                No
-              </Button>
-            </span>
-            <div className="alert alert-primary clearfix" role="alert">
-              In order to submit a project for full anti-piracy services including pre-release
-              filtering, you must submit audio files. In the meantime, you can submit track titles
-              and metadata for basic leak detection, monitoring and web-crawling in the next step.
-            </div>
-          </Modal.Body>
-        </Modal>
-      </>
+      <Modal id="HaveAudioModal" show={this.state.show} onHide={this.handleClose}>
+        <Modal.Header>
+          <Modal.Title></Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {t('audio:DoYouHaveAudio')}
+          <span>
+            <br />
+            <Button variant="primary" id="yesButton" onClick={this.handleClose}>
+              {t('audio:Yes')}
+            </Button>
+            <Button variant="primary" id="noButton" onClick={this.handleNoAudioClick}>
+              {t('audio:No')}
+            </Button>
+          </span>
+          <div className="alert alert-primary clearfix" role="alert">
+            {t('audio:ModalDes')}
+          </div>
+        </Modal.Body>
+      </Modal>
     );
   }
 }

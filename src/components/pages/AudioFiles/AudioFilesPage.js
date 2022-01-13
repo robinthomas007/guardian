@@ -115,8 +115,8 @@ class AudioFilesPage extends Component {
       artist: track.artist
         ? track.artist
         : projectData.projectArtistName
-          ? projectData.projectArtistName
-          : '',
+        ? projectData.projectArtistName
+        : '',
       discNumber: track.discNumber ? track.discNumber : '',
       fileName: track.fileName ? track.fileName : '',
       hasUpload: track.hasUpload ? track.hasUpload : false,
@@ -245,7 +245,7 @@ class AudioFilesPage extends Component {
       request.setRequestHeader('Project-Id', projectID);
       request.setRequestHeader('Track-Id', trackID ? trackID : '');
       // upload progress event
-      request.upload.addEventListener('progress', function (e) {
+      request.upload.addEventListener('progress', function(e) {
         // upload progress as percentage
         let percent_completed = (e.loaded / e.total) * 100;
         onUploadProgress(uniqFileName, Math.round(percent_completed));
@@ -632,7 +632,7 @@ class AudioFilesPage extends Component {
     }
     return (
       <div className="col-10">
-        {isUpcProject && <HaveAudioModal projectID={this.props.projectID} />}
+        {isUpcProject && <HaveAudioModal t={t} projectID={this.props.projectID} />}
         <LoadingImg show={this.state.showLoader || loading || upcLoading} />
 
         <ReplaceAudioModal

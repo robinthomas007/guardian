@@ -577,13 +577,13 @@ class Header extends Component {
             <div className="col-12 align-items-end flex-column flex-grow-1">
               <div className="row d-flex no-gutters custom-col-width">
                 <div className="col-1"></div>
-                <div className="col-4 custom-col-4">
+                <div className="col-2 custom-col-2">
                   <NavLink to={{ pathname: '/findProject' }}>
                     <span className="guardian-logo"></span>
                   </NavLink>
                 </div>
                 <div className="nav-bg"></div>
-                <nav className="col-6 custom-col-6 d-flex no-gutters justify-content-end">
+                <nav className="col-8 custom-col-8 d-flex no-gutters justify-content-end">
                   <ul className="menu-items nav-header-menu">
                     {this.props.userData.IsAdmin ? (
                       <li>

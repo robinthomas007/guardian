@@ -42,10 +42,7 @@ class TrackInformationDataTable extends Component {
         </th>
         <th>
           {t('track:ISRC ')}&nbsp;
-          <ToolTip
-            tabIndex="-1"
-            message="You may include ISRC here if known, necessary for completion of Step 3 (Audio Files)."
-          />
+          <ToolTip tabIndex="-1" message={t('track:CheckISRCsMsg')} />
           <button
             style={{ float: 'right' }}
             className="btn btn-sm btn-primary"

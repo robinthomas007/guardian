@@ -18,5 +18,9 @@
   "Actions": "Actions",
   "AddDisc": "Add Disc",
   "Save": "Save",
-  "SaveAndContinue": "Save & Continue"
+  "SaveAndContinue": "Save & Continue",
+  "DoYouHaveAudio": "Do you have audio files to upload?",
+  "Yes": "Yes",
+  "No": "No",
+  "ModalDes": "In order to submit a project for full anti-piracy services including pre-release filtering, you must submit audio files. In the meantime, you can submit track titles and metadata for basic leak detection, monitoring and web-crawling in the next step."
 }

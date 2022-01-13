@@ -3,6 +3,7 @@
   background-color: #d9f3fe;
   height: 190px;
   width: 190px;
+  top: 50px;
 }
 
 .album-art-drop span {
@@ -145,4 +146,9 @@ button.btn.btn-secondary.action.remove-art {
   padding: 8px;
   margin: 2px 5%;
   text-align: left !important;
+}
+
+.cover-art-label {
+  flex-grow: 1;
+  margin-left: 72px;
 }

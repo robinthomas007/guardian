@@ -47,7 +47,8 @@ export default class LanguageDropdown extends Component {
     this.changeLanguage(item.value);
     localStorage.setItem('languageCode', item.languageCode);
     localStorage.setItem('langIndex', value);
-    this.props.getUserData(item.languageCode);
+    this.props.getUserData && this.props.getUserData(item.languageCode);
+    window.location.reload();
   }
 
   getLanguageOptions = () => {

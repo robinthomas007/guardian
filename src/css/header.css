@@ -367,14 +367,14 @@ div.row.d-flex.steps-bar ul li a.active span.step-arrow {
   margin: 0;
 }
 
-@media screen and (max-width: 1600px) and (min-width: 1000px) {
-  .custom-col-width .custom-col-4 {
-    max-width: 20%;
-    flex: 0 0 20%;
+@media screen and (max-width: 1600px) and (min-width: 1024px) {
+  .custom-col-width .custom-col-2 {
+    max-width: 18%;
+    flex: 0 0 18%;
   }
 
-  .custom-col-width .custom-col-6 {
-    max-width: 63%;
-    flex: 0 0 63%;
+  .custom-col-width .custom-col-8 {
+    max-width: 70%;
+    flex: 0 0 70%;
   }
 }

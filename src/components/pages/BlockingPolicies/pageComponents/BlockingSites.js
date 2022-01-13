@@ -129,6 +129,7 @@ class BlockingSites extends Component {
                 setIndex={this.props.setIndex}
                 handleChildDrag={e => this.props.handleChildDrag(e)}
                 handleDrop={e => this.props.handleChildDrop(e, this.props.setIndex)}
+                t={t}
               />
             </td>
           </tr>

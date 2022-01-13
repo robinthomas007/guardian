@@ -18,5 +18,9 @@
   "Actions": "Comportamiento",
   "AddDisc": "Agregar disco",
   "Save": "Ahorrar",
-  "SaveAndContinue": "Guardar Continuar"
+  "SaveAndContinue": "Guardar Continuar",
+  "DoYouHaveAudio": "¿Tienes archivos de audio para subir?",
+  "Yes": "sí",
+  "No": "No",
+  "ModalDes": "Para enviar un proyecto para servicios completos contra la piratería, incluido el filtrado previo al lanzamiento, debe enviar archivos de audio. Mientras tanto, puede enviar títulos de pistas y metadatos para la detección básica de fugas, el monitoreo y el rastreo web en el siguiente paso."
 }

@@ -1,5 +1,5 @@
 {
-  "Admin": "Administradora",
+  "Admin": "Administrador",
   "NewProject": "Nuevo proyecto",
   "ProjectSearch": "Búsqueda de proyectos",
   "ProjectInbox": "Bandeja de entrada del proyecto",
@@ -11,7 +11,7 @@
   "ReleaseInfo": "Liberar información",
   "Contacts": "Contactos",
   "AudioFiles": "Archivos de sonido",
-  "TrackInfo": "Información de seguimiento",
+  "TrackInfo": "Info de seguimiento",
   "Rights": "Derechos",
   "Blocking": "Bloqueo",
   "Review": "Revisar",

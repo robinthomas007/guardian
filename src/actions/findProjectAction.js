@@ -23,12 +23,10 @@ export const fetchRequest = loading => {
 };
 
 export const fetchProjects = data => {
+  data.languageCode = localStorage.getItem('languageCode') || 'en';
   return dispatch => {
     dispatch(fetchRequest(true));
-    return Api.post('/project/search', {
-      data,
-      languagecode: localStorage.getItem('languageCode') || 'en',
-    })
+    return Api.post('/project/search', data)
       .then(response => response.json())
       .then(response => {
         if (response) {
