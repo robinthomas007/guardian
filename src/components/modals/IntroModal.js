@@ -3,6 +3,7 @@ import { Button, Modal } from 'react-bootstrap';
 import './IntroModal.css';
 import Cookies from 'universal-cookie';
 import { NavLink } from 'react-router-dom';
+import { withTranslation } from 'react-i18next';
 
 class IntroModal extends Component {
   constructor(props, context) {
@@ -45,7 +46,7 @@ class IntroModal extends Component {
     this.handleShow();
   }
 
-  getModal() {
+  getModal(t) {
     const cookies = new Cookies();
     if (!cookies.get('guardianShowLoginModal')) {
       return (
@@ -54,37 +55,34 @@ class IntroModal extends Component {
             <div className="red-diag">
               <div className="purp-diag">
                 <Modal.Header closeButton>
-                  <Modal.Title>Welcome to the Guardian!</Modal.Title>
+                  <Modal.Title>{t('Guardian')}</Modal.Title>
                 </Modal.Header>
 
                 <Modal.Body>
-                  UMG’s Content Protection Guardian is a “one-stop shop” for all your Content
-                  Protection and Anti-Piracy needs. <br /> Here, users can set up new releases for
-                  anti-piracy services, including:
+                  {t('GuardianDesc')}
+                  <br />
+                  {t('GuardianDescSub')}
                   <ul>
                     <li>
                       <div className="leak-detection"></div>
-                      <div>Content protection, leak detection and monitoring</div>
+                      <div>{t('ContentProtection')}</div>
                     </li>
                     <li>
                       <div className="web-crawling"></div>
-                      <div>Web-crawling and takedowns from unlicensed platforms</div>
+                      <div>{t('WebCrawling')}</div>
                     </li>
                     <li>
                       <div className="territorial-rights"></div>
-                      <div>
-                        Establish territorial rights and set post-release UGC blocking policies
-                      </div>
+                      <div>{t('TerritorialRights')}</div>
                     </li>
                   </ul>
-                  Feel free to click on any of the helpful info buttons scattered throughout the
-                  site but you can always reach out to contact us at the address below. We’re here
-                  to help you achieve success for your artists!
+                  {t('ContactUs')}
                   <br />
                   <br />
-                  Have a question or need help getting started?{' '}
-                  <NavLink to={{ pathname: '/helpGuide' }}>Click Here </NavLink>or contact us
-                  directly at{' '}
+                  {t('Help')}
+                  &nbsp;
+                  <NavLink to={{ pathname: '/helpGuide' }}>{t('ClickHere')}</NavLink>
+                  {t('Msg')}
                   <a href="mailto:guardian-support@umusic.com">guardian-support@umusic.com</a>
                   <br />
                   <br />
@@ -97,12 +95,12 @@ class IntroModal extends Component {
                       <span className="checkmark "></span>
                     </label>
                     <label htmlFor={'doNotShowIntro'} className="noshow-label">
-                      Do not show this anymore.
+                      {t('DoNotShow')}
                     </label>
                   </div>
 
                   <Button variant="primary" onClick={this.handleClose} id="introModalContinue">
-                    Continue
+                    {t('Continue')}
                   </Button>
                 </Modal.Footer>
               </div>
@@ -116,8 +114,8 @@ class IntroModal extends Component {
   }
 
   render() {
-    return <>{this.getModal()}</>;
+    return <>{this.getModal(this.props.t)}</>;
   }
 }
 
-export default IntroModal;
+export default withTranslation('intro')(IntroModal);
