@@ -15,7 +15,7 @@ class HelpGuide extends Component {
       videos: [
         {
           tutorialVideoLink:
-            'https://usaws03-guardian-media.s3.amazonaws.com/videos/The+Guardian+2021+pt.+17+Finding+a+Project.mp4',
+            'https://usaws03-guardian-media.s3.amazonaws.com/videos/The+Guardian+2021+pt.+1+Introduction.mp4',
           modalHeader: props.t('GuardianCompleteIntroduction'),
         },
         {
@@ -52,6 +52,26 @@ class HelpGuide extends Component {
           tutorialVideoLink:
             'https://usaws03-guardian-media.s3.amazonaws.com/videos/The+Guardian+2021+pt.+13+Review+%26+Submit.mp4',
           modalHeader: props.t('ReviewandSubmit'),
+        },
+        {
+          tutorialVideoLink:
+            'https://usaws03-guardian-media.s3.amazonaws.com/videos/The+Guardian+2021+pt.+17+Finding+a+Project.mp4',
+          modalHeader: props.t('ProjectSearch'),
+        },
+        {
+          tutorialVideoLink:
+            'https://usaws03-guardian-media.s3.amazonaws.com/videos/The+Guardian+2021+pt.+11+Alternate+Workflow+-+UPC.mp4',
+          modalHeader: props.t('UpcFlow'),
+        },
+        {
+          tutorialVideoLink:
+            'https://usaws03-guardian-media.s3.amazonaws.com/videos/The+Guardian+2021+pt.+15+Project+Inbox.mp4',
+          modalHeader: props.t('Inbox'),
+        },
+        {
+          tutorialVideoLink:
+            'https://usaws03-guardian-media.s3.amazonaws.com/videos/The+Guardian+2021+pt.+14+Adding+Comments.mp4',
+          modalHeader: props.t('Notifications'),
         },
       ],
     };
@@ -649,7 +669,6 @@ class HelpGuide extends Component {
                   <p>{t('ReleaseInformationDescription')}</p>
                 </div>
               </div>
-
               <div className="col-3">
                 <div className="video-grid">
                   <div
@@ -720,6 +739,54 @@ class HelpGuide extends Component {
                   ></div>
                   <h3>{t('ReviewandSubmit')}</h3>
                   <p>{t('ReviewandSubmitDescription')}</p>
+                </div>
+              </div>
+              <div className="col-3">
+                <div className="video-grid">
+                  <div
+                    className="vd-thmb-box"
+                    onClick={() => {
+                      this.showVideoTutorialModal(8);
+                    }}
+                  ></div>
+                  <h3>{t('ProjectSearch')}</h3>
+                  <p>{t('ProjectSearchDesc')}</p>
+                </div>
+              </div>
+              <div className="col-3">
+                <div className="video-grid">
+                  <div
+                    className="vd-thmb-box"
+                    onClick={() => {
+                      this.showVideoTutorialModal(9);
+                    }}
+                  ></div>
+                  <h3>{t('UpcFlow')}</h3>
+                  <p>{t('UpcFlowDesc')}</p>
+                </div>
+              </div>
+              <div className="col-3">
+                <div className="video-grid">
+                  <div
+                    className="vd-thmb-box"
+                    onClick={() => {
+                      this.showVideoTutorialModal(10);
+                    }}
+                  ></div>
+                  <h3>{t('Inbox')}</h3>
+                  <p>{t('InboxDesc')}</p>
+                </div>
+              </div>
+              <div className="col-3">
+                <div className="video-grid">
+                  <div
+                    className="vd-thmb-box"
+                    onClick={() => {
+                      this.showVideoTutorialModal(11);
+                    }}
+                  ></div>
+                  <h3>{t('Notifications')}</h3>
+                  <p>{t('NotificationsDesc')}</p>
                 </div>
               </div>
             </div>

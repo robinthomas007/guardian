@@ -45,7 +45,7 @@ class AudioVideoDataTable extends Component {
               </button>
               <VideoPlayer
                 title="Introduction Video"
-                link="https://usaws03-guardian-media.s3.amazonaws.com/videos/The+Guardian+2021+pt.+1+Introduction.mp4"
+                link="https://usaws03-guardian-media.s3.amazonaws.com/videos/The+Guardian+2021+pt.+3.5+Audio+Files.mp4"
               />
             </div>
           </th>
