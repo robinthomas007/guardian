@@ -414,7 +414,7 @@ class ReleaseinformationPage extends Component {
                     onChange={this.handleChange}
                   />
                 </div>
-                <div className="col-1">
+                <div className="col-3">
                   <button
                     style={{ marginLeft: '10px', padding: '7px 10px' }}
                     className="btn btn-sm btn-primary"
@@ -425,8 +425,6 @@ class ReleaseinformationPage extends Component {
                     <i className={'material-icons notranslate'}>search</i>
                     {t('releaseInfo:FindUPC')}
                   </button>
-                </div>
-                <div className="col-1" style={{ marginLeft: '20px' }}>
                   <VideoPlayer
                     title="UPC Flow"
                     link="https://usaws03-guardian-media.s3.amazonaws.com/videos/The+Guardian+2021+pt.+11+Alternate+Workflow+-+UPC.mp4"
