@@ -53,7 +53,7 @@ class TrackInformationDataTable extends Component {
               {t('track:CheckISRCs')}
             </button>
             <VideoPlayer
-              title="Introduction Video"
+              title="Tracks - Check ISRC"
               link="https://usaws03-guardian-media.s3.amazonaws.com/videos/The+Guardian+2021+pt.+3.5+Audio+Files.mp4"
             />
           </div>
