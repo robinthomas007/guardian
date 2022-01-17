@@ -22,5 +22,13 @@
   "DoYouHaveAudio": "¿Tienes archivos de audio para subir?",
   "Yes": "sí",
   "No": "No",
-  "ModalDes": "Para enviar un proyecto para servicios completos contra la piratería, incluido el filtrado previo al lanzamiento, debe enviar archivos de audio. Mientras tanto, puede enviar títulos de pistas y metadatos para la detección básica de fugas, el monitoreo y el rastreo web en el siguiente paso."
+  "ModalDes": "Para enviar un proyecto para servicios completos contra la piratería, incluido el filtrado previo al lanzamiento, debe enviar archivos de audio. Mientras tanto, puede enviar títulos de pistas y metadatos para la detección básica de fugas, el monitoreo y el rastreo web en el siguiente paso.",
+  "duplicateTrackTitle": "Está intentando ingresar un título de pista / isrc duplicado. Haga clic para cerrar.",
+  "UploadingFailed": "No se han podido cargar los archivos de audio. Inténtalo de nuevo. Haga clic para cerrar.",
+  "UploadInProgress": "Carga en curso. Por favor, no abandone The Guardian hasta que esté completo.",
+  "trackSaved": "La información de tu pista se ha guardado correctamente.",
+  "NoMatchingISRC": "No se encontró ningún ISRC coincidente",
+  "NoFileFoundFromASPEN": "No se encontraron archivos del repositorio ASPEN de UMG",
+  "weHaveFound": "Lo hemos encontrado y subido",
+  "trackFromUMG": "Pistas del repositorio ASPEN de UMG"
 }

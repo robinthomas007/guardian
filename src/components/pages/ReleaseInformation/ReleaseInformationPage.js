@@ -443,10 +443,7 @@ class ReleaseinformationPage extends Component {
                     {t('releaseInfo:ProjectTitle')}
                     <span className="required-ind">*</span>
                   </Form.Label>
-                  <ToolTip
-                    tabIndex="-1"
-                    message="Enter a title for your project here. It may consist of any letter, number or symbol from 0-255 characters in length."
-                  />
+                  <ToolTip tabIndex="-1" message={t('releaseInfo:ProjectTitleMessage')} />
                 </div>
                 <div className="col-9">
                   <Form.Control
@@ -458,7 +455,7 @@ class ReleaseinformationPage extends Component {
                     value={this.state.formInputs.projectTitle}
                     onChange={this.handleChange}
                   />
-                  <div className="invalid-tooltip">Project Title is Required</div>
+                  <div className="invalid-tooltip">{t('releaseInfo:ProjectTitleRequired')}</div>
                 </div>
               </Form.Group>
 
@@ -468,10 +465,7 @@ class ReleaseinformationPage extends Component {
                     {t('releaseInfo:Artist')}
                     <span className="required-ind">*</span>
                   </Form.Label>
-                  <ToolTip
-                    tabIndex="-1"
-                    message="Enter the artist for your project here. It may consist of any letter, number or symbol from 0-255 characters in length."
-                  />
+                  <ToolTip tabIndex="-1" message={t('releaseInfo:ArtistMessage')} />
                 </div>
                 <div className="col-9">
                   <Form.Control
@@ -483,7 +477,7 @@ class ReleaseinformationPage extends Component {
                     value={this.state.formInputs.projectArtistName}
                     onChange={this.handleChange}
                   />
-                  <div className="invalid-tooltip">Artist Name is Required</div>
+                  <div className="invalid-tooltip">{t('releaseInfo:ArtistRequired')}</div>
                 </div>
               </Form.Group>
 
@@ -493,10 +487,7 @@ class ReleaseinformationPage extends Component {
                     {t('releaseInfo:ProjectType')}
                     <span className="required-ind">*</span>
                   </Form.Label>
-                  <ToolTip
-                    tabIndex="-1"
-                    message="Select a project type for your project. This can help you differentiate and identify projects with similar titles."
-                  />
+                  <ToolTip tabIndex="-1" message={t('releaseInfo:ProjectTypeMessage')} />
                 </div>
                 <div className="col-9">
                   <ProjectTypesInput
@@ -515,10 +506,7 @@ class ReleaseinformationPage extends Component {
                     {t('releaseInfo:ReleasingLabel')}
                     <span className="required-ind">*</span>
                   </Form.Label>
-                  <ToolTip
-                    tabIndex="-1"
-                    message="Please select the releasing label for your project. If you only have access to a single label, your label will be pre-loaded and not require a selection."
-                  />
+                  <ToolTip tabIndex="-1" message={t('releaseInfo:ReleasingLabelMessage')} />
                 </div>
                 <div className="col-9">
                   <ReleasingLabelsInput
@@ -537,10 +525,7 @@ class ReleaseinformationPage extends Component {
                     {t('releaseInfo:ReleaseDate')}
                     <span className="required-ind">*</span>
                   </Form.Label>
-                  <ToolTip
-                    tabIndex="-1"
-                    message="Projects with a release date prior to today&#39;s date will be considered post-release. If the project&#39;s release date is to be determined, select TBD."
-                  />
+                  <ToolTip tabIndex="-1" message={t('releaseInfo:ReleaseDateMessage')} />
                 </div>
                 <div className="col-6 release-date">
                   <DatePicker
@@ -594,7 +579,7 @@ class ReleaseinformationPage extends Component {
               <Form.Group className="row d-flex no-gutters">
                 <div className="col-3">
                   <Form.Label className="notes">{t('releaseInfo:Notes')}</Form.Label>
-                  <ToolTip tabIndex="-1" message="Anything notable about this release?" />
+                  <ToolTip tabIndex="-1" message={t('releaseInfo:NotesMessage')} />
                 </div>
                 <div className="col-9">
                   <Form.Control

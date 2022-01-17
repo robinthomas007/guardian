@@ -19,5 +19,9 @@
   "AddTrack": "Add Track",
   "AddDisc": "Add Disc",
   "Save": "Save",
-  "SaveAndContinue": "Save & Continue"
+  "SaveAndContinue": "Save & Continue",
+  "trackSavedAndSubmittedForIntialProtection": "Your track information has been successfully saved and submitted for intial protection.",
+  "NotSaved": "Your tracks were NOT successfully saved. Please try again.",
+  "duplicateTrackTitle": "You're attempting to enter a duplicate track title / isrc. Click to close.",
+  "uploadingAudioFailed": "Uploading audio file(s) failed. Please try again. Click to close."
 }

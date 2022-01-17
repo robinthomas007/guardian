@@ -73,7 +73,7 @@ class ProjectContactsPage extends Component {
   }
 
   showNotification(e, projectID, saveAndContinue) {
-    showNotyInfo('Your project has been successfully saved', () => {
+    showNotyInfo(this.props.t('contact:projectSaved'), () => {
       if (saveAndContinue) {
         if (
           !this.state.project.Project.projectReleaseDateTBD &&
@@ -92,7 +92,7 @@ class ProjectContactsPage extends Component {
   }
 
   showNotSavedNotification(e) {
-    showNotyAutoError('Your project has NOT been successfully saved');
+    showNotyAutoError(this.props.t('contact:projectSaved'));
   }
 
   handleChange(event) {
@@ -295,10 +295,7 @@ class ProjectContactsPage extends Component {
                     {t('contact:ProjectSecurity')}
                     <span className="required-ind">*</span>
                   </Form.Label>
-                  <ToolTip
-                    tabIndex="-1"
-                    message="Projects are by default, set to private. This means only you may view or make changes to them. If set to public, projects will be made available to everyone within the label group."
-                  />
+                  <ToolTip tabIndex="-1" message={t('contact:ProjectSecurityMessage')} />
                 </div>
                 <div className="col-10">
                   <BootStrapDropDownInput
@@ -317,10 +314,7 @@ class ProjectContactsPage extends Component {
                     {t('contact:PrimaryContact')}
                     <span className="required-ind">*</span>
                   </Form.Label>
-                  <ToolTip
-                    tabIndex="-1"
-                    message="The originator of the project is by default set to be the primary contact. This can be changed here and the project will be created for that users account as long as they have access to the selected label."
-                  />
+                  <ToolTip tabIndex="-1" message={t('contact:PrimaryContactMessage')} />
                 </div>
                 <div className="col-5">
                   <Form.Control
@@ -330,7 +324,7 @@ class ProjectContactsPage extends Component {
                     value={this.state.formInputs.projectPrimaryContact}
                     onChange={this.handleChange}
                   />
-                  <div className="invalid-tooltip">Primary Contact is Required</div>
+                  <div className="invalid-tooltip">{t('contact:PrimaryContactRequired')}</div>
                 </div>
                 <div className="col-5"></div>
               </Form.Group>
@@ -341,10 +335,7 @@ class ProjectContactsPage extends Component {
                     {t('contact:PrimaryContactEmail')}
                     <span className="required-ind">*</span>
                   </Form.Label>
-                  <ToolTip
-                    tabIndex="-1"
-                    message="The email address belonging to the primary contact. This may not belong to any user aside from the primary contact."
-                  />
+                  <ToolTip tabIndex="-1" message={t('contact:PrimaryContactEmailMessage')} />
                 </div>
                 <div className="col-5">
                   <Form.Control
@@ -355,7 +346,7 @@ class ProjectContactsPage extends Component {
                     onChange={this.handleChange}
                     type="email"
                   />
-                  <div className="invalid-tooltip">Primary Contact Email is Required</div>
+                  <div className="invalid-tooltip">{t('contact:PrimaryContactEmailRequired')}</div>
                 </div>
                 <div className="col-5"></div>
               </Form.Group>
@@ -365,10 +356,7 @@ class ProjectContactsPage extends Component {
                   <Form.Label className="col-form-label align-top">
                     {t('contact:AdditionalContacts')}
                   </Form.Label>
-                  <ToolTip
-                    tabIndex="-1"
-                    message="Additional contacts or users that youd like to share this project with may be added here. You can copy and paste from Outlook, or separate a list of users to be added by commas, spaces, semi-colons or any combination of these."
-                  />
+                  <ToolTip tabIndex="-1" message={t('contact:AdditionalContactsMessage')} />
                 </div>
                 <div className="col-10 bubule-email-field">
                   {this.state.emails.map(email => (
@@ -401,7 +389,7 @@ class ProjectContactsPage extends Component {
                     onKeyDown={this.handleKeyDown}
                     onPaste={this.onPasteEmail}
                   />
-                  <div className="invalid-tooltip">Incorrectly formatted email addresse(s)</div>
+                  <div className="invalid-tooltip">{t('contact:IncorrectlyFormattedEmail')}</div>
                 </div>
               </Form.Group>
             </div>
@@ -435,11 +423,6 @@ class ProjectContactsPage extends Component {
   }
 }
 
-// ProjectContactsPage = reduxForm({
-//   form: 'ProjectContactsPageForm',
-//   enableReinitialize: true,
-// })(ProjectContactsPage);
-
 const mapDispatchToProps = dispatch => ({
   findUpc: val => dispatch(releaseAction.findUpc(val)),
   getProjectDetails: data => dispatch(releaseAction.getProjectDetails(data)),
@@ -447,10 +430,7 @@ const mapDispatchToProps = dispatch => ({
   validateEmails: data => dispatch(releaseAction.validateEmails(data)),
 });
 
-const mapStateToProps = state => ({
-  // upcData: state.releaseReducer.upcData,
-  // loading: state.releaseReducer.loading,
-});
+const mapStateToProps = state => ({});
 
 export default withRouter(
   compose(

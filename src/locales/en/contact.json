@@ -3,11 +3,20 @@
   "ProjectContacts": "Project Contacts",
   "DescriptionMain": "In this step, you can choose which contacts will be associated with the project. You can select the level of project security (i.e., who will be able to see the project) and who should be contacted regarding this project, if necessary. Required fields are indicated with an",
   "ProjectSecurity": "Project Security",
+  "ProjectSecurityMessage": "Projects are by default, set to private. This means only you may view or make changes to them. If set to public, projects will be made available to everyone within the label group.",
   "Private": "Private (Viewable ONLY by project contacts)",
   "Public": "Public (Viewable by ALL label users)",
   "PrimaryContact": "Primary Contact",
+  "PrimaryContactMessage": "The originator of the project is by default set to be the primary contact. This can be changed here and the project will be created for that users account as long as they have access to the selected label.",
+  "PrimaryContactRequired": "Primary Contact is Required",
   "PrimaryContactEmail": "Primary Contact Email",
+  "PrimaryContactEmailMessage": "The email address belonging to the primary contact. This may not belong to any user aside from the primary contact.",
+  "PrimaryContactEmailRequired": "Primary Contact Email is Required",
   "AdditionalContacts": "Additional Contacts",
+  "AdditionalContactsMessage": "Additional contacts or users that youd like to share this project with may be added here. You can copy and paste from Outlook, or separate a list of users to be added by commas, spaces, semi-colons or any combination of these.",
   "Save": "Save",
-  "Continue": "Continue"
+  "Continue": "Continue",
+  "projectSaved": "Your project has been successfully saved",
+  "projectNotSaved": "Your project has NOT been successfully saved",
+  "IncorrectlyFormattedEmail": "Incorrectly formatted email addresse(s)"
 }

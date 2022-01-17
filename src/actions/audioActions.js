@@ -2,6 +2,8 @@ import * as actions from 'types/audio.types';
 import Api from 'lib/api';
 import { showNotyAutoError, showNotyInfo } from './../components/Utils';
 import { startUpload, setUploadProgress, endUpload } from './../redux/uploadProgressAlert/actions';
+import i18n from './../i18n';
+
 export const fetchSuccess = result => {
   return {
     type: actions.ISRC_CHECK_SUCCESS,
@@ -33,7 +35,7 @@ export const isrcCheck = data => {
         if (response.Status === 'OK' && response.ExTracks && response.ExTracks.length > 0) {
           dispatch(fetchSuccess(response.ExTracks));
         } else {
-          showNotyAutoError('No matching ISRC found');
+          showNotyAutoError(i18n.t('audio:NoMatchingISRC'));
           dispatch(fetchFailure(response.message));
         }
       })
@@ -81,13 +83,14 @@ export const getCisData = data => {
             dispatch(endUpload('CIS' + i));
           }
           showNotyInfo(
-            `We've found and uploaded ${response.length} Tracks from UMG's ASPEN repository`,
+            `${i18n.t('audio:weHaveFound')} ${response.length} ${i18n.t('audio:trackFromUMG')}`,
           );
         } else {
           for (let i = 0; i < data.Iscrs.length; i++) {
             dispatch(endUpload('CIS' + i));
           }
-          showNotyInfo(`No files found from UMG's ASPEN repository`);
+          showNotyInfo(i18n.t('audio:NoFileFoundFromASPEN'));
+          showNotyInfo();
           dispatch(cisFetchFailure(response));
         }
       })

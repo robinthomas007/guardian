@@ -253,29 +253,26 @@ class TrackInformationPage extends Component {
   }
 
   showNotification(saveAndContinue) {
-    showNotyInfo(
-      'Your track information has been successfully saved and submitted for intial protection.',
-      () => {
-        if (saveAndContinue) {
-          if (
-            !this.state.project.Project.projectReleaseDateTBD &&
-            !isPreReleaseDate(this.state.project)
-          ) {
-            this.props.history.push({
-              pathname: '/blockingPolicies/' + this.props.match.params.projectID,
-            });
-          } else {
-            this.props.history.push({
-              pathname: '/territorialRights/' + this.props.match.params.projectID,
-            });
-          }
+    showNotyInfo(this.props.t('track:trackSavedAndSubmittedForIntialProtection'), () => {
+      if (saveAndContinue) {
+        if (
+          !this.state.project.Project.projectReleaseDateTBD &&
+          !isPreReleaseDate(this.state.project)
+        ) {
+          this.props.history.push({
+            pathname: '/blockingPolicies/' + this.props.match.params.projectID,
+          });
+        } else {
+          this.props.history.push({
+            pathname: '/territorialRights/' + this.props.match.params.projectID,
+          });
         }
-      },
-    );
+      }
+    });
   }
 
   showNotSavedNotification(e) {
-    showNotyAutoError('Your tracks were NOT successfully saved. Please try again.');
+    showNotyAutoError(this.props.t('track:NotSaved'));
   }
 
   handleDiscUpdate(i, updatedDisc) {
@@ -384,7 +381,7 @@ class TrackInformationPage extends Component {
     const saveAndContinue = e.target.classList.contains('saveAndContinueButton') ? true : false;
     if (isFormValid() && this.isValidForm()) {
       if (isDuplicateTrackTitle()) {
-        toast.info("You're attempting to enter a duplicate track title / isrc. Click to close.", {
+        toast.info(this.props.t('track:duplicateTrackTitle'), {
           onClose: () => {
             if (count.length === 1 && isDuplicateTrackTitle()) {
               this.saveTrackApi(saveAndContinue);
@@ -508,7 +505,7 @@ class TrackInformationPage extends Component {
         this.handleFileUploadView(track.trackNumber, false);
         onUploadComplete(uniqFileName);
         if (request.status >= 300) {
-          showNotyError('Uploading audio file(s) failed. Please try again. Click to close.');
+          showNotyError(this.props.t('track:uploadingAudioFailed'));
         }
       });
       request.send(formData);

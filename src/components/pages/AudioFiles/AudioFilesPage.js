@@ -149,7 +149,7 @@ class AudioFilesPage extends Component {
   showNotification(saveAndContinue) {
     const projectID = this.state.projectID ? this.state.projectID : '';
 
-    showNotyInfo('Your track information has been successfully saved.', () => {
+    showNotyInfo(this.props.t('audio:trackSaved'), () => {
       if (saveAndContinue) {
         this.props.history.push({
           pathname: '/trackInformation/' + projectID,
@@ -255,7 +255,7 @@ class AudioFilesPage extends Component {
       request.addEventListener('load', e => {
         onUploadComplete(uniqFileName);
         if (request.status >= 300) {
-          showNotyError('Uploading audio file(s) failed. Please try again. Click to close.');
+          showNotyError(this.props.t('audio:UploadingFailed'));
         }
       });
 
@@ -473,7 +473,7 @@ class AudioFilesPage extends Component {
 
     if (formIsValid) {
       if (isDuplicateTrackTitle()) {
-        toast.info("You're attempting to enter a duplicate track title / isrc. Click to close.", {
+        toast.info(this.props.t('audio:duplicateTrackTitle'), {
           onClose: () => {
             if (count.length === 1 && isDuplicateTrackTitle()) {
               this.saveAudioApi(saveAndContinue);

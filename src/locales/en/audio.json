@@ -22,5 +22,13 @@
   "DoYouHaveAudio": "Do you have audio files to upload?",
   "Yes": "Yes",
   "No": "No",
-  "ModalDes": "In order to submit a project for full anti-piracy services including pre-release filtering, you must submit audio files. In the meantime, you can submit track titles and metadata for basic leak detection, monitoring and web-crawling in the next step."
+  "ModalDes": "In order to submit a project for full anti-piracy services including pre-release filtering, you must submit audio files. In the meantime, you can submit track titles and metadata for basic leak detection, monitoring and web-crawling in the next step.",
+  "duplicateTrackTitle": "You're attempting to enter a duplicate track title / isrc. Click to close.",
+  "UploadingFailed": "Uploading audio file(s) failed. Please try again. Click to close.",
+  "UploadInProgress": "Upload in progress. Please do not leave the Guardian until it's complete.",
+  "trackSaved": "Your track information has been successfully saved.",
+  "NoMatchingISRC": "No matching ISRC found",
+  "NoFileFoundFromASPEN": "No files found from UMG's ASPEN repository",
+  "weHaveFound": "We've found and uploaded",
+  "trackFromUMG": "Tracks from UMG's ASPEN repository"
 }

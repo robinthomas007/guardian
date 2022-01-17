@@ -25,5 +25,14 @@
   "Album": "Album",
   "Collection": "Collection",
   "Single": "Single",
-  "EP": "EP"
+  "EP": "EP",
+  "NoMatchingUPCfound": "No matching UPC found.",
+  "ProjectTitleMessage": "Enter a title for your project here. It may consist of any letter, number or symbol from 0-255 characters in length.",
+  "ProjectTitleRequired": "Project Title is Required",
+  "ArtistMessage": "Enter the artist for your project here. It may consist of any letter, number or symbol from 0-255 characters in length.",
+  "ArtistRequired": "Artist Name is Required",
+  "ProjectTypeMessage": "Select a project type for your project. This can help you differentiate and identify projects with similar titles.",
+  "ReleasingLabelMessage": "Please select the releasing label for your project. If you only have access to a single label, your label will be pre-loaded and not require a selection.",
+  "ReleaseDateMessage": "Projects with a release date prior to today's date will be considered post-release. If the project's release date is to be determined, select TBD.",
+  "NotesMessage": "Anything notable about this release?"
 }

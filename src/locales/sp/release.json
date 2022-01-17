@@ -25,5 +25,14 @@
   "Album": "Álbum",
   "Collection": "Colección",
   "Single": "Único",
-  "EP": "EP"
+  "EP": "EP",
+  "NoMatchingUPCfound": "No se encontró UPC coincidente.",
+  "ProjectTitleMessage": "Ingrese un título para su proyecto aquí. Puede consistir en cualquier letra, número o símbolo de 0 a 255 caracteres de longitud.",
+  "ProjectTitleRequired": "El título del proyecto es obligatorio",
+  "ArtistMessage": "Introduzca el artista para su proyecto aquí. Puede consistir en cualquier letra, número o símbolo de 0 a 255 caracteres de longitud.",
+  "ArtistRequired": "El nombre del artista es obligatorio",
+  "ProjectTypeMessage": "Seleccione un tipo de proyecto para su proyecto. Esto puede ayudarlo a diferenciar e identificar proyectos con títulos similares.",
+  "ReleasingLabelMessage": "Seleccione la etiqueta de lanzamiento de su proyecto. Si solo tiene acceso a una sola etiqueta, su etiqueta estará precargada y no requerirá una selección.",
+  "ReleaseDateMessage": "Los proyectos con una fecha de lanzamiento anterior a la fecha de hoy se considerarán posteriores al lanzamiento. Si se va a determinar la fecha de lanzamiento del proyecto, seleccione TBD.",
+  "NotesMessage": "¿Algo destacable de este lanzamiento?"
 }

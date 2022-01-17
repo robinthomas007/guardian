@@ -3,11 +3,20 @@
   "ProjectContacts": "Contactos del proyecto",
   "DescriptionMain": "En este paso, puede elegir qué contactos se asociarán con el proyecto. Puede seleccionar el nivel de seguridad del proyecto (es decir, quién podrá ver el proyecto) y quién debe ser contactado con respecto a este proyecto, si es necesario. Los campos obligatorios se indican con un",
   "ProjectSecurity": "Proyecto Seguridad",
+  "ProjectSecurityMessage": "Los proyectos están configurados de manera predeterminada como privados. Esto significa que solo usted puede verlos o modificarlos. Si se configura como público, los proyectos estarán disponibles para todos los miembros del grupo de etiquetas.",
   "Private": "Privado (visible SOLO por contactos del proyecto)",
   "Public": "Público (visible para TODOS los usuarios de etiquetas)",
   "PrimaryContact": "Contacto primario",
+  "PrimaryContactMessage": "El creador del proyecto está configurado de forma predeterminada para ser el contacto principal. Esto se puede cambiar aquí y el proyecto se creará para esa cuenta de usuario siempre que tenga acceso a la etiqueta seleccionada.",
+  "PrimaryContactRequired": "Se requiere contacto principal",
   "PrimaryContactEmail": "Correo electrónico de contacto principal",
+  "PrimaryContactEmailMessage": "La dirección de correo electrónico perteneciente al contacto principal. Esto no puede pertenecer a ningún usuario aparte del contacto principal.",
+  "PrimaryContactEmailRequired": "El correo electrónico de contacto principal es obligatorio",
   "AdditionalContacts": "Contactos adicionales",
+  "AdditionalContactsMessage": "Aquí se pueden agregar contactos o usuarios adicionales con los que le gustaría compartir este proyecto. Puede copiar y pegar desde Outlook, o separar una lista de usuarios para agregar con comas, espacios, punto y coma o cualquier combinación de estos.",
   "Save": "Guardar",
-  "Continue": "continuar"
+  "Continue": "continuar",
+  "projectSaved": "Su proyecto se ha guardado con éxito",
+  "projectNotSaved": "Su proyecto NO se ha guardado correctamente",
+  "IncorrectlyFormattedEmail": "Direcciones de correo electrónico con formato incorrecto"
 }
