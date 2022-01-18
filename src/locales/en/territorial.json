@@ -17,5 +17,8 @@
   "SelectCountry": "Select Country",
   "Worldwide": "Worldwide",
   "Save": "Save",
-  "SaveAndContinue": "Save & Continue"
+  "SaveAndContinue": "Save & Continue",
+  "NotyInfo": "Your rights policies have been successfully saved",
+  "NotyError": "Your rights policies have NOT been successfully saved.",
+  "NotyError1": "Your rights policies have been successfully saved however, all Unassigned Tracks must be assigned to 1 or more sets for this step to be complete."
 }

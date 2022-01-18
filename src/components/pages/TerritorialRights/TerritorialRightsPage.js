@@ -222,33 +222,30 @@ class TerritorialRightsPage extends Component {
     this.setState({ dragSource: [] });
   };
 
-  showNotification(saveAndContinue, projectID) {
-    showNotyInfo('Your rights policies have been successfully saved', () => {
+  showNotification = (saveAndContinue, projectID) => {
+    showNotyInfo(this.props.t('territorial:NotyInfo'), () => {
       if (saveAndContinue) {
         this.props.history.push({
           pathname: '/blockingPolicies/' + projectID,
         });
       }
     });
-  }
+  };
 
-  showNotSavedNotification(e) {
-    showNotyAutoError('Your rights policies have NOT been successfully saved');
-  }
+  showNotSavedNotification = e => {
+    showNotyAutoError(this.props.t('territorial:NotyError'));
+  };
 
-  showUnassignedTracksNotification(saveAndContinue, projectID) {
-    showNotyAutoError(
-      'Your rights policies have been successfully saved however, all Unassigned Tracks must be assigned to 1 or more sets for this step to be complete.',
-      () => {
-        if (saveAndContinue) {
-          this.props.history.push({
-            pathname: '/blockingPolicies/' + projectID,
-          });
-          this.props.initializeRightsData();
-        }
-      },
-    );
-  }
+  showUnassignedTracksNotification = (saveAndContinue, projectID) => {
+    showNotyAutoError(this.props.t('territorial:NotyError1'), () => {
+      if (saveAndContinue) {
+        this.props.history.push({
+          pathname: '/blockingPolicies/' + projectID,
+        });
+        this.props.initializeRightsData();
+      }
+    });
+  };
 
   handleSubmit = e => {
     e.preventDefault();
