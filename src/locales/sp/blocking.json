@@ -27,5 +27,7 @@
   "CreateANewBlockingPolicy": "Cree una nueva política de bloqueo",
   "Draft": "borrador",
   "Save": "Guardar",
-  "Continue": "continuar"
+  "Continue": "continuar",
+  "NotyInfo": "Sus preferencias de bloqueo se han guardado con éxito.",
+  "NotyError": "Sus políticas de bloqueo NO se han guardado correctamente."
 }

@@ -27,5 +27,7 @@
   "CreateANewBlockingPolicy": "Create A New Blocking Policy",
   "Draft": "Draft",
   "Save": "Save",
-  "Continue": "Continue"
+  "Continue": "Continue",
+  "NotyInfo": "Your blocking preferences have been successfully saved.",
+  "NotyError": "Your blocking policies have NOT been successfully saved."
 }

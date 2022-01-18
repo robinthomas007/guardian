@@ -147,7 +147,7 @@ class BlockingPoliciesPage extends Component {
     return {
       blockingPolicySetID: set.blockingPolicySetID ? set.blockingPolicySetID : '',
       sequence: set.sequence ? set.sequence : i,
-      description: 'Set #' + i,
+      description: this.props.t('blocking:Set') + ' #' + i,
       platformPolicies: this.getPlatforms(releaseDate),
       tracks: [],
     };
@@ -352,7 +352,7 @@ class BlockingPoliciesPage extends Component {
     let modifiedBlockingPolicySets = BlockingPolicySets;
 
     for (let i = 0; i < modifiedBlockingPolicySets.length; i++) {
-      modifiedBlockingPolicySets[i].description = 'Set #' + (i + 1);
+      modifiedBlockingPolicySets[i].description = this.props.t('blocking:Set') + ' #' + (i + 1);
     }
 
     this.setState({ BlockingPolicySets: modifiedBlockingPolicySets });
@@ -378,19 +378,19 @@ class BlockingPoliciesPage extends Component {
     }
   }
 
-  showNotification(e, projectID, saveAndContinue) {
-    showNotyInfo('Your blocking preferences have been successfully saved.', () => {
+  showNotification = (e, projectID, saveAndContinue) => {
+    showNotyInfo(this.props.t('blocking:NotyInfo'), () => {
       if (saveAndContinue) {
         this.props.history.push({
           pathname: '/reviewSubmit/' + projectID,
         });
       }
     });
-  }
+  };
 
-  showNotSavedNotification(e) {
-    showNotyAutoError('Your blocking policies have NOT been successfully saved.');
-  }
+  showNotSavedNotification = e => {
+    showNotyAutoError(this.props.t('blocking:NotyError'));
+  };
 
   getStepNumber() {
     let stepNumber;
