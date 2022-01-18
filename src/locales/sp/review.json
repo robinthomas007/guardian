@@ -39,5 +39,6 @@
   "Cancel": "Cancelar",
   "SendEmail": "Enviar correo electrónico",
   "Share": "Cuota",
-  "SubmitProject": "Enviar proyecto"
+  "SubmitProject": "Enviar proyecto",
+  "NotyInfo": "Su proyecto se ha guardado correctamente y se ha enviado para su revisión."
 }

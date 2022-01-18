@@ -7,6 +7,7 @@ import TextArea from '../common/texarea';
 import * as shareAction from 'actions/shareAction';
 import { withRouter } from 'react-router-dom';
 import LoadingImg from 'component_library/LoadingImg';
+import { withTranslation } from 'react-i18next';
 
 const validate = values => {
   const errors = {};
@@ -132,7 +133,7 @@ const ShareProjectModal = props => {
       <Modal.Body>
         <LoadingImg show={loading} />
         <form onSubmit={handleSubmit(formSubmit)}>
-          <label>Please enter email id's</label>
+          <label>{props.t('MailPopup')}</label>
           <div className="col-12 bubule-email-field">
             {emails.map(email => (
               <button
@@ -161,10 +162,10 @@ const ShareProjectModal = props => {
           </div>
           <div className="submit-buttons float-right">
             <Button type="button" variant="secondary" onClick={handleClose}>
-              Cancel
+              {props.t('Cancel')}
             </Button>
             <Button type="submit" disabled={loading} class="btn btn-primary" variant="primary">
-              Send Email
+              {props.t('SendEmail')}
             </Button>
           </div>
         </form>
@@ -190,9 +191,11 @@ const mapStateToProps = state => ({
   formValues: state.form.ShareProjectModalForm,
 });
 
+const ShareProjectModalCompTrans = withTranslation('review')(ShareProjectModalComp);
+
 export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps,
-  )(ShareProjectModalComp),
+  )(ShareProjectModalCompTrans),
 );

@@ -39,5 +39,6 @@
   "Cancel": "Cancel",
   "SendEmail": "Send Email",
   "Share": "Share",
-  "SubmitProject": "Submit Project"
+  "SubmitProject": "Submit Project",
+  "NotyInfo": "Your project has been successfully saved and submitted for review."
 }

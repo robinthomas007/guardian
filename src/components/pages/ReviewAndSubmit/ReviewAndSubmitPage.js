@@ -79,7 +79,7 @@ class ReviewAndSubmitPage extends Component {
       : this.showIncompleteProjectModal();
   };
 
-  handleSubmitProjectClick() {
+  handleSubmitProjectClick = () => {
     const fetchHeaders = new Headers({
       'Content-Type': 'application/json',
       Authorization: sessionStorage.getItem('accessToken'),
@@ -104,7 +104,7 @@ class ReviewAndSubmitPage extends Component {
       })
       .then(responseJSON => {
         this.setState({ showloader: false });
-        showNotyInfo('Your project has been successfully saved and submitted for review.', () => {
+        showNotyInfo(this.props.t('review:NotyInfo'), () => {
           return this.props.history.push({ pathname: '/findProject/' });
         });
         localStorage.setItem('prevStep', 7);
@@ -113,7 +113,7 @@ class ReviewAndSubmitPage extends Component {
         console.error(error);
         this.setState({ showloader: false });
       });
-  }
+  };
 
   getStepNumber() {
     let stepNumber = 7;
@@ -161,7 +161,7 @@ class ReviewAndSubmitPage extends Component {
           />
 
           <div className="row no-gutters step-description review">
-            <div className="col-10">
+            <div className="col-9">
               <h2>
                 {t('review:step')}&nbsp;<span className="count-circle">{this.getStepNumber()}</span>
                 &nbsp;
@@ -173,19 +173,25 @@ class ReviewAndSubmitPage extends Component {
                 {t('review:DescriptionSub')}
               </p>
             </div>
-            <div className="col-2">
-              <button className="btn btn-secondary align-content-end" onClick={this.showShareModal}>
-                <i className="material-icons">share</i> {t('review:Share')}
-              </button>
-              {parseInt(this.props.data.Project.projectStatusID) === 1 ? (
+            <div className="col-3">
+              <div className="float-right">
                 <button
-                  type="button"
-                  className="btn btn-primary float-right"
-                  onClick={this.handlePreSubmitCheck}
+                  className="btn btn-secondary align-content-end"
+                  onClick={this.showShareModal}
                 >
-                  {t('review:SubmitProject')}
+                  <i className="material-icons">share</i> {t('review:Share')}
                 </button>
-              ) : null}
+                {parseInt(this.props.data.Project.projectStatusID) === 1 ? (
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    style={{ marginLeft: '10px' }}
+                    onClick={this.handlePreSubmitCheck}
+                  >
+                    {t('review:SubmitProject')}
+                  </button>
+                ) : null}
+              </div>
             </div>
           </div>
         </div>
