@@ -28,7 +28,7 @@ const CommentSlider = props => {
   const { handleClose, handleSubmit } = props;
   const comments = useSelector(state => state.commentReducer.comments);
   const loading = useSelector(state => state.commentReducer.loading);
-  const [height, setHeight] = useState(210);
+  const [height, setHeight] = useState(188);
 
   useEffect(() => {
     if (props.projectID) props.getComments({ ProjectId: props.projectID });

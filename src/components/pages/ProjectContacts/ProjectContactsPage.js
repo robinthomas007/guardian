@@ -304,6 +304,7 @@ class ProjectContactsPage extends Component {
                     value={this.state.formInputs.projectSecurityID}
                     onChange={this.handleChangeByID}
                     className={'project-security-dropdown'}
+                    t={t}
                   />
                 </div>
               </Form.Group>

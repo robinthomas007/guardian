@@ -40,5 +40,7 @@
   "SendEmail": "Send Email",
   "Share": "Share",
   "SubmitProject": "Submit Project",
-  "NotyInfo": "Your project has been successfully saved and submitted for review."
+  "NotyInfo": "Your project has been successfully saved and submitted for review.",
+  "AreYouSureMain": "Are you sure? Once submitted, this project will be locked and no longer editable",
+  "AreYouSureSub": "except by a Guardian support administrator."
 }

@@ -11,25 +11,23 @@ class SubmitProjectModal extends Component {
   }
 
   render() {
+    const { t } = this.props;
     return (
-      <>
-        <Modal id="SubmitProjectModal" show={this.props.show} onHide={this.props.handleClose}>
-          <Modal.Body>
-            <div className="alert alert-danger" role="alert">
-              Are you sure? Once submitted, this project will be locked and no longer editable{' '}
-              <i>except by a Guardian support administrator.</i>
-            </div>
-            <div className="submit-buttons float-right">
-              <Button variant="secondary" onClick={this.props.handleClose}>
-                Cancel
-              </Button>
-              <Button variant="primary" onClick={this.props.handleSubmitProjectClick}>
-                Submit Project
-              </Button>
-            </div>
-          </Modal.Body>
-        </Modal>
-      </>
+      <Modal id="SubmitProjectModal" show={this.props.show} onHide={this.props.handleClose}>
+        <Modal.Body>
+          <div className="alert alert-danger" role="alert">
+            {t('review:AreYouSureMain')} <i>{t('review:AreYouSureSub')}</i>
+          </div>
+          <div className="submit-buttons float-right">
+            <Button variant="secondary" onClick={this.props.handleClose}>
+              {t('review:Cancel')}
+            </Button>
+            <Button variant="primary" onClick={this.props.handleSubmitProjectClick}>
+              {t('review:SubmitProject')}
+            </Button>
+          </div>
+        </Modal.Body>
+      </Modal>
     );
   }
 }

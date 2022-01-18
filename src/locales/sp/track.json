@@ -23,5 +23,7 @@
   "trackSavedAndSubmittedForIntialProtection": "La información de su pista se ha guardado correctamente y se ha enviado para la protección inicial.",
   "NotSaved": "Tus pistas NO se guardaron correctamente. Inténtalo de nuevo.",
   "duplicateTrackTitle": "Está intentando ingresar un título de pista / isrc duplicado. Haga clic para cerrar.",
-  "uploadingAudioFailed": "No se han podido cargar los archivos de audio. Inténtalo de nuevo. Haga clic para cerrar."
+  "uploadingAudioFailed": "No se han podido cargar los archivos de audio. Inténtalo de nuevo. Haga clic para cerrar.",
+  "InvalidTrackTitle": "Título de pista no válido",
+  "InvalidISRC": "ISRC no válido"
 }

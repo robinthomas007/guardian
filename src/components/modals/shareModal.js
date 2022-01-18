@@ -55,6 +55,7 @@ const ShareProjectModal = props => {
             User: {
               email: user.email,
             },
+            languagecode: localStorage.getItem('languageCode') || 'en',
           });
       }
     }

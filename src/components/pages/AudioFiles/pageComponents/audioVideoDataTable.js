@@ -129,6 +129,7 @@ class AudioVideoDataTable extends Component {
       trackArr[trackIds[0].slice(0, -14)] = value;
       trackArr['trackId'] = trackIds.length > 0 ? trackIds[1] : null;
     });
+    const { t } = this.props;
 
     if (this.props.data.Tracks) {
       tableDataRows = this.props.data.Tracks.map((track, i) => {
@@ -175,7 +176,7 @@ class AudioVideoDataTable extends Component {
                       onClick={() => this.props.showReplaceModal(track, i, 'Upload')}
                     >
                       <i className="material-icons">publish</i>
-                      <span>Upload Audio File</span>
+                      <span>{t('audio:UploadAudioFile')}</span>
                     </button>
                   )}
                   <Form.Control
@@ -222,7 +223,11 @@ class AudioVideoDataTable extends Component {
                     >
                       <span>
                         <i className="material-icons">publish</i>
-                        <span>{this.props.cisLoading ? 'Uploading...' : 'Upload Audio File'}</span>
+                        <span>
+                          {this.props.cisLoading
+                            ? t('audio:Uploading')
+                            : t('audio:UploadAudioFile')}
+                        </span>
                       </span>
                       {this.props.cisLoading && (
                         <span className="loading-sm uploading-pgs-loader">
@@ -249,7 +254,7 @@ class AudioVideoDataTable extends Component {
                 className={'trackTitleField'}
                 onBlur={e => this.handleOnBlur(e)}
               />
-              <div className="invalid-tooltip">Invalid Track Title</div>
+              <div className="invalid-tooltip">{t('audio:InvalidTrackTitle')}</div>
             </td>
             <td>
               <Form.Control
@@ -261,7 +266,7 @@ class AudioVideoDataTable extends Component {
                 onBlur={e => this.handleOnBlur(e)}
                 maxlength={12}
               />
-              <div className="invalid-tooltip">Invalid ISRC</div>
+              <div className="invalid-tooltip">{t('audio:InvalidISRC')}</div>
             </td>
             <td>
               <Form.Control

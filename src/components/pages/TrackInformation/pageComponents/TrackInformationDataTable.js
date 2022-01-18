@@ -65,7 +65,7 @@ class TrackInformationDataTable extends Component {
           <ToolTip tabIndex="-1" message={t('track:ReleaseDateDescription')} />
         </th>
         <th>{t('track:TBD')}</th>
-        <th className="text-center"> {t('track:Actions')} Actions</th>
+        <th className="text-center"> {t('track:Actions')}</th>
       </tr>
     );
   };
@@ -202,7 +202,7 @@ class TrackInformationDataTable extends Component {
     if (this.props.data.Discs.length > 0 && this.props.data.Discs[this.props.discID].Tracks) {
       let tableRows = this.props.data.Discs[this.props.discID].Tracks.map((track, i) => {
         const pre = isPreReleaseDate(this.props.data);
-
+        const { t } = this.props;
         return (
           <tr
             className={'draggable-track'}
@@ -239,7 +239,7 @@ class TrackInformationDataTable extends Component {
                 onChange={evt => this.handleChange(evt, track, i)}
                 className={'trackTitleField requiredInput'}
               ></Form.Control>
-              <div className="invalid-tooltip">Invalid Track Title</div>
+              <div className="invalid-tooltip">{t('track:InvalidTrackTitle')}</div>
             </td>
             <td>
               <Form.Control
@@ -251,7 +251,7 @@ class TrackInformationDataTable extends Component {
                 onBlur={e => this.handleOnBlur(e)}
                 maxlength={12}
               ></Form.Control>
-              <div className="invalid-tooltip">Invalid Isrc</div>
+              <div className="invalid-tooltip">{t('track:InvalidIsrc')}</div>
             </td>
             <td>
               <Form.Control

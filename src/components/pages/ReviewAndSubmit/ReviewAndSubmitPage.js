@@ -146,6 +146,7 @@ class ReviewAndSubmitPage extends Component {
             handleClose={this.hideProjectSubmitModal}
             show={this.state.showRequestModal}
             handleSubmitProjectClick={this.handleSubmitProjectClick}
+            t={t}
           />
 
           <ShareModal
@@ -153,11 +154,13 @@ class ReviewAndSubmitPage extends Component {
             handleClose={this.hideShareModal}
             show={this.state.shareModal}
             projectId={this.props.data.Project.projectID}
+            t={t}
           />
 
           <IncompleteProjectModal
             handleClose={this.hideIncompleteProjectModal}
             show={this.state.showIncompleteProjectModal}
+            t={t}
           />
 
           <div className="row no-gutters step-description review">

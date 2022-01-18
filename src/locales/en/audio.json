@@ -30,5 +30,9 @@
   "NoMatchingISRC": "No matching ISRC found",
   "NoFileFoundFromASPEN": "No files found from UMG's ASPEN repository",
   "weHaveFound": "We've found and uploaded",
-  "trackFromUMG": "Tracks from UMG's ASPEN repository"
+  "trackFromUMG": "Tracks from UMG's ASPEN repository",
+  "UploadAudioFile": "Upload Audio File",
+  "Uploading": "Uploading...",
+  "InvalidTrackTitle": "Invalid Track Title",
+  "InvalidISRC": "Invalid ISRC"
 }

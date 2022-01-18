@@ -329,7 +329,9 @@ class FindProjectDataTable extends Component {
               </label>
             </div>
           </th>
-          {this.props.userData.IsAdmin ? <th className="text-center">Actions</th> : null}
+          {this.props.userData.IsAdmin ? (
+            <th className="text-center">{t('search:Actions')}</th>
+          ) : null}
           <th
             className="text-nowrap sortable"
             onMouseOver={(e, columnID) => this.handleMouseOver(e, 'last_updated')}

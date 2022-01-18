@@ -40,5 +40,7 @@
   "SendEmail": "Enviar correo electrónico",
   "Share": "Cuota",
   "SubmitProject": "Enviar proyecto",
-  "NotyInfo": "Su proyecto se ha guardado correctamente y se ha enviado para su revisión."
+  "NotyInfo": "Su proyecto se ha guardado correctamente y se ha enviado para su revisión.",
+  "AreYouSureMain": "¿Está seguro? Una vez enviado, este proyecto se bloqueará y ya no podrá editarse.",
+  "AreYouSureSub": "Excepto por un administrador de soporte de Guardian."
 }

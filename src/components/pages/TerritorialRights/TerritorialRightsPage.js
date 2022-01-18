@@ -64,6 +64,7 @@ class TerritorialRightsPage extends Component {
           User: { email: user.email },
           ProjectId: this.props.match.params.projectID,
           IsNewUgcRights: localStorage.step === '4' ? true : false,
+          languagecode: localStorage.getItem('languageCode') || 'en',
         });
       })
       .catch(error => {
