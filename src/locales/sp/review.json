@@ -42,5 +42,6 @@
   "SubmitProject": "Enviar proyecto",
   "NotyInfo": "Su proyecto se ha guardado correctamente y se ha enviado para su revisión.",
   "AreYouSureMain": "¿Está seguro? Una vez enviado, este proyecto se bloqueará y ya no podrá editarse.",
-  "AreYouSureSub": "Excepto por un administrador de soporte de Guardian."
+  "AreYouSureSub": "Excepto por un administrador de soporte de Guardian.",
+  "ProjectIncomplete": "Este proyecto tiene pasos que están incompletos y no se pueden enviar. Revise la barra de progreso para ver qué paso está incompleto."
 }

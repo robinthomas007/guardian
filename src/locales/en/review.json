@@ -42,5 +42,6 @@
   "SubmitProject": "Submit Project",
   "NotyInfo": "Your project has been successfully saved and submitted for review.",
   "AreYouSureMain": "Are you sure? Once submitted, this project will be locked and no longer editable",
-  "AreYouSureSub": "except by a Guardian support administrator."
+  "AreYouSureSub": "except by a Guardian support administrator.",
+  "ProjectIncomplete": "This project has Steps that are incomplete and cannot be submitted. Please review the progress bar to see which step is incomplete."
 }
