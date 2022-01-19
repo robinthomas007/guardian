@@ -86,9 +86,7 @@ class TerritorialRightsPage extends Component {
     return {
       territorialRightsSetID: set.id ? set.id : '',
       sequence: set.sequence ? set.sequence : index,
-      description: set.description
-        ? set.description
-        : `${this.props.t('territorial:Set')} #` + index,
+      description: set.description || '',
       countries: [
         {
           id: 'WW',
@@ -111,16 +109,6 @@ class TerritorialRightsPage extends Component {
     this.setState({ TerritorialRightsSets: modifiedTerritorialRightsSets });
   };
 
-  handleResequenceRighstSets = () => {
-    const { TerritorialRightsSets } = this.state.project;
-    let modifiedTerritorialRightsSets = TerritorialRightsSets;
-    for (let i = 0; i < modifiedTerritorialRightsSets.length; i++) {
-      modifiedTerritorialRightsSets[i].description =
-        `${this.props.t('territorial:Set')} #` + (i + 1);
-    }
-    this.setState({ TerritorialRightsSets: modifiedTerritorialRightsSets });
-  };
-
   handleSetDelete = i => {
     const { TerritorialRightsSets } = this.state.project;
     const { UnassignedTerritorialRightsSetTracks } = this.state.project;
@@ -130,20 +118,11 @@ class TerritorialRightsPage extends Component {
     if (TerritorialRightsSets.length > 1) {
       let modifiedTerritorialRightsSets = TerritorialRightsSets;
       modifiedTerritorialRightsSets.splice(i, 1);
-      this.setState(
-        {
-          TerritorialRightsSets: modifiedTerritorialRightsSets,
-        },
-        this.handleResequenceRighstSets(),
-      );
-
-      //TODO : do this correctly
-      this.state.project.UnassignedTerritorialRightsSetTracks = combinedTracks;
+      this.setState({
+        TerritorialRightsSets: modifiedTerritorialRightsSets,
+        project: { ...this.state.project, UnassignedTerritorialRightsSetTracks: combinedTracks },
+      });
     }
-
-    // this.setState({
-    //     UnassignedTracks : combinedTracks
-    // }, () => alert(this.state.project.UnassignedTracks));
   };
 
   handleNoRightsTracksRemove = (i, trackID) => {

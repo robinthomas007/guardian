@@ -147,7 +147,7 @@ class TracksRightsSets extends Component {
       return (
         <div key={i} className="set-card">
           <div className="row d-flex col-12 no-gutters">
-            <h3>{rightsSet.description}</h3>
+            <h3>{this.props.t('territorial:Set') + ' #' + (i + 1)}</h3>
 
             <div className="delete-rights-set">{this.handleDeleteButton(i)}</div>
           </div>

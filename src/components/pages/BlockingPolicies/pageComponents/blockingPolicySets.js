@@ -33,7 +33,7 @@ class BlockingPolicySets extends Component {
       return (
         <div className="set-card" key={i}>
           <div className="row d-flex col-12 no-gutters">
-            <h3>{blockingSet.description}</h3>
+            <h3>{this.props.t('territorial:Set') + ' #' + (i + 1)}</h3>
 
             <div className="delete-rights-set">{this.handleDeleteButton(i)}</div>
           </div>
