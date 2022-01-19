@@ -131,13 +131,14 @@ class Content extends Component {
           return response.json();
         })
         .then(responseJSON => {
-          if (
-            responseJSON.Project.projectStatus !== 'In Progress' &&
-            responseJSON.Project.projectStatus !== 'No Rights' &&
-            !pagePath.includes('reviewSubmit')
-          ) {
-            this.props.history.push('/reviewSubmit/' + this.state.projectID);
-          }
+          // console.log('responseJSON.Project.projectStatus', responseJSON.Project.projectStatus);
+          // if (
+          //   responseJSON.Project.projectStatus !== 'In Progress' &&
+          //   responseJSON.Project.projectStatus !== 'No Rights' &&
+          //   !pagePath.includes('reviewSubmit')
+          // ) {
+          //   this.props.history.push('/reviewSubmit/' + this.state.projectID);
+          // }
           return this.state.project !== responseJSON
             ? this.setState({ project: responseJSON })
             : '';
