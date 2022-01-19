@@ -18,7 +18,9 @@ class TerritorialRightsTable extends Component {
     return this.props.data.TerritorialRightsSets[setIndex].tracks.map((track, i) => {
       return (
         <tr className="row no-gutters" key={i}>
-          <td className="col-3">{i === 0 ? policy.description : ''}</td>
+          <td className="col-3">
+            {i === 0 ? this.props.t('territorial:Set') + ' #' + (setIndex + 1) : ''}
+          </td>
           <td className="col-3">{track.trackTitle}</td>
           <td className="col-3">
             {policy.hasRights ? this.getTrackCountries(policy.countries) : ''}
