@@ -11,15 +11,17 @@ class BlockingPoliciesDataTable extends Component {
   }
 
   getblockedPolicyText = platform => {
+    const { t } = this.props;
     return !platform.duration && !platform.expirationDate
       ? !platform.expirationDate
-        ? 'Block All'
-        : 'Block All Until ' + platform.expirationDate
-      : 'Block ' +
+        ? t('review:BlockAll')
+        : t('review:BlockAllUntil') + ' ' + platform.expirationDate
+      : t('review:Block') +
+          ' ' +
           platform.duration +
           (platform.expirationDate
-            ? ' Until ' + moment(platform.expirationDate).format('DD-MM-YYYY')
-            : ' Always ');
+            ? ' ' + t('review:Until') + ' ' + moment(platform.expirationDate).format('DD-MM-YYYY')
+            : ' ' + t('Always') + ' ');
   };
 
   getTrackPolicies = platforms => {
