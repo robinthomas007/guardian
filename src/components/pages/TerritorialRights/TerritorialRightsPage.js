@@ -60,12 +60,15 @@ class TerritorialRightsPage extends Component {
         }
         this.setState({ showLoader: false });
         this.props.setHeaderProjectData(this.state.project);
-        this.props.getRights({
-          User: { email: user.email },
-          ProjectId: this.props.match.params.projectID,
-          IsNewUgcRights: localStorage.step === '4' ? true : false,
-          languagecode: localStorage.getItem('languageCode') || 'en',
-        });
+        this.props.getRights(
+          {
+            User: { email: user.email },
+            ProjectId: this.props.match.params.projectID,
+            IsNewUgcRights: localStorage.step === '4' ? true : false,
+            languagecode: localStorage.getItem('languageCode') || 'en',
+          },
+          this.props.t,
+        );
       })
       .catch(error => {
         console.error(error);
@@ -454,7 +457,7 @@ class TerritorialRightsPage extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  getRights: val => dispatch(territorialRightsAction.getRights(val)),
+  getRights: (val, t) => dispatch(territorialRightsAction.getRights(val, t)),
   initializeRightsData: () => dispatch(territorialRightsAction.initializeRightsData()),
 });
 

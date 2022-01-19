@@ -39,7 +39,7 @@ export const updateProjectStatus = data => {
   };
 };
 
-export const getRights = val => {
+export const getRights = (val, t) => {
   return dispatch => {
     dispatch(rightRequest(true));
     return Api.post('/project/ugcrights', val)
@@ -67,7 +67,7 @@ export const getRights = val => {
               .then(response => response.json())
               .then(response => {
                 if (response.success) {
-                  dispatch(projectStatusUpdate('No Rights'));
+                  dispatch(projectStatusUpdate(t('NoRights')));
                 }
               })
               .catch(error => {
@@ -86,7 +86,7 @@ export const getRights = val => {
               .then(response => response.json())
               .then(response => {
                 if (response.success) {
-                  dispatch(projectStatusUpdate('In Progress'));
+                  dispatch(projectStatusUpdate(t('InProgress')));
                 }
               })
               .catch(error => {
