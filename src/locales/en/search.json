@@ -45,5 +45,7 @@
   "MoreVideos": "More Videos",
   "Help/FAQs": "Help/FAQs",
   "Export": "Export",
-  "Exporting": "Exportador"
+  "Exporting": "Exportador",
+  "NotyInfo": "Your project reminder has been successfully sent.",
+  "NotyError": "Your project reminder encountered an error, please try again."
 }

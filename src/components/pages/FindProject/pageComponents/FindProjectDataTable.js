@@ -155,12 +155,12 @@ class FindProjectDataTable extends Component {
       })
       .then(responseJSON => {
         this.setState({ showloader: false });
-        showNotyInfo('Your project reminder has been successfully sent.');
+        showNotyInfo(this.props.t('search:NotyInfo'));
       })
       .catch(error => {
         console.error(error);
         this.setState({ showloader: false });
-        showNotyAutoError('Your project reminder encountered an error, please try again.');
+        showNotyAutoError(this.props.t('search:NotyError'));
       });
   };
 

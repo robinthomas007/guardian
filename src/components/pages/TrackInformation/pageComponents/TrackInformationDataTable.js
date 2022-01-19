@@ -251,7 +251,7 @@ class TrackInformationDataTable extends Component {
                 onBlur={e => this.handleOnBlur(e)}
                 maxlength={12}
               ></Form.Control>
-              <div className="invalid-tooltip">{t('track:InvalidIsrc')}</div>
+              <div className="invalid-tooltip">{t('track:InvalidISRC')}</div>
             </td>
             <td>
               <Form.Control
