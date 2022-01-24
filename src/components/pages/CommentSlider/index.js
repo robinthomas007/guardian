@@ -97,10 +97,14 @@ const CommentSlider = props => {
       }}
     >
       <div className="comment-slider">
-        <VideoPlayer
-          title="Adding Comments"
-          link="https://usaws03-guardian-media.s3.amazonaws.com/videos/The+Guardian+2021+pt.+14+Adding+Comments.mp4"
-        />
+        <div className="text-right" style={{ marginTop: '-5px', marginRight: '20px' }}>
+          <VideoPlayer
+            text={props.t('header:AddingComment')}
+            text="Adding Comments"
+            title="Adding Comments"
+            link="https://usaws03-guardian-media.s3.amazonaws.com/videos/The+Guardian+2021+pt.+14+Adding+Comments.mp4"
+          />
+        </div>
         <span className="material-icons close" onClick={handleClose}>
           close
         </span>

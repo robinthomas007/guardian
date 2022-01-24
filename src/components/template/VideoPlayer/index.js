@@ -19,7 +19,7 @@ export default class VideoPlayer extends Component {
 
   render() {
     const { showVideoTutorialModal } = this.state;
-    const { title, link } = this.props;
+    const { title, link, text } = this.props;
     const videos = [
       {
         modalHeader: title || 'Video Tutorial',
@@ -37,6 +37,7 @@ export default class VideoPlayer extends Component {
           title={title || 'Tutorial Video'}
         >
           <i className={'material-icons'}>videocam</i>
+          {text && <span>&nbsp;{text}</span>}
         </button>
         <VideoTutorialModal
           showModal={showVideoTutorialModal}

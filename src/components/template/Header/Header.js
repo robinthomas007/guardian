@@ -578,6 +578,7 @@ class Header extends Component {
             <CommentBox
               projectID={projectData.Project.projectID}
               handleClose={this.hideCommentBox}
+              t={t}
             />
           )}
           <header

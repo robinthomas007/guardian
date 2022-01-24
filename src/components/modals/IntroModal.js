@@ -57,8 +57,9 @@ class IntroModal extends Component {
               <div className="purp-diag">
                 <Modal.Header closeButton>
                   <Modal.Title>{t('Guardian')}</Modal.Title>
-                  <span style={{ marginLeft: '20px', marginTop: '10px' }}>
+                  <span style={{ margin: '10px 0 0 auto' }}>
                     <VideoPlayer
+                      text={t('Intro')}
                       title="Introduction Video"
                       link="https://usaws03-guardian-media.s3.amazonaws.com/videos/The+Guardian+2021+pt.+1+Introduction.mp4"
                     />
