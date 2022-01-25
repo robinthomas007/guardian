@@ -649,7 +649,7 @@ class TrackInformationPage extends Component {
 
         <section className="row save-buttons">
           <div className="col-9"></div>
-          <div className="col-3">
+          <div className="col-3 audio-footer-action-fxd">
             <button
               type="button"
               className="btn btn-secondary saveButton"

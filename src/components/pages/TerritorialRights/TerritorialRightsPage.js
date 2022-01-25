@@ -430,7 +430,7 @@ class TerritorialRightsPage extends Component {
           </div>
         </div>
         <div className="row save-buttons">
-          <div className="col-12">
+          <div className="col-12 audio-footer-action-fxd">
             <button
               tabIndex="5+"
               id="contactsSaveButton"

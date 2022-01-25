@@ -338,7 +338,9 @@ class TrackInformationDataTable extends Component {
     return (
       <div className="table-responsive">
         <Table droppable="true" className="tracks-table">
-          <thead>{this.trackInformationDataHeader()}</thead>
+          <thead style={{ position: 'sticky', top: '240px', background: '#fff' }}>
+            {this.trackInformationDataHeader()}
+          </thead>
           <tbody>{this.getTrackRows()}</tbody>
         </Table>
       </div>

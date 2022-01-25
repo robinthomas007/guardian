@@ -203,7 +203,7 @@ class FindProjectPage extends Component {
             />
           </li>
         </ul>
-        <div className="table-responsive row">
+        <div className="">
           <FindProjectDataTable
             t={t}
             userData={JSON.parse(sessionStorage.getItem('user'))}

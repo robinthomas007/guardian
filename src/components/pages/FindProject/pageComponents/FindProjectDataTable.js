@@ -312,7 +312,7 @@ class FindProjectDataTable extends Component {
   getDataTable = () => {
     const { t } = this.props;
     return (
-      <thead>
+      <thead style={{ position: 'sticky', top: '155px', background: '#fff' }}>
         <tr>
           <th>
             <div className="select-all">
