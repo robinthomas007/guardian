@@ -14,8 +14,10 @@ const selectedFilter = [
   { name: 'hasRights', label: 'Has Rights' },
   { name: 'statusID', label: 'Status' },
   { name: 'hasBlocking', label: 'Blocking' },
-  { name: 'from', label: 'From' },
-  { name: 'to', label: 'To' },
+  { name: 'from', label: 'Updated From' },
+  { name: 'to', label: 'Updated To' },
+  { name: 'releaseFrom', label: 'Release From' },
+  { name: 'releaseTo', label: 'Release To' },
 ];
 
 const Filter = props => {
@@ -123,6 +125,12 @@ const Filter = props => {
         if (key === 'to') {
           values[key] = props.getToDate(item);
         }
+        if (key === 'releaseFrom') {
+          values[key] = props.getFromDate(item);
+        }
+        if (key === 'releaseTo') {
+          values[key] = props.getToDate(item);
+        }
       }
     });
 
@@ -227,6 +235,22 @@ const Filter = props => {
               <Field
                 label={t('search:to')}
                 name="to"
+                handleOnSelect={handleOnSelect}
+                component={DateTimePicker}
+              />
+            </div>
+          </div>
+          <div className="row no-gutters">
+            <div className="col-10 last-up-date">
+              <Field
+                label={t('search:ReleaseDate')}
+                name="releaseFrom"
+                handleOnSelect={handleOnSelect}
+                component={DateTimePicker}
+              />
+              <Field
+                label={t('search:to')}
+                name="releaseTo"
                 handleOnSelect={handleOnSelect}
                 component={DateTimePicker}
               />
