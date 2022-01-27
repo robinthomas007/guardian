@@ -430,25 +430,27 @@ class TerritorialRightsPage extends Component {
           </div>
         </div>
         <div className="row save-buttons">
-          <div className="col-12 audio-footer-action-fxd">
-            <button
-              tabIndex="5+"
-              id="contactsSaveButton"
-              type="button"
-              className="btn btn-secondary"
-              onClick={this.handleSubmit}
-            >
-              {t('territorial:Save')}
-            </button>
-            <button
-              tabIndex="6+"
-              id="contactsSaveContButton"
-              type="button"
-              className="btn btn-primary"
-              onClick={this.handleSubmit}
-            >
-              {t('territorial:SaveAndContinue')}
-            </button>
+          <div className="col-12">
+            <div className="audio-footer-action-fxd">
+              <button
+                tabIndex="5+"
+                id="contactsSaveButton"
+                type="button"
+                className="btn btn-secondary"
+                onClick={this.handleSubmit}
+              >
+                {t('territorial:Save')}
+              </button>
+              <button
+                tabIndex="6+"
+                id="contactsSaveContButton"
+                type="button"
+                className="btn btn-primary"
+                onClick={this.handleSubmit}
+              >
+                {t('territorial:SaveAndContinue')}
+              </button>
+            </div>
           </div>
         </div>
       </div>

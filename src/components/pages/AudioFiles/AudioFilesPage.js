@@ -710,21 +710,23 @@ class AudioFilesPage extends Component {
         />
 
         <section className="row no-gutters save-buttons">
-          <div className="col-12 audio-footer-action-fxd">
-            <button
-              type="button"
-              className="btn btn-secondary saveButton"
-              onClick={e => this.handleDataSubmit(e)}
-            >
-              {t('audio:Save')}
-            </button>
-            <button
-              type="button"
-              className="btn btn-primary saveAndContinueButton"
-              onClick={e => this.handleDataSubmit(e)}
-            >
-              {t('audio:SaveAndContinue')}
-            </button>
+          <div className="col-12">
+            <div className="audio-footer-action-fxd">
+              <button
+                type="button"
+                className="btn btn-secondary saveButton"
+                onClick={e => this.handleDataSubmit(e)}
+              >
+                {t('audio:Save')}
+              </button>
+              <button
+                type="button"
+                className="btn btn-primary saveAndContinueButton"
+                onClick={e => this.handleDataSubmit(e)}
+              >
+                {t('audio:SaveAndContinue')}
+              </button>
+            </div>
           </div>
         </section>
       </div>

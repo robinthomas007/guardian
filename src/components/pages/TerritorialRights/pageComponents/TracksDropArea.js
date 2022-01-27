@@ -82,10 +82,10 @@ class TracksDropArea extends Component {
       return (
         <div
           key={i}
-          draggable="true"
+          draggable={track.IsLockedByUgc ? 'false' : 'true'}
           className="draggable-track rightsSetTracks"
-          onDragStart={e => this.handleDrag(e)}
-          onDragEnd={e => this.handleDragEnd(e, i, track)}
+          onDragStart={e => !track.IsLockedByUgc && this.handleDrag(e)}
+          onDragEnd={e => !track.IsLockedByUgc && this.handleDragEnd(e, i, track)}
           setindex={this.props.setIndex}
           trackindex={i}
           trackid={track.trackID}
@@ -100,6 +100,7 @@ class TracksDropArea extends Component {
               type="checkbox"
               id={`check_${track.trackID}`}
               name={`check_${track.trackID}`}
+              disabled={track.IsLockedByUgc}
             />
             <span className="checkmark "></span>
           </label>
@@ -113,7 +114,7 @@ class TracksDropArea extends Component {
   };
 
   render() {
-    const { data, t } = this.props;
+    const { data, t, disabled } = this.props;
     const { selectAllNoRights } = this.state;
     return (
       <div
@@ -126,6 +127,7 @@ class TracksDropArea extends Component {
           <div className="select-all">
             <label className="custom-checkbox">
               <input
+                disabled={disabled}
                 onChange={this.selectAll}
                 className="track-multi-drag-check"
                 checked={selectAllNoRights}

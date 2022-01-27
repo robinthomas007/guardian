@@ -21,7 +21,7 @@ class TracksRightsRule extends Component {
   }
 
   render() {
-    const { t } = this.props;
+    const { t, disabled } = this.props;
     return (
       <div>
         <input
@@ -29,6 +29,7 @@ class TracksRightsRule extends Component {
           name={'hasRights_' + this.props.setIndex}
           type="radio"
           value="true"
+          disabled={disabled}
           checked={this.props.data}
           onChange={this.handleChange}
         />{' '}
@@ -42,6 +43,7 @@ class TracksRightsRule extends Component {
           name={'hasRights_' + this.props.setIndex}
           type="radio"
           value="false"
+          disabled={disabled}
           checked={!this.props.data}
           onChange={this.handleChange}
         />{' '}

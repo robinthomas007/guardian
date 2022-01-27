@@ -364,6 +364,7 @@ class Content extends Component {
                     />
                   )}
                 />
+                <div className="col-1"></div>
               </div>
             </div>
           </div>

@@ -33,7 +33,7 @@ class TrackSelectDropDown extends Component {
   };
 
   render() {
-    const { t } = this.props;
+    const { t, disabled } = this.props;
     return (
       <div className="dropdown tracks-dropdown">
         <button
@@ -43,6 +43,7 @@ class TrackSelectDropDown extends Component {
           data-toggle="dropdown"
           aria-haspopup="true"
           aria-expanded="false"
+          disabled={disabled}
         >
           {t('territorial:SelectTracksorDragBelow')}
         </button>

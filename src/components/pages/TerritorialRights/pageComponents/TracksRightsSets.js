@@ -144,6 +144,8 @@ class TracksRightsSets extends Component {
         this.props.data.UnassignedTerritorialRightsSetTracks,
         val => val.hasRights !== false,
       );
+      const IsLockedByUgc = _.find(rightsSet.tracks, 'IsLockedByUgc');
+      console.log(IsLockedByUgc, 'IsLockedByUgcIsLockedByUgc111');
       return (
         <div key={i} className="set-card">
           <div className="row d-flex col-12 no-gutters">
@@ -175,6 +177,7 @@ class TracksRightsSets extends Component {
                       onChange={e => this.handleTrackSelect(e, rightsSet)}
                       setIndex={i}
                       t={t}
+                      // disabled={IsLockedByUgc}
                     />
 
                     <TracksDropArea
@@ -185,6 +188,7 @@ class TracksRightsSets extends Component {
                       handleChildDrag={this.props.handleChildDrag}
                       dragSource={this.props.dragSource}
                       t={t}
+                      disabled={IsLockedByUgc}
                     />
                   </td>
                   <td className="col-4">
@@ -193,6 +197,7 @@ class TracksRightsSets extends Component {
                       setIndex={i}
                       onChange={value => this.handleRightsRuleChange(value, i)}
                       t={t}
+                      disabled={IsLockedByUgc}
                     />
                   </td>
                   <td className="col-4">
@@ -204,6 +209,7 @@ class TracksRightsSets extends Component {
                         value={this.getCountryIDs(rightsSet.countries)}
                         id={'territorialRightsCountry_' + i}
                         onChange={value => this.handleCountryChange(value, i)}
+                        disabled={IsLockedByUgc}
                       />
                     </div>
                     <br />

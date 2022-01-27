@@ -494,25 +494,27 @@ class BlockingPoliciesPage extends Component {
         </div>
 
         <div className="row save-buttons">
-          <div className="col-12 audio-footer-action-fxd">
-            <button
-              tabIndex="5+"
-              id="contactsSaveButton"
-              type="button"
-              className="btn btn-secondary saveButton"
-              onClick={e => this.handleSubmit(e)}
-            >
-              {t('blocking:Save')} {t('blocking:Draft')}
-            </button>
-            <button
-              tabIndex="6+"
-              id="contactsSaveContButton"
-              type="button"
-              className="btn btn-primary saveAndContinueButton"
-              onClick={e => this.handleSubmit(e)}
-            >
-              {t('blocking:Save')} & {t('blocking:Continue')}
-            </button>
+          <div className="col-12">
+            <div className="audio-footer-action-fxd">
+              <button
+                tabIndex="5+"
+                id="contactsSaveButton"
+                type="button"
+                className="btn btn-secondary saveButton"
+                onClick={e => this.handleSubmit(e)}
+              >
+                {t('blocking:Save')} {t('blocking:Draft')}
+              </button>
+              <button
+                tabIndex="6+"
+                id="contactsSaveContButton"
+                type="button"
+                className="btn btn-primary saveAndContinueButton"
+                onClick={e => this.handleSubmit(e)}
+              >
+                {t('blocking:Save')} & {t('blocking:Continue')}
+              </button>
+            </div>
           </div>
         </div>
       </div>

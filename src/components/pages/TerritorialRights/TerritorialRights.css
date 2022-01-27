@@ -20,6 +20,11 @@
   background-color: #fff;
 }
 
+.btn.btn-secondary.dropdown-toggle:disabled {
+  background-color: #ccc;
+  width: 100% !important;
+}
+
 .set-card table.table th {
   align-content: center;
   text-align: center;

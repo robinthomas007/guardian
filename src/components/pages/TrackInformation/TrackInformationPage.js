@@ -648,22 +648,23 @@ class TrackInformationPage extends Component {
         />
 
         <section className="row save-buttons">
-          <div className="col-9"></div>
-          <div className="col-3 audio-footer-action-fxd">
-            <button
-              type="button"
-              className="btn btn-secondary saveButton"
-              onClick={e => this.handleSubmit(e)}
-            >
-              {t('track:Save')}
-            </button>
-            <button
-              type="button"
-              className="btn btn-primary saveAndContinueButton"
-              onClick={e => this.handleSubmit(e)}
-            >
-              {t('track:SaveAndContinue')}
-            </button>
+          <div className="col-12">
+            <div className="audio-footer-action-fxd">
+              <button
+                type="button"
+                className="btn btn-secondary saveButton"
+                onClick={e => this.handleSubmit(e)}
+              >
+                {t('track:Save')}
+              </button>
+              <button
+                type="button"
+                className="btn btn-primary saveAndContinueButton"
+                onClick={e => this.handleSubmit(e)}
+              >
+                {t('track:SaveAndContinue')}
+              </button>
+            </div>
           </div>
         </section>
       </div>
