@@ -83,7 +83,9 @@ class TracksDropArea extends Component {
         <div
           key={i}
           draggable={track.IsLockedByUgc ? 'false' : 'true'}
-          className="draggable-track rightsSetTracks"
+          className={`${
+            track.IsLockedByUgc ? 'disabled_text' : ''
+          } draggable-track rightsSetTracks`}
           onDragStart={e => !track.IsLockedByUgc && this.handleDrag(e)}
           onDragEnd={e => !track.IsLockedByUgc && this.handleDragEnd(e, i, track)}
           setindex={this.props.setIndex}

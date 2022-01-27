@@ -145,7 +145,6 @@ class TracksRightsSets extends Component {
         val => val.hasRights !== false,
       );
       const IsLockedByUgc = _.find(rightsSet.tracks, 'IsLockedByUgc');
-      console.log(IsLockedByUgc, 'IsLockedByUgcIsLockedByUgc111');
       return (
         <div key={i} className="set-card">
           <div className="row d-flex col-12 no-gutters">
