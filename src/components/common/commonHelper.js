@@ -35,28 +35,34 @@ export const getSearchCriteria = searchCriteria => {
 
 export const getToDate = (date, iso) => {
   if (!date) return '';
-  let toDate = new Date(date);
-  toDate.setHours(23, 59, 59);
-  toDate.setDate(toDate.getDate() + 1);
-  if (iso) {
-    toDate = moment(toDate).format('YYYY-MM-DD');
-    toDate = `${toDate}T00:00:00.000Z`;
-  } else {
-    toDate = toDate.toISOString().replace('Z', '');
-  }
-  return toDate;
+  // let toDate = new Date(date);
+  // toDate.setHours(23, 59, 59);
+  // toDate.setDate(toDate.getDate() + 1);
+  // if (iso) {
+  //   toDate = moment(toDate).format('YYYY-MM-DD');
+  //   toDate = `${toDate}T00:00:00.000Z`;
+  // } else {
+  //   toDate = toDate.toISOString().replace('Z', '');
+  // }
+  // return toDate;
+  return moment(date)
+    .format('YYYY-MM-DD')
+    .toString();
 };
 
 export const getFromDate = (date, iso) => {
   if (!date) return '';
-  let fromDate = new Date(date);
-  if (iso) {
-    fromDate = moment(fromDate).format('YYYY-MM-DD');
-    fromDate = `${fromDate}T00:00:00.000Z`;
-  } else {
-    fromDate = fromDate.toISOString().replace('Z', '');
-  }
-  return fromDate;
+  // let fromDate = new Date(date);
+  // if (iso) {
+  //   fromDate = moment(fromDate).format('YYYY-MM-DD');
+  //   fromDate = `${fromDate}T00:00:00.000Z`;
+  // } else {
+  //   fromDate = fromDate.toISOString().replace('Z', '');
+  // }
+  // return fromDate;
+  return moment(date)
+    .format('YYYY-MM-DD')
+    .toString();
 };
 
 export const steps = [
