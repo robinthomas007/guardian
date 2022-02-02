@@ -25,5 +25,6 @@
   "duplicateTrackTitle": "Está intentando ingresar un título de pista / isrc duplicado. Haga clic para cerrar.",
   "uploadingAudioFailed": "No se han podido cargar los archivos de audio. Inténtalo de nuevo. Haga clic para cerrar.",
   "InvalidTrackTitle": "Título de pista no válido",
-  "InvalidISRC": "ISRC no válido"
+  "InvalidISRC": "ISRC no válido",
+  "FileName": "Nombre del archivo"
 }

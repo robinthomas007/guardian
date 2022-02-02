@@ -25,5 +25,6 @@
   "duplicateTrackTitle": "You're attempting to enter a duplicate track title / isrc. Click to close.",
   "uploadingAudioFailed": "Uploading audio file(s) failed. Please try again. Click to close.",
   "InvalidTrackTitle": "Invalid Track Title",
-  "InvalidISRC": "Invalid ISRC"
+  "InvalidISRC": "Invalid ISRC",
+  "FileName": "File Name"
 }

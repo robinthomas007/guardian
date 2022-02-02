@@ -5,7 +5,7 @@ import AdminStatusDropdown from '../pageComponents/AdminStatusDropdown';
 import LoadingImg from 'component_library/LoadingImg';
 import { showNotyInfo, showNotyAutoError } from 'components/Utils';
 import moment from 'moment';
-
+import ExtendedTracks from './ExtendedTracks';
 class FindProjectDataTable extends Component {
   constructor(props) {
     super(props);
@@ -15,10 +15,22 @@ class FindProjectDataTable extends Component {
       activeSortDesc: true,
       activeHover: null,
       showloader: false,
+      expandedTracks: {},
     };
 
     this.handleSortDisplay = this.handleSortDisplay.bind(this);
   }
+
+  expandTracks = (projectID, tracks) => {
+    const { expandedTracks } = this.state;
+    this.setState({ expandedTracks: { ...expandedTracks, [projectID]: tracks } });
+  };
+
+  shrinkTracks = projectID => {
+    const { expandedTracks } = this.state;
+    let { [projectID]: _omit, ...result } = expandedTracks;
+    this.setState({ expandedTracks: result });
+  };
 
   checkProjectStepStatus = stepStatus => {
     return stepStatus ? (
@@ -210,83 +222,103 @@ class FindProjectDataTable extends Component {
           }
         }
         return (
-          <tr key={i}>
-            <td>
-              <div className="select-all">
-                <label className="custom-checkbox">
-                  <input
-                    onChange={this.checkboxChange}
-                    className="track-multi-drag-check"
-                    checked={this.state[`check_${project.projectID}`]}
-                    type="checkbox"
-                    id="selectAll"
-                    name={`check_${project.projectID}`}
-                  />
-                  <span className="checkmark"></span>
-                </label>
-              </div>
-            </td>
-            {this.props.userData.IsAdmin ? this.getAdminButtons(project) : null}
-            <td onClick={() => this.handleRowClick(project.projectID)}>
-              {moment.utc(project.projectLastModified).format('MM-DD-YYYY hh:mm A')} UTC
-            </td>
-            <td onClick={() => this.handleRowClick(project.projectID)}>{project.projectTitle}</td>
-            <td onClick={() => this.handleRowClick(project.projectID)}>
-              {project.projectArtistName}
-            </td>
-            <td onClick={() => this.handleRowClick(project.projectID)}>
-              {project.projectReleasingLabel}
-            </td>
-            <td onClick={() => this.handleRowClick(project.projectID)}>
-              {project.projectReleaseDate
-                ? `${moment.utc(project.projectReleaseDate).format('MM-DD-YYYY hh:mm A')} UTC`
-                : 'TBD'}
-            </td>
-            <td
-              onClick={() =>
-                !this.props.userData.IsAdmin ? this.handleRowClick(project.projectID) : null
-              }
-              className="status text-nowrap"
-            >
-              <span>
-                {this.props.userData.IsAdmin ? (
-                  <AdminStatusDropdown
-                    onChange={this.handleAdminStatusChange}
-                    project={project}
-                    selectedText={project.status}
-                    selectedID={project.statusID}
-                    options={this.props.data.Facets.StatusFacets}
-                  />
-                ) : (
-                  project.status
-                )}
-              </span>
-            </td>
-            <td
-              onClick={() => this.handleRowClick(project.projectID)}
-              className={`status text-center ${colour}`}
-            >
-              {this.checkProjectStepStatus(project.isAudioFilesComplete)}
-            </td>
-            <td
-              onClick={() => this.handleRowClick(project.projectID)}
-              className="status text-center"
-            >
-              {this.checkProjectStepStatus(project.isTrackInfoComplete)}
-            </td>
-            <td
-              onClick={() => this.handleRowClick(project.projectID)}
-              className={`status text-center ${colour}`}
-            >
-              {this.checkProjectStepStatus(project.isTerritorialRightsComplete)}
-            </td>
-            <td
-              onClick={() => this.handleRowClick(project.projectID)}
-              className="status text-center"
-            >
-              {this.checkProjectStepStatus(project.isBlockingPoliciesComplete)}
-            </td>
-          </tr>
+          <React.Fragment key={i}>
+            <tr>
+              <td>
+                <div className="select-all">
+                  <label className="custom-checkbox">
+                    <input
+                      onChange={this.checkboxChange}
+                      className="track-multi-drag-check"
+                      checked={this.state[`check_${project.projectID}`]}
+                      type="checkbox"
+                      id="selectAll"
+                      name={`check_${project.projectID}`}
+                    />
+                    <span className="checkmark"></span>
+                  </label>
+                </div>
+              </td>
+              {this.props.userData.IsAdmin ? this.getAdminButtons(project) : null}
+              <td onClick={() => this.handleRowClick(project.projectID)}>
+                {moment.utc(project.projectLastModified).format('MM-DD-YYYY hh:mm A')} UTC
+              </td>
+              <td onClick={() => this.handleRowClick(project.projectID)}>{project.projectTitle}</td>
+              <td onClick={() => this.handleRowClick(project.projectID)}>
+                {project.projectArtistName}
+              </td>
+              <td onClick={() => this.handleRowClick(project.projectID)}>
+                {project.projectReleasingLabel}
+              </td>
+              <td onClick={() => this.handleRowClick(project.projectID)}>
+                {project.projectReleaseDate
+                  ? `${moment.utc(project.projectReleaseDate).format('MM-DD-YYYY hh:mm A')} UTC`
+                  : 'TBD'}
+              </td>
+              <td
+                onClick={() =>
+                  !this.props.userData.IsAdmin ? this.handleRowClick(project.projectID) : null
+                }
+                className="status text-nowrap"
+              >
+                <span>
+                  {this.props.userData.IsAdmin ? (
+                    <AdminStatusDropdown
+                      onChange={this.handleAdminStatusChange}
+                      project={project}
+                      selectedText={project.status}
+                      selectedID={project.statusID}
+                      options={this.props.data.Facets.StatusFacets}
+                    />
+                  ) : (
+                    project.status
+                  )}
+                </span>
+              </td>
+              <td className="text-nowrap">
+                <button
+                  className="btn btn-sm btn-secondary btn-collapse"
+                  onClick={() => this.expandTracks(project.projectID, [])}
+                  title="Comment"
+                  type="button"
+                >
+                  {9}
+                  <i className={`material-icons`}>arrow_drop_down</i>
+                </button>
+              </td>
+              <td
+                onClick={() => this.handleRowClick(project.projectID)}
+                className={`status text-center ${colour}`}
+              >
+                {this.checkProjectStepStatus(project.isAudioFilesComplete)}
+              </td>
+              <td
+                onClick={() => this.handleRowClick(project.projectID)}
+                className="status text-center"
+              >
+                {this.checkProjectStepStatus(project.isTrackInfoComplete)}
+              </td>
+              <td
+                onClick={() => this.handleRowClick(project.projectID)}
+                className={`status text-center ${colour}`}
+              >
+                {this.checkProjectStepStatus(project.isTerritorialRightsComplete)}
+              </td>
+              <td
+                onClick={() => this.handleRowClick(project.projectID)}
+                className="status text-center"
+              >
+                {this.checkProjectStepStatus(project.isBlockingPoliciesComplete)}
+              </td>
+            </tr>
+            {this.state.expandedTracks[project.projectID] ? (
+              <ExtendedTracks
+                projectID={project.projectID}
+                handleClose={this.shrinkTracks}
+                tracks={[]}
+              />
+            ) : null}
+          </React.Fragment>
         );
       });
       return tableRows;
@@ -416,6 +448,7 @@ class FindProjectDataTable extends Component {
               arrow_drop_up
             </i>
           </th>
+          <th className="status text-center">{t('search:Tracks')}</th>
           <th
             className="text-nowrap text-center sortable"
             onMouseOver={(e, columnID) => this.handleMouseOver(e, 'status')}
