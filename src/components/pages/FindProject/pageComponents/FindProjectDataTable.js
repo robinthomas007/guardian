@@ -15,21 +15,26 @@ class FindProjectDataTable extends Component {
       activeSortDesc: true,
       activeHover: null,
       showloader: false,
-      expandedTracks: {},
+      expandedProjectIds: [],
     };
 
     this.handleSortDisplay = this.handleSortDisplay.bind(this);
   }
 
-  expandTracks = (projectID, tracks) => {
-    const { expandedTracks } = this.state;
-    this.setState({ expandedTracks: { ...expandedTracks, [projectID]: tracks } });
+  expandTracks = projectID => {
+    const { expandedProjectIds } = this.state;
+    if (!expandedProjectIds.includes(projectID)) {
+      this.setState({ expandedProjectIds: [...expandedProjectIds, projectID] });
+    }
   };
 
   shrinkTracks = projectID => {
-    const { expandedTracks } = this.state;
-    let { [projectID]: _omit, ...result } = expandedTracks;
-    this.setState({ expandedTracks: result });
+    let { expandedProjectIds } = this.state;
+    const index = expandedProjectIds.indexOf(projectID);
+    if (index > -1) {
+      expandedProjectIds.splice(index, 1);
+      this.setState({ expandedProjectIds });
+    }
   };
 
   checkProjectStepStatus = stepStatus => {
@@ -221,6 +226,11 @@ class FindProjectDataTable extends Component {
             colour = 'gray-shade';
           }
         }
+        const isExtendable = project.Discs.length > 0;
+        const tracksCount = project.Discs.reduce((acc, disc) => {
+          return acc + disc.Tracks.length;
+        }, 0);
+
         return (
           <React.Fragment key={i}>
             <tr>
@@ -255,6 +265,18 @@ class FindProjectDataTable extends Component {
                   ? `${moment.utc(project.projectReleaseDate).format('MM-DD-YYYY hh:mm A')} UTC`
                   : 'TBD'}
               </td>
+              <td className="text-nowrap">
+                <button
+                  className="btn btn-sm btn-secondary btn-collapse"
+                  onClick={() => this.expandTracks(project.projectID)}
+                  title="Open Tracks"
+                  type="button"
+                  disabled={!isExtendable}
+                >
+                  {tracksCount}
+                  <i className={`material-icons`}>arrow_drop_down</i>
+                </button>
+              </td>
               <td
                 onClick={() =>
                   !this.props.userData.IsAdmin ? this.handleRowClick(project.projectID) : null
@@ -274,17 +296,6 @@ class FindProjectDataTable extends Component {
                     project.status
                   )}
                 </span>
-              </td>
-              <td className="text-nowrap">
-                <button
-                  className="btn btn-sm btn-secondary btn-collapse"
-                  onClick={() => this.expandTracks(project.projectID, [])}
-                  title="Comment"
-                  type="button"
-                >
-                  {9}
-                  <i className={`material-icons`}>arrow_drop_down</i>
-                </button>
               </td>
               <td
                 onClick={() => this.handleRowClick(project.projectID)}
@@ -311,11 +322,11 @@ class FindProjectDataTable extends Component {
                 {this.checkProjectStepStatus(project.isBlockingPoliciesComplete)}
               </td>
             </tr>
-            {this.state.expandedTracks[project.projectID] ? (
+            {this.state.expandedProjectIds.includes(project.projectID) ? (
               <ExtendedTracks
                 projectID={project.projectID}
                 handleClose={this.shrinkTracks}
-                tracks={[]}
+                discs={project.Discs}
               />
             ) : null}
           </React.Fragment>
@@ -448,7 +459,7 @@ class FindProjectDataTable extends Component {
               arrow_drop_up
             </i>
           </th>
-          <th className="status text-center">{t('search:Tracks')}</th>
+          <th>{t('search:Tracks')}</th>
           <th
             className="text-nowrap text-center sortable"
             onMouseOver={(e, columnID) => this.handleMouseOver(e, 'status')}
