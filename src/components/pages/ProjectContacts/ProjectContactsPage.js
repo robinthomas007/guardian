@@ -25,6 +25,7 @@ class ProjectContactsPage extends Component {
         projectSecurityID: '1',
         projectAdditionalContacts: '',
         projectStatusID: '1',
+        isMasked: false,
       },
       projectAdditionalContactsValid: '',
       project: {},
@@ -41,6 +42,7 @@ class ProjectContactsPage extends Component {
     this.showNotification = this.showNotification.bind(this);
     this.handleChangeByID = this.handleChangeByID.bind(this);
     this.isAdditionalContactsValid = this.isAdditionalContactsValid.bind(this);
+    this.handleMaskChange = this.handleMaskChange.bind(this);
   }
 
   handlePageDataLoad() {
@@ -95,9 +97,16 @@ class ProjectContactsPage extends Component {
     showNotyAutoError(this.props.t('contact:projectSaved'));
   }
 
-  handleChange(event) {
+  handleChange(e) {
+    let inputValue = '';
+    if (e.target.type === 'checkbox') {
+      inputValue = e.target.checked ? true : false;
+    } else {
+      inputValue = e.target.value;
+    }
+
     this.setState({
-      formInputs: { ...this.state.formInputs, [event.target.id]: event.target.value },
+      formInputs: { ...this.state.formInputs, [e.target.id]: inputValue },
     });
   }
 
@@ -105,7 +114,9 @@ class ProjectContactsPage extends Component {
     const { formInputs } = this.state;
     let modifiedFormInput = formInputs;
     modifiedFormInput[id] = value;
-
+    if (id === 'projectSecurityID' && value === '2') {
+      modifiedFormInput['isMasked'] = false;
+    }
     this.setState({ formInputs: modifiedFormInput });
   }
 
@@ -269,6 +280,10 @@ class ProjectContactsPage extends Component {
     }
   };
 
+  handleMaskChange = e => {
+    this.handleChange(e);
+  };
+
   render() {
     const { t } = this.props;
     return (
@@ -306,6 +321,36 @@ class ProjectContactsPage extends Component {
                     className={'project-security-dropdown'}
                     t={t}
                   />
+                </div>
+              </Form.Group>
+
+              <Form.Group className="row d-flex no-gutters">
+                <div className="col-2">
+                  <Form.Label className="col-form-label">
+                    {t('contact:mask')}
+                    <span className="required-ind">*</span>
+                  </Form.Label>
+                  <ToolTip tabIndex="-1" message={t('contact:maskMessage')} />
+                </div>
+                <div className="col-10">
+                  <label className="custom-checkbox">
+                    <input
+                      tabIndex="+1"
+                      id="isMasked"
+                      className="form-control"
+                      type="checkbox"
+                      value={this.state.formInputs.isMasked}
+                      onChange={this.handleMaskChange}
+                      checked={this.state.formInputs.isMasked}
+                      disabled={this.state.formInputs.projectSecurityID !== '1'}
+                    />
+
+                    <span
+                      className={`checkmark ${
+                        this.state.formInputs.projectSecurityID !== '1' ? 'disabled' : ''
+                      }`}
+                    ></span>
+                  </label>
                 </div>
               </Form.Group>
 
