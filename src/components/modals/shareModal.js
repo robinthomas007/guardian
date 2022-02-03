@@ -39,25 +39,34 @@ const ShareProjectModal = props => {
   const formSubmit = () => {
     const user = JSON.parse(sessionStorage.getItem('user'));
 
-    if (emails.length > 0) {
-      let isValid = true;
-      if (emails.length > 0) {
-        emails.forEach(email => {
-          if (!validateEmail(email)) {
-            isValid = false;
-          }
-        });
+    let email = document.querySelector('#shareEmailsIds').value;
+    email = email.trim();
+    email = email.split(/(?:,| |;)+/);
+    email = email[0];
+    props.initialize({
+      emails: null,
+    });
+    if (email) {
+      setEmails([...emails, email]);
+    }
 
-        isValid &&
-          props.postEmails({
-            emails: emails,
-            projectID: props.projectId,
-            User: {
-              email: user.email,
-            },
-            languagecode: localStorage.getItem('languageCode') || 'en',
-          });
-      }
+    if ([...emails, email].length > 0) {
+      let isValid = true;
+      [...emails, email].forEach(email => {
+        if (!validateEmail(email)) {
+          isValid = false;
+        }
+      });
+
+      isValid &&
+        props.postEmails({
+          emails: [...emails, email],
+          projectID: props.projectId,
+          User: {
+            email: user.email,
+          },
+          languagecode: localStorage.getItem('languageCode') || 'en',
+        });
     }
   };
 

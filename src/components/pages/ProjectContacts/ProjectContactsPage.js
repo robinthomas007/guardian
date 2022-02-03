@@ -121,10 +121,24 @@ class ProjectContactsPage extends Component {
   }
 
   isAdditionalContactsValid(e) {
+    const { formInputs, emails } = this.state;
     const saveAndContinue = e.target.classList.contains('saveAndContinueButton') ? true : false;
+
+    let email = document.querySelector('#projectAdditionalContacts').value;
+    email = email.trim();
+    email = email.split(/(?:,| |;)+/);
+    email = email[0];
+    formInputs.projectAdditionalContacts = '';
+    if (email) {
+      this.setState({
+        emails: [...emails, email],
+        formInputs: formInputs,
+      });
+    }
+
     this.props
       .validateEmails({
-        emails: this.state.emails.join(),
+        emails: [...emails, email].join(),
       })
       .then(response => response.json())
       .then(responseJSON => {
