@@ -12,8 +12,8 @@
   background: #ffffff;
 }
 
-.table-wrapper {
-  max-height: 200px;
+.ext-tracks-wrapper {
+  max-height: 250px;
   overflow-y: auto;
 }
 

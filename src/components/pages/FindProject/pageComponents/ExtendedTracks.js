@@ -64,7 +64,7 @@ export default ({ projectID, discs, handleClose }) => {
         <span class="material-icons close" onClick={() => handleClose(projectID)}>
           close
         </span>
-        <div className="table-wrapper">{renderTracks()}</div>
+        <div className="ext-tracks-wrapper">{renderTracks()}</div>
       </td>
     </tr>
   );
