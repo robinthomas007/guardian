@@ -38,10 +38,15 @@ const Tracks = ({ tracks }) => {
 };
 
 const Discs = ({ discs }) => {
+  const { t } = useTranslation();
   return (
     <Tabs defaultActiveKey={discs[0].discNumber}>
       {discs.map(disc => (
-        <Tab key={disc.discNumber} eventKey={disc.discNumber} title={'Disc' + disc.discNumber}>
+        <Tab
+          key={disc.discNumber}
+          eventKey={disc.discNumber}
+          title={t('track:Disc') + ' ' + disc.discNumber}
+        >
           <Tracks tracks={disc.Tracks} />
         </Tab>
       ))}
