@@ -29,7 +29,7 @@ const Tracks = ({ tracks }) => {
             <td>
               <i className="material-icons">{track.isSingle ? 'check' : 'close'}</i>
             </td>
-            <td>{track.trackReleaseDate}</td>
+            <td>{track.trackReleaseDate || t('track:TBD')}</td>
           </tr>
         ))}
       </tbody>
