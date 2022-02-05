@@ -314,6 +314,12 @@ class AudioFilesPage extends Component {
             obj['Tracks'] = _.uniqBy(obj['Tracks'], v => [v.isrc, v.trackTitle].join());
           }
           upcDisc.push(obj);
+          let hasOtherDisc = _.filter(data, val => val.discNumber !== disc.discNumber);
+          if (hasOtherDisc.length > 0) {
+            hasOtherDisc.forEach((Otherdisc, i) => {
+              upcDisc.push(Otherdisc);
+            });
+          }
         });
         this.setState({ discs: _.cloneDeep(upcDisc) });
         const isrcs = [];
@@ -524,6 +530,12 @@ class AudioFilesPage extends Component {
           upcDisc.push(obj);
           let trackIsrcs = _.map(disc.ExTracks, 'isrc');
           isrcs.push(...trackIsrcs);
+          let hasOtherDisc = _.filter(discs, val => val.discNumber !== disc.discNumber);
+          if (hasOtherDisc.length > 0) {
+            hasOtherDisc.forEach((Otherdisc, i) => {
+              upcDisc.push(Otherdisc);
+            });
+          }
         });
         this.setState({ discs: _.cloneDeep(upcDisc) });
         const prevPage = JSON.parse(localStorage.getItem('prevStep'));
