@@ -312,9 +312,10 @@ a {
   box-shadow: 2px 3px 8px #8c9396;
   max-height: 30rem;
   min-width: auto;
-  overflow-y: auto;
+  /* Commented below to auto position dropdown up or down */
+  /* overflow-y: auto;
   overflow-x: auto;
-  transform: translate3d(5px, 35px, 0px) !important;
+  transform: translate3d(5px, 35px, 0px) !important; */
 }
 
 .dropdown-menu > a.dropdown-item {

@@ -38,13 +38,13 @@ class AdminStatusDropdown extends Component {
   };
 
   render() {
+    const { project, selectedText } = this.props;
     return (
       <div className="dropdown">
         <button
           className="btn btn-secondary dropdown-toggle"
           type="button"
-          id={this.props.id}
-          ref={this.props.id}
+          id={`${project.projectID}`}
           data-toggle="dropdown"
           aria-haspopup="true"
           aria-expanded="false"
@@ -52,7 +52,7 @@ class AdminStatusDropdown extends Component {
           {this.props.selectedText}
         </button>
 
-        <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <div className="dropdown-menu dropdown-menu" aria-labelledby={`${project.projectID}`}>
           {this.getOptions()}
         </div>
       </div>
