@@ -541,6 +541,14 @@ class Header extends Component {
                         {moment.utc(noti.DateCreated).fromNow()})
                       </p>
                     )}
+                    {noti.NotificationType === 'Masking' && (
+                      <p>
+                        <strong className="bold">{noti.AssignedBy}</strong> has opted to mask for
+                        the project
+                        <strong className="bold"> "{noti.ProjectTitle}" </strong> (
+                        {moment.utc(noti.DateCreated).fromNow()})
+                      </p>
+                    )}
                   </div>
                 </NavLink>
               </li>

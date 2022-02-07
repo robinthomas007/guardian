@@ -38,7 +38,6 @@ const ShareProjectModal = props => {
 
   const formSubmit = () => {
     const user = JSON.parse(sessionStorage.getItem('user'));
-
     let email = document.querySelector('#shareEmailsIds').value;
     email = email.trim();
     email = email.split(/(?:,| |;)+/);
@@ -50,9 +49,10 @@ const ShareProjectModal = props => {
       setEmails([...emails, email]);
     }
 
-    if ([...emails, email].length > 0) {
+    const finalMailIds = email !== '' ? [...emails, email] : emails;
+    if (finalMailIds.length > 0) {
       let isValid = true;
-      [...emails, email].forEach(email => {
+      finalMailIds.forEach(email => {
         if (!validateEmail(email)) {
           isValid = false;
         }
@@ -60,7 +60,7 @@ const ShareProjectModal = props => {
 
       isValid &&
         props.postEmails({
-          emails: [...emails, email],
+          emails: finalMailIds,
           projectID: props.projectId,
           User: {
             email: user.email,
