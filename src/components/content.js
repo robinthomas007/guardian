@@ -18,6 +18,7 @@ import ErrorBoundary from './common/ErrorBoundary';
 import * as releaseAction from './pages/ReleaseInformation/releaseAction';
 import * as territorialRightsAction from '../actions/territorialRightsAction';
 import UploadProgressAlert from 'components/SharedPageComponents/UploadProgresAlert';
+import { showNotyMaskWarning } from 'components/Utils';
 
 class Content extends Component {
   constructor(props) {
@@ -131,6 +132,11 @@ class Content extends Component {
           return response.json();
         })
         .then(responseJSON => {
+          if (responseJSON.Project && responseJSON.Project.isMasked) {
+            showNotyMaskWarning(
+              'This projects meta data is being masked. The Project Title, Artist, Track Titles and Artists will all be masked.',
+            );
+          }
           // console.log('responseJSON.Project.projectStatus', responseJSON.Project.projectStatus);
           // if (
           //   responseJSON.Project.projectStatus !== 'In Progress' &&

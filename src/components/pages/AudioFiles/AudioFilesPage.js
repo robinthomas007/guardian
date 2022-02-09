@@ -8,7 +8,7 @@ import { reduxForm } from 'redux-form';
 import AudioFilesTabbedTracks from '../AudioFiles/pageComponents/audioFilesTabbedTracks';
 import { connect } from 'react-redux';
 import * as uploadProgressActions from 'redux/uploadProgressAlert/actions';
-import { isDuplicateTrackTitle, showNotyError } from '../../Utils';
+import { isDuplicateTrackTitle, showNotyError, showNotyMaskWarning } from '../../Utils';
 import _ from 'lodash';
 import { showNotyInfo } from 'components/Utils';
 import { toast } from 'react-toastify';
@@ -364,6 +364,11 @@ class AudioFilesPage extends Component {
         return response.json();
       })
       .then(responseJSON => {
+        if (responseJSON.Project && responseJSON.Project.isMasked) {
+          showNotyMaskWarning(
+            'This projects meta data is being masked. The Project Title, Artist, Track Titles and Artists will all be masked.',
+          );
+        }
         this.setState({
           project: _.cloneDeep(responseJSON),
           projectData: responseJSON.Project,

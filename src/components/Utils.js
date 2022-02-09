@@ -164,6 +164,11 @@ export function showNotyError(message, afterClose) {
   toast.error(message, { onClose: afterClose });
 }
 
+export function showNotyMaskWarning(message) {
+  toast.dismiss();
+  toast.error(message);
+}
+
 export function showNotyAutoError(message, afterClose) {
   toast.dismiss();
   toast.error(message, { autoClose: 3000, onClose: afterClose });
