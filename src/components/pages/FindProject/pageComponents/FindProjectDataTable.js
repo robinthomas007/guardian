@@ -6,6 +6,8 @@ import LoadingImg from 'component_library/LoadingImg';
 import { showNotyInfo, showNotyAutoError } from 'components/Utils';
 import moment from 'moment';
 import ExtendedTracks from './ExtendedTracks';
+import ConfirmModal from 'components/modals/ConfirmModal';
+
 class FindProjectDataTable extends Component {
   constructor(props) {
     super(props);
@@ -16,6 +18,7 @@ class FindProjectDataTable extends Component {
       activeHover: null,
       showloader: false,
       expandedProjectIds: [],
+      projectIDToDelete: null,
     };
 
     this.handleSortDisplay = this.handleSortDisplay.bind(this);
@@ -181,6 +184,37 @@ class FindProjectDataTable extends Component {
       });
   };
 
+  handleProjectDelete = projectID => {
+    const { afterProjectDelete } = this.props;
+    this.setState({ showloader: true, projectIDToDelete: null });
+
+    const fetchHeaders = new Headers({
+      'Content-Type': 'application/json',
+      Authorization: sessionStorage.getItem('accessToken'),
+    });
+
+    const fetchBody = {
+      ProjectID: projectID,
+    };
+
+    fetch(window.env.api.url + '/project/delete', {
+      method: 'POST',
+      headers: fetchHeaders,
+      body: JSON.stringify(fetchBody),
+    })
+      .then(_response => {
+        showNotyInfo(this.props.t('search:NotyDeleteInfo'));
+        afterProjectDelete();
+        return null;
+      })
+      .catch(_e => {
+        showNotyAutoError(this.props.t('search:NotyDeleteError'));
+      })
+      .finally(() => {
+        this.setState({ showloader: false });
+      });
+  };
+
   checkboxChange = e => {
     this.setState({
       [e.target.name]: !this.state[e.target.name],
@@ -210,6 +244,13 @@ class FindProjectDataTable extends Component {
             <i className="material-icons">alarm</i>
           </button>
         ) : null}
+        <button
+          type="button"
+          onClick={() => this.setState({ projectIDToDelete: project.projectID })}
+          className="btn btn-secondary"
+        >
+          <i className="material-icons">delete</i>
+        </button>
       </td>
     );
   };
@@ -497,6 +538,12 @@ class FindProjectDataTable extends Component {
     return (
       <div>
         <LoadingImg show={this.state.showloader} />
+        <ConfirmModal
+          show={this.state.projectIDToDelete ? true : false}
+          title={this.props.t('search:DeleteProject')}
+          onHide={() => this.setState({ projectIDToDelete: null })}
+          onConfirm={() => this.handleProjectDelete(this.state.projectIDToDelete)}
+        />
         <Table className="search-table find-a-project-table responsive">
           {this.getDataTable()}
           <tbody>{this.renderProjects()}</tbody>

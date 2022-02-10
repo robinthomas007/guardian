@@ -46,6 +46,9 @@
   "Help/FAQs": "Ayuda / Preguntas frecuentes",
   "Export": "Exportar",
   "Exporting": "Exportador",
+  "DeleteProject": "¿Quieres eliminar el proyecto?",
   "NotyInfo": "Su recordatorio de proyecto ha sido enviado con éxito.",
+  "NotyDeleteInfo": "El proyecto se ha eliminado correctamente.",
+  "NotyDeleteError": "La eliminación del proyecto falló. Póngase en contacto con el administrador.",
   "NotyError": "Se ha producido un error en el recordatorio de su proyecto. Vuelva a intentarlo."
 }

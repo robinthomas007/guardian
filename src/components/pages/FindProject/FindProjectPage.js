@@ -57,6 +57,20 @@ class FindProjectPage extends Component {
     this.props.handleProjectSearch({ searchCriteria: searchCriteria });
   }
 
+  refetchProjects = () => {
+    const searchTerm = _.get(this.props, 'formValues.values.searchTerm', '');
+    const searchCriteria = {
+      itemsPerPage: this.props.searchCriteria.itemsPerPage,
+      pageNumber: this.props.searchCriteria.pageNumber,
+      searchTerm,
+      filter: this.props.searchCriteria.filter,
+      sortOrder: this.state.sortOrder,
+      sortColumn: this.state.sortColumn,
+    };
+
+    this.props.handleProjectSearch({ searchCriteria: searchCriteria });
+  };
+
   handlePaginationChange(newPage) {
     const searchCriteria = _.cloneDeep(this.props.formValues.values);
     const searchTerm = _.get(this.props, 'formValues.values.searchTerm', '');
@@ -212,6 +226,7 @@ class FindProjectPage extends Component {
               this.handleColumnSort(columnID, columnSortOrder)
             }
             handleAdminStatusChange={this.handleAdminStatusChange}
+            afterProjectDelete={this.refetchProjects}
           />
         </div>
       </div>

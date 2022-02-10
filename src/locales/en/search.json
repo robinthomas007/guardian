@@ -46,6 +46,9 @@
   "Help/FAQs": "Help/FAQs",
   "Export": "Export",
   "Exporting": "Exportador",
+  "DeleteProject": "Do you want to delete the project?",
   "NotyInfo": "Your project reminder has been successfully sent.",
+  "NotyDeleteInfo": "The project has been successfully deleted.",
+  "NotyDeleteError": "The project deletion failed. Please contact admin.",
   "NotyError": "Your project reminder encountered an error, please try again."
 }

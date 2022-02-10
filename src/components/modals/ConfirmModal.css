@@ -1,0 +1,11 @@
+#ConfirmModal .modal-body {
+  text-align: center;
+  font-size: 1.6rem;
+}
+#ConfirmModal .modal-footer {
+  justify-content: center;
+  padding-bottom: 3rem;
+}
+#ConfirmModal .modal-footer button {
+  width: 100px;
+}
