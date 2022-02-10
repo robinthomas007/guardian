@@ -180,6 +180,7 @@ class ProjectContactsPage extends Component {
           if (responseJSON.errorMessage) {
             this.showNotSavedNotification();
           } else {
+            this.props.showNotiBarIfMasked(responseJSON);
             this.setState(
               {
                 project: responseJSON,

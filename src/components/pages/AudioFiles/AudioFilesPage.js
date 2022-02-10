@@ -364,7 +364,6 @@ class AudioFilesPage extends Component {
         return response.json();
       })
       .then(responseJSON => {
-        this.props.showNotiBarIfMasked(responseJSON);
         this.setState({
           project: _.cloneDeep(responseJSON),
           projectData: responseJSON.Project,

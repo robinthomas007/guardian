@@ -293,6 +293,7 @@ class Content extends Component {
                       setHeaderProjectData={this.setHeaderProjectData}
                       serverTimeDate={this.state.serverTimeDate}
                       data={this.state.project.Project}
+                      showNotiBarIfMasked={this.showNotiBarIfMasked}
                     />
                   )}
                 />
@@ -337,7 +338,6 @@ class Content extends Component {
                       setProjectID={this.setProjectID}
                       setHeaderProjectData={this.setHeaderProjectData}
                       serverTimeDate={this.state.serverTimeDate}
-                      showNotiBarIfMasked={this.showNotiBarIfMasked}
                     />
                   )}
                 />
