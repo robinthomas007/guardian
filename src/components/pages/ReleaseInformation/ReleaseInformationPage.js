@@ -207,6 +207,7 @@ class ReleaseinformationPage extends Component {
                   ' by ' +
                   responseJSON.projectArtist +
                   ' already exists. Please enter a new title. Click to close.',
+                1,
               );
             }
           })

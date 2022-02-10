@@ -110,6 +110,16 @@ class Content extends Component {
       .catch(error => console.error(error));
   }
 
+  showNotiBarIfMasked = response => {
+    if (response.Project && response.Project.isMasked) {
+      showNotyMaskWarning(
+        'This projects meta data is being masked. The Project Title, Artist, Track Titles and Artists will all be masked.',
+        () => {},
+        10,
+      );
+    }
+  };
+
   handleProjectDataLoad = pagePath => {
     if (pagePath && pagePath !== '' && this.state.projectID !== '') {
       const fetchHeaders = new Headers({
@@ -132,11 +142,7 @@ class Content extends Component {
           return response.json();
         })
         .then(responseJSON => {
-          if (responseJSON.Project && responseJSON.Project.isMasked) {
-            showNotyMaskWarning(
-              'This projects meta data is being masked. The Project Title, Artist, Track Titles and Artists will all be masked.',
-            );
-          }
+          this.showNotiBarIfMasked(responseJSON);
           // console.log('responseJSON.Project.projectStatus', responseJSON.Project.projectStatus);
           // if (
           //   responseJSON.Project.projectStatus !== 'In Progress' &&
@@ -331,6 +337,7 @@ class Content extends Component {
                       setProjectID={this.setProjectID}
                       setHeaderProjectData={this.setHeaderProjectData}
                       serverTimeDate={this.state.serverTimeDate}
+                      showNotiBarIfMasked={this.showNotiBarIfMasked}
                     />
                   )}
                 />

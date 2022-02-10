@@ -54,6 +54,7 @@ export const getRights = (val, t) => {
                 <br /> Please remove them from your project or correct the rights status outside of
                 the Guardian to continue.
               </span>,
+              5,
             );
             dispatch(
               updateProjectStatus({

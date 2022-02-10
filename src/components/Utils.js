@@ -159,27 +159,24 @@ export function isDuplicateTrackTitle() {
   return isDuplicate;
 }
 
-export function showNotyError(message, afterClose) {
-  toast.dismiss();
-  toast.error(message, { onClose: afterClose });
+export function showNotyError(message, afterClose, id) {
+  toast.error(message, { onClose: afterClose, toastId: id });
 }
 
-export function showNotyMaskWarning(message) {
-  toast.dismiss();
-  toast.error(message);
+export function showNotyMaskWarning(message, afterClose, id) {
+  toast.error(message, { onClose: afterClose, toastId: id });
 }
 
-export function showNotyAutoError(message, afterClose) {
-  toast.dismiss();
-  toast.error(message, { autoClose: 3000, onClose: afterClose });
+export function showNotyAutoError(message, afterClose, id) {
+  toast.error(message, { autoClose: 3000, onClose: afterClose, toastId: id });
 }
 
 export function showNotyWarning(message, afterClose) {
   toast.warn(message, { autoClose: 3000, onClose: afterClose });
 }
 
-export function showNotyInfo(message, afterClose) {
-  toast.info(message, { autoClose: 3000, onClose: afterClose });
+export function showNotyInfo(message, afterClose, id) {
+  toast.info(message, { autoClose: 3000, onClose: afterClose, toastId: id });
 }
 
 export const CustomInput = props => {

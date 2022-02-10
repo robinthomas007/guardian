@@ -377,17 +377,18 @@ class TrackInformationPage extends Component {
 
   handleSubmit(e) {
     let count = document.getElementsByClassName('toast-warn-custom-track');
-    toast.dismiss();
+    // toast.dismiss();
     const saveAndContinue = e.target.classList.contains('saveAndContinueButton') ? true : false;
     if (isFormValid() && this.isValidForm()) {
       if (isDuplicateTrackTitle()) {
-        toast.info(this.props.t('track:duplicateTrackTitle'), {
+        toast.info(this.props.t('track:duplicateTrackTitle', 12), {
           onClose: () => {
             if (count.length === 1 && isDuplicateTrackTitle()) {
               this.saveTrackApi(saveAndContinue);
             }
           },
           className: 'toast-warn-custom-track',
+          toastId: 12,
         });
       } else {
         this.saveTrackApi(saveAndContinue);
@@ -505,7 +506,7 @@ class TrackInformationPage extends Component {
         this.handleFileUploadView(track.trackNumber, false);
         onUploadComplete(uniqFileName);
         if (request.status >= 300) {
-          showNotyError(this.props.t('track:uploadingAudioFailed'));
+          showNotyError(this.props.t('track:uploadingAudioFailed'), 4);
         }
       });
       request.send(formData);

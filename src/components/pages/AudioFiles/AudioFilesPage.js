@@ -255,7 +255,7 @@ class AudioFilesPage extends Component {
       request.addEventListener('load', e => {
         onUploadComplete(uniqFileName);
         if (request.status >= 300) {
-          showNotyError(this.props.t('audio:UploadingFailed'));
+          showNotyError(this.props.t('audio:UploadingFailed'), 3);
         }
       });
 
@@ -364,11 +364,7 @@ class AudioFilesPage extends Component {
         return response.json();
       })
       .then(responseJSON => {
-        if (responseJSON.Project && responseJSON.Project.isMasked) {
-          showNotyMaskWarning(
-            'This projects meta data is being masked. The Project Title, Artist, Track Titles and Artists will all be masked.',
-          );
-        }
+        this.props.showNotiBarIfMasked(responseJSON);
         this.setState({
           project: _.cloneDeep(responseJSON),
           projectData: responseJSON.Project,
@@ -477,7 +473,7 @@ class AudioFilesPage extends Component {
   handleDataSubmit(e) {
     let count = document.getElementsByClassName('toast-warn-custom-audio');
 
-    toast.dismiss();
+    // toast.dismiss();
     const saveAndContinue = e.target.classList.contains('saveAndContinueButton') ? true : false;
     this.setTrackSequence();
     let formIsValid = this.isValidForm();
@@ -491,6 +487,7 @@ class AudioFilesPage extends Component {
             }
           },
           className: 'toast-warn-custom-audio',
+          toastId: 11,
         });
       } else {
         this.saveAudioApi(saveAndContinue);
