@@ -58,12 +58,14 @@ class FindProjectPage extends Component {
   }
 
   refetchProjects = () => {
+    const filter = _.cloneDeep(this.props.searchCriteria.filter);
     const searchTerm = _.get(this.props, 'formValues.values.searchTerm', '');
     const searchCriteria = {
       itemsPerPage: this.props.searchCriteria.itemsPerPage,
       pageNumber: this.props.searchCriteria.pageNumber,
       searchTerm,
-      filter: this.props.searchCriteria.filter,
+      // filter: this.props.searchCriteria.filter,
+      filter: getSearchCriteria(filter),
       sortOrder: this.state.sortOrder,
       sortColumn: this.state.sortColumn,
     };
