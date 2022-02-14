@@ -223,7 +223,7 @@ class FindProjectDataTable extends Component {
 
   getAdminButtons = project => {
     return (
-      <td className="text-center">
+      <td>
         {parseInt(project.statusID) !== 1 ? (
           <button
             onClick={() =>
@@ -244,13 +244,15 @@ class FindProjectDataTable extends Component {
             <i className="material-icons">alarm</i>
           </button>
         ) : null}
-        <button
-          type="button"
-          onClick={() => this.setState({ projectIDToDelete: project.projectID })}
-          className="btn btn-secondary"
-        >
-          <i className="material-icons">delete</i>
-        </button>
+        {parseInt(project.statusID) === 1 ? (
+          <button
+            type="button"
+            onClick={() => this.setState({ projectIDToDelete: project.projectID })}
+            className="btn btn-secondary"
+          >
+            <i className="material-icons">delete</i>
+          </button>
+        ) : null}
       </td>
     );
   };
