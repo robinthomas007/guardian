@@ -34,6 +34,11 @@ const Filter = props => {
         return !_.isEqual(e, val);
       });
       newVal[name] = _.cloneDeep(arr);
+    } else if (name === 'excludeLabelIds') {
+      let arr = _.filter(newVal.excludeLabelIds, function(e) {
+        return !_.isEqual(e, val);
+      });
+      newVal[name] = _.cloneDeep(arr);
     } else {
       newVal[name] = null;
     }
@@ -59,7 +64,6 @@ const Filter = props => {
     if (!hasFilter) {
       return false;
     }
-
     let data = _.map(selectedFilter, (item, key) => {
       if (Array.isArray(values[item.name]) && values[item.name].length > 0) {
         return (
@@ -79,7 +83,10 @@ const Filter = props => {
             })}
           </span>
         );
-      } else if (values[item.name] && item.name !== 'labelIds') {
+      } else if (
+        values[item.name] &&
+        (item.name !== 'labelIds' && item.name !== 'excludeLabelIds')
+      ) {
         return (
           <span>
             <label>{item.label}:</label>
