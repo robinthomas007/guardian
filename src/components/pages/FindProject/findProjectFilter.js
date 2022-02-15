@@ -18,6 +18,7 @@ const selectedFilter = [
   { name: 'to', label: 'Updated To' },
   { name: 'releaseFrom', label: 'Release From' },
   { name: 'releaseTo', label: 'Release To' },
+  { name: 'excludeLabelIds', label: 'Exclude Labels' },
 ];
 
 const Filter = props => {
