@@ -223,6 +223,17 @@ const Filter = props => {
                 options={HasRightsFacets}
               />
             </div>
+            <div className="col-2"></div>
+            <div className="col-5">
+              <Field
+                label={t('search:excludeLabel')}
+                name="excludeLabelIds"
+                handleOnSelect={handleOnSelect}
+                component={multiSelect}
+                options={LabelFacets}
+                classes={'multi-select'}
+              />
+            </div>
           </div>
           <div className="row no-gutters">
             <div className="col-10 last-up-date">
