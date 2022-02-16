@@ -271,6 +271,9 @@ class ReleaseinformationPage extends Component {
 
   componentDidMount() {
     const localData = JSON.parse(localStorage.getItem('projectData'));
+    if (localData && localData.projectReleaseDateTBD) {
+      this.setState({ releaseDateRequired: false });
+    }
 
     if (this.state.formInputs.projectCoverArtBase64Data !== '') {
       this.setCoverArt();
