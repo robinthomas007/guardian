@@ -33,7 +33,7 @@ class AudioFilesPage extends Component {
       replaceTrackIndex: null,
       modalAction: 'Replace',
       showLoader: false,
-      diskNumberToDelete: null,
+      diskToDelete: null,
       project: {
         Project: {
           projectID: '',
@@ -226,16 +226,22 @@ class AudioFilesPage extends Component {
     this.setState({ discs: modifiedDiscs });
   }
 
-  diskDeleteConfirmation = discNumber => {
-    this.setState({ diskNumberToDelete: discNumber });
+  diskDeleteConfirmation = (e, discIndex) => {
+    e.preventDefault();
+    e.stopPropagation();
+    this.setState({ diskToDelete: discIndex });
   };
 
-  deleteDisc = discNumber => {
-    const { discs } = this.state;
-    this.setState({
-      discs: discs.filter(disc => disc.discNumber !== discNumber),
-      diskNumberToDelete: null,
-    });
+  deleteDisc = discIndex => {
+    const { discs, diskToDelete } = this.state;
+    const newState = {
+      discs: discs.filter((disc, i) => i !== discIndex),
+      diskToDelete: null,
+    };
+    if (discIndex === diskToDelete) {
+      newState.activeTab = 0;
+    }
+    this.setState(newState);
   };
 
   hideFileUploadingIndicator(fileName) {
@@ -670,10 +676,10 @@ class AudioFilesPage extends Component {
         />
 
         <ConfirmModal
-          show={this.state.diskNumberToDelete ? true : false}
+          show={this.state.diskToDelete !== null ? true : false}
           title={t('audio:deleteDisc')}
-          onHide={() => this.setState({ diskNumberToDelete: null })}
-          onConfirm={() => this.deleteDisc(this.state.diskNumberToDelete)}
+          onHide={() => this.setState({ diskToDelete: null })}
+          onConfirm={() => this.deleteDisc(this.state.diskToDelete)}
         />
 
         <div className="row no-gutters step-description">
@@ -742,6 +748,7 @@ class AudioFilesPage extends Component {
           upc={project.Project.upc ? true : false}
           cisLoading={this.props.cisLoading}
           t={t}
+          activeTab={this.state.activeTab}
         />
 
         <section className="row no-gutters save-buttons">
