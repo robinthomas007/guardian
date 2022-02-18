@@ -34,5 +34,6 @@
   "UploadAudioFile": "Upload Audio File",
   "Uploading": "Uploading...",
   "InvalidTrackTitle": "Invalid Track Title",
-  "InvalidISRC": "Invalid ISRC"
+  "InvalidISRC": "Invalid ISRC",
+  "deleteDisc": "Delete the disk & all tracks within it?"
 }

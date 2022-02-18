@@ -16,6 +16,7 @@ import * as releaseAction from './../ReleaseInformation/releaseAction';
 import * as AudioActions from '../../../actions/audioActions';
 import { withTranslation } from 'react-i18next';
 import { compose } from 'redux';
+import ConfirmModal from 'components/modals/ConfirmModal';
 
 class AudioFilesPage extends Component {
   constructor(props) {
@@ -32,6 +33,7 @@ class AudioFilesPage extends Component {
       replaceTrackIndex: null,
       modalAction: 'Replace',
       showLoader: false,
+      diskNumberToDelete: null,
       project: {
         Project: {
           projectID: '',
@@ -223,6 +225,18 @@ class AudioFilesPage extends Component {
     modifiedDiscs[this.state.activeTab].Tracks.splice(rowIndex, 1);
     this.setState({ discs: modifiedDiscs });
   }
+
+  diskDeleteConfirmation = discNumber => {
+    this.setState({ diskNumberToDelete: discNumber });
+  };
+
+  deleteDisc = discNumber => {
+    const { discs } = this.state;
+    this.setState({
+      discs: discs.filter(disc => disc.discNumber !== discNumber),
+      diskNumberToDelete: null,
+    });
+  };
 
   hideFileUploadingIndicator(fileName) {
     let uploadingIndicator = document.getElementById(`${fileName}_ico`);
@@ -655,6 +669,13 @@ class AudioFilesPage extends Component {
           modalAction={this.state.modalAction}
         />
 
+        <ConfirmModal
+          show={this.state.diskNumberToDelete ? true : false}
+          title={t('audio:deleteDisc')}
+          onHide={() => this.setState({ diskNumberToDelete: null })}
+          onConfirm={() => this.deleteDisc(this.state.diskNumberToDelete)}
+        />
+
         <div className="row no-gutters step-description">
           <div className="col-12">
             <h2>
@@ -708,6 +729,7 @@ class AudioFilesPage extends Component {
           data={this.state.discs}
           handleTabClick={this.handleTabClick}
           deleteRow={this.deleteRow}
+          diskDeleteConfirmation={this.diskDeleteConfirmation}
           handleChange={this.handleChange}
           resequencePageTableData={this.resequencePageTableData}
           isValidIsrc={this.isValidIsrc}

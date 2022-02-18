@@ -34,5 +34,6 @@
   "UploadAudioFile": "Subir archivo de audio",
   "Uploading": "Subiendo...",
   "InvalidTrackTitle": "Título de pista no válido",
-  "InvalidISRC": "ISRC no válido"
+  "InvalidISRC": "ISRC no válido",
+  "deleteDisc": "¿Eliminar el disco y todas las pistas dentro de él?"
 }

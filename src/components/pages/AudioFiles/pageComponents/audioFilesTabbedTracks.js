@@ -14,7 +14,22 @@ class AudioFilesTabbedTracks extends Component {
       let discs = this.props.data.map((disc, i) => {
         const count = i + 1;
         return (
-          <Tab key={i} eventKey={i} title={t('audio:Disc') + ' ' + count}>
+          <Tab
+            key={i}
+            eventKey={i}
+            title={
+              <span>
+                {t('audio:Disc') + ' ' + count + ' '}
+                <button
+                  type="button"
+                  className="btn btn-secondary btn-sm "
+                  onClick={() => this.props.diskDeleteConfirmation(disc.discNumber)}
+                >
+                  <i className="material-icons close">close</i>
+                </button>
+              </span>
+            }
+          >
             <AudioVideoDataTable
               uploads={this.props.uploads}
               data={disc}
