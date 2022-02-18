@@ -16,6 +16,7 @@ import { showNotyInfo, showNotyAutoError } from 'components/Utils';
 import * as AudioActions from '../../../actions/audioActions';
 import { withTranslation } from 'react-i18next';
 import { compose } from 'redux';
+import ConfirmModal from 'components/modals/ConfirmModal';
 
 class TrackInformationPage extends Component {
   constructor(props) {
@@ -29,7 +30,7 @@ class TrackInformationPage extends Component {
       projectData: {},
       activeDiscTab: 1,
       discs: [],
-
+      diskToDelete: null,
       project: {
         Project: {
           projectID: '',
@@ -604,6 +605,25 @@ class TrackInformationPage extends Component {
     }
   };
 
+  diskDeleteConfirmation = (e, discIndex) => {
+    console.log('discIndex', discIndex);
+    e.preventDefault();
+    e.stopPropagation();
+    this.setState({ diskToDelete: discIndex });
+  };
+
+  deleteDisc = discIndex => {
+    const { project, diskToDelete } = this.state;
+    const newState = {
+      project: { ...project, Discs: project.Discs.filter((disc, i) => i !== discIndex) },
+      diskToDelete: null,
+    };
+    if (discIndex == diskToDelete) {
+      newState.activeDiscTab = 1;
+    }
+    this.setState(newState);
+  };
+
   render() {
     const { t } = this.props;
     return (
@@ -615,7 +635,12 @@ class TrackInformationPage extends Component {
           handleClose={this.hideReplaceAudioModal}
           onChange={e => this.updateFile(e)}
         />
-
+        <ConfirmModal
+          show={this.state.diskToDelete !== null ? true : false}
+          title={t('audio:deleteDisc')}
+          onHide={() => this.setState({ diskToDelete: null })}
+          onConfirm={() => this.deleteDisc(this.state.diskToDelete)}
+        />
         <PageHeader data={this.state.project} />
 
         <div className="row no-gutters step-description">
@@ -633,6 +658,7 @@ class TrackInformationPage extends Component {
           data={this.state.project}
           showClick={this.showTrackModal}
           activeDiscTab={this.state.activeDiscTab}
+          diskDeleteConfirmation={this.diskDeleteConfirmation}
           handleActiveDiscUpdate={this.setActiveDiscTab}
           handleDiscUpdate={this.handleDiscUpdate}
           addTrack={this.addTrack}

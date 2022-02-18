@@ -28,13 +28,28 @@ class TabbedTracks extends Component {
   }
 
   getDiscTabs = () => {
-    const { t } = this.props;
+    const { t, diskDeleteConfirmation, activeDiscTab } = this.props;
     if (this.props.data.Discs) {
       let discs = this.props.data.Discs.map((disc, i) => {
         const count = i + 1;
 
         return (
-          <Tab key={i} eventKey={count} title={t('track:Disc') + ' ' + count}>
+          <Tab
+            key={count}
+            eventKey={count}
+            title={
+              <span>
+                {t('track:Disc') + ' ' + count + ' '}
+                <button
+                  type="button"
+                  className="btn btn-secondary btn-sm close"
+                  onClick={e => diskDeleteConfirmation(e, i)}
+                >
+                  <i className="material-icons">close</i>
+                </button>
+              </span>
+            }
+          >
             <TrackInformationDataTable
               data={this.props.data}
               discID={i}
@@ -55,7 +70,9 @@ class TabbedTracks extends Component {
 
       return (
         <Tab.Container defaultActiveKey="1">
-          <Tabs onSelect={this.handleTabClick}>{discs}</Tabs>
+          <Tabs onSelect={this.handleTabClick} activeKey={this.props.activeDiscTab}>
+            {discs}
+          </Tabs>
         </Tab.Container>
       );
     }
