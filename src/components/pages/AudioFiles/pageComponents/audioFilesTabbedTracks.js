@@ -22,10 +22,10 @@ class AudioFilesTabbedTracks extends Component {
                 {t('audio:Disc') + ' ' + count + ' '}
                 <button
                   type="button"
-                  className="btn btn-secondary btn-sm "
+                  className="btn btn-secondary btn-sm close"
                   onClick={() => this.props.diskDeleteConfirmation(disc.discNumber)}
                 >
-                  <i className="material-icons close">close</i>
+                  <i className="material-icons">close</i>
                 </button>
               </span>
             }
