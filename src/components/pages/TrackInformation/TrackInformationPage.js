@@ -136,6 +136,12 @@ class TrackInformationPage extends Component {
           }
 
           upcDisc.push(obj);
+          let hasOtherDisc = _.filter(data, val => val.discNumber !== disc.discNumber);
+          if (hasOtherDisc.length > 0) {
+            hasOtherDisc.forEach((Otherdisc, i) => {
+              upcDisc.push(Otherdisc);
+            });
+          }
         });
         project.Discs = _.cloneDeep(upcDisc);
         this.setState({ project });
@@ -225,6 +231,12 @@ class TrackInformationPage extends Component {
             obj['Tracks'] = _.uniqBy(obj['Tracks'], v => [v.isrc, v.trackTitle].join());
           }
           upcDisc.push(obj);
+          let hasOtherDisc = _.filter(project.Discs, val => val.discNumber !== disc.discNumber);
+          if (hasOtherDisc.length > 0) {
+            hasOtherDisc.forEach((Otherdisc, i) => {
+              upcDisc.push(Otherdisc);
+            });
+          }
         });
         project.Discs = _.cloneDeep(upcDisc);
         this.setState({ project });
