@@ -28,9 +28,9 @@ class TabbedTracks extends Component {
   }
 
   getDiscTabs = () => {
-    const { t, diskDeleteConfirmation, activeDiscTab } = this.props;
-    if (this.props.data.Discs) {
-      let discs = this.props.data.Discs.map((disc, i) => {
+    const { t, diskDeleteConfirmation, data } = this.props;
+    if (data.Discs) {
+      let discs = data.Discs.map((disc, i) => {
         const count = i + 1;
 
         return (
@@ -40,18 +40,20 @@ class TabbedTracks extends Component {
             title={
               <span>
                 {t('track:Disc') + ' ' + count + ' '}
-                <button
-                  type="button"
-                  className="btn btn-secondary btn-sm close"
-                  onClick={e => diskDeleteConfirmation(e, i)}
-                >
-                  <i className="material-icons">close</i>
-                </button>
+                {data.Discs.length > 1 && (
+                  <button
+                    type="button"
+                    className="btn btn-secondary btn-sm close"
+                    onClick={e => diskDeleteConfirmation(e, i)}
+                  >
+                    <i className="material-icons">close</i>
+                  </button>
+                )}
               </span>
             }
           >
             <TrackInformationDataTable
-              data={this.props.data}
+              data={data}
               discID={i}
               updateDiscData={this.updateDiscData}
               removeTrack={(e, i) => this.props.removeTrack(e, i)}

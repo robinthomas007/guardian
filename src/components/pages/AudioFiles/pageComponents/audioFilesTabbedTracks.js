@@ -12,13 +12,15 @@ export default props => (
           title={
             <span>
               {props.t('audio:Disc') + ' ' + (i + 1) + ' '}
-              <button
-                type="button"
-                className="btn btn-secondary btn-sm close"
-                onClick={e => props.diskDeleteConfirmation(e, i)}
-              >
-                <i className="material-icons">close</i>
-              </button>
+              {props.data.length > 1 && (
+                <button
+                  type="button"
+                  className="btn btn-secondary btn-sm close"
+                  onClick={e => props.diskDeleteConfirmation(e, i)}
+                >
+                  <i className="material-icons">close</i>
+                </button>
+              )}
             </span>
           }
         >
