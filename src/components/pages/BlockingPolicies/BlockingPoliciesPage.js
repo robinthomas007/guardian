@@ -418,11 +418,11 @@ class BlockingPoliciesPage extends Component {
     this.handlePageDataLoad();
   }
 
-  // componentDidUpdate() {
-  //   if (this.props.match.params.projectID) {
-  //     this.props.setProjectID(this.props.match.params.projectID, this.props.match.url);
-  //   }
-  // }
+  componentDidUpdate() {
+    if (this.props.match.params.projectID) {
+      this.props.setProjectID(this.props.match.params.projectID, this.props.match.url);
+    }
+  }
 
   render() {
     const { t } = this.props;
