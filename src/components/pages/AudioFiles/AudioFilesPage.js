@@ -8,10 +8,9 @@ import { reduxForm } from 'redux-form';
 import AudioFilesTabbedTracks from '../AudioFiles/pageComponents/audioFilesTabbedTracks';
 import { connect } from 'react-redux';
 import * as uploadProgressActions from 'redux/uploadProgressAlert/actions';
-import { isDuplicateTrackTitle, showNotyError, showNotyMaskWarning } from '../../Utils';
+import { isDuplicateItem, isDuplicateISRC, showNotyError, showNotyAutoError } from '../../Utils';
 import _ from 'lodash';
 import { showNotyInfo } from 'components/Utils';
-import { toast } from 'react-toastify';
 import * as releaseAction from './../ReleaseInformation/releaseAction';
 import * as AudioActions from '../../../actions/audioActions';
 import { withTranslation } from 'react-i18next';
@@ -433,8 +432,13 @@ class AudioFilesPage extends Component {
     let trackTitles = document.getElementsByClassName('trackTitleField');
     let isValidForm = true;
 
+    let isrcValues = [];
+    for (var x = 0; x < isrcs.length; x++) {
+      isrcValues.push(isrcs[x].value);
+    }
+
     for (var i = 0; i < isrcs.length; i++) {
-      if (!this.isValidIsrc(isrcs[i].value)) {
+      if (!this.isValidIsrc(isrcs[i].value) || isDuplicateItem(isrcValues, isrcs[i].value)) {
         this.setFieldValidation(isrcs[i], 'is-invalid');
         isValidForm = false;
       } else {
@@ -490,26 +494,15 @@ class AudioFilesPage extends Component {
   }
 
   handleDataSubmit(e) {
-    let count = document.getElementsByClassName('toast-warn-custom-audio');
-
-    // toast.dismiss();
     const saveAndContinue = e.target.classList.contains('saveAndContinueButton') ? true : false;
     this.setTrackSequence();
     let formIsValid = this.isValidForm();
 
     if (formIsValid) {
-      if (isDuplicateTrackTitle()) {
-        toast.info(this.props.t('audio:duplicateTrackTitle'), {
-          onClose: () => {
-            if (count.length === 1 && isDuplicateTrackTitle()) {
-              this.saveAudioApi(saveAndContinue);
-            }
-          },
-          className: 'toast-warn-custom-audio',
-          toastId: 11,
-        });
-      } else {
-        this.saveAudioApi(saveAndContinue);
+      this.saveAudioApi(saveAndContinue);
+    } else {
+      if (isDuplicateISRC()) {
+        showNotyAutoError('Duplicate ISRC found for tracks');
       }
     }
   }

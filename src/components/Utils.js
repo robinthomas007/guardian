@@ -2,6 +2,10 @@ import React from 'react';
 import moment from 'moment';
 import { toast } from 'react-toastify';
 
+export function isDuplicateItem(array, what) {
+  return array.filter(item => item === what).length > 1;
+}
+
 export const isFormValid = () => {
   let requiredInputs = document.getElementsByClassName('requiredInput');
 
@@ -128,6 +132,22 @@ export const isPreReleaseDate = projectData => {
     return true;
   }
 };
+
+export function isDuplicateISRC() {
+  let isDuplicate = false;
+  let trackIsrc = document.getElementsByClassName('trackIsrcField');
+  let isrcValues = [];
+  for (let i = 0; i < trackIsrc.length; i++) {
+    const title = trackIsrc[i].value;
+    if (title && isrcValues.includes(title)) {
+      isDuplicate = true;
+      break;
+    } else {
+      isrcValues.push(title);
+    }
+  }
+  return isDuplicate;
+}
 
 export function isDuplicateTrackTitle() {
   let trackTitles = document.getElementsByClassName('trackTitleField');

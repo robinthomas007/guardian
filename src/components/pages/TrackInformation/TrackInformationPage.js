@@ -8,11 +8,17 @@ import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 import * as uploadProgressActions from 'redux/uploadProgressAlert/actions';
-import { isFormValid, isDuplicateTrackTitle, showNotyError, isPreReleaseDate } from '../../Utils';
-import { toast } from 'react-toastify';
+import {
+  isFormValid,
+  isDuplicateItem,
+  isDuplicateISRC,
+  showNotyError,
+  showNotyAutoError,
+  isPreReleaseDate,
+  showNotyInfo,
+} from '../../Utils';
 import * as releaseAction from './../ReleaseInformation/releaseAction';
 import _ from 'lodash';
-import { showNotyInfo, showNotyAutoError } from 'components/Utils';
 import * as AudioActions from '../../../actions/audioActions';
 import { withTranslation } from 'react-i18next';
 import { compose } from 'redux';
@@ -338,8 +344,13 @@ class TrackInformationPage extends Component {
     let isrcs = document.getElementsByClassName('trackIsrcField');
     let isValidForm = true;
 
+    let isrcValues = [];
+    for (var x = 0; x < isrcs.length; x++) {
+      isrcValues.push(isrcs[x].value);
+    }
+
     for (var i = 0; i < isrcs.length; i++) {
-      if (!this.isValidIsrc(isrcs[i].value)) {
+      if (!this.isValidIsrc(isrcs[i].value) || isDuplicateItem(isrcValues, isrcs[i].value)) {
         this.setFieldValidation(isrcs[i], 'is-invalid');
         isValidForm = false;
       } else {
@@ -389,22 +400,12 @@ class TrackInformationPage extends Component {
   }
 
   handleSubmit(e) {
-    let count = document.getElementsByClassName('toast-warn-custom-track');
-    // toast.dismiss();
     const saveAndContinue = e.target.classList.contains('saveAndContinueButton') ? true : false;
     if (isFormValid() && this.isValidForm()) {
-      if (isDuplicateTrackTitle()) {
-        toast.info(this.props.t('track:duplicateTrackTitle', 12), {
-          onClose: () => {
-            if (count.length === 1 && isDuplicateTrackTitle()) {
-              this.saveTrackApi(saveAndContinue);
-            }
-          },
-          className: 'toast-warn-custom-track',
-          toastId: 12,
-        });
-      } else {
-        this.saveTrackApi(saveAndContinue);
+      this.saveTrackApi(saveAndContinue);
+    } else {
+      if (isDuplicateISRC()) {
+        showNotyAutoError('Duplicate ISRC found for tracks');
       }
     }
   }
