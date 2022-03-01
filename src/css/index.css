@@ -1396,7 +1396,3 @@ th.sortable {
 .dropdown-menu.show::-webkit-scrollbar {
   display: none;
 }
-
-.multi-select.input_holder div div {
-  z-index: 9999;
-}

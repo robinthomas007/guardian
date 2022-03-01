@@ -94,6 +94,7 @@ ul.results-controls span.viewing {
 .page-item.active .page-link {
   background-color: #01578b;
   border-color: #01578b;
+  z-index: 0 !important;
 }
 
 .btn-secondary:not(:disabled):not(.disabled).active,
@@ -204,7 +205,7 @@ ul.row.search-row div.col-2 label {
 }
 
 li.col-4.d-flex.justify-content-center.pagination-wrap {
-  z-index: 999;
+  z-index: 1;
 }
 
 .gray-shade .material-icons {
