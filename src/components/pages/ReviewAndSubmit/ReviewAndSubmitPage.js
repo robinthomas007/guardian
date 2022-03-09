@@ -12,6 +12,9 @@ import { formatDateToYYYYMMDD, convertToLocaleTime, isPreReleaseDate } from '../
 import { showNotyInfo } from 'components/Utils';
 import moment from 'moment';
 import { withTranslation } from 'react-i18next';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import * as reviewActions from '../../../actions/reviewActions';
 
 class ReviewAndSubmitPage extends Component {
   constructor(props) {
@@ -115,6 +118,10 @@ class ReviewAndSubmitPage extends Component {
       });
   };
 
+  handlePublish = () => {
+    this.props.handlePublish({ ProjectID: this.props.data.Project.projectID });
+  };
+
   getStepNumber() {
     let stepNumber = 7;
     if (
@@ -192,6 +199,17 @@ class ReviewAndSubmitPage extends Component {
                     onClick={this.handlePreSubmitCheck}
                   >
                     {t('review:SubmitProject')}
+                  </button>
+                ) : null}
+                {parseInt(this.props.data.Project.projectStatusID) !== 1 &&
+                this.props.user.IsAdmin ? (
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    style={{ marginLeft: '10px' }}
+                    onClick={this.handlePublish}
+                  >
+                    {t('review:publish')}
                   </button>
                 ) : null}
               </div>
@@ -442,6 +460,18 @@ class ReviewAndSubmitPage extends Component {
   }
 }
 
-const ReviewAndSubmitPageWithTranslation = withTranslation()(ReviewAndSubmitPage);
+const mapDispatchToProps = dispatch => ({
+  handlePublish: val => dispatch(reviewActions.handlePublish(val)),
+});
 
-export default withRouter(ReviewAndSubmitPageWithTranslation);
+const mapStateToProps = state => ({});
+
+export default withRouter(
+  compose(
+    withTranslation('review'),
+    connect(
+      mapStateToProps,
+      mapDispatchToProps,
+    ),
+  )(ReviewAndSubmitPage),
+);

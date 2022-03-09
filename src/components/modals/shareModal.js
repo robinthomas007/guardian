@@ -161,7 +161,6 @@ const ShareProjectModal = props => {
             ))}
             <Field
               row="3"
-              id="share"
               name="emails"
               component={TextArea}
               onKeyUp={onKeyUp}

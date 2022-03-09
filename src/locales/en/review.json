@@ -48,5 +48,6 @@
   "BlockAll": "Block All",
   "BlockAllUntil": "Block All Until",
   "Until": "Until",
-  "Always": "Always"
+  "Always": "Always",
+  "publish": "Publish"
 }

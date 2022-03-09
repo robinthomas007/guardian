@@ -48,5 +48,6 @@
   "BlockAll": "Bloquear todo",
   "BlockAllUntil": "Bloquear todo hasta",
   "Until": "Hasta",
-  "Always": "Siempre"
+  "Always": "Siempre",
+  "publish": "Publicar"
 }
