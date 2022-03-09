@@ -29,7 +29,7 @@ export const handlePublish = data => {
     return Api.post('/project/publish ', data)
       .then(response => response.json())
       .then(response => {
-        if (response.result) {
+        if (response.Result) {
           showNotyInfo(response.message);
           dispatch(publishSuccess(response));
         } else {
