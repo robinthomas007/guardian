@@ -3,7 +3,7 @@ import moment from 'moment';
 import { toast } from 'react-toastify';
 
 export function isDuplicateItem(array, what) {
-  return array.filter(item => item === what).length > 1;
+  return array.filter(item => item !== '' && item === what).length > 1;
 }
 
 export const isFormValid = () => {
