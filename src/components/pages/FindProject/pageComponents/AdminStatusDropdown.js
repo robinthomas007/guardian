@@ -17,17 +17,20 @@ class AdminStatusDropdown extends Component {
   }
 
   getOptions = () => {
+    const { project } = this.props;
     if (this.props.options) {
       const inputOptions = this.props.options.map((option, i) => {
+        let disabled = project.statusID !== '2' && option.id === '5' ? true : false;
         return (
           <a
+            href
             key={i}
-            className={
+            className={`${
               parseInt(this.props.selectedID) === option.id
                 ? 'dropdown-item selected'
                 : 'dropdown-item'
-            }
-            onClick={() => this.handleChange(option)}
+            } ${disabled ? 'disabled' : ''}`}
+            onClick={() => !disabled && this.handleChange(option)}
           >
             {option.name}
           </a>

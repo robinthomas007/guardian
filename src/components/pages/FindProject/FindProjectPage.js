@@ -8,6 +8,7 @@ import { withRouter } from 'react-router';
 import LoadingImg from 'component_library/LoadingImg';
 import { connect } from 'react-redux';
 import * as findProjectAction from 'actions/findProjectAction';
+import * as reviewActions from 'actions/reviewActions';
 import Filter from './findProjectFilter';
 import { reduxForm, Field } from 'redux-form';
 import InputField from '../../common/InputField';
@@ -120,15 +121,19 @@ class FindProjectPage extends Component {
   };
 
   handleAdminStatusChange = (data, projectID) => {
-    const searchCriteria = _.cloneDeep(this.props.formValues.values);
-    const searchTerm = _.get(this.props, 'formValues.values.searchTerm', '');
-    const searchData = {
-      itemsPerPage: this.props.searchCriteria.itemsPerPage,
-      pageNumber: this.props.searchCriteria.pageNumber,
-      searchTerm: searchTerm,
-      filter: getSearchCriteria(searchCriteria),
-    };
-    this.props.adminStatusChange({ ProjectIds: projectID, StatusID: data.id }, searchData);
+    if (data.id === '5' && data.name === 'Published') {
+      this.props.handlePublish({ ProjectID: projectID });
+    } else {
+      const searchCriteria = _.cloneDeep(this.props.formValues.values);
+      const searchTerm = _.get(this.props, 'formValues.values.searchTerm', '');
+      const searchData = {
+        itemsPerPage: this.props.searchCriteria.itemsPerPage,
+        pageNumber: this.props.searchCriteria.pageNumber,
+        searchTerm: searchTerm,
+        filter: getSearchCriteria(searchCriteria),
+      };
+      this.props.adminStatusChange({ ProjectIds: projectID, StatusID: data.id }, searchData);
+    }
   };
 
   render() {
@@ -247,6 +252,7 @@ const mapDispatchToProps = dispatch => ({
   changeItemsPerPage: limit => dispatch(findProjectAction.changeItemsPerPage(limit)),
   adminStatusChange: (val, searchData) =>
     dispatch(findProjectAction.adminStatusChange(val, searchData)),
+  handlePublish: val => dispatch(reviewActions.handlePublish(val)),
 });
 
 const mapStateToProps = state => ({

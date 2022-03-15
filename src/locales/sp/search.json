@@ -51,5 +51,6 @@
   "NotyDeleteInfo": "El proyecto se ha eliminado correctamente.",
   "NotyDeleteError": "La eliminación del proyecto falló. Póngase en contacto con el administrador.",
   "NotyError": "Se ha producido un error en el recordatorio de su proyecto. Vuelva a intentarlo.",
-  "excludeLabel": "Exclude Label"
+  "excludeLabel": "Exclude Label",
+  "publishError": "Solo puede publicar los proyectos enviados"
 }

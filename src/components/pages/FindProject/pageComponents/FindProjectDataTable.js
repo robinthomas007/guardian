@@ -137,18 +137,26 @@ class FindProjectDataTable extends Component {
 
   handleAdminStatusChange = (data, project) => {
     const projectIds = [];
+    let isValid = true;
     this.props.data.Projects.forEach(item => {
       let checkName = `check_${item.projectID}`;
       if (this.state[checkName]) {
+        if (data.id === '5' && data.name === 'Published' && item.statusID !== '2') {
+          isValid = false;
+        }
         projectIds.push(item.projectID);
       }
-      this.setState({ [checkName]: null });
+      isValid && this.setState({ [checkName]: null });
     });
     if (projectIds.length === 0) {
       projectIds.push(project.projectID);
     }
-    this.props.handleAdminStatusChange(data, projectIds);
-    this.setState({ selectAllItem: null });
+    if (isValid) {
+      this.props.handleAdminStatusChange(data, projectIds);
+      this.setState({ selectAllItem: null });
+    } else {
+      showNotyAutoError(this.props.t('search:publishError'));
+    }
   };
 
   handleProjectReminder = projectID => {

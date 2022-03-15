@@ -211,3 +211,8 @@ li.col-4.d-flex.justify-content-center.pagination-wrap {
 .gray-shade .material-icons {
   color: #807f7f !important;
 }
+
+a.dropdown-item.disabled {
+  background: #eee;
+  color: #aaa;
+}
