@@ -122,7 +122,7 @@ class FindProjectPage extends Component {
 
   handleAdminStatusChange = (data, projectID) => {
     if (data.id === '5' && data.name === 'Published') {
-      this.props.handlePublish({ ProjectID: projectID });
+      this.props.handlePublish({ ProjectIds: projectID });
     } else {
       const searchCriteria = _.cloneDeep(this.props.formValues.values);
       const searchTerm = _.get(this.props, 'formValues.values.searchTerm', '');
