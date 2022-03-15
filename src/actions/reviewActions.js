@@ -1,6 +1,9 @@
 import * as actions from 'types/review.types';
+import * as findProjectactions from 'types/findProject.types';
+
 import Api from 'lib/api';
 import { showNotyInfo, showNotyAutoError } from './../components/Utils';
+import { fetchProjects } from './findProjectAction';
 
 export const publishSuccess = comment => {
   return {
@@ -18,12 +21,12 @@ export const publishFailure = error => {
 
 export const publishRequest = loading => {
   return {
-    type: actions.GET_PUBLISH_REQUEST,
+    type: findProjectactions.GET_PROJECT_REQUEST,
     loading,
   };
 };
 
-export const handlePublish = data => {
+export const handlePublish = (data, searchData) => {
   return dispatch => {
     dispatch(publishRequest(true));
     return Api.post('/project/publish ', data)
@@ -32,14 +35,17 @@ export const handlePublish = data => {
         if (response.Result) {
           showNotyInfo(response.message);
           dispatch(publishSuccess(response));
+          dispatch(fetchProjects({ searchCriteria: searchData }));
         } else {
           showNotyAutoError('Publishing Project Failed');
           dispatch(publishFailure(response.message));
         }
+        dispatch(publishRequest(false));
         return response;
       })
       .catch(error => {
         console.log('error', error);
+        dispatch(publishRequest(false));
         dispatch(publishFailure(error));
         return error;
       });
