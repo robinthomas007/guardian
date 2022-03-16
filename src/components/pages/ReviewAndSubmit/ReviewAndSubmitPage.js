@@ -108,7 +108,7 @@ class ReviewAndSubmitPage extends Component {
       .then(responseJSON => {
         this.setState({ showloader: false });
         if (responseJSON.message) {
-          showNotyInfo(this.props.t('review:NotyInfo'));
+          showNotyInfo(responseJSON.message);
         }
         showNotyInfo(this.props.t('review:NotyInfo'), () => {
           return this.props.history.push({ pathname: '/findProject/' });
