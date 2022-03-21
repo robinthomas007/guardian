@@ -1,0 +1,12 @@
+div#AuditModal {
+  max-width: 85% !important;
+}
+
+#AuditModal .modal-backdrop {
+  background-color: transparent;
+}
+
+.display-filter {
+  display: flex;
+  align-items: center;
+}

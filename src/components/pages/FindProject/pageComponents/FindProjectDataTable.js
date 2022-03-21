@@ -7,6 +7,7 @@ import { showNotyInfo, showNotyAutoError } from 'components/Utils';
 import moment from 'moment';
 import ExtendedTracks from './ExtendedTracks';
 import ConfirmModal from 'components/modals/ConfirmModal';
+import AuditModal from 'components/modals/AuditModal';
 
 class FindProjectDataTable extends Component {
   constructor(props) {
@@ -19,6 +20,7 @@ class FindProjectDataTable extends Component {
       showloader: false,
       expandedProjectIds: [],
       projectIDToDelete: null,
+      auditModal: null,
     };
 
     this.handleSortDisplay = this.handleSortDisplay.bind(this);
@@ -261,6 +263,14 @@ class FindProjectDataTable extends Component {
             <i className="material-icons">delete</i>
           </button>
         ) : null}
+
+        <button
+          type="button"
+          onClick={() => this.setState({ auditModal: project.projectID })}
+          className="btn btn-secondary"
+        >
+          <i className="material-icons">fact_check</i>
+        </button>
       </td>
     );
   };
@@ -553,6 +563,12 @@ class FindProjectDataTable extends Component {
           title={this.props.t('search:DeleteProject')}
           onHide={() => this.setState({ projectIDToDelete: null })}
           onConfirm={() => this.handleProjectDelete(this.state.projectIDToDelete)}
+        />
+        <AuditModal
+          show={this.state.auditModal ? true : false}
+          title={this.props.t('search:DeleteProject')}
+          onHide={() => this.setState({ auditModal: null })}
+          // onConfirm={() => this.handleProjectDelete(this.state.projectIDToDelete)}
         />
         <Table className="search-table find-a-project-table responsive">
           {this.getDataTable()}
