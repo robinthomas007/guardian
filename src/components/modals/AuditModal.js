@@ -3,6 +3,7 @@ import { Table, Modal, Form } from 'react-bootstrap';
 import './AuditModal.css';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
+import moment from 'moment';
 
 const audit = [
   {
@@ -409,28 +410,24 @@ const audit = [
             block: false,
             duration: '',
             expirationDate: '',
-            monetize: true,
           },
           {
             platformName: 'SoundCloud',
             block: true,
-            duration: '',
-            expirationDate: '',
-            monetize: false,
+            duration: '> 3o sec',
+            expirationDate: '12/10/2022',
           },
           {
             platformName: 'Facebook',
             block: false,
             duration: '',
             expirationDate: '',
-            monetize: true,
           },
           {
             platformName: 'Instagram',
             block: false,
             duration: '',
             expirationDate: '',
-            monetize: true,
           },
         ],
         tracks: [
@@ -633,7 +630,7 @@ const renderStep2Table = project => {
       <thead>
         <tr>
           <th>Project Security</th>
-          <th>Masked</th>
+          <th className="text-center">Masked</th>
           <th>Primary Contact</th>
           <th>Primary Contact Email</th>
           <th>Additional Contacts</th>
@@ -642,7 +639,17 @@ const renderStep2Table = project => {
       <tbody>
         <tr>
           <td>{project.projectSecurity}</td>
-          <td>{project.isMasked}</td>
+          <td className="text-center">
+            <label className="custom-checkbox">
+              <input
+                id="projectReleaseDateTBD"
+                className="form-control"
+                type="checkbox"
+                checked={project.isMasked}
+              />
+              <span className="checkmark "></span>
+            </label>
+          </td>
           <td>{project.projectPrimaryContact}</td>
           <td>{project.projectPrimaryContactEmail}</td>
           <td>{project.projectAdditionalContacts}</td>
@@ -660,7 +667,13 @@ const renderStep3UploadTable = AudioFiles => {
         <td>{item.FileName}</td>
         <td>{item.FileSize}</td>
         <td>{item.FileFormat}</td>
-        <td>{item.IsCompleted}</td>
+        <td className="text-center completed-icon">
+          {item.IsCompleted ? (
+            <i className="material-icons success">verified_user</i>
+          ) : (
+            <i className="material-icons success">verified_user</i>
+          )}
+        </td>
       </tr>
     );
   });
@@ -672,7 +685,7 @@ const renderStep3UploadTable = AudioFiles => {
           <th>File Name</th>
           <th>File Size</th>
           <th>Format</th>
-          <th>Completed</th>
+          <th className="text-center">Completed</th>
         </tr>
       </thead>
       <tbody>{audioFileData}</tbody>
@@ -683,7 +696,6 @@ const renderStep3UploadTable = AudioFiles => {
 const renderStep3TrackTable = Discs => {
   const trackData = _.map(Discs, Disc => {
     return _.map(Disc.Tracks, track => {
-      console.log(track);
       return (
         <tr>
           <td>{Disc.discNumber}</td>
@@ -724,7 +736,17 @@ const renderStep4TrackTable = Discs => {
           <td>{track.trackTitle}</td>
           <td>{track.isrc}</td>
           <td>{track.artist}</td>
-          <td>{track.isSingle}</td>
+          <td className="text-center">
+            <label className="custom-checkbox">
+              <input
+                id="projectReleaseDateTBD"
+                className="form-control"
+                type="checkbox"
+                checked={track.isSingle}
+              />
+              <span className="checkmark "></span>
+            </label>
+          </td>
           <td>{track.trackReleaseDate}</td>
         </tr>
       );
@@ -740,7 +762,7 @@ const renderStep4TrackTable = Discs => {
           <th>Track Title</th>
           <th>ISRC</th>
           <th>Artist</th>
-          <th>Single</th>
+          <th className="text-center">Single</th>
           <th>Release Date</th>
         </tr>
       </thead>
@@ -783,7 +805,7 @@ const renderStep6BlockingPolicyTable = blockingPolicies => {
   const blockingPoliciesData = _.map(blockingPolicies, blocking => {
     const platforms = _.map(blocking.platformPolicies, platform => {
       return (
-        <div>
+        <div className="platform-wrapper social-icons">
           <span>
             <span className={`platform-sprite small ${platform.platformName.toLowerCase()}`}></span>
           </span>
@@ -793,7 +815,7 @@ const renderStep6BlockingPolicyTable = blockingPolicies => {
 
     const trackTitle = _.map(blocking.tracks, track => {
       return (
-        <div>
+        <div className="td-bottom-line-div">
           <span>{track.trackTitle}</span>
         </div>
       );
@@ -801,7 +823,7 @@ const renderStep6BlockingPolicyTable = blockingPolicies => {
 
     const trackId = _.map(blocking.tracks, track => {
       return (
-        <div>
+        <div className="td-bottom-line-div">
           <span>{track.trackID}</span>
         </div>
       );
@@ -809,7 +831,7 @@ const renderStep6BlockingPolicyTable = blockingPolicies => {
 
     const setId = _.map(blocking.tracks, () => {
       return (
-        <div>
+        <div className="td-bottom-line-div">
           <span>{blocking.sequence}</span>
         </div>
       );
@@ -817,9 +839,9 @@ const renderStep6BlockingPolicyTable = blockingPolicies => {
 
     const Monetize = _.map(blocking.platformPolicies, platform => {
       return (
-        <div>
+        <div className="platform-wrapper">
           <span>
-            {platform.monetize && (
+            {!platform.block && (
               <label className="custom-checkbox">
                 <input
                   id="projectReleaseDateTBD"
@@ -835,9 +857,26 @@ const renderStep6BlockingPolicyTable = blockingPolicies => {
       );
     });
 
+    const duration = _.map(blocking.platformPolicies, platform => {
+      console.log(platform, 'platformplatformplatform');
+      return (
+        <div className="platform-wrapper">
+          <span>{platform.duration}</span>
+        </div>
+      );
+    });
+
+    const blockUntil = _.map(blocking.platformPolicies, platform => {
+      return (
+        <div className="platform-wrapper">
+          <span>{platform.expirationDate}</span>
+        </div>
+      );
+    });
+
     const Block = _.map(blocking.platformPolicies, platform => {
       return (
-        <div>
+        <div className="platform-wrapper">
           <span>
             {platform.block && (
               <label className="custom-checkbox">
@@ -857,12 +896,14 @@ const renderStep6BlockingPolicyTable = blockingPolicies => {
 
     return (
       <tr>
-        <td>{setId}</td>
-        <td>{trackId}</td>
-        <td>{trackTitle}</td>
-        <td> {platforms}</td>
-        <td>{Monetize}</td>
-        <td>{Block}</td>
+        <td className="audit-5-custom-td">{setId}</td>
+        <td className="audit-5-custom-td">{trackId}</td>
+        <td className="audit-5-custom-td border-right">{trackTitle}</td>
+        <td className="audit-5-custom-td"> {platforms}</td>
+        <td className="audit-5-custom-td text-center">{Monetize}</td>
+        <td className="audit-5-custom-td text-center">{Block}</td>
+        <td className="audit-5-custom-td text-center">{duration}</td>
+        <td className="audit-5-custom-td text-center">{blockUntil}</td>
       </tr>
     );
   });
@@ -874,11 +915,11 @@ const renderStep6BlockingPolicyTable = blockingPolicies => {
           <th>Set #</th>
           <th>Track</th>
           <th>Track Title</th>
-          <th>Platform</th>
-          <th>Monetize</th>
-          <th>Block</th>
-          <th>Duration</th>
-          <th>Block Until</th>
+          <th className="text-center">Platform</th>
+          <th className="text-center">Monetize</th>
+          <th className="text-center">Block</th>
+          <th className="text-center">Duration</th>
+          <th className="text-center">Block Until</th>
         </tr>
       </thead>
       <tbody>{blockingPoliciesData}</tbody>
@@ -900,13 +941,16 @@ export default ({ show, title, onHide, onConfirm }) => {
     >
       <Modal.Header closeButton></Modal.Header>
       <Modal.Body>
-        <div className="row">
+        <div className="row filter-head">
           <div className="col-3">
             <h3>Audit Trail for Test Project</h3>
           </div>
           <div className="col-8">
             <div className="display-filter">
-              <label>Display</label>
+              <div className="col-auto">
+                <Form.Label className="col-form-label tbd text-nowrap">display</Form.Label>
+                <label className="custom-checkbox"></label>
+              </div>
               <div className="col-auto">
                 <Form.Label className="col-form-label tbd text-nowrap">All</Form.Label>
                 <label className="custom-checkbox">
@@ -970,13 +1014,85 @@ export default ({ show, title, onHide, onConfirm }) => {
           {_.map(audit, item => {
             return (
               <div className="col-12">
-                {item.StepId === 2 && renderStep1Table(item.Project)}
+                {item.StepId === 2 && (
+                  <div>
+                    <div className="table-sub-head">
+                      step <span className="round-step-circle">1</span>/{' '}
+                      <span className="round-step-circle">2</span>
+                      On {moment(item.CreatedDateTime).format('DD-MM-YYYY')} at{' '}
+                      {moment(item.CreatedDateTime).format('hh:mm a')}.{item.UserName} created a new
+                      project, {item.Project.projectTitle} with the following values:{' '}
+                    </div>
+                    {renderStep1Table(item.Project)}
+                  </div>
+                )}
                 {item.StepId === 2 && renderStep2Table(item.Project)}
-                {item.StepId === 3 && renderStep3UploadTable(item.AudioFiles)}
-                {item.StepId === 3 && renderStep3TrackTable(item.Discs)}
-                {item.StepId === 4 && renderStep4TrackTable(item.Discs)}
-                {item.StepId === 5 && renderStep5RightsTable(item.TerritorialRightsSets)}
-                {item.StepId === 6 && renderStep6BlockingPolicyTable(item.BlockingPolicySets)}
+
+                {item.StepId === 3 && (
+                  <div>
+                    <div className="table-sub-head">
+                      step <span className="round-step-circle">3</span>
+                      On {moment(item.CreatedDateTime).format('DD-MM-YYYY')} at{' '}
+                      {moment(item.CreatedDateTime).format('hh:mm a')}.{item.UserName} uploaded the
+                      following files:{' '}
+                    </div>
+                    {renderStep3UploadTable(item.AudioFiles)}
+                  </div>
+                )}
+                {item.StepId === 3 && (
+                  <div>
+                    <div className="table-sub-head">
+                      step <span className="round-step-circle">3</span>
+                      On {moment(item.CreatedDateTime).format('DD-MM-YYYY')} at{' '}
+                      {moment(item.CreatedDateTime).format('hh:mm a')}.{item.UserName} saved Step 3
+                      for {item.Project.projectTitle} with the following values:{' '}
+                    </div>
+                    {renderStep3TrackTable(item.Discs)}
+                  </div>
+                )}
+                {item.StepId === 4 && (
+                  <div>
+                    <div className="table-sub-head">
+                      step <span className="round-step-circle">4</span>
+                      On {moment(item.CreatedDateTime).format('DD-MM-YYYY')} at{' '}
+                      {moment(item.CreatedDateTime).format('hh:mm a')}.{item.UserName} saved Step 4
+                      for {item.Project.projectTitle} with the following values:{' '}
+                    </div>
+                    {renderStep4TrackTable(item.Discs)}
+                  </div>
+                )}
+                {item.StepId === 5 && (
+                  <div>
+                    <div className="table-sub-head">
+                      step <span className="round-step-circle">5</span>
+                      On {moment(item.CreatedDateTime).format('DD-MM-YYYY')} at{' '}
+                      {moment(item.CreatedDateTime).format('hh:mm a')}.{item.UserName} saved Step 5
+                      for {item.Project.projectTitle} with the following values:{' '}
+                    </div>
+                    {renderStep5RightsTable(item.TerritorialRightsSets)}
+                  </div>
+                )}
+                {item.StepId === 6 && (
+                  <div>
+                    <div className="table-sub-head">
+                      step <span className="round-step-circle">6</span>
+                      On {moment(item.CreatedDateTime).format('DD-MM-YYYY')} at{' '}
+                      {moment(item.CreatedDateTime).format('hh:mm a')}.{item.UserName} saved Step 6
+                      for {item.Project.projectTitle} with the following values:{' '}
+                    </div>
+                    {renderStep6BlockingPolicyTable(item.BlockingPolicySets)}
+                  </div>
+                )}
+                {item.StepId === 7 && (
+                  <div>
+                    <div className="table-sub-head">
+                      step <span className="round-step-circle">7</span>
+                      On {moment(item.CreatedDateTime).format('DD-MM-YYYY')} at{' '}
+                      {moment(item.CreatedDateTime).format('hh:mm a')}.{item.UserName} submitted{' '}
+                      {item.Project.projectTitle}
+                    </div>
+                  </div>
+                )}
               </div>
             );
           })}

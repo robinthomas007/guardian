@@ -1,12 +1,77 @@
 div#AuditModal {
-  max-width: 85% !important;
-}
-
-#AuditModal .modal-backdrop {
-  background-color: transparent;
+  max-width: 90% !important;
 }
 
 .display-filter {
   display: flex;
   align-items: center;
+}
+
+.table-sub-head {
+  background: #d9f3fe;
+  padding: 12px;
+}
+
+.round-step-circle {
+  background: #fff;
+  border-radius: 50%;
+  padding: 2px 6px;
+  margin: 0px 2px;
+}
+
+div#AuditModal table thead {
+  background: #f5f5f5;
+}
+
+div#AuditModal table thead th,
+div#AuditModal table tbody td {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+div#AuditModal .table {
+  margin-bottom: 0;
+}
+
+div#AuditModal .modal-header {
+  border-bottom: none;
+  padding: 5px 20px;
+}
+
+td.completed-icon i.material-icons.success {
+  color: green !important;
+}
+
+.filter-head {
+  padding-bottom: 15px;
+}
+
+.td-bottom-line-div {
+  border-bottom: 1px solid #ccc;
+  padding: 8px;
+}
+
+.audit-5-custom-td {
+  padding: 0px !important;
+}
+
+.td-bottom-line-div span {
+  padding: 4px;
+  display: block;
+}
+
+.border-right {
+  border-right: 1px solid #ccc;
+}
+
+.platform-wrapper span {
+  min-height: 28px;
+}
+
+.platform-wrapper {
+  padding: 10px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: top !important;
 }
