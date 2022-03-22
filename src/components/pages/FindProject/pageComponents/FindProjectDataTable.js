@@ -266,7 +266,7 @@ class FindProjectDataTable extends Component {
 
         <button
           type="button"
-          onClick={() => this.setState({ auditModal: project.projectID })}
+          onClick={() => this.setState({ auditModal: project })}
           className="btn btn-secondary"
         >
           <i className="material-icons">fact_check</i>
@@ -564,12 +564,13 @@ class FindProjectDataTable extends Component {
           onHide={() => this.setState({ projectIDToDelete: null })}
           onConfirm={() => this.handleProjectDelete(this.state.projectIDToDelete)}
         />
-        <AuditModal
-          show={this.state.auditModal ? true : false}
-          title={this.props.t('search:DeleteProject')}
-          onHide={() => this.setState({ auditModal: null })}
-          // onConfirm={() => this.handleProjectDelete(this.state.projectIDToDelete)}
-        />
+        {this.state.auditModal && (
+          <AuditModal
+            show={this.state.auditModal ? true : false}
+            project={this.state.auditModal}
+            onHide={() => this.setState({ auditModal: null })}
+          />
+        )}
         <Table className="search-table find-a-project-table responsive">
           {this.getDataTable()}
           <tbody>{this.renderProjects()}</tbody>

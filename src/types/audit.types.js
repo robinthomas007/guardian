@@ -1,0 +1,3 @@
+export const AUDIT_SUCCESS = 'AUDIT_SUCCESS';
+export const AUDIT_FAILURE = 'AUDIT_FAILURE';
+export const AUDIT_REQUEST = 'AUDIT_REQUEST';

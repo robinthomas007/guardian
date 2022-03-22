@@ -1,595 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Table, Modal, Form } from 'react-bootstrap';
 import './AuditModal.css';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
 import moment from 'moment';
-
-const audit = [
-  {
-    StepId: 2,
-    ActionType: 'Save',
-    Project: {
-      projectID: '1241',
-      projectTitle: 'Audit-Testing-1',
-      projectTypeID: '1',
-      projectType: 'Album',
-      projectArtistName: 'selvam',
-      projectReleasingLabelID: '-1',
-      projectReleasingLabel: 'ZDeviner',
-      projectReleaseDate: '3/26/2022 12:00',
-      projectReleaseDateTBD: false,
-      projectPrimaryContact: 'selvam murugan',
-      projectPrimaryContactEmail: 'selvam.murugan@umusic.com',
-      projectAdditionalContacts: '',
-      projectNotes: '',
-      projectSecurityID: '1',
-      projectSecurity: 'Private (Viewable By You)',
-      projectStatusID: '1',
-      projectStatus: 'In Progress',
-      projectCoverArtFileName: '',
-      projectCoverArtBase64Data: '',
-      releaseInfoStatus: '3',
-      projectContactsStatus: '3',
-      audioFilesStatus: '2',
-      trackInfoStatus: '2',
-      territorialRightsStatus: '2',
-      blockingPoliciesStatus: '2',
-      projectSubmitStatus: '2',
-      isProjectComplete: false,
-      isProjectReviewable: false,
-      upc: '',
-      isMasked: false,
-    },
-    AudioFiles: [],
-    Discs: [],
-    TerritorialRightsSets: [],
-    UnassignedTerritorialRightsSetTracks: [],
-    BlockingPolicySets: [],
-    UnassignedBlockingPolicySetTracks: [],
-    message: null,
-    CreatedDateTime: '2022-03-21T10:22:20.695431',
-    UserName: 'selvam murugan',
-  },
-  {
-    StepId: 3,
-    ActionType: 'Save',
-    Project: {
-      projectID: '1241',
-      projectTitle: 'Audit-Testing-1',
-      projectTypeID: '1',
-      projectType: 'Album',
-      projectArtistName: 'selvam',
-      projectReleasingLabelID: '-1',
-      projectReleasingLabel: 'ZDeviner',
-      projectReleaseDate: '3/26/2022 12:00',
-      projectReleaseDateTBD: false,
-      projectPrimaryContact: 'selvam murugan',
-      projectPrimaryContactEmail: 'selvam.murugan@umusic.com',
-      projectAdditionalContacts: '',
-      projectNotes: '',
-      projectSecurityID: '1',
-      projectSecurity: 'Private (Viewable By You)',
-      projectStatusID: '1',
-      projectStatus: 'In Progress',
-      projectCoverArtFileName: '',
-      projectCoverArtBase64Data: '',
-      releaseInfoStatus: '3',
-      projectContactsStatus: '3',
-      audioFilesStatus: '3',
-      trackInfoStatus: '2',
-      territorialRightsStatus: '2',
-      blockingPoliciesStatus: '2',
-      projectSubmitStatus: '2',
-      isProjectComplete: false,
-      isProjectReviewable: false,
-      upc: '',
-      isMasked: false,
-    },
-    AudioFiles: [
-      {
-        FileName: 'file_example_MP3_700KB - Copy (3).mp3',
-        FileSize: '0.73 MB',
-        FileFormat: 'MP3',
-        IsCompleted: false,
-      },
-    ],
-    Discs: [
-      {
-        discNumber: '1',
-        Tracks: [
-          {
-            trackID: '3241',
-            trackNumber: '1',
-            hasUpload: true,
-            trackTitle: 'Title1',
-            isrc: 'USUG12100193',
-            isSingle: false,
-            trackReleaseDate: '3/26/2022 12:00',
-            fileName: 'file_example_MP3_700KB - Copy (3).mp3',
-            artist: 'selvam',
-            isInProgress: true,
-            isCisAudio: false,
-          },
-        ],
-      },
-    ],
-    TerritorialRightsSets: [],
-    UnassignedTerritorialRightsSetTracks: [
-      {
-        trackID: '3241',
-        trackTitle: 'Title1',
-        IsLockedByUgc: false,
-      },
-    ],
-    BlockingPolicySets: [],
-    UnassignedBlockingPolicySetTracks: [
-      {
-        trackID: '3241',
-        trackTitle: 'Title1',
-        IsLockedByUgc: false,
-      },
-    ],
-    message: null,
-    CreatedDateTime: '2022-03-21T10:22:41.218943',
-    UserName: 'selvam murugan',
-  },
-  {
-    StepId: 4,
-    ActionType: 'Save',
-    Project: {
-      projectID: '1241',
-      projectTitle: 'Audit-Testing-1',
-      projectTypeID: '1',
-      projectType: 'Album',
-      projectArtistName: 'selvam',
-      projectReleasingLabelID: '-1',
-      projectReleasingLabel: 'ZDeviner',
-      projectReleaseDate: '3/26/2022 12:00',
-      projectReleaseDateTBD: false,
-      projectPrimaryContact: 'selvam murugan',
-      projectPrimaryContactEmail: 'selvam.murugan@umusic.com',
-      projectAdditionalContacts: '',
-      projectNotes: '',
-      projectSecurityID: '1',
-      projectSecurity: 'Private (Viewable By You)',
-      projectStatusID: '1',
-      projectStatus: 'In Progress',
-      projectCoverArtFileName: '',
-      projectCoverArtBase64Data: '',
-      releaseInfoStatus: '3',
-      projectContactsStatus: '3',
-      audioFilesStatus: '3',
-      trackInfoStatus: '3',
-      territorialRightsStatus: '2',
-      blockingPoliciesStatus: '2',
-      projectSubmitStatus: '2',
-      isProjectComplete: false,
-      isProjectReviewable: false,
-      upc: '',
-      isMasked: false,
-    },
-    AudioFiles: [
-      {
-        FileName: 'file_example_MP3_700KB - Copy (3).mp3',
-        FileSize: '0.73 MB',
-        FileFormat: 'MP3',
-        IsCompleted: true,
-      },
-    ],
-    Discs: [
-      {
-        discNumber: '1',
-        Tracks: [
-          {
-            trackID: '3241',
-            trackNumber: '1',
-            hasUpload: true,
-            trackTitle: 'Title1',
-            isrc: 'USUG12100193',
-            isSingle: false,
-            trackReleaseDate: '3/26/2022 12:00',
-            fileName: 'file_example_MP3_700KB - Copy (3).mp3',
-            artist: 'selvam',
-            isInProgress: false,
-            isCisAudio: false,
-          },
-        ],
-      },
-    ],
-    TerritorialRightsSets: [],
-    UnassignedTerritorialRightsSetTracks: [
-      {
-        trackID: '3241',
-        trackTitle: 'Title1',
-        IsLockedByUgc: false,
-      },
-    ],
-    BlockingPolicySets: [],
-    UnassignedBlockingPolicySetTracks: [
-      {
-        trackID: '3241',
-        trackTitle: 'Title1',
-        IsLockedByUgc: false,
-      },
-    ],
-    message: null,
-    CreatedDateTime: '2022-03-21T10:22:48.408802',
-    UserName: 'selvam murugan',
-  },
-  {
-    StepId: 5,
-    ActionType: 'Save',
-    Project: {
-      projectID: '1241',
-      projectTitle: 'Audit-Testing-1',
-      projectTypeID: '1',
-      projectType: 'Album',
-      projectArtistName: 'selvam',
-      projectReleasingLabelID: '-1',
-      projectReleasingLabel: 'ZDeviner',
-      projectReleaseDate: '3/26/2022 12:00',
-      projectReleaseDateTBD: false,
-      projectPrimaryContact: 'selvam murugan',
-      projectPrimaryContactEmail: 'selvam.murugan@umusic.com',
-      projectAdditionalContacts: '',
-      projectNotes: '',
-      projectSecurityID: '1',
-      projectSecurity: 'Private (Viewable By You)',
-      projectStatusID: '1',
-      projectStatus: 'In Progress',
-      projectCoverArtFileName: '',
-      projectCoverArtBase64Data: '',
-      releaseInfoStatus: '3',
-      projectContactsStatus: '3',
-      audioFilesStatus: '3',
-      trackInfoStatus: '3',
-      territorialRightsStatus: '3',
-      blockingPoliciesStatus: '2',
-      projectSubmitStatus: '2',
-      isProjectComplete: false,
-      isProjectReviewable: false,
-      upc: '',
-      isMasked: false,
-    },
-    AudioFiles: [
-      {
-        FileName: 'file_example_MP3_700KB - Copy (3).mp3',
-        FileSize: '0.73 MB',
-        FileFormat: 'MP3',
-        IsCompleted: true,
-      },
-    ],
-    Discs: [
-      {
-        discNumber: '1',
-        Tracks: [
-          {
-            trackID: '3241',
-            trackNumber: '1',
-            hasUpload: true,
-            trackTitle: 'Title1',
-            isrc: 'USUG12100193',
-            isSingle: false,
-            trackReleaseDate: '3/26/2022 12:00',
-            fileName: 'file_example_MP3_700KB - Copy (3).mp3',
-            artist: 'selvam',
-            isInProgress: false,
-            isCisAudio: false,
-          },
-        ],
-      },
-    ],
-    TerritorialRightsSets: [
-      {
-        territorialRightsSetID: '748',
-        sequence: '1',
-        description: '',
-        countries: [
-          {
-            id: 'WW',
-            name: 'Worldwide',
-          },
-        ],
-        tracks: [
-          {
-            trackID: '3241',
-            trackTitle: 'Title1',
-            IsLockedByUgc: false,
-          },
-        ],
-        hasRights: true,
-      },
-    ],
-    UnassignedTerritorialRightsSetTracks: [],
-    BlockingPolicySets: [],
-    UnassignedBlockingPolicySetTracks: [
-      {
-        trackID: '3241',
-        trackTitle: 'Title1',
-        IsLockedByUgc: false,
-      },
-    ],
-    message: null,
-    CreatedDateTime: '2022-03-21T10:23:01.175328',
-    UserName: 'selvam murugan',
-  },
-  {
-    StepId: 6,
-    ActionType: 'Save',
-    Project: {
-      projectID: '1241',
-      projectTitle: 'Audit-Testing-1',
-      projectTypeID: '1',
-      projectType: 'Album',
-      projectArtistName: 'selvam',
-      projectReleasingLabelID: '-1',
-      projectReleasingLabel: 'ZDeviner',
-      projectReleaseDate: '3/26/2022 12:00',
-      projectReleaseDateTBD: false,
-      projectPrimaryContact: 'selvam murugan',
-      projectPrimaryContactEmail: 'selvam.murugan@umusic.com',
-      projectAdditionalContacts: '',
-      projectNotes: '',
-      projectSecurityID: '1',
-      projectSecurity: 'Private (Viewable By You)',
-      projectStatusID: '1',
-      projectStatus: 'In Progress',
-      projectCoverArtFileName: '',
-      projectCoverArtBase64Data: '',
-      releaseInfoStatus: '3',
-      projectContactsStatus: '3',
-      audioFilesStatus: '3',
-      trackInfoStatus: '3',
-      territorialRightsStatus: '3',
-      blockingPoliciesStatus: '3',
-      projectSubmitStatus: '2',
-      isProjectComplete: true,
-      isProjectReviewable: true,
-      upc: '',
-      isMasked: false,
-    },
-    AudioFiles: [
-      {
-        FileName: 'file_example_MP3_700KB - Copy (3).mp3',
-        FileSize: '0.73 MB',
-        FileFormat: 'MP3',
-        IsCompleted: true,
-      },
-    ],
-    Discs: [
-      {
-        discNumber: '1',
-        Tracks: [
-          {
-            trackID: '3241',
-            trackNumber: '1',
-            hasUpload: true,
-            trackTitle: 'Title1',
-            isrc: 'USUG12100193',
-            isSingle: false,
-            trackReleaseDate: '3/26/2022 12:00',
-            fileName: 'file_example_MP3_700KB - Copy (3).mp3',
-            artist: 'selvam',
-            isInProgress: false,
-            isCisAudio: false,
-          },
-        ],
-      },
-    ],
-    TerritorialRightsSets: [
-      {
-        territorialRightsSetID: '748',
-        sequence: '1',
-        description: '',
-        countries: [
-          {
-            id: 'WW',
-            name: 'Worldwide',
-          },
-        ],
-        tracks: [
-          {
-            trackID: '3241',
-            trackTitle: 'Title1',
-            IsLockedByUgc: false,
-          },
-        ],
-        hasRights: true,
-      },
-    ],
-    UnassignedTerritorialRightsSetTracks: [],
-    BlockingPolicySets: [
-      {
-        blockingPolicySetID: '482',
-        sequence: '1',
-        description: 'Set #1',
-        platformPolicies: [
-          {
-            platformName: 'YouTube',
-            block: false,
-            duration: '',
-            expirationDate: '',
-          },
-          {
-            platformName: 'SoundCloud',
-            block: true,
-            duration: '> 3o sec',
-            expirationDate: '12/10/2022',
-          },
-          {
-            platformName: 'Facebook',
-            block: false,
-            duration: '',
-            expirationDate: '',
-          },
-          {
-            platformName: 'Instagram',
-            block: false,
-            duration: '',
-            expirationDate: '',
-          },
-        ],
-        tracks: [
-          {
-            trackID: '3241',
-            trackTitle: 'Title1',
-            IsLockedByUgc: false,
-          },
-          {
-            trackID: '3242',
-            trackTitle: 'Title2',
-            IsLockedByUgc: false,
-          },
-          {
-            trackID: '3243',
-            trackTitle: 'Title3',
-            IsLockedByUgc: false,
-          },
-          {
-            trackID: '3244',
-            trackTitle: 'Title4',
-            IsLockedByUgc: false,
-          },
-        ],
-      },
-    ],
-    UnassignedBlockingPolicySetTracks: [],
-    message: null,
-    CreatedDateTime: '2022-03-21T10:23:20.198805',
-    UserName: 'selvam murugan',
-  },
-  {
-    StepId: 7,
-    ActionType: 'Submit',
-    Project: {
-      projectID: '1241',
-      projectTitle: 'Audit-Testing-1',
-      projectTypeID: '1',
-      projectType: 'Album',
-      projectArtistName: 'selvam',
-      projectReleasingLabelID: '-1',
-      projectReleasingLabel: 'ZDeviner',
-      projectReleaseDate: '3/26/2022 12:00',
-      projectReleaseDateTBD: false,
-      projectPrimaryContact: 'selvam murugan',
-      projectPrimaryContactEmail: 'selvam.murugan@umusic.com',
-      projectAdditionalContacts: '',
-      projectNotes: '',
-      projectSecurityID: '1',
-      projectSecurity: 'Private (Viewable By You)',
-      projectStatusID: '2',
-      projectStatus: 'Submitted',
-      projectCoverArtFileName: '',
-      projectCoverArtBase64Data: '',
-      releaseInfoStatus: '3',
-      projectContactsStatus: '3',
-      audioFilesStatus: '3',
-      trackInfoStatus: '3',
-      territorialRightsStatus: '3',
-      blockingPoliciesStatus: '3',
-      projectSubmitStatus: '3',
-      isProjectComplete: true,
-      isProjectReviewable: true,
-      upc: '',
-      isMasked: false,
-    },
-    AudioFiles: [
-      {
-        FileName: 'file_example_MP3_700KB - Copy (3).mp3',
-        FileSize: '0.73 MB',
-        FileFormat: 'MP3',
-        IsCompleted: true,
-      },
-    ],
-    Discs: [
-      {
-        discNumber: '1',
-        Tracks: [
-          {
-            trackID: '3241',
-            trackNumber: '1',
-            hasUpload: true,
-            trackTitle: 'Title1',
-            isrc: 'USUG12100193',
-            isSingle: false,
-            trackReleaseDate: '3/26/2022 12:00',
-            fileName: 'file_example_MP3_700KB - Copy (3).mp3',
-            artist: 'selvam',
-            isInProgress: false,
-            isCisAudio: false,
-          },
-        ],
-      },
-    ],
-    TerritorialRightsSets: [
-      {
-        territorialRightsSetID: '748',
-        sequence: '1',
-        description: '',
-        countries: [
-          {
-            id: 'WW',
-            name: 'Worldwide',
-          },
-        ],
-        tracks: [
-          {
-            trackID: '3241',
-            trackTitle: 'Title1',
-            IsLockedByUgc: false,
-          },
-        ],
-        hasRights: true,
-      },
-    ],
-    UnassignedTerritorialRightsSetTracks: [],
-    BlockingPolicySets: [
-      {
-        blockingPolicySetID: '482',
-        sequence: '1',
-        description: 'Set #1',
-        platformPolicies: [
-          {
-            platformName: 'YouTube',
-            block: false,
-            duration: '',
-            expirationDate: '',
-          },
-          {
-            platformName: 'SoundCloud',
-            block: false,
-            duration: '',
-            expirationDate: '',
-          },
-          {
-            platformName: 'Facebook',
-            block: false,
-            duration: '',
-            expirationDate: '',
-          },
-          {
-            platformName: 'Instagram',
-            block: false,
-            duration: '',
-            expirationDate: '',
-          },
-        ],
-        tracks: [
-          {
-            trackID: '3241',
-            trackTitle: 'Title1',
-            IsLockedByUgc: false,
-          },
-        ],
-      },
-    ],
-    UnassignedBlockingPolicySetTracks: [],
-    message: null,
-    CreatedDateTime: '2022-03-21T10:23:46.865994',
-    UserName: 'selvam murugan',
-  },
-];
+import { connect, useSelector } from 'react-redux';
+import * as auditAction from 'actions/auditAction';
+import { withRouter } from 'react-router-dom';
+import LoadingImg from 'component_library/LoadingImg';
 
 const getCountries = countries => {
   return _.map(countries, 'name').toString();
@@ -858,7 +276,6 @@ const renderStep6BlockingPolicyTable = blockingPolicies => {
     });
 
     const duration = _.map(blocking.platformPolicies, platform => {
-      console.log(platform, 'platformplatformplatform');
       return (
         <div className="platform-wrapper">
           <span>{platform.duration}</span>
@@ -927,8 +344,94 @@ const renderStep6BlockingPolicyTable = blockingPolicies => {
   );
 };
 
-export default ({ show, title, onHide, onConfirm }) => {
+const Audit = props => {
+  const { show, onHide, project, audit } = props;
+  const [auditData, setauditData] = useState([]);
+  const [selectedFilter, setFilter] = useState({
+    checkBoxAll: true,
+    checkBoxStep_1_2: false,
+    checkBoxStep_3: false,
+    checkBoxStep_4: false,
+    checkBoxStep_5: false,
+    checkBoxStep_6: false,
+    checkBoxStep_7: false,
+  });
   const { t } = useTranslation();
+
+  useEffect(() => {
+    if (project.projectID) {
+      const user = JSON.parse(sessionStorage.getItem('user'));
+      props.getAuditData({
+        User: {
+          email: user.email,
+        },
+        ProjectId: project.projectID,
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (audit.length > 0) {
+      setauditData(audit);
+    }
+  }, [audit]);
+
+  const handleChangeStepFilter = e => {
+    setFilter({
+      ...selectedFilter,
+      [e.target.id]: e.target.checked ? true : false,
+      checkBoxAll: e.target.id !== 'checkBoxAll' ? false : e.target.checked ? true : false,
+    });
+    let dataArr = [];
+    let checkedSteps = [];
+    let keys = Object.keys(selectedFilter);
+
+    let filtered = keys.filter(function(key) {
+      return selectedFilter[key];
+    });
+
+    if (e.target.checked) {
+      filtered.forEach(el => {
+        const steps = el.split('_').splice(1);
+        checkedSteps.push(...steps);
+      });
+
+      const steps = e.target.id ? e.target.id.split('_').splice(1) : [];
+      steps.push(...checkedSteps);
+      _.map(steps, item => {
+        const data = _.filter(audit, val => val.StepId === parseInt(item));
+        dataArr.push(...data);
+      });
+    } else {
+      let filteredArr = filtered.filter(val => val !== e.target.id);
+      if (filteredArr.length === 0) {
+        dataArr = audit;
+        setFilter({ checkBoxAll: true });
+      }
+      filteredArr.forEach(el => {
+        const steps = el.split('_').splice(1);
+        checkedSteps.push(...steps);
+      });
+      _.map(checkedSteps, item => {
+        const data = _.filter(audit, val => val.StepId === parseInt(item));
+        dataArr.push(...data);
+      });
+    }
+    if (e.target.id === 'checkBoxAll' && e.target.checked) {
+      setFilter({
+        checkBoxStep_1_2: false,
+        checkBoxStep_3: false,
+        checkBoxStep_4: false,
+        checkBoxStep_5: false,
+        checkBoxStep_6: false,
+        checkBoxStep_7: false,
+      });
+      dataArr = audit;
+    }
+
+    setauditData(dataArr);
+  };
+
   return (
     <Modal
       dialogClassName="new clas"
@@ -941,62 +444,105 @@ export default ({ show, title, onHide, onConfirm }) => {
     >
       <Modal.Header closeButton></Modal.Header>
       <Modal.Body>
+        <LoadingImg show={props.loading} />
         <div className="row filter-head">
           <div className="col-3">
-            <h3>Audit Trail for Test Project</h3>
+            <h3>Audit Trail for {project ? project.projectTitle : ''}</h3>
           </div>
           <div className="col-8">
             <div className="display-filter">
               <div className="col-auto">
-                <Form.Label className="col-form-label tbd text-nowrap">display</Form.Label>
+                <Form.Label className="col-form-label tbd text-nowrap">Display</Form.Label>
                 <label className="custom-checkbox"></label>
               </div>
               <div className="col-auto">
-                <Form.Label className="col-form-label tbd text-nowrap">All</Form.Label>
+                <Form.Label className="col-form-label tbd text-nowrap">All </Form.Label>
                 <label className="custom-checkbox">
-                  <input id="projectReleaseDateTBD" className="form-control" type="checkbox" />
+                  <input
+                    id="checkBoxAll"
+                    className="form-control"
+                    type="checkbox"
+                    onChange={handleChangeStepFilter}
+                    checked={selectedFilter.checkBoxAll}
+                  />
                   <span className="checkmark "></span>
                 </label>
               </div>
               <div className="col-auto">
-                <Form.Label className="col-form-label tbd text-nowrap">Step 1/ Step 2</Form.Label>
+                <Form.Label className="col-form-label tbd text-nowrap">Step 1 / Step 2</Form.Label>
                 <label className="custom-checkbox">
-                  <input id="projectReleaseDateTBD" className="form-control" type="checkbox" />
+                  <input
+                    id="checkBoxStep_1_2"
+                    className="form-control"
+                    type="checkbox"
+                    onChange={handleChangeStepFilter}
+                    checked={selectedFilter.checkBoxStep_1_2}
+                  />
                   <span className="checkmark "></span>
                 </label>
               </div>
               <div className="col-auto">
                 <Form.Label className="col-form-label tbd text-nowrap">Step 3</Form.Label>
                 <label className="custom-checkbox">
-                  <input id="projectReleaseDateTBD" className="form-control" type="checkbox" />
+                  <input
+                    id="checkBoxStep_3"
+                    className="form-control"
+                    type="checkbox"
+                    onChange={handleChangeStepFilter}
+                    checked={selectedFilter.checkBoxStep_3}
+                  />
                   <span className="checkmark "></span>
                 </label>
               </div>
               <div className="col-auto">
                 <Form.Label className="col-form-label tbd text-nowrap">Step 4</Form.Label>
                 <label className="custom-checkbox">
-                  <input id="projectReleaseDateTBD" className="form-control" type="checkbox" />
+                  <input
+                    id="checkBoxStep_4"
+                    className="form-control"
+                    type="checkbox"
+                    onChange={handleChangeStepFilter}
+                    checked={selectedFilter.checkBoxStep_4}
+                  />
                   <span className="checkmark "></span>
                 </label>
               </div>
               <div className="col-auto">
                 <Form.Label className="col-form-label tbd text-nowrap">Step 5</Form.Label>
                 <label className="custom-checkbox">
-                  <input id="projectReleaseDateTBD" className="form-control" type="checkbox" />
+                  <input
+                    id="checkBoxStep_5"
+                    className="form-control"
+                    type="checkbox"
+                    onChange={handleChangeStepFilter}
+                    checked={selectedFilter.checkBoxStep_5}
+                  />
                   <span className="checkmark "></span>
                 </label>
               </div>
               <div className="col-auto">
                 <Form.Label className="col-form-label tbd text-nowrap">Step 6</Form.Label>
                 <label className="custom-checkbox">
-                  <input id="projectReleaseDateTBD" className="form-control" type="checkbox" />
+                  <input
+                    id="checkBoxStep_6"
+                    className="form-control"
+                    type="checkbox"
+                    onChange={handleChangeStepFilter}
+                    checked={selectedFilter.checkBoxStep_6}
+                  />
                   <span className="checkmark "></span>
                 </label>
               </div>
               <div className="col-auto">
                 <Form.Label className="col-form-label tbd text-nowrap">Step 7</Form.Label>
                 <label className="custom-checkbox">
-                  <input id="projectReleaseDateTBD" className="form-control" type="checkbox" />
+                  <input
+                    id="checkBoxStep_7"
+                    className="form-control"
+                    type="checkbox"
+                    onChange={handleChangeStepFilter}
+                    checked={selectedFilter.checkBoxStep_7}
+                  />
                   <span className="checkmark "></span>
                 </label>
               </div>
@@ -1011,7 +557,7 @@ export default ({ show, title, onHide, onConfirm }) => {
           </div>
         </div>
         <div className="row">
-          {_.map(audit, item => {
+          {_.map(auditData, item => {
             return (
               <div className="col-12">
                 {item.StepId === 2 && (
@@ -1101,3 +647,19 @@ export default ({ show, title, onHide, onConfirm }) => {
     </Modal>
   );
 };
+
+const mapDispatchToProps = dispatch => ({
+  getAuditData: val => dispatch(auditAction.getAuditData(val)),
+});
+
+const mapStateToProps = state => ({
+  audit: state.auditReducer.audit,
+  loading: state.auditReducer.loading,
+});
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  )(Audit),
+);

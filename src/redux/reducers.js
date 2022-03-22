@@ -12,6 +12,7 @@ import releaseReducer from '../components/pages/ReleaseInformation/releaseReduce
 import audioReducer from './../reducers/audioReducer';
 import shareReducer from './../reducers/shareReducer';
 import territorialRightsReducer from './../reducers/territorialRightsReducer';
+import auditReducer from '../reducers/auditReducer';
 
 export default asyncReducers => {
   return combineReducers({
@@ -28,6 +29,7 @@ export default asyncReducers => {
     audioReducer,
     shareReducer,
     territorialRightsReducer,
+    auditReducer,
     ...asyncReducers,
   });
 };
