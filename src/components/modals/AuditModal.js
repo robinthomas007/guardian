@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Table, Modal, Form } from 'react-bootstrap';
 import './AuditModal.css';
 import { useTranslation } from 'react-i18next';
@@ -8,6 +8,7 @@ import { connect, useSelector } from 'react-redux';
 import * as auditAction from 'actions/auditAction';
 import { withRouter } from 'react-router-dom';
 import LoadingImg from 'component_library/LoadingImg';
+import ReactToPrint from 'react-to-print';
 
 const getCountries = countries => {
   return _.map(countries, 'name').toString();
@@ -357,6 +358,7 @@ const Audit = props => {
     checkBoxStep_7: false,
   });
   const { t } = useTranslation();
+  const exportRef = useRef(null);
 
   useEffect(() => {
     if (project.projectID) {
@@ -443,7 +445,7 @@ const Audit = props => {
       onHide={onHide}
     >
       <Modal.Header closeButton></Modal.Header>
-      <Modal.Body>
+      <Modal.Body ref={exportRef}>
         <LoadingImg show={props.loading} />
         <div className="row filter-head">
           <div className="col-3">
@@ -549,11 +551,16 @@ const Audit = props => {
             </div>
           </div>
           <div className="col-1">
-            <button className="btn btn-secondary" type="button">
-              <span>
-                <i className="material-icons">description</i> {t('search:Export')}
-              </span>
-            </button>
+            <ReactToPrint
+              content={() => exportRef.current}
+              trigger={() => (
+                <button className="btn btn-secondary" type="button">
+                  <span>
+                    <i className="material-icons">description</i> {t('search:Export')}
+                  </span>
+                </button>
+              )}
+            />
           </div>
         </div>
         <div className="row">
