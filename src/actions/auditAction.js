@@ -35,12 +35,10 @@ export const getAuditData = data => {
           showNotyAutoError(response.message);
           dispatch(auditFailure(response.message));
         }
-        dispatch(auditRequest(false));
         return response;
       })
       .catch(error => {
         console.log('error', error);
-        dispatch(auditRequest(false));
         dispatch(auditFailure(error));
         return error;
       });

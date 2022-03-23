@@ -166,7 +166,7 @@ const renderStep4TrackTable = Discs => {
               <span className="checkmark "></span>
             </label>
           </td>
-          <td>{track.trackReleaseDate}</td>
+          <td>{track.trackReleaseDate ? track.trackReleaseDate : 'TBD'}</td>
         </tr>
       );
     });
@@ -220,7 +220,7 @@ const renderStep5RightsTable = TerritorialRightsSets => {
   );
 };
 
-const renderStep6BlockingPolicyTable = blockingPolicies => {
+const renderStep6BlockingPolicyTable = (blockingPolicies, t) => {
   const blockingPoliciesData = _.map(blockingPolicies, blocking => {
     const platforms = _.map(blocking.platformPolicies, platform => {
       return (
@@ -287,7 +287,20 @@ const renderStep6BlockingPolicyTable = blockingPolicies => {
     const blockUntil = _.map(blocking.platformPolicies, platform => {
       return (
         <div className="platform-wrapper">
-          <span>{platform.expirationDate}</span>
+          <span>
+            {!platform.duration && !platform.expirationDate
+              ? !platform.expirationDate
+                ? t('review:BlockAll')
+                : t('review:BlockAllUntil') + ' ' + platform.expirationDate
+              : t('review:Block') +
+                ' ' +
+                (platform.expirationDate
+                  ? ' ' +
+                    t('review:Until') +
+                    ' ' +
+                    moment(platform.expirationDate).format('DD-MM-YYYY')
+                  : ' ' + t('Always') + ' ')}
+          </span>
         </div>
       );
     });
@@ -362,6 +375,8 @@ const Audit = props => {
 
   useEffect(() => {
     if (project.projectID) {
+      const backdrop = document.querySelector('.modal-backdrop');
+      backdrop.style.background = 'transparent';
       const user = JSON.parse(sessionStorage.getItem('user'));
       props.getAuditData({
         User: {
@@ -377,6 +392,14 @@ const Audit = props => {
       setauditData(audit);
     }
   }, [audit]);
+
+  useEffect(
+    () => () => {
+      const backdrop = document.querySelector('.modal-backdrop');
+      backdrop.style.background = '#000000';
+    },
+    [],
+  );
 
   const handleChangeStepFilter = e => {
     setFilter({
@@ -430,8 +453,7 @@ const Audit = props => {
       });
       dataArr = audit;
     }
-
-    setauditData(dataArr);
+    setauditData(_.orderBy(dataArr, ['StepId'], ['asc']));
   };
 
   return (
@@ -444,9 +466,7 @@ const Audit = props => {
       show={show}
       onHide={onHide}
     >
-      <Modal.Header closeButton></Modal.Header>
-      <Modal.Body ref={exportRef}>
-        <LoadingImg show={props.loading} />
+      <Modal.Header closeButton>
         <div className="row filter-head">
           <div className="col-3">
             <h3>Audit Trail for {project ? project.projectTitle : ''}</h3>
@@ -471,7 +491,10 @@ const Audit = props => {
                 </label>
               </div>
               <div className="col-auto">
-                <Form.Label className="col-form-label tbd text-nowrap">Step 1 / Step 2</Form.Label>
+                <Form.Label className="col-form-label tbd text-nowrap">
+                  Step <span className="round-step-circle light-blue">1</span> / Step{' '}
+                  <span className="round-step-circle light-blue">2</span>
+                </Form.Label>
                 <label className="custom-checkbox">
                   <input
                     id="checkBoxStep_1_2"
@@ -484,7 +507,9 @@ const Audit = props => {
                 </label>
               </div>
               <div className="col-auto">
-                <Form.Label className="col-form-label tbd text-nowrap">Step 3</Form.Label>
+                <Form.Label className="col-form-label tbd text-nowrap">
+                  Step <span className="round-step-circle light-blue">3</span>
+                </Form.Label>
                 <label className="custom-checkbox">
                   <input
                     id="checkBoxStep_3"
@@ -497,7 +522,9 @@ const Audit = props => {
                 </label>
               </div>
               <div className="col-auto">
-                <Form.Label className="col-form-label tbd text-nowrap">Step 4</Form.Label>
+                <Form.Label className="col-form-label tbd text-nowrap">
+                  Step <span className="round-step-circle light-blue">4</span>
+                </Form.Label>
                 <label className="custom-checkbox">
                   <input
                     id="checkBoxStep_4"
@@ -510,7 +537,9 @@ const Audit = props => {
                 </label>
               </div>
               <div className="col-auto">
-                <Form.Label className="col-form-label tbd text-nowrap">Step 5</Form.Label>
+                <Form.Label className="col-form-label tbd text-nowrap">
+                  Step <span className="round-step-circle light-blue">5</span>
+                </Form.Label>
                 <label className="custom-checkbox">
                   <input
                     id="checkBoxStep_5"
@@ -523,7 +552,9 @@ const Audit = props => {
                 </label>
               </div>
               <div className="col-auto">
-                <Form.Label className="col-form-label tbd text-nowrap">Step 6</Form.Label>
+                <Form.Label className="col-form-label tbd text-nowrap">
+                  Step <span className="round-step-circle light-blue">6</span>
+                </Form.Label>
                 <label className="custom-checkbox">
                   <input
                     id="checkBoxStep_6"
@@ -536,7 +567,9 @@ const Audit = props => {
                 </label>
               </div>
               <div className="col-auto">
-                <Form.Label className="col-form-label tbd text-nowrap">Step 7</Form.Label>
+                <Form.Label className="col-form-label tbd text-nowrap">
+                  Step <span className="round-step-circle light-blue">7</span>
+                </Form.Label>
                 <label className="custom-checkbox">
                   <input
                     id="checkBoxStep_7"
@@ -563,6 +596,9 @@ const Audit = props => {
             />
           </div>
         </div>
+      </Modal.Header>
+      <Modal.Body ref={exportRef}>
+        <LoadingImg show={props.loading} />
         <div className="row">
           {_.map(auditData, item => {
             return (
@@ -633,7 +669,7 @@ const Audit = props => {
                       {moment(item.CreatedDateTime).format('hh:mm a')}.{item.UserName} saved Step 6
                       for {item.Project.projectTitle} with the following values:{' '}
                     </div>
-                    {renderStep6BlockingPolicyTable(item.BlockingPolicySets)}
+                    {renderStep6BlockingPolicyTable(item.BlockingPolicySets, t)}
                   </div>
                 )}
                 {item.StepId === 7 && (

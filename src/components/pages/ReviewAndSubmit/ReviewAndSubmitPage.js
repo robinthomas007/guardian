@@ -9,12 +9,11 @@ import SubmitProjectModal from '../../modals/SubmitProjectModal';
 import ShareModal from '../../modals/shareModal';
 import IncompleteProjectModal from '../../modals/IncompleteProjectModal';
 import { formatDateToYYYYMMDD, convertToLocaleTime, isPreReleaseDate } from '../../Utils';
-import { showNotyInfo } from 'components/Utils';
+import { showNotyInfo, showNotyAutoError } from 'components/Utils';
 import moment from 'moment';
 import { withTranslation } from 'react-i18next';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-// import * as reviewActions from '../../../actions/reviewActions';
 
 class ReviewAndSubmitPage extends Component {
   constructor(props) {
@@ -108,7 +107,7 @@ class ReviewAndSubmitPage extends Component {
       .then(responseJSON => {
         this.setState({ showloader: false });
         if (responseJSON.message) {
-          showNotyInfo(responseJSON.message);
+          showNotyAutoError(responseJSON.message);
         }
         showNotyInfo(this.props.t('review:NotyInfo'), () => {
           return this.props.history.push({ pathname: '/findProject/' });

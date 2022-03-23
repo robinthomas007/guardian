@@ -10,6 +10,7 @@ export const initialState = {
 export default createReducer(initialState, {
   [AUDIT_REQUEST]: (state, action) => {
     state.loading = action.loading;
+    state.audit = [];
   },
   [AUDIT_SUCCESS]: (state, action) => {
     state.audit = action.audit;

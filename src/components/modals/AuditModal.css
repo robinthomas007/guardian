@@ -1,5 +1,5 @@
 div#AuditModal {
-  max-width: 90% !important;
+  max-width: 94% !important;
 }
 
 .display-filter {
@@ -10,6 +10,7 @@ div#AuditModal {
 .table-sub-head {
   background: #d9f3fe;
   padding: 12px;
+  font-weight: bold;
 }
 
 .round-step-circle {
@@ -43,7 +44,9 @@ td.completed-icon i.material-icons.success {
 }
 
 .filter-head {
-  padding-bottom: 15px;
+  padding: 15px 0px;
+  display: flex;
+  flex-grow: 1;
 }
 
 .td-bottom-line-div {
@@ -74,4 +77,28 @@ td.completed-icon i.material-icons.success {
   align-items: center;
   justify-content: center;
   vertical-align: top !important;
+}
+
+.display-filter .col-auto {
+  padding-right: 0px;
+  padding-left: 0px;
+}
+
+.display-filter .col-auto label.col-form-label.tbd.text-nowrap.form-label {
+  margin: auto 15px;
+}
+
+.light-blue {
+  background: #d9f3fe;
+}
+
+div#AuditModal .modal-body {
+  max-height: 640px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+div#AuditModal .modal-body::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }
