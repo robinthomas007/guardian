@@ -619,7 +619,7 @@ const Audit = props => {
                 )}
                 {item.StepId === 2 && renderStep2Table(item.Project)}
 
-                {item.StepId === 3 && (
+                {item.StepId === 3 && item.ActionType === 'Upload' && (
                   <div>
                     <div className="table-sub-head">
                       step <span className="round-step-circle">3</span>
@@ -630,7 +630,7 @@ const Audit = props => {
                     {renderStep3UploadTable(item.AudioFiles)}
                   </div>
                 )}
-                {item.StepId === 3 && (
+                {item.StepId === 3 && item.ActionType === 'Save' && (
                   <div>
                     <div className="table-sub-head">
                       step <span className="round-step-circle">3</span>
