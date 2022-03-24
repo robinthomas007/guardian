@@ -288,18 +288,20 @@ const renderStep6BlockingPolicyTable = (blockingPolicies, t) => {
       return (
         <div className="platform-wrapper">
           <span>
-            {!platform.duration && !platform.expirationDate
-              ? !platform.expirationDate
-                ? t('review:BlockAll')
-                : t('review:BlockAllUntil') + ' ' + platform.expirationDate
-              : t('review:Block') +
-                ' ' +
-                (platform.expirationDate
-                  ? ' ' +
-                    t('review:Until') +
-                    ' ' +
-                    moment(platform.expirationDate).format('DD-MM-YYYY')
-                  : ' ' + t('Always') + ' ')}
+            {platform.block
+              ? !platform.duration && !platform.expirationDate
+                ? !platform.expirationDate
+                  ? t('review:BlockAll')
+                  : t('review:BlockAllUntil') + ' ' + platform.expirationDate
+                : t('review:Block') +
+                  ' ' +
+                  (platform.expirationDate
+                    ? ' ' +
+                      t('review:Until') +
+                      ' ' +
+                      moment(platform.expirationDate).format('DD-MM-YYYY')
+                    : ' ' + t('Always') + ' ')
+              : t('review:MonetizeAll')}
           </span>
         </div>
       );
@@ -608,7 +610,7 @@ const Audit = props => {
                     <div className="table-sub-head">
                       step <span className="round-step-circle">1</span>/{' '}
                       <span className="round-step-circle">2</span>
-                      On {moment(item.CreatedDateTime).format('DD-MM-YYYY')} at{' '}
+                      On {moment(item.CreatedDateTime).format('DD/MM/YYYY')} at{' '}
                       {moment(item.CreatedDateTime).format('hh:mm a')}.{item.UserName} created a new
                       project, {item.Project.projectTitle} with the following values:{' '}
                     </div>
@@ -621,7 +623,7 @@ const Audit = props => {
                   <div>
                     <div className="table-sub-head">
                       step <span className="round-step-circle">3</span>
-                      On {moment(item.CreatedDateTime).format('DD-MM-YYYY')} at{' '}
+                      On {moment(item.CreatedDateTime).format('DD/MM/YYYY')} at{' '}
                       {moment(item.CreatedDateTime).format('hh:mm a')}.{item.UserName} uploaded the
                       following files:{' '}
                     </div>
@@ -632,7 +634,7 @@ const Audit = props => {
                   <div>
                     <div className="table-sub-head">
                       step <span className="round-step-circle">3</span>
-                      On {moment(item.CreatedDateTime).format('DD-MM-YYYY')} at{' '}
+                      On {moment(item.CreatedDateTime).format('DD/MM/YYYY')} at{' '}
                       {moment(item.CreatedDateTime).format('hh:mm a')}.{item.UserName} saved Step 3
                       for {item.Project.projectTitle} with the following values:{' '}
                     </div>
@@ -643,7 +645,7 @@ const Audit = props => {
                   <div>
                     <div className="table-sub-head">
                       step <span className="round-step-circle">4</span>
-                      On {moment(item.CreatedDateTime).format('DD-MM-YYYY')} at{' '}
+                      On {moment(item.CreatedDateTime).format('DD/MM/YYYY')} at{' '}
                       {moment(item.CreatedDateTime).format('hh:mm a')}.{item.UserName} saved Step 4
                       for {item.Project.projectTitle} with the following values:{' '}
                     </div>
@@ -654,7 +656,7 @@ const Audit = props => {
                   <div>
                     <div className="table-sub-head">
                       step <span className="round-step-circle">5</span>
-                      On {moment(item.CreatedDateTime).format('DD-MM-YYYY')} at{' '}
+                      On {moment(item.CreatedDateTime).format('DD/MM/YYYY')} at{' '}
                       {moment(item.CreatedDateTime).format('hh:mm a')}.{item.UserName} saved Step 5
                       for {item.Project.projectTitle} with the following values:{' '}
                     </div>
@@ -665,7 +667,7 @@ const Audit = props => {
                   <div>
                     <div className="table-sub-head">
                       step <span className="round-step-circle">6</span>
-                      On {moment(item.CreatedDateTime).format('DD-MM-YYYY')} at{' '}
+                      On {moment(item.CreatedDateTime).format('DD/MM/YYYY')} at{' '}
                       {moment(item.CreatedDateTime).format('hh:mm a')}.{item.UserName} saved Step 6
                       for {item.Project.projectTitle} with the following values:{' '}
                     </div>
@@ -676,7 +678,7 @@ const Audit = props => {
                   <div>
                     <div className="table-sub-head">
                       step <span className="round-step-circle">7</span>
-                      On {moment(item.CreatedDateTime).format('DD-MM-YYYY')} at{' '}
+                      On {moment(item.CreatedDateTime).format('DD/MM/YYYY')} at{' '}
                       {moment(item.CreatedDateTime).format('hh:mm a')}.{item.UserName} submitted{' '}
                       {item.Project.projectTitle}
                     </div>
