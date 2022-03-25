@@ -106,13 +106,15 @@ class ReviewAndSubmitPage extends Component {
       })
       .then(responseJSON => {
         this.setState({ showloader: false });
-        if (responseJSON.message) {
-          showNotyAutoError(responseJSON.message);
+        if (responseJSON.IsIsrcSuperConfidential) {
+          showNotyAutoError(this.props.t('review:SuperConfidential'));
         }
-        showNotyInfo(this.props.t('review:NotyInfo'), () => {
-          return this.props.history.push({ pathname: '/findProject/' });
-        });
-        localStorage.setItem('prevStep', 7);
+        setTimeout(() => {
+          showNotyInfo(this.props.t('review:NotyInfo'), () => {
+            return this.props.history.push({ pathname: '/findProject/' });
+          });
+          localStorage.setItem('prevStep', 7);
+        }, 2000);
       })
       .catch(error => {
         console.error(error);

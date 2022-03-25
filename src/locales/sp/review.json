@@ -49,5 +49,6 @@
   "BlockAllUntil": "Bloquear todo hasta",
   "Until": "Hasta",
   "Always": "Siempre",
-  "publish": "Publicar"
+  "publish": "Publicar",
+  "SuperConfidential": "Hemos detectado que parte del contenido que envías está registrado como súper confidencial. Como resultado, configuraremos el proyecto como privado y enmascararemos todo el contenido enviado."
 }
