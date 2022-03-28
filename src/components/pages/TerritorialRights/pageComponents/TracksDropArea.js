@@ -46,7 +46,11 @@ class TracksDropArea extends Component {
     const { dragSource } = this.props;
     let isValid = false;
     // if user drag mistakenly same item again and again this code will restrict droping it
-    if (!e.target.classList.contains('draggable-track')) {
+    console.log(e.target.classList, 'e.target.classList');
+    if (
+      !e.target.classList.contains('draggable-track') &&
+      !e.target.classList.contains('track-draggable-area')
+    ) {
       return false;
     }
 

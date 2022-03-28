@@ -13,7 +13,10 @@ class TracksWithoutRights extends Component {
   }
 
   handleDrop = e => {
-    if (e.target.classList.contains('draggable-track')) {
+    if (
+      e.target.classList.contains('draggable-track') ||
+      e.target.classList.contains('track-draggable-area')
+    ) {
       this.props.handleDropAdd(e);
     }
   };
