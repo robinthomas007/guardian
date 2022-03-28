@@ -45,6 +45,11 @@ class TracksDropArea extends Component {
   handleDrop(e, setIndex) {
     const { dragSource } = this.props;
     let isValid = false;
+    // if user drag mistakenly same item again and again this code will restrict droping it
+    if (!e.target.classList.contains('draggable-track')) {
+      return false;
+    }
+
     for (let i = 0; i < dragSource.length; i++) {
       if (
         !dragSource[i].classList.contains('rightsSetTracks') ||
@@ -53,7 +58,9 @@ class TracksDropArea extends Component {
         isValid = true;
       }
     }
-    if (isValid) this.props.handleDrop(e, setIndex);
+    if (isValid) {
+      this.props.handleDrop(e, setIndex);
+    }
   }
 
   toggleChange = e => {
