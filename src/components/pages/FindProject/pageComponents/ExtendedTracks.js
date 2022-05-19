@@ -54,7 +54,7 @@ const Discs = ({ discs }) => {
   );
 };
 
-export default ({ projectID, discs, handleClose }) => {
+export default ({ discs }) => {
   const renderTracks = () => {
     if (discs.length > 1) {
       return <Discs discs={discs} />;
@@ -66,9 +66,6 @@ export default ({ projectID, discs, handleClose }) => {
   return (
     <tr className="wrapper-tr">
       <td colSpan={13} className="wrapper-td">
-        <span class="material-icons close" onClick={() => handleClose(projectID)}>
-          close
-        </span>
         <div className="ext-tracks-wrapper">{renderTracks()}</div>
       </td>
     </tr>

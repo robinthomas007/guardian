@@ -30,15 +30,10 @@ class FindProjectDataTable extends Component {
     const { expandedProjectIds } = this.state;
     if (!expandedProjectIds.includes(projectID)) {
       this.setState({ expandedProjectIds: [...expandedProjectIds, projectID] });
-    }
-  };
-
-  shrinkTracks = projectID => {
-    let { expandedProjectIds } = this.state;
-    const index = expandedProjectIds.indexOf(projectID);
-    if (index > -1) {
-      expandedProjectIds.splice(index, 1);
-      this.setState({ expandedProjectIds });
+    } else {
+      this.setState({
+        expandedProjectIds: expandedProjectIds.filter(id => id !== projectID),
+      });
     }
   };
 
@@ -384,11 +379,7 @@ class FindProjectDataTable extends Component {
               </td>
             </tr>
             {this.state.expandedProjectIds.includes(project.projectID) ? (
-              <ExtendedTracks
-                projectID={project.projectID}
-                handleClose={this.shrinkTracks}
-                discs={project.Discs}
-              />
+              <ExtendedTracks discs={project.Discs} />
             ) : null}
           </React.Fragment>
         );
