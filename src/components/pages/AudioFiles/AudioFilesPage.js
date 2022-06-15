@@ -163,6 +163,7 @@ class AudioFilesPage extends Component {
     const validFiles = {
       wav: 1,
       mp3: 1,
+      flac: 1,
     };
 
     const fileNameParts = fileName.toLowerCase().split('.');
@@ -699,7 +700,7 @@ class AudioFilesPage extends Component {
                   id="audioFiles"
                   multiple={true}
                   onChange={this.updateFiles}
-                  accept=".wav, .mp3"
+                  accept=".wav, .mp3, .flac"
                 />
               </div>
             </div>

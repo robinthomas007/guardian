@@ -86,7 +86,7 @@ class inputDateField extends Component {
             onBlur={input.onBlur}
             showYearDropdown
             isClearable={input.value && !disabled}
-            selected={selected}
+            selected={selected ? new Date(selected) : null}
             {...options}
           />
           {touched && error && <p className="error_message">{error}</p>}

@@ -10,6 +10,7 @@ import ShareModal from '../../modals/shareModal';
 import IncompleteProjectModal from '../../modals/IncompleteProjectModal';
 import { formatDateToYYYYMMDD, convertToLocaleTime, isPreReleaseDate } from '../../Utils';
 import { showNotyInfo, showNotyAutoError } from 'components/Utils';
+import * as reviewActions from '../../../actions/reviewActions';
 import moment from 'moment';
 import { withTranslation } from 'react-i18next';
 import { compose } from 'redux';
@@ -231,6 +232,7 @@ class ReviewAndSubmitPage extends Component {
             <div className="row no-gutters">
               <div className="col-2">
                 <img
+                  alt="img"
                   className="album-art"
                   src={
                     this.props.data && this.props.data.Project
@@ -442,6 +444,16 @@ class ReviewAndSubmitPage extends Component {
                 {t('review:SubmitProject')}
               </button>
             ) : null}
+            {parseInt(this.props.data.Project.projectStatusID) !== 1 && this.props.user.IsAdmin ? (
+              <button
+                type="button"
+                className="btn btn-primary float-right"
+                style={{ marginLeft: '10px' }}
+                onClick={this.handlePublish}
+              >
+                {t('review:publish')}
+              </button>
+            ) : null}
           </div>
         </div>
       </div>
@@ -454,7 +466,7 @@ class ReviewAndSubmitPage extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  // handlePublish: val => dispatch(reviewActions.handlePublish(val)),
+  handlePublish: val => dispatch(reviewActions.handlePublish(val)),
 });
 
 const mapStateToProps = state => ({});

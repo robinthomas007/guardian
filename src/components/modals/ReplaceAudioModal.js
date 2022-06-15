@@ -50,7 +50,7 @@ class ReplaceAudioModal extends Component {
                   id="audioFiles"
                   multiple={false}
                   onChange={this.handleChange}
-                  accept=".wav, .mp3"
+                  accept=".wav, .mp3, .flac"
                 />
               </div>
             </li>
