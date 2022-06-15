@@ -21,9 +21,9 @@ class AdminStatusDropdown extends Component {
     if (this.props.options) {
       const inputOptions = this.props.options.map((option, i) => {
         // this is working condition need to change when static code changes-> below
-        // let disabled = project.statusID !== '2' && option.id === '5' ? true : false;
+        let disabled = project.statusID !== '2' && option.id === '5' ? true : false;
         // changing manually for demo
-        let disabled = parseInt(option.id) >= 5;
+        // let disabled = parseInt(option.id) >= 5;
         return (
           <a
             href

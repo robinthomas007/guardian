@@ -10,7 +10,7 @@ import ShareModal from '../../modals/shareModal';
 import IncompleteProjectModal from '../../modals/IncompleteProjectModal';
 import { formatDateToYYYYMMDD, convertToLocaleTime, isPreReleaseDate } from '../../Utils';
 import { showNotyInfo, showNotyAutoError } from 'components/Utils';
-import * as reviewActions from '../../../actions/reviewActions';
+// import * as reviewActions from '../../../actions/reviewActions';
 import moment from 'moment';
 import { withTranslation } from 'react-i18next';
 import { compose } from 'redux';
@@ -123,9 +123,9 @@ class ReviewAndSubmitPage extends Component {
       });
   };
 
-  handlePublish = () => {
-    this.props.handlePublish({ ProjectID: this.props.data.Project.projectID });
-  };
+  // handlePublish = () => {
+  //   this.props.handlePublish({ ProjectID: this.props.data.Project.projectID });
+  // };
 
   getStepNumber() {
     let stepNumber = 7;
@@ -444,7 +444,7 @@ class ReviewAndSubmitPage extends Component {
                 {t('review:SubmitProject')}
               </button>
             ) : null}
-            {parseInt(this.props.data.Project.projectStatusID) !== 1 && this.props.user.IsAdmin ? (
+            {/*parseInt(this.props.data.Project.projectStatusID) !== 1 && this.props.user.IsAdmin ? (
               <button
                 type="button"
                 className="btn btn-primary float-right"
@@ -453,7 +453,7 @@ class ReviewAndSubmitPage extends Component {
               >
                 {t('review:publish')}
               </button>
-            ) : null}
+            ) : null*/}
           </div>
         </div>
       </div>
@@ -466,7 +466,7 @@ class ReviewAndSubmitPage extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  handlePublish: val => dispatch(reviewActions.handlePublish(val)),
+  // handlePublish: val => dispatch(reviewActions.handlePublish(val)),
 });
 
 const mapStateToProps = state => ({});
