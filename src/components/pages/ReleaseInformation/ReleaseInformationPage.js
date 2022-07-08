@@ -615,7 +615,7 @@ class ReleaseinformationPage extends Component {
                     {t('releaseInfo:orDrag')} &amp; {t('releaseInfo:Drop')}
                     <br />
                     <br />
-                    Max size: 4mb
+                    Max size: 3mb
                     <br />
                     (JPG, JPEG, PNG)
                   </span>
