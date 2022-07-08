@@ -377,8 +377,8 @@ const Audit = props => {
 
   useEffect(() => {
     if (project.projectID) {
-      const backdrop = document.querySelector('.modal-backdrop');
-      backdrop.style.background = 'transparent';
+      // const backdrop = document.querySelector('.modal-backdrop');
+      // backdrop.style.background = 'transparent';
       const user = JSON.parse(sessionStorage.getItem('user'));
       props.getAuditData({
         User: {
@@ -395,13 +395,13 @@ const Audit = props => {
     }
   }, [audit]);
 
-  useEffect(
-    () => () => {
-      const backdrop = document.querySelector('.modal-backdrop');
-      backdrop.style.background = '#000000';
-    },
-    [],
-  );
+  // useEffect(
+  //   () => () => {
+  //     const backdrop = document.querySelector('.modal-backdrop');
+  //     backdrop.style.background = '#000000';
+  //   },
+  //   [],
+  // );
 
   const handleChangeStepFilter = e => {
     setFilter({
@@ -462,8 +462,8 @@ const Audit = props => {
     <Modal
       dialogClassName="new clas"
       fullscreen={true}
+      scrollable={true}
       className="test"
-      backdrop="false"
       id="AuditModal"
       show={show}
       onHide={onHide}
@@ -599,7 +599,7 @@ const Audit = props => {
           </div>
         </div>
       </Modal.Header>
-      <Modal.Body ref={exportRef}>
+      <Modal.Body ref={exportRef} className="custom-scroll">
         <LoadingImg show={props.loading} />
         <div className="row">
           {_.map(auditData, item => {
