@@ -613,6 +613,11 @@ class ReleaseinformationPage extends Component {
                     {t('releaseInfo:ClickToBrowse')}
                     <br />
                     {t('releaseInfo:orDrag')} &amp; {t('releaseInfo:Drop')}
+                    <br />
+                    <br />
+                    Max size: 4mb
+                    <br />
+                    (JPG, JPEG, PNG)
                   </span>
                   <input id="projectCoverArt" type="file" onChange={this.albumArt} />
                   <div className="browse-btn">
