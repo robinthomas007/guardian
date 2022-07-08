@@ -330,7 +330,11 @@ class FindProjectDataTable extends Component {
                   disabled={!isExtendable}
                 >
                   {tracksCount}
-                  <i className={`material-icons`}>arrow_drop_down</i>
+                  <i className="material-icons">
+                    {this.state.expandedProjectIds.includes(project.projectID)
+                      ? 'arrow_drop_up'
+                      : 'arrow_drop_down'}
+                  </i>
                 </button>
               </td>
               <td
