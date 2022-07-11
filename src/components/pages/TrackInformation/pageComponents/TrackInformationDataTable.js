@@ -177,9 +177,7 @@ class TrackInformationDataTable extends Component {
   }
 
   isValidIsrc(isrc) {
-    return isrc.replace(/\W/g, '').length === 12 || isrc.replace(/\W/g, '').length === 0
-      ? true
-      : false;
+    return isrc.length === 0 || isrc.match(/^[a-z0-9]{12}$/i) ? true : false;
   }
 
   setFieldValidation(input, status) {
