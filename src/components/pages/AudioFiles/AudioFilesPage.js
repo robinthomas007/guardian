@@ -216,7 +216,7 @@ class AudioFilesPage extends Component {
         newFiles.splice(i, 1);
       }
     }
-    this.handleFileUpload(newFiles);
+    this.handleFileUpload(newFiles, null, true);
   }
 
   deleteRow(rowIndex) {
@@ -251,8 +251,20 @@ class AudioFilesPage extends Component {
     }
   }
 
-  handleFileUpload(files, trackID) {
+  removeTrack = fileName => {
+    const { discs, activeTab } = this.state;
+    const newTracks = discs[activeTab].Tracks.filter(
+      track => !(track.fileName === fileName && track.trackID === ''),
+    );
+    let modifiedDiscs = [...discs];
+    modifiedDiscs[activeTab].Tracks = newTracks;
+    this.setState({ discs: modifiedDiscs });
+    this.props.saveDiscs(modifiedDiscs);
+  };
+
+  handleFileUpload(files, trackID, handleFailure) {
     const { onUploadStart, onUploadProgress, onUploadComplete } = this.props;
+    const removeTrack = this.removeTrack;
     const projectID = this.state.projectID ? this.state.projectID : '';
     files.map(file => {
       const uniqFileName = `${file.name}-${new Date().getTime()}/${trackID ? trackID : ''}`;
@@ -276,6 +288,9 @@ class AudioFilesPage extends Component {
         onUploadComplete(uniqFileName);
         if (request.status >= 300) {
           showNotyError(this.props.t('audio:UploadingFailed'), 3);
+          if (handleFailure) {
+            removeTrack(file.name);
+          }
         }
       });
 
