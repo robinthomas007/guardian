@@ -257,7 +257,7 @@ class AudioFilesPage extends Component {
     if (trackID) {
       const newTracks = discs[activeTab].Tracks.map(track => {
         if (track.trackID === trackID) {
-          return { ...track, fileName: '', fileUpload: false };
+          return { ...track, fileName: '', fileUpload: false, hasUpload: false };
         } else {
           return track;
         }

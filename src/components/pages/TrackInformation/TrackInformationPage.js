@@ -488,6 +488,20 @@ class TrackInformationPage extends Component {
     this.setState({ Discs: modifiedDDiscs });
   };
 
+  removeFile = trackToRemove => {
+    const { project, activeDiscTab } = this.state;
+    let modifiedDiscs = [...project.Discs];
+    const newTracks = modifiedDiscs[activeDiscTab - 1].Tracks.map(track => {
+      if (track.trackID === trackToRemove.trackID) {
+        return { ...track, fileName: '', fileUpload: false, hasUpload: false };
+      } else {
+        return track;
+      }
+    });
+    modifiedDiscs[activeDiscTab - 1].Tracks = newTracks;
+    this.setState({ project: { ...project, Discs: modifiedDiscs }, Discs: modifiedDiscs });
+  };
+
   handleFileUpload(files, track) {
     const { onUploadStart, onUploadProgress, onUploadComplete } = this.props;
     const user = JSON.parse(sessionStorage.getItem('user'));
@@ -519,6 +533,7 @@ class TrackInformationPage extends Component {
         onUploadComplete(uniqFileName);
         if (request.status >= 300) {
           showNotyError(this.props.t('track:uploadingAudioFailed'), 4);
+          this.removeFile(track);
         }
       });
       request.send(formData);
