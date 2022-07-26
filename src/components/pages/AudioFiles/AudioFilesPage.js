@@ -253,7 +253,7 @@ class AudioFilesPage extends Component {
 
   removeTrack = (fileName, trackID) => {
     const { discs, activeTab } = this.state;
-    let modifiedDiscs = [...discs];
+    let modifiedDiscs = discs;
     if (trackID) {
       const newTracks = discs[activeTab].Tracks.map(track => {
         if (track.trackID === trackID) {
@@ -270,7 +270,7 @@ class AudioFilesPage extends Component {
       modifiedDiscs[activeTab].Tracks = newTracks;
     }
     this.setState({ discs: modifiedDiscs });
-    this.props.saveDiscs(modifiedDiscs);
+    this.props.saveDiscs(_.cloneDeep(modifiedDiscs));
   };
 
   handleFileUpload(files, trackID) {
