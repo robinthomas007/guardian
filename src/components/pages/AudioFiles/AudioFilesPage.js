@@ -216,7 +216,7 @@ class AudioFilesPage extends Component {
         newFiles.splice(i, 1);
       }
     }
-    this.handleFileUpload(newFiles, null, true);
+    this.handleFileUpload(newFiles);
   }
 
   deleteRow(rowIndex) {
@@ -251,18 +251,29 @@ class AudioFilesPage extends Component {
     }
   }
 
-  removeTrack = fileName => {
+  removeTrack = (fileName, trackID) => {
     const { discs, activeTab } = this.state;
-    const newTracks = discs[activeTab].Tracks.filter(
-      track => !(track.fileName === fileName && track.trackID === ''),
-    );
     let modifiedDiscs = [...discs];
-    modifiedDiscs[activeTab].Tracks = newTracks;
+    if (trackID) {
+      const newTracks = discs[activeTab].Tracks.map(track => {
+        if (track.trackID === trackID) {
+          return { ...track, fileName: '', fileUpload: false };
+        } else {
+          return track;
+        }
+      });
+      modifiedDiscs[activeTab].Tracks = newTracks;
+    } else {
+      const newTracks = discs[activeTab].Tracks.filter(
+        track => !(track.fileName === fileName && track.trackID === ''),
+      );
+      modifiedDiscs[activeTab].Tracks = newTracks;
+    }
     this.setState({ discs: modifiedDiscs });
     this.props.saveDiscs(modifiedDiscs);
   };
 
-  handleFileUpload(files, trackID, handleFailure) {
+  handleFileUpload(files, trackID) {
     const { onUploadStart, onUploadProgress, onUploadComplete } = this.props;
     const removeTrack = this.removeTrack;
     const projectID = this.state.projectID ? this.state.projectID : '';
@@ -288,9 +299,7 @@ class AudioFilesPage extends Component {
         onUploadComplete(uniqFileName);
         if (request.status >= 300) {
           showNotyError(this.props.t('audio:UploadingFailed'), 3);
-          if (handleFailure) {
-            removeTrack(file.name);
-          }
+          removeTrack(file.name, trackID);
         }
       });
 
@@ -314,14 +323,10 @@ class AudioFilesPage extends Component {
 
   setTrackSequence() {
     const { discs } = this.state;
-    const sortedDiscs = discs;
-
-    sortedDiscs.map(disc => {
-      var tracks = disc.Tracks;
-
-      tracks.map((track, i) => {
-        track.trackNumber = i + 1;
-      });
+    const sortedDiscs = discs.map(disc => {
+      let newTracks = disc.Tracks.map((track, i) => ({ ...track, trackNumber: i + 1 }));
+      console.log('newTracks', newTracks);
+      return { ...disc, Tracks: newTracks };
     });
     this.setState({ discs: sortedDiscs });
   }
