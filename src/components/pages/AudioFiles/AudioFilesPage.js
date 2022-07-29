@@ -270,7 +270,7 @@ class AudioFilesPage extends Component {
       modifiedDiscs[activeTab].Tracks = newTracks;
     }
     this.setState({ discs: modifiedDiscs });
-    this.props.saveDiscs(_.cloneDeep(modifiedDiscs));
+    // this.props.saveDiscs(_.cloneDeep(modifiedDiscs));
   };
 
   handleFileUpload(files, trackID) {
