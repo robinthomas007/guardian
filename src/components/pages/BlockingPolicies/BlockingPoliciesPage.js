@@ -396,9 +396,8 @@ function BlockingPoliciesPage(props) {
                                   />
                                 </div>
                                 <div
-                                  className={`${
-                                    platform.block ? 'blk-af-rel' : 'light-gray-bg blk-af-rel'
-                                  }`}
+                                  className={`${platform.block ? 'blk-af-rel' : 'light-gray-bg blk-af-rel'
+                                    }`}
                                 >
                                   <Form.Control
                                     type="radio"
@@ -411,9 +410,8 @@ function BlockingPoliciesPage(props) {
                                 </div>
 
                                 <div
-                                  className={`${
-                                    platform.block ? 'duration' : 'light-gray-bg duration'
-                                  }`}
+                                  className={`${platform.block ? 'duration' : 'light-gray-bg duration'
+                                    }`}
                                 >
                                   {platform.block && (
                                     <Form.Control
@@ -435,9 +433,8 @@ function BlockingPoliciesPage(props) {
                                   )}
                                 </div>
                                 <div
-                                  className={`${
-                                    platform.block ? 'untill' : 'light-gray-bg untill'
-                                  }`}
+                                  className={`${platform.block ? 'untill' : 'light-gray-bg untill'
+                                    }`}
                                 >
                                   {platform.block && (
                                     <DatePicker
@@ -456,7 +453,7 @@ function BlockingPoliciesPage(props) {
                                       }
                                       selected={
                                         platform.expirationDate != null &&
-                                        platform.expirationDate != ''
+                                          platform.expirationDate != ''
                                           ? new Date(platform.expirationDate)
                                           : null
                                       }
