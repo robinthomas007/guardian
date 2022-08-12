@@ -1,182 +1,31 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import BlockingPoliciesModal from '../../modals/BlockingPoliciesModal';
-import PageHeader from '../PageHeader/PageHeader';
-import './BlockingPolicies.css';
-import TracksWithoutRights from '../TerritorialRights/pageComponents/TracksWithoutRights';
-import BlockingPolicySets from '../BlockingPolicies/pageComponents/blockingPolicySets';
 import LoadingImg from 'component_library/LoadingImg';
 import { withRouter } from 'react-router-dom';
-import { formatDateToYYYYMMDD, convertToLocaleTime, resetDatePickerByObj } from '../../Utils';
-import { showNotyInfo, showNotyAutoError } from 'components/Utils';
-import _ from 'lodash';
 import { withTranslation } from 'react-i18next';
+import youtube from '../../../images/YouTube.png';
+import soundcloud from '../../../images/Soundcloud.png';
+import facebook from '../../../images/facebook.png';
+import instagram from '../../../images/instagram.png';
+import tiktok from '../../../images/tiktok.png';
+import { Table, Grid, Button, Form } from 'react-bootstrap';
+import DatePicker from 'react-datepicker';
+import _ from 'lodash';
+import './BlockingPolicies.css';
 
-class BlockingPoliciesPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      project: {
-        BlockingPolicySets: [],
-        UnassignedBlockingPolicySetTracks: [],
-      },
-      dragSource: [],
-      showLoader: false,
-    };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleChildDrag = this.handleChildDrag.bind(this);
-    this.handleDateChange = this.handleDateChange.bind(this);
-  }
+function BlockingPoliciesPage(props) {
+  const { t } = props;
+  const [blockingPolicies, setBlockingPolicies] = useState([]);
 
-  handleChange = e => {
-    const setIndex = e.target.getAttribute('setIndex');
-    const siteIndex = e.target.getAttribute('siteIndex');
-
-    const { BlockingPolicySets } = this.state.project;
-    let modifiedBlockingPolicySets = BlockingPolicySets;
-    modifiedBlockingPolicySets[setIndex].platformPolicies[siteIndex][e.target.id] = e.target.value;
-    this.setState({ BlockingPolicySets: modifiedBlockingPolicySets });
-  };
-
-  handleDateChange = (date, id, setIndex, siteIndex) => {
-    const { BlockingPolicySets } = this.state.project;
-    let modifiedBlockingPolicySets = BlockingPolicySets;
-    modifiedBlockingPolicySets[setIndex].platformPolicies[siteIndex][id] = date;
-    this.setState({ BlockingPolicySets: modifiedBlockingPolicySets });
-  };
-
-  handleExpirationDisable = (setIndex, siteIndex) => {
-    const { BlockingPolicySets } = this.state.project;
-    let modifiedBlockingPolicySets = BlockingPolicySets;
-    modifiedBlockingPolicySets[setIndex].platformPolicies[siteIndex].disabled = true;
-    this.setState({ BlockingPolicySets: modifiedBlockingPolicySets });
-  };
-
-  handleMonetizeBlock = e => {
-    const setIndex = e.target.getAttribute('setIndex');
-    const siteIndex = e.target.getAttribute('siteIndex');
-    const eTargetValue = e.target.value === 'true' ? true : false;
-    const { BlockingPolicySets } = this.state.project;
-    let modifiedBlockingPolicySets = BlockingPolicySets;
-    modifiedBlockingPolicySets[setIndex].platformPolicies[siteIndex].block = eTargetValue;
-
-    const expirationDateInputs = document.getElementsByClassName('blockingPolicyDateInput');
-
-    for (var i = 0; i < expirationDateInputs.length; i++) {
-      if (
-        expirationDateInputs[i].getAttribute('setIndex') === setIndex &&
-        expirationDateInputs[i].getAttribute('siteIndex') === siteIndex
-      ) {
-        resetDatePickerByObj(expirationDateInputs[i]);
-      }
-    }
-
-    if (!eTargetValue) {
-      modifiedBlockingPolicySets[setIndex].platformPolicies[siteIndex].disabled = false;
-      modifiedBlockingPolicySets[setIndex].platformPolicies[siteIndex].expirationDate = '';
-      modifiedBlockingPolicySets[setIndex].platformPolicies[siteIndex].duration = '';
-      this.setState({ BlockingPolicySets: modifiedBlockingPolicySets }, () => {
-        this.handleExpirationDisable(setIndex, siteIndex);
-      });
-    } else {
-      modifiedBlockingPolicySets[setIndex].platformPolicies[siteIndex].disabled = false;
-      this.setState({ BlockingPolicySets: modifiedBlockingPolicySets });
-    }
-  };
-
-  setDefaultMonetizeForPostRelease = (releaseDate = null) => {
-    if (releaseDate && typeof releaseDate === 'string')
-      return (
-        formatDateToYYYYMMDD(convertToLocaleTime(this.props.serverTimeDate)) >
-        formatDateToYYYYMMDD(releaseDate)
-      );
-    else return false;
-  };
-
-  setDefaultBlockedUntil = (releaseDate = null) => {
-    if (releaseDate && typeof releaseDate === 'string') {
-      if (
-        formatDateToYYYYMMDD(convertToLocaleTime(this.props.serverTimeDate)) >
-        formatDateToYYYYMMDD(releaseDate)
-      ) {
-        return '';
-      } else {
-        return formatDateToYYYYMMDD(releaseDate);
-      }
-    }
-    return '';
-  };
-
-  getPlatforms = (releaseDate = null) => {
-    return [
-      {
-        platformName: 'YouTube',
-        // block : (this.setDefaultMonetizeForPostRelease(releaseDate)) ? false : true,
-        block: false,
-        duration: '',
-        // expirationDate : this.setDefaultBlockedUntil(releaseDate)
-        expirationDate: '',
-      },
-      {
-        platformName: 'SoundCloud',
-        // block : (this.setDefaultMonetizeForPostRelease(releaseDate)) ? false : true,
-        block: false,
-        duration: '',
-        // expirationDate : this.setDefaultBlockedUntil(releaseDate)
-        expirationDate: '',
-      },
-      {
-        platformName: 'Facebook',
-        // block : (this.setDefaultMonetizeForPostRelease(releaseDate)) ? false : true,
-        block: false,
-        duration: '',
-        // expirationDate : this.setDefaultBlockedUntil(releaseDate)
-        expirationDate: '',
-      },
-      {
-        platformName: 'Instagram',
-        // block : (this.setDefaultMonetizeForPostRelease(releaseDate)) ? false : true,
-        block: false,
-        duration: '',
-        // expirationDate : this.setDefaultBlockedUntil(releaseDate)
-        expirationDate: '',
-      },
-    ];
-  };
-
-  getBlockingSet = (set, i, releaseDate = null) => {
-    return {
-      blockingPolicySetID: set.blockingPolicySetID ? set.blockingPolicySetID : '',
-      sequence: set.sequence ? set.sequence : i,
-      description: this.props.t('blocking:Set') + ' #' + i,
-      platformPolicies: this.getPlatforms(releaseDate),
-      tracks: [],
-    };
-  };
-
-  addBlockingSet = (releaseDate = null) => {
-    const { BlockingPolicySets } = this.state.project;
-    let modifiedBlockingPolicySets = BlockingPolicySets;
-
-    if (typeof releaseDate === 'object')
-      releaseDate = this.state.project.Project.projectReleaseDate;
-
-    modifiedBlockingPolicySets.push(
-      this.getBlockingSet({}, BlockingPolicySets.length + 1, releaseDate),
-    );
-    this.setState({ BlockingPolicySets: modifiedBlockingPolicySets });
-  };
-
-  handlePageDataLoad = () => {
-    this.setState({ showLoader: true });
-
+  const handlePageDataLoad = () => {
     const fetchHeaders = new Headers({
       'Content-Type': 'application/json',
       Authorization: sessionStorage.getItem('accessToken'),
     });
 
     const fetchBody = JSON.stringify({
-      PagePath: this.props.match.url ? this.props.match.url : '',
-      ProjectID: this.props.match.params.projectID,
+      PagePath: props.match.url ? props.match.url : '',
+      ProjectID: props.match.params.projectID,
       languagecode: localStorage.getItem('languageCode') || 'en',
     });
 
@@ -189,337 +38,185 @@ class BlockingPoliciesPage extends Component {
         return response.json();
       })
       .then(responseJSON => {
-        responseJSON.BlockingPolicySets.map((policies, key) => {
-          policies.platformPolicies.map((data, index) => {
-            if (
-              this.setDefaultMonetizeForPostRelease(responseJSON.Project.projectReleaseDate) &&
-              !data.duration &&
-              !data.expirationDate
-            ) {
-              responseJSON.BlockingPolicySets[key].platformPolicies[index].block = false;
-            }
-          });
-        });
-        this.setState({ project: responseJSON });
-        if (!responseJSON.BlockingPolicySets || !responseJSON.BlockingPolicySets.length) {
-          this.addBlockingSet(responseJSON.Project.projectReleaseDate);
-        }
-        this.setState({ showLoader: false });
-        this.props.setHeaderProjectData(this.state.project);
+        setBlockingPolicies(responseJSON.BlockingPolicySets);
+        console.log(responseJSON, 'responseJSONresponseJSON');
       })
       .catch(error => {
         console.error(error);
-        this.setState({ showLoader: false });
       });
   };
 
-  handleSubmit = e => {
-    const saveAndContinue = e.target.classList.contains('saveAndContinueButton') ? true : false;
-    this.setState({ showLoader: true });
-    const fetchHeaders = new Headers({
-      'Content-Type': 'application/json',
-      Authorization: sessionStorage.getItem('accessToken'),
-    });
+  useEffect(() => {
+    handlePageDataLoad();
+  }, []);
 
-    const fetchBody = JSON.stringify({
-      projectID: this.props.match.params.projectID,
-      BlockingPolicySets: this.state.project.BlockingPolicySets,
-    });
-
-    fetch(window.env.api.url + '/project/blockingpolicies', {
-      method: 'POST',
-      headers: fetchHeaders,
-      body: fetchBody,
-    })
-      .then(response => {
-        return response.json();
-      })
-      .then(responseJSON => {
-        if (responseJSON.errorMessage) {
-          this.showNotSavedNotification();
-        } else {
-          this.showNotification(null, this.props.match.params.projectID, saveAndContinue);
-          this.props.setHeaderProjectData(this.state.project);
-          localStorage.setItem('prevStep', 6);
-        }
-        this.setState({ showLoader: false });
-      })
-      .catch(error => {
-        console.error(error);
-        this.showNotSavedNotification();
-        this.setState({ showLoader: false });
-      });
-  };
-
-  handleChildDrag = e => {
-    this.setState({ dragSource: e });
-  };
-
-  handleChildDrop = (e, i) => {
-    const { dragSource } = this.state;
-    const { UnassignedBlockingPolicySetTracks, BlockingPolicySets } = this.state.project;
-
-    let dragTrackId = [];
-    for (let j = 0; j < dragSource.length; j++) {
-      dragTrackId.push(dragSource[j] ? dragSource[j].getAttribute('trackid') : []);
-      BlockingPolicySets[i].tracks.push({
-        trackID: dragSource[j].getAttribute('trackid'),
-        trackTitle: dragSource[j].getAttribute('tracktitle'),
-      });
-    }
-
-    let modifiedUnassignedBlockingPolicySetTracks = UnassignedBlockingPolicySetTracks;
-    modifiedUnassignedBlockingPolicySetTracks = _.filter(
-      UnassignedBlockingPolicySetTracks,
-      val => !dragTrackId.includes(val.trackID),
-    );
-
-    this.setState({
-      project: {
-        ...this.state.project,
-        BlockingPolicySets: BlockingPolicySets,
-        UnassignedBlockingPolicySetTracks: modifiedUnassignedBlockingPolicySetTracks,
-        dragSource: null,
-      },
-    });
-  };
-
-  handleTrackSelect = e => {
-    const setIndex = parseInt(e.target.getAttribute('setindex'));
-    const trackIndex = parseInt(e.target.getAttribute('optionindex'));
-    const { UnassignedBlockingPolicySetTracks } = this.state.project;
-    const { tracks } = this.state.project.BlockingPolicySets[setIndex];
-
-    let modifiedUnassignedBlockingPolicySetTracks = UnassignedBlockingPolicySetTracks;
-    modifiedUnassignedBlockingPolicySetTracks.splice(trackIndex, 1);
-
-    let modifiedTracks = tracks;
-    modifiedTracks.push({
-      trackID: e.target.getAttribute('trackid'),
-      trackTitle: e.target.getAttribute('tracktitle'),
-    });
-
-    this.setState({
-      UnassignedBlockingPolicySetTracks: modifiedUnassignedBlockingPolicySetTracks,
-      tracks: modifiedTracks,
-    });
-  };
-
-  handleDropAdd = e => {
-    const { dragSource } = this.state;
-    for (let i = 0; i < dragSource.length; i++) {
-      const setIndex = dragSource[i].getAttribute('setindex');
-      const trackId = dragSource[i].getAttribute('trackid');
-      const trackTitle = dragSource[i].getAttribute('trackTitle');
-
-      // restrict dropping to just the set tracks
-      if (
-        (dragSource[i] && !dragSource[i].classList.contains('unassignedTrack')) ||
-        !e.target.classList.contains('unassignedTrack')
-      ) {
-        //add the selection to the unassigned tracks
-        const { UnassignedBlockingPolicySetTracks } = this.state.project;
-
-        let modifiedUnassignedBlockingPolicySetTracks = UnassignedBlockingPolicySetTracks;
-        modifiedUnassignedBlockingPolicySetTracks.push({
-          trackID: trackId,
-          trackTitle: trackTitle,
-        });
-
-        //remove the selection from the set's assigned tracks
-        const { BlockingPolicySets } = this.state.project;
-
-        let modifiedBlockingPolicySets = BlockingPolicySets;
-
-        modifiedBlockingPolicySets[setIndex].tracks = _.filter(
-          BlockingPolicySets[setIndex].tracks,
-          val => val.trackID !== trackId,
-        );
-
-        this.setState({
-          project: {
-            ...this.state.project,
-            BlockingPolicySets: modifiedBlockingPolicySets,
-            UnassignedBlockingPolicySetTracks: modifiedUnassignedBlockingPolicySetTracks,
-          },
-        });
-      }
-    }
-  };
-
-  handleResequenceRighstSets = () => {
-    const { BlockingPolicySets } = this.state.project;
-    let modifiedBlockingPolicySets = BlockingPolicySets;
-
-    for (let i = 0; i < modifiedBlockingPolicySets.length; i++) {
-      modifiedBlockingPolicySets[i].description = this.props.t('blocking:Set') + ' #' + (i + 1);
-    }
-
-    this.setState({ BlockingPolicySets: modifiedBlockingPolicySets });
-  };
-
-  handleSetDelete(i) {
-    const { project } = this.state;
-    const deletedTracks = this.state.project.BlockingPolicySets[i].tracks;
-    const combinedTracks = [
-      ...this.state.project.UnassignedBlockingPolicySetTracks,
-      ...deletedTracks,
-    ];
-
-    if (this.state.project.BlockingPolicySets.length > 1) {
-      let modifiedProject = project;
-      modifiedProject.BlockingPolicySets.splice(i, 1);
-      modifiedProject.UnassignedBlockingPolicySetTracks = combinedTracks;
-
-      this.handleResequenceRighstSets();
-      this.setState({
-        project: modifiedProject,
-      });
-    }
+  function allowDrop(ev) {
+    ev.preventDefault();
   }
 
-  showNotification = (e, projectID, saveAndContinue) => {
-    showNotyInfo(this.props.t('blocking:NotyInfo'), () => {
-      if (saveAndContinue) {
-        this.props.history.push({
-          pathname: '/reviewSubmit/' + projectID,
-        });
-      }
+  function drag(ev, index) {
+    ev.dataTransfer.setData('policyData', JSON.stringify({ trackID: ev.target.id, index: index }));
+  }
+
+  function drop(ev, index) {
+    ev.preventDefault();
+    const data = JSON.parse(ev.dataTransfer.getData('policyData'));
+    let tracks = [];
+    blockingPolicies.forEach(element => {
+      let track = element.tracks.filter(track => track.trackID === data.trackID);
+      if (track.length > 0) tracks = [...tracks, ...track];
     });
-  };
-
-  showNotSavedNotification = e => {
-    showNotyAutoError(this.props.t('blocking:NotyError'));
-  };
-
-  getStepNumber() {
-    let stepNumber;
-    if (this.state.project && this.state.project.Project) {
-      if (this.state.project.Project.projectReleaseDateTBD) {
-        return 6;
-      }
-    }
-    if (
-      this.props.serverTimeDate &&
-      this.state.project &&
-      this.state.project.Project &&
-      this.state.project.Project.projectReleaseDate
-    ) {
-      stepNumber =
-        formatDateToYYYYMMDD(convertToLocaleTime(this.props.serverTimeDate)) >
-        formatDateToYYYYMMDD(this.state.project.Project.projectReleaseDate)
-          ? 4
-          : 6;
-    }
-    return stepNumber;
+    let modifiedPolicies = [...blockingPolicies];
+    // adding the track to new set
+    modifiedPolicies[index].tracks = [...blockingPolicies[index].tracks, ...tracks];
+    // removing track from existing set
+    modifiedPolicies[data.index].tracks = _.filter(blockingPolicies[data.index].tracks, val => {
+      console.log(data.trackID, val, '1111');
+      return data.trackID !== val.trackID;
+    });
+    setBlockingPolicies(modifiedPolicies);
   }
 
-  componentDidMount() {
-    this.handlePageDataLoad();
-  }
-
-  componentDidUpdate() {
-    if (this.props.match.params.projectID) {
-      this.props.setProjectID(this.props.match.params.projectID, this.props.match.url);
-    }
-  }
-
-  render() {
-    const { t } = this.props;
-    return (
-      <div className="col-10">
-        <BlockingPoliciesModal projectID={this.props.projectID} t={t} />
-
-        <LoadingImg show={this.state.showLoader} />
-
-        <PageHeader data={this.state.project} />
-
-        <div className="row no-gutters step-description">
-          <div className="col-12">
-            <h2>
-              {t('blocking:Step')} <span className="count-circle">{this.getStepNumber()}</span>{' '}
-              {t('blocking:PostRelease')}{' '}
-              <span className="option-text">({t('blocking:Optional')})</span>
-            </h2>
-            <p>{t('blocking:DescriptionMain')}</p>
-            <p>{t('blocking:NoteMessage')}</p>
-          </div>
+  return (
+    <div className="col-10">
+      <BlockingPoliciesModal projectID={props.projectID} t={t} />
+      <LoadingImg show={false} />
+      <div className="row no-gutters step-description">
+        <div className="col-12">
+          <h2>
+            {t('blocking:Step')} <span className="count-circle">6</span> {t('blocking:PostRelease')}{' '}
+            <span className="option-text">({t('blocking:Optional')})</span>
+          </h2>
+          <p>{t('blocking:DescriptionMain')}</p>
+          <p>{t('blocking:NoteMessage')}</p>
         </div>
-        <div className="row no-gutters align-items-center">
-          <div className="col-3">
-            <h2>{t('blocking:TracksWithNoSetPolicy')}</h2>
-          </div>
-          <div className="col-9">
-            <div className="row no-gutters align-items-center card-nav">
-              <div className="col-4">
-                <span className="drag-drop-arrow float-left">
-                  <span>{t('blocking:DragAudioFilesToThePolicySet')}</span>
-                </span>
+      </div>
+      {blockingPolicies.map((policy, index) => {
+        return (
+          <div>
+            <div className="row no-gutters">
+              <div className="col-10">
+                <strong className="display-5" style={{ fontSize: 19 }}>
+                  Policy {policy.sequence}
+                </strong>
               </div>
-              <div className="col-8">
-                <button className="btn btn-primary" onClick={this.addBlockingSet}>
-                  {t('blocking:CreateANewBlockingPolicy')}
+              <div className="col-2 text-right">
+                <button className="btn btn-secondary">
+                  + {t('blocking:CreateANewBlockingPolicy')}
                 </button>
               </div>
             </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-3">
-            <TracksWithoutRights
-              data={this.state.project.UnassignedBlockingPolicySetTracks}
-              dragSource={this.state.dragSource}
-              handleDropAdd={this.handleDropAdd}
-              handleChildDrag={this.handleChildDrag}
-              t={t}
-            />
-          </div>
-          <div className="col-9">
-            <BlockingPolicySets
-              data={this.state.project}
-              onChange={e => this.handleChange(e)}
-              handleDateChange={(date, id, setIndex, siteIndex) =>
-                this.handleDateChange(date, id, setIndex, siteIndex)
-              }
-              handleMonetizeBlock={e => this.handleMonetizeBlock(e)}
-              dragSource={this.state.dragSource}
-              handleDrop={(e, i) => this.handleChildDrop(e, i)}
-              handleChildDrop={(e, i) => this.handleDrop()}
-              handleChildDrag={(e, i) => this.handleChildDrag(e)}
-              handleTrackSelect={(e, i) => this.handleTrackSelect(e, i)}
-              handleSetDelete={i => this.handleSetDelete(i)}
-              t={t}
-            />
-          </div>
-        </div>
-
-        <div className="row save-buttons">
-          <div className="col-12">
-            <div className="audio-footer-action-fxd">
-              <button
-                tabIndex="5+"
-                id="contactsSaveButton"
-                type="button"
-                className="btn btn-secondary saveButton"
-                onClick={e => this.handleSubmit(e)}
-              >
-                {t('blocking:Save')} {t('blocking:Draft')}
-              </button>
-              <button
-                tabIndex="6+"
-                id="contactsSaveContButton"
-                type="button"
-                className="btn btn-primary saveAndContinueButton"
-                onClick={e => this.handleSubmit(e)}
-              >
-                {t('blocking:Save')} & {t('blocking:Continue')}
-              </button>
+            <div className="row no-gutters">
+              <div className="col-12">
+                <Table className="responsive w-100 border mt-2 blk-plcy-table">
+                  <thead className="border">
+                    <tr>
+                      <th>
+                        <strong>Track Title</strong> (Tracks are draggable between policies)
+                      </th>
+                      <th>
+                        <strong>Platform</strong>
+                      </th>
+                      <th className="text-center">
+                        <strong>Monetize</strong>
+                      </th>
+                      <th className="text-center">
+                        <strong>Block After Release</strong>
+                      </th>
+                      <th className="text-center">
+                        <strong>Set Duration</strong>
+                      </th>
+                      <th className="text-center">
+                        <strong>Blocked Until</strong>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td className="track-bg">
+                        <div
+                          onDrop={e => drop(e, index)}
+                          onDragOver={allowDrop}
+                          className="drop-area"
+                          id={`blk-plcy-drop-${policy.sequence}`}
+                        >
+                          {policy.tracks.map((track, i) => {
+                            return (
+                              <div
+                                draggable="true"
+                                onDragStart={e => drag(e, index)}
+                                id={track.trackID}
+                                className="bp-tr-list"
+                              >
+                                <label className="custom-checkbox">
+                                  <input className="track-multi-drag-check" type="checkbox" />
+                                  <span className="checkmark"></span>
+                                </label>
+                                <i className="material-icons">dehaze</i>
+                                <span>{track.trackTitle}</span>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </td>
+                      <td colSpan="5" className="p-0">
+                        <div>
+                          {policy.platformPolicies.map((platform, i) => {
+                            const imgObj = {
+                              youtube: youtube,
+                              soundcloud: soundcloud,
+                              facebook: facebook,
+                              instagram: instagram,
+                              tiktok: tiktok,
+                            };
+                            return (
+                              <div className="d-flex align-items-stretch text-center policy-lp">
+                                <div className="plt-img">
+                                  <img
+                                    src={imgObj[platform.platformName.toLowerCase()]}
+                                    alt={platform.platformName.toLowerCase()}
+                                  />
+                                </div>
+                                <div className="monetize">
+                                  <Form.Control
+                                    type="radio"
+                                    checked={platform.block ? false : true}
+                                  />
+                                </div>
+                                <div className="blk-af-rel">
+                                  <Form.Control
+                                    type="radio"
+                                    checked={platform.block ? true : false}
+                                  />
+                                </div>
+                                {platform.block && (
+                                  <div className="duration">
+                                    <Form.Control as="select"></Form.Control>
+                                  </div>
+                                )}
+                                {platform.block && (
+                                  <div className="untill">
+                                    <DatePicker
+                                      dateFormat="MM/dd/yyyy"
+                                      placeholderText="mm/dd/yyyy"
+                                    />
+                                  </div>
+                                )}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </Table>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-    );
-  }
+        );
+      })}
+    </div>
+  );
 }
 
 export default withRouter(withTranslation('blocking')(BlockingPoliciesPage));

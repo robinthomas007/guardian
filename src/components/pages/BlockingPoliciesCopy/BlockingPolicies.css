@@ -1,6 +1,6 @@
 /* Territorial Rights & Blocking Polcies */
 
-/* .card-nav {
+.card-nav {
   text-align: right;
   margin-bottom: 10px;
 }
@@ -146,67 +146,4 @@ ul.tracks li label.dropdown-item {
 
 .platform-sprite.small.twitter {
   background-position: 0px -362px;
-} */
-.blk-plcy-table th:nth-child(1) {
-  width: 27%;
-}
-.blk-plcy-table th:nth-child(2) {
-  width: 17%;
-}
-.blk-plcy-table th:nth-child(3) {
-  width: 5%;
-}
-.blk-plcy-table th:nth-child(4) {
-  width: 10%;
-}
-.blk-plcy-table th:nth-child(5) {
-  width: 15%;
-}
-.blk-plcy-table th:nth-child(6) {
-  width: 16%;
-}
-.track-bg {
-  background: #d9f3fe;
-}
-.bp-tr-list {
-  padding: 10px;
-  background: #ffffff;
-  margin: 10px 3px;
-}
-.drop-area {
-  min-height: 120px;
-}
-.policy-lp {
-  min-height: 50px;
-}
-.policy-lp > div {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #f5f5f5;
-}
-
-.plt-img {
-  min-width: 27%;
-}
-
-.monetize {
-  min-width: 8%;
-}
-
-.blk-af-rel {
-  min-width: 16%;
-}
-
-.duration {
-  min-width: 24%;
-}
-
-.untill {
-  min-width: 25%;
-}
-
-.bp-tr-list label,
-.bp-tr-list .material-icons {
-  margin-right: 10px;
 }
