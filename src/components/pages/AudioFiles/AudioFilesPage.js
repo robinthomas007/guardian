@@ -8,7 +8,13 @@ import { reduxForm } from 'redux-form';
 import AudioFilesTabbedTracks from '../AudioFiles/pageComponents/audioFilesTabbedTracks';
 import { connect } from 'react-redux';
 import * as uploadProgressActions from 'redux/uploadProgressAlert/actions';
-import { isDuplicateItem, isDuplicateISRC, showNotyError, showNotyAutoError } from '../../Utils';
+import {
+  isDuplicateItem,
+  isDuplicateISRC,
+  showNotyError,
+  showNotyAutoError,
+  renameFile,
+} from '../../Utils';
 import _ from 'lodash';
 import { showNotyInfo } from 'components/Utils';
 import * as releaseAction from './../ReleaseInformation/releaseAction';
@@ -273,13 +279,6 @@ class AudioFilesPage extends Component {
     // this.props.saveDiscs(_.cloneDeep(modifiedDiscs));
   };
 
-  renameFile(originalFile, newName) {
-    return new File([originalFile], newName, {
-      type: originalFile.type,
-      lastModified: originalFile.lastModified,
-    });
-  }
-
   handleFileUpload(files, trackID) {
     const { onUploadStart, onUploadProgress, onUploadComplete } = this.props;
     const removeTrack = this.removeTrack;
@@ -289,7 +288,7 @@ class AudioFilesPage extends Component {
       const uniqFileName = `${file.name}-${new Date().getTime()}/${trackID ? trackID : ''}`;
       onUploadStart(uniqFileName, trackID);
       let formData = new FormData();
-      formData.append('file', this.renameFile(file, file.name.split(/\.(?=[^\.]+$)/)[0] + '.flac'));
+      formData.append('file', renameFile(file, file.name.split(/\.(?=[^\.]+$)/)[0] + '.flac'));
       let request = new XMLHttpRequest();
       request.open('POST', window.env.api.url + '/media/api/Upload');
       request.setRequestHeader('Authorization', sessionStorage.getItem('accessToken'));

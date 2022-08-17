@@ -16,6 +16,7 @@ import {
   showNotyAutoError,
   isPreReleaseDate,
   showNotyInfo,
+  renameFile,
 } from '../../Utils';
 import * as releaseAction from './../ReleaseInformation/releaseAction';
 import _ from 'lodash';
@@ -512,7 +513,7 @@ class TrackInformationPage extends Component {
       const uniqFileName = `${file.name}-${new Date().getTime()}`;
       onUploadStart(uniqFileName);
       var formData = new FormData();
-      formData.append('file', file);
+      formData.append('file', renameFile(file, file.name.split(/\.(?=[^\.]+$)/)[0] + '.flac'));
       let request = new XMLHttpRequest();
       request.open('POST', window.env.api.url + '/media/api/Upload');
       request.setRequestHeader('Authorization', sessionStorage.getItem('accessToken'));
