@@ -468,7 +468,7 @@ class TrackInformationPage extends Component {
     let newFiles = Array.from(e.target.files);
     let { replaceTrack } = this.state;
     let modifiedReplaceTrack = replaceTrack;
-    modifiedReplaceTrack.fileName = newFiles[0].name;
+    modifiedReplaceTrack.fileName = newFiles[0].name.split(/\.(?=[^\.]+$)/)[0] + '.flac';
 
     this.setState({ replaceTrack: modifiedReplaceTrack }, () => {
       this.handleFileUpload(newFiles, replaceTrack);
