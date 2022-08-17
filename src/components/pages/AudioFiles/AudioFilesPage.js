@@ -180,7 +180,7 @@ class AudioFilesPage extends Component {
 
     let updatedDiscs = discs;
     updatedDiscs[this.state.activeTab].Tracks[this.state.replaceTrackIndex].fileName =
-      newFiles[0].name.split('.')[0] + '.flac';
+      newFiles[0].name.split(/\.(?=[^\.]+$)/)[0] + '.flac';
     updatedDiscs[this.state.activeTab].Tracks[this.state.replaceTrackIndex].hasUpload = false;
     updatedDiscs[this.state.activeTab].Tracks[this.state.replaceTrackIndex].fileUpload = true;
 
@@ -201,7 +201,7 @@ class AudioFilesPage extends Component {
     for (var i = 0; i < newFiles.length; i++) {
       if (this.isValidAudioType(newFiles[i].name)) {
         let newTrack = {
-          fileName: newFiles[i].name.split('.')[0] + '.flac',
+          fileName: newFiles[i].name.split(/\.(?=[^\.]+$)/)[0] + '.flac',
           fileUpload: true,
         };
 
@@ -289,7 +289,7 @@ class AudioFilesPage extends Component {
       const uniqFileName = `${file.name}-${new Date().getTime()}/${trackID ? trackID : ''}`;
       onUploadStart(uniqFileName, trackID);
       let formData = new FormData();
-      formData.append('file', this.renameFile(file, file.name.split('.')[0] + '.flac'));
+      formData.append('file', this.renameFile(file, file.name.split(/\.(?=[^\.]+$)/)[0] + '.flac'));
       let request = new XMLHttpRequest();
       request.open('POST', window.env.api.url + '/media/api/Upload');
       request.setRequestHeader('Authorization', sessionStorage.getItem('accessToken'));
