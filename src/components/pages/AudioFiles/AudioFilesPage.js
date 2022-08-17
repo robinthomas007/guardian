@@ -180,7 +180,7 @@ class AudioFilesPage extends Component {
 
     let updatedDiscs = discs;
     updatedDiscs[this.state.activeTab].Tracks[this.state.replaceTrackIndex].fileName =
-      newFiles[0].name;
+      newFiles[0].name.split('.')[0] + '.flac';
     updatedDiscs[this.state.activeTab].Tracks[this.state.replaceTrackIndex].hasUpload = false;
     updatedDiscs[this.state.activeTab].Tracks[this.state.replaceTrackIndex].fileUpload = true;
 
@@ -198,11 +198,10 @@ class AudioFilesPage extends Component {
     const { discs, activeTab } = this.state;
     let newFiles = Array.from(e.target.files);
     let modifiedDiscs = discs;
-
     for (var i = 0; i < newFiles.length; i++) {
       if (this.isValidAudioType(newFiles[i].name)) {
         let newTrack = {
-          fileName: newFiles[i].name,
+          fileName: newFiles[i].name.split('.')[0] + '.flac',
           fileUpload: true,
         };
 
@@ -216,6 +215,7 @@ class AudioFilesPage extends Component {
         newFiles.splice(i, 1);
       }
     }
+
     this.handleFileUpload(newFiles);
   }
 
@@ -273,15 +273,23 @@ class AudioFilesPage extends Component {
     // this.props.saveDiscs(_.cloneDeep(modifiedDiscs));
   };
 
+  renameFile(originalFile, newName) {
+    return new File([originalFile], newName, {
+      type: originalFile.type,
+      lastModified: originalFile.lastModified,
+    });
+  }
+
   handleFileUpload(files, trackID) {
     const { onUploadStart, onUploadProgress, onUploadComplete } = this.props;
     const removeTrack = this.removeTrack;
     const projectID = this.state.projectID ? this.state.projectID : '';
     files.map(file => {
+      console.log(file, 'file here');
       const uniqFileName = `${file.name}-${new Date().getTime()}/${trackID ? trackID : ''}`;
       onUploadStart(uniqFileName, trackID);
       let formData = new FormData();
-      formData.append('file', file);
+      formData.append('file', this.renameFile(file, file.name.split('.')[0] + '.flac'));
       let request = new XMLHttpRequest();
       request.open('POST', window.env.api.url + '/media/api/Upload');
       request.setRequestHeader('Authorization', sessionStorage.getItem('accessToken'));
