@@ -10,6 +10,9 @@ import instagram from '../../../images/instagram.png';
 import tiktok from '../../../images/tiktok.png';
 import { Table, Grid, Button, Form } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
+import { Duration, showNotyInfo } from './../../Utils';
+import moment from 'moment';
+
 import _ from 'lodash';
 import './BlockingPolicies.css';
 
@@ -38,12 +41,80 @@ function BlockingPoliciesPage(props) {
         return response.json();
       })
       .then(responseJSON => {
-        setBlockingPolicies(responseJSON.BlockingPolicySets);
-        console.log(responseJSON, 'responseJSONresponseJSON');
+        if (
+          responseJSON.BlockingPolicySets.length > 0 &&
+          responseJSON.UnassignedBlockingPolicySetTracks.length > 0
+        ) {
+          const blksets = [...responseJSON.BlockingPolicySets];
+          blksets[0].tracks.push(...responseJSON.UnassignedBlockingPolicySetTracks);
+          setBlockingPolicies(blksets);
+        }
+        if (
+          responseJSON.BlockingPolicySets.length > 0 &&
+          responseJSON.UnassignedBlockingPolicySetTracks.length === 0
+        ) {
+          setBlockingPolicies([...responseJSON.BlockingPolicySets]);
+        }
+        if (
+          responseJSON.BlockingPolicySets.length === 0 &&
+          responseJSON.UnassignedBlockingPolicySetTracks.length > 0
+        ) {
+          const blksets = [];
+          blksets.push(createPolicySet());
+          blksets[0].tracks.push(...responseJSON.UnassignedBlockingPolicySetTracks);
+          setBlockingPolicies(blksets);
+        }
+        if (
+          responseJSON.BlockingPolicySets.length === 0 &&
+          responseJSON.UnassignedBlockingPolicySetTracks.length === 0
+        ) {
+          const blksets = [];
+          blksets.push(createPolicySet());
+          setBlockingPolicies(blksets);
+        }
       })
       .catch(error => {
         console.error(error);
       });
+  };
+
+  const createPolicySet = () => {
+    return {
+      blockingPolicySetID: '',
+      sequence: blockingPolicies.length > 0 ? blockingPolicies.length + 1 : 1,
+      description: '',
+      platformPolicies: getPlatforms(),
+      tracks: [],
+    };
+  };
+
+  const getPlatforms = () => {
+    return [
+      {
+        platformName: 'YouTube',
+        block: false,
+        duration: '',
+        expirationDate: '',
+      },
+      {
+        platformName: 'SoundCloud',
+        block: false,
+        duration: '',
+        expirationDate: '',
+      },
+      {
+        platformName: 'Facebook',
+        block: false,
+        duration: '',
+        expirationDate: '',
+      },
+      {
+        platformName: 'Instagram',
+        block: false,
+        duration: '',
+        expirationDate: '',
+      },
+    ];
   };
 
   useEffect(() => {
@@ -66,16 +137,97 @@ function BlockingPoliciesPage(props) {
       let track = element.tracks.filter(track => track.trackID === data.trackID);
       if (track.length > 0) tracks = [...tracks, ...track];
     });
-    let modifiedPolicies = [...blockingPolicies];
+    const modifiedPolicies = [...blockingPolicies];
     // adding the track to new set
     modifiedPolicies[index].tracks = [...blockingPolicies[index].tracks, ...tracks];
     // removing track from existing set
     modifiedPolicies[data.index].tracks = _.filter(blockingPolicies[data.index].tracks, val => {
-      console.log(data.trackID, val, '1111');
       return data.trackID !== val.trackID;
     });
     setBlockingPolicies(modifiedPolicies);
   }
+
+  const handleMonetizeBlock = e => {
+    const platformindex = e.target.getAttribute('platformindex');
+    const policyindex = e.target.getAttribute('policyindex');
+    const eTargetValue = e.target.value === 'true' ? true : false;
+    const modifiedPolicies = [...blockingPolicies];
+    modifiedPolicies[policyindex].platformPolicies[platformindex].block = eTargetValue;
+    setBlockingPolicies(modifiedPolicies);
+  };
+
+  const handleDurationChange = e => {
+    const platformindex = e.target.getAttribute('platformindex');
+    const policyindex = e.target.getAttribute('policyindex');
+    const eTargetValue = e.target.value;
+    const modifiedPolicies = [...blockingPolicies];
+    modifiedPolicies[policyindex].platformPolicies[platformindex].duration = eTargetValue;
+    setBlockingPolicies(modifiedPolicies);
+  };
+
+  const handleDateChange = (date, platformindex, policyindex) => {
+    const modifiedPolicies = [...blockingPolicies];
+    modifiedPolicies[policyindex].platformPolicies[platformindex].expirationDate = moment(
+      date,
+    ).format('MM-DD-YYYY');
+    setBlockingPolicies(modifiedPolicies);
+  };
+
+  const createANewBlockingPolicy = () => {
+    const newBlkPolicy = [...blockingPolicies];
+    newBlkPolicy.push(createPolicySet());
+    setBlockingPolicies(newBlkPolicy);
+  };
+
+  const deleteBlockingPolicy = (e, policyindex) => {
+    const newBlkPolicy = [...blockingPolicies];
+    newBlkPolicy[0].tracks.push(...blockingPolicies[policyindex].tracks);
+    newBlkPolicy.splice(policyindex, 1);
+    setBlockingPolicies(newBlkPolicy);
+  };
+
+  const showNotification = projectID => {
+    showNotyInfo(props.t('blocking:NotyInfo'), () => {
+      props.history.push({
+        pathname: '/reviewSubmit/' + projectID,
+      });
+    });
+  };
+
+  const handleSubmit = () => {
+    const fetchHeaders = new Headers({
+      'Content-Type': 'application/json',
+      Authorization: sessionStorage.getItem('accessToken'),
+    });
+
+    const fetchBody = JSON.stringify({
+      projectID: props.match.params.projectID,
+      BlockingPolicySets: blockingPolicies,
+    });
+
+    fetch(window.env.api.url + '/project/blockingpolicies', {
+      method: 'POST',
+      headers: fetchHeaders,
+      body: fetchBody,
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(responseJSON => {
+        if (responseJSON.errorMessage) {
+          // this.showNotSavedNotification();
+        } else {
+          showNotification(props.match.params.projectID);
+          props.setHeaderProjectData(this.state.project);
+          localStorage.setItem('prevStep', 6);
+        }
+      })
+      .catch(error => {
+        console.error(error);
+        // this.showNotSavedNotification();
+        // this.setState({ showLoader: false });
+      });
+  };
 
   return (
     <div className="col-10">
@@ -91,7 +243,7 @@ function BlockingPoliciesPage(props) {
           <p>{t('blocking:NoteMessage')}</p>
         </div>
       </div>
-      {blockingPolicies.map((policy, index) => {
+      {blockingPolicies.map((policy, policyindex) => {
         return (
           <div>
             <div className="row no-gutters">
@@ -101,9 +253,20 @@ function BlockingPoliciesPage(props) {
                 </strong>
               </div>
               <div className="col-2 text-right">
-                <button className="btn btn-secondary">
-                  + {t('blocking:CreateANewBlockingPolicy')}
-                </button>
+                {policyindex === 0 && (
+                  <button className="btn btn-secondary" onClick={createANewBlockingPolicy}>
+                    + {t('blocking:CreateANewBlockingPolicy')}
+                  </button>
+                )}
+                {policyindex > 0 && (
+                  <button
+                    className="btn btn-secondary"
+                    onClick={e => deleteBlockingPolicy(e, policyindex)}
+                  >
+                    <i className="material-icons">delete</i>
+                    {t('blocking:deleteBlockPolicy')}
+                  </button>
+                )}
               </div>
             </div>
             <div className="row no-gutters">
@@ -135,7 +298,7 @@ function BlockingPoliciesPage(props) {
                     <tr>
                       <td className="track-bg">
                         <div
-                          onDrop={e => drop(e, index)}
+                          onDrop={e => drop(e, policyindex)}
                           onDragOver={allowDrop}
                           className="drop-area"
                           id={`blk-plcy-drop-${policy.sequence}`}
@@ -144,7 +307,7 @@ function BlockingPoliciesPage(props) {
                             return (
                               <div
                                 draggable="true"
-                                onDragStart={e => drag(e, index)}
+                                onDragStart={e => drag(e, policyindex)}
                                 id={track.trackID}
                                 className="bp-tr-list"
                               >
@@ -161,7 +324,7 @@ function BlockingPoliciesPage(props) {
                       </td>
                       <td colSpan="5" className="p-0">
                         <div>
-                          {policy.platformPolicies.map((platform, i) => {
+                          {policy.platformPolicies.map((platform, platformindex) => {
                             const imgObj = {
                               youtube: youtube,
                               soundcloud: soundcloud,
@@ -181,27 +344,73 @@ function BlockingPoliciesPage(props) {
                                   <Form.Control
                                     type="radio"
                                     checked={platform.block ? false : true}
+                                    onChange={e => handleMonetizeBlock(e)}
+                                    platformindex={platformindex}
+                                    policyindex={policyindex}
+                                    value={false}
                                   />
                                 </div>
-                                <div className="blk-af-rel">
+                                <div
+                                  className={`${
+                                    platform.block ? 'blk-af-rel' : 'light-gray-bg blk-af-rel'
+                                  }`}
+                                >
                                   <Form.Control
                                     type="radio"
                                     checked={platform.block ? true : false}
+                                    onChange={e => handleMonetizeBlock(e)}
+                                    platformindex={platformindex}
+                                    policyindex={policyindex}
+                                    value={true}
                                   />
                                 </div>
-                                {platform.block && (
-                                  <div className="duration">
-                                    <Form.Control as="select"></Form.Control>
-                                  </div>
-                                )}
-                                {platform.block && (
-                                  <div className="untill">
+
+                                <div
+                                  className={`${
+                                    platform.block ? 'duration' : 'light-gray-bg duration'
+                                  }`}
+                                >
+                                  {platform.block && (
+                                    <Form.Control
+                                      as="select"
+                                      value={platform.duration}
+                                      onChange={handleDurationChange}
+                                      platformindex={platformindex}
+                                      policyindex={policyindex}
+                                    >
+                                      {Duration.map((option, i) => {
+                                        return (
+                                          <option key={i} value={option.value}>
+                                            {option.text}
+                                          </option>
+                                        );
+                                      })}
+                                    </Form.Control>
+                                  )}
+                                </div>
+                                <div
+                                  className={`${
+                                    platform.block ? 'untill' : 'light-gray-bg untill'
+                                  }`}
+                                >
+                                  {platform.block && (
                                     <DatePicker
                                       dateFormat="MM/dd/yyyy"
                                       placeholderText="mm/dd/yyyy"
+                                      platformindex={platformindex}
+                                      policyindex={policyindex}
+                                      onChange={date =>
+                                        handleDateChange(date, platformindex, policyindex)
+                                      }
+                                      selected={
+                                        platform.expirationDate != null &&
+                                        platform.expirationDate != ''
+                                          ? new Date(platform.expirationDate)
+                                          : null
+                                      }
                                     />
-                                  </div>
-                                )}
+                                  )}
+                                </div>
                               </div>
                             );
                           })}
@@ -215,6 +424,21 @@ function BlockingPoliciesPage(props) {
           </div>
         );
       })}
+      <div className="row save-buttons">
+        <div className="col-12">
+          <div className="audio-footer-action-fxd">
+            <button
+              tabIndex="6+"
+              id="contactsSaveContButton"
+              type="button"
+              className="btn btn-primary saveAndContinueButton"
+              onClick={e => handleSubmit(e)}
+            >
+              {t('blocking:Save')} & {t('blocking:Continue')}
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
