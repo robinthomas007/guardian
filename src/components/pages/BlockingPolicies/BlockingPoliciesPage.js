@@ -10,7 +10,7 @@ import instagram from '../../../images/instagram.png';
 import tiktok from '../../../images/tiktok.png';
 import { Table, Grid, Button, Form } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
-import { Duration, showNotyInfo } from './../../Utils';
+import { Duration, showNotyInfo, showNotyAutoError } from './../../Utils';
 import moment from 'moment';
 
 import _ from 'lodash';
@@ -19,8 +19,11 @@ import './BlockingPolicies.css';
 function BlockingPoliciesPage(props) {
   const { t } = props;
   const [blockingPolicies, setBlockingPolicies] = useState([]);
+  const [project, setProject] = useState({});
+  const [showLoader, setShowLoader] = useState(false);
 
   const handlePageDataLoad = () => {
+    setShowLoader(true);
     const fetchHeaders = new Headers({
       'Content-Type': 'application/json',
       Authorization: sessionStorage.getItem('accessToken'),
@@ -41,6 +44,8 @@ function BlockingPoliciesPage(props) {
         return response.json();
       })
       .then(responseJSON => {
+        setShowLoader(false);
+        setProject(responseJSON);
         if (
           responseJSON.BlockingPolicySets.length > 0 &&
           responseJSON.UnassignedBlockingPolicySetTracks.length > 0
@@ -72,9 +77,11 @@ function BlockingPoliciesPage(props) {
           blksets.push(createPolicySet());
           setBlockingPolicies(blksets);
         }
+        props.setHeaderProjectData(responseJSON);
       })
       .catch(error => {
         console.error(error);
+        setShowLoader(false);
       });
   };
 
@@ -194,12 +201,18 @@ function BlockingPoliciesPage(props) {
     });
   };
 
+  const showNotSavedNotification = () => {
+    showNotyAutoError(props.t('blocking:NotyError'));
+  };
+
   const handleSubmit = () => {
+    setShowLoader(true);
     const fetchHeaders = new Headers({
       'Content-Type': 'application/json',
       Authorization: sessionStorage.getItem('accessToken'),
     });
 
+    setProject({ ...project, BlockingPolicySets: blockingPolicies });
     const fetchBody = JSON.stringify({
       projectID: props.match.params.projectID,
       BlockingPolicySets: blockingPolicies,
@@ -214,25 +227,26 @@ function BlockingPoliciesPage(props) {
         return response.json();
       })
       .then(responseJSON => {
+        setShowLoader(false);
         if (responseJSON.errorMessage) {
-          // this.showNotSavedNotification();
+          showNotSavedNotification();
         } else {
           showNotification(props.match.params.projectID);
-          props.setHeaderProjectData(this.state.project);
+          props.setHeaderProjectData(project);
           localStorage.setItem('prevStep', 6);
         }
       })
       .catch(error => {
         console.error(error);
-        // this.showNotSavedNotification();
-        // this.setState({ showLoader: false });
+        showNotSavedNotification();
+        setShowLoader(false);
       });
   };
 
   return (
     <div className="col-10">
       <BlockingPoliciesModal projectID={props.projectID} t={t} />
-      <LoadingImg show={false} />
+      <LoadingImg show={showLoader} />
       <div className="row no-gutters step-description">
         <div className="col-12">
           <h2>
