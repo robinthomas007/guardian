@@ -513,7 +513,8 @@ class TrackInformationPage extends Component {
       const uniqFileName = `${file.name}-${new Date().getTime()}`;
       onUploadStart(uniqFileName);
       var formData = new FormData();
-      formData.append('file', renameFile(file, file.name.split(/\.(?=[^\.]+$)/)[0] + '.flac'));
+      formData.append('file', file);
+      // formData.append('file', renameFile(file, file.name.split(/\.(?=[^\.]+$)/)[0] + '.flac'));
       let request = new XMLHttpRequest();
       request.open('POST', window.env.api.url + '/media/api/Upload');
       request.setRequestHeader('Authorization', sessionStorage.getItem('accessToken'));

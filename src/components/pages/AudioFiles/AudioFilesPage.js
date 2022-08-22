@@ -284,11 +284,11 @@ class AudioFilesPage extends Component {
     const removeTrack = this.removeTrack;
     const projectID = this.state.projectID ? this.state.projectID : '';
     files.map(file => {
-      console.log(file, 'file here');
       const uniqFileName = `${file.name}-${new Date().getTime()}/${trackID ? trackID : ''}`;
       onUploadStart(uniqFileName, trackID);
       let formData = new FormData();
-      formData.append('file', renameFile(file, file.name.split(/\.(?=[^\.]+$)/)[0] + '.flac'));
+      // formData.append('file', renameFile(file, file.name.split(/\.(?=[^\.]+$)/)[0] + '.flac'));
+      formData.append('file', file);
       let request = new XMLHttpRequest();
       request.open('POST', window.env.api.url + '/media/api/Upload');
       request.setRequestHeader('Authorization', sessionStorage.getItem('accessToken'));
