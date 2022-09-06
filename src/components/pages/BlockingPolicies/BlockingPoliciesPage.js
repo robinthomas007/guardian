@@ -21,6 +21,7 @@ function BlockingPoliciesPage(props) {
   const [blockingPolicies, setBlockingPolicies] = useState([]);
   const [project, setProject] = useState({});
   const [showLoader, setShowLoader] = useState(false);
+  const [selected, setSelected] = useState([]);
 
   const handlePageDataLoad = () => {
     setShowLoader(true);
@@ -134,23 +135,34 @@ function BlockingPoliciesPage(props) {
 
   function drag(ev, index) {
     ev.dataTransfer.setData('policyData', JSON.stringify({ trackID: ev.target.id, index: index }));
+    if (selected.length > 0) {
+      const ele = document.querySelector(`#${ev.target.id} .track-title-name`);
+      ele.innerHTML = `You are dragging ${selected.length} files`;
+    }
   }
 
   function drop(ev, index) {
     ev.preventDefault();
     const data = JSON.parse(ev.dataTransfer.getData('policyData'));
     let tracks = [];
+    if (index === data.index) return false;
     blockingPolicies.forEach(element => {
-      let track = element.tracks.filter(track => track.trackID === data.trackID);
+      let track = [];
+      if (selected.length > 0)
+        track = element.tracks.filter(track => selected.includes(track.trackID));
+      else track = element.tracks.filter(track => track.trackID === data.trackID);
+
       if (track.length > 0) tracks = [...tracks, ...track];
     });
     const modifiedPolicies = [...blockingPolicies];
     // adding the track to new set
     modifiedPolicies[index].tracks = [...blockingPolicies[index].tracks, ...tracks];
     // removing track from existing set
+    const removeTracks = selected.length > 0 ? selected : [data.trackID];
     modifiedPolicies[data.index].tracks = _.filter(blockingPolicies[data.index].tracks, val => {
-      return data.trackID !== val.trackID;
+      return !removeTracks.includes(val.trackID);
     });
+    setSelected([]);
     setBlockingPolicies(modifiedPolicies);
   }
 
@@ -243,6 +255,14 @@ function BlockingPoliciesPage(props) {
       });
   };
 
+  const handleCheckboxChange = (e, trackId) => {
+    if (e.target.checked) {
+      setSelected([...selected, trackId]);
+    } else {
+      setSelected(selected.filter(id => id !== trackId));
+    }
+  };
+
   return (
     <div className="col-10">
       <BlockingPoliciesModal projectID={props.projectID} t={t} />
@@ -277,7 +297,7 @@ function BlockingPoliciesPage(props) {
                     className="btn btn-secondary"
                     onClick={e => deleteBlockingPolicy(e, policyindex)}
                   >
-                    <i className="material-icons">delete</i>
+                    <i className="material-icons">delete</i>&nbsp;
                     {t('blocking:deleteBlockPolicy')}
                   </button>
                 )}
@@ -322,15 +342,21 @@ function BlockingPoliciesPage(props) {
                               <div
                                 draggable="true"
                                 onDragStart={e => drag(e, policyindex)}
-                                id={track.trackID}
+                                id={`check_${track.trackID}`}
                                 className="bp-tr-list"
                               >
                                 <label className="custom-checkbox">
-                                  <input className="track-multi-drag-check" type="checkbox" />
+                                  <input
+                                    name={`check_${track.trackID}`}
+                                    className="track-multi-drag-check"
+                                    type="checkbox"
+                                    checked={selected.includes(track.trackID)}
+                                    onChange={e => handleCheckboxChange(e, track.trackID)}
+                                  />
                                   <span className="checkmark"></span>
                                 </label>
                                 <i className="material-icons">dehaze</i>
-                                <span>{track.trackTitle}</span>
+                                <span className="track-title-name">{track.trackTitle}</span>
                               </div>
                             );
                           })}
