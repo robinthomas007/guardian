@@ -44,14 +44,6 @@ class TrackInformationDataTable extends Component {
           {t('track:ISRC ')}&nbsp;
           <ToolTip tabIndex="-1" message={t('track:CheckISRCsMsg')} />
           <div style={{ float: 'right' }}>
-            <button
-              className="btn btn-sm btn-primary"
-              onClick={this.props.checkIsrc}
-              title="Comment"
-            >
-              <i className={'material-icons'}>search</i>
-              {t('track:CheckISRCs')}
-            </button>
             <VideoPlayer
               title="Tracks - Check ISRC"
               link="https://usaws03-guardian-media.s3.amazonaws.com/videos/The+Guardian+2021+pt.+9+Track+Information.mp4"

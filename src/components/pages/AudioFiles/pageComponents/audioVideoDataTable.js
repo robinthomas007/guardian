@@ -35,14 +35,6 @@ class AudioVideoDataTable extends Component {
           <th>
             {t('audio:ISRC')}
             <div style={{ float: 'right' }}>
-              <button
-                className="btn btn-sm btn-primary"
-                onClick={this.props.checkIsrc}
-                title="Comment"
-              >
-                <i className={'material-icons'}>search</i>
-                {t('audio:CheckISRCs')}
-              </button>
               <VideoPlayer
                 title="Audio Files - Check ISRC"
                 link="https://usaws03-guardian-media.s3.amazonaws.com/videos/The+Guardian+2021+pt.+3.5+Audio+Files.mp4"
