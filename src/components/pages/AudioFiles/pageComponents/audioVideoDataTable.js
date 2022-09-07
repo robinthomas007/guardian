@@ -73,10 +73,14 @@ class AudioVideoDataTable extends Component {
   }
 
   handleOnBlur(e) {
+    const { getCisDataForIsrc } = this.props;
     if (e.target.className.match('trackIsrcField')) {
-      this.isValidIsrc(e.target.value)
-        ? this.setFieldValidation(e.target, 'is-Valid')
-        : this.setFieldValidation(e.target, 'is-invalid');
+      if (this.isValidIsrc(e.target.value)) {
+        this.setFieldValidation(e.target, 'is-Valid');
+        getCisDataForIsrc(e.target.value);
+      } else {
+        this.setFieldValidation(e.target, 'is-invalid');
+      }
     } else if (e.target.className.match('trackTitleField')) {
       this.isValidTitle(e.target.value)
         ? this.setFieldValidation(e.target, 'is-Valid')
@@ -85,7 +89,6 @@ class AudioVideoDataTable extends Component {
   }
 
   handleChange(e, track, rowID) {
-    const { discs } = this.state;
     const { tableData } = this.state;
 
     track[e.target.id] = e.target.value;

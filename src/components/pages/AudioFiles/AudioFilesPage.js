@@ -103,6 +103,13 @@ class AudioFilesPage extends Component {
     }
   }
 
+  getCisDataForIsrc = isrc => {
+    this.props.getCisData({
+      Iscrs: [isrc],
+      ProjectId: this.props.match.params.projectID,
+    });
+  };
+
   showReplaceModal(track, i, upload) {
     this.setState({
       showReplaceAudioModal: true,
@@ -768,6 +775,7 @@ class AudioFilesPage extends Component {
           cisLoading={this.props.cisLoading}
           t={t}
           activeTab={this.state.activeTab}
+          getCisDataForIsrc={this.getCisDataForIsrc}
         />
 
         <section className="row no-gutters save-buttons">
