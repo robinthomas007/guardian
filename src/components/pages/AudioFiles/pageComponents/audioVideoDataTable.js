@@ -73,11 +73,11 @@ class AudioVideoDataTable extends Component {
   }
 
   handleOnBlur(e) {
-    const { getCisDataForIsrc } = this.props;
+    const { checkIsrcOnBlur } = this.props;
     if (e.target.className.match('trackIsrcField')) {
       if (this.isValidIsrc(e.target.value)) {
         this.setFieldValidation(e.target, 'is-Valid');
-        getCisDataForIsrc(e.target.value);
+        checkIsrcOnBlur(e.target.value);
       } else {
         this.setFieldValidation(e.target, 'is-invalid');
       }

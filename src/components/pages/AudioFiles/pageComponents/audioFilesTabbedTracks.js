@@ -36,7 +36,7 @@ export default props => (
             upc={props.upc}
             cisLoading={props.cisLoading}
             t={props.t}
-            getCisDataForIsrc={props.getCisDataForIsrc}
+            checkIsrcOnBlur={props.checkIsrcOnBlur}
           />
         </Tab>
       ))}

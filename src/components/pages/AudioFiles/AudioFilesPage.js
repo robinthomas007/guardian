@@ -103,7 +103,9 @@ class AudioFilesPage extends Component {
     }
   }
 
-  getCisDataForIsrc = isrc => {
+  checkIsrcOnBlur = isrc => {
+    const user = JSON.parse(sessionStorage.getItem('user'));
+    this.props.isrcCheck({ User: { email: user.email }, isrcs: [isrc] });
     this.props.getCisData({
       Iscrs: [isrc],
       ProjectId: this.props.match.params.projectID,
@@ -775,7 +777,7 @@ class AudioFilesPage extends Component {
           cisLoading={this.props.cisLoading}
           t={t}
           activeTab={this.state.activeTab}
-          getCisDataForIsrc={this.getCisDataForIsrc}
+          checkIsrcOnBlur={this.checkIsrcOnBlur}
         />
 
         <section className="row no-gutters save-buttons">

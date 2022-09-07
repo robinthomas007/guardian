@@ -100,6 +100,11 @@ class TrackInformationPage extends Component {
       this.props.isrcCheck({ User: { email: user.email }, isrcs: isrcs });
   }
 
+  checkIsrcOnBlur = isrc => {
+    const user = JSON.parse(sessionStorage.getItem('user'));
+    this.props.isrcCheck({ User: { email: user.email }, isrcs: [isrc] });
+  };
+
   setActiveDiscTab(tabID) {
     this.setState({ activeDiscTab: tabID });
   }
@@ -699,6 +704,7 @@ class TrackInformationPage extends Component {
           handleChildDrag={(e, i) => this.handleChildDrag(e, i)}
           handleChildDrop={(e, i) => this.handleChildDrop(e, i)}
           checkIsrc={this.checkIsrc}
+          checkIsrcOnBlur={this.checkIsrcOnBlur}
           t={t}
         />
 

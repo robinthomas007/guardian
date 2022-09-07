@@ -189,10 +189,14 @@ class TrackInformationDataTable extends Component {
   }
 
   handleOnBlur(e) {
+    const { checkIsrcOnBlur } = this.props;
     if (e.target.className.match('trackIsrcField')) {
-      this.isValidIsrc(e.target.value)
-        ? this.setFieldValidation(e.target, 'is-Valid')
-        : this.setFieldValidation(e.target, 'is-invalid');
+      if (this.isValidIsrc(e.target.value)) {
+        this.setFieldValidation(e.target, 'is-Valid');
+        checkIsrcOnBlur(e.target.value);
+      } else {
+        this.setFieldValidation(e.target, 'is-invalid');
+      }
     }
   }
 

@@ -28,15 +28,15 @@ export const fetchRequest = loading => {
 
 export const isrcCheck = data => {
   return dispatch => {
-    dispatch(fetchRequest(true));
+    // dispatch(fetchRequest(true));
     return Api.post('/project/isrc', data)
       .then(response => response.json())
       .then(response => {
         if (response.Status === 'OK' && response.ExTracks && response.ExTracks.length > 0) {
           dispatch(fetchSuccess(response.ExTracks));
-        } else {
-          showNotyAutoError(i18n.t('audio:NoMatchingISRC'));
-          dispatch(fetchFailure(response.message));
+          // } else {
+          //   showNotyAutoError(i18n.t('audio:NoMatchingISRC'));
+          //   dispatch(fetchFailure(response.message));
         }
       })
       .catch(error => {
@@ -69,7 +69,7 @@ export const cisFetchRequest = loading => {
 
 export const getCisData = data => {
   return dispatch => {
-    dispatch(cisFetchRequest(true));
+    // dispatch(cisFetchRequest(true));
     // for (let i = 0; i < data.Iscrs.length; i++) {
     //   dispatch(startUpload('CIS' + i));
     //   dispatch(setUploadProgress('CIS' + i, 100));

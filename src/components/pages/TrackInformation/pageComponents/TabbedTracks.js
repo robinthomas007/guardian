@@ -64,6 +64,7 @@ class TabbedTracks extends Component {
               handleChildDrag={(e, i) => this.props.handleChildDrag(e, i)}
               handleChildDrop={(e, i) => this.props.handleChildDrop(e, i)}
               checkIsrc={this.props.checkIsrc}
+              checkIsrcOnBlur={this.props.checkIsrcOnBlur}
               t={t}
             />
           </Tab>
