@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, forwardRef } from 'react';
 import BlockingPoliciesModal from '../../modals/BlockingPoliciesModal';
 import LoadingImg from 'component_library/LoadingImg';
 import { withRouter } from 'react-router-dom';
@@ -10,11 +10,27 @@ import instagram from '../../../images/instagram.png';
 import tiktok from '../../../images/tiktok.png';
 import { Table, Form } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
-import { Duration, showNotyInfo, showNotyAutoError } from './../../Utils';
+import {
+  Duration,
+  showNotyInfo,
+  showNotyAutoError,
+  getProjectReview,
+  getPlatforms,
+} from './../../Utils';
 import moment from 'moment';
-
 import _ from 'lodash';
 import './BlockingPolicies.css';
+
+const CustomInput = forwardRef((props, ref) => {
+  return (
+    <div className="custom-date-picker blocking-custom-d-picker">
+      <input ref={ref} onClick={props.onClick} value={props.value} type="text" />
+      <i onClick={props.onClick} aria-hidden="true" className="material-icons calendar">
+        date_range
+      </i>
+    </div>
+  );
+});
 
 function BlockingPoliciesPage(props) {
   const { t } = props;
@@ -22,28 +38,17 @@ function BlockingPoliciesPage(props) {
   const [project, setProject] = useState({});
   const [showLoader, setShowLoader] = useState(false);
   const [selected, setSelected] = useState([]);
-
+  const [selectedBlock, setSelectedBlock] = useState(null);
+  const ref = React.createRef();
   const handlePageDataLoad = () => {
     setShowLoader(true);
-    const fetchHeaders = new Headers({
-      'Content-Type': 'application/json',
-      Authorization: sessionStorage.getItem('accessToken'),
-    });
-
     const fetchBody = JSON.stringify({
       PagePath: props.match.url ? props.match.url : '',
       ProjectID: props.match.params.projectID,
       languagecode: localStorage.getItem('languageCode') || 'en',
     });
 
-    fetch(window.env.api.url + '/project/review', {
-      method: 'POST',
-      headers: fetchHeaders,
-      body: fetchBody,
-    })
-      .then(response => {
-        return response.json();
-      })
+    getProjectReview(fetchBody)
       .then(responseJSON => {
         setShowLoader(false);
         setProject(responseJSON);
@@ -94,35 +99,6 @@ function BlockingPoliciesPage(props) {
       platformPolicies: getPlatforms(),
       tracks: [],
     };
-  };
-
-  const getPlatforms = () => {
-    return [
-      {
-        platformName: 'YouTube',
-        block: false,
-        duration: '',
-        expirationDate: '',
-      },
-      {
-        platformName: 'SoundCloud',
-        block: false,
-        duration: '',
-        expirationDate: '',
-      },
-      {
-        platformName: 'Facebook',
-        block: false,
-        duration: '',
-        expirationDate: '',
-      },
-      {
-        platformName: 'Instagram',
-        block: false,
-        duration: '',
-        expirationDate: '',
-      },
-    ];
   };
 
   useEffect(() => {
@@ -247,12 +223,6 @@ function BlockingPoliciesPage(props) {
           showNotSavedNotification();
         } else {
           showNotification(props.match.params.projectID);
-          props.setHeaderProjectData({
-            ...project,
-            BlockingPolicySets: blockingPolicies,
-            UnassignedBlockingPolicySetTracks: [],
-            blockingPoliciesStatus: '3',
-          });
           localStorage.setItem('prevStep', 6);
         }
       })
@@ -263,13 +233,24 @@ function BlockingPoliciesPage(props) {
       });
   };
 
-  const handleCheckboxChange = (e, trackId) => {
-    if (e.target.checked) {
-      setSelected([...selected, trackId]);
+  const handleCheckboxChange = (e, trackId, blkIndex) => {
+    if (selectedBlock === null || selectedBlock === blkIndex) {
+      if (e.target.checked) {
+        setSelected([...selected, trackId]);
+      } else {
+        setSelected(selected.filter(id => id !== trackId));
+      }
+      setSelectedBlock(blkIndex);
     } else {
-      setSelected(selected.filter(id => id !== trackId));
+      alert('Select from any 1 Policy block at a time');
     }
   };
+
+  useEffect(() => {
+    if (selected.length === 0) {
+      setSelectedBlock(null);
+    }
+  }, [selected]);
 
   return (
     <div className="col-10">
@@ -287,11 +268,15 @@ function BlockingPoliciesPage(props) {
       </div>
       {blockingPolicies.map((policy, policyindex) => {
         return (
-          <div>
+          <div key={policyindex}>
             <div className="row no-gutters">
               <div className="col-10">
                 <strong className="display-5" style={{ fontSize: 19 }}>
-                  Policy {policy.sequence}
+                  {policyindex === 0 ? (
+                    <span>{t('blocking:defaultPolicy')}</span>
+                  ) : (
+                    <span>Policy {policyindex}</span>
+                  )}
                 </strong>
               </div>
               <div className="col-2 text-right">
@@ -348,6 +333,7 @@ function BlockingPoliciesPage(props) {
                           {policy.tracks.map((track, i) => {
                             return (
                               <div
+                                key={i}
                                 draggable="true"
                                 onDragStart={e => drag(e, policyindex)}
                                 id={`check_${track.trackID}`}
@@ -359,7 +345,9 @@ function BlockingPoliciesPage(props) {
                                     className="track-multi-drag-check"
                                     type="checkbox"
                                     checked={selected.includes(track.trackID)}
-                                    onChange={e => handleCheckboxChange(e, track.trackID)}
+                                    onChange={e =>
+                                      handleCheckboxChange(e, track.trackID, policyindex)
+                                    }
                                   />
                                   <span className="checkmark"></span>
                                 </label>
@@ -381,7 +369,10 @@ function BlockingPoliciesPage(props) {
                               tiktok: tiktok,
                             };
                             return (
-                              <div className="d-flex align-items-stretch text-center policy-lp">
+                              <div
+                                className="d-flex align-items-stretch text-center policy-lp"
+                                key={platformindex}
+                              >
                                 <div className="plt-img">
                                   <img
                                     src={imgObj[platform.platformName.toLowerCase()]}
@@ -425,6 +416,7 @@ function BlockingPoliciesPage(props) {
                                       onChange={handleDurationChange}
                                       platformindex={platformindex}
                                       policyindex={policyindex}
+                                      className="blk-custom-select"
                                     >
                                       {Duration.map((option, i) => {
                                         return (
@@ -444,11 +436,17 @@ function BlockingPoliciesPage(props) {
                                   {platform.block && (
                                     <DatePicker
                                       dateFormat="MM/dd/yyyy"
-                                      placeholderText="mm/dd/yyyy"
                                       platformindex={platformindex}
                                       policyindex={policyindex}
                                       onChange={date =>
                                         handleDateChange(date, platformindex, policyindex)
+                                      }
+                                      customInput={
+                                        <CustomInput
+                                          ref={ref}
+                                          placeholder="mm/dd/yyyy"
+                                          {...props}
+                                        />
                                       }
                                       selected={
                                         platform.expirationDate != null &&

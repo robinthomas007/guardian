@@ -260,3 +260,46 @@ export const Duration = [
   { value: '> 2:00', text: '> 2:00', selected: false },
   { value: '> 2:30', text: '> 2:30', selected: false },
 ];
+
+export const getProjectReview = fetchBody => {
+  const fetchHeaders = new Headers({
+    'Content-Type': 'application/json',
+    Authorization: sessionStorage.getItem('accessToken'),
+  });
+  return fetch(window.env.api.url + '/project/review', {
+    method: 'POST',
+    headers: fetchHeaders,
+    body: fetchBody,
+  }).then(response => {
+    return response.json();
+  });
+};
+
+export const getPlatforms = () => {
+  return [
+    {
+      platformName: 'YouTube',
+      block: false,
+      duration: '',
+      expirationDate: '',
+    },
+    {
+      platformName: 'SoundCloud',
+      block: false,
+      duration: '',
+      expirationDate: '',
+    },
+    {
+      platformName: 'Facebook',
+      block: false,
+      duration: '',
+      expirationDate: '',
+    },
+    {
+      platformName: 'Instagram',
+      block: false,
+      duration: '',
+      expirationDate: '',
+    },
+  ];
+};
