@@ -8,7 +8,7 @@ import soundcloud from '../../../images/Soundcloud.png';
 import facebook from '../../../images/facebook.png';
 import instagram from '../../../images/instagram.png';
 import tiktok from '../../../images/tiktok.png';
-import { Table, Grid, Button, Form } from 'react-bootstrap';
+import { Table, Form } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import { Duration, showNotyInfo, showNotyAutoError } from './../../Utils';
 import moment from 'moment';
@@ -251,6 +251,7 @@ function BlockingPoliciesPage(props) {
             ...project,
             BlockingPolicySets: blockingPolicies,
             UnassignedBlockingPolicySetTracks: [],
+            blockingPoliciesStatus: '3',
           });
           localStorage.setItem('prevStep', 6);
         }
