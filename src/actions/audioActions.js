@@ -34,9 +34,9 @@ export const isrcCheck = data => {
       .then(response => {
         if (response.Status === 'OK' && response.ExTracks && response.ExTracks.length > 0) {
           dispatch(fetchSuccess(response.ExTracks));
-          // } else {
-          //   showNotyAutoError(i18n.t('audio:NoMatchingISRC'));
-          //   dispatch(fetchFailure(response.message));
+        } else {
+          showNotyAutoError(i18n.t('audio:NoMatchingISRC'));
+          dispatch(fetchFailure(response.message));
         }
       })
       .catch(error => {
@@ -70,28 +70,28 @@ export const cisFetchRequest = loading => {
 export const getCisData = data => {
   return dispatch => {
     // dispatch(cisFetchRequest(true));
-    // for (let i = 0; i < data.Iscrs.length; i++) {
-    //   dispatch(startUpload('CIS' + i));
-    //   dispatch(setUploadProgress('CIS' + i, 100));
-    // }
+    for (let i = 0; i < data.Iscrs.length; i++) {
+      dispatch(startUpload('CIS' + i));
+      dispatch(setUploadProgress('CIS' + i, 100));
+    }
     return Api.post('/media/api/cisupload', data)
       .then(response => response.json())
       .then(response => {
         if (response && response.length > 0) {
           dispatch(cisFetchSuccess(response));
-          // for (let i = 0; i < data.Iscrs.length; i++) {
-          //   dispatch(endUpload('CIS' + i));
-          // }
-          // showNotyInfo(
-          //   `${i18n.t('audio:weHaveFound')} ${response.length} ${i18n.t('audio:trackFromUMG')}`,
-          // );
+          for (let i = 0; i < data.Iscrs.length; i++) {
+            dispatch(endUpload('CIS' + i));
+          }
+          showNotyInfo(
+            `${i18n.t('audio:weHaveFound')} ${response.length} ${i18n.t('audio:trackFromUMG')}`,
+          );
         } else {
-          // for (let i = 0; i < data.Iscrs.length; i++) {
-          //   dispatch(endUpload('CIS' + i));
-          // }
-          // showNotyInfo(i18n.t('audio:NoFileFoundFromASPEN'));
-          // showNotyInfo();
-          // dispatch(cisFetchFailure(response));
+          for (let i = 0; i < data.Iscrs.length; i++) {
+            dispatch(endUpload('CIS' + i));
+          }
+          showNotyInfo(i18n.t('audio:NoFileFoundFromASPEN'));
+          showNotyInfo();
+          dispatch(cisFetchFailure(response));
         }
       })
       .catch(error => {
