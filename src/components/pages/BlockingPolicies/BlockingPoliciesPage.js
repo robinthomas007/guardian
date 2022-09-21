@@ -40,6 +40,7 @@ function BlockingPoliciesPage(props) {
   const [selected, setSelected] = useState([]);
   const [selectedBlock, setSelectedBlock] = useState(null);
   const ref = React.createRef();
+
   const handlePageDataLoad = () => {
     setShowLoader(true);
     const fetchBody = JSON.stringify({
@@ -330,6 +331,11 @@ function BlockingPoliciesPage(props) {
                           className="drop-area"
                           id={`blk-plcy-drop-${policy.sequence}`}
                         >
+                          {policy.tracks && policy.tracks.length === 0 && (
+                            <p className="drag-track-info">
+                              Drag tracks here from any other policy set
+                            </p>
+                          )}
                           {policy.tracks.map((track, i) => {
                             return (
                               <div

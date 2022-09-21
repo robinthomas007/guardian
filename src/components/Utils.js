@@ -301,5 +301,11 @@ export const getPlatforms = () => {
       duration: '',
       expirationDate: '',
     },
+    {
+      platformName: 'Tiktok',
+      block: false,
+      duration: '',
+      expirationDate: '',
+    },
   ];
 };
