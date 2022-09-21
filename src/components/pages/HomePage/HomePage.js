@@ -3,9 +3,10 @@ import RequestAccessModal from '../../modals/RequestAccessModal';
 import './HomePage.css';
 // import { withAuth } from '@okta/okta-react';
 import GuardianLogo from 'images/guardian-logo.png';
-import { showNotyInfo, showNotyAutoError } from 'components/Utils';
+import { showNotyInfo, showNotyAutoError, getCookie } from 'components/Utils';
 import { withTranslation } from 'react-i18next';
 import LanguageDropdown from '../../common/LanguageDropdown';
+import jwt_decode from 'jwt-decode';
 
 class HomePage extends Component {
   constructor(props) {
@@ -39,9 +40,18 @@ class HomePage extends Component {
   }
 
   async login() {
-    // return this.props.history.push('/findProject');
-    window.location.href =
-      'https://umgb2cnonprod.b2clogin.com/umgb2cnonprod.onmicrosoft.com/oauth2/v2.0/authorize?p=B2C_1A_LIMITEDSIGNUPSIGNIN&client_id=6772052e-f3a9-4e5a-b40b-d7dd9f0b8168&nonce=defaultNonce&redirect_uri=https://istioli.umusic.net/oauth2/guardian-dev&scope=openid&response_type=code&prompt=login';
+    const accesstoken = getCookie('guardian_auth');
+    let user = {};
+    try {
+      user = jwt_decode(accesstoken);
+    } catch (err) {
+      console.log(err);
+    }
+    console.log(user, 'useruseruser');
+    if (!user.email) {
+      window.location.href =
+        'https://umgb2cnonprod.b2clogin.com/umgb2cnonprod.onmicrosoft.com/oauth2/v2.0/authorize?p=B2C_1A_LIMITEDSIGNUPSIGNIN&client_id=6772052e-f3a9-4e5a-b40b-d7dd9f0b8168&nonce=defaultNonce&redirect_uri=https://istioli.umusic.net/oauth2/guardian-dev&scope=openid&response_type=code&prompt=login';
+    } else this.props.history.push('/findProject');
   }
 
   async logout() {

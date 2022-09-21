@@ -54,7 +54,16 @@ class Content extends Component {
 
   async checkAuthentication() {
     const accesstoken = getCookie('guardian_auth');
-    const user = jwt_decode(accesstoken);
+    let user = {};
+    try {
+      user = jwt_decode(accesstoken);
+    } catch (err) {
+      console.log(err);
+    }
+
+    if (!user.email) {
+      this.props.history.push('/');
+    }
 
     if (accesstoken !== this.state.accesstoken) {
       this.setState({ accesstoken });
