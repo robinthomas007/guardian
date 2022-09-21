@@ -32,8 +32,16 @@ class HomePage extends Component {
   // }
 
   async componentDidMount() {
-    // this.checkAuthentication();
-    this.login();
+    const accesstoken = getCookie('guardian_auth');
+    let user = {};
+    try {
+      user = jwt_decode(accesstoken);
+    } catch (err) {
+      console.log(err);
+    }
+    if (user.email) {
+      this.props.history.push('/findProject');
+    }
   }
 
   async componentDidUpdate() {
