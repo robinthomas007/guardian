@@ -33,6 +33,7 @@ class HomePage extends Component {
 
   async componentDidMount() {
     // this.checkAuthentication();
+    this.login();
   }
 
   async componentDidUpdate() {
