@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import RequestAccessModal from '../../modals/RequestAccessModal';
 import './HomePage.css';
-import { withAuth } from '@okta/okta-react';
+// import { withAuth } from '@okta/okta-react';
 import GuardianLogo from 'images/guardian-logo.png';
 import { showNotyInfo, showNotyAutoError } from 'components/Utils';
 import { withTranslation } from 'react-i18next';
@@ -17,28 +17,31 @@ class HomePage extends Component {
     };
     this.showRequestModal = this.showRequestModal.bind(this);
     this.hideRequestModal = this.hideRequestModal.bind(this);
-    this.checkAuthentication = this.checkAuthentication.bind(this);
+    // this.checkAuthentication = this.checkAuthentication.bind(this);
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
   }
 
-  async checkAuthentication() {
-    const authenticated = await this.props.auth.isAuthenticated();
-    if (authenticated !== this.state.authenticated) {
-      this.setState({ authenticated });
-    }
-  }
+  // async checkAuthentication() {
+  // const authenticated = await this.props.auth.isAuthenticated();
+  // const authenticated = false;
+  // if (authenticated !== this.state.authenticated) {
+  //   this.setState({ authenticated });
+  // }
+  // }
 
   async componentDidMount() {
-    this.checkAuthentication();
+    // this.checkAuthentication();
   }
 
   async componentDidUpdate() {
-    this.checkAuthentication();
+    // this.checkAuthentication();
   }
 
   async login() {
-    return this.props.history.push('/findProject');
+    // return this.props.history.push('/findProject');
+    window.location.href =
+      'https://umgb2cnonprod.b2clogin.com/umgb2cnonprod.onmicrosoft.com/oauth2/v2.0/authorize?p=B2C_1A_LIMITEDSIGNUPSIGNIN&client_id=6772052e-f3a9-4e5a-b40b-d7dd9f0b8168&nonce=defaultNonce&redirect_uri=https://istioli.umusic.net/oauth2/guardian-dev&scope=openid&response_type=code&prompt=login';
   }
 
   async logout() {
@@ -73,7 +76,7 @@ class HomePage extends Component {
 
   render() {
     const { t } = this.props;
-    if (this.state.authenticated === null) return null;
+    // if (this.state.authenticated === null) return null;
 
     return (
       <section className="container-fluid landing">
@@ -126,4 +129,4 @@ class HomePage extends Component {
   }
 }
 
-export default withAuth(withTranslation('home')(HomePage));
+export default withTranslation('home')(HomePage);
