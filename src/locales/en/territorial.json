@@ -22,8 +22,5 @@
   "NotyError": "Your rights policies have NOT been successfully saved.",
   "NotyError1": "Your rights policies have been successfully saved however, all Unassigned Tracks must be assigned to 1 or more sets for this step to be complete.",
   "NoRights": "No Rights",
-  "InProgress": "In Progress",
-  "defaultRights": "Default Rights (Worldwide)",
-  "CreateANewBlockingRights": "Create a Rights Rule",
-  "deleteRule": "Delete Rights Rule"
+  "InProgress": "In Progress"
 }

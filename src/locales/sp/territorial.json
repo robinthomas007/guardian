@@ -22,8 +22,5 @@
   "NotyError": "Sus políticas de derechos NO se han guardado correctamente",
   "NotyError1": "Sus políticas de derechos se han guardado correctamente, sin embargo, todas las pistas sin asignar deben asignarse a 1 o más conjuntos para completar este paso.",
   "NoRights": "Sin Derechos",
-  "InProgress": "En Curso",
-  "defaultRights": "Derechos predeterminados (en todo el mundo)",
-  "CreateANewBlockingRights": "Crear una regla de derechos",
-  "deleteRule": "Eliminar regla de derechos"
+  "InProgress": "En Curso"
 }
