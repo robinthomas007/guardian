@@ -25,7 +25,6 @@
   "BlockedUntilMessage": "The expiration date for the block policy you submit. If no date is selected, blocking will continue indefinitely.",
   "SelectOne": "Select One",
   "CreateANewBlockingPolicy": "Create A New Blocking Policy",
-  "deleteBlockPolicy": "Delete this Policy",
   "Draft": "Draft",
   "Save": "Save",
   "Continue": "Continue",
