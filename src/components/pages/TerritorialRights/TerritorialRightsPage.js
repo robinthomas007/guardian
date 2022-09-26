@@ -3,6 +3,10 @@ import LoadingImg from 'component_library/LoadingImg';
 import { withRouter } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
 import { Table, Form } from 'react-bootstrap';
+import ReactMultiSelectCheckboxes from 'react-multiselect-checkboxes';
+import { showNotyInfo, showNotyAutoError } from './../../Utils';
+import _ from 'lodash';
+
 import './TerritorialRights.css';
 
 function TerritorialRightsPage(props) {
@@ -10,9 +14,8 @@ function TerritorialRightsPage(props) {
   const [territorialRights, setTerritorialRights] = useState([]);
   const [showLoader, setShowLoader] = useState(false);
   const [project, setProject] = useState({});
-  const [selected, setSelected] = useState([]);
-
-  const rightindex = 0;
+  const [selectedTracks, setSelectedTracks] = useState([]);
+  const [selectedBlock, setSelectedBlock] = useState(null);
 
   const handlePageDataLoad = () => {
     setShowLoader(true);
@@ -82,7 +85,6 @@ function TerritorialRightsPage(props) {
     handlePageDataLoad();
   }, []);
 
-  console.log(territorialRights, 'territorialRightsterritorialRights');
   const createRightSet = () => {
     return {
       territorialRightsSetID: '',
@@ -91,7 +93,7 @@ function TerritorialRightsPage(props) {
       countries: [
         {
           id: 'WW',
-          name: this.props.t('territorial:Worldwide'),
+          name: props.t('territorial:Worldwide'),
         },
       ],
       tracks: [],
@@ -99,65 +101,160 @@ function TerritorialRightsPage(props) {
     };
   };
 
-  const createANewBlockingPolicy = () => {};
+  const createANewBlockingPolicy = () => {
+    const territorial = [...territorialRights];
+    territorial.push(createRightSet());
+    setTerritorialRights(territorial);
+  };
 
-  const deleteBlockingPolicy = () => {};
+  const deleteBlockingPolicy = (e, rightIndex) => {
+    const newTerr = [...territorialRights];
+    newTerr[0].tracks.push(...territorialRights[rightIndex].tracks);
+    newTerr.splice(rightIndex, 1);
+    setTerritorialRights(newTerr);
+  };
 
   function allowDrop(ev) {
     ev.preventDefault();
   }
 
   function drag(ev, index) {
-    // const id = ev.target.id ? ev.target.id.split('_')[1] : '';
-    // ev.dataTransfer.setData('policyData', JSON.stringify({ trackID: id, index: index }));
-    // if (selected.length > 0) {
-    //   const ele = document.querySelector(`#${ev.target.id} .track-title-name`);
-    //   ele.innerHTML = `You are dragging ${selected.length} files`;
-    // }
+    const id = ev.target.id ? ev.target.id.split('_')[1] : '';
+    ev.dataTransfer.setData('rightsData', JSON.stringify({ trackID: id, index: index }));
+    if (selectedTracks.length > 0) {
+      const ele = document.querySelector(`#${ev.target.id} .track-title-name`);
+      ele.innerHTML = `You are dragging ${selectedTracks.length} files`;
+    }
   }
 
   function drop(ev, index) {
-    // ev.preventDefault();
-    // const data = JSON.parse(ev.dataTransfer.getData('policyData'));
-    // let tracks = [];
-    // if (index === data.index) return false;
-    // blockingPolicies.forEach(element => {
-    //   let track = [];
-    //   if (selected.length > 0)
-    //     track = element.tracks.filter(track => selected.includes(track.trackID));
-    //   else {
-    //     track = element.tracks.filter(track => track.trackID === data.trackID);
-    //   }
-    //   if (track.length > 0) tracks = [...tracks, ...track];
-    // });
-    // const modifiedPolicies = [...blockingPolicies];
+    ev.preventDefault();
+    const data = JSON.parse(ev.dataTransfer.getData('rightsData'));
+    let tracks = [];
+    if (index === data.index) return false;
+    territorialRights.forEach(element => {
+      let track = [];
+      if (selectedTracks.length > 0)
+        track = element.tracks.filter(track => selectedTracks.includes(track.trackID));
+      else {
+        track = element.tracks.filter(track => track.trackID === data.trackID);
+      }
+      if (track.length > 0) tracks = [...tracks, ...track];
+    });
+    const modifiedTerritorials = [...territorialRights];
     // adding the track to new set
-    // modifiedPolicies[index].tracks = [...blockingPolicies[index].tracks, ...tracks];
+    modifiedTerritorials[index].tracks = [...territorialRights[index].tracks, ...tracks];
     // removing track from existing set
-    // const removeTracks = selected.length > 0 ? selected : [data.trackID];
-    // modifiedPolicies[data.index].tracks = _.filter(blockingPolicies[data.index].tracks, val => {
-    //   return !removeTracks.includes(val.trackID);
-    // });
-    // setSelected([]);
-    // setBlockingPolicies(modifiedPolicies);
+    const removeTracks = selectedTracks.length > 0 ? selectedTracks : [data.trackID];
+    modifiedTerritorials[data.index].tracks = _.filter(
+      territorialRights[data.index].tracks,
+      val => {
+        return !removeTracks.includes(val.trackID);
+      },
+    );
+    setSelectedTracks([]);
+    setTerritorialRights(modifiedTerritorials);
   }
 
   const handleCheckboxChange = (e, trackId, blkIndex) => {
-    // if (selectedBlock === null || selectedBlock === blkIndex) {
-    //   if (e.target.checked) {
-    //     setSelected([...selected, trackId]);
-    //   } else {
-    //     setSelected(selected.filter(id => id !== trackId));
-    //   }
-    //   setSelectedBlock(blkIndex);
-    // } else {
-    //   alert('Select from any 1 Policy block at a time');
-    // }
+    if (selectedBlock === null || selectedBlock === blkIndex) {
+      if (e.target.checked) {
+        setSelectedTracks([...selectedTracks, trackId]);
+      } else {
+        setSelectedTracks(selectedTracks.filter(id => id !== trackId));
+      }
+      setSelectedBlock(blkIndex);
+    } else {
+      alert('Select from any 1 Policy block at a time');
+    }
+  };
+
+  useEffect(() => {
+    if (selectedTracks.length === 0) {
+      setSelectedBlock(null);
+    }
+  }, [selectedTracks]);
+
+  const handleRightChange = e => {
+    const rightIndex = e.target.getAttribute('rightIndex');
+    const eTargetValue = e.target.value === 'true' ? true : false;
+    const modifiedRights = [...territorialRights];
+    modifiedRights[rightIndex].hasRights = eTargetValue;
+    setTerritorialRights(modifiedRights);
+  };
+
+  const selectTerChange = (data, e) => {
+    let hasWolrdWide = false;
+    const selectedCountries = data.map(c => {
+      if (c.value === 'WW') hasWolrdWide = true;
+      return { name: c.label, id: c.value };
+    });
+    const rightIndex = e.name;
+    const modifiedRights = [...territorialRights];
+    modifiedRights[rightIndex].countries = hasWolrdWide
+      ? selectedCountries.filter(o => o.id === 'WW')
+      : selectedCountries.filter(o => o.id !== 'WW');
+    setTerritorialRights(modifiedRights);
+  };
+
+  const showNotSavedNotification = () => {
+    showNotyAutoError(props.t('territorial:NotyError'));
+  };
+
+  const showNotification = projectID => {
+    showNotyInfo(props.t('territorial:NotyInfo'), () => {
+      props.history.push({
+        pathname: '/blockingPolicies/' + projectID,
+      });
+    });
+  };
+
+  const handleSubmit = () => {
+    setShowLoader(true);
+    const fetchHeaders = new Headers({
+      'Content-Type': 'application/json',
+      Authorization: sessionStorage.getItem('accessToken'),
+    });
+
+    setProject({
+      ...project,
+      TerritorialRightsSets: territorialRights,
+      UnassignedTerritorialRightsSetTracks: [],
+    });
+    const fetchBody = JSON.stringify({
+      projectID: props.match.params.projectID,
+      TerritorialRightsSets: territorialRights,
+      NoRightsTracks: [],
+    });
+
+    fetch(window.env.api.url + '/project/territorialrights', {
+      method: 'POST',
+      headers: fetchHeaders,
+      body: fetchBody,
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(responseJSON => {
+        setShowLoader(false);
+        console.log(responseJSON, 'responseJSONresponseJSONresponseJSON');
+        if (responseJSON.errorMessage) {
+          showNotSavedNotification();
+        } else {
+          showNotification(props.match.params.projectID);
+          localStorage.setItem('prevStep', 5);
+        }
+      })
+      .catch(error => {
+        console.error(error);
+        showNotSavedNotification();
+        setShowLoader(false);
+      });
   };
 
   return (
     <div className="col-10">
-      <LoadingImg show={false} />
+      <LoadingImg show={showLoader} />
 
       <div className="row no-gutters step-description">
         <div className="col-12">
@@ -175,7 +272,7 @@ function TerritorialRightsPage(props) {
               <div className="col-10">
                 <strong className="display-5" style={{ fontSize: 19 }}>
                   {rightindex === 0 ? (
-                    <span>{t('blocking:defaultPolicy')}</span>
+                    <span>{t('territorial:defaultRights')}</span>
                   ) : (
                     <span>Rights {rightindex}</span>
                   )}
@@ -184,7 +281,7 @@ function TerritorialRightsPage(props) {
               <div className="col-2 text-right">
                 {rightindex === 0 && (
                   <button className="btn btn-secondary" onClick={createANewBlockingPolicy}>
-                    + {t('blocking:CreateANewBlockingPolicy')}
+                    + {t('territorial:CreateANewBlockingRights')}
                   </button>
                 )}
                 {rightindex > 0 && (
@@ -193,7 +290,7 @@ function TerritorialRightsPage(props) {
                     onClick={e => deleteBlockingPolicy(e, rightindex)}
                   >
                     <i className="material-icons">delete</i>&nbsp;
-                    {t('blocking:deleteBlockPolicy')}
+                    {t('territorial:deleteRule')}
                   </button>
                 )}
               </div>
@@ -245,7 +342,7 @@ function TerritorialRightsPage(props) {
                                     name={`check_${track.trackID}`}
                                     className="track-multi-drag-check"
                                     type="checkbox"
-                                    checked={selected.includes(track.trackID)}
+                                    checked={selectedTracks.includes(track.trackID)}
                                     onChange={e =>
                                       handleCheckboxChange(e, track.trackID, rightindex)
                                     }
@@ -259,7 +356,54 @@ function TerritorialRightsPage(props) {
                           })}
                         </div>
                       </td>
-                      <td colSpan="5" className="p-0"></td>
+                      <td colSpan="5" className="p-0">
+                        <div className="d-flex p-5">
+                          <div className="rights-input-wrap">
+                            <div className="rights-input">
+                              <Form.Control
+                                type="radio"
+                                checked={rights.hasRights ? true : false}
+                                onChange={e => handleRightChange(e)}
+                                rightIndex={rightindex}
+                                value={true}
+                              />
+                              <label>Has Rights</label>
+                            </div>
+                            <div className="rights-input">
+                              <Form.Control
+                                type="radio"
+                                checked={!rights.hasRights ? true : false}
+                                onChange={e => handleRightChange(e)}
+                                rightIndex={rightindex}
+                                value={false}
+                              />
+                              <label>No Rights</label>
+                            </div>
+                          </div>
+                          <div className="select-ter">
+                            <ReactMultiSelectCheckboxes
+                              value={rights.countries.map(c => {
+                                return { label: c.name, value: c.id };
+                              })}
+                              name={rightindex}
+                              placeholderButtonLabel="Select Territory"
+                              onChange={(data, e) => selectTerChange(data, e)}
+                              options={project.Countries.map(c => {
+                                return { label: c.name, value: c.id };
+                              })}
+                            />
+                          </div>
+                          <div className="selected-ter">
+                            {rights.countries.map(c => {
+                              return (
+                                <span>
+                                  {c.name} <i className="material-icons">close</i>
+                                </span>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      </td>
                     </tr>
                   </tbody>
                 </Table>
@@ -268,8 +412,23 @@ function TerritorialRightsPage(props) {
           </div>
         );
       })}
+      <div className="row save-buttons">
+        <div className="col-12">
+          <div className="audio-footer-action-fxd">
+            <button
+              tabIndex="6+"
+              id="contactsSaveContButton"
+              type="button"
+              className="btn btn-primary saveAndContinueButton"
+              onClick={e => handleSubmit(e)}
+            >
+              {t('blocking:Save')} & {t('blocking:Continue')}
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
 
-export default withRouter(withTranslation('blocking')(TerritorialRightsPage));
+export default withRouter(withTranslation('territorial')(TerritorialRightsPage));

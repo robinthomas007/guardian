@@ -16,12 +16,12 @@ import { compose } from 'redux';
 class ProjectContactsPage extends Component {
   constructor(props) {
     const user = JSON.parse(sessionStorage.getItem('user'));
-
+    console.log(user, 'useruseruser123ß');
     super(props);
     this.state = {
       formInputs: {
         projectPrimaryContact: user.name,
-        projectPrimaryContactEmail: user.preferred_username,
+        projectPrimaryContactEmail: user.email,
         projectSecurityID: '1',
         projectAdditionalContacts: '',
         projectStatusID: '1',

@@ -4,4 +4,57 @@
 
 .ter-right-table th:nth-child(2) {
   width: 25%;
+  padding-left: 50px;
+}
+
+.ter-right-table td:nth-child(2) {
+  vertical-align: top;
+  background: #fff;
+}
+
+.ter-right-table .rights-input-wrap {
+  width: 33%;
+}
+
+.ter-right-table .rights-input-wrap > .rights-input {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: auto;
+  margin-bottom: 10px;
+}
+
+.ter-right-table .rights-input-wrap > .rights-input input {
+  width: auto;
+}
+
+.ter-right-table .rights-input-wrap > .rights-input label {
+  margin: 0;
+  padding-left: 10px;
+}
+
+.select-ter {
+  width: 34%;
+}
+
+.selected-ter {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  width: 33%;
+}
+
+.selected-ter span {
+  background: #f5f5f5;
+  padding: 12px 15px;
+  border-radius: 4px;
+  color: #01579b;
+  margin: 5px;
+}
+
+.selected-ter span i {
+  font-size: 17px;
+  vertical-align: middle;
+  cursor: pointer;
 }
