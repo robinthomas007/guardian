@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
 import ReactGA from 'react-ga';
 import Home from 'components/pages/HomePage/HomePage';
-// import Login from './login';
+import Login from './login';
 import Content from 'components/content';
 import { createBrowserHistory } from 'history';
 import Toaster from 'component_library/Toaster';
@@ -31,6 +31,7 @@ class App extends Component {
         <Router history={history}>
           <Switch>
             <Route path="/" exact={true} component={Home} />
+            <Route path="/login" render={() => <Login baseUrl={config.okta.base_url} />} />
             <Route path="/" component={Content} />
           </Switch>
         </Router>
