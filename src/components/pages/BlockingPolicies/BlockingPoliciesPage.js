@@ -134,8 +134,7 @@ function BlockingPoliciesPage(props) {
   }
 
   function drag(ev, index) {
-    const id = ev.target.id ? ev.target.id.split('_')[1] : '';
-    ev.dataTransfer.setData('policyData', JSON.stringify({ trackID: id, index: index }));
+    ev.dataTransfer.setData('policyData', JSON.stringify({ trackID: ev.target.id, index: index }));
     if (selected.length > 0) {
       const ele = document.querySelector(`#${ev.target.id} .track-title-name`);
       ele.innerHTML = `You are dragging ${selected.length} files`;
@@ -151,9 +150,7 @@ function BlockingPoliciesPage(props) {
       let track = [];
       if (selected.length > 0)
         track = element.tracks.filter(track => selected.includes(track.trackID));
-      else {
-        track = element.tracks.filter(track => track.trackID === data.trackID);
-      }
+      else track = element.tracks.filter(track => track.trackID === data.trackID);
 
       if (track.length > 0) tracks = [...tracks, ...track];
     });
@@ -247,11 +244,7 @@ function BlockingPoliciesPage(props) {
           showNotSavedNotification();
         } else {
           showNotification(props.match.params.projectID);
-          props.setHeaderProjectData({
-            ...project,
-            BlockingPolicySets: blockingPolicies,
-            UnassignedBlockingPolicySetTracks: [],
-          });
+          props.setHeaderProjectData(project);
           localStorage.setItem('prevStep', 6);
         }
       })
