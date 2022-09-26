@@ -9,7 +9,7 @@ import SubmitProjectModal from '../../modals/SubmitProjectModal';
 import ShareModal from '../../modals/shareModal';
 import IncompleteProjectModal from '../../modals/IncompleteProjectModal';
 import { formatDateToYYYYMMDD, convertToLocaleTime, isPreReleaseDate } from '../../Utils';
-import { showNotyInfo, showNotyAutoError, getProjectReview } from 'components/Utils';
+import { showNotyInfo, showNotyAutoError } from 'components/Utils';
 // import * as reviewActions from '../../../actions/reviewActions';
 import moment from 'moment';
 import { withTranslation } from 'react-i18next';
@@ -43,29 +43,9 @@ class ReviewAndSubmitPage extends Component {
       showloader: false,
     });
     if (this.props.match && this.props.match.params && this.props.match.params.projectID) {
+      this.props.setProjectID(this.props.match.params.projectID, this.props.match.url);
       localStorage.setItem('prevStep', 7);
-      this.handlePageDataLoad();
-      console.log('Asdasd');
     }
-  }
-
-  handlePageDataLoad() {
-    this.setState({ showloader: true });
-    const fetchBody = JSON.stringify({
-      PagePath: this.props.match.url ? this.props.match.url : '',
-      ProjectID: this.props.match.params.projectID,
-      languagecode: localStorage.getItem('languageCode') || 'en',
-    });
-
-    getProjectReview(fetchBody)
-      .then(responseJSON => {
-        this.props.setHeaderProjectData(responseJSON);
-        this.setState({ showloader: false });
-      })
-      .catch(error => {
-        console.error(error);
-        this.setState({ showloader: false });
-      });
   }
 
   handleProjectCategoryClick(category) {
@@ -97,7 +77,6 @@ class ReviewAndSubmitPage extends Component {
   }
 
   handlePreSubmitCheck = () => {
-    console.log(this.props.data.Project, 'this.props.data.Project');
     return this.props.data.Project.isProjectComplete
       ? this.showProjectSubmitModal()
       : this.showIncompleteProjectModal();
