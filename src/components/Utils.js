@@ -251,12 +251,3 @@ export function getCookie(name) {
   var b = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
   return b ? b.pop() : '';
 }
-
-export const Duration = [
-  { value: '', text: 'Select One', selected: true },
-  { value: '> 30 sec', text: '> 30 sec', selected: false },
-  { value: '> 1:00', text: '> 1:00', selected: false },
-  { value: '> 1:30', text: '> 1:30', selected: false },
-  { value: '> 2:00', text: '> 2:00', selected: false },
-  { value: '> 2:30', text: '> 2:30', selected: false },
-];
