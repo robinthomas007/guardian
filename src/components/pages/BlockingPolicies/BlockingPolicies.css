@@ -1,149 +1,148 @@
-/* Territorial Rights & Blocking Polcies */
-
-.card-nav {
-  text-align: right;
-  margin-bottom: 10px;
+.blk-plcy-table th:nth-child(1) {
+  width: 27%;
 }
 
-.card-nav .dropdown {
-  margin-left: 10px;
+.blk-plcy-table th:nth-child(2) {
+  width: 17%;
 }
 
-.set-card {
-  margin-left: -20px;
-  padding: 1rem;
-  background-color: #f5f5f5;
+.blk-plcy-table th:nth-child(3) {
+  width: 5%;
 }
 
-.set-card btn.dropdown {
-  background-color: #fff;
+.blk-plcy-table th:nth-child(4) {
+  width: 10%;
 }
 
-.set-card table.table td {
-  vertical-align: top;
-  border-bottom: none;
+.blk-plcy-table th:nth-child(5) {
+  width: 15%;
 }
 
-.set-card table.table td input[type='text'] {
-  align-content: center;
-  text-align: center;
-  margin: 0 auto;
+.blk-plcy-table th:nth-child(6) {
+  width: 16%;
 }
 
-.set-card .track-draggable-area {
-  max-height: 400px;
-  overflow-y: auto;
+.track-bg {
+  background: #d9f3fe;
+  position: relative;
+}
+
+.bp-tr-list {
+  padding: 10px;
+  background: #ffffff;
+  margin: 10px 3px;
+}
+
+.drop-area {
+  height: 248px;
+  overflow: scroll;
   overflow-x: hidden;
 }
 
-span.drag-drop-arrow {
-  display: block;
-  height: 33px;
-  position: absolute;
-  padding-left: 50px;
-  left: -38px;
-  bottom: -44px;
-  background-image: url(/images/drag-over-arrow.png);
-  background-repeat: no-repeat;
-  z-index: 10;
+.drop-area::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }
 
-span.drag-drop-arrow > span {
-  position: absolute;
-  top: -20px;
-  left: -10px;
-  width: 160px;
-  font-size: 0.7em;
-  font-weight: 700;
+.policy-lp {
+  min-height: 50px;
 }
 
-ul.countries,
-ul.tracks {
-  margin: 0;
-  padding: 0.75rem;
-  list-style: none;
-}
-
-ul.tracks {
-  min-width: 260px;
-}
-
-ul.countries li,
-ul.tracks li {
+.policy-lp > div {
   display: flex;
-  padding-bottom: 0.6rem;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 0px;
 }
 
-ul.countries li .dropdown-item,
-ul.tracks li .dropdown-item {
-  margin: 0rem 0rem;
+.light-gray-bg {
+  background: #f5f5f5;
 }
 
-ul.countries li:last-child,
-ul.tracks li:last-child {
-  padding-bottom: 0;
+.light-gray-bg .react-datepicker__input-container {
+  background: #f5f5f5;
 }
 
-ul.countries li span,
-ul.tracks li span {
-  vertical-align: middle;
+.plt-img {
+  min-width: 27%;
 }
 
-ul.countries li label.dropdown-item,
-ul.tracks li label.dropdown-item {
-  padding: 0.5rem 1.1rem;
+.monetize {
+  min-width: 8%;
 }
 
-.dropdown .custom-checkbox {
+.blk-af-rel {
+  min-width: 16%;
+}
+
+.duration {
+  min-width: 24%;
+}
+
+.untill {
+  min-width: 25%;
+}
+
+.bp-tr-list label,
+.bp-tr-list .material-icons {
+  margin-right: 10px;
+}
+
+.blk-plcy-table td {
+  vertical-align: top;
+  /* padding: 0px !important; */
+}
+
+.blk-plcy-table .form-control:focus {
+  border-color: inherit;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.duration .form-control {
+  height: 35px !important;
+  width: 50%;
+  border-radius: 4px;
+  border-color: #c4c4c4;
+}
+
+.duration select.form-control:focus {
+  background-color: #f5f5f5;
+  border-color: #c4c4c4;
+}
+
+.untill .react-datepicker__input-container input {
+  background-color: #f5f5f5;
+}
+
+.untill .react-datepicker__input-container {
+  display: flex;
+  justify-content: center;
+}
+
+.blocking-custom-d-picker {
+  width: 50% !important;
+  height: 35px;
+  background-color: #f5f5f5;
+  border: 1px solid #c4c4c4;
+  border-radius: 4px;
   display: inline-block;
+  text-align: center;
 }
 
-.dropdown.tracks-dropdown {
-  padding-left: 0px;
-}
-
-.track-draggable-area.territory-tracks {
-  min-height: 324px;
-}
-
-.territory-tracks {
-  width: 260px;
-}
-
-.option-text {
-  color: #999;
-  font-style: italic;
-}
-
-.required-text {
-  color: #ff0000;
-  font-style: italic;
-}
-
-.platform-sprite.small {
-  display: block;
-  height: 28px;
-  width: 80px;
-  background-image: url(../../../images/platforms-sprite.png);
+.blk-plcy-table select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
   background-repeat: no-repeat;
+  background-position-x: 100%;
+  background-position-y: 5px;
 }
-
-.platform-sprite.small.youtube {
-  background-position: 0px -250px;
-}
-
-.platform-sprite.small.soundcloud {
-  background-position: 0px -278px;
-}
-
-.platform-sprite.small.facebook {
-  background-position: 0px -306px;
-}
-
-.platform-sprite.small.instagram {
-  background-position: 0px -334px;
-}
-
-.platform-sprite.small.twitter {
-  background-position: 0px -362px;
+.drag-track-info {
+  text-align: center;
+  top: 50%;
+  color: #666666;
+  position: absolute;
+  left: 24%;
 }

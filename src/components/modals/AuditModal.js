@@ -9,6 +9,7 @@ import * as auditAction from 'actions/auditAction';
 import { withRouter } from 'react-router-dom';
 import LoadingImg from 'component_library/LoadingImg';
 import ReactToPrint from 'react-to-print';
+import tiktok from '../../images/tiktok.png';
 
 const getCountries = countries => {
   return _.map(countries, 'name').toString();
@@ -226,7 +227,14 @@ const renderStep6BlockingPolicyTable = (blockingPolicies, t) => {
       return (
         <div className="platform-wrapper social-icons">
           <span>
-            <span className={`platform-sprite small ${platform.platformName.toLowerCase()}`}></span>
+            {platform.platformName.toLowerCase() !== 'tiktok' && (
+              <span
+                className={`platform-sprite small ${platform.platformName.toLowerCase()}`}
+              ></span>
+            )}
+            {platform.platformName.toLowerCase() === 'tiktok' && (
+              <img alt="tiktok" src={tiktok} style={{ width: '80%', paddingLeft: '10px' }} />
+            )}
           </span>
         </div>
       );

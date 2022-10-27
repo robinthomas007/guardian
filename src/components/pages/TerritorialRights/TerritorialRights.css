@@ -1,218 +1,60 @@
-/* Territorial Rights & Blocking Polcies */
-
-.card-nav {
-  text-align: right;
-  margin-bottom: 10px;
+.ter-right-table th:nth-child(1) {
+  width: 27%;
 }
 
-.card-nav .dropdown {
-  margin-left: 10px;
-}
-
-.set-card {
-  margin-left: -20px;
-  margin-bottom: 10px;
-  padding: 1rem;
-  background-color: #f5f5f5;
-}
-
-.btn.btn-secondary.dropdown-toggle {
-  background-color: #fff;
-}
-
-.btn.btn-secondary.dropdown-toggle:disabled {
-  background-color: #ccc;
-  width: 100% !important;
-}
-
-.set-card table.table th {
-  align-content: center;
-  text-align: center;
-  text-align: -webkit-center;
-  margin: 0 auto;
-}
-
-.set-card table.table td {
-  vertical-align: middle;
-  align-content: center;
-  text-align: center;
-  text-align: -webkit-center;
-  border-bottom: none;
-}
-
-.set-card table.table td input[type='text'] {
-  align-content: center;
-  text-align: center;
-  margin: 0 auto;
-}
-
-.set-card .track-draggable-area {
-  max-height: 400px;
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
-.set-card h3 {
-  margin-top: 8px;
-  margin-right: 8px;
-}
-
-span.drag-drop-arrow {
-  display: block;
-  height: 33px;
-  position: absolute;
+.ter-right-table th:nth-child(2) {
+  width: 25%;
   padding-left: 50px;
-  left: -38px;
-  bottom: -44px;
-  background-image: url(../../../images/drag-over-arrow.png);
-  background-repeat: no-repeat;
-  z-index: 10;
 }
 
-span.drag-drop-arrow > span {
-  position: absolute;
-  top: -20px;
-  left: -10px;
-  width: 160px;
-  font-size: 0.7em;
-  font-weight: 700;
+.ter-right-table td:nth-child(2) {
+  vertical-align: top;
+  background: #fff;
 }
 
-ul.countries,
-ul.tracks {
-  margin: 0;
-  padding: 0.75rem;
-  list-style: none;
+.ter-right-table .rights-input-wrap {
+  width: 33%;
 }
 
-ul.tracks {
-  min-width: 260px;
-}
-
-ul.countries li,
-ul.tracks li {
-  display: flex;
-  padding-bottom: 0.6rem;
-}
-
-ul.countries li .dropdown-item,
-ul.tracks li .dropdown-item {
-  margin: 0rem 0rem;
-}
-
-ul.countries li:last-child,
-ul.tracks li:last-child {
-  padding-bottom: 0;
-}
-
-ul.countries li span,
-ul.tracks li span {
-  vertical-align: middle;
-}
-
-ul.countries li label.dropdown-item,
-ul.tracks li label.dropdown-item {
-  padding: 0.5rem 1.1rem;
-}
-
-.track-draggable-area.territory-tracks {
-  min-height: 100px !important;
-}
-
-.dropdown .custom-checkbox {
-  display: inline-block;
-}
-
-.territory-tracks {
-  width: 260px;
-}
-
-.dropdown.tracks-dropdown {
-  padding-left: 0px;
-  width: 100%;
-}
-
-table.territorial-rights-table th {
-  padding: 20px 0 10px 0;
-}
-
-table.territorial-rights-table td {
-  border-top: solid 1px #ccc;
-  padding-top: 10px;
-}
-
-.option-text {
-  color: #999;
-  font-style: italic;
-}
-
-.required-text {
-  color: #ff0000;
-  font-style: italic;
-}
-
-button.btn.btn-secondary.action.align-middle {
-  padding: 0px 0.25rem;
-  margin-left: 4px;
-  height: 1.9rem;
-}
-
-.select-all {
+.ter-right-table .rights-input-wrap > .rights-input {
   display: flex;
   align-items: center;
-  padding-left: 6px;
+  justify-content: flex-start;
+  width: auto;
+  margin-bottom: 10px;
 }
 
-.select-all span {
+.ter-right-table .rights-input-wrap > .rights-input input {
+  width: auto;
+}
+
+.ter-right-table .rights-input-wrap > .rights-input label {
+  margin: 0;
   padding-left: 10px;
 }
 
-.rightsSetTracks .custom-checkbox,
-.unassignedTrack .custom-checkbox {
-  margin: 0 6px;
+.select-ter {
+  width: 34%;
 }
 
-.country-list {
-  overflow: scroll;
-  overflow-x: hidden;
+.selected-ter {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  width: 33%;
 }
 
-.country-list::-webkit-scrollbar {
-  width: 0;
-  height: 0;
+.selected-ter span {
+  background: #f5f5f5;
+  padding: 12px 15px;
+  border-radius: 4px;
+  color: #01579b;
+  margin: 5px;
 }
 
-.set-card .track-draggable-area::-webkit-scrollbar {
-  width: 0;
-  height: 0;
-}
-
-.review-card.territorial table tr td:nth-child(3) {
-  max-height: 100px;
-  overflow: auto;
-  padding: 10px 0px;
-}
-
-.review-card.territorial table tr td:nth-child(4) {
-  max-height: 100px;
-  overflow: auto;
-  padding: 10px 0px;
-}
-
-.review-card.territorial table tr td::-webkit-scrollbar {
-  width: 0;
-  height: 0;
-}
-
-.unassignedTrack-red {
-  color: #e74c3c;
-}
-
-.track-tit-name {
-  padding-left: 5px;
-  pointer-events: none;
-}
-
-.disabled_text {
-  color: rgb(136, 135, 135);
+.selected-ter span i {
+  font-size: 17px;
+  vertical-align: middle;
+  cursor: pointer;
 }

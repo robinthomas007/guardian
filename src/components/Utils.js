@@ -246,3 +246,71 @@ export const renameFile = (originalFile, newName) => {
     lastModified: originalFile.lastModified,
   });
 };
+
+export function getCookie(name) {
+  var b = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+  return b ? b.pop() : '';
+}
+
+export const deleteCookie = function(name) {
+  document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT; domain=.umusic.net';
+  document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT; domain=.umusic.net';
+};
+
+export const Duration = [
+  { value: '', text: 'Select One', selected: true },
+  { value: '> 30 sec', text: '> 30 sec', selected: false },
+  { value: '> 1:00', text: '> 1:00', selected: false },
+  { value: '> 1:30', text: '> 1:30', selected: false },
+  { value: '> 2:00', text: '> 2:00', selected: false },
+  { value: '> 2:30', text: '> 2:30', selected: false },
+];
+
+export const getProjectReview = fetchBody => {
+  const fetchHeaders = new Headers({
+    'Content-Type': 'application/json',
+    Authorization: sessionStorage.getItem('accessToken'),
+  });
+  return fetch(window.env.api.url + '/project/review', {
+    method: 'POST',
+    headers: fetchHeaders,
+    body: fetchBody,
+  }).then(response => {
+    return response.json();
+  });
+};
+
+export const getPlatforms = () => {
+  return [
+    {
+      platformName: 'YouTube',
+      block: false,
+      duration: '',
+      expirationDate: '',
+    },
+    {
+      platformName: 'SoundCloud',
+      block: false,
+      duration: '',
+      expirationDate: '',
+    },
+    {
+      platformName: 'Facebook',
+      block: false,
+      duration: '',
+      expirationDate: '',
+    },
+    {
+      platformName: 'Instagram',
+      block: false,
+      duration: '',
+      expirationDate: '',
+    },
+    {
+      platformName: 'Tiktok',
+      block: false,
+      duration: '',
+      expirationDate: '',
+    },
+  ];
+};
