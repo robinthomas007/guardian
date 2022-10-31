@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import moment from 'moment';
 import { withTranslation } from 'react-i18next';
 import { t } from 'i18next';
+import tiktok from '../../../../images/tiktok.png';
 
 class BlockingPoliciesDataTable extends Component {
   constructor(props) {
@@ -60,10 +61,13 @@ class BlockingPoliciesDataTable extends Component {
 
   getUnassignedBlockingPolicyTracks = () => {
     return this.props.data.UnassignedBlockingPolicySetTracks.map((track, i) => {
+      console.log(track, 'tracktracktrack');
+
       return (
         <tr key={i}>
           <td>{i === 0 ? this.props.t('review:UnassignedTracks') : ''}</td>
           <td>{track.trackTitle}</td>
+          <td>{this.props.t('review:MonetizeAll')}</td>
           <td>{this.props.t('review:MonetizeAll')}</td>
           <td>{this.props.t('review:MonetizeAll')}</td>
           <td>{this.props.t('review:MonetizeAll')}</td>
@@ -95,6 +99,9 @@ class BlockingPoliciesDataTable extends Component {
             </th>
             <th className="align-items-center">
               <span className="platform-sprite small instagram"></span>
+            </th>
+            <th className="align-items-center">
+              <img alt="tiktok" src={tiktok} style={{ width: '36%', paddingBottom: '10px' }} />
             </th>
           </tr>
         </thead>

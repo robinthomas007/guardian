@@ -209,6 +209,22 @@ function TerritorialRightsPage(props) {
     });
   };
 
+  const removeCountries = (c, rightIndex) => {
+    let hasWolrdWide = false;
+    if (c.id === 'WW') {
+      hasWolrdWide = true;
+      return false;
+    }
+    const modifiedRights = [...territorialRights];
+    modifiedRights[rightIndex].countries = modifiedRights[rightIndex].countries.filter(
+      o => o.id !== c.id,
+    );
+    if (modifiedRights[rightIndex].countries.length === 0) {
+      modifiedRights[rightIndex].countries = [{ name: 'Worldwide', id: 'WW' }];
+    }
+    setTerritorialRights(modifiedRights);
+  };
+
   const handleSubmit = () => {
     setShowLoader(true);
     const fetchHeaders = new Headers({
@@ -397,7 +413,13 @@ function TerritorialRightsPage(props) {
                             {rights.countries.map(c => {
                               return (
                                 <span>
-                                  {c.name} <i className="material-icons">close</i>
+                                  {c.name}{' '}
+                                  <i
+                                    className="material-icons"
+                                    onClick={() => removeCountries(c, rightindex)}
+                                  >
+                                    close
+                                  </i>
                                 </span>
                               );
                             })}
