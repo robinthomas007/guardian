@@ -2,8 +2,9 @@ import React from 'react';
 import './ExtendedTracks.css';
 import { Table, Tabs, Tab } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import Toggle from '../../../../component_library/Toggle';
 
-const Tracks = ({ tracks }) => {
+const Tracks = ({ tracks, status, onIsPublishToggle }) => {
   const { t } = useTranslation();
   return (
     <Table className="ext-tracks-table" responsive>
@@ -16,6 +17,7 @@ const Tracks = ({ tracks }) => {
           <th>{t('track:Artist')}</th>
           <th>{t('track:Single')}</th>
           <th>{t('track:ReleaseDate')}</th>
+          <th>Deliver ?</th>
         </tr>
       </thead>
       <tbody>
@@ -30,6 +32,12 @@ const Tracks = ({ tracks }) => {
               <i className="material-icons">{track.isSingle ? 'check' : 'close'}</i>
             </td>
             <td>{track.trackReleaseDate || t('track:TBD')}</td>
+            <td>
+              <Toggle
+                checked={Boolean(track.isPublish)}
+                onToggle={() => onIsPublishToggle(track.trackID)}
+              />
+            </td>
           </tr>
         ))}
       </tbody>
@@ -37,7 +45,7 @@ const Tracks = ({ tracks }) => {
   );
 };
 
-const Discs = ({ discs }) => {
+const Discs = ({ discs, status, onIsPublishToggle }) => {
   const { t } = useTranslation();
   return (
     <Tabs defaultActiveKey={discs[0].discNumber}>
@@ -47,19 +55,22 @@ const Discs = ({ discs }) => {
           eventKey={disc.discNumber}
           title={t('track:Disc') + ' ' + disc.discNumber}
         >
-          <Tracks tracks={disc.Tracks} />
+          <Tracks tracks={disc.Tracks} status={status} onIsPublishToggle={onIsPublishToggle} />
         </Tab>
       ))}
     </Tabs>
   );
 };
 
-export default ({ discs }) => {
+export default ({ discs, status, onIsPublishToggle }) => {
+  console.log('status', status);
   const renderTracks = () => {
     if (discs.length > 1) {
       return <Discs discs={discs} />;
     } else {
-      return <Tracks tracks={discs[0].Tracks} />;
+      return (
+        <Tracks tracks={discs[0].Tracks} status={status} onIsPublishToggle={onIsPublishToggle} />
+      );
     }
   };
 

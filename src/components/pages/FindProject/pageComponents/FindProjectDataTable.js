@@ -270,6 +270,10 @@ class FindProjectDataTable extends Component {
     );
   };
 
+  handleTrackPublish = trackID => {
+    console.log('trackID', trackID);
+  };
+
   renderProjects() {
     if (this.props.data.Projects) {
       const tableRows = this.props.data.Projects.map((project, i) => {
@@ -383,7 +387,11 @@ class FindProjectDataTable extends Component {
               </td>
             </tr>
             {this.state.expandedProjectIds.includes(project.projectID) ? (
-              <ExtendedTracks discs={project.Discs} />
+              <ExtendedTracks
+                discs={project.Discs}
+                status={project.status}
+                onIsPublishToggle={this.handleTrackPublish}
+              />
             ) : null}
           </React.Fragment>
         );
