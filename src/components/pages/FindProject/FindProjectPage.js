@@ -120,7 +120,7 @@ class FindProjectPage extends Component {
     this.props.handleProjectSearch({ searchCriteria: searchData });
   };
 
-  handleAdminStatusChange = (data, projectID) => {
+  handleAdminStatusChange = (data, projectID, publishIds) => {
     const searchCriteria = _.cloneDeep(this.props.formValues.values);
     const searchTerm = _.get(this.props, 'formValues.values.searchTerm', '');
     const searchData = {
@@ -131,7 +131,7 @@ class FindProjectPage extends Component {
     };
 
     if (data.id === '5' && data.name === 'Published') {
-      this.props.handlePublish({ ProjectIds: projectID }, searchData);
+      this.props.handlePublish({ ProjectIds: projectID, PublishTrackIds: publishIds }, searchData);
     } else {
       this.props.adminStatusChange({ ProjectIds: projectID, StatusID: data.id }, searchData);
     }

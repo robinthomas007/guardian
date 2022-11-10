@@ -21,6 +21,7 @@ class FindProjectDataTable extends Component {
       expandedProjectIds: [],
       projectIDToDelete: null,
       auditModal: null,
+      publishState: {},
     };
 
     this.handleSortDisplay = this.handleSortDisplay.bind(this);
@@ -149,7 +150,8 @@ class FindProjectDataTable extends Component {
       projectIds.push(project.projectID);
     }
     if (isValid) {
-      this.props.handleAdminStatusChange(data, projectIds);
+      const publishIds = this.state.publishState[project.projectID] || [];
+      this.props.handleAdminStatusChange(data, projectIds, publishIds);
       this.setState({ selectAllItem: null });
     } else {
       showNotyAutoError(this.props.t('search:publishError'));
@@ -270,8 +272,37 @@ class FindProjectDataTable extends Component {
     );
   };
 
-  handleTrackPublish = trackID => {
-    console.log('trackID', trackID);
+  handleTrackPublish = (project, trackID) => {
+    let { publishState } = this.state;
+    if (publishState[project.projectID]) {
+      if (publishState[project.projectID].includes(trackID)) {
+        this.setState({
+          publishState: {
+            ...publishState,
+            [project.projectID]: publishState[project.projectID].filter(id => id !== trackID),
+          },
+        });
+      } else {
+        this.setState({
+          publishState: {
+            ...publishState,
+            [project.projectID]: [...publishState[project.projectID], trackID],
+          },
+        });
+      }
+    } else {
+      let allTrackIDS = [];
+      project.Discs.forEach(disk => {
+        disk.Tracks.forEach(track => track.isPublish && allTrackIDS.push(track.trackID));
+      });
+      const trackIndex = allTrackIDS.indexOf(trackID);
+      if (trackIndex >= 0) {
+        allTrackIDS.splice(trackIndex, 1);
+      } else {
+        allTrackIDS.push(trackID);
+      }
+      this.setState({ publishState: { ...publishState, [project.projectID]: allTrackIDS } });
+    }
   };
 
   renderProjects() {
@@ -389,7 +420,7 @@ class FindProjectDataTable extends Component {
             {this.state.expandedProjectIds.includes(project.projectID) ? (
               <ExtendedTracks
                 discs={project.Discs}
-                status={project.status}
+                project={project}
                 onIsPublishToggle={this.handleTrackPublish}
               />
             ) : null}

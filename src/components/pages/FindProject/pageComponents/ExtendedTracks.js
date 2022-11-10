@@ -4,7 +4,7 @@ import { Table, Tabs, Tab } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import Toggle from '../../../../component_library/Toggle';
 
-const Tracks = ({ tracks, status, onIsPublishToggle }) => {
+const Tracks = ({ tracks, project, onIsPublishToggle }) => {
   const { t } = useTranslation();
   return (
     <Table className="ext-tracks-table" responsive>
@@ -34,8 +34,8 @@ const Tracks = ({ tracks, status, onIsPublishToggle }) => {
             <td>{track.trackReleaseDate || t('track:TBD')}</td>
             <td>
               <Toggle
-                checked={Boolean(track.isPublish)}
-                onToggle={() => onIsPublishToggle(track.trackID)}
+                defaultChecked={Boolean(track.isPublish)}
+                onChange={() => onIsPublishToggle(project, track.trackID)}
               />
             </td>
           </tr>
@@ -45,7 +45,7 @@ const Tracks = ({ tracks, status, onIsPublishToggle }) => {
   );
 };
 
-const Discs = ({ discs, status, onIsPublishToggle }) => {
+const Discs = ({ discs, project, onIsPublishToggle }) => {
   const { t } = useTranslation();
   return (
     <Tabs defaultActiveKey={discs[0].discNumber}>
@@ -55,21 +55,20 @@ const Discs = ({ discs, status, onIsPublishToggle }) => {
           eventKey={disc.discNumber}
           title={t('track:Disc') + ' ' + disc.discNumber}
         >
-          <Tracks tracks={disc.Tracks} status={status} onIsPublishToggle={onIsPublishToggle} />
+          <Tracks tracks={disc.Tracks} project={project} onIsPublishToggle={onIsPublishToggle} />
         </Tab>
       ))}
     </Tabs>
   );
 };
 
-export default ({ discs, status, onIsPublishToggle }) => {
-  console.log('status', status);
+export default ({ discs, project, onIsPublishToggle }) => {
   const renderTracks = () => {
     if (discs.length > 1) {
       return <Discs discs={discs} />;
     } else {
       return (
-        <Tracks tracks={discs[0].Tracks} status={status} onIsPublishToggle={onIsPublishToggle} />
+        <Tracks tracks={discs[0].Tracks} project={project} onIsPublishToggle={onIsPublishToggle} />
       );
     }
   };
