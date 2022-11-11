@@ -50,3 +50,11 @@ input:checked + .slider:before {
   -ms-transform: translateX(18px);
   transform: translateX(18px);
 }
+
+input:disabled + .slider {
+  background-color: gray;
+  cursor: not-allowed;
+}
+input:disabled + .slider:before {
+  background-color: #dee2e6;
+}
