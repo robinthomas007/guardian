@@ -36,7 +36,7 @@ const Tracks = ({ tracks, project, onIsPublishToggle }) => {
               <Toggle
                 defaultChecked={Boolean(track.isPublish)}
                 onChange={() => onIsPublishToggle(project, track.trackID)}
-                disabled={project.status === 'InProgress'}
+                disabled={project.status === 'In Progress'}
               />
             </td>
           </tr>
