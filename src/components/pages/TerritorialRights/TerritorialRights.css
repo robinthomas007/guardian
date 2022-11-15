@@ -58,3 +58,6 @@
   vertical-align: middle;
   cursor: pointer;
 }
+.blocked-tracks {
+  color: red;
+}

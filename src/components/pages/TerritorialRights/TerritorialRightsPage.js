@@ -111,10 +111,11 @@ function TerritorialRightsPage(props) {
           setTerritorialRights(blksets);
         }
         if (responseJSON.NoRightsTracks.length > 0) {
-          updateProjectStatus();
+          updateProjectStatus('4');
           blksets.push(createRightSet());
           blksets[blksets.length - 1].tracks.push(...responseJSON.NoRightsTracks);
           blksets[blksets.length - 1].hasRights = false;
+          blksets[blksets.length - 1].isBlocked = true;
           setTerritorialRights(blksets);
           const projectData = { ...res };
           projectData.projectStatus = 'No Rights';
@@ -123,9 +124,15 @@ function TerritorialRightsPage(props) {
           showNotyAutoError(
             'We do not own the rights to one or more of the tracks in your project. Please remove them from your project or correct the rights status outside of the Guardian to continue.',
           );
+        } else {
+          updateProjectStatus('1');
         }
         if (responseJSON.TerritorialRightsSets.length > 0) {
-          blksets.push(...responseJSON.TerritorialRightsSets);
+          let arrObj = responseJSON.TerritorialRightsSets.map(item => {
+            item.isUgc = true;
+            return item;
+          });
+          blksets.push(...arrObj);
           setTerritorialRights(blksets);
         }
         setShowLoader(false);
@@ -136,14 +143,14 @@ function TerritorialRightsPage(props) {
       });
   };
 
-  const updateProjectStatus = () => {
+  const updateProjectStatus = statusId => {
     const fetchHeaders = new Headers({
       'Content-Type': 'application/json',
       Authorization: sessionStorage.getItem('accessToken'),
     });
     const fetchBody = JSON.stringify({
       ProjectId: props.match.params.projectID,
-      StatusId: '4',
+      StatusId: statusId,
     });
 
     fetch(window.env.api.url + '/project/statusnonadmin', {
@@ -211,6 +218,9 @@ function TerritorialRightsPage(props) {
 
   function drop(ev, index) {
     ev.preventDefault();
+    if (!ev.dataTransfer.getData('rightsData')) {
+      return false;
+    }
     const data = JSON.parse(ev.dataTransfer.getData('rightsData'));
     let tracks = [];
     if (index === data.index) return false;
@@ -430,9 +440,11 @@ function TerritorialRightsPage(props) {
                               <div
                                 key={i}
                                 draggable="true"
-                                onDragStart={e => drag(e, rightindex)}
+                                onDragStart={e => !track.IsLockedByUgc && drag(e, rightindex)}
                                 id={`check_${track.trackID}`}
-                                className="bp-tr-list"
+                                className={
+                                  rights.isBlocked ? 'blocked-tracks bp-tr-list' : 'bp-tr-list'
+                                }
                               >
                                 <label className="custom-checkbox">
                                   <input
@@ -463,6 +475,7 @@ function TerritorialRightsPage(props) {
                                 onChange={e => handleRightChange(e)}
                                 rightIndex={rightindex}
                                 value={true}
+                                disabled={rights.isUgc}
                               />
                               <label>Has Rights</label>
                             </div>
@@ -473,18 +486,20 @@ function TerritorialRightsPage(props) {
                                 onChange={e => handleRightChange(e)}
                                 rightIndex={rightindex}
                                 value={false}
+                                disabled={rights.isUgc}
                               />
                               <label>No Rights</label>
                             </div>
                           </div>
                           <div className="select-ter">
                             <ReactMultiSelectCheckboxes
+                              disabled={rights.isUgc}
                               value={rights.countries.map(c => {
                                 return { label: c.name, value: c.id };
                               })}
                               name={rightindex}
                               placeholderButtonLabel="Select Territory"
-                              onChange={(data, e) => selectTerChange(data, e)}
+                              onChange={(data, e) => !rights.isUgc && selectTerChange(data, e)}
                               options={project.Countries.map(c => {
                                 return { label: c.name, value: c.id };
                               })}
@@ -497,7 +512,7 @@ function TerritorialRightsPage(props) {
                                   {c.name}{' '}
                                   <i
                                     className="material-icons"
-                                    onClick={() => removeCountries(c, rightindex)}
+                                    onClick={() => !rights.isUgc && removeCountries(c, rightindex)}
                                   >
                                     close
                                   </i>
