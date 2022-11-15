@@ -8,6 +8,7 @@ import { showNotyInfo, showNotyAutoError } from './../../Utils';
 import _ from 'lodash';
 
 import './TerritorialRights.css';
+import { updateProjectStatus } from 'actions/territorialRightsAction';
 
 function TerritorialRightsPage(props) {
   const { t } = props;
@@ -74,6 +75,87 @@ function TerritorialRightsPage(props) {
           setTerritorialRights(blksets);
         }
         props.setHeaderProjectData(responseJSON);
+        localStorage.prevStep === '4' && getRights(responseJSON);
+      })
+      .catch(error => {
+        console.error(error);
+        setShowLoader(false);
+      });
+  };
+
+  const getRights = res => {
+    setShowLoader(true);
+    const fetchHeaders = new Headers({
+      'Content-Type': 'application/json',
+      Authorization: sessionStorage.getItem('accessToken'),
+    });
+    const fetchBody = JSON.stringify({
+      ProjectId: props.match.params.projectID,
+      IsNewUgcRights: localStorage.prevStep === '4' ? true : false,
+      languagecode: localStorage.getItem('languageCode') || 'en',
+    });
+
+    fetch(window.env.api.url + '/project/ugcrights', {
+      method: 'POST',
+      headers: fetchHeaders,
+      body: fetchBody,
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(responseJSON => {
+        const blksets = [];
+        if (responseJSON.UnassignedTracks.length > 0) {
+          blksets.push(createRightSet());
+          blksets[0].tracks.push(...responseJSON.UnassignedTracks);
+          setTerritorialRights(blksets);
+        }
+        if (responseJSON.NoRightsTracks.length > 0) {
+          updateProjectStatus();
+          blksets.push(createRightSet());
+          blksets[blksets.length - 1].tracks.push(...responseJSON.NoRightsTracks);
+          blksets[blksets.length - 1].hasRights = false;
+          setTerritorialRights(blksets);
+          const projectData = { ...res };
+          projectData.projectStatus = 'No Rights';
+          projectData.projectStatusID = '4';
+          props.setHeaderProjectData(projectData);
+          showNotyAutoError(
+            'We do not own the rights to one or more of the tracks in your project. Please remove them from your project or correct the rights status outside of the Guardian to continue.',
+          );
+        }
+        if (responseJSON.TerritorialRightsSets.length > 0) {
+          blksets.push(...responseJSON.TerritorialRightsSets);
+          setTerritorialRights(blksets);
+        }
+        setShowLoader(false);
+      })
+      .catch(error => {
+        console.error(error);
+        setShowLoader(false);
+      });
+  };
+
+  const updateProjectStatus = () => {
+    const fetchHeaders = new Headers({
+      'Content-Type': 'application/json',
+      Authorization: sessionStorage.getItem('accessToken'),
+    });
+    const fetchBody = JSON.stringify({
+      ProjectId: props.match.params.projectID,
+      StatusId: '4',
+    });
+
+    fetch(window.env.api.url + '/project/statusnonadmin', {
+      method: 'POST',
+      headers: fetchHeaders,
+      body: fetchBody,
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(responseJSON => {
+        console.log(responseJSON, 'project status update');
       })
       .catch(error => {
         console.error(error);
@@ -210,9 +292,9 @@ function TerritorialRightsPage(props) {
   };
 
   const removeCountries = (c, rightIndex) => {
-    let hasWolrdWide = false;
+    // let hasWolrdWide = false;
     if (c.id === 'WW') {
-      hasWolrdWide = true;
+      // hasWolrdWide = true;
       return false;
     }
     const modifiedRights = [...territorialRights];
@@ -253,7 +335,6 @@ function TerritorialRightsPage(props) {
       })
       .then(responseJSON => {
         setShowLoader(false);
-        console.log(responseJSON, 'responseJSONresponseJSONresponseJSON');
         if (responseJSON.errorMessage) {
           showNotSavedNotification();
         } else {
