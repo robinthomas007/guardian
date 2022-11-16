@@ -431,7 +431,7 @@ class Header extends Component {
       this.props.t('header:InProgress'),
     );
     if (this.props.status) {
-      Projectstatus = this.props.status;
+      Projectstatus = this.props.status ? this.props.status : Projectstatus;
     }
     return (
       <div className="row d-flex no-gutters project-title">
@@ -731,7 +731,6 @@ const mapStateToProps = state => ({
   notifications: state.headerReducer.notifications,
   count: state.headerReducer.count,
   error: state.headerReducer.error,
-  status: state.territorialRightsReducer.status,
 });
 
 export default withRouter(

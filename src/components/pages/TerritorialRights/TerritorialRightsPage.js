@@ -43,39 +43,42 @@ function TerritorialRightsPage(props) {
       .then(responseJSON => {
         setShowLoader(false);
         setProject(responseJSON);
-        if (
-          responseJSON.TerritorialRightsSets.length > 0 &&
-          responseJSON.UnassignedTerritorialRightsSetTracks.length > 0
-        ) {
-          const blksets = [...responseJSON.TerritorialRightsSets];
-          blksets[0].tracks.push(...responseJSON.UnassignedTerritorialRightsSetTracks);
-          setTerritorialRights(blksets);
-        }
-        if (
-          responseJSON.TerritorialRightsSets.length > 0 &&
-          responseJSON.UnassignedTerritorialRightsSetTracks.length === 0
-        ) {
-          setTerritorialRights([...responseJSON.TerritorialRightsSets]);
-        }
-        if (
-          responseJSON.TerritorialRightsSets.length === 0 &&
-          responseJSON.UnassignedTerritorialRightsSetTracks.length > 0
-        ) {
-          const blksets = [];
-          blksets.push(createRightSet());
-          blksets[0].tracks.push(...responseJSON.UnassignedTerritorialRightsSetTracks);
-          setTerritorialRights(blksets);
-        }
-        if (
-          responseJSON.TerritorialRightsSets.length === 0 &&
-          responseJSON.UnassignedTerritorialRightsSetTracks.length === 0
-        ) {
-          const blksets = [];
-          blksets.push(createRightSet());
-          setTerritorialRights(blksets);
-        }
+        // if (localStorage.prevStep === '4') {
+        getRights(responseJSON);
+        // } else {
+        // if (
+        //   responseJSON.TerritorialRightsSets.length > 0 &&
+        //   responseJSON.UnassignedTerritorialRightsSetTracks.length > 0
+        // ) {
+        //   const blksets = [...responseJSON.TerritorialRightsSets];
+        //   blksets[0].tracks.push(...responseJSON.UnassignedTerritorialRightsSetTracks);
+        //   setTerritorialRights(blksets);
+        // }
+        // if (
+        //   responseJSON.TerritorialRightsSets.length > 0 &&
+        //   responseJSON.UnassignedTerritorialRightsSetTracks.length === 0
+        // ) {
+        //   setTerritorialRights([...responseJSON.TerritorialRightsSets]);
+        // }
+        // if (
+        //   responseJSON.TerritorialRightsSets.length === 0 &&
+        //   responseJSON.UnassignedTerritorialRightsSetTracks.length > 0
+        // ) {
+        //   const blksets = [];
+        //   blksets.push(createRightSet());
+        //   blksets[0].tracks.push(...responseJSON.UnassignedTerritorialRightsSetTracks);
+        //   setTerritorialRights(blksets);
+        // }
+        // if (
+        //   responseJSON.TerritorialRightsSets.length === 0 &&
+        //   responseJSON.UnassignedTerritorialRightsSetTracks.length === 0
+        // ) {
+        //   const blksets = [];
+        //   blksets.push(createRightSet());
+        //   setTerritorialRights(blksets);
+        // }
         props.setHeaderProjectData(responseJSON);
-        localStorage.prevStep === '4' && getRights(responseJSON);
+        // }
       })
       .catch(error => {
         console.error(error);
@@ -108,28 +111,35 @@ function TerritorialRightsPage(props) {
         if (responseJSON.UnassignedTracks.length > 0) {
           blksets.push(createRightSet());
           blksets[0].tracks.push(...responseJSON.UnassignedTracks);
+          blksets[0].unAssigned = true;
           setTerritorialRights(blksets);
         }
         if (responseJSON.NoRightsTracks.length > 0) {
           updateProjectStatus('4');
           blksets.push(createRightSet());
-          blksets[blksets.length - 1].tracks.push(...responseJSON.NoRightsTracks);
+          let arrObj = responseJSON.NoRightsTracks.map(item => {
+            item.IsLockedByUgc = true;
+            return item;
+          });
+          blksets[blksets.length - 1].tracks.push(...arrObj);
           blksets[blksets.length - 1].hasRights = false;
-          blksets[blksets.length - 1].isBlocked = true;
+          blksets[blksets.length - 1].isUgc = true;
+          blksets[blksets.length - 1].NoRights = true;
           setTerritorialRights(blksets);
-          const projectData = { ...res };
-          projectData.projectStatus = 'No Rights';
-          projectData.projectStatusID = '4';
-          props.setHeaderProjectData(projectData);
           showNotyAutoError(
             'We do not own the rights to one or more of the tracks in your project. Please remove them from your project or correct the rights status outside of the Guardian to continue.',
           );
         } else {
           updateProjectStatus('1');
         }
+        const projectData = { ...res };
+        projectData.projectStatus = 'No Rights';
+        projectData.projectStatusID = '4';
+        props.setHeaderProjectData(projectData);
         if (responseJSON.TerritorialRightsSets.length > 0) {
           let arrObj = responseJSON.TerritorialRightsSets.map(item => {
             item.isUgc = true;
+            item.territorial = true;
             return item;
           });
           blksets.push(...arrObj);
@@ -162,7 +172,7 @@ function TerritorialRightsPage(props) {
         return response.json();
       })
       .then(responseJSON => {
-        console.log(responseJSON, 'project status update');
+        props.setStatus(statusId === '1' ? 'In Progress' : 'No Rights');
       })
       .catch(error => {
         console.error(error);
@@ -217,6 +227,10 @@ function TerritorialRightsPage(props) {
   }
 
   function drop(ev, index) {
+    console.log(
+      ev.dataTransfer.getData('rightsData'),
+      "ev.dataTransfer.getData('rightsData')ev.dataTransfer.getData('rightsData')",
+    );
     ev.preventDefault();
     if (!ev.dataTransfer.getData('rightsData')) {
       return false;
@@ -329,10 +343,13 @@ function TerritorialRightsPage(props) {
       TerritorialRightsSets: territorialRights,
       UnassignedTerritorialRightsSetTracks: [],
     });
+    // console.log(territorialRights, "territorialRightsterritorialRightsterritorialRights")
+    // console.log(_.filter(territorialRights, val => val.territorial))
     const fetchBody = JSON.stringify({
       projectID: props.match.params.projectID,
-      TerritorialRightsSets: territorialRights,
-      NoRightsTracks: [],
+      TerritorialRightsSets: _.filter(territorialRights, val => val.territorial),
+      NoRightsTracks: _.filter(territorialRights, val => val.NoRights),
+      UnassignedTracks: _.filter(territorialRights, val => val.unAssigned),
     });
 
     fetch(window.env.api.url + '/project/territorialrights', {
@@ -394,7 +411,7 @@ function TerritorialRightsPage(props) {
                 {rightindex > 0 && (
                   <button
                     className="btn btn-secondary"
-                    onClick={e => deleteBlockingPolicy(e, rightindex)}
+                    onClick={e => !rights.isUgc && deleteBlockingPolicy(e, rightindex)}
                   >
                     <i className="material-icons">delete</i>&nbsp;
                     {t('territorial:deleteRule')}
@@ -443,7 +460,7 @@ function TerritorialRightsPage(props) {
                                 onDragStart={e => !track.IsLockedByUgc && drag(e, rightindex)}
                                 id={`check_${track.trackID}`}
                                 className={
-                                  rights.isBlocked ? 'blocked-tracks bp-tr-list' : 'bp-tr-list'
+                                  rights.NoRights ? 'blocked-tracks bp-tr-list' : 'bp-tr-list'
                                 }
                               >
                                 <label className="custom-checkbox">

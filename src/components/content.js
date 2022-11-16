@@ -35,6 +35,7 @@ class Content extends Component {
       pageViewCompact: true,
       projectID: '',
       pagePath: '',
+      projectStatus: null,
       project: {
         Project: {},
       },
@@ -214,6 +215,10 @@ class Content extends Component {
     localStorage.clear();
   };
 
+  setStatus = status => {
+    this.setState({ projectStatus: status });
+  };
+
   setHeaderProjectData = projectData => {
     if (this.state.project !== projectData && projectData.Project) {
       this.setState({ project: projectData });
@@ -250,6 +255,7 @@ class Content extends Component {
                 clearProject={this.clearProject}
                 handleLogoutClick={this.handleLogoutClick}
                 getUserData={this.getUserData}
+                status={this.state.projectStatus}
               />
               <div
                 className={
@@ -316,6 +322,7 @@ class Content extends Component {
                       setProjectID={this.setProjectID}
                       setHeaderProjectData={this.setHeaderProjectData}
                       serverTimeDate={this.state.serverTimeDate}
+                      setStatus={this.setStatus}
                     />
                   )}
                 />
