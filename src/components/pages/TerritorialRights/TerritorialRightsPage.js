@@ -6,9 +6,7 @@ import { Table, Form } from 'react-bootstrap';
 import ReactMultiSelectCheckboxes from 'react-multiselect-checkboxes';
 import { showNotyInfo, showNotyAutoError } from './../../Utils';
 import _ from 'lodash';
-
 import './TerritorialRights.css';
-import { updateProjectStatus } from 'actions/territorialRightsAction';
 
 function TerritorialRightsPage(props) {
   const { t } = props;
@@ -43,42 +41,8 @@ function TerritorialRightsPage(props) {
       .then(responseJSON => {
         setShowLoader(false);
         setProject(responseJSON);
-        // if (localStorage.prevStep === '4') {
-        getRights(responseJSON);
-        // } else {
-        // if (
-        //   responseJSON.TerritorialRightsSets.length > 0 &&
-        //   responseJSON.UnassignedTerritorialRightsSetTracks.length > 0
-        // ) {
-        //   const blksets = [...responseJSON.TerritorialRightsSets];
-        //   blksets[0].tracks.push(...responseJSON.UnassignedTerritorialRightsSetTracks);
-        //   setTerritorialRights(blksets);
-        // }
-        // if (
-        //   responseJSON.TerritorialRightsSets.length > 0 &&
-        //   responseJSON.UnassignedTerritorialRightsSetTracks.length === 0
-        // ) {
-        //   setTerritorialRights([...responseJSON.TerritorialRightsSets]);
-        // }
-        // if (
-        //   responseJSON.TerritorialRightsSets.length === 0 &&
-        //   responseJSON.UnassignedTerritorialRightsSetTracks.length > 0
-        // ) {
-        //   const blksets = [];
-        //   blksets.push(createRightSet());
-        //   blksets[0].tracks.push(...responseJSON.UnassignedTerritorialRightsSetTracks);
-        //   setTerritorialRights(blksets);
-        // }
-        // if (
-        //   responseJSON.TerritorialRightsSets.length === 0 &&
-        //   responseJSON.UnassignedTerritorialRightsSetTracks.length === 0
-        // ) {
-        //   const blksets = [];
-        //   blksets.push(createRightSet());
-        //   setTerritorialRights(blksets);
-        // }
+        getRights();
         props.setHeaderProjectData(responseJSON);
-        // }
       })
       .catch(error => {
         console.error(error);
@@ -86,7 +50,7 @@ function TerritorialRightsPage(props) {
       });
   };
 
-  const getRights = res => {
+  const getRights = () => {
     setShowLoader(true);
     const fetchHeaders = new Headers({
       'Content-Type': 'application/json',
@@ -132,10 +96,6 @@ function TerritorialRightsPage(props) {
         } else {
           updateProjectStatus('1');
         }
-        const projectData = { ...res };
-        projectData.projectStatus = 'No Rights';
-        projectData.projectStatusID = '4';
-        props.setHeaderProjectData(projectData);
         if (responseJSON.TerritorialRightsSets.length > 0) {
           let arrObj = responseJSON.TerritorialRightsSets.map(item => {
             item.isUgc = true;
@@ -343,13 +303,11 @@ function TerritorialRightsPage(props) {
       TerritorialRightsSets: territorialRights,
       UnassignedTerritorialRightsSetTracks: [],
     });
-    // console.log(territorialRights, "territorialRightsterritorialRightsterritorialRights")
-    // console.log(_.filter(territorialRights, val => val.territorial))
     const NoRightsTracks = _.filter(territorialRights, val => val.NoRights);
     const fetchBody = JSON.stringify({
       projectID: props.match.params.projectID,
       TerritorialRightsSets: _.filter(territorialRights, val => val.territorial),
-      NoRightsTracks: NoRightsTracks[0].tracks,
+      NoRightsTracks: NoRightsTracks.length > 0 ? NoRightsTracks[0].tracks : [],
       UnassignedTracks: _.filter(territorialRights, val => val.unAssigned),
     });
 
