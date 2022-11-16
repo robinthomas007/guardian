@@ -345,10 +345,11 @@ function TerritorialRightsPage(props) {
     });
     // console.log(territorialRights, "territorialRightsterritorialRightsterritorialRights")
     // console.log(_.filter(territorialRights, val => val.territorial))
+    const NoRightsTracks = _.filter(territorialRights, val => val.NoRights);
     const fetchBody = JSON.stringify({
       projectID: props.match.params.projectID,
       TerritorialRightsSets: _.filter(territorialRights, val => val.territorial),
-      NoRightsTracks: _.filter(territorialRights, val => val.NoRights),
+      NoRightsTracks: NoRightsTracks[0].tracks,
       UnassignedTracks: _.filter(territorialRights, val => val.unAssigned),
     });
 
