@@ -312,7 +312,6 @@ function TerritorialRightsPage(props) {
       projectID: props.match.params.projectID,
       TerritorialRightsSets: _.filter(territorialRights, val => val.territorial),
       NoRightsTracks: NoRightsTracks.length > 0 ? NoRightsTracks[0].tracks : [],
-      UnassignedTracks: _.filter(territorialRights, val => val.unAssigned),
     });
 
     fetch(window.env.api.url + '/project/territorialrights', {
