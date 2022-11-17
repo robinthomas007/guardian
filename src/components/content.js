@@ -12,11 +12,10 @@ import FindProjectPage from './pages/FindProject/FindProjectPage';
 import HelpGuide from './pages/HelpGuide/HelpGuidePage';
 import UserAdmin from './pages/UserAdmin/UserAdmin';
 import { withAuth } from '@okta/okta-react';
-import { connect, createDispatchHook } from 'react-redux';
+import { connect } from 'react-redux';
 import ProjectInbox from './pages/ProjectInbox';
 import ErrorBoundary from './common/ErrorBoundary';
 import * as releaseAction from './pages/ReleaseInformation/releaseAction';
-import * as territorialRightsAction from '../actions/territorialRightsAction';
 import UploadProgressAlert from 'components/SharedPageComponents/UploadProgresAlert';
 import { showNotyMaskWarning } from 'components/Utils';
 
@@ -203,8 +202,7 @@ class Content extends Component {
     localStorage.removeItem('projectData');
     localStorage.removeItem('upc');
     this.props.initializeUpcData();
-    this.props.initializeRightsData();
-    this.setState({ project: blankProject, clearProject: true }, () =>
+    this.setState({ project: blankProject, clearProject: true, projectStatus: 'In Progress' }, () =>
       this.setState({ clearProject: false }),
     );
   };
@@ -358,6 +356,7 @@ class Content extends Component {
                       data={this.state.project}
                       setHeaderProjectData={this.setHeaderProjectData}
                       serverTimeDate={this.state.serverTimeDate}
+                      setStatus={this.setStatus}
                     />
                   )}
                 />
@@ -403,7 +402,6 @@ export default withAuth(
     }),
     dispatch => ({
       initializeUpcData: () => dispatch(releaseAction.initializeUpcData()),
-      initializeRightsData: () => dispatch(territorialRightsAction.initializeRightsData()),
     }),
   )(Content),
 );

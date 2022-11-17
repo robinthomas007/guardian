@@ -61,6 +61,7 @@ class ReviewAndSubmitPage extends Component {
       .then(responseJSON => {
         this.props.setHeaderProjectData(responseJSON);
         this.setState({ showloader: false });
+        this.props.setStatus(responseJSON.Project.projectStatus);
       })
       .catch(error => {
         console.error(error);

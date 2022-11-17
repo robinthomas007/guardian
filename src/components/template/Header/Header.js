@@ -179,6 +179,7 @@ class Header extends Component {
 
   getStepIcon = (navLink, navIndex) => {
     const stepValidation = parseInt(this.props.projectData.Project[navLink.stepValidation]);
+    console.log(stepValidation, 'stepValidation', navLink.stepValidation);
     if (!stepValidation || parseInt(stepValidation) === 1) {
       return navIndex + 1;
     } else if (parseInt(stepValidation) === 2) {

@@ -187,10 +187,6 @@ function TerritorialRightsPage(props) {
   }
 
   function drop(ev, index) {
-    console.log(
-      ev.dataTransfer.getData('rightsData'),
-      "ev.dataTransfer.getData('rightsData')ev.dataTransfer.getData('rightsData')",
-    );
     ev.preventDefault();
     if (!ev.dataTransfer.getData('rightsData')) {
       return false;
@@ -210,6 +206,14 @@ function TerritorialRightsPage(props) {
     const modifiedTerritorials = [...territorialRights];
     // adding the track to new set
     modifiedTerritorials[index].tracks = [...territorialRights[index].tracks, ...tracks];
+    if (data.index === 0 && index > 0) {
+      modifiedTerritorials[index].territorial = true;
+      delete modifiedTerritorials[index].unAssigned;
+    }
+    if (index === 0 && data.index > 0) {
+      modifiedTerritorials[index].unAssigned = true;
+      delete modifiedTerritorials[index].territorial;
+    }
     // removing track from existing set
     const removeTracks = selectedTracks.length > 0 ? selectedTracks : [data.trackID];
     modifiedTerritorials[data.index].tracks = _.filter(
