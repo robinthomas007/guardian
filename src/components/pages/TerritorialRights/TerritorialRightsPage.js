@@ -206,11 +206,11 @@ function TerritorialRightsPage(props) {
     const modifiedTerritorials = [...territorialRights];
     // adding the track to new set
     modifiedTerritorials[index].tracks = [...territorialRights[index].tracks, ...tracks];
-    if (data.index === 0 && index > 0) {
+    if (index > 0) {
       modifiedTerritorials[index].territorial = true;
       delete modifiedTerritorials[index].unAssigned;
     }
-    if (index === 0 && data.index > 0) {
+    if (index === 0) {
       modifiedTerritorials[index].unAssigned = true;
       delete modifiedTerritorials[index].territorial;
     }
