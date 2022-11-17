@@ -1,10 +1,10 @@
 .switch {
   position: relative;
   display: inline-block;
-  width: 36px;
-  height: 20px;
-  margin-bottom: 8px;
-  bottom: -4px;
+  width: 30px;
+  height: 16px;
+  margin-bottom: 10px;
+  bottom: -5px;
 }
 
 .switch input {
@@ -21,8 +21,8 @@
   right: 0;
   bottom: 0;
   background-color: #636363;
-  -webkit-transition: 0.4s;
-  transition: 0.4s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
   border-radius: 34px;
 }
 
@@ -30,14 +30,14 @@
   position: absolute;
   border-radius: 50%;
   content: '';
-  height: 16px;
-  width: 16px;
+  height: 12px;
+  width: 12px;
   top: 2px;
   bottom: 2px;
   left: 2px;
   background-color: white;
-  -webkit-transition: 0.4s;
-  transition: 0.4s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
 }
 
 input:checked + .slider {
@@ -49,9 +49,9 @@ input:focus + .slider {
 }
 
 input:checked + .slider:before {
-  -webkit-transform: translateX(16px);
-  -ms-transform: translateX(16px);
-  transform: translateX(16px);
+  -webkit-transform: translateX(14px);
+  -ms-transform: translateX(14px);
+  transform: translateX(14px);
 }
 
 input:disabled + .slider {
