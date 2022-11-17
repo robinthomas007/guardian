@@ -17,6 +17,7 @@ const Tracks = ({ tracks, project, onIsPublishToggle }) => {
           <th>{t('track:Artist')}</th>
           <th>{t('track:Single')}</th>
           <th>{t('track:ReleaseDate')}</th>
+          <th className="status text-center">Has Rights</th>
           <th>Deliver ?</th>
         </tr>
       </thead>
@@ -32,11 +33,18 @@ const Tracks = ({ tracks, project, onIsPublishToggle }) => {
               <i className="material-icons">{track.isSingle ? 'check' : 'close'}</i>
             </td>
             <td>{track.trackReleaseDate || t('track:TBD')}</td>
+            <td className="status text-center">
+              {track.nonExclusive ? (
+                <i className="material-icons warning">report_problem</i>
+              ) : (
+                <i className="material-icons success">verified_user</i>
+              )}
+            </td>
             <td>
               <Toggle
                 defaultChecked={Boolean(track.isPublish)}
                 onChange={() => onIsPublishToggle(project, track.trackID)}
-                disabled={project.status === 'In Progress'}
+                disabled={project.status === 'In Progress' || track.nonExclusive}
               />
             </td>
           </tr>

@@ -1311,6 +1311,10 @@ td.status i.material-icons.success {
   color: green !important;
 }
 
+td.status i.material-icons.warning {
+  color: #f57f17 !important;
+}
+
 ul.results-controls {
   list-style: none;
   margin: 0;
