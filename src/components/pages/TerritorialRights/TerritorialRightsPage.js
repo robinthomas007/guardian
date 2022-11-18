@@ -72,22 +72,14 @@ function TerritorialRightsPage(props) {
       })
       .then(responseJSON => {
         const blksets = [];
-        if (responseJSON.UnassignedTracks.length > 0) {
-          blksets.push(createRightSet());
-          blksets[0].tracks.push(...responseJSON.UnassignedTracks);
-          blksets[0].unAssigned = true;
-          setTerritorialRights(blksets);
+        if (responseJSON.TerritorialRightsSets.length > 0) {
+          const terArr = _.reverse(responseJSON.TerritorialRightsSets);
+          blksets.push(...terArr);
         }
         if (responseJSON.NoRightsTracks.length > 0) {
           updateProjectStatus('4');
           blksets.push(createRightSet());
-          let arrObj = responseJSON.NoRightsTracks.map(item => {
-            item.IsLockedByUgc = true;
-            return item;
-          });
-          blksets[blksets.length - 1].tracks.push(...arrObj);
-          blksets[blksets.length - 1].hasRights = false;
-          blksets[blksets.length - 1].isUgc = true;
+          blksets[blksets.length - 1].tracks.push(...responseJSON.NoRightsTracks);
           blksets[blksets.length - 1].NoRights = true;
           setTerritorialRights(blksets);
           showNotyAutoError(
@@ -96,15 +88,7 @@ function TerritorialRightsPage(props) {
         } else {
           updateProjectStatus('1');
         }
-        if (responseJSON.TerritorialRightsSets.length > 0) {
-          let arrObj = responseJSON.TerritorialRightsSets.map(item => {
-            item.isUgc = true;
-            item.territorial = true;
-            return item;
-          });
-          blksets.push(...arrObj);
-          setTerritorialRights(blksets);
-        }
+        setTerritorialRights(blksets);
         setShowLoader(false);
       })
       .catch(error => {
@@ -188,6 +172,7 @@ function TerritorialRightsPage(props) {
 
   function drop(ev, index) {
     ev.preventDefault();
+    console.log(ev.dataTransfer.getData('rightsData'), "ev.dataTransfer.getData('rightsData')");
     if (!ev.dataTransfer.getData('rightsData')) {
       return false;
     }
@@ -206,14 +191,6 @@ function TerritorialRightsPage(props) {
     const modifiedTerritorials = [...territorialRights];
     // adding the track to new set
     modifiedTerritorials[index].tracks = [...territorialRights[index].tracks, ...tracks];
-    if (index > 0) {
-      modifiedTerritorials[index].territorial = true;
-      delete modifiedTerritorials[index].unAssigned;
-    }
-    if (index === 0) {
-      modifiedTerritorials[index].unAssigned = true;
-      delete modifiedTerritorials[index].territorial;
-    }
     // removing track from existing set
     const removeTracks = selectedTracks.length > 0 ? selectedTracks : [data.trackID];
     modifiedTerritorials[data.index].tracks = _.filter(
@@ -310,7 +287,7 @@ function TerritorialRightsPage(props) {
     const NoRightsTracks = _.filter(territorialRights, val => val.NoRights);
     const fetchBody = JSON.stringify({
       projectID: props.match.params.projectID,
-      TerritorialRightsSets: _.filter(territorialRights, val => val.territorial),
+      TerritorialRightsSets: _.filter(territorialRights, val => !val.NoRights),
       NoRightsTracks: NoRightsTracks.length > 0 ? NoRightsTracks[0].tracks : [],
     });
 
@@ -337,7 +314,6 @@ function TerritorialRightsPage(props) {
         setShowLoader(false);
       });
   };
-
   return (
     <div className="col-10">
       <LoadingImg show={showLoader} />
@@ -352,6 +328,8 @@ function TerritorialRightsPage(props) {
         </div>
       </div>
       {territorialRights.map((rights, rightindex) => {
+        let isDisabled = false;
+        isDisabled = rights.NoRights ? true : isDisabled;
         return (
           <div>
             <div className="row no-gutters">
@@ -415,11 +393,12 @@ function TerritorialRightsPage(props) {
                             </p>
                           )}
                           {rights.tracks.map((track, i) => {
+                            isDisabled = track.IsLockedByUgc ? true : isDisabled;
                             return (
                               <div
                                 key={i}
                                 draggable="true"
-                                onDragStart={e => !track.IsLockedByUgc && drag(e, rightindex)}
+                                onDragStart={e => !isDisabled && drag(e, rightindex)}
                                 id={`check_${track.trackID}`}
                                 className={
                                   rights.NoRights ? 'blocked-tracks bp-tr-list' : 'bp-tr-list'
@@ -427,6 +406,7 @@ function TerritorialRightsPage(props) {
                               >
                                 <label className="custom-checkbox">
                                   <input
+                                    disabled={isDisabled}
                                     name={`check_${track.trackID}`}
                                     className="track-multi-drag-check"
                                     type="checkbox"
@@ -454,7 +434,7 @@ function TerritorialRightsPage(props) {
                                 onChange={e => handleRightChange(e)}
                                 rightIndex={rightindex}
                                 value={true}
-                                disabled={rights.isUgc}
+                                disabled={isDisabled}
                               />
                               <label>Has Rights</label>
                             </div>
@@ -465,20 +445,20 @@ function TerritorialRightsPage(props) {
                                 onChange={e => handleRightChange(e)}
                                 rightIndex={rightindex}
                                 value={false}
-                                disabled={rights.isUgc}
+                                disabled={isDisabled}
                               />
                               <label>No Rights</label>
                             </div>
                           </div>
                           <div className="select-ter">
                             <ReactMultiSelectCheckboxes
-                              disabled={rights.isUgc}
+                              disabled={isDisabled}
                               value={rights.countries.map(c => {
                                 return { label: c.name, value: c.id };
                               })}
                               name={rightindex}
                               placeholderButtonLabel="Select Territory"
-                              onChange={(data, e) => !rights.isUgc && selectTerChange(data, e)}
+                              onChange={(data, e) => !isDisabled && selectTerChange(data, e)}
                               options={project.Countries.map(c => {
                                 return { label: c.name, value: c.id };
                               })}
@@ -491,7 +471,7 @@ function TerritorialRightsPage(props) {
                                   {c.name}{' '}
                                   <i
                                     className="material-icons"
-                                    onClick={() => !rights.isUgc && removeCountries(c, rightindex)}
+                                    onClick={() => !isDisabled && removeCountries(c, rightindex)}
                                   >
                                     close
                                   </i>
