@@ -74,7 +74,7 @@ const Discs = ({ discs, project, onIsPublishToggle }) => {
 export default ({ discs, project, onIsPublishToggle }) => {
   const renderTracks = () => {
     if (discs.length > 1) {
-      return <Discs discs={discs} />;
+      return <Discs discs={discs} project={project} onIsPublishToggle={onIsPublishToggle} />;
     } else {
       return (
         <Tracks tracks={discs[0].Tracks} project={project} onIsPublishToggle={onIsPublishToggle} />
