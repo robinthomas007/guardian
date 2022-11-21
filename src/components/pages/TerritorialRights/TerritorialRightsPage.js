@@ -73,13 +73,16 @@ function TerritorialRightsPage(props) {
       .then(responseJSON => {
         const blksets = [];
         if (responseJSON.TerritorialRightsSets.length > 0) {
-          const terArr = _.reverse(responseJSON.TerritorialRightsSets);
-          blksets.push(...terArr);
+          blksets.push(...responseJSON.TerritorialRightsSets);
         }
         if (responseJSON.NoRightsTracks.length > 0) {
           updateProjectStatus('4');
           blksets.push(createRightSet());
-          blksets[blksets.length - 1].tracks.push(...responseJSON.NoRightsTracks);
+          let arrObj = responseJSON.NoRightsTracks.map(item => {
+            item.IsLockedByUgc = true;
+            return item;
+          });
+          blksets[blksets.length - 1].tracks.push(...arrObj);
           blksets[blksets.length - 1].NoRights = true;
           setTerritorialRights(blksets);
           showNotyAutoError(
@@ -172,7 +175,6 @@ function TerritorialRightsPage(props) {
 
   function drop(ev, index) {
     ev.preventDefault();
-    console.log(ev.dataTransfer.getData('rightsData'), "ev.dataTransfer.getData('rightsData')");
     if (!ev.dataTransfer.getData('rightsData')) {
       return false;
     }
@@ -351,7 +353,7 @@ function TerritorialRightsPage(props) {
                 {rightindex > 0 && (
                   <button
                     className="btn btn-secondary"
-                    onClick={e => !rights.isUgc && deleteBlockingPolicy(e, rightindex)}
+                    onClick={e => !isDisabled && deleteBlockingPolicy(e, rightindex)}
                   >
                     <i className="material-icons">delete</i>&nbsp;
                     {t('territorial:deleteRule')}
@@ -398,7 +400,7 @@ function TerritorialRightsPage(props) {
                               <div
                                 key={i}
                                 draggable="true"
-                                onDragStart={e => !isDisabled && drag(e, rightindex)}
+                                onDragStart={e => !track.IsLockedByUgc && drag(e, rightindex)}
                                 id={`check_${track.trackID}`}
                                 className={
                                   rights.NoRights ? 'blocked-tracks bp-tr-list' : 'bp-tr-list'
