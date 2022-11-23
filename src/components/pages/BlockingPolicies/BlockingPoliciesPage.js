@@ -152,6 +152,10 @@ function BlockingPoliciesPage(props) {
     const eTargetValue = e.target.value === 'true' ? true : false;
     const modifiedPolicies = [...blockingPolicies];
     modifiedPolicies[policyindex].platformPolicies[platformindex].block = eTargetValue;
+    if (!eTargetValue) {
+      modifiedPolicies[policyindex].platformPolicies[platformindex].duration = '';
+      modifiedPolicies[policyindex].platformPolicies[platformindex].expirationDate = '';
+    }
     setBlockingPolicies(modifiedPolicies);
   };
 
