@@ -138,7 +138,21 @@ class FindProjectPage extends Component {
   };
 
   render() {
-    const { loading, result, handleSubmit, searchCriteria, facets, t } = this.props;
+    let { loading, result, handleSubmit, searchCriteria, facets, t } = this.props;
+    let data = { ...result };
+    if (data.Projects) {
+      const projects = data.Projects.map(project => {
+        let Discs = project.Discs.map(disk => {
+          let Tracks = disk.Tracks.map(track => {
+            let isPublish = project.status === 'Published' ? track.isPublish : !track.nonExclusive;
+            return { ...track, isPublish };
+          });
+          return { ...disk, Tracks };
+        });
+        return { ...project, Discs };
+      });
+      data.Projects = projects;
+    }
     return (
       <div className="col-10">
         <IntroModal />
@@ -229,7 +243,7 @@ class FindProjectPage extends Component {
           <FindProjectDataTable
             t={t}
             userData={JSON.parse(sessionStorage.getItem('user'))}
-            data={result}
+            data={data}
             handleColumnSort={(columnID, columnSortOrder) =>
               this.handleColumnSort(columnID, columnSortOrder)
             }

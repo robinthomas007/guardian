@@ -272,36 +272,39 @@ class FindProjectDataTable extends Component {
     );
   };
 
+  componentDidUpdate(prevProps) {
+    if (this.props.data.Projects && this.props.data.Projects !== prevProps.data.Projects) {
+      let publishState = {};
+      this.props.data.Projects.map(project => {
+        publishState[project.projectID] = [];
+        project.Discs.map(disk => {
+          disk.Tracks.map(track => {
+            if (track.isPublish) {
+              publishState[project.projectID].push(track.trackID);
+            }
+          });
+        });
+      });
+      this.setState({ publishState });
+    }
+  }
+
   handleTrackPublish = (project, trackID) => {
     let { publishState } = this.state;
-    if (publishState[project.projectID]) {
-      if (publishState[project.projectID].includes(trackID)) {
-        this.setState({
-          publishState: {
-            ...publishState,
-            [project.projectID]: publishState[project.projectID].filter(id => id !== trackID),
-          },
-        });
-      } else {
-        this.setState({
-          publishState: {
-            ...publishState,
-            [project.projectID]: [...publishState[project.projectID], trackID],
-          },
-        });
-      }
-    } else {
-      let allTrackIDS = [];
-      project.Discs.forEach(disk => {
-        disk.Tracks.forEach(track => track.isPublish && allTrackIDS.push(track.trackID));
+    if (publishState[project.projectID].includes(trackID)) {
+      this.setState({
+        publishState: {
+          ...publishState,
+          [project.projectID]: publishState[project.projectID].filter(id => id !== trackID),
+        },
       });
-      const trackIndex = allTrackIDS.indexOf(trackID);
-      if (trackIndex >= 0) {
-        allTrackIDS.splice(trackIndex, 1);
-      } else {
-        allTrackIDS.push(trackID);
-      }
-      this.setState({ publishState: { ...publishState, [project.projectID]: allTrackIDS } });
+    } else {
+      this.setState({
+        publishState: {
+          ...publishState,
+          [project.projectID]: [...publishState[project.projectID], trackID],
+        },
+      });
     }
   };
 
@@ -580,13 +583,6 @@ class FindProjectDataTable extends Component {
       </thead>
     );
   };
-
-  componentDidMount() {
-    this.setState({
-      data: this.props.data.Projects,
-      userData: this.props.userData,
-    });
-  }
 
   render() {
     return (
