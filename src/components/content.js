@@ -40,6 +40,7 @@ class Content extends Component {
       },
       serverTimeDate: '',
       clearProject: false,
+      prevLocation: '',
     };
     this.setProjectID = this.setProjectID.bind(this);
     this.getUserData = this.getUserData.bind(this);
@@ -74,6 +75,14 @@ class Content extends Component {
 
     if (!this.state.userLoaded) {
       this.getUserData();
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.location !== this.props.location) {
+      if (this.props.location.pathname === '/findProject') {
+        this.setState({ prevLocation: 'findProject' });
+      } else this.setState({ prevLocation: '' });
     }
   }
 
@@ -350,6 +359,7 @@ class Content extends Component {
                   path="/reviewSubmit/:projectID?"
                   render={() => (
                     <ReviewAndSubmitPage
+                      prevLocation={this.state.prevLocation}
                       user={this.state.user}
                       setProjectID={this.setProjectID}
                       projectID={this.state.project.Project.projectID}

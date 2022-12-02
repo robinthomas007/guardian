@@ -6,6 +6,7 @@ import TerritorialRightsTable from '../ReviewAndSubmit/pageComponents/Territoria
 import BlockingPoliciesDataTable from '../ReviewAndSubmit/pageComponents/BlockingPoliciesDataTable';
 import { withRouter } from 'react-router-dom';
 import SubmitProjectModal from '../../modals/SubmitProjectModal';
+import UpdateRepertoireModal from '../../modals/UpdateRepertoireModal';
 import ShareModal from '../../modals/shareModal';
 import IncompleteProjectModal from '../../modals/IncompleteProjectModal';
 import { formatDateToYYYYMMDD, convertToLocaleTime, isPreReleaseDate } from '../../Utils';
@@ -25,11 +26,14 @@ class ReviewAndSubmitPage extends Component {
       showRequestModal: false,
       showIncompleteProjectModal: false,
       shareModal: false,
+      updateModal: false,
+      updateModalData: [],
     };
     this.handleSubmitProjectClick = this.handleSubmitProjectClick.bind(this);
     this.handleProjectCategoryClick = this.handleProjectCategoryClick.bind(this);
     this.showProjectSubmitModal = this.showProjectSubmitModal.bind(this);
     this.hideProjectSubmitModal = this.hideProjectSubmitModal.bind(this);
+    this.hideUpdateModal = this.hideUpdateModal.bind(this);
     this.showIncompleteProjectModal = this.showIncompleteProjectModal.bind(this);
     this.hideIncompleteProjectModal = this.hideIncompleteProjectModal.bind(this);
     this.getStepNumber = this.getStepNumber.bind(this);
@@ -45,7 +49,9 @@ class ReviewAndSubmitPage extends Component {
     if (this.props.match && this.props.match.params && this.props.match.params.projectID) {
       localStorage.setItem('prevStep', 7);
       this.handlePageDataLoad();
-      console.log('Asdasd');
+    }
+    if (this.props.prevLocation === 'findProject') {
+      this.getUpdateModalData();
     }
   }
 
@@ -60,7 +66,9 @@ class ReviewAndSubmitPage extends Component {
     getProjectReview(fetchBody)
       .then(responseJSON => {
         this.props.setHeaderProjectData(responseJSON);
-        this.setState({ showloader: false });
+        if (this.props.prevLocation !== 'findProject') {
+          this.setState({ showloader: false });
+        }
         this.props.setStatus(responseJSON.Project.projectStatus);
       })
       .catch(error => {
@@ -69,6 +77,35 @@ class ReviewAndSubmitPage extends Component {
       });
   }
 
+  getUpdateModalData() {
+    this.setState({ showloader: true });
+    const fetchBody = JSON.stringify({
+      ProjectId: this.props.match.params.projectID,
+      languagecode: localStorage.getItem('languageCode') || 'en',
+    });
+    const fetchHeaders = new Headers({
+      'Content-Type': 'application/json',
+      Authorization: sessionStorage.getItem('accessToken'),
+    });
+
+    fetch(window.env.api.url + '/project/rssubscription ', {
+      method: 'POST',
+      headers: fetchHeaders,
+      body: fetchBody,
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(responseJSON => {
+        this.setState({ updateModalData: responseJSON });
+        if (
+          (responseJSON.Tracks && responseJSON.Tracks.length > 0) ||
+          (responseJSON.Rights && responseJSON.Rights.length > 0)
+        )
+          this.setState({ updateModal: true });
+        this.setState({ showloader: false });
+      });
+  }
   handleProjectCategoryClick(category) {
     this.props.history.push(category + this.props.match.params.projectID);
   }
@@ -89,6 +126,10 @@ class ReviewAndSubmitPage extends Component {
     this.setState({ showRequestModal: false });
   }
 
+  hideUpdateModal() {
+    this.setState({ updateModal: false });
+  }
+
   showIncompleteProjectModal() {
     this.setState({ showIncompleteProjectModal: true });
   }
@@ -98,7 +139,6 @@ class ReviewAndSubmitPage extends Component {
   }
 
   handlePreSubmitCheck = () => {
-    console.log(this.props.data.Project, 'this.props.data.Project');
     return this.props.data.Project.isProjectComplete
       ? this.showProjectSubmitModal()
       : this.showIncompleteProjectModal();
@@ -174,6 +214,13 @@ class ReviewAndSubmitPage extends Component {
           <LoadingImg show={this.state.showloader} />
 
           <PageHeader data={this.props.data.Project} />
+
+          <UpdateRepertoireModal
+            handleClose={this.hideUpdateModal}
+            show={this.state.updateModal}
+            t={t}
+            data={this.state.updateModalData}
+          />
 
           <SubmitProjectModal
             showModal={this.showProjectSubmitModal}
