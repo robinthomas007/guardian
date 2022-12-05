@@ -478,6 +478,13 @@ class UserAdmin extends Component {
     this.setState({ targetUser: modifiedTargetUser });
   };
 
+  newHandleLabelSelectChange = options => {
+    const { targetUser } = this.state;
+    const ids = options.map(opt => opt.value);
+
+    this.setState({ targetUser: { ...targetUser, secondaryLabelIds: ids } });
+  };
+
   handleKeyUp(e) {
     if (e.key === 'Enter') {
       this.fetchUsers();
@@ -496,6 +503,7 @@ class UserAdmin extends Component {
           handleUserUpdate={this.handleUserUpdate}
           handleTargetUserUpdate={this.handleTargetUserUpdate}
           handleLabelSelectChange={this.handleLabelSelectChange}
+          newHandleLabelSelectChange={this.newHandleLabelSelectChange}
           releasingLabels={this.state.releasingLabels}
           selectedOptions={this.state.targetUser.secondaryLabelIds}
         />

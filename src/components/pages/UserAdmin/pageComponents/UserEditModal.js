@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import LabelsInput from '../../../../components/pages/FindProject/pageComponents/LabelsInput';
 import { Button, Modal, Form } from 'react-bootstrap';
 import LabelsMultiSelect from './LabelsMultiSelect';
+import ReactMultiSelectCheckboxes from 'react-multiselect-checkboxes';
 
 class UserEditModal extends Component {
   constructor(props) {
@@ -30,6 +30,10 @@ class UserEditModal extends Component {
   };
 
   render() {
+    const options = this.props.releasingLabels.map(label => ({
+      label: label.name,
+      value: label.id,
+    }));
     return (
       <Modal id="userEditModal" show={this.props.showModal} onHide={this.handleClose}>
         <Modal.Header closeButton>
@@ -69,11 +73,16 @@ class UserEditModal extends Component {
               <Form.Group controlId="formLabel">
                 <Form.Label>Label/Company</Form.Label>
                 <br />
-                <LabelsMultiSelect
+                {/* <LabelsMultiSelect
                   options={this.props.releasingLabels}
                   onChange={(e, label) => this.props.handleLabelSelectChange(e, label)}
                   defaultText="Select Option"
                   selectedOptions={this.props.selectedOptions}
+                /> */}
+                <ReactMultiSelectCheckboxes
+                  options={options}
+                  value={options.filter(opt => this.props.selectedOptions.includes(opt.value))}
+                  onChange={option => this.props.newHandleLabelSelectChange(option)}
                 />
               </Form.Group>
             </Form.Row>
