@@ -1,0 +1,21 @@
+{
+  "Admin": "Administratrice",
+  "NewProject": "Nouveau projet",
+  "ProjectSearch": "Recherche de projet",
+  "ProjectInbox": "Boîte de réception du projet",
+  "Inbox": "Boîte de réception",
+  "Welcome": "Bienvenue",
+  "Logout": "Se déconnecter",
+  "Status": "Statut",
+  "InProgress": "En cours",
+  "ReleaseInfo": "Informations sur la version",
+  "Contacts": "Contacts",
+  "AudioFiles": "Fichiers audio",
+  "TrackInfo": "Informations sur la piste",
+  "Rights": "Droits",
+  "Blocking": "Blocage",
+  "Review": "Examen",
+  "Help/FAQs": "Aide/FAQ",
+  "UserAdministration": "Administration des utilisateurs",
+  "AddingComment": "Ajouter un commentaire"
+}

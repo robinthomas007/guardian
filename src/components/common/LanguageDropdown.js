@@ -21,6 +21,12 @@ export default class LanguageDropdown extends Component {
           value: 'sp',
           languageCode: 'es',
         },
+        {
+          label:
+            '<img class="lang-img" src="https://img.icons8.com/color/48/000000/france-circular.png"/> French',
+          value: 'fr',
+          languageCode: 'fr',
+        },
       ],
     };
   }

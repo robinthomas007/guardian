@@ -4,45 +4,59 @@ import detector from 'i18next-browser-languagedetector';
 
 import translationEN from 'locales/en/translation.json';
 import translationSP from 'locales/sp/translation.json';
+import translationFR from 'locales/fr/translation.json';
 
 import releaseInforEN from 'locales/en/release.json';
 import releaseInforSP from 'locales/sp/release.json';
+import releaseInforFR from 'locales/fr/release.json';
 
 import contactEN from 'locales/en/contact.json';
 import contactSP from 'locales/sp/contact.json';
+import contactFR from 'locales/fr/contact.json';
 
 import audioEN from 'locales/en/audio.json';
 import audioSP from 'locales/sp/audio.json';
+import audioFR from 'locales/fr/audio.json';
 
 import trackEN from 'locales/en/track.json';
 import trackSP from 'locales/sp/track.json';
+import trackFR from 'locales/fr/track.json';
 
 import territorialEN from 'locales/en/territorial.json';
 import territorialSP from 'locales/sp/territorial.json';
+import territorialFR from 'locales/fr/territorial.json';
 
 import reviewEN from 'locales/en/review.json';
 import reviewSP from 'locales/sp/review.json';
+import reviewFR from 'locales/fr/review.json';
 
 import headerEN from 'locales/en/header.json';
 import headerSP from 'locales/sp/header.json';
+import headerFR from 'locales/fr/header.json';
 
 import inboxEN from 'locales/en/inbox.json';
 import inboxSP from 'locales/sp/inbox.json';
+import inboxFR from 'locales/fr/inbox.json';
 
 import homeEN from 'locales/en/home.json';
 import homeSP from 'locales/sp/home.json';
+import homeFR from 'locales/fr/home.json';
 
 import searchEN from 'locales/en/search.json';
 import searchSP from 'locales/sp/search.json';
+import searchFR from 'locales/fr/search.json';
 
 import helpEN from 'locales/en/help.json';
 import helpSP from 'locales/sp/help.json';
+import helpFR from 'locales/fr/help.json';
 
 import blockingEN from 'locales/en/blocking.json';
 import blockingSP from 'locales/sp/blocking.json';
+import blockingFR from 'locales/fr/blocking.json';
 
 import introEN from 'locales/en/intro.json';
 import introSP from 'locales/sp/intro.json';
+import introFR from 'locales/fr/intro.json';
 
 // the translations
 const resources = {
@@ -77,6 +91,22 @@ const resources = {
     help: helpSP,
     blocking: blockingSP,
     intro: introSP,
+  },
+  fr: {
+    translation: translationFR,
+    releaseInfo: releaseInforFR,
+    contact: contactFR,
+    audio: audioFR,
+    track: trackFR,
+    territorial: territorialFR,
+    review: reviewFR,
+    header: headerFR,
+    inbox: inboxFR,
+    home: homeFR,
+    search: searchFR,
+    help: helpFR,
+    blocking: blockingFR,
+    intro: introFR,
   },
 };
 

@@ -127,7 +127,8 @@ class ReviewAndSubmitPage extends Component {
   }
 
   hideUpdateModal() {
-    this.setState({ updateModal: false });
+    this.handlePageDataLoad();
+    this.setState({ updateModal: false, showloader: false });
   }
 
   showIncompleteProjectModal() {
