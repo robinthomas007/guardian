@@ -485,6 +485,13 @@ class UserAdmin extends Component {
     this.setState({ targetUser: { ...targetUser, secondaryLabelIds: ids } });
   };
 
+  removeLabelFromEditModal = labelId => {
+    const { targetUser } = this.state;
+    let ids = [...targetUser.secondaryLabelIds];
+    ids.splice(ids.indexOf(labelId), 1);
+    this.setState({ targetUser: { ...targetUser, secondaryLabelIds: ids } });
+  };
+
   handleKeyUp(e) {
     if (e.key === 'Enter') {
       this.fetchUsers();
@@ -504,6 +511,7 @@ class UserAdmin extends Component {
           handleTargetUserUpdate={this.handleTargetUserUpdate}
           handleLabelSelectChange={this.handleLabelSelectChange}
           newHandleLabelSelectChange={this.newHandleLabelSelectChange}
+          removeLabelFromEditModal={this.removeLabelFromEditModal}
           releasingLabels={this.state.releasingLabels}
           selectedOptions={this.state.targetUser.secondaryLabelIds}
         />
