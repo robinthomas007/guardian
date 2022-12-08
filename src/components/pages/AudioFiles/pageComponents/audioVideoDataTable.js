@@ -15,6 +15,7 @@ class AudioVideoDataTable extends Component {
       activeTab: 0,
       activeDragSource: null,
       activeDragTarget: null,
+      isrcCheckedTrackIds: [],
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -64,12 +65,16 @@ class AudioVideoDataTable extends Component {
     }
   }
 
-  handleOnBlur(e) {
+  handleOnBlur(e, trackID) {
     const { checkIsrcOnBlur } = this.props;
+    const { isrcCheckedTrackIds } = this.state;
     if (e.target.className.match('trackIsrcField')) {
       if (this.isValidIsrc(e.target.value)) {
         this.setFieldValidation(e.target, 'is-Valid');
-        checkIsrcOnBlur(e.target.value);
+        if (!isrcCheckedTrackIds.includes(trackID)) {
+          checkIsrcOnBlur(e.target.value);
+          this.setState({ isrcCheckedTrackIds: [...isrcCheckedTrackIds, trackID] });
+        }
       } else {
         this.setFieldValidation(e.target, 'is-invalid');
       }
@@ -256,7 +261,7 @@ class AudioVideoDataTable extends Component {
                 onChange={e => this.handleChange(e, track, i)}
                 value={this.state.tableData[i].isrc}
                 className={'trackIsrcField'}
-                onBlur={e => this.handleOnBlur(e)}
+                onBlur={e => this.handleOnBlur(e, track.trackID)}
                 maxLength={12}
               />
               <div className="invalid-tooltip">{t('audio:InvalidISRC')}</div>
