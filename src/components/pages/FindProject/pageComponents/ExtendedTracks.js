@@ -17,8 +17,8 @@ const Tracks = ({ tracks, project, onIsPublishToggle }) => {
           <th>{t('track:Artist')}</th>
           <th>{t('track:Single')}</th>
           <th>{t('track:ReleaseDate')}</th>
-          <th className="status text-center">Has Rights</th>
-          <th>Deliver ?</th>
+          <th className="status text-center">{t('track:HasRights')}</th>
+          <th>{t('track:Deliver')}?</th>
         </tr>
       </thead>
       <tbody>

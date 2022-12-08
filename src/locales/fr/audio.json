@@ -1,6 +1,13 @@
 {
   "step": "Marcher",
   "Audiofiles": "Fichiers audio",
+  "Audiofile": "Fichier audio",
+  "replace": "Remplacer",
+  "upload": "Télécharger",
+  "replaceModalText1": "Utilisez la zone ci-dessous pour",
+  "replaceModalText2": "le fichier audio correspondant.",
+  "dragAndDropFiles": "Faites glisser et déposez des fichiers audio ou cliquez ici pour parcourir",
+  "done": "Fait",
   "DescriptionMain": "Au cours de cette étape, vous pouvez télécharger des fichiers MP3/WAV pour un filtrage préalable à la sortie en glissant-déposant ou en cliquant pour parcourir les fichiers. Les pistes peuvent également être réorganisées par glisser-déposer. Cette section doit être complétée en cliquant sur le bouton 'Enregistrer et continuer' ci-dessous.",
   "DescriptionSub": "",
   "DragAndDrop": "Faites glisser et déposez des MP3/WAV ci-dessous",

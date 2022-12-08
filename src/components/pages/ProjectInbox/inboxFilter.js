@@ -5,18 +5,19 @@ import DateTimePicker from '../../common/DateTimePicker';
 import _ from 'lodash';
 import { formatSelectArray, fomatDates } from '../../common/commonHelper';
 import { useTranslation } from 'react-i18next';
+import i18n from './../../../i18n';
 
 const selectedFilter = [
-  { name: 'ProjectArtist', label: 'Project Artist' },
-  { name: 'AssignedBy', label: 'Assigned By' },
-  { name: 'Step', label: 'Sections' },
-  { name: 'From', label: 'From' },
-  { name: 'To', label: 'To' },
+  { name: 'ProjectArtist', label: i18n.t('search:ProjectArtist') },
+  { name: 'AssignedBy', label: i18n.t('search:AssignedBy') },
+  { name: 'Step', label: i18n.t('search:Sections') },
+  { name: 'From', label: i18n.t('search:From') },
+  { name: 'To', label: i18n.t('search:To') },
 ];
 
 const Filter = props => {
   useEffect(() => {}, []);
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const values = props.formValues && props.formValues.values;
 
   const deleteSelected = (val, name) => {
@@ -82,7 +83,7 @@ const Filter = props => {
     });
     return (
       <div class="selected-filters row d-flex flex-nowrap no-gutters">
-        <div class="col-auto">Selected Filters:</div>
+        <div class="col-auto">{i18n.t('search:SelectedFilters')}:</div>
         <div class="col-10">{data}</div>
       </div>
     );

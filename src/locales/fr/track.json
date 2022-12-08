@@ -26,5 +26,7 @@
   "uploadingAudioFailed": "Échec du téléchargement du ou des fichiers audio. Veuillez réessayer. Cliquez pour fermer.",
   "InvalidTrackTitle": "Titre de piste non valide",
   "InvalidISRC": "Code ISRC invalide",
-  "FileName": "Nom de fichier"
+  "FileName": "Nom de fichier",
+  "HasRights": "A des droits",
+  "Deliver": "Livrer"
 }

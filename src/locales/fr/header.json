@@ -17,5 +17,8 @@
   "Review": "Examen",
   "Help/FAQs": "Aide/FAQ",
   "UserAdministration": "Administration des utilisateurs",
-  "AddingComment": "Ajouter un commentaire"
+  "AddingComment": "Ajouter un commentaire",
+  "AssignTo": "Affecter à",
+  "Step#": "Marcher#",
+  "comment": "Commentaire"
 }

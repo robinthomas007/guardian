@@ -219,7 +219,9 @@ class Content extends Component {
   handleLogoutClick = e => {
     e.preventDefault();
     this.props.auth.logout('/');
+    const langIndex = localStorage.getItem('langIndex');
     localStorage.clear();
+    localStorage.setItem('langIndex', langIndex);
   };
 
   setStatus = status => {

@@ -22,7 +22,7 @@ class BlockingPoliciesDataTable extends Component {
           platform.duration +
           (platform.expirationDate
             ? ' ' + t('review:Until') + ' ' + moment(platform.expirationDate).format('DD-MM-YYYY')
-            : ' ' + t('Always') + ' ');
+            : ' ' + t('review:Always') + ' ');
   };
 
   getTrackPolicies = platforms => {

@@ -31,5 +31,9 @@
   "Save": "Save",
   "Continue": "Continue",
   "NotyInfo": "Your blocking preferences have been successfully saved.",
-  "NotyError": "Your blocking policies have NOT been successfully saved."
+  "NotyError": "Your blocking policies have NOT been successfully saved.",
+  "BlockAfterRelease": "Block After Release",
+  "SetDuration": "Set Duration",
+  "policy": "Policy",
+  "selectOne": "Select One"
 }

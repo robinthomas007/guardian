@@ -52,5 +52,17 @@
   "NotyDeleteError": "The project deletion failed. Please contact admin.",
   "NotyError": "Votre rappel de projet a rencontré une erreur, veuillez réessayer.",
   "excludeLabel": "Exclure le libellé",
-  "publishError": "Vous ne pouvez publier que les projets soumis"
+  "publishError": "Vous ne pouvez publier que les projets soumis",
+  "SelectedFilters": "Filtres sélectionnés",
+  "Labels": "Étiquettes",
+  "UpdatedFrom": "Mis à jour depuis",
+  "UpdatedTo": "Mis à jour à",
+  "ReleaseFrom": "Libérer de",
+  "ReleaseTo": "Libérer pour",
+  "ExcludeLabels": "Exclure les libellés",
+  "ProjectArtist": "Artiste du projet",
+  "AssignedBy": "Assigné par",
+  "From": "De",
+  "Sections": "Sections",
+  "To": "À"
 }

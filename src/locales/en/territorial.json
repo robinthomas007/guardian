@@ -25,5 +25,12 @@
   "InProgress": "In Progress",
   "defaultRights": "Default Rights (Worldwide)",
   "CreateANewBlockingRights": "Create a Rights Rule",
-  "deleteRule": "Delete Rights Rule"
+  "deleteRule": "Delete Rights Rule",
+  "HasRights": "Has Rights",
+  "DragTracksHere": "Drag tracks here from any other policy set",
+  "SelectedTerritories": "Selected Territories",
+  "SelectTerritories": "Select Territories",
+  "TrackTitle": "Track Title",
+  "TrackTitledrag": "Tracks are draggable between policies",
+  "Rights": "Rights"
 }

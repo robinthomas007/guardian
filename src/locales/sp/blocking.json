@@ -31,5 +31,9 @@
   "Save": "Guardar",
   "Continue": "continuar",
   "NotyInfo": "Sus preferencias de bloqueo se han guardado con éxito.",
-  "NotyError": "Sus políticas de bloqueo NO se han guardado correctamente."
+  "NotyError": "Sus políticas de bloqueo NO se han guardado correctamente.",
+  "BlockAfterRelease": "Bloquear después del lanzamiento",
+  "SetDuration": "Establecer duración",
+  "policy": "Política",
+  "selectOne": "Seleccione uno"
 }

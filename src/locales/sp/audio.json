@@ -1,6 +1,13 @@
 {
   "step": "Paso",
   "Audiofiles": "Archivos de audio",
+  "Audiofile": "Archivo de audio",
+  "replace": "Reemplazar",
+  "upload": "Subir",
+  "replaceModalText1": "Use el área de abajo para",
+  "replaceModalText2": "el archivo de audio correspondiente.",
+  "dragAndDropFiles": "Arrastre y suelte archivos de audio o haga clic aquí para buscar",
+  "done": "Hecho",
   "DescriptionMain": "En este paso, puede cargar MP3 / WAV / Flac para el filtrado previo al lanzamiento, ya sea arrastrando y soltando o haciendo clic para buscar archivos. Las pistas también se pueden reordenar mediante la función de arrastrar y soltar. Esta sección debe completarse haciendo clic en el botón 'Guardar y continuar' a continuación.",
   "DescriptionSub": "",
   "DragAndDrop": "Arrastra y suelta MP3 / WAV / Flac a continuación",

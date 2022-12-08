@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import { toast } from 'react-toastify';
+import i18n from './../i18n';
 
 export function isDuplicateItem(array, what) {
   return array.filter(item => item !== '' && item === what).length > 1;
@@ -258,7 +259,7 @@ export const deleteCookie = function(name) {
 };
 
 export const Duration = [
-  { value: '', text: 'Select One', selected: true },
+  { value: '', text: i18n.t('blocking:selectOne'), selected: true },
   { value: '> 30 sec', text: '> 30 sec', selected: false },
   { value: '> 1:00', text: '> 1:00', selected: false },
   { value: '> 1:30', text: '> 1:30', selected: false },

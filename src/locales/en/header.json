@@ -17,5 +17,8 @@
   "Review": "Review",
   "Help/FAQs": "Help/FAQs",
   "UserAdministration": "User Administration",
-  "AddingComment": "Adding Comment"
+  "AddingComment": "Adding Comment",
+  "AssignTo": "Assign To",
+  "Step#": "Step#",
+  "comment": "Comment"
 }

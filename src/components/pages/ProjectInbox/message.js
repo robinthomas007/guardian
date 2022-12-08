@@ -11,6 +11,7 @@ import _ from 'lodash';
 import AudioLoader from 'component_library/AudioLoader';
 import * as commentAction from 'actions/commentAction';
 import moment from 'moment';
+import { useTranslation } from 'react-i18next';
 
 const validate = values => {
   const errors = {};
@@ -24,6 +25,7 @@ const Message = props => {
   const { handleClose, handleSubmit } = props;
   const comments = useSelector(state => state.commentReducer.comments);
   const loading = useSelector(state => state.commentReducer.loading);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (props.projectID) props.getComments({ ProjectId: props.projectID });
@@ -82,8 +84,19 @@ const Message = props => {
       <form onSubmit={handleSubmit(formSubmit)}>
         <div className="row d-flex no-gutters">
           <div className="col-3">
-            <Field strong={true} name="AssignedToEmail" component={InputField} label="Assign To" />
-            <Field strong={true} name="Step" component={Dropdown} label="Step#" options={steps} />
+            <Field
+              strong={true}
+              name="AssignedToEmail"
+              component={InputField}
+              label={t('header:AssignTo')}
+            />
+            <Field
+              strong={true}
+              name="Step"
+              component={Dropdown}
+              label={t('header:Step#')}
+              options={steps}
+            />
           </div>
           <div className="col-9 pad-lft-25">
             <Field id="comment" name="Text" component={TextArea} row={3} />
@@ -91,7 +104,7 @@ const Message = props => {
         </div>
         <div className="text-right">
           <button type="submit" class="btn btn-primary" disabled={loading}>
-            Comment
+            {t('header:comment')}
           </button>
         </div>
       </form>

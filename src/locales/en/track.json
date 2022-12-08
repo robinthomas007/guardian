@@ -26,5 +26,7 @@
   "uploadingAudioFailed": "Uploading audio file(s) failed. Please try again. Click to close.",
   "InvalidTrackTitle": "Invalid Track Title",
   "InvalidISRC": "Invalid ISRC",
-  "FileName": "File Name"
+  "FileName": "File Name",
+  "HasRights": "Has Rights",
+  "Deliver": "Deliver"
 }

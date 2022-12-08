@@ -100,7 +100,6 @@ const CommentSlider = props => {
         <div className="text-right" style={{ marginTop: '-5px', marginRight: '20px' }}>
           <VideoPlayer
             text={props.t('header:AddingComment')}
-            text="Adding Comments"
             title="Adding Comments"
             link="https://usaws03-guardian-media.s3.amazonaws.com/videos/The+Guardian+2021+pt.+14+Adding+Comments.mp4"
           />
@@ -110,12 +109,23 @@ const CommentSlider = props => {
         </span>
         {renderComments()}
         <form onSubmit={handleSubmit(formSubmit)} id="commentForm">
-          <Field strong={true} name="AssignedToEmail" component={InputField} label="Assign To" />
-          <Field strong={true} name="Step" component={Dropdown} label="Step#" options={steps} />
+          <Field
+            strong={true}
+            name="AssignedToEmail"
+            component={InputField}
+            label={props.t('header:AssignTo')}
+          />
+          <Field
+            strong={true}
+            name="Step"
+            component={Dropdown}
+            label={props.t('header:Step#')}
+            options={steps}
+          />
           <Field id="comment" name="Text" component={TextArea} />
           <div className="text-right">
             <button type="submit" class="btn btn-primary" disabled={loading}>
-              Comment
+              {props.t('header:comment')}
             </button>
           </div>
         </form>

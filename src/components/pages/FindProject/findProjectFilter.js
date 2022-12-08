@@ -7,23 +7,24 @@ import _ from 'lodash';
 import { formatSelectArray } from '../../common/commonHelper';
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
+import i18n from './../../../i18n';
 
 const selectedFilter = [
-  { name: 'labelIds', label: 'Labels' },
-  { name: 'hasAudio', label: 'Has Audio' },
-  { name: 'hasRights', label: 'Has Rights' },
-  { name: 'statusID', label: 'Status' },
-  { name: 'hasBlocking', label: 'Blocking' },
-  { name: 'from', label: 'Updated From' },
-  { name: 'to', label: 'Updated To' },
-  { name: 'releaseFrom', label: 'Release From' },
-  { name: 'releaseTo', label: 'Release To' },
-  { name: 'excludeLabelIds', label: 'Exclude Labels' },
+  { name: 'labelIds', label: i18n.t('search:Labels') },
+  { name: 'hasAudio', label: i18n.t('search:HasAudio') },
+  { name: 'hasRights', label: i18n.t('search:HasRights') },
+  { name: 'statusID', label: i18n.t('search:Status') },
+  { name: 'hasBlocking', label: i18n.t('search:HasBlocking') },
+  { name: 'from', label: i18n.t('search:UpdatedFrom') },
+  { name: 'to', label: i18n.t('search:UpdatedTo') },
+  { name: 'releaseFrom', label: i18n.t('search:ReleaseFrom') },
+  { name: 'releaseTo', label: i18n.t('search:ReleaseTo') },
+  { name: 'excludeLabelIds', label: i18n.t('search:ExcludeLabels') },
 ];
 
 const Filter = props => {
   useEffect(() => {}, []);
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   const values = props.formValues && props.formValues.values;
 
@@ -106,7 +107,7 @@ const Filter = props => {
     });
     return (
       <div class="selected-filters row d-flex flex-nowrap no-gutters">
-        <div class="col-auto">Selected Filters:</div>
+        <div class="col-auto"> {i18n.t('search:SelectedFilters')}:</div>
         <div class="col-10">{data}</div>
       </div>
     );

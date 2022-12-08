@@ -52,5 +52,17 @@
   "NotyDeleteError": "La eliminación del proyecto falló. Póngase en contacto con el administrador.",
   "NotyError": "Se ha producido un error en el recordatorio de su proyecto. Vuelva a intentarlo.",
   "excludeLabel": "Exclude Label",
-  "publishError": "Solo puede publicar los proyectos enviados"
+  "publishError": "Solo puede publicar los proyectos enviados",
+  "SelectedFilters": "Filtros seleccionados",
+  "Labels": "Etiquetas",
+  "UpdatedFrom": "Actualizado desde",
+  "UpdatedTo": "Actualizado a",
+  "ReleaseFrom": "Liberar de",
+  "ReleaseTo": "Liberar a",
+  "ExcludeLabels": "Excluir etiquetas",
+  "ProjectArtist": "Artista del proyecto",
+  "AssignedBy": "Asignado por",
+  "From": "De",
+  "Sections": "Secciones",
+  "To": "A"
 }

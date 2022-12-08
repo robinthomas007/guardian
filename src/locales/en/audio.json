@@ -1,6 +1,13 @@
 {
   "step": "Step",
   "Audiofiles": "Audio Files",
+  "Audiofile": "Audio File",
+  "replace": "Replace",
+  "upload": "Upload",
+  "replaceModalText1": "Use the area below to",
+  "replaceModalText2": "the corresponding audio file.",
+  "dragAndDropFiles": "Drag and Drop Audio Files or Click Here To Browse",
+  "done": "Done",
   "DescriptionMain": "In this step, you can upload MP3s/WAVs/Flac for pre-release filtering by either dragging & dropping or clicking to browse files. Tracks can be reordered using drag and drop as well. This section must be completed by clicking on the 'Save & Continue' button below.",
   "DescriptionSub": "",
   "DragAndDrop": "Drag & Drop MP3s/WAVs/Flac Below",

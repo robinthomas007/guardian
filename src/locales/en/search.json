@@ -52,5 +52,17 @@
   "NotyDeleteError": "The project deletion failed. Please contact admin.",
   "NotyError": "Your project reminder encountered an error, please try again.",
   "excludeLabel": "Exclude Label",
-  "publishError": "You can only publish submitted project's"
+  "publishError": "You can only publish submitted project's",
+  "SelectedFilters": "Selected Filters",
+  "Labels": "Labels",
+  "UpdatedFrom": "Updated From",
+  "UpdatedTo": "Updated To",
+  "ReleaseFrom": "Release From",
+  "ReleaseTo": "Release To",
+  "ExcludeLabels": "Exclude Labels",
+  "ProjectArtist": "Project Artist",
+  "AssignedBy": "Assigned By",
+  "From": "From",
+  "Sections": "Sections",
+  "To": "To"
 }

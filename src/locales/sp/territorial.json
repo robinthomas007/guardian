@@ -25,5 +25,12 @@
   "InProgress": "En Curso",
   "defaultRights": "Derechos predeterminados (en todo el mundo)",
   "CreateANewBlockingRights": "Crear una regla de derechos",
-  "deleteRule": "Eliminar regla de derechos"
+  "deleteRule": "Eliminar regla de derechos",
+  "HasRights": "tiene derechos",
+  "DragTracksHere": "Arrastre pistas aquí desde cualquier otro conjunto de políticas",
+  "SelectedTerritories": "Territorios Seleccionados",
+  "SelectTerritories": "Seleccionar territorios",
+  "TrackTitle": "Título de la pista",
+  "TrackTitledrag": "Las pistas se pueden arrastrar entre políticas",
+  "Rights": "Derechos"
 }

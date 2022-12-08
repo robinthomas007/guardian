@@ -31,5 +31,9 @@
   "Save": "sauvegarder",
   "Continue": "Continuer",
   "NotyInfo": "Vos préférences de blocage ont été enregistrées avec succès.",
-  "NotyError": "Vos politiques de blocage n'ont PAS été enregistrées avec succès."
+  "NotyError": "Vos politiques de blocage n'ont PAS été enregistrées avec succès.",
+  "BlockAfterRelease": "Bloquer après la libération",
+  "SetDuration": "Définir la durée",
+  "policy": "politique",
+  "selectOne": "Sélectionnez-en un"
 }

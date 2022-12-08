@@ -340,7 +340,9 @@ function TerritorialRightsPage(props) {
                   {rightindex === 0 ? (
                     <span>{t('territorial:defaultRights')}</span>
                   ) : (
-                    <span>Rights {rightindex}</span>
+                    <span>
+                      {t('territorial:Rights')} {rightindex}
+                    </span>
                   )}
                 </strong>
               </div>
@@ -367,16 +369,17 @@ function TerritorialRightsPage(props) {
                   <thead className="border">
                     <tr>
                       <th>
-                        <strong>Track Title</strong> (Tracks are draggable between policies)
+                        <strong>{t('territorial:TrackTitle')}</strong> (
+                        {t('territorial:TrackTitledrag')})
                       </th>
                       <th>
-                        <strong>Rights Rule</strong>
+                        <strong>{t('territorial:RightsRule')}</strong>
                       </th>
                       <th>
-                        <strong>Select Territories</strong>
+                        <strong>{t('territorial:SelectTerritories')}</strong>
                       </th>
                       <th>
-                        <strong>Selected Territories</strong>
+                        <strong>{t('territorial:SelectedTerritories')}</strong>
                       </th>
                     </tr>
                   </thead>
@@ -390,9 +393,7 @@ function TerritorialRightsPage(props) {
                           id={`blk-plcy-drop-${rights.sequence}`}
                         >
                           {rights.tracks && rights.tracks.length === 0 && (
-                            <p className="drag-track-info">
-                              Drag tracks here from any other policy set
-                            </p>
+                            <p className="drag-track-info">{t('territorial: DragTracksHere')}</p>
                           )}
                           {rights.tracks.map((track, i) => {
                             isDisabled = track.IsLockedByUgc ? true : isDisabled;
@@ -438,7 +439,7 @@ function TerritorialRightsPage(props) {
                                 value={true}
                                 disabled={isDisabled}
                               />
-                              <label>Has Rights</label>
+                              <label>{t('territorial:HasRights')}</label>
                             </div>
                             <div className="rights-input">
                               <Form.Control
@@ -449,7 +450,7 @@ function TerritorialRightsPage(props) {
                                 value={false}
                                 disabled={isDisabled}
                               />
-                              <label>No Rights</label>
+                              <label>{t('territorial:NoRights')}</label>
                             </div>
                           </div>
                           <div className="select-ter">

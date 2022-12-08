@@ -280,7 +280,9 @@ function BlockingPoliciesPage(props) {
                   {policyindex === 0 ? (
                     <span>{t('blocking:defaultPolicy')}</span>
                   ) : (
-                    <span>Policy {policyindex}</span>
+                    <span>
+                      {t('blocking:policy')} {policyindex}
+                    </span>
                   )}
                 </strong>
               </div>
@@ -307,22 +309,23 @@ function BlockingPoliciesPage(props) {
                   <thead className="border">
                     <tr>
                       <th>
-                        <strong>Track Title</strong> (Tracks are draggable between policies)
+                        <strong>{t('territorial:TrackTitle')}</strong> (
+                        {t('territorial:TrackTitledrag')})
                       </th>
                       <th>
-                        <strong>Platform</strong>
+                        <strong>{t('blocking:Platform')}</strong>
                       </th>
                       <th className="text-center">
-                        <strong>Monetize</strong>
+                        <strong>{t('blocking:Monetize')}</strong>
                       </th>
                       <th className="text-center">
-                        <strong>Block After Release</strong>
+                        <strong>{t('blocking:BlockAfterRelease')}</strong>
                       </th>
                       <th className="text-center">
-                        <strong>Set Duration</strong>
+                        <strong>{t('blocking:SetDuration')}</strong>
                       </th>
                       <th className="text-center">
-                        <strong>Blocked Until</strong>
+                        <strong>{t('blocking:BlockedUntil')}</strong>
                       </th>
                     </tr>
                   </thead>

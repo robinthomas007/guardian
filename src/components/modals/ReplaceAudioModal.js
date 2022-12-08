@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Modal } from 'react-bootstrap';
+import { withTranslation } from 'react-i18next';
 import './ReplaceAudioModal.css';
 
 class ReplaceAudioModal extends Component {
@@ -28,23 +29,27 @@ class ReplaceAudioModal extends Component {
   };
 
   render() {
+    const { t } = this.props;
     return (
       <Modal id="ReplaceAudioModal" show={this.props.showModal} onHide={this.handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>{this.props.modalAction} Audio File</Modal.Title>
+          <Modal.Title>
+            {this.props.modalAction === 'Replace' ? t('audio:replace') : t('audio:upload')}{' '}
+            {t('audio:Audiofile')}
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <ul>
             <li>
-              Use the area below to{' '}
-              {this.props.modalAction ? this.props.modalAction.toLocaleLowerCase() : 'replace'} the
-              corresponding audio file.
+              {t('audio:replaceModalText1')}{' '}
+              {this.props.modalAction === 'Replace'
+                ? t('audio:replace').toLocaleLowerCase()
+                : t('audio:upload').toLocaleLowerCase()}{' '}
+              {t('audio:replaceModalText2')}
             </li>
             <li>
               <div className="audio-drop-area d-flex justify-content-center">
-                <span className="align-self-center">
-                  Drag and Drop Audio Files or Click Here To Browse
-                </span>
+                <span className="align-self-center">{t('audio:dragAndDropFiles')}</span>
                 <input
                   type="file"
                   id="audioFiles"
@@ -58,7 +63,7 @@ class ReplaceAudioModal extends Component {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="primary" id="doneButton" onClick={this.handleClose}>
-            Done
+            {t('audio:done')}
           </Button>
         </Modal.Footer>
       </Modal>
@@ -66,4 +71,4 @@ class ReplaceAudioModal extends Component {
   }
 }
 
-export default ReplaceAudioModal;
+export default withTranslation('audio')(ReplaceAudioModal);
