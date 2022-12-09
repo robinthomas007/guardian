@@ -19,6 +19,13 @@
   "UserAdministration": "Administration des utilisateurs",
   "AddingComment": "Ajouter un commentaire",
   "AssignTo": "Affecter à",
-  "Step#": "Marcher#",
-  "comment": "Commentaire"
+  "Step#": "Étape#",
+  "comment": "Commentaire",
+  "Step_1_ReleaseInformation": "Étape 1 - Information sur la mise en liberté",
+  "Step_2_Contacts": "Étape 2 - Contacts",
+  "Step_3_Audio": "Étape 3 - Audio",
+  "Step_4_Tracks": "Étape 4 - Pistes",
+  "Step_5_TerritorialRights": "Étape 5 - Droits territoriaux",
+  "Step_6_UGCBlocking": "Étape 6 - Blocage UGC",
+  "Step_7_Review": "Étape 7 - Examen"
 }

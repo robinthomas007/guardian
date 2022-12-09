@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import moment from 'moment';
+import i18n from './../../i18n';
 
 export const formaterForSelect = data => ({
   label: data.name,
@@ -66,13 +67,13 @@ export const getFromDate = (date, iso) => {
 };
 
 export const steps = [
-  { value: 'Step 1 - Release Information', label: 'Step 1 - Release Information' },
-  { value: 'Step 2 - Contacts', label: 'Step 2 - Contacts' },
-  { value: 'Step 3 - Audio', label: 'Step 3 - Audio' },
-  { value: 'Step 4 - Tracks', label: 'Step 4 - Tracks' },
-  { value: 'Step 5 - Territorial Rights', label: 'Step 5 - Territorial Rights' },
-  { value: 'Step 6 - UGC Blocking', label: 'Step 6 - UGC Blocking' },
-  { value: 'Step 7 - Review', label: 'Step 7 - Review' },
+  { value: 'Step 1 - Release Information', label: i18n.t('header:Step_1_ReleaseInformation') },
+  { value: 'Step 2 - Contacts', label: i18n.t('header:Step_2_Contacts') },
+  { value: 'Step 3 - Audio', label: i18n.t('header:Step_3_Audio') },
+  { value: 'Step 4 - Tracks', label: i18n.t('header:Step_4_Tracks') },
+  { value: 'Step 5 - Territorial Rights', label: i18n.t('header:Step_5_TerritorialRights') },
+  { value: 'Step 6 - UGC Blocking', label: i18n.t('header:Step_6_UGCBlocking') },
+  { value: 'Step 7 - Review', label: i18n.t('header:Step_7_Review') },
 ];
 
 export const fomatDates = searchData => {

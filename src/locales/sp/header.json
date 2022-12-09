@@ -20,5 +20,12 @@
   "AddingComment": "Agregar comentario",
   "AssignTo": "Asignar a",
   "Step#": "Paso#",
-  "comment": "Comentario"
+  "comment": "Comentario",
+  "Step_1_ReleaseInformation": "Paso 1 - Información de la versión",
+  "Step_2_Contacts": "Paso 2 - Contactos",
+  "Step_3_Audio": "Paso 3 - Audio",
+  "Step_4_Tracks": "Paso 4 - Pistas",
+  "Step_5_TerritorialRights": "Paso 5 - Derechos territoriales",
+  "Step_6_UGCBlocking": "Paso 6 - Bloqueo de UGC",
+  "Step_7_Review": "Paso 7 - Revisión"
 }

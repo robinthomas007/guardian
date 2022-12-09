@@ -20,5 +20,12 @@
   "AddingComment": "Adding Comment",
   "AssignTo": "Assign To",
   "Step#": "Step#",
-  "comment": "Comment"
+  "comment": "Comment",
+  "Step_1_ReleaseInformation": "Step 1 - Release Information",
+  "Step_2_Contacts": "Step 2 - Contacts",
+  "Step_3_Audio": "Step 3 - Audio",
+  "Step_4_Tracks": "Step 4 - Tracks",
+  "Step_5_TerritorialRights": "Step 5 - Territorial Rights",
+  "Step_6_UGCBlocking": "Step 6 - UGC Blocking",
+  "Step_7_Review": "Step 7 - Review"
 }

@@ -130,7 +130,7 @@ class FindProjectPage extends Component {
       filter: getSearchCriteria(searchCriteria),
     };
 
-    if (data.id === '5' && data.name === 'Published') {
+    if (data.id === '5' && data.name === this.props.t('search:Published')) {
       this.props.handlePublish({ ProjectIds: projectID, PublishTrackIds: publishIds }, searchData);
     } else {
       this.props.adminStatusChange({ ProjectIds: projectID, StatusID: data.id }, searchData);
@@ -144,7 +144,8 @@ class FindProjectPage extends Component {
       const projects = data.Projects.map(project => {
         let Discs = project.Discs.map(disk => {
           let Tracks = disk.Tracks.map(track => {
-            let isPublish = project.status === 'Published' ? track.isPublish : !track.nonExclusive;
+            let isPublish =
+              project.status === t('search:Published') ? track.isPublish : !track.nonExclusive;
             return { ...track, isPublish };
           });
           return { ...disk, Tracks };

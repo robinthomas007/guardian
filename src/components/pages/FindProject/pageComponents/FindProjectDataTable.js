@@ -139,7 +139,11 @@ class FindProjectDataTable extends Component {
     this.props.data.Projects.forEach(item => {
       let checkName = `check_${item.projectID}`;
       if (this.state[checkName]) {
-        if (data.id === '5' && data.name === 'Published' && item.statusID !== '2') {
+        if (
+          data.id === '5' &&
+          data.name === this.props.t('search:Published') &&
+          item.statusID !== '2'
+        ) {
           isValid = false;
         }
         projectIds.push(item.projectID);

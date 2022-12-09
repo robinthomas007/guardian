@@ -393,7 +393,7 @@ function TerritorialRightsPage(props) {
                           id={`blk-plcy-drop-${rights.sequence}`}
                         >
                           {rights.tracks && rights.tracks.length === 0 && (
-                            <p className="drag-track-info">{t('territorial: DragTracksHere')}</p>
+                            <p className="drag-track-info">{t('territorial:DragTracksHere')}</p>
                           )}
                           {rights.tracks.map((track, i) => {
                             isDisabled = track.IsLockedByUgc ? true : isDisabled;
