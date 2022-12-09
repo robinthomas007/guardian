@@ -15,7 +15,7 @@ class AudioVideoDataTable extends Component {
       activeTab: 0,
       activeDragSource: null,
       activeDragTarget: null,
-      isrcCheckedTrackIds: [],
+      isrcCheckedIds: [],
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -67,13 +67,13 @@ class AudioVideoDataTable extends Component {
 
   handleOnBlur(e, trackID) {
     const { checkIsrcOnBlur } = this.props;
-    const { isrcCheckedTrackIds } = this.state;
+    const { isrcCheckedIds } = this.state;
     if (e.target.className.match('trackIsrcField')) {
       if (this.isValidIsrc(e.target.value)) {
         this.setFieldValidation(e.target, 'is-Valid');
-        if (!isrcCheckedTrackIds.includes(trackID)) {
+        if (!isrcCheckedIds.includes(e.target.value)) {
           checkIsrcOnBlur(e.target.value);
-          this.setState({ isrcCheckedTrackIds: [...isrcCheckedTrackIds, trackID] });
+          this.setState({ isrcCheckedIds: [...isrcCheckedIds, e.target.value] });
         }
       } else {
         this.setFieldValidation(e.target, 'is-invalid');
