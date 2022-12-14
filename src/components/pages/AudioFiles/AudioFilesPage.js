@@ -186,10 +186,16 @@ class AudioFilesPage extends Component {
   updateFile = e => {
     let newFiles = Array.from(e.target.files);
     const { discs } = this.state;
-
+    let filename = newFiles[0].name.split(/\.(?=[^\.]+$)/)[0] + '.flac';
+    const isDuplicateFilename = discs[this.state.activeTab].Tracks.some(
+      track => track.fileName === filename,
+    );
+    if (isDuplicateFilename) {
+      showNotyAutoError('Duplicate Audio File');
+      return null;
+    }
     let updatedDiscs = discs;
-    updatedDiscs[this.state.activeTab].Tracks[this.state.replaceTrackIndex].fileName =
-      newFiles[0].name.split(/\.(?=[^\.]+$)/)[0] + '.flac';
+    updatedDiscs[this.state.activeTab].Tracks[this.state.replaceTrackIndex].fileName = filename;
     updatedDiscs[this.state.activeTab].Tracks[this.state.replaceTrackIndex].hasUpload = false;
     updatedDiscs[this.state.activeTab].Tracks[this.state.replaceTrackIndex].fileUpload = true;
 
