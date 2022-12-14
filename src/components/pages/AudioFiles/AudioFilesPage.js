@@ -8,13 +8,7 @@ import { reduxForm } from 'redux-form';
 import AudioFilesTabbedTracks from '../AudioFiles/pageComponents/audioFilesTabbedTracks';
 import { connect } from 'react-redux';
 import * as uploadProgressActions from 'redux/uploadProgressAlert/actions';
-import {
-  isDuplicateItem,
-  isDuplicateISRC,
-  showNotyError,
-  showNotyAutoError,
-  renameFile,
-} from '../../Utils';
+import { isDuplicateItem, isDuplicateISRC, showNotyError, showNotyAutoError } from '../../Utils';
 import _ from 'lodash';
 import { showNotyInfo } from 'components/Utils';
 import * as releaseAction from './../ReleaseInformation/releaseAction';
@@ -214,23 +208,32 @@ class AudioFilesPage extends Component {
     let newFiles = Array.from(e.target.files);
     let modifiedDiscs = discs;
     for (var i = 0; i < newFiles.length; i++) {
-      if (this.isValidAudioType(newFiles[i].name)) {
+      let filename = newFiles[i].name.split(/\.(?=[^\.]+$)/)[0] + '.flac';
+      if (this.isValidAudioType(filename)) {
         let newTrack = {
-          fileName: newFiles[i].name.split(/\.(?=[^\.]+$)/)[0] + '.flac',
+          fileName: filename,
           fileUpload: true,
         };
 
-        modifiedDiscs[activeTab].Tracks.push(
-          this.getTrack(newTrack, modifiedDiscs[activeTab].Tracks.length),
+        const isDuplicateFilename = modifiedDiscs[activeTab].Tracks.some(
+          track => track.fileName === filename,
         );
-        this.setState({ discs: modifiedDiscs });
-        this.props.saveDiscs(_.cloneDeep(modifiedDiscs));
+        if (!isDuplicateFilename) {
+          modifiedDiscs[activeTab].Tracks.push(
+            this.getTrack(newTrack, modifiedDiscs[activeTab].Tracks.length),
+          );
+          this.setState({ discs: modifiedDiscs });
+          this.props.saveDiscs(_.cloneDeep(modifiedDiscs));
+        } else {
+          //remove this from the file stack
+          newFiles.splice(i, 1);
+          showNotyAutoError('Duplicate Audio File');
+        }
       } else {
         //remove this from the file stack
         newFiles.splice(i, 1);
       }
     }
-
     this.handleFileUpload(newFiles);
   }
 
