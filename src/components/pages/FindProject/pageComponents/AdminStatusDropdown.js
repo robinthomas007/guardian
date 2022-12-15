@@ -6,6 +6,7 @@ class AdminStatusDropdown extends Component {
     this.state = {
       selectedID: this.props.selectedID,
       selectedText: this.props.selectedText,
+      disabledLabels: ['Ingrooves', 'En Grooves', 'Dans les rainures', 'Imperial', 'Impérial'],
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -18,12 +19,15 @@ class AdminStatusDropdown extends Component {
 
   getOptions = () => {
     const { project } = this.props;
+    const { disabledLabels } = this.state;
     if (this.props.options) {
       const inputOptions = this.props.options.map((option, i) => {
-        // this is working condition need to change when static code changes-> below
-        let disabled = project.statusID !== '2' && option.id === '5' ? true : false;
-        // changing manually for demo
-        // let disabled = parseInt(option.id) >= 5;
+        let disabled = false;
+        // 5 -> Published
+        if (option.id === '5') {
+          disabled =
+            project.statusID !== '2' || disabledLabels.includes(project.projectReleasingLabel);
+        }
         return (
           <a
             href
@@ -55,7 +59,7 @@ class AdminStatusDropdown extends Component {
           aria-haspopup="true"
           aria-expanded="false"
         >
-          {this.props.selectedText}
+          {selectedText}
         </button>
 
         <div className="dropdown-menu dropdown-menu" aria-labelledby={`${project.projectID}`}>
