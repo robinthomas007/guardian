@@ -61,3 +61,22 @@
 .blocked-tracks {
   color: red;
 }
+
+.ter-tab-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.ter-tabs {
+  border: 1px solid #dee2e6;
+  border-bottom: none;
+  padding: 8px 31px;
+  border-top-right-radius: 15px;
+  cursor: pointer;
+}
+
+.ter-tabs.active {
+  background: #ffffff;
+}

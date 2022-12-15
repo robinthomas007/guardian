@@ -32,5 +32,6 @@
   "SelectTerritories": "Seleccionar territorios",
   "TrackTitle": "Título de la pista",
   "TrackTitledrag": "Las pistas se pueden arrastrar entre políticas",
-  "Rights": "Derechos"
+  "Rights": "Derechos",
+  "noTrackInDisk": "No se encontraron pistas en el disco"
 }

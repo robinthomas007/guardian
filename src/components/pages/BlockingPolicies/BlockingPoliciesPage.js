@@ -39,6 +39,9 @@ function BlockingPoliciesPage(props) {
   const [showLoader, setShowLoader] = useState(false);
   const [selected, setSelected] = useState([]);
   const [selectedBlock, setSelectedBlock] = useState(null);
+  const [selectedDisk, setSelectedDisk] = useState(0);
+  const [tracksByDiscs, setTracksByDiscs] = useState([]);
+
   const ref = React.createRef();
 
   const handlePageDataLoad = () => {
@@ -257,6 +260,26 @@ function BlockingPoliciesPage(props) {
     }
   }, [selected]);
 
+  useEffect(() => {
+    let trackByDisc = _.cloneDeep(blockingPolicies);
+    trackByDisc.forEach((pol, i) => {
+      let newTracks = [];
+      pol.tracks.forEach(track => {
+        if (project.Discs && project.Discs[selectedDisk]) {
+          let discTrack = project.Discs[selectedDisk].Tracks.filter(
+            t => t.trackID === track.trackID,
+          );
+          if (discTrack.length > 0) newTracks.push(discTrack[0]);
+        }
+      });
+      if (newTracks.length > 0) {
+        trackByDisc[i].tracks = newTracks;
+        trackByDisc[i].discNo = selectedDisk;
+      }
+    });
+    setTracksByDiscs(trackByDisc);
+  }, [blockingPolicies, selectedDisk]);
+
   return (
     <div className="col-10">
       <BlockingPoliciesModal projectID={props.projectID} t={t} />
@@ -271,7 +294,7 @@ function BlockingPoliciesPage(props) {
           <p>{t('blocking:NoteMessage')}</p>
         </div>
       </div>
-      {blockingPolicies.map((policy, policyindex) => {
+      {tracksByDiscs.map((policy, policyindex) => {
         return (
           <div key={policyindex}>
             <div className="row no-gutters">
@@ -332,6 +355,21 @@ function BlockingPoliciesPage(props) {
                   <tbody>
                     <tr>
                       <td className="track-bg">
+                        <div className="ter-tab-wrapper">
+                          {project.Discs &&
+                            project.Discs.map((disc, index) => {
+                              return (
+                                <div
+                                  onClick={() => setSelectedDisk(index)}
+                                  className={`${
+                                    selectedDisk === index ? 'active ter-tabs' : 'ter-tabs'
+                                  }`}
+                                >
+                                  Disc {index + 1}
+                                </div>
+                              );
+                            })}
+                        </div>
                         <div
                           onDrop={e => drop(e, policyindex)}
                           onDragOver={allowDrop}
@@ -343,32 +381,38 @@ function BlockingPoliciesPage(props) {
                               Drag tracks here from any other policy set
                             </p>
                           )}
-                          {policy.tracks.map((track, i) => {
-                            return (
-                              <div
-                                key={i}
-                                draggable="true"
-                                onDragStart={e => drag(e, policyindex)}
-                                id={`check_${track.trackID}`}
-                                className="bp-tr-list"
-                              >
-                                <label className="custom-checkbox">
-                                  <input
-                                    name={`check_${track.trackID}`}
-                                    className="track-multi-drag-check"
-                                    type="checkbox"
-                                    checked={selected.includes(track.trackID)}
-                                    onChange={e =>
-                                      handleCheckboxChange(e, track.trackID, policyindex)
-                                    }
-                                  />
-                                  <span className="checkmark"></span>
-                                </label>
-                                <i className="material-icons">dehaze</i>
-                                <span className="track-title-name">{track.trackTitle}</span>
-                              </div>
-                            );
-                          })}
+                          {policy.discNo !== selectedDisk && (
+                            <p className="drag-track-info">
+                              {t('territorial:noTrackInDisk')} {selectedDisk + 1}
+                            </p>
+                          )}
+                          {policy.discNo === selectedDisk &&
+                            policy.tracks.map((track, i) => {
+                              return (
+                                <div
+                                  key={i}
+                                  draggable="true"
+                                  onDragStart={e => drag(e, policyindex)}
+                                  id={`check_${track.trackID}`}
+                                  className="bp-tr-list"
+                                >
+                                  <label className="custom-checkbox">
+                                    <input
+                                      name={`check_${track.trackID}`}
+                                      className="track-multi-drag-check"
+                                      type="checkbox"
+                                      checked={selected.includes(track.trackID)}
+                                      onChange={e =>
+                                        handleCheckboxChange(e, track.trackID, policyindex)
+                                      }
+                                    />
+                                    <span className="checkmark"></span>
+                                  </label>
+                                  <i className="material-icons">dehaze</i>
+                                  <span className="track-title-name">{track.trackTitle}</span>
+                                </div>
+                              );
+                            })}
                         </div>
                       </td>
                       <td colSpan="5" className="p-0">

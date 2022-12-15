@@ -15,6 +15,8 @@ function TerritorialRightsPage(props) {
   const [project, setProject] = useState({});
   const [selectedTracks, setSelectedTracks] = useState([]);
   const [selectedBlock, setSelectedBlock] = useState(null);
+  const [selectedDisk, setSelectedDisk] = useState(0);
+  const [tracksByDiscs, setTracksByDiscs] = useState([]);
 
   const handlePageDataLoad = () => {
     setShowLoader(true);
@@ -144,6 +146,7 @@ function TerritorialRightsPage(props) {
       ],
       tracks: [],
       hasRights: true,
+      discNo: selectedDisk,
     };
   };
 
@@ -316,10 +319,30 @@ function TerritorialRightsPage(props) {
         setShowLoader(false);
       });
   };
+
+  useEffect(() => {
+    let trackByDisc = _.cloneDeep(territorialRights);
+    trackByDisc.forEach((ter, i) => {
+      let newTracks = [];
+      ter.tracks.forEach(track => {
+        if (project.Discs && project.Discs[selectedDisk]) {
+          let discTrack = project.Discs[selectedDisk].Tracks.filter(
+            t => t.trackID === track.trackID,
+          );
+          if (discTrack.length > 0) newTracks.push(discTrack[0]);
+        }
+      });
+      if (newTracks.length > 0) {
+        trackByDisc[i].tracks = newTracks;
+        trackByDisc[i].discNo = selectedDisk;
+      }
+    });
+    setTracksByDiscs(trackByDisc);
+  }, [territorialRights, selectedDisk]);
+
   return (
     <div className="col-10">
       <LoadingImg show={showLoader} />
-
       <div className="row no-gutters step-description">
         <div className="col-12">
           <h2>
@@ -328,20 +351,24 @@ function TerritorialRightsPage(props) {
           </h2>
           <p>{t('territorial:DescriptionMain')}</p>
         </div>
+        <div className="col-12"></div>
       </div>
-      {territorialRights.map((rights, rightindex) => {
+      {tracksByDiscs.map((rights, rightindex) => {
         let isDisabled = false;
         isDisabled = rights.NoRights ? true : isDisabled;
+        // if (rights.discNo !== selectedDisk) {
+        //   return null
+        // }
         return (
           <div>
             <div className="row no-gutters">
               <div className="col-10">
                 <strong className="display-5" style={{ fontSize: 19 }}>
-                  {rightindex === 0 ? (
+                  {rights.description === 'Default' ? (
                     <span>{t('territorial:defaultRights')}</span>
                   ) : (
                     <span>
-                      {t('territorial:Rights')} {rightindex}
+                      {t('territorial:Rights')} {rightindex === 0 ? rightindex + 1 : rightindex}
                     </span>
                   )}
                 </strong>
@@ -386,6 +413,21 @@ function TerritorialRightsPage(props) {
                   <tbody>
                     <tr>
                       <td className="track-bg">
+                        <div className="ter-tab-wrapper">
+                          {project.Discs &&
+                            project.Discs.map((disc, index) => {
+                              return (
+                                <div
+                                  onClick={() => setSelectedDisk(index)}
+                                  className={`${
+                                    selectedDisk === index ? 'active ter-tabs' : 'ter-tabs'
+                                  }`}
+                                >
+                                  Disc {index + 1}
+                                </div>
+                              );
+                            })}
+                        </div>
                         <div
                           onDrop={e => drop(e, rightindex)}
                           onDragOver={allowDrop}
@@ -395,36 +437,42 @@ function TerritorialRightsPage(props) {
                           {rights.tracks && rights.tracks.length === 0 && (
                             <p className="drag-track-info">{t('territorial:DragTracksHere')}</p>
                           )}
-                          {rights.tracks.map((track, i) => {
-                            isDisabled = track.IsLockedByUgc ? true : isDisabled;
-                            return (
-                              <div
-                                key={i}
-                                draggable="true"
-                                onDragStart={e => !track.IsLockedByUgc && drag(e, rightindex)}
-                                id={`check_${track.trackID}`}
-                                className={
-                                  rights.NoRights ? 'blocked-tracks bp-tr-list' : 'bp-tr-list'
-                                }
-                              >
-                                <label className="custom-checkbox">
-                                  <input
-                                    disabled={isDisabled}
-                                    name={`check_${track.trackID}`}
-                                    className="track-multi-drag-check"
-                                    type="checkbox"
-                                    checked={selectedTracks.includes(track.trackID)}
-                                    onChange={e =>
-                                      handleCheckboxChange(e, track.trackID, rightindex)
-                                    }
-                                  />
-                                  <span className="checkmark"></span>
-                                </label>
-                                <i className="material-icons">dehaze</i>
-                                <span className="track-title-name">{track.trackTitle}</span>
-                              </div>
-                            );
-                          })}
+                          {rights.discNo !== selectedDisk && (
+                            <p className="drag-track-info">
+                              {t('territorial:noTrackInDisk')} {selectedDisk + 1}
+                            </p>
+                          )}
+                          {rights.discNo === selectedDisk &&
+                            rights.tracks.map((track, i) => {
+                              isDisabled = track.IsLockedByUgc ? true : isDisabled;
+                              return (
+                                <div
+                                  key={i}
+                                  draggable="true"
+                                  onDragStart={e => !track.IsLockedByUgc && drag(e, rightindex)}
+                                  id={`check_${track.trackID}`}
+                                  className={
+                                    rights.NoRights ? 'blocked-tracks bp-tr-list' : 'bp-tr-list'
+                                  }
+                                >
+                                  <label className="custom-checkbox">
+                                    <input
+                                      disabled={isDisabled}
+                                      name={`check_${track.trackID}`}
+                                      className="track-multi-drag-check"
+                                      type="checkbox"
+                                      checked={selectedTracks.includes(track.trackID)}
+                                      onChange={e =>
+                                        handleCheckboxChange(e, track.trackID, rightindex)
+                                      }
+                                    />
+                                    <span className="checkmark"></span>
+                                  </label>
+                                  <i className="material-icons">dehaze</i>
+                                  <span className="track-title-name">{track.trackTitle}</span>
+                                </div>
+                              );
+                            })}
                         </div>
                       </td>
                       <td colSpan="5" className="p-0">
