@@ -469,16 +469,25 @@ class TrackInformationPage extends Component {
     });
   }
 
+  isDuplicateFilename = fileName => {
+    const { Discs } = this.state.project;
+    return Discs.some(disc => disc.Tracks.some(track => track.fileName === fileName));
+  };
+
   updateFile = e => {
     let newFiles = Array.from(e.target.files);
-    let { replaceTrack } = this.state;
-    let modifiedReplaceTrack = replaceTrack;
-    modifiedReplaceTrack.fileName = newFiles[0].name.split(/\.(?=[^\.]+$)/)[0] + '.flac';
-
-    this.setState({ replaceTrack: modifiedReplaceTrack }, () => {
-      this.handleFileUpload(newFiles, replaceTrack);
-      this.hideReplaceAudioModal();
-    });
+    const filename = newFiles[0].name.split(/\.(?=[^\.]+$)/)[0] + '.flac';
+    if (this.isDuplicateFilename(filename)) {
+      showNotyAutoError('Duplicate Audio File');
+    } else {
+      let { replaceTrack } = this.state;
+      let modifiedReplaceTrack = replaceTrack;
+      modifiedReplaceTrack.fileName = filename;
+      this.setState({ replaceTrack: modifiedReplaceTrack }, () => {
+        this.handleFileUpload(newFiles, replaceTrack);
+        this.hideReplaceAudioModal();
+      });
+    }
   };
 
   handleFileUploadView = (trackNumber, showUpload) => {

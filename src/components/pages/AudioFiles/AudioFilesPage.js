@@ -187,29 +187,32 @@ class AudioFilesPage extends Component {
     let newFiles = Array.from(e.target.files);
     const { discs } = this.state;
     let filename = newFiles[0].name.split(/\.(?=[^\.]+$)/)[0] + '.flac';
-    const isDuplicateFilename = discs[this.state.activeTab].Tracks.some(
-      track => track.fileName === filename,
-    );
-    if (isDuplicateFilename) {
+    if (this.isDuplicateFilename(filename)) {
       showNotyAutoError('Duplicate Audio File');
-      return null;
-    }
-    let updatedDiscs = discs;
-    updatedDiscs[this.state.activeTab].Tracks[this.state.replaceTrackIndex].fileName = filename;
-    updatedDiscs[this.state.activeTab].Tracks[this.state.replaceTrackIndex].hasUpload = false;
-    updatedDiscs[this.state.activeTab].Tracks[this.state.replaceTrackIndex].fileUpload = true;
+    } else {
+      let updatedDiscs = discs;
+      updatedDiscs[this.state.activeTab].Tracks[this.state.replaceTrackIndex].fileName = filename;
+      updatedDiscs[this.state.activeTab].Tracks[this.state.replaceTrackIndex].hasUpload = false;
+      updatedDiscs[this.state.activeTab].Tracks[this.state.replaceTrackIndex].fileUpload = true;
 
-    const trackID = updatedDiscs[this.state.activeTab].Tracks[this.state.replaceTrackIndex].trackID;
-    this.handleFileUpload(newFiles, trackID);
-    this.setState({
-      discs: updatedDiscs,
-      replaceTrackIndex: null,
-    });
-    this.props.saveDiscs(_.cloneDeep(updatedDiscs));
-    this.hideReplaceAudioModal();
+      const trackID =
+        updatedDiscs[this.state.activeTab].Tracks[this.state.replaceTrackIndex].trackID;
+      this.handleFileUpload(newFiles, trackID);
+      this.setState({
+        discs: updatedDiscs,
+        replaceTrackIndex: null,
+      });
+      this.props.saveDiscs(_.cloneDeep(updatedDiscs));
+      this.hideReplaceAudioModal();
+    }
   };
 
-  updateFiles(e) {
+  isDuplicateFilename = fileName => {
+    const { discs } = this.state;
+    return discs.some(disc => disc.Tracks.some(track => track.fileName === fileName));
+  };
+
+  updateFiles = e => {
     const { discs, activeTab } = this.state;
     let newFiles = Array.from(e.target.files);
     let modifiedDiscs = discs;
@@ -220,28 +223,22 @@ class AudioFilesPage extends Component {
           fileName: filename,
           fileUpload: true,
         };
-
-        const isDuplicateFilename = modifiedDiscs[activeTab].Tracks.some(
-          track => track.fileName === filename,
-        );
-        if (!isDuplicateFilename) {
+        if (this.isDuplicateFilename(filename)) {
+          newFiles.splice(i, 1);
+          showNotyAutoError('Duplicate Audio File');
+        } else {
           modifiedDiscs[activeTab].Tracks.push(
             this.getTrack(newTrack, modifiedDiscs[activeTab].Tracks.length),
           );
           this.setState({ discs: modifiedDiscs });
           this.props.saveDiscs(_.cloneDeep(modifiedDiscs));
-        } else {
-          //remove this from the file stack
-          newFiles.splice(i, 1);
-          showNotyAutoError('Duplicate Audio File');
         }
       } else {
-        //remove this from the file stack
         newFiles.splice(i, 1);
       }
     }
     this.handleFileUpload(newFiles);
-  }
+  };
 
   deleteRow(rowIndex) {
     const { discs } = this.state;
