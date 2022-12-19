@@ -329,7 +329,7 @@ function TerritorialRightsPage(props) {
           let discTrack = project.Discs[selectedDisk].Tracks.filter(
             t => t.trackID === track.trackID,
           );
-          if (discTrack.length > 0) newTracks.push(discTrack[0]);
+          if (discTrack.length > 0) newTracks.push(track);
         }
       });
       if (newTracks.length > 0) {
