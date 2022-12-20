@@ -146,7 +146,6 @@ function TerritorialRightsPage(props) {
       ],
       tracks: [],
       hasRights: true,
-      discNo: selectedDisk,
     };
   };
 
@@ -356,9 +355,6 @@ function TerritorialRightsPage(props) {
       {tracksByDiscs.map((rights, rightindex) => {
         let isDisabled = false;
         isDisabled = rights.NoRights ? true : isDisabled;
-        // if (rights.discNo !== selectedDisk) {
-        //   return null
-        // }
         return (
           <div>
             <div className="row no-gutters">
