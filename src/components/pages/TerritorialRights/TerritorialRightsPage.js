@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
 import { Table, Form } from 'react-bootstrap';
 import ReactMultiSelectCheckboxes from 'react-multiselect-checkboxes';
-import { showNotyInfo, showNotyAutoError } from './../../Utils';
+import { showNotyInfo, showNotyAutoError, NO_LABEL_ID } from './../../Utils';
 import _ from 'lodash';
 import './TerritorialRights.css';
 
@@ -339,6 +339,8 @@ function TerritorialRightsPage(props) {
     setTracksByDiscs(trackByDisc);
   }, [territorialRights, selectedDisk]);
 
+  const isReadOnlyUser = props.user.DefaultReleasingLabelID === NO_LABEL_ID ? true : false;
+
   return (
     <div className="col-10">
       <LoadingImg show={showLoader} />
@@ -536,21 +538,23 @@ function TerritorialRightsPage(props) {
           </div>
         );
       })}
-      <div className="row save-buttons">
-        <div className="col-12">
-          <div className="audio-footer-action-fxd">
-            <button
-              tabIndex="6+"
-              id="contactsSaveContButton"
-              type="button"
-              className="btn btn-primary saveAndContinueButton"
-              onClick={e => handleSubmit(e)}
-            >
-              {t('blocking:Save')} & {t('blocking:Continue')}
-            </button>
+      {!isReadOnlyUser && (
+        <div className="row save-buttons">
+          <div className="col-12">
+            <div className="audio-footer-action-fxd">
+              <button
+                tabIndex="6+"
+                id="contactsSaveContButton"
+                type="button"
+                className="btn btn-primary saveAndContinueButton"
+                onClick={e => handleSubmit(e)}
+              >
+                {t('blocking:Save')} & {t('blocking:Continue')}
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

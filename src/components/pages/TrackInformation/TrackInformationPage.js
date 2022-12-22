@@ -17,6 +17,7 @@ import {
   isPreReleaseDate,
   showNotyInfo,
   renameFile,
+  NO_LABEL_ID,
 } from '../../Utils';
 import * as releaseAction from './../ReleaseInformation/releaseAction';
 import _ from 'lodash';
@@ -667,7 +668,8 @@ class TrackInformationPage extends Component {
   };
 
   render() {
-    const { t } = this.props;
+    const { t, user } = this.props;
+    const isReadOnlyUser = user.DefaultReleasingLabelID === NO_LABEL_ID ? true : false;
     return (
       <div className="col-10">
         <LoadingImg show={this.state.showloader || this.props.loading || this.props.upcLoading} />
@@ -717,26 +719,28 @@ class TrackInformationPage extends Component {
           t={t}
         />
 
-        <section className="row save-buttons">
-          <div className="col-12">
-            <div className="audio-footer-action-fxd">
-              <button
-                type="button"
-                className="btn btn-secondary saveButton"
-                onClick={e => this.handleSubmit(e)}
-              >
-                {t('track:Save')}
-              </button>
-              <button
-                type="button"
-                className="btn btn-primary saveAndContinueButton"
-                onClick={e => this.handleSubmit(e)}
-              >
-                {t('track:SaveAndContinue')}
-              </button>
+        {!isReadOnlyUser && (
+          <section className="row save-buttons">
+            <div className="col-12">
+              <div className="audio-footer-action-fxd">
+                <button
+                  type="button"
+                  className="btn btn-secondary saveButton"
+                  onClick={e => this.handleSubmit(e)}
+                >
+                  {t('track:Save')}
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-primary saveAndContinueButton"
+                  onClick={e => this.handleSubmit(e)}
+                >
+                  {t('track:SaveAndContinue')}
+                </button>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        )}
       </div>
     );
   }

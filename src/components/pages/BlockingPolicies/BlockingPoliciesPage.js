@@ -16,6 +16,7 @@ import {
   showNotyAutoError,
   getProjectReview,
   getPlatforms,
+  NO_LABEL_ID,
 } from './../../Utils';
 import moment from 'moment';
 import _ from 'lodash';
@@ -280,6 +281,8 @@ function BlockingPoliciesPage(props) {
     setTracksByDiscs(trackByDisc);
   }, [blockingPolicies, selectedDisk]);
 
+  const isReadOnlyUser = props.user.DefaultReleasingLabelID === NO_LABEL_ID ? true : false;
+
   return (
     <div className="col-10">
       <BlockingPoliciesModal projectID={props.projectID} t={t} />
@@ -527,21 +530,23 @@ function BlockingPoliciesPage(props) {
           </div>
         );
       })}
-      <div className="row save-buttons">
-        <div className="col-12">
-          <div className="audio-footer-action-fxd">
-            <button
-              tabIndex="6+"
-              id="contactsSaveContButton"
-              type="button"
-              className="btn btn-primary saveAndContinueButton"
-              onClick={e => handleSubmit(e)}
-            >
-              {t('blocking:Save')} & {t('blocking:Continue')}
-            </button>
+      {!isReadOnlyUser && (
+        <div className="row save-buttons">
+          <div className="col-12">
+            <div className="audio-footer-action-fxd">
+              <button
+                tabIndex="6+"
+                id="contactsSaveContButton"
+                type="button"
+                className="btn btn-primary saveAndContinueButton"
+                onClick={e => handleSubmit(e)}
+              >
+                {t('blocking:Save')} & {t('blocking:Continue')}
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

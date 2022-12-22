@@ -4,7 +4,7 @@ import ToolTip from 'component_library/Tooltip';
 import './ReleaseInformation.css';
 import { withRouter } from 'react-router-dom';
 import LoadingImg from 'component_library/LoadingImg';
-import { resetDatePicker, isFormValid, CustomInput } from '../../Utils.js';
+import { resetDatePicker, isFormValid, CustomInput, NO_LABEL_ID } from '../../Utils.js';
 import moment from 'moment';
 import ReleasingLabelsInput from '../ReleaseInformation/pageComponents/ReleasingLabelsInput';
 import ProjectTypesInput from '../ReleaseInformation/pageComponents/ProjectTypesInput';
@@ -379,7 +379,8 @@ class ReleaseinformationPage extends Component {
   }
 
   render() {
-    const { t } = this.props;
+    const { t, user } = this.props;
+    const isReadOnlyUser = user.DefaultReleasingLabelID === NO_LABEL_ID ? true : false;
     return (
       <div className="col-10">
         <LoadingImg show={this.state.showloader || this.props.loading} />
@@ -634,19 +635,21 @@ class ReleaseinformationPage extends Component {
             </div>
           </div>
 
-          <section className="row d-flex no-gutters save-buttons">
-            <div className="col-12">
-              <button
-                tabIndex="8+"
-                type="submit"
-                className="btn btn-primary"
-                onClick={this.handleSubmit}
-                id="releaseInfoSaveAndContinue"
-              >
-                {t('releaseInfo:Save')} &amp; {t('releaseInfo:Continue')}
-              </button>
-            </div>
-          </section>
+          {!isReadOnlyUser && (
+            <section className="row d-flex no-gutters save-buttons">
+              <div className="col-12">
+                <button
+                  tabIndex="8+"
+                  type="submit"
+                  className="btn btn-primary"
+                  onClick={this.handleSubmit}
+                  id="releaseInfoSaveAndContinue"
+                >
+                  {t('releaseInfo:Save')} &amp; {t('releaseInfo:Continue')}
+                </button>
+              </div>
+            </section>
+          )}
         </Form>
       </div>
     );

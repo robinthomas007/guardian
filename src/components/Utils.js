@@ -315,3 +315,5 @@ export const getPlatforms = () => {
     },
   ];
 };
+
+export const NO_LABEL_ID = '-2';

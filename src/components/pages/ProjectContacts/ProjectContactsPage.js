@@ -7,7 +7,7 @@ import './ProjectContacts.css';
 import LoadingImg from 'component_library/LoadingImg';
 import { isFormValid, isPreReleaseDate } from '../../Utils.js';
 import _ from 'lodash';
-import { showNotyInfo, showNotyAutoError } from 'components/Utils';
+import { showNotyInfo, showNotyAutoError, NO_LABEL_ID } from 'components/Utils';
 import { connect } from 'react-redux';
 import * as releaseAction from './../ReleaseInformation/releaseAction';
 import { withTranslation } from 'react-i18next';
@@ -300,7 +300,8 @@ class ProjectContactsPage extends Component {
   };
 
   render() {
-    const { t } = this.props;
+    const { t, user } = this.props;
+    const isReadOnlyUser = user.DefaultReleasingLabelID === NO_LABEL_ID ? true : false;
     return (
       <div className="col-10">
         <LoadingImg show={this.state.showloader} />
@@ -456,28 +457,30 @@ class ProjectContactsPage extends Component {
             </div>
           </div>
 
-          <div className="row save-buttons">
-            <div className="col-12">
-              <button
-                tabIndex="5+"
-                id="contactsSaveButton"
-                type="button"
-                className="btn btn-secondary saveButton"
-                onClick={this.isAdditionalContactsValid}
-              >
-                {t('contact:Save')}
-              </button>
-              <button
-                tabIndex="6+"
-                id="contactsSaveContButton"
-                type="button"
-                className="btn btn-primary saveAndContinueButton"
-                onClick={this.isAdditionalContactsValid}
-              >
-                {t('contact:Save')} &amp; {t('contact:Continue')}
-              </button>
+          {!isReadOnlyUser && (
+            <div className="row save-buttons">
+              <div className="col-12">
+                <button
+                  tabIndex="5+"
+                  id="contactsSaveButton"
+                  type="button"
+                  className="btn btn-secondary saveButton"
+                  onClick={this.isAdditionalContactsValid}
+                >
+                  {t('contact:Save')}
+                </button>
+                <button
+                  tabIndex="6+"
+                  id="contactsSaveContButton"
+                  type="button"
+                  className="btn btn-primary saveAndContinueButton"
+                  onClick={this.isAdditionalContactsValid}
+                >
+                  {t('contact:Save')} &amp; {t('contact:Continue')}
+                </button>
+              </div>
             </div>
-          </div>
+          )}
         </Form>
       </div>
     );

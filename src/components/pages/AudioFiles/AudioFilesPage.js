@@ -8,7 +8,13 @@ import { reduxForm } from 'redux-form';
 import AudioFilesTabbedTracks from '../AudioFiles/pageComponents/audioFilesTabbedTracks';
 import { connect } from 'react-redux';
 import * as uploadProgressActions from 'redux/uploadProgressAlert/actions';
-import { isDuplicateItem, isDuplicateISRC, showNotyError, showNotyAutoError } from '../../Utils';
+import {
+  isDuplicateItem,
+  isDuplicateISRC,
+  showNotyError,
+  showNotyAutoError,
+  NO_LABEL_ID,
+} from '../../Utils';
 import _ from 'lodash';
 import { showNotyInfo } from 'components/Utils';
 import * as releaseAction from './../ReleaseInformation/releaseAction';
@@ -688,7 +694,8 @@ class AudioFilesPage extends Component {
 
   render() {
     const { project } = this.state;
-    const { uploads, loading, upcLoading, t } = this.props;
+    const { uploads, loading, upcLoading, t, user } = this.props;
+    const isReadOnlyUser = user.DefaultReleasingLabelID === NO_LABEL_ID ? true : false;
     let isUpcProject = false;
     if (this.state.project && this.state.project.Project.projectID) {
       if (this.state.project.Project.upc) {
@@ -786,26 +793,28 @@ class AudioFilesPage extends Component {
           checkIsrcOnBlur={this.checkIsrcOnBlur}
         />
 
-        <section className="row no-gutters save-buttons">
-          <div className="col-12">
-            <div className="audio-footer-action-fxd">
-              <button
-                type="button"
-                className="btn btn-secondary saveButton"
-                onClick={e => this.handleDataSubmit(e)}
-              >
-                {t('audio:Save')}
-              </button>
-              <button
-                type="button"
-                className="btn btn-primary saveAndContinueButton"
-                onClick={e => this.handleDataSubmit(e)}
-              >
-                {t('audio:SaveAndContinue')}
-              </button>
+        {!isReadOnlyUser && (
+          <section className="row no-gutters save-buttons">
+            <div className="col-12">
+              <div className="audio-footer-action-fxd">
+                <button
+                  type="button"
+                  className="btn btn-secondary saveButton"
+                  onClick={e => this.handleDataSubmit(e)}
+                >
+                  {t('audio:Save')}
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-primary saveAndContinueButton"
+                  onClick={e => this.handleDataSubmit(e)}
+                >
+                  {t('audio:SaveAndContinue')}
+                </button>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        )}
       </div>
     );
   }

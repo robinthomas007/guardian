@@ -9,7 +9,12 @@ import SubmitProjectModal from '../../modals/SubmitProjectModal';
 import UpdateRepertoireModal from '../../modals/UpdateRepertoireModal';
 import ShareModal from '../../modals/shareModal';
 import IncompleteProjectModal from '../../modals/IncompleteProjectModal';
-import { formatDateToYYYYMMDD, convertToLocaleTime, isPreReleaseDate } from '../../Utils';
+import {
+  formatDateToYYYYMMDD,
+  convertToLocaleTime,
+  isPreReleaseDate,
+  NO_LABEL_ID,
+} from '../../Utils';
 import { showNotyInfo, showNotyAutoError, getProjectReview } from 'components/Utils';
 // import * as reviewActions from '../../../actions/reviewActions';
 import moment from 'moment';
@@ -208,7 +213,9 @@ class ReviewAndSubmitPage extends Component {
   }
 
   getPage = () => {
-    const { t } = this.props;
+    const { t, user } = this.props;
+    const isReadOnlyUser = user.DefaultReleasingLabelID === NO_LABEL_ID ? true : false;
+
     return (
       <div>
         <div className="page-container">
@@ -266,7 +273,7 @@ class ReviewAndSubmitPage extends Component {
                 >
                   <i className="material-icons">share</i> {t('review:Share')}
                 </button>
-                {parseInt(this.props.data.Project.projectStatusID) === 1 ? (
+                {parseInt(this.props.data.Project.projectStatusID) === 1 && !isReadOnlyUser ? (
                   <button
                     type="button"
                     className="btn btn-primary"
@@ -503,18 +510,19 @@ class ReviewAndSubmitPage extends Component {
           </div>
         </div>
 
-        <div className="row d-flex no-gutters">
-          <div className="col-12 align-content-end submit-project">
-            {parseInt(this.props.data.Project.projectStatusID) === 1 ? (
-              <button
-                type="button"
-                className="btn btn-primary float-right"
-                onClick={this.handlePreSubmitCheck}
-              >
-                {t('review:SubmitProject')}
-              </button>
-            ) : null}
-            {/*parseInt(this.props.data.Project.projectStatusID) !== 1 && this.props.user.IsAdmin ? (
+        {!isReadOnlyUser && (
+          <div className="row d-flex no-gutters">
+            <div className="col-12 align-content-end submit-project">
+              {parseInt(this.props.data.Project.projectStatusID) === 1 ? (
+                <button
+                  type="button"
+                  className="btn btn-primary float-right"
+                  onClick={this.handlePreSubmitCheck}
+                >
+                  {t('review:SubmitProject')}
+                </button>
+              ) : null}
+              {/*parseInt(this.props.data.Project.projectStatusID) !== 1 && this.props.user.IsAdmin ? (
               <button
                 type="button"
                 className="btn btn-primary float-right"
@@ -524,8 +532,9 @@ class ReviewAndSubmitPage extends Component {
                 {t('review:publish')}
               </button>
             ) : null*/}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     );
   };
