@@ -687,8 +687,8 @@ const Audit = props => {
                     <div className="table-sub-head">
                       step <span className="round-step-circle">7</span>
                       On {moment(item.CreatedDateTime).format('DD/MM/YYYY')} at{' '}
-                      {moment(item.CreatedDateTime).format('hh:mm a')}.{item.UserName} submitted{' '}
-                      {item.Project.projectTitle}
+                      {moment(item.CreatedDateTime).format('hh:mm a')}.{item.UserName} has changed
+                      the status to {item.Project.projectStatus} for {item.Project.projectTitle}
                     </div>
                   </div>
                 )}
