@@ -12,7 +12,7 @@ const config = Object.freeze(window.env);
 
 let url = 'https://istioli.umusic.net/oauth2/guardian-dev';
 
-switch (config.REACT_APP_ENV) {
+switch (config.react_app_env) {
   case 'dev':
     url = 'https://istioli.umusic.net/oauth2/guardian-dev';
     break;
