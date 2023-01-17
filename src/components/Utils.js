@@ -258,6 +258,9 @@ export const deleteCookie = function(name) {
   document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT; domain=.umusic.net';
 };
 
+export const LOGOUT_URL =
+  'https://umgb2cnonprod.b2clogin.com/umgb2cnonprod.onmicrosoft.com/B2C_1A_LIMITEDWITHMFASIGNUPSIGNINGUARDIAN/oauth2/v2.0/logout';
+
 export const Duration = [
   { value: '', text: i18n.t('blocking:selectOne'), selected: true },
   { value: '> 30 sec', text: '> 30 sec', selected: false },

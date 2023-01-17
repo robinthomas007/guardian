@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import RequestAccessModal from '../../modals/RequestAccessModal';
 import './HomePage.css';
-import { withAuth } from '@okta/okta-react';
 import GuardianLogo from 'images/guardian-logo.png';
-import { showNotyInfo, showNotyAutoError } from 'components/Utils';
+import { showNotyInfo, showNotyAutoError, getCookie } from 'components/Utils';
 import { withTranslation } from 'react-i18next';
 import LanguageDropdown from '../../common/LanguageDropdown';
+import jwt_decode from 'jwt-decode';
+import { BASE_URL } from './../../../App';
 
 class HomePage extends Component {
   constructor(props) {
@@ -17,28 +18,36 @@ class HomePage extends Component {
     };
     this.showRequestModal = this.showRequestModal.bind(this);
     this.hideRequestModal = this.hideRequestModal.bind(this);
-    this.checkAuthentication = this.checkAuthentication.bind(this);
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
   }
 
-  async checkAuthentication() {
-    const authenticated = await this.props.auth.isAuthenticated();
-    if (authenticated !== this.state.authenticated) {
-      this.setState({ authenticated });
+  async componentDidMount() {
+    const accesstoken = getCookie('guardian_auth');
+    let user = {};
+    try {
+      user = jwt_decode(accesstoken);
+    } catch (err) {
+      console.log(err);
+    }
+    if (user && user.email) {
+      this.props.history.push('/findProject');
     }
   }
 
-  async componentDidMount() {
-    this.checkAuthentication();
-  }
-
-  async componentDidUpdate() {
-    this.checkAuthentication();
-  }
-
   async login() {
-    return this.props.history.push('/findProject');
+    const accesstoken = getCookie('guardian_auth');
+    let user = {};
+    try {
+      user = jwt_decode(accesstoken);
+    } catch (err) {
+      console.log(err);
+    }
+    if (!user || (user && !user.email)) {
+      window.location.href = BASE_URL;
+    } else {
+      this.props.history.push('/findProject');
+    }
   }
 
   async logout() {
@@ -73,7 +82,7 @@ class HomePage extends Component {
 
   render() {
     const { t } = this.props;
-    if (this.state.authenticated === null) return null;
+    // if (this.state.authenticated === null) return null;
 
     return (
       <section className="container-fluid landing">
@@ -126,4 +135,4 @@ class HomePage extends Component {
   }
 }
 
-export default withAuth(withTranslation('home')(HomePage));
+export default withTranslation('home')(HomePage);

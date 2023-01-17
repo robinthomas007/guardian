@@ -11,7 +11,7 @@ async function vaultUserPassLogin(user, pass) {
         password: pass
       })
       res(resp.data.auth.client_token)
-    } catch(e) {
+    } catch (e) {
       rej(e)
     }
   })
@@ -24,7 +24,7 @@ async function vaultLdapLogin(user, pass) {
         password: pass
       })
       res(resp.data.auth.client_token)
-    } catch(e) {
+    } catch (e) {
       rej(e)
     }
   })
@@ -39,7 +39,7 @@ async function vaultGetSecret(token, secret) {
         }
       })
       res(resp.data.data.data)
-    } catch(e) {
+    } catch (e) {
       rej(e)
     }
   })
@@ -75,17 +75,18 @@ async function vaultGetSecret(token, secret) {
         default:
           console.log("Login to vault with ldap")
           token = await vaultLdapLogin(process.env.VAULT_USER, process.env.VAULT_PASS)
-  	      break;
+          break;
       }
     }
     process.env.NODE_ENV = process.env.NODE_ENV.toLowerCase()
     console.log("Get secret for env", process.env.NODE_ENV)
     let data = await vaultGetSecret(token, 'guardian-ui/' + process.env.NODE_ENV)
+    data.REACT_APP_ENV = process.env.NODE_ENV
     //fs.writeFileSync("src/config/index."+process.env.NODE_ENV+".json", JSON.stringify(data))
     let configData = JSON.stringify(data);
     let tpl = `window.env = ${configData}`;
     fs.writeFileSync("public/static/config/index.js", tpl);
-  } catch(e) {
+  } catch (e) {
     console.log(e.message)
   }
 })();

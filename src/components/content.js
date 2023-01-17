@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Header from './template/Header/Header';
-import { SecureRoute } from '@okta/okta-react';
 import TrackInformationPage from './pages/TrackInformation/TrackInformationPage';
 import ProjectContactsPage from './pages/ProjectContacts/ProjectContactsPage';
 import AudioFilesPage from './pages/AudioFiles/AudioFilesPage';
@@ -11,13 +10,18 @@ import ReleaseInformationPage from './pages/ReleaseInformation/ReleaseInformatio
 import FindProjectPage from './pages/FindProject/FindProjectPage';
 import HelpGuide from './pages/HelpGuide/HelpGuidePage';
 import UserAdmin from './pages/UserAdmin/UserAdmin';
-import { withAuth } from '@okta/okta-react';
 import { connect } from 'react-redux';
 import ProjectInbox from './pages/ProjectInbox';
 import ErrorBoundary from './common/ErrorBoundary';
 import * as releaseAction from './pages/ReleaseInformation/releaseAction';
+import * as territorialRightsAction from '../actions/territorialRightsAction';
 import UploadProgressAlert from 'components/SharedPageComponents/UploadProgresAlert';
-import { showNotyMaskWarning } from 'components/Utils';
+import { showNotyMaskWarning, getCookie, deleteCookie, LOGOUT_URL } from 'components/Utils';
+import { Route } from 'react-router-dom';
+import jwt_decode from 'jwt-decode';
+import { compose } from 'redux';
+import { withTranslation } from 'react-i18next';
+import _ from 'lodash';
 
 class Content extends Component {
   constructor(props) {
@@ -26,7 +30,6 @@ class Content extends Component {
     super(props);
     this.state = {
       accesstoken: '',
-      idtoken: '',
       user: {},
       isAdmin: false,
       userLoaded: false,
@@ -45,37 +48,10 @@ class Content extends Component {
     this.setProjectID = this.setProjectID.bind(this);
     this.getUserData = this.getUserData.bind(this);
     this.updateHistory = this.updateHistory.bind(this);
-    this.checkAuthentication();
   }
 
-  async checkAuthentication() {
-    const accesstoken = await this.props.auth.getAccessToken();
-    const idtoken = await this.props.auth.getIdToken();
-    const user = await this.props.auth.getUser();
-
-    if (accesstoken !== this.state.accesstoken) {
-      this.setState({ accesstoken });
-    }
-
-    if (idtoken !== this.state.idtoken) {
-      this.setState({ idtoken });
-    }
-
-    if (user !== this.state.user) {
-      this.setState({ user });
-    }
-
-    sessionStorage.setItem('idtoken', idtoken);
-    sessionStorage.setItem('accessToken', accesstoken);
-    sessionStorage.setItem('user', JSON.stringify(user));
-
-    if (this.state.user !== user) {
-      this.setState({ user: user });
-    }
-
-    if (!this.state.userLoaded) {
-      this.getUserData();
-    }
+  componentDidMount() {
+    this.checkAuthentication();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -86,11 +62,32 @@ class Content extends Component {
     }
   }
 
+  async checkAuthentication() {
+    const accesstoken = getCookie('guardian_auth');
+    let user = {};
+    try {
+      user = jwt_decode(accesstoken);
+    } catch (err) {
+      console.log(err);
+    }
+
+    if (!user.email) {
+      this.props.history.push('/');
+    }
+
+    this.setState({ accesstoken });
+    sessionStorage.setItem('accessToken', accesstoken);
+    sessionStorage.setItem('user', JSON.stringify(user));
+
+    this.setState({ user: user }, () => {
+      this.getUserData();
+    });
+  }
+
   getUserData(lang) {
-    const user = JSON.parse(sessionStorage.getItem('user'));
     const fetchHeaders = new Headers({
       'Content-Type': 'application/json',
-      Authorization: sessionStorage.getItem('accessToken'),
+      Authorization: this.state.accesstoken,
     });
 
     const fetchBody = JSON.stringify({
@@ -106,15 +103,23 @@ class Content extends Component {
       body: fetchBody,
     })
       .then(response => {
+        if (response.status === 403 || response.status === 401) {
+          deleteCookie('guardian_auth');
+          this.props.history.push('/');
+          return {};
+        }
         return response.json();
       })
       .then(userJSON => {
-        const newUserObj = Object.assign(userJSON, user);
-        this.setState({
-          user: newUserObj,
-          userLoaded: true,
-        });
-        sessionStorage.setItem('user', JSON.stringify(newUserObj));
+        if (!_.isEmpty(userJSON)) {
+          const newUserObj = Object.assign(userJSON, this.state.user);
+          this.setState({
+            user: newUserObj,
+            userLoaded: true,
+          });
+          sessionStorage.setItem('user', JSON.stringify(newUserObj));
+          sessionStorage.setItem('accessToken', this.state.accesstoken);
+        }
       })
       .catch(error => console.error(error));
   }
@@ -211,6 +216,7 @@ class Content extends Component {
     localStorage.removeItem('projectData');
     localStorage.removeItem('upc');
     this.props.initializeUpcData();
+    this.props.initializeRightsData();
     this.setState({ project: blankProject, clearProject: true, projectStatus: 'In Progress' }, () =>
       this.setState({ clearProject: false }),
     );
@@ -218,14 +224,10 @@ class Content extends Component {
 
   handleLogoutClick = e => {
     e.preventDefault();
-    this.props.auth.logout('/');
-    const langIndex = localStorage.getItem('langIndex');
+    deleteCookie('guardian_auth');
+    this.props.history.push('/');
     localStorage.clear();
-    localStorage.setItem('langIndex', langIndex);
-  };
-
-  setStatus = status => {
-    this.setState({ projectStatus: status });
+    window.location.href = LOGOUT_URL;
   };
 
   setHeaderProjectData = projectData => {
@@ -241,8 +243,6 @@ class Content extends Component {
     ) {
       this.setState({ serverTimeDate: JSON.parse(sessionStorage.getItem('user')).UtcDateTime });
     }
-
-    //alert(this.props.location.pathname)
   };
 
   render() {
@@ -275,7 +275,7 @@ class Content extends Component {
               >
                 <div className="col-1"></div>
 
-                <SecureRoute
+                <Route
                   path="/releaseInformation/:projectID?"
                   render={() => (
                     <ReleaseInformationPage
@@ -288,7 +288,7 @@ class Content extends Component {
                     />
                   )}
                 />
-                <SecureRoute
+                <Route
                   path="/inbox"
                   render={() => (
                     <ProjectInbox
@@ -299,7 +299,7 @@ class Content extends Component {
                     />
                   )}
                 />
-                <SecureRoute
+                <Route
                   path="/projectContacts/:projectID?"
                   render={() => (
                     <ProjectContactsPage
@@ -312,7 +312,7 @@ class Content extends Component {
                     />
                   )}
                 />
-                <SecureRoute
+                <Route
                   path="/trackInformation/:projectID?"
                   render={() => (
                     <TrackInformationPage
@@ -323,7 +323,7 @@ class Content extends Component {
                     />
                   )}
                 />
-                <SecureRoute
+                <Route
                   path="/territorialRights/:projectID?"
                   render={() => (
                     <TerritorialRightsPage
@@ -331,11 +331,10 @@ class Content extends Component {
                       setProjectID={this.setProjectID}
                       setHeaderProjectData={this.setHeaderProjectData}
                       serverTimeDate={this.state.serverTimeDate}
-                      setStatus={this.setStatus}
                     />
                   )}
                 />
-                <SecureRoute
+                <Route
                   path="/blockingPolicies/:projectID?"
                   render={() => (
                     <BlockingPoliciesPage
@@ -346,7 +345,7 @@ class Content extends Component {
                     />
                   )}
                 />
-                <SecureRoute
+                <Route
                   path="/audioFiles/:projectID?"
                   render={() => (
                     <AudioFilesPage
@@ -357,22 +356,20 @@ class Content extends Component {
                     />
                   )}
                 />
-                <SecureRoute
+                <Route
                   path="/reviewSubmit/:projectID?"
                   render={() => (
                     <ReviewAndSubmitPage
-                      prevLocation={this.state.prevLocation}
                       user={this.state.user}
                       setProjectID={this.setProjectID}
                       projectID={this.state.project.Project.projectID}
                       data={this.state.project}
                       setHeaderProjectData={this.setHeaderProjectData}
                       serverTimeDate={this.state.serverTimeDate}
-                      setStatus={this.setStatus}
                     />
                   )}
                 />
-                <SecureRoute
+                <Route
                   path="/findProject"
                   render={() => (
                     <FindProjectPage
@@ -383,8 +380,8 @@ class Content extends Component {
                     />
                   )}
                 />
-                <SecureRoute path="/helpGuide/:id?" render={() => <HelpGuide />} />
-                <SecureRoute
+                <Route path="/helpGuide/:id?" render={() => <HelpGuide />} />
+                <Route
                   path="/userAdmin"
                   render={() => (
                     <UserAdmin
@@ -407,13 +404,19 @@ class Content extends Component {
   }
 }
 
-export default withAuth(
+const mapDispatchToProps = dispatch => ({
+  initializeUpcData: () => dispatch(releaseAction.initializeUpcData()),
+  initializeRightsData: () => dispatch(territorialRightsAction.initializeRightsData()),
+});
+
+const mapStateToProps = state => ({
+  uploads: state.uploadProgressAlert.uploads,
+});
+
+export default compose(
+  withTranslation('content'),
   connect(
-    state => ({
-      uploads: state.uploadProgressAlert.uploads,
-    }),
-    dispatch => ({
-      initializeUpcData: () => dispatch(releaseAction.initializeUpcData()),
-    }),
-  )(Content),
-);
+    mapStateToProps,
+    mapDispatchToProps,
+  ),
+)(Content);
