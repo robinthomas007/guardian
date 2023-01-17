@@ -2,7 +2,7 @@ const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
 require('dotenv').config();
-const vaultAddr = process.env.VAULT_ADDR || 'https://cellar.umusic.com';
+const vaultAddr = process.env.VAULT_ADDR || 'https://vault.umusic.net';
 
 async function vaultUserPassLogin(user, pass) {
   return new Promise(async (res, rej) => {
