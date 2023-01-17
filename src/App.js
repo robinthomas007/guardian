@@ -28,7 +28,6 @@ switch (config.react_app_env) {
   default:
     url = 'https://istioli.umusic.net/oauth2/guardian-dev';
 }
-console.log('process.env.REACT_APP_ENVprocess.env.REACT_APP_ENV', config);
 
 export const BASE_URL = url;
 

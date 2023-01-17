@@ -225,9 +225,9 @@ class Content extends Component {
   handleLogoutClick = e => {
     e.preventDefault();
     deleteCookie('guardian_auth');
-    this.props.history.push('/');
     localStorage.clear();
-    window.location.href = LOGOUT_URL;
+    this.props.history.push('/');
+    // window.location.href = LOGOUT_URL;
   };
 
   setHeaderProjectData = projectData => {
