@@ -245,6 +245,10 @@ class Content extends Component {
     }
   };
 
+  setStatus = status => {
+    this.setState({ projectStatus: status });
+  };
+
   render() {
     if (this.state.userLoaded) {
       return (
@@ -331,6 +335,7 @@ class Content extends Component {
                       setProjectID={this.setProjectID}
                       setHeaderProjectData={this.setHeaderProjectData}
                       serverTimeDate={this.state.serverTimeDate}
+                      setStatus={this.setStatus}
                     />
                   )}
                 />
@@ -360,12 +365,14 @@ class Content extends Component {
                   path="/reviewSubmit/:projectID?"
                   render={() => (
                     <ReviewAndSubmitPage
+                      prevLocation={this.state.prevLocation}
                       user={this.state.user}
                       setProjectID={this.setProjectID}
                       projectID={this.state.project.Project.projectID}
                       data={this.state.project}
                       setHeaderProjectData={this.setHeaderProjectData}
                       serverTimeDate={this.state.serverTimeDate}
+                      setStatus={this.setStatus}
                     />
                   )}
                 />
