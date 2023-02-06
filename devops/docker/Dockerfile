@@ -12,7 +12,8 @@ COPY . .
 RUN npm ci --ignore-scripts
 
 ENV NODE_PATH=src
-RUN bash devops/scripts/vaultconfig.sh && \
+RUN --mount=type=secret,id=serviceaccount_token,target=/var/run/secrets/kubernetes.io/serviceaccount/token \
+    bash devops/scripts/vaultconfig.sh && \
     npm run build
 
 FROM docker-registry.umusic.com/swift/nginx-base-aws:1.18-0.0.1 as app
