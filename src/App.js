@@ -20,7 +20,7 @@ switch (config.react_app_env) {
     url = 'https://istioli.umusic.net/oauth2/guardian-qa';
     break;
   case 'uat':
-    url = 'https://istioli.umusic.net/oauth2/guardian-stage';
+    url = 'https://istioli.umusic.com/oauth2/guardian-stage';
     break;
   case 'prod':
     url = 'https://istioli.umusic.net/oauth2/guardian-prod';
