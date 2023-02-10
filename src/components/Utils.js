@@ -256,6 +256,7 @@ export function getCookie(name) {
 export const deleteCookie = function(name) {
   document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT; domain=.umusic.net';
   document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT; domain=.umusic.net';
+  document.cookie = 'guardian_auth=;expires=Thu, 01 Jan 1970 00:00:01 GMT; domain=.umusic.com';
   document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT';
 };
 
