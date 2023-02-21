@@ -124,7 +124,10 @@ class AudioVideoDataTable extends Component {
     const trackArr = {};
     Object.entries(uploads).forEach(([key, value]) => {
       const trackIds = key.split('/');
-      trackArr[trackIds[0].slice(0, -14)] = value;
+      // recently changed all the other formats to flac
+      let changeToFlac = trackIds[0].slice(0, -14);
+      changeToFlac = changeToFlac.split('.')[0] + '.flac';
+      trackArr[changeToFlac] = value;
       trackArr['trackId'] = trackIds.length > 0 ? trackIds[1] : null;
     });
     const { t } = this.props;
