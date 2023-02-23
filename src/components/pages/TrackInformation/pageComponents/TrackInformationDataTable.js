@@ -96,40 +96,41 @@ class TrackInformationDataTable extends Component {
     let datePickers = document.getElementsByClassName('trackReleaseDateInput');
     let sortedInputs = [];
     for (var i = 0; i < datePickers.length; i++) {
-      console.log(datePickers[i].getAttribute('tabIndex'), this.props.discID, 'Asddasd');
       if (parseInt(datePickers[i].getAttribute('tabIndex')) === parseInt(this.props.discID)) {
         sortedInputs.push(datePickers[i]);
       }
     }
-
     if (checked) {
-      sortedInputs[rowIndex].disabled = false;
       sortedInputs[rowIndex].value = '';
       sortedInputs[rowIndex].disabled = true;
     } else {
       sortedInputs[rowIndex].value = '';
+      sortedInputs[rowIndex].disabled = false;
     }
   };
 
   handleTBDClick(e, track, i) {
     const { Discs } = this.props.data;
     let modifiedDiscs = Discs[this.props.discID];
-
     if (e.target.checked) {
       modifiedDiscs.Tracks[i].isReleaseDateDisabled = true;
       modifiedDiscs.Tracks[i].trackReleaseDate = '';
-      modifiedDiscs.Tracks[i].isSingle = false;
+      // modifiedDiscs.Tracks[i].isSingle = false;
       modifiedDiscs.Tracks[i].isTbdDisabled = false;
       modifiedDiscs.Tracks[i].isTbdChecked = true;
       this.setDatePicker(e.target.checked, i);
     } else {
+      modifiedDiscs.Tracks[i].isReleaseDateDisabled = false;
       modifiedDiscs.Tracks[i].isTbdDisabled = false;
+      modifiedDiscs.Tracks[i].isTbdChecked = false;
+      modifiedDiscs.Tracks[i].trackReleaseDate = new Date();
+      this.setDatePicker(e.target.checked, i);
     }
     this.props.updateDiscData(this.props.discID, modifiedDiscs);
   }
 
   handleTBDCheckedLoad = track => {
-    return !track.trackReleaseDate && !track.isSingle ? true : false;
+    return !track.trackReleaseDate && track.isSingle ? true : false;
   };
 
   setSingle(e, track, i) {
@@ -142,8 +143,8 @@ class TrackInformationDataTable extends Component {
         ? this.props.data.Project.projectReleaseDate
         : '';
       modifiedDiscs.Tracks[i].isReleaseDateDisabled = false;
-      modifiedDiscs.Tracks[i].isTbdChecked = false;
-      modifiedDiscs.Tracks[i].isTbdDisabled = false;
+      // modifiedDiscs.Tracks[i].isTbdChecked = false;
+      // modifiedDiscs.Tracks[i].isTbdDisabled = false;
     } else {
       modifiedDiscs.Tracks[i].trackReleaseDate = this.props.data.Project.projectReleaseDate
         ? this.props.data.Project.projectReleaseDate
@@ -298,7 +299,7 @@ class TrackInformationDataTable extends Component {
                   checked={this.handleTBDCheckedLoad(track)}
                   value={this.handleTBDCheckedLoad(track)}
                   disabled={track.isTbdDisabled || !pre}
-                  onChange={evt => this.handleTBDClick(evt, track, i)}
+                  onChange={evt => track.isSingle && this.handleTBDClick(evt, track, i)}
                 />
                 <span
                   className={`checkmark ${track.isTbdDisabled || !pre ? 'disabled' : ''}`}
