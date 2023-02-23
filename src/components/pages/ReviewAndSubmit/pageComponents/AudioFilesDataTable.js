@@ -32,7 +32,7 @@ class AudioFilesDataTable extends Component {
               </label>
             </td>
             <td className="col-2 text-center">
-              {track.isSingle || track.trackReleaseDate !== ''
+              {track.trackReleaseDate !== ''
                 ? `${moment.utc(track.trackReleaseDate).format('MM-DD-YYYY hh:mm A')} UTC`
                 : 'TBD'}
             </td>
