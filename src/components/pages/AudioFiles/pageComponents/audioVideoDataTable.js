@@ -177,7 +177,14 @@ class AudioVideoDataTable extends Component {
                       onClick={() => this.props.showReplaceModal(track, i, 'Upload')}
                     >
                       <i className="material-icons">publish</i>
-                      <span>{t('audio:UploadAudioFile')}</span>
+                      <span>
+                        {this.props.cisLoading ? t('audio:Uploading') : t('audio:UploadAudioFile')}
+                      </span>
+                      {this.props.cisLoading && (
+                        <span className="loading-sm uploading-pgs-loader">
+                          <AudioLoader show={true} />
+                        </span>
+                      )}
                     </button>
                   )}
                   <Form.Control

@@ -69,7 +69,7 @@ export const cisFetchRequest = loading => {
 
 export const getCisData = data => {
   return dispatch => {
-    // dispatch(cisFetchRequest(true));
+    dispatch(cisFetchRequest(true));
     for (let i = 0; i < data.Iscrs.length; i++) {
       dispatch(startUpload('CIS' + i));
       dispatch(setUploadProgress('CIS' + i, 100));
