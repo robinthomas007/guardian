@@ -35,6 +35,7 @@ export default props => (
             checkIsrc={props.checkIsrc}
             upc={props.upc}
             cisLoading={props.cisLoading}
+            Iscrs={props.Iscrs}
             t={props.t}
             checkIsrcOnBlur={props.checkIsrcOnBlur}
           />

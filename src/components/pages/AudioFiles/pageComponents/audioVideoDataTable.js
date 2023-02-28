@@ -162,7 +162,8 @@ class AudioVideoDataTable extends Component {
                       </li>
                       <li>{track.fileName}</li>
                       <li>
-                        {trackArr[track.fileName] && track.trackID === trackArr['trackId'] ? (
+                        {(trackArr[track.fileName] && track.trackID === trackArr['trackId']) ||
+                        (this.props.cisLoading && this.props.Iscrs.includes(track.isrc)) ? (
                           <span className="loading-sm" id={`${track.fileName}_ico`}>
                             <AudioLoader show={true} />
                           </span>
@@ -178,9 +179,11 @@ class AudioVideoDataTable extends Component {
                     >
                       <i className="material-icons">publish</i>
                       <span>
-                        {this.props.cisLoading ? t('audio:Uploading') : t('audio:UploadAudioFile')}
+                        {this.props.cisLoading && this.props.Iscrs.includes(track.isrc)
+                          ? t('audio:Uploading')
+                          : t('audio:UploadAudioFile')}
                       </span>
-                      {this.props.cisLoading && (
+                      {this.props.cisLoading && this.props.Iscrs.includes(track.isrc) && (
                         <span className="loading-sm uploading-pgs-loader">
                           <AudioLoader show={true} />
                         </span>
@@ -214,7 +217,8 @@ class AudioVideoDataTable extends Component {
                       </li>
                       <li>{track.fileName}</li>
                       <li>
-                        {trackArr[track.fileName] && track.trackID === trackArr['trackId'] ? (
+                        {(trackArr[track.fileName] && track.trackID === trackArr['trackId']) ||
+                        (this.props.cisLoading && this.props.Iscrs.includes(track.isrc)) ? (
                           <span className="loading-sm" id={`${track.fileName}_ico`}>
                             <AudioLoader show={true} />
                           </span>
@@ -232,12 +236,12 @@ class AudioVideoDataTable extends Component {
                       <span>
                         <i className="material-icons">publish</i>
                         <span>
-                          {this.props.cisLoading
+                          {this.props.cisLoading && this.props.Iscrs.includes(track.isrc)
                             ? t('audio:Uploading')
                             : t('audio:UploadAudioFile')}
                         </span>
                       </span>
-                      {this.props.cisLoading && (
+                      {this.props.cisLoading && this.props.Iscrs.includes(track.isrc) && (
                         <span className="loading-sm uploading-pgs-loader">
                           <AudioLoader show={true} />
                         </span>

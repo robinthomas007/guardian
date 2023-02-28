@@ -60,16 +60,17 @@ export const cisFetchFailure = error => {
   };
 };
 
-export const cisFetchRequest = loading => {
+export const cisFetchRequest = (loading, Iscrs) => {
   return {
     type: actions.CIS_REQUEST,
     loading,
+    Iscrs,
   };
 };
 
 export const getCisData = data => {
   return dispatch => {
-    dispatch(cisFetchRequest(true));
+    dispatch(cisFetchRequest(true, data.Iscrs));
     for (let i = 0; i < data.Iscrs.length; i++) {
       dispatch(startUpload('CIS' + i));
       dispatch(setUploadProgress('CIS' + i, 100));

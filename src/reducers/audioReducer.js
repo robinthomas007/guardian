@@ -14,6 +14,7 @@ export const initialState = {
   message: null,
   cisData: [],
   cisLoading: false,
+  Iscrs: [],
 };
 
 export default createReducer(initialState, {
@@ -30,13 +31,16 @@ export default createReducer(initialState, {
   },
   [CIS_REQUEST]: (state, action) => {
     state.cisLoading = action.loading;
+    state.Iscrs = action.Iscrs;
   },
   [CIS_SUCCESS]: (state, action) => {
     state.cisData = action.result;
     state.cisLoading = false;
+    state.Iscrs = [];
   },
   [CIS_FAILURE]: (state, action) => {
     state.cisLoading = false;
     state.message = action.message;
+    state.Iscrs = [];
   },
 });

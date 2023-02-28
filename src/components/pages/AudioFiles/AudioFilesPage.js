@@ -788,6 +788,7 @@ class AudioFilesPage extends Component {
           checkIsrc={this.checkIsrc}
           upc={project.Project.upc ? true : false}
           cisLoading={this.props.cisLoading}
+          Iscrs={this.props.Iscrs}
           t={t}
           activeTab={this.state.activeTab}
           checkIsrcOnBlur={this.checkIsrcOnBlur}
@@ -837,6 +838,7 @@ export default withRouter(
         loading: state.audioReducer.loading,
         cisData: state.audioReducer.cisData,
         cisLoading: state.audioReducer.cisLoading,
+        Iscrs: state.audioReducer.Iscrs,
         upcLoading: state.releaseReducer.upcLoading,
       }),
       dispatch => ({
