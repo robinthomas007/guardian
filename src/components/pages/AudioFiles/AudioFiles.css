@@ -138,3 +138,6 @@ button.btn-disabled.btn.btn-secondary.action {
   top: '240px';
   background: '#fff';
 }
+.table thead .tbl-isrc-width {
+  width: 150px !important;
+}

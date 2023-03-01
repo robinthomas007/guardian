@@ -40,7 +40,7 @@ class TrackInformationDataTable extends Component {
             <i>({t('track:Required')})</i>
           </span>
         </th>
-        <th>
+        <th className="tbl-isrc-width">
           {t('track:ISRC ')}&nbsp;
           <ToolTip tabIndex="-1" message={t('track:CheckISRCsMsg')} />
           <div style={{ float: 'right' }}>

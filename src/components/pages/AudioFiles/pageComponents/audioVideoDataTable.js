@@ -33,7 +33,7 @@ class AudioVideoDataTable extends Component {
               <span className="required-ind"> ({t('audio:Required')})</span>
             </i>
           </th>
-          <th>
+          <th className="tbl-isrc-width">
             {t('audio:ISRC')}
             <div style={{ float: 'right' }}>
               <VideoPlayer
