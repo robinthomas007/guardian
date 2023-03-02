@@ -659,7 +659,7 @@ class Header extends Component {
                       <LanguageDropdown getUserData={this.props.getUserData} />
                     </li>
                     <li>
-                      {t('header:Welcome')}, {this.props.userData.name}
+                      {t('header:Welcome')}, {this.props.userData.FullName}
                     </li>
                     <li>
                       <span className="btn-log" onClick={e => this.props.handleLogoutClick(e)}>
