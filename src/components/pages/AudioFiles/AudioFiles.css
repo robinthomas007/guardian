@@ -139,5 +139,9 @@ button.btn-disabled.btn.btn-secondary.action {
   background: '#fff';
 }
 .table thead .tbl-isrc-width {
-  width: 150px !important;
+  width: 155px !important;
+}
+
+.table thead .release-date-col {
+  width: 190px;
 }
