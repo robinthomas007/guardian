@@ -41,8 +41,10 @@ class TrackInformationDataTable extends Component {
           </span>
         </th>
         <th className="tbl-isrc-width">
-          {t('track:ISRC ')}&nbsp;
-          <ToolTip tabIndex="-1" message={t('track:CheckISRCsMsg')} />
+          <div>
+            {t('track:ISRC ')}&nbsp;
+            <ToolTip tabIndex="-1" message={t('track:CheckISRCsMsg')} />
+          </div>
           <div style={{ float: 'right' }}>
             <VideoPlayer
               title="Tracks - Check ISRC"
@@ -236,7 +238,7 @@ class TrackInformationDataTable extends Component {
               ></Form.Control>
               <div className="invalid-tooltip">{t('track:InvalidTrackTitle')}</div>
             </td>
-            <td>
+            <td className="tbl-isrc-width-td">
               <Form.Control
                 type="text"
                 id={'isrc'}

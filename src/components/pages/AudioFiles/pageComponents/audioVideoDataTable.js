@@ -34,7 +34,7 @@ class AudioVideoDataTable extends Component {
             </i>
           </th>
           <th className="tbl-isrc-width">
-            {t('audio:ISRC')}
+            <div>{t('audio:ISRC')}</div>
             <div style={{ float: 'right' }}>
               <VideoPlayer
                 title="Audio Files - Check ISRC"
@@ -268,7 +268,7 @@ class AudioVideoDataTable extends Component {
               />
               <div className="invalid-tooltip">{t('audio:InvalidTrackTitle')}</div>
             </td>
-            <td>
+            <td className="tbl-isrc-width-td">
               <Form.Control
                 type="text"
                 id="isrc"

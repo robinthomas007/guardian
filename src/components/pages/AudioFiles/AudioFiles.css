@@ -140,6 +140,12 @@ button.btn-disabled.btn.btn-secondary.action {
 }
 .table thead .tbl-isrc-width {
   width: 155px !important;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.tbl-isrc-width-td {
+  width: 155px !important;
 }
 
 .table thead .release-date-col {
