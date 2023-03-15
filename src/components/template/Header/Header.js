@@ -549,6 +549,14 @@ class Header extends Component {
                         {moment.utc(noti.DateCreated).fromNow()})
                       </p>
                     )}
+                    {noti.NotificationType === 'Project Save' && (
+                      <p>
+                        <strong className="bold">{noti.AssignedBy}</strong> has assigned{' '}
+                        {noti.AssignedTo} for the project
+                        <strong className="bold"> "{noti.ProjectTitle}" </strong> (
+                        {moment.utc(noti.DateCreated).fromNow()})
+                      </p>
+                    )}
                   </div>
                 </NavLink>
               </li>
