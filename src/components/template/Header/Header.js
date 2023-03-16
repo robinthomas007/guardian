@@ -551,8 +551,8 @@ class Header extends Component {
                     )}
                     {noti.NotificationType === 'Project Save' && (
                       <p>
-                        <strong className="bold">{noti.AssignedBy}</strong> has assigned{' '}
-                        {noti.AssignedTo} for the project
+                        <strong className="bold">{noti.AssignedBy}</strong> has added{' '}
+                        {noti.AssignedTo} to the project
                         <strong className="bold"> "{noti.ProjectTitle}" </strong> (
                         {moment.utc(noti.DateCreated).fromNow()})
                       </p>
