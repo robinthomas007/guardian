@@ -10,7 +10,7 @@ import ReleasingLabelsInput from '../ReleaseInformation/pageComponents/Releasing
 import ProjectTypesInput from '../ReleaseInformation/pageComponents/ProjectTypesInput';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { showNotyError, showNotyInfo } from 'components/Utils';
+import { showNotyError } from 'components/Utils';
 import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
 import * as releaseAction from './releaseAction';
@@ -222,7 +222,7 @@ class ReleaseinformationPage extends Component {
   albumArt(e) {
     const files = e.target.files;
     if (e.target.files[0].size > 3145727) {
-      showNotyInfo('Album image is too big(max 3mb)');
+      showNotyError('Album image is too big(max 3mb)');
       return false;
     }
     for (let i = 0; i < files.length; i++) {
