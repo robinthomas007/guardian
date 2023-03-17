@@ -135,10 +135,10 @@ class ProjectContactsPage extends Component {
         formInputs: formInputs,
       });
     }
-
+    const validateEmails = [...emails, email].filter(str => str !== '');
     this.props
       .validateEmails({
-        emails: [...emails, email].join(),
+        emails: validateEmails.join(),
       })
       .then(response => response.json())
       .then(responseJSON => {
@@ -430,7 +430,7 @@ class ProjectContactsPage extends Component {
                       }`}
                     >
                       <span onClick={() => this.updateEmail(email)}>{email}</span>
-                      <i class="material-icons" onClick={() => this.removeEmail(email)}>
+                      <i className="material-icons" onClick={() => this.removeEmail(email)}>
                         close
                       </i>
                     </button>
