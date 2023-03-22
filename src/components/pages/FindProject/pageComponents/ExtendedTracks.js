@@ -9,10 +9,15 @@ import soundcloud from '../../../../images/Soundcloud.png';
 import facebook from '../../../../images/facebook.png';
 import instagram from '../../../../images/instagram.png';
 import tiktok from '../../../../images/tiktok.png';
+import acrcloud from '../../../../images/acrcloud.png';
+import audibleMagic from '../../../../images/audibleMagic.png';
+import block from '../../../../images/block.png';
+import snap from '../../../../images/snap.png';
+import spectrum from '../../../../images/spectrum.png';
+import moment from 'moment';
 import LoadingImg from '../../../../component_library/LoadingImg';
 
 const ExtendDeliveryInfo = ({ orderPartnerDetails }) => {
-  console.log(orderPartnerDetails, 'orderPartnerDetails');
   return (
     <tr className="wrapper-tr">
       <td colSpan={10} className="wrapper-td white-bg">
@@ -38,26 +43,32 @@ const DeliverInfo = ({ orderPartnerDetails }) => {
       <tbody>
         {orderPartnerDetails.map((order, i) => {
           const imgObj = {
-            youtube: youtube,
-            soundcloud: soundcloud,
-            facebook: facebook,
+            YOUTUBE: youtube,
+            soundcldfingerprintrbd: soundcloud,
+            FACEBOOK: facebook,
             instagram: instagram,
-            tiktok: tiktok,
+            tiktokugc: tiktok,
+            audiblemagicblock: audibleMagic,
+            audiblemagicspectrum: audibleMagic,
+            acrcloudresgsc: acrcloud,
+            audiblesnapugc: snap,
           };
           return (
             <tr className="white-bg" key={i}>
               <td style={{ width: '50%' }}></td>
               <td>
                 <div className="plt-img">
-                  <img
-                    src={youtube}
-                    // src={imgObj[order.partnerName.toLowerCase()]}
-                    alt={order.partnerName.toLowerCase()}
-                  />
+                  <img src={imgObj[order.shortname]} alt={order.shortname} />
+                  {order.shortname === 'audiblemagicblock' && (
+                    <img src={block} alt={order.shortname} />
+                  )}
+                  {order.shortname === 'audiblemagicspectrum' && (
+                    <img src={spectrum} alt={order.shortname} />
+                  )}
                 </div>
               </td>
-              <td>{order.firstDeliveryDate}</td>
-              <td>{order.lastDeliveryDate}</td>
+              <td>{moment(order.firstDeliveryDate).format('DD/MM/YYYY')}</td>
+              <td>{moment(order.lastDeliveryDate).format('DD/MM/YYYY')}</td>
             </tr>
           );
         })}
