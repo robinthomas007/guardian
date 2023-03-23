@@ -31,3 +31,11 @@ table.search-table tr.wrapper-tr:hover td {
 .white-bg:hover {
   background-color: #ffffff !important;
 }
+
+.partner-img {
+  padding-right: 10px;
+}
+
+table.search-table tr.wrapper-tr .dws-wrapper-tr:hover td {
+  background-color: #ffff !important;
+}

@@ -19,7 +19,7 @@ import LoadingImg from '../../../../component_library/LoadingImg';
 
 const ExtendDeliveryInfo = ({ orderPartnerDetails }) => {
   return (
-    <tr className="wrapper-tr">
+    <tr className="dws-wrapper-tr">
       <td colSpan={10} className="wrapper-td white-bg">
         <div className="ext-tracks-wrapper">
           <DeliverInfo orderPartnerDetails={orderPartnerDetails} />
@@ -58,7 +58,11 @@ const DeliverInfo = ({ orderPartnerDetails }) => {
               <td style={{ width: '50%' }}></td>
               <td>
                 <div className="plt-img">
-                  <img src={imgObj[order.shortname]} alt={order.shortname} />
+                  <img
+                    className="partner-img"
+                    src={imgObj[order.shortname]}
+                    alt={order.shortname}
+                  />
                   {order.shortname === 'audiblemagicblock' && (
                     <img src={block} alt={order.shortname} />
                   )}
@@ -67,8 +71,16 @@ const DeliverInfo = ({ orderPartnerDetails }) => {
                   )}
                 </div>
               </td>
-              <td>{moment(order.firstDeliveryDate).format('DD/MM/YYYY')}</td>
-              <td>{moment(order.lastDeliveryDate).format('DD/MM/YYYY')}</td>
+              <td>
+                {moment(order.firstDeliveryDate).isValid()
+                  ? moment(order.firstDeliveryDate).format('DD/MM/YYYY')
+                  : order.firstDeliveryDate}
+              </td>
+              <td>
+                {moment(order.lastDeliveryDate).isValid()
+                  ? moment(order.lastDeliveryDate).format('DD/MM/YYYY')
+                  : order.lastDeliveryDate}
+              </td>
             </tr>
           );
         })}
