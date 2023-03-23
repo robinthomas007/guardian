@@ -72,14 +72,18 @@ const DeliverInfo = ({ orderPartnerDetails }) => {
                 </div>
               </td>
               <td>
-                {moment(order.firstDeliveryDate).isValid()
-                  ? moment(order.firstDeliveryDate).format('DD/MM/YYYY')
-                  : order.firstDeliveryDate}
+                {moment(order.firstDeliveryDate).isValid() ? (
+                  moment(order.firstDeliveryDate).format('DD/MM/YYYY')
+                ) : (
+                  <span className="not-delivered">{order.firstDeliveryDate}</span>
+                )}
               </td>
               <td>
-                {moment(order.lastDeliveryDate).isValid()
-                  ? moment(order.lastDeliveryDate).format('DD/MM/YYYY')
-                  : order.lastDeliveryDate}
+                {moment(order.lastDeliveryDate).isValid() ? (
+                  moment(order.lastDeliveryDate).format('DD/MM/YYYY')
+                ) : (
+                  <span className="not-delivered">{order.lastDeliveryDate}</span>
+                )}
               </td>
             </tr>
           );

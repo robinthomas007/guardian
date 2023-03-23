@@ -39,3 +39,13 @@ table.search-table tr.wrapper-tr:hover td {
 table.search-table tr.wrapper-tr .dws-wrapper-tr:hover td {
   background-color: #ffff !important;
 }
+.dws-wrapper-tr td {
+  padding: 10px !important;
+}
+
+.not-delivered {
+  color: #a91414;
+}
+.dws-wrapper-tr td {
+  height: 70px;
+}
