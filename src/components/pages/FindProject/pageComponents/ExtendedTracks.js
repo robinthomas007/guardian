@@ -51,7 +51,7 @@ const DeliverInfo = ({ orderPartnerDetails }) => {
             audiblemagicblock: audibleMagic,
             audiblemagicspectrum: audibleMagic,
             acrcloudresgsc: acrcloud,
-            audiblesnapugc: snap,
+            snapamugc: snap,
           };
           return (
             <tr className="white-bg" key={i}>
