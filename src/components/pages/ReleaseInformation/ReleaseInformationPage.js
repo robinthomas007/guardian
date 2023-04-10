@@ -17,6 +17,7 @@ import * as releaseAction from './releaseAction';
 import { withTranslation } from 'react-i18next';
 import { compose } from 'redux';
 import VideoPlayer from 'components/template/VideoPlayer';
+import { clearConfigCache } from 'prettier';
 
 class ReleaseinformationPage extends Component {
   constructor(props) {
@@ -273,6 +274,9 @@ class ReleaseinformationPage extends Component {
   }
 
   componentDidMount() {
+    if (this.props.user && this.props.user.IsLabelReadOnly) {
+      this.props.history.push('/findProject');
+    }
     const localData = JSON.parse(localStorage.getItem('projectData'));
     if (localData && localData.projectReleaseDateTBD) {
       this.setState({ releaseDateRequired: false, projectReleaseDateDisabled: true });

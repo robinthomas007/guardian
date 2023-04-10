@@ -347,10 +347,13 @@ class Header extends Component {
 
   handleNavLoadByStatus = () => {
     const projectStatusID = parseInt(this.props.projectData.Project.projectStatusID);
+    const IsLabelReadOnly = this.props.userData.IsLabelReadOnly;
+    console.log(IsLabelReadOnly, 'IsLabelReadOnlyIsLabelReadOnly');
     //When project ID is there, we are fetching Navlinks and update.
-    if (!projectStatusID || projectStatusID === 1 || projectStatusID === 4) {
+    if (!IsLabelReadOnly && (!projectStatusID || projectStatusID === 1 || projectStatusID === 4)) {
       this.getNavLinks();
     } else {
+      console.log('Else part');
       //If no project ID, We are loading normal header without status and other new project releated settings.
       this.setState({
         showProgressBar: false,
@@ -576,7 +579,7 @@ class Header extends Component {
         ? this.state.navSteps
         : this.state.navSteps.filter(step => step.preRelease);
     const { notifify } = this.state;
-    const { projectData, count } = this.props;
+    const { projectData, count, userData } = this.props;
     const { showCommentBox } = this.state;
     if (projectData.Project) {
       return (
@@ -613,7 +616,7 @@ class Header extends Component {
                 <div className="nav-bg"></div>
                 <nav className="col-8 custom-col-8 d-flex no-gutters justify-content-end">
                   <ul className="menu-items nav-header-menu">
-                    {this.props.userData.IsAdmin ? (
+                    {this.props.userData.IsAdmin || this.props.userData.IsLabelAdmin ? (
                       <li>
                         <NavLink className="steps" to={{ pathname: '/userAdmin' }}>
                           <i className="material-icons notranslate">supervised_user_circle</i>
@@ -622,14 +625,16 @@ class Header extends Component {
                       </li>
                     ) : null}
                     <li>
-                      <NavLink
-                        className="steps"
-                        to={{ pathname: '/releaseInformation' }}
-                        onClick={() => this.props.clearProject()}
-                      >
-                        <i className="material-icons notranslate">library_music</i>
-                        {t('header:NewProject')}
-                      </NavLink>
+                      {!userData.IsLabelReadOnly && (
+                        <NavLink
+                          className="steps"
+                          to={{ pathname: '/releaseInformation' }}
+                          onClick={() => this.props.clearProject()}
+                        >
+                          <i className="material-icons notranslate">library_music</i>
+                          {t('header:NewProject')}
+                        </NavLink>
+                      )}
                     </li>
                     <li>
                       <NavLink className="steps" to={{ pathname: '/findProject' }}>
