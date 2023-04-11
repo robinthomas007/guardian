@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Table, Button } from 'react-bootstrap';
 
 class UserDataTable extends Component {
@@ -55,48 +55,73 @@ class UserDataTable extends Component {
   };
 
   getPageButtons = user => {
+    const { userData } = this.props;
+    console.log(user, 'useruseruseruseruseruseruser=1');
+    console.log(userData, 'userData');
     return (
       <td className="text-center">
         {this.props.pageView === 'requesting' ? (
-          <>
-            <Button
-              onClick={() => this.props.approveDenyUser('approve', user)}
-              className={'btn btn-primary'}
-            >
-              <i className="material-icons">check</i> Approve
-            </Button>
-            <Button
-              onClick={() => this.props.approveDenyUser('deny', user)}
-              className={'btn btn-secondary'}
-            >
-              <i className="material-icons">block</i> Deny
-            </Button>
-          </>
-        ) : (
-          <>
-            <Button
-              onClick={() => this.props.showUserEditModal(user)}
-              className={'btn btn-primary'}
-            >
-              <i className="material-icons">edit</i> Edit
-            </Button>
-
-            {user.status.toUpperCase() === 'ACTIVE' ? (
+          <Fragment>
+            {(userData.IsAdmin ||
+              (userData.IsLabelAdmin &&
+                userData.DefaultReleasingLabelID === user.primaryLabelID)) && (
               <Button
-                onClick={() => this.props.revokeReinstateUser('revoke', user)}
-                className={'btn btn-secondary'}
+                onClick={() => this.props.approveDenyUser('approve', user)}
+                className={'btn btn-primary'}
               >
-                <i className="material-icons">block</i> Revoke
-              </Button>
-            ) : (
-              <Button
-                onClick={() => this.props.revokeReinstateUser('reinstate', user)}
-                className={'btn btn-secondary'}
-              >
-                <i className="material-icons">check</i> Reinstate
+                <i className="material-icons">check</i> Approve
               </Button>
             )}
-          </>
+            {(userData.IsAdmin ||
+              (userData.IsLabelAdmin &&
+                userData.DefaultReleasingLabelID === user.primaryLabelID)) && (
+              <Button
+                onClick={() => this.props.approveDenyUser('deny', user)}
+                className={'btn btn-secondary'}
+              >
+                <i className="material-icons">block</i> Deny
+              </Button>
+            )}
+          </Fragment>
+        ) : (
+          <Fragment>
+            {userData.IsAdmin && (
+              <Button
+                onClick={() => this.props.showUserEditModal(user)}
+                className={'btn btn-primary'}
+              >
+                <i className="material-icons">edit</i> Edit
+              </Button>
+            )}
+
+            {user.status.toUpperCase() === 'ACTIVE' ? (
+              <Fragment>
+                {(userData.IsAdmin ||
+                  (userData.IsLabelAdmin &&
+                    userData.DefaultReleasingLabelID === user.primaryLabelID)) && (
+                  <Button
+                    onClick={() => this.props.revokeReinstateUser('revoke', user)}
+                    className={'btn btn-secondary'}
+                  >
+                    <i className="material-icons">block</i> Revoke
+                  </Button>
+                )}
+              </Fragment>
+            ) : (
+              <Fragment>
+                {(userData.IsAdmin ||
+                  (userData.IsLabelAdmin &&
+                    userData.DefaultReleasingLabelID === user.primaryLabelID)) && (
+                  <Button
+                    onClick={() => this.props.revokeReinstateUser('reinstate', user)}
+                    className={'btn btn-secondary'}
+                  >
+                    <i className="material-icons">check</i> Reinstate
+                  </Button>
+                )}
+              </Fragment>
+            )}
+          </Fragment>
         )}
       </td>
     );

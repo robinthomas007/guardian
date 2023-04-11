@@ -348,7 +348,6 @@ class Header extends Component {
   handleNavLoadByStatus = () => {
     const projectStatusID = parseInt(this.props.projectData.Project.projectStatusID);
     const IsLabelReadOnly = this.props.userData.IsLabelReadOnly;
-    console.log(IsLabelReadOnly, 'IsLabelReadOnlyIsLabelReadOnly');
     //When project ID is there, we are fetching Navlinks and update.
     if (!IsLabelReadOnly && (!projectStatusID || projectStatusID === 1 || projectStatusID === 4)) {
       this.getNavLinks();

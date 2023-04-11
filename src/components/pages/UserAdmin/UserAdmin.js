@@ -600,6 +600,7 @@ class UserAdmin extends Component {
                   handleColumnSort={this.handleColumnSort}
                   pageView={'requesting'}
                   approveDenyUser={this.approveDenyUser}
+                  userData={this.props.user}
                 />
               </Tab>
 
@@ -624,6 +625,7 @@ class UserAdmin extends Component {
                   hideUserEditModal={this.hideUserEditModal}
                   targetUserID={this.state.targetUserID}
                   revokeReinstateUser={this.revokeReinstateUser}
+                  userData={this.props.user}
                 />
               </Tab>
             </Tabs>

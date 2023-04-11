@@ -44,6 +44,7 @@ class RequestingAccessTab extends Component {
             handleColumnSort={this.props.handleColumnSort}
             pageView={this.props.pageView}
             approveDenyUser={this.props.approveDenyUser}
+            userData={this.props.userData}
           />
         </div>
       </>

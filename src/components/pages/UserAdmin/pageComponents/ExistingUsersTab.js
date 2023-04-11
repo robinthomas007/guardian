@@ -48,6 +48,7 @@ class ExistingUsersTab extends Component {
             targetUserID={this.state.targetUserID}
             setTargetUserID={this.state.setTargetUserID}
             revokeReinstateUser={this.props.revokeReinstateUser}
+            userData={this.props.userData}
           />
         </div>
       </>
