@@ -1,31 +1,34 @@
 import React, { Component } from 'react';
 import i18n from '../../i18n';
 import { Dropdown } from 'react-bootstrap';
+import images from '../../images/index';
+const { English, German, Spanish, French } = images;
 
 export default class LanguageDropdown extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      toggleValue:
-        '<img class="lang-img" src="https://img.icons8.com/color/48/000000/usa-circular.png"/> English',
+      toggleValue: `<img class="lang-img" src="${English}"/> English`,
       options: [
         {
-          label:
-            '<img class="lang-img" src="https://img.icons8.com/color/48/000000/usa-circular.png"/> English',
+          label: `<img class="lang-img" src="${English}"/> English`,
           value: 'en',
           languageCode: 'en',
         },
         {
-          label:
-            '<img class="lang-img" src="https://img.icons8.com/color/48/000000/spain-circular.png"/> Spanish',
+          label: `<img class="lang-img" src="${Spanish}"/> Spanish`,
           value: 'sp',
           languageCode: 'es',
         },
         {
-          label:
-            '<img class="lang-img" src="https://img.icons8.com/color/48/000000/france-circular.png"/> French',
+          label: `<img class="lang-img" src="${French}"/> French`,
           value: 'fr',
           languageCode: 'fr',
+        },
+        {
+          label: `<img class="lang-img" src="${German}"/> German`,
+          value: 'ge',
+          languageCode: 'de',
         },
       ],
     };

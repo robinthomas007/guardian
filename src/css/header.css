@@ -355,6 +355,8 @@ div.row.d-flex.steps-bar ul li a.active span.step-arrow {
 .lang-dropdown img.lang-img {
   width: 22px;
   margin-right: 5px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
 }
 
 .nav-header-menu {
