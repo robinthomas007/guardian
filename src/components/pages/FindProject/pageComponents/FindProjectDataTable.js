@@ -386,7 +386,7 @@ class FindProjectDataTable extends Component {
                 className="status text-nowrap"
               >
                 <span>
-                  {this.props.userData.IsAdmin ? (
+                  {this.props.userData.IsAdmin || this.props.userData.IsLabelAdmin ? (
                     <AdminStatusDropdown
                       onChange={this.handleAdminStatusChange}
                       project={project}
