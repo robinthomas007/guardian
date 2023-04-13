@@ -368,7 +368,7 @@ function BlockingPoliciesPage(props) {
                                     selectedDisk === index ? 'active ter-tabs' : 'ter-tabs'
                                   }`}
                                 >
-                                  Disc {index + 1}
+                                  {t('blocking:Disc') + ' ' + (index + 1)}
                                 </div>
                               );
                             })}

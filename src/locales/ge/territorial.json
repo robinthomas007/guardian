@@ -1,6 +1,7 @@
 {
   "step": "Schritt",
   "TerritorialRights": "Territoriale Rechte",
+  "Disc": "Rabatt",
   "DescriptionMain": "In diesem Schritt können Sie die territorialen/geografischen Rechte für jeden Track im Projekt festlegen. Sie können Tracks entweder per Drag & Drop aus der Liste ziehen oder Tracks aus der Dropdown-Liste “Tracks mit diesem Rechtesatz“ auswählen, bevor Sie ihnen Rechte zuweisen. Der Abschnitt muss abgeschlossen werden, indem alle Tracks einem Rechtesatz zugewiesen werden und unten die Schaltfläche “Speichern & Fortfahren“ ausgewählt wird.",
   "DescriptionSub": "",
   "CreateNewRightsSet": "Neuen Rechtesatz erstellen",

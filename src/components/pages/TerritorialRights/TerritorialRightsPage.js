@@ -421,7 +421,7 @@ function TerritorialRightsPage(props) {
                                     selectedDisk === index ? 'active ter-tabs' : 'ter-tabs'
                                   }`}
                                 >
-                                  Disc {index + 1}
+                                  {t('territorial:Disc') + ' ' + (index + 1)}
                                 </div>
                               );
                             })}
