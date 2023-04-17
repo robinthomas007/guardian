@@ -123,6 +123,7 @@ class FindProjectPage extends Component {
   handleAdminStatusChange = (data, projectID, publishIds) => {
     const searchCriteria = _.cloneDeep(this.props.formValues.values);
     const searchTerm = _.get(this.props, 'formValues.values.searchTerm', '');
+    const languageCode = localStorage.getItem('languageCode') || 'en';
     const searchData = {
       itemsPerPage: this.props.searchCriteria.itemsPerPage,
       pageNumber: this.props.searchCriteria.pageNumber,
@@ -131,7 +132,10 @@ class FindProjectPage extends Component {
     };
 
     if (data.id === '5' && data.name === this.props.t('search:Published')) {
-      this.props.handlePublish({ ProjectIds: projectID, PublishTrackIds: publishIds }, searchData);
+      this.props.handlePublish(
+        { ProjectIds: projectID, PublishTrackIds: publishIds, languageCode: languageCode },
+        searchData,
+      );
     } else {
       this.props.adminStatusChange({ ProjectIds: projectID, StatusID: data.id }, searchData);
     }
