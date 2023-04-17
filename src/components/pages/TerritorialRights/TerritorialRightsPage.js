@@ -121,7 +121,9 @@ function TerritorialRightsPage(props) {
         return response.json();
       })
       .then(responseJSON => {
-        props.setStatus(statusId === '1' ? 'In Progress' : 'No Rights');
+        props.setStatus(
+          statusId === '1' ? props.t('territorial:InProgress') : props.t('territorial:NoRights'),
+        );
       })
       .catch(error => {
         console.error(error);
