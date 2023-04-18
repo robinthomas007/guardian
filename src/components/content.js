@@ -213,8 +213,13 @@ class Content extends Component {
     localStorage.removeItem('upc');
     this.props.initializeUpcData();
     this.props.initializeRightsData();
-    this.setState({ project: blankProject, clearProject: true, projectStatus: 'In Progress' }, () =>
-      this.setState({ clearProject: false }),
+    this.setState(
+      {
+        project: blankProject,
+        clearProject: true,
+        projectStatus: this.props.t('header:InProgress'),
+      },
+      () => this.setState({ clearProject: false }),
     );
   };
 
