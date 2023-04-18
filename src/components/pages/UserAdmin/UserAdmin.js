@@ -8,6 +8,7 @@ import SelectedFilters from './pageComponents/SelectedFilters';
 import RequestingAccessTab from './pageComponents/RequestingAccessTab';
 import ExistingUsersTab from './pageComponents/ExistingUsersTab';
 import { resetDatePicker } from '../../Utils';
+import { withTranslation } from 'react-i18next';
 class UserAdmin extends Component {
   constructor(props) {
     super(props);
@@ -499,6 +500,7 @@ class UserAdmin extends Component {
   }
 
   render() {
+    const { t } = this.props;
     return (
       <div className="col-10">
         <LoadingImg show={this.state.showloader} />
@@ -519,8 +521,8 @@ class UserAdmin extends Component {
         <div>
           <div className="row d-flex no-gutters">
             <div className="col-12">
-              <h2>User Administration</h2>
-              <p>Search for an existing user or a user that is requesting access.</p>
+              <h2>{t('admin:adminLabel')}</h2>
+              <p>{t('admin:adminDesc')}</p>
             </div>
           </div>
 
@@ -539,7 +541,7 @@ class UserAdmin extends Component {
                   aria-haspopup="true"
                   aria-expanded="false"
                 >
-                  <i className="material-icons">settings</i> Filters
+                  <i className="material-icons">settings</i> {t('admin:filters')}
                 </button>
               </div>
 
@@ -557,7 +559,7 @@ class UserAdmin extends Component {
                 type="button"
                 onClick={this.fetchUsers}
               >
-                <i className="material-icons">search</i> Search
+                <i className="material-icons">search</i> {t('admin:search')}
               </button>
             </li>
             <li className="col-2 d-flex"></li>
@@ -569,6 +571,7 @@ class UserAdmin extends Component {
             handleSearchFilterLabelChange={this.handleSearchFilterLabelChange}
             handleDateFilter={this.handleDateFilter}
             selectedFilterLabelOptions={this.state.selectedFilterLabelOptions}
+            t={this.props.t}
           />
 
           <SelectedFilters
@@ -582,7 +585,7 @@ class UserAdmin extends Component {
         <div>
           <Tab.Container>
             <Tabs onSelect={this.handleTabClick} defaultActiveKey="requestAccess">
-              <Tab eventKey={'requestAccess'} title={'Requesting Users'}>
+              <Tab eventKey={'requestAccess'} title={t('admin:requestingUsers')}>
                 <RequestingAccessTab
                   tableData={this.state.tableData.AccessRequestSearchResponse.AccessRequests}
                   activePage={this.state.AccessRequestSearchCriteria.pageNumber}
@@ -601,10 +604,11 @@ class UserAdmin extends Component {
                   pageView={'requesting'}
                   approveDenyUser={this.approveDenyUser}
                   userData={this.props.user}
+                  t={this.props.t}
                 />
               </Tab>
 
-              <Tab eventKey={'existing'} title={'Existing Users'}>
+              <Tab eventKey={'existing'} title={t('admin:existingUsers')}>
                 <ExistingUsersTab
                   tableData={this.state.tableData.UserSearchResponse.Users}
                   activePage={this.state.UserSearchCriteria.pageNumber}
@@ -626,6 +630,7 @@ class UserAdmin extends Component {
                   targetUserID={this.state.targetUserID}
                   revokeReinstateUser={this.revokeReinstateUser}
                   userData={this.props.user}
+                  t={this.props.t}
                 />
               </Tab>
             </Tabs>
@@ -636,4 +641,4 @@ class UserAdmin extends Component {
   }
 }
 
-export default withRouter(UserAdmin);
+export default withRouter(withTranslation('admin')(UserAdmin));

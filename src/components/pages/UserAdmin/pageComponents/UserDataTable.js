@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { Table, Button } from 'react-bootstrap';
+import { withTranslation } from 'react-i18next';
 
 class UserDataTable extends Component {
   constructor(props) {
@@ -56,10 +57,8 @@ class UserDataTable extends Component {
 
   getPageButtons = user => {
     const { userData } = this.props;
-    console.log(user, 'useruseruseruseruseruseruser=1');
-    console.log(userData, 'userData');
     return (
-      <td className="text-center">
+      <td className="text-center" style={{ display: 'flex', justifyContent: 'center' }}>
         {this.props.pageView === 'requesting' ? (
           <Fragment>
             {(userData.IsAdmin ||
@@ -69,7 +68,7 @@ class UserDataTable extends Component {
                 onClick={() => this.props.approveDenyUser('approve', user)}
                 className={'btn btn-primary'}
               >
-                <i className="material-icons">check</i> Approve
+                <i className="material-icons">check</i> {this.props.t('admin:approve')}
               </Button>
             )}
             {(userData.IsAdmin ||
@@ -79,7 +78,7 @@ class UserDataTable extends Component {
                 onClick={() => this.props.approveDenyUser('deny', user)}
                 className={'btn btn-secondary'}
               >
-                <i className="material-icons">block</i> Deny
+                <i className="material-icons">block</i> {this.props.t('admin:deny')}
               </Button>
             )}
           </Fragment>
@@ -90,7 +89,7 @@ class UserDataTable extends Component {
                 onClick={() => this.props.showUserEditModal(user)}
                 className={'btn btn-primary'}
               >
-                <i className="material-icons">edit</i> Edit
+                <i className="material-icons">edit</i> {this.props.t('admin:edit')}
               </Button>
             )}
 
@@ -103,7 +102,7 @@ class UserDataTable extends Component {
                     onClick={() => this.props.revokeReinstateUser('revoke', user)}
                     className={'btn btn-secondary'}
                   >
-                    <i className="material-icons">block</i> Revoke
+                    <i className="material-icons">block</i> {this.props.t('admin:revoke')}
                   </Button>
                 )}
               </Fragment>
@@ -116,7 +115,7 @@ class UserDataTable extends Component {
                     onClick={() => this.props.revokeReinstateUser('reinstate', user)}
                     className={'btn btn-secondary'}
                   >
-                    <i className="material-icons">check</i> Reinstate
+                    <i className="material-icons">check</i> {this.props.t('admin:reinstate')}
                   </Button>
                 )}
               </Fragment>
@@ -142,6 +141,7 @@ class UserDataTable extends Component {
   };
 
   render() {
+    const t = this.props.t;
     return (
       <Table>
         <thead>
@@ -152,7 +152,7 @@ class UserDataTable extends Component {
               onMouseOut={(e, columnID) => this.handleMouseOut(e, 'date_created')}
               onClick={id => this.handleTableSort('date_created')}
             >
-              Request Date
+              {t('admin:requestDate')}
               <i
                 className={
                   this.state.activeHover === 'date_created' ||
@@ -170,7 +170,7 @@ class UserDataTable extends Component {
               onMouseOut={(e, columnID) => this.handleMouseOut(e, 'first_name')}
               onClick={id => this.handleTableSort('first_name')}
             >
-              First Name
+              {t('admin:firstName')}
               <i
                 className={
                   this.state.activeHover === 'first_name' ||
@@ -188,7 +188,7 @@ class UserDataTable extends Component {
               onMouseOut={(e, columnID) => this.handleMouseOut(e, 'last_name')}
               onClick={id => this.handleTableSort('last_name')}
             >
-              Last Name
+              {t('admin:lastName')}
               <i
                 className={
                   this.state.activeHover === 'last_name' || this.state.sortColumnID === 'last_name'
@@ -205,7 +205,7 @@ class UserDataTable extends Component {
               onMouseOut={(e, columnID) => this.handleMouseOut(e, 'email')}
               onClick={id => this.handleTableSort('email')}
             >
-              Email
+              {t('admin:email')}
               <i
                 className={
                   this.state.activeHover === 'email' || this.state.sortColumnID === 'email'
@@ -222,7 +222,7 @@ class UserDataTable extends Component {
               onMouseOut={(e, columnID) => this.handleMouseOut(e, 'label')}
               onClick={id => this.handleTableSort('label')}
             >
-              Label/Co.
+              {t('admin:companyLabel')}
               <i
                 className={
                   this.state.activeHover === 'label' || this.state.sortColumnID === 'label'
@@ -233,7 +233,7 @@ class UserDataTable extends Component {
                 {this.handleSortCaratDisplay('label')}
               </i>
             </th>
-            <th className="col-2 text-center">Actions</th>
+            <th className="col-2 text-center">{t('admin:actions')}</th>
           </tr>
         </thead>
         <tbody>{this.getUsersDataRows()}</tbody>
@@ -242,4 +242,4 @@ class UserDataTable extends Component {
   }
 }
 
-export default UserDataTable;
+export default withTranslation('admin')(UserDataTable);

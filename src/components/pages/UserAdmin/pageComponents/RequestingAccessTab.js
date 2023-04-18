@@ -17,13 +17,16 @@ class RequestingAccessTab extends Component {
 
         <ul className="row results-controls">
           <li className="col-4">
-            <span className="viewing">Viewing</span>
+            <span className="viewing">{this.props.t('admin:viewing')}</span>
             <ViewCountDropDown
               data={this.props.viewCountData}
               onChange={this.props.viewCountOnChange}
               defaultValue={this.props.viewCountDefaultValue}
             />
-            <span className="viewing">of {this.props.totalSearchItems} Results</span>
+            <span className="viewing">
+              {this.props.t('admin:of')} {this.props.totalSearchItems}{' '}
+              {this.props.t('admin:results')}
+            </span>
           </li>
           <li className="col-4 d-flex justify-content-center">
             <nav aria-label="Page navigation example">
@@ -45,6 +48,7 @@ class RequestingAccessTab extends Component {
             pageView={this.props.pageView}
             approveDenyUser={this.props.approveDenyUser}
             userData={this.props.userData}
+            t={this.props.t}
           />
         </div>
       </>

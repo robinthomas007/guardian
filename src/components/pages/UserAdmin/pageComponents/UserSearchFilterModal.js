@@ -12,6 +12,7 @@ class UserSearchFilterModal extends Component {
   }
 
   render() {
+    const t = this.props.t;
     return (
       <div
         className={
@@ -20,27 +21,27 @@ class UserSearchFilterModal extends Component {
         id="collapsePanel"
       >
         <div className="card card-body">
-          <h5>Search Filters</h5>
+          <h5>{t('admin:modalFilters')}</h5>
 
           <br />
 
           <div className="row no-gutters">
             <div className="col-2">
-              <label>By Label</label>
+              <label>{t('admin:modalByLabel')}</label>
             </div>
 
             <div className="col-10">
               <LabelsMultiSelect
                 options={this.props.releasingLabels}
                 onChange={(e, label) => this.props.handleSearchFilterLabelChange(e, label)}
-                defaultText="Select Option"
+                defaultText={t('admin:modalSelectOption')}
                 selectedOptions={this.props.selectedFilterLabelOptions}
                 id={'filterReleasingLabels'}
               />
             </div>
 
             <div className="col-2">
-              <label>Last Updated</label>
+              <label>{t('admin:modalLastUpdated')}</label>
             </div>
 
             <div className="col-10">
@@ -50,7 +51,7 @@ class UserSearchFilterModal extends Component {
                 onChange={this.props.handleDateFilter}
               />
               &nbsp;
-              <label>to</label>
+              <label>{t('admin:modalTo')}</label>
               &nbsp; &nbsp;
               <Form.Control id="filterEndDate" type="date" onChange={this.props.handleDateFilter} />
             </div>

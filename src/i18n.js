@@ -72,6 +72,11 @@ import introSP from 'locales/sp/intro.json';
 import introFR from 'locales/fr/intro.json';
 import introGE from 'locales/ge/intro.json';
 
+import adminEN from 'locales/en/admin.json';
+import adminSP from 'locales/sp/admin.json';
+import adminFR from 'locales/fr/admin.json';
+import adminGE from 'locales/ge/admin.json';
+
 // the translations
 const resources = {
   en: {
@@ -89,6 +94,7 @@ const resources = {
     help: helpEN,
     blocking: blockingEN,
     intro: introEN,
+    admin: adminEN,
   },
   sp: {
     translation: translationSP,
@@ -105,6 +111,7 @@ const resources = {
     help: helpSP,
     blocking: blockingSP,
     intro: introSP,
+    admin: adminSP,
   },
   fr: {
     translation: translationFR,
@@ -121,6 +128,7 @@ const resources = {
     help: helpFR,
     blocking: blockingFR,
     intro: introFR,
+    admin: adminFR,
   },
   ge: {
     translation: translationGE,
@@ -137,6 +145,7 @@ const resources = {
     help: helpGE,
     blocking: blockingGE,
     intro: introGE,
+    admin: adminGE,
   },
 };
 
@@ -160,6 +169,7 @@ i18n
       'help',
       'blocking',
       'intro',
+      'admin',
     ],
     defaultNS: 'translations',
     keySeparator: false, // we do not use keys in form messages.welcome
