@@ -20,5 +20,6 @@
   "projectNotSaved": "Su proyecto NO se ha guardado correctamente",
   "IncorrectlyFormattedEmail": "Direcciones de correo electrónico con formato incorrecto",
   "mask": "Proyecto de máscara",
-  "maskMessage": "Artista de máscara e información de la pista"
+  "maskMessage": "Artista de máscara e información de la pista",
+  "maskWarning": "Los metadatos de este proyecto están siendo enmascarados. Se enmascararán el título del proyecto, el artista, los títulos de las pistas y los artistas."
 }

@@ -20,5 +20,6 @@
   "projectNotSaved": "Your project has NOT been successfully saved",
   "IncorrectlyFormattedEmail": "Incorrectly formatted email addresse(s)",
   "mask": "Mask Project",
-  "maskMessage": "Mask Artist and Track Information"
+  "maskMessage": "Mask Artist and Track Information",
+  "maskWarning": "This projects meta data is being masked. The Project Title, Artist, Track Titles and Artists will all be masked."
 }

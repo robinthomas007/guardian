@@ -21,6 +21,7 @@
   "NotyInfo": "Your rights policies have been successfully saved",
   "NotyError": "Your rights policies have NOT been successfully saved.",
   "NotyError1": "Your rights policies have been successfully saved however, all Unassigned Tracks must be assigned to 1 or more sets for this step to be complete.",
+  "NotyErrorForOwnRights": "We do not own the rights to one or more of the tracks in your project. Please remove them from your project or correct the rights status outside of the Guardian to continue.",
   "NoRights": "No Rights",
   "InProgress": "In Progress",
   "defaultRights": "Default Rights (Worldwide)",

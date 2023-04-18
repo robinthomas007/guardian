@@ -20,5 +20,6 @@
   "projectNotSaved": "Ihr Projekt wurde NICHT erfolgreich gespeichert",
   "IncorrectlyFormattedEmail": "Falsch formatierte E-Mail-Adresse(n)",
   "mask": "Maskenprojekt",
-  "maskMessage": "Maskenkünstler und Titelinformationen"
+  "maskMessage": "Maskenkünstler und Titelinformationen",
+  "maskWarning": "Die Metadaten dieses Projekts werden maskiert. Projekttitel, Künstler, Titeltitel und Künstler werden alle maskiert."
 }

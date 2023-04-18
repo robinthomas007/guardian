@@ -21,6 +21,7 @@
   "NotyInfo": "Sus políticas de derechos se han guardado correctamente",
   "NotyError": "Sus políticas de derechos NO se han guardado correctamente",
   "NotyError1": "Sus políticas de derechos se han guardado correctamente, sin embargo, todas las pistas sin asignar deben asignarse a 1 o más conjuntos para completar este paso.",
+  "NotyErrorForOwnRights": "No poseemos los derechos de una o más de las pistas de su proyecto. Elimínelos de su proyecto o corrija el estado de los derechos fuera de The Guardian para continuar.",
   "NoRights": "Sin Derechos",
   "InProgress": "En Curso",
   "defaultRights": "Derechos predeterminados (en todo el mundo)",

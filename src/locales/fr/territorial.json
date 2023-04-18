@@ -21,6 +21,7 @@
   "NotyInfo": "Vos politiques de droits ont été enregistrées avec succès",
   "NotyError": "Vos politiques de droits n'ont PAS été enregistrées avec succès.",
   "NotyError1": "Vos politiques de droits ont été enregistrées avec succès, cependant, toutes les pistes non attribuées doivent être attribuées à 1 ou plusieurs ensembles pour que cette étape soit terminée.",
+  "NotyErrorForOwnRights": "Nous ne détenons pas les droits sur une ou plusieurs des pistes de votre projet. Veuillez les supprimer de votre projet ou corriger le statut des droits en dehors du Guardian pour continuer.",
   "NoRights": "Aucun droit",
   "InProgress": "En cours",
   "defaultRights": "Droits par défaut (dans le monde entier)",

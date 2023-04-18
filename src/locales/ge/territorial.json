@@ -22,6 +22,7 @@
   "NotyInfo": "Ihre Rechterichtlinien wurden erfolgreich gespeichert",
   "NotyError": "Ihre Rechterichtlinien wurden NICHT erfolgreich gespeichert.",
   "NotyError1": "Ihre Rechterichtlinien wurden erfolgreich gespeichert, aber alle nicht zugewiesenen Tracks müssen einem oder mehreren Sets zugewiesen werden, damit dieser Schritt abgeschlossen werden kann.",
+  "NotyErrorForOwnRights": "Wir besitzen nicht die Rechte an einem oder mehreren Tracks in Ihrem Projekt. Bitte entfernen Sie sie aus Ihrem Projekt oder korrigieren Sie den Rechtestatus außerhalb des Guardian, um fortzufahren.",
   "NoRights": "Keine Rechte",
   "InProgress": "Im Gange",
   "defaultRights": "Standardrechte (weltweit)",

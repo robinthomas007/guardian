@@ -126,11 +126,7 @@ class Content extends Component {
 
   showNotiBarIfMasked = response => {
     if (response.Project && response.Project.isMasked) {
-      showNotyMaskWarning(
-        'This projects meta data is being masked. The Project Title, Artist, Track Titles and Artists will all be masked.',
-        () => {},
-        10,
-      );
+      showNotyMaskWarning(this.props.t('contact:maskWarning'), () => {}, 10);
     }
   };
 

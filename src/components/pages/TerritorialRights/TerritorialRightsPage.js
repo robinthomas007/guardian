@@ -87,9 +87,7 @@ function TerritorialRightsPage(props) {
           blksets[blksets.length - 1].tracks.push(...arrObj);
           blksets[blksets.length - 1].NoRights = true;
           setTerritorialRights(blksets);
-          showNotyAutoError(
-            'We do not own the rights to one or more of the tracks in your project. Please remove them from your project or correct the rights status outside of the Guardian to continue.',
-          );
+          showNotyAutoError(t('territorial:NotyErrorForOwnRights'));
         } else {
           updateProjectStatus('1');
         }
