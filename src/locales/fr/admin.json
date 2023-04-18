@@ -23,5 +23,10 @@
   "deny": "Refuser",
   "edit": "Modifier",
   "reinstate": "Rétablir",
-  "revoke": "Révoquer"
+  "revoke": "Révoquer",
+  "lastUpdate": "Dernière mise à jour",
+  "selectedFilters": "Filtres sélectionnés",
+  "from": "Depuis",
+  "labels": "Étiquettes",
+  "To": "Pour"
 }

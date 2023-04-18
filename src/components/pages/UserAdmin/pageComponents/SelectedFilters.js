@@ -57,7 +57,7 @@ class SelectedFilters extends Component {
     const fromDate = this.getFromDateFilters();
     return toDate || fromDate ? (
       <span className="date-bubbles">
-        <label>Last Update: </label>
+        <label>{this.props.t('admin:lastUpdate')}: </label>
         <div>{fromDate}</div>
         <div>{toDate}</div>
       </span>
@@ -88,13 +88,13 @@ class SelectedFilters extends Component {
         </button>
       ) : null;
     });
-    return labels.length > 0 ? this.getFilterBubbles('Labels', labels) : null;
+    return labels.length > 0 ? this.getFilterBubbles(this.props.t('admin:labels'), labels) : null;
   };
 
   getToDateFilters = () => {
     return this.props.filters.to
       ? this.getFilterBubbles(
-          'To',
+          this.props.t('admin:To'),
           <button
             className="btn btn-sm btn-secondary"
             onClick={e => this.props.removeDateFilter('to')}
@@ -109,7 +109,7 @@ class SelectedFilters extends Component {
   getFromDateFilters = () => {
     return this.props.filters.from
       ? this.getFilterBubbles(
-          'From',
+          this.props.t('admin:from'),
           <button
             className="btn btn-sm btn-secondary"
             onClick={() => this.props.removeDateFilter('from')}
@@ -134,7 +134,7 @@ class SelectedFilters extends Component {
     if (labelFilters || dateFilters) {
       return (
         <div className="selected-filters row d-flex flex-nowrap no-gutters">
-          <div className="col-auto">Selected Filters:</div>
+          <div style={{ width: 'auto' }}>{this.props.t('admin:selectedFilters')}:</div>
           <div className="col-10">
             {labelFilters}
             {dateFilters}

@@ -580,6 +580,7 @@ class UserAdmin extends Component {
             removeLabelsFilter={this.removeLabelsFilter}
             removeDateFilter={this.removeDateFilter}
             removeFromDateFilter={this.removeFromDateFilter}
+            t={this.props.t}
           />
         </div>
         <div>
