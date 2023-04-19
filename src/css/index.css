@@ -1314,7 +1314,9 @@ td.status i.material-icons.success {
 td.status i.material-icons.warning {
   color: #f57f17 !important;
 }
-
+td.status i.bi.warning {
+  color: #f57f17 !important;
+}
 ul.results-controls {
   list-style: none;
   margin: 0;

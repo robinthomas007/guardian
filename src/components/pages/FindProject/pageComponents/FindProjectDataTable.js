@@ -421,7 +421,11 @@ class FindProjectDataTable extends Component {
                 onClick={() => this.handleRowClick(project.projectID)}
                 className="status text-center"
               >
-                {this.checkProjectStepStatus(project.isBlockingPoliciesComplete)}
+                {project.isBlockingPoliciesChanged ? (
+                  <i class="bi bi-exclamation-diamond-fill warning"></i>
+                ) : (
+                  this.checkProjectStepStatus(project.isBlockingPoliciesComplete)
+                )}
               </td>
             </tr>
             {this.state.expandedProjectIds.includes(project.projectID) ? (
