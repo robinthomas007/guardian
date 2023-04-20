@@ -495,7 +495,7 @@ class Header extends Component {
   };
 
   getNotifications = () => {
-    const { notifications } = this.props;
+    const { notifications, t } = this.props;
     return (
       <div className="notification-content">
         <ul className="content-list">
@@ -513,48 +513,50 @@ class Header extends Component {
                   <div className="rgt-col">
                     {noti.NotificationType === 'Comment' && (
                       <p>
-                        <strong className="bold">{noti.AssignedBy}</strong> left you a comment on{' '}
-                        <strong className="bold">{noti.Step} </strong>for the project
+                        <strong className="bold">{noti.AssignedBy}</strong>{' '}
+                        {t('header:leftComment')} <strong className="bold">{noti.Step} </strong>
+                        {t('header:forTheProject')}
                         <strong className="bold"> "{noti.ProjectTitle}" </strong> (
                         {moment.utc(noti.DateCreated).fromNow()})
                       </p>
                     )}
                     {noti.NotificationType === 'Audio' && (
                       <p>
-                        <strong className="bold">{noti.AssignedBy}</strong> uploaded audio files for
-                        the project
+                        <strong className="bold">{noti.AssignedBy}</strong>{' '}
+                        {t('header:uploadAudioFiles')} {t('header:forTheProject')}
                         <strong className="bold"> "{noti.ProjectTitle}" </strong> (
                         {moment.utc(noti.DateCreated).fromNow()})
                       </p>
                     )}
                     {noti.NotificationType === 'Submit' && (
                       <p>
-                        <strong className="bold">{noti.AssignedBy}</strong> completed and submitted
-                        the project
+                        <strong className="bold">{noti.AssignedBy}</strong>{' '}
+                        {t('header:completedProject')}
                         <strong className="bold"> "{noti.ProjectTitle}" </strong> (
                         {moment.utc(noti.DateCreated).fromNow()})
                       </p>
                     )}
                     {noti.NotificationType === 'Tracks' && (
                       <p>
-                        <strong className="bold">{noti.AssignedBy}</strong> completed the{' '}
-                        <strong className="bold">{noti.Step} </strong>for the project
+                        <strong className="bold">{noti.AssignedBy}</strong>{' '}
+                        {t('header:completedTracks')} <strong className="bold">{noti.Step} </strong>
+                        {t('header:forTheProject')}
                         <strong className="bold"> "{noti.ProjectTitle}" </strong> (
                         {moment.utc(noti.DateCreated).fromNow()})
                       </p>
                     )}
                     {noti.NotificationType === 'Masking' && (
                       <p>
-                        <strong className="bold">{noti.AssignedBy}</strong> has opted to mask for
-                        the project
+                        <strong className="bold">{noti.AssignedBy}</strong>{' '}
+                        {t('header:hasOptedMask')}
                         <strong className="bold"> "{noti.ProjectTitle}" </strong> (
                         {moment.utc(noti.DateCreated).fromNow()})
                       </p>
                     )}
                     {noti.NotificationType === 'Project Save' && (
                       <p>
-                        <strong className="bold">{noti.AssignedBy}</strong> has added{' '}
-                        {noti.AssignedTo} to the project
+                        <strong className="bold">{noti.AssignedBy}</strong> {t('header:hasAdded')}{' '}
+                        {noti.AssignedTo} {t('header:toTheProject')}
                         <strong className="bold"> "{noti.ProjectTitle}" </strong> (
                         {moment.utc(noti.DateCreated).fromNow()})
                       </p>

@@ -27,5 +27,13 @@
   "Step_4_Tracks": "Paso 4 - Pistas",
   "Step_5_TerritorialRights": "Paso 5 - Derechos territoriales",
   "Step_6_UGCBlocking": "Paso 6 - Bloqueo de UGC",
-  "Step_7_Review": "Paso 7 - Revisión"
+  "Step_7_Review": "Paso 7 - Revisión",
+  "leftComment": "te dejo un comentario",
+  "forTheProject": "Para el proyecto",
+  "uploadAudioFiles": "archivos de audio subidos",
+  "completedProject": "completado y presentado el proyecto",
+  "completedTracks": "completado el",
+  "hasOptedMask": "ha optado por enmascarar para el proyecto",
+  "hasAdded": "ha añadido",
+  "toTheProject": "al proyecto"
 }
