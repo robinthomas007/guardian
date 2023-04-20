@@ -37,8 +37,18 @@ export default class ExportCSV extends React.Component {
     return Api.post('/project/search', { searchCriteria: searchData })
       .then(response => response.json())
       .then(response => {
-        this.setState({ data: response.Projects }, () => {
-          setTimeout(() => this.csvLink.current.link.click(), 500);
+        const newProject = response.Projects.map(project => {
+          if (project.isBlockingPoliciesChanged) {
+            project.isBlockingPoliciesComplete = 'Modified';
+          } else if (project.isBlockingPoliciesComplete) {
+            project.isBlockingPoliciesComplete = 'Skipped';
+          } else {
+            project.isBlockingPoliciesComplete = 'Incomplete';
+          }
+          return project;
+        });
+        this.setState({ data: newProject }, () => {
+          setTimeout(() => this.csvLink.current.link.click(), 700);
         });
       })
       .catch(() => {
