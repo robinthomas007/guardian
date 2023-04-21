@@ -28,5 +28,8 @@
   "InvalidISRC": "Code ISRC invalide",
   "FileName": "Nom de fichier",
   "HasRights": "A des droits",
-  "Deliver": "Livrer"
+  "Deliver": "Livrer",
+  "Partner": "Partenaire",
+  "FirstDeliveryDate": "Première date de livraison",
+  "LastDeliveryDate": "Dernière date de livraison"
 }

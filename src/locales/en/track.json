@@ -28,5 +28,8 @@
   "InvalidISRC": "Invalid ISRC",
   "FileName": "File Name",
   "HasRights": "Has Rights",
-  "Deliver": "Deliver"
+  "Deliver": "Deliver",
+  "Partner": "Partner",
+  "FirstDeliveryDate": "First Delivery Date",
+  "LastDeliveryDate": "Last Delivery Date"
 }

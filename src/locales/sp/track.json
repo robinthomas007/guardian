@@ -26,5 +26,10 @@
   "uploadingAudioFailed": "No se han podido cargar los archivos de audio. Inténtalo de nuevo. Haga clic para cerrar.",
   "InvalidTrackTitle": "Título de pista no válido",
   "InvalidISRC": "ISRC no válido",
-  "FileName": "Nombre del archivo"
+  "FileName": "Nombre del archivo",
+  "HasRights": "tiene derechos",
+  "Deliver": "Entregar",
+  "Partner": "Pareja",
+  "FirstDeliveryDate": "Primera fecha de entrega",
+  "LastDeliveryDate": "Última fecha de entrega"
 }

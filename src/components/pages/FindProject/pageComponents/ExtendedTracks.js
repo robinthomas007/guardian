@@ -30,14 +30,15 @@ const ExtendDeliveryInfo = ({ orderPartnerDetails }) => {
 };
 
 const DeliverInfo = ({ orderPartnerDetails }) => {
+  const { t } = useTranslation();
   return (
     <Table className="ext-tracks-table white-bg dws-table" responsive bgcolor="#fff">
       <thead>
         <tr className="white-bg">
           <th style={{ width: '50%' }}></th>
-          <th>Partner</th>
-          <th>First Delivery Date</th>
-          <th>Last Delivery Date</th>
+          <th>{t('track:Partner')}</th>
+          <th>{t('track:FirstDeliveryDate')}</th>
+          <th>{t('track:LastDeliveryDate')}</th>
         </tr>
       </thead>
       <tbody>
@@ -249,6 +250,7 @@ export default ({ discs, project, onIsPublishToggle, expandedProjectIds }) => {
 
       const fetchBody = JSON.stringify({
         Isrc: isrcList,
+        languagecode: localStorage.getItem('languageCode') || 'en',
       });
       try {
         const response = await fetch(window.env.api.url + '/project/search/dwsorder', {
