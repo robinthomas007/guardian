@@ -1,4 +1,4 @@
-FROM node:15 as builder
+FROM node:15-buster as builder
 
 ARG VAULT_TOKEN
 ENV VAULT_TOKEN=${VAULT_TOKEN}
