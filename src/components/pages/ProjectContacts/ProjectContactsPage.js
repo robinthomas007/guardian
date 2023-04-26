@@ -20,7 +20,7 @@ class ProjectContactsPage extends Component {
     this.state = {
       formInputs: {
         projectPrimaryContact: user.name,
-        projectPrimaryContactEmail: user.upn ? user.upn.toLowerCase() : '',
+        projectPrimaryContactEmail: user.upn ? user.upn.toLowerCase() : user.email.toLowerCase(),
         projectSecurityID: '1',
         projectAdditionalContacts: '',
         projectStatusID: '1',
