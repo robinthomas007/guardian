@@ -4,6 +4,7 @@ import { Form, Button } from 'react-bootstrap';
 import ReleasingLabelsInput from '../../../components/pages/ReleaseInformation/pageComponents/ReleasingLabelsInput.js';
 import { isFormValid } from '../../../components/Utils';
 import { showNotyInfo, showNotyError } from 'components/Utils';
+import MultiSelectHierarchy from 'components/common/multiSelectHierarchy.js';
 
 class RequestAccessForm extends Component {
   constructor(props) {
@@ -150,17 +151,24 @@ class RequestAccessForm extends Component {
             <div className="invalid-tooltip">Last Name is required.</div>
           </li>
           <li>
-            <Form.Label id="labelName">
+            <div className="msh-parent-wrapper">
+              <Form.Label id="labelName">
+                Label/Company <span className="required-ind">*</span>
+              </Form.Label>
+              <MultiSelectHierarchy />
+            </div>
+
+            {/*  <Form.Label id="labelName">
               Label/Company <span className="required-ind">*</span>
             </Form.Label>
-            <ReleasingLabelsInput
+             <ReleasingLabelsInput
               id="LabelID"
               name="LabelID"
-              user={this.state.ReleasingLabels}
+              user={this.state.ReleasingLabels} 
               value={this.state.formInputs.LabelID}
               onChange={this.handleLabelChange}
               className={'requiredInput'}
-            />
+    />*/}
             <div className="invalid-tooltip">A label selection is required.</div>
           </li>
           <li>

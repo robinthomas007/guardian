@@ -34,7 +34,7 @@ class RequestAccessModal extends Component {
 
   render() {
     return (
-      <Modal id="RequestAccesModal" show={this.props.showModal} onHide={this.handleClose}>
+      <Modal id="RequestAccesModal" size="md" show={this.props.showModal} onHide={this.handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Request Access</Modal.Title>
         </Modal.Header>
