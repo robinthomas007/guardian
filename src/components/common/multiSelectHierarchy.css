@@ -1,19 +1,41 @@
 .msh-wrapper {
   background: #f5f5f5;
-  padding: 25px;
-  margin: 10px 0px;
+  line-height: 3rem;
+  width: 400px;
+  padding: 10px;
+}
+
+.msh-content {
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 12px;
 }
 
 label.custom-checkbox.msh-checkbox {
   width: 40px !important;
 }
+/* .company-wrapper{
+  padding: 10px;;
+} */
 
 .divison-wrapper {
   padding-left: 30px;
 }
 
+.dropdown-menu {
+  box-shadow: 2px 3px 8px #8c9396;
+  max-height: 30rem;
+  min-width: auto;
+  overflow-y: auto;
+  overflow-x: auto;
+  transform: translate3d(5px, 35px, 0px) !important;
+  width: 400px !important;
+  padding: 0 !important;
+}
+
 .label-wrapper {
   padding-left: 30px;
+  margin-top: -10px;
 }
 
 .msh-wrapper .sub-title,
@@ -24,20 +46,32 @@ label.custom-checkbox.msh-checkbox {
 .msh-wrapper .main-title {
   font-size: 16px;
 }
+.msh-wrapper input {
+  width: 288px !important;
+  display: inherit !important;
+  height: 35px !important;
+}
 
 .inside-wrapper {
   position: relative;
 }
+.search-icon {
+  color: #999999 !important;
+  right: 102px !important;
+  font-size: 22px;
+  top: 7px !important;
+}
 
-.vl {
+.msh-wrapper .vl {
   border-left: 2px solid #ddd;
-  height: 30px;
+  height: 29px;
   position: absolute;
   top: 35px;
   left: 10px;
+  margin-top: 1px;
 }
 
-.hl {
+.msh-wrapper .hl {
   border-bottom: 2px solid #ddd;
   width: 20px;
   display: inline-block;

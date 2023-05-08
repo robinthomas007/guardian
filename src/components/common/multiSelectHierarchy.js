@@ -1,212 +1,78 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import './multiSelectHierarchy.css';
+import Dropdown from 'react-bootstrap/Dropdown';
+import Api from '../../lib/api';
 
-const list = [
-  {
-    CompanyId: 19245,
-    CompanyName: 'Atomic Music',
-    DivisionList: [
-      {
-        DivisionId: 3152,
-        DivisionName: 'Atomic Music/Federal Distribution',
-        LabelList: [
-          {
-            LabelId: 3047,
-            LabelName: 'Atomic Music/Federal Distribution',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    CompanyId: 24131,
-    CompanyName: 'ATO Records (AT0)',
-    DivisionList: [],
-  },
-  {
-    CompanyId: 26451,
-    CompanyName: 'ATO Records LLC',
-    DivisionList: [
-      {
-        DivisionId: 8004,
-        DivisionName: 'ATO Records LLC',
-        LabelList: [
-          {
-            LabelId: 6871,
-            LabelName: 'ATO Records LLC',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    CompanyId: 26452,
-    CompanyName: 'ATO Records - My Morning Jacket',
-    DivisionList: [
-      {
-        DivisionId: 8005,
-        DivisionName: 'ATO Records - My Morning Jacket',
-        LabelList: [
-          {
-            LabelId: 6872,
-            LabelName: 'ATO Records - My Morning Jacket',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    CompanyId: 26621,
-    CompanyName: 'Atom Factory - Six 60',
-    DivisionList: [
-      {
-        DivisionId: 8072,
-        DivisionName: 'Atom Factory - Six 60',
-        LabelList: [
-          {
-            LabelId: 6938,
-            LabelName: 'Atom Factory - Six 60',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    CompanyId: 27584,
-    CompanyName: 'ATO Records- Jim James',
-    DivisionList: [
-      {
-        DivisionId: 8621,
-        DivisionName: 'ATO Records- Jim James',
-        LabelList: [
-          {
-            LabelId: 7300,
-            LabelName: 'ATO Records- Jim James',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    CompanyId: '',
-    CompanyName: '',
-    DivisionList: [
-      {
-        DivisionId: 9726,
-        DivisionName: 'ATO Records/Fontana North',
-        LabelList: [],
-      },
-    ],
-  },
-  {
-    CompanyId: '',
-    CompanyName: '',
-    DivisionList: [
-      {
-        DivisionId: '',
-        DivisionName: '',
-        LabelList: [
-          {
-            LabelId: 48502,
-            LabelName: 'Atomic',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    CompanyId: '',
-    CompanyName: '',
-    DivisionList: [
-      {
-        DivisionId: '',
-        DivisionName: '',
-        LabelList: [
-          {
-            LabelId: 6134,
-            LabelName: 'Atom Factory Music, LLC',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    CompanyId: '',
-    CompanyName: '',
-    DivisionList: [
-      {
-        DivisionId: '',
-        DivisionName: '',
-        LabelList: [
-          {
-            LabelId: 5772,
-            LabelName: 'ATO Records (AT0)',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    CompanyId: '',
-    CompanyName: '',
-    DivisionList: [
-      {
-        DivisionId: '',
-        DivisionName: '',
-        LabelList: [
-          {
-            LabelId: 5774,
-            LabelName: 'ATO Records',
-          },
-        ],
-      },
-    ],
-  },
-];
-
-export default function multiSelectHierarchy() {
+export default function MultiSelectHierarchy({ isAdmin, handleChangeCheckbox }) {
   const [companyList, setcompanyList] = useState([]);
-  const [selectedlabel, setselectedlabel] = useState([]);
 
+  const [searchInput, setSearchInput] = useState('');
+  const [hasSearchCriteria, setHasSearchCreteria] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  // useEffect(() => {
+  //   console.log('selectedLabels-Sofar', selectedLabel);
+  //   console.log('selectedOptions-Sofar', selectedOptions);
+  // }, [selectedLabel, setSelectedOptions]);
   useEffect(() => {
-    // API call
-    setcompanyList(list);
-  }, []);
-
-  const handleChangeCheckbox = (e, data) => {
-    console.log(e.target.checked, 'e.target.checkede.target.checked', e, data);
-    if (e.target.checked) {
-      // psuh the data
-      setselectedlabel([...selectedlabel, data]);
+    if (searchInput.length >= 3) {
+      setLoading(true);
+      const payload = {
+        User: {
+          email: 'selvam.murugan@umusic.com',
+        },
+        SearchCriteria: {
+          SearchTerm: searchInput,
+        },
+        languageCode: localStorage.getItem('languageCode') || 'en',
+      };
+      Api.post('/labels/search', payload)
+        .then(res => {
+          setHasSearchCreteria(true);
+          return res.json();
+        })
+        .then(res => {
+          const demo = JSON.parse(res.Result);
+          console.log(demo);
+          setcompanyList(demo);
+          setLoading(false);
+        });
     } else {
-      // pull the data if exist
+      setHasSearchCreteria(false);
+      setcompanyList([]);
     }
-  };
+  }, [searchInput]);
 
   const renderCompanies = companyList => {
     return (
       <div>
         <span className="sub-title">Select Options from Search Results</span>
         {companyList.map((company, i) => {
-          const hasComapny = company.CompanyId ? true : false;
+          const { CompanyId, CompanyName } = company;
+          const hasComapny = CompanyId ? true : false;
           return (
-            <div className="company-wrapper">
-              {company.CompanyId && (
+            <div className="company-wrapper" key={i}>
+              {CompanyId && (
                 <div className="inside-wrapper">
                   <label className="custom-checkbox msh-checkbox">
                     <input
                       id="company"
                       className="form-control"
                       type="checkbox"
-                      name={company.CompanyId}
-                      onChange={e => handleChangeCheckbox(e, company)}
+                      name={CompanyId}
+                      onChange={e =>
+                        handleChangeCheckbox(e, {
+                          CompanyId,
+                          CompanyName,
+                        })
+                      }
                     />
                     <span className="checkmark "></span>
                   </label>
-                  <span>{company.CompanyName} (Company)</span>
+                  <span>{CompanyName} (Company)</span>
                   {company.DivisionList.length > 0 && (
-                    <div>
+                    <div style={{ marginTop: '-10px' }}>
                       <div className="vl"></div>
                       <div className="hl"></div>
                     </div>
@@ -225,21 +91,23 @@ export default function multiSelectHierarchy() {
     return (
       <div className={`${!hasComapny ? 'rmvPadDivisonLabel' : ''} divison-wrapper`}>
         {divisionList.map((division, i) => {
-          const hasDivision = division.DivisionId ? true : false;
+          const { DivisionId, DivisionName } = division;
+          const hasDivision = DivisionId ? true : false;
           return (
-            <div>
-              {division.DivisionId && (
+            <div key={i}>
+              {DivisionId && (
                 <div className="inside-wrapper">
                   <label className="custom-checkbox msh-checkbox">
                     <input
                       id="division"
                       className="form-control"
                       type="checkbox"
-                      name={division.DivisionId}
+                      name={DivisionId}
+                      onChange={e => handleChangeCheckbox(e, { DivisionId, DivisionName })}
                     />
                     <span className="checkmark "></span>
                   </label>
-                  <span>{division.DivisionName} (Division)</span>
+                  <span>{DivisionName} (Division)</span>
                   {division.LabelList.length > 0 && (
                     <div>
                       <div className="vl"></div>
@@ -260,13 +128,20 @@ export default function multiSelectHierarchy() {
     return (
       <div className={`${!hasDivision ? 'rmvPadDivisonLabel' : ''} label-wrapper`}>
         {LabelList.map((label, i) => {
+          const { LabelId, LabelName } = label;
           return (
-            <div>
+            <div key={i}>
               <label className="custom-checkbox msh-checkbox">
-                <input id="label" className="form-control" type="checkbox" name={label.LabelId} />
+                <input
+                  id="label"
+                  className="form-control"
+                  type="checkbox"
+                  name={LabelId}
+                  onChange={e => handleChangeCheckbox(e, { LabelId, LabelName })}
+                />
                 <span className="checkmark "></span>
               </label>
-              <span>{label.LabelName} (Label)</span>
+              <span>{LabelName} (Label)</span>
             </div>
           );
         })}
@@ -274,21 +149,97 @@ export default function multiSelectHierarchy() {
     );
   };
 
-  return (
-    <div className="msh-wrapper">
-      <div className="main-title">Companies, Divisions & Labels</div>
-      <div className="search-input">
-        <Form.Control
-          type="text"
-          name="firstName"
-          className="form-control requiredInput"
-          // value={this.state.formInputs.firstName}
-          // onChange={this.handleChange}
-        />
-        <i className="material-icons search-icon">search</i>
+  // const handleSearchInput = e => {
+  //   console.log('searchInput', searchInput);
+  //   if (searchInput.length >= 3) {
+  //     console.log('search query is more than 3 characters');
+  //     setHasSearchCreteria(true);
+  //   } else {
+  //     setHasSearchCreteria(false);
+  //   }
+  // };
+
+  const handleChange = e => {
+    console.log('search keyword', e.target.value);
+    // const randomNumbers = Math.floor(Math.random(100));
+    // if (e.target.value.length >= 3) {
+    //   console.log('search query is more than 3 characters');
+    //   const newCompanyList = [...companyList];
+    //   newCompanyList.unshift({
+    //     CompanyId: 19245,
+    //     CompanyName: `Atomic Music ${randomNumbers}`,
+    //     DivisionList: [
+    //       {
+    //         DivisionId: 3152,
+    //         DivisionName: 'Atomic Music/Federal Distribution',
+    //         LabelList: [
+    //           {
+    //             LabelId: 3047,
+    //             LabelName: 'Atomic Music/Federal Distribution',
+    //           },
+    //         ],
+    //       },
+    //     ],
+    //   });
+    //   setcompanyList(newCompanyList);
+    // } else {
+    //   setHasSearchCreteria(false);
+    // }
+    setSearchInput(e.target.value);
+  };
+  if (isAdmin) {
+    return (
+      <div className="msh-wrapper">
+        <div className="main-title">Companies, Divisions & Labels</div>
+        <div className="search-input">
+          <Form.Control
+            type="text"
+            name="searchInput"
+            className="form-control requiredInput"
+            value={searchInput}
+            onChange={handleChange}
+          />
+          <i className="material-icons search-icon">search</i>
+        </div>
+        <div className="msh-content">
+          {loading && <h3>Loading...</h3>}
+
+          {companyList.length > 0 && hasSearchCriteria && renderCompanies(companyList)}
+        </div>
+
+        <div className="invalid-tooltip">Label is required.</div>
       </div>
-      {companyList.length > 0 && renderCompanies(companyList)}
-      <div className="invalid-tooltip">Label is required.</div>
-    </div>
-  );
+    );
+  } else {
+    return (
+      <>
+        <Dropdown className="d-inline mx-2" autoClose="inside">
+          <Dropdown.Toggle id="dropdown-autoclose-inside">Select Options</Dropdown.Toggle>
+
+          <Dropdown.Menu>
+            <div className="msh-wrapper">
+              <div className="main-title">Companies, Divisions & Labels</div>
+              <div className="search-input">
+                <Form.Control
+                  type="text"
+                  name="searchInput"
+                  className="form-control requiredInput"
+                  value={searchInput}
+                  onChange={handleChange}
+                />
+                <i className="material-icons search-icon">search</i>
+              </div>
+              <div className="msh-content">
+                {loading && <h3>Loading...</h3>}
+
+                {companyList.length > 0 && hasSearchCriteria && renderCompanies(companyList)}
+              </div>
+
+              <div className="invalid-tooltip">Label is required.</div>
+            </div>
+          </Dropdown.Menu>
+        </Dropdown>
+      </>
+    );
+  }
 }

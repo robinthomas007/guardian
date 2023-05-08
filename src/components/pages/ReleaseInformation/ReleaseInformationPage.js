@@ -18,6 +18,7 @@ import { withTranslation } from 'react-i18next';
 import { compose } from 'redux';
 import VideoPlayer from 'components/template/VideoPlayer';
 import { clearConfigCache } from 'prettier';
+import MultiSelectHierarchy from 'components/common/MultiSelectHierarchy';
 
 class ReleaseinformationPage extends Component {
   constructor(props) {
@@ -65,6 +66,7 @@ class ReleaseinformationPage extends Component {
       showloader: false,
       projectReleaseDateDisabled: false,
       projectReleaseDateReset: false,
+      selectedOptions: [],
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -160,6 +162,26 @@ class ReleaseinformationPage extends Component {
       preview.appendChild(img);
     }
   }
+
+  handleChangeCheckbox = (e, data) => {
+    const selectedLabelId =
+      e.target.id === 'company'
+        ? 'CompanyId'
+        : e.target.id === 'division'
+        ? 'DivisionId'
+        : 'LabelId';
+    if (e.target.checked) {
+      console.log('checked');
+      console.log('data', data);
+      console.log('selectedData', data[selectedLabelId]);
+      const modifiedDta = [...this.state.selectedOptions, data[selectedLabelId]];
+      this.setState({ selectedOptions: modifiedDta }, () => {
+        console.log('finalData', this.state.selectedOptions);
+      });
+    } else {
+      console.log('not checked!');
+    }
+  };
 
   handleSubmit(event) {
     event.preventDefault();
@@ -384,6 +406,12 @@ class ReleaseinformationPage extends Component {
         this.setState({ showloader: false });
       });
   }
+  newHandleLabelSelectChange(options) {
+    const { targetUser } = this.state;
+    const ids = options.map(opt => opt.value);
+
+    this.setState({ targetUser: { ...targetUser, secondaryLabelIds: ids } });
+  }
 
   render() {
     const { t, user } = this.props;
@@ -511,7 +539,6 @@ class ReleaseinformationPage extends Component {
                   />
                 </div>
               </Form.Group>
-
               <Form.Group className="row d-flex no-gutters">
                 <div className="col-3">
                   <Form.Label className="col-form-label">
@@ -520,16 +547,25 @@ class ReleaseinformationPage extends Component {
                   </Form.Label>
                   <ToolTip tabIndex="-1" message={t('releaseInfo:ReleasingLabelMessage')} />
                 </div>
-                <div className="col-9">
-                  <ReleasingLabelsInput
+                <div className="col-6">
+                  {true ? (
+                    <MultiSelectHierarchy
+                      handleChangeCheckbox={this.handleChangeCheckbox}
+                      isAdmin={false}
+                    />
+                  ) : (
+                    <MultiSelectHierarchy isAdmin={this.props.user.IsAdmin} />
+                  )}
+                </div>
+              </Form.Group>
+
+              {/* <ReleasingLabelsInput
                     tabIndex="4+"
                     id="projectReleasingLabelID"
                     user={this.props.user}
                     value={this.state.formInputs.projectReleasingLabelID}
                     onChange={this.setParentState}
-                  />
-                </div>
-              </Form.Group>
+                  /> */}
 
               <Form.Group className="row d-flex no-gutters">
                 <div className="col-3">

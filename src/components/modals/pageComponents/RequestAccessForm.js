@@ -4,7 +4,7 @@ import { Form, Button } from 'react-bootstrap';
 import ReleasingLabelsInput from '../../../components/pages/ReleaseInformation/pageComponents/ReleasingLabelsInput.js';
 import { isFormValid } from '../../../components/Utils';
 import { showNotyInfo, showNotyError } from 'components/Utils';
-import MultiSelectHierarchy from 'components/common/multiSelectHierarchy.js';
+import MultiSelectHierarchy from 'components/common/MultiSelectHierarchy.js';
 
 class RequestAccessForm extends Component {
   constructor(props) {
@@ -16,9 +16,11 @@ class RequestAccessForm extends Component {
         LabelID: null,
         email: '',
         phoneNumber: '',
+        LabelIDs: [],
       },
       ReleasingLabels: [],
       submitDisabled: false,
+      selectedOptions: [],
     };
   }
 
@@ -38,6 +40,27 @@ class RequestAccessForm extends Component {
         console.log(this.state);
       },
     );
+  };
+  handleChangeCheckbox = (e, data) => {
+    const selectedLabelId =
+      e.target.id === 'company'
+        ? 'CompanyId'
+        : e.target.id === 'division'
+        ? 'DivisionId'
+        : 'LabelId';
+    if (e.target.checked) {
+      console.log('checked');
+      console.log('data', data);
+      console.log('selectedData', data[selectedLabelId]);
+      const modifiedDta = [...this.state.selectedOptions, data[selectedLabelId]];
+      this.setState({ selectedOptions: modifiedDta }, () => {
+        console.log('finalData', this.state.selectedOptions);
+      });
+      // setSelectedOptions([...selectedOptions, data[selectedLabelId]]);
+    } else {
+      console.log('not checked!');
+      // pull the data if exist
+    }
   };
 
   getLabels = () => {
@@ -155,7 +178,11 @@ class RequestAccessForm extends Component {
               <Form.Label id="labelName">
                 Label/Company <span className="required-ind">*</span>
               </Form.Label>
-              <MultiSelectHierarchy />
+              <MultiSelectHierarchy
+                handleChangeCheckbox={this.handleChangeCheckbox}
+                isAdmin={true}
+                isMultiSelect={true}
+              />
             </div>
 
             {/*  <Form.Label id="labelName">
@@ -200,6 +227,7 @@ class RequestAccessForm extends Component {
             <Button variant="secondary" id="cancelButton" onClick={this.props.handleClose}>
               Cancel
             </Button>
+            &nbsp;&nbsp;
             <Button
               disabled={this.state.submitDisabled}
               onClick={this.handleSubmit}
