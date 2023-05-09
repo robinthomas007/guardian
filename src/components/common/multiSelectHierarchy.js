@@ -10,6 +10,7 @@ export default function MultiSelectHierarchy({
   isMultiSelect,
   isChecked,
   selectedOptions,
+  type,
 }) {
   const [companyList, setcompanyList] = useState([]);
 
@@ -36,8 +37,9 @@ export default function MultiSelectHierarchy({
           return res.json();
         })
         .then(res => {
-          const result = JSON.parse(res.Result);
+          const result = res.Result;
           console.log(result);
+          console.log('result', result);
           setcompanyList(result);
           setLoading(false);
         });
@@ -155,6 +157,32 @@ export default function MultiSelectHierarchy({
     );
   };
 
+  const getLabelFilters = () => {
+    const labels = this.props.filters.labelIds.map((labelID, i) => {
+      let labelName = this.isSelectedLabel(labelID);
+      return labelName ? (
+        <button
+          key={i}
+          className="btn btn-sm btn-secondary"
+          onClick={() => this.props.removeLabelsFilter(labelID)}
+        >
+          {labelName}
+          <i className="material-icons">close</i>
+        </button>
+      ) : null;
+    });
+    return labels.length > 0 ? this.getFilterBubbles(this.props.t('admin:labels'), labels) : null;
+  };
+
+  const getFilterBubbles = (headerText, bubbles) => {
+    return (
+      <span>
+        <label>{headerText}:</label>
+        {bubbles}
+      </span>
+    );
+  };
+
   // const handleSearchInput = e => {
   //   console.log('searchInput', searchInput);
   //   if (searchInput.length >= 3) {
@@ -191,12 +219,19 @@ export default function MultiSelectHierarchy({
     // } else {
     //   setHasSearchCreteria(false);
     // }
+    // requestFormInput
+    // releaseInfoInput
     setSearchInput(e.target.value);
   };
   if (isAdmin) {
     return (
       <>
-        <Dropdown className="d-inline mx-2 custom-dropdown" autoClose="inside">
+        <Dropdown
+          className={`d-inline mx-2 ${
+            type === 'requestAccess' ? 'requestFormInput' : 'releaseInfoInput'
+          }`}
+          autoClose="inside"
+        >
           <Dropdown.Toggle id="dropdown-autoclose-inside">Select Options</Dropdown.Toggle>
 
           <Dropdown.Menu>
@@ -226,26 +261,47 @@ export default function MultiSelectHierarchy({
     );
   } else {
     return (
-      <div className="msh-wrapper">
-        <div className="main-title">Companies, Divisions & Labels</div>
-        <div className="search-input">
-          <Form.Control
-            type="text"
-            name="searchInput"
-            className="form-control requiredInput"
-            value={searchInput}
-            onChange={handleChange}
-          />
-          <i className="material-icons search-icon">search</i>
-        </div>
-        <div className="msh-content">
-          {loading && <h3>Loading...</h3>}
+      <Dropdown
+        className={`d-inline mx-2 ${
+          type === 'requestAccess' ? 'requestFormInput' : 'releaseInfoInput'
+        }`}
+        autoClose="inside"
+      >
+        <Dropdown.Toggle id="dropdown-autoclose-inside">Select Options</Dropdown.Toggle>
 
-          {companyList.length > 0 && hasSearchCriteria && renderCompanies(companyList)}
-        </div>
+        <Dropdown.Menu>
+          <div className="msh-wrapper">
+            <div className="main-title">Companies, Divisions & Labels</div>
+            <div className="msh-content">
+              {loading && <h3>Loading...</h3>}
 
-        <div className="invalid-tooltip">Label is required.</div>
-      </div>
+              {companyList.length > 0 && hasSearchCriteria && renderCompanies(companyList)}
+            </div>
+
+            <div className="invalid-tooltip">Label is required.</div>
+          </div>
+        </Dropdown.Menu>
+      </Dropdown>
+      // <div className="msh-wrapper">
+      //   <div className="main-title">Companies, Divisions & Labels</div>
+      //   <div className="search-input">
+      //     <Form.Control
+      //       type="text"
+      //       name="searchInput"
+      //       className="form-control requiredInput"
+      //       value={searchInput}
+      //       onChange={handleChange}
+      //     />
+      //     <i className="material-icons search-icon">search</i>
+      //   </div>
+      //   <div className="msh-content">
+      //     {loading && <h3>Loading...</h3>}
+
+      //     {companyList.length > 0 && hasSearchCriteria && renderCompanies(companyList)}
+      //   </div>
+
+      //   <div className="invalid-tooltip">Label is required.</div>
+      // </div>
     );
   }
 }

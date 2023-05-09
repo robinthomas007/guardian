@@ -1,8 +1,15 @@
 .msh-wrapper {
   background: #f5f5f5;
   line-height: 3rem;
-  width: 435px;
+  /* width: 435px; */
   padding: 10px;
+}
+
+.requestFormInput .dropdown-toggle::after {
+  margin: 0 0 -2px 164px;
+}
+.releaseInfoInput .dropdown-toggle::after {
+  margin: 0 0 -2px 113px;
 }
 
 .msh-content {
@@ -22,6 +29,12 @@ label.custom-checkbox.msh-checkbox {
   padding-left: 30px;
 }
 
+.requestFormInput .dropdown-menu {
+  margin-top: 9px !important;
+}
+.releaseInfoInput .dropdown-menu {
+  margin-top: -3px !important;
+}
 .dropdown-menu {
   box-shadow: 2px 3px 8px #8c9396;
   max-height: 30rem;
@@ -29,7 +42,7 @@ label.custom-checkbox.msh-checkbox {
   overflow-y: auto;
   overflow-x: auto;
   transform: translate3d(5px, 35px, 0px) !important;
-  width: 430px !important;
+  width: 450px !important;
   padding: 0 !important;
   margin-left: -14px;
 }
@@ -37,13 +50,6 @@ label.custom-checkbox.msh-checkbox {
 .label-wrapper {
   padding-left: 30px;
   margin-top: -10px;
-}
-.custom-dropdown #dropdown-autoclose-inside {
-  width: 223px !important;
-  height: 38px;
-  left: 0px;
-  /* text-align: left; */
-  margin-left: -8px;
 }
 
 .msh-wrapper .sub-title,
@@ -55,7 +61,7 @@ label.custom-checkbox.msh-checkbox {
   font-size: 16px;
 }
 .msh-wrapper input {
-  width: 288px !important;
+  width: 428px !important;
   display: inherit !important;
   height: 35px !important;
 }
@@ -65,7 +71,6 @@ label.custom-checkbox.msh-checkbox {
 }
 .search-icon {
   color: #999999 !important;
-  right: 131px !important;
   font-size: 22px;
   top: 7px !important;
 }
@@ -113,4 +118,20 @@ label.custom-checkbox.msh-checkbox {
     max-width: 630px;
     margin: 1.75rem auto;
   }
+}
+
+.requestFormInput #dropdown-autoclose-inside {
+  width: 280px !important;
+  height: 38px;
+  left: 0px;
+  /* text-align: left; */
+  margin-left: -8px;
+}
+
+.releaseInfoInput #dropdown-autoclose-inside {
+  width: 223px !important;
+  height: 38px;
+  left: 0px;
+  /* text-align: left; */
+  margin-left: -8px;
 }

@@ -563,6 +563,7 @@ class ReleaseinformationPage extends Component {
                       handleChangeCheckbox={this.handleChangeCheckbox}
                       isAdmin={this.props.user.IsAdmin}
                       isMultiSelect={false}
+                      type={'releaseInfo'}
                       isChecked={this.state.isChecked}
                       selectedOptions={this.state.selectedOptions}
                     />
@@ -571,6 +572,8 @@ class ReleaseinformationPage extends Component {
                       handleChangeCheckbox={this.handleChangeCheckbox}
                       isAdmin={this.props.user.IsAdmin}
                       isMultiSelect={true}
+                      type={'releaseInfo'}
+                      releasingLabels={this.props.user.ReleasingLabels}
                       isChecked={this.state.isChecked}
                       selectedOptions={this.state.selectedOptions}
                     />
