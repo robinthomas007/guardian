@@ -18,7 +18,7 @@ import { withTranslation } from 'react-i18next';
 import { compose } from 'redux';
 import VideoPlayer from 'components/template/VideoPlayer';
 import { clearConfigCache } from 'prettier';
-import MultiSelectHierarchy from 'components/common/MultiSelectHierarchy';
+import MultiSelectHierarchy from 'components/common/MultiSelectHierarchy.js';
 
 class ReleaseinformationPage extends Component {
   constructor(props) {
