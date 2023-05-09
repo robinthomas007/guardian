@@ -16,7 +16,6 @@ class RequestAccessForm extends Component {
         LabelID: null,
         email: '',
         phoneNumber: '',
-        LabelIDs: [],
       },
       ReleasingLabels: [],
       submitDisabled: false,
@@ -56,7 +55,6 @@ class RequestAccessForm extends Component {
       this.setState({ selectedOptions: modifiedDta }, () => {
         console.log('finalData', this.state.selectedOptions);
       });
-      // setSelectedOptions([...selectedOptions, data[selectedLabelId]]);
     } else {
       console.log('not checked!');
       // pull the data if exist
@@ -102,7 +100,11 @@ class RequestAccessForm extends Component {
       'Content-Type': 'application/json',
     });
 
-    const fetchBody = JSON.stringify(this.state.formInputs);
+    const formattedFormData = {
+      formInputs: { ...this.state.formInputs, LabelID: this.state.selectedOptions.join(',') },
+    };
+    console.log('submittedData', formattedFormData);
+    const fetchBody = JSON.stringify(formattedFormData);
 
     fetch(window.env.api.url + '/access', {
       method: 'POST',
