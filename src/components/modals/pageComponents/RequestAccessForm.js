@@ -53,7 +53,7 @@ class RequestAccessForm extends Component {
       console.log('selectedData', data[selectedLabelId]);
       const modifiedDta = [...this.state.selectedOptions, data[selectedLabelId]];
       this.setState({ selectedOptions: modifiedDta }, () => {
-        console.log('finalData', this.state.selectedOptions);
+        console.log('selectedLabels', this.state.selectedOptions);
       });
     } else {
       console.log('not checked!');
