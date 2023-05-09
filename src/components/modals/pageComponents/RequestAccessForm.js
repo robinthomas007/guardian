@@ -182,6 +182,7 @@ class RequestAccessForm extends Component {
                 handleChangeCheckbox={this.handleChangeCheckbox}
                 isAdmin={true}
                 isMultiSelect={true}
+                selectedOptions={[]}
               />
             </div>
 

@@ -4,7 +4,13 @@ import './multiSelectHierarchy.css';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Api from '../../lib/api';
 
-export default function MultiSelectHierarchy({ isAdmin, handleChangeCheckbox }) {
+export default function MultiSelectHierarchy({
+  isAdmin,
+  handleChangeCheckbox,
+  isMultiSelect,
+  isChecked,
+  selectedOptions,
+}) {
   const [companyList, setcompanyList] = useState([]);
 
   const [searchInput, setSearchInput] = useState('');
@@ -19,9 +25,6 @@ export default function MultiSelectHierarchy({ isAdmin, handleChangeCheckbox }) 
     if (searchInput.length >= 3) {
       setLoading(true);
       const payload = {
-        User: {
-          email: 'selvam.murugan@umusic.com',
-        },
         SearchCriteria: {
           SearchTerm: searchInput,
         },
@@ -33,9 +36,9 @@ export default function MultiSelectHierarchy({ isAdmin, handleChangeCheckbox }) 
           return res.json();
         })
         .then(res => {
-          const demo = JSON.parse(res.Result);
-          console.log(demo);
-          setcompanyList(demo);
+          const result = JSON.parse(res.Result);
+          console.log(result);
+          setcompanyList(result);
           setLoading(false);
         });
     } else {
@@ -65,6 +68,7 @@ export default function MultiSelectHierarchy({ isAdmin, handleChangeCheckbox }) 
                         handleChangeCheckbox(e, {
                           CompanyId,
                           CompanyName,
+                          isMultiSelect,
                         })
                       }
                     />
@@ -103,7 +107,9 @@ export default function MultiSelectHierarchy({ isAdmin, handleChangeCheckbox }) 
                       className="form-control"
                       type="checkbox"
                       name={DivisionId}
-                      onChange={e => handleChangeCheckbox(e, { DivisionId, DivisionName })}
+                      onChange={e =>
+                        handleChangeCheckbox(e, { DivisionId, DivisionName, isMultiSelect })
+                      }
                     />
                     <span className="checkmark "></span>
                   </label>
@@ -137,7 +143,7 @@ export default function MultiSelectHierarchy({ isAdmin, handleChangeCheckbox }) 
                   className="form-control"
                   type="checkbox"
                   name={LabelId}
-                  onChange={e => handleChangeCheckbox(e, { LabelId, LabelName })}
+                  onChange={e => handleChangeCheckbox(e, { LabelId, LabelName, isMultiSelect })}
                 />
                 <span className="checkmark "></span>
               </label>
@@ -189,31 +195,8 @@ export default function MultiSelectHierarchy({ isAdmin, handleChangeCheckbox }) 
   };
   if (isAdmin) {
     return (
-      <div className="msh-wrapper">
-        <div className="main-title">Companies, Divisions & Labels</div>
-        <div className="search-input">
-          <Form.Control
-            type="text"
-            name="searchInput"
-            className="form-control requiredInput"
-            value={searchInput}
-            onChange={handleChange}
-          />
-          <i className="material-icons search-icon">search</i>
-        </div>
-        <div className="msh-content">
-          {loading && <h3>Loading...</h3>}
-
-          {companyList.length > 0 && hasSearchCriteria && renderCompanies(companyList)}
-        </div>
-
-        <div className="invalid-tooltip">Label is required.</div>
-      </div>
-    );
-  } else {
-    return (
       <>
-        <Dropdown className="d-inline mx-2" autoClose="inside">
+        <Dropdown className="d-inline mx-2 custom-dropdown" autoClose="inside">
           <Dropdown.Toggle id="dropdown-autoclose-inside">Select Options</Dropdown.Toggle>
 
           <Dropdown.Menu>
@@ -240,6 +223,29 @@ export default function MultiSelectHierarchy({ isAdmin, handleChangeCheckbox }) 
           </Dropdown.Menu>
         </Dropdown>
       </>
+    );
+  } else {
+    return (
+      <div className="msh-wrapper">
+        <div className="main-title">Companies, Divisions & Labels</div>
+        <div className="search-input">
+          <Form.Control
+            type="text"
+            name="searchInput"
+            className="form-control requiredInput"
+            value={searchInput}
+            onChange={handleChange}
+          />
+          <i className="material-icons search-icon">search</i>
+        </div>
+        <div className="msh-content">
+          {loading && <h3>Loading...</h3>}
+
+          {companyList.length > 0 && hasSearchCriteria && renderCompanies(companyList)}
+        </div>
+
+        <div className="invalid-tooltip">Label is required.</div>
+      </div>
     );
   }
 }

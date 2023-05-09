@@ -1,7 +1,7 @@
 .msh-wrapper {
   background: #f5f5f5;
   line-height: 3rem;
-  width: 400px;
+  width: 435px;
   padding: 10px;
 }
 
@@ -29,13 +29,21 @@ label.custom-checkbox.msh-checkbox {
   overflow-y: auto;
   overflow-x: auto;
   transform: translate3d(5px, 35px, 0px) !important;
-  width: 400px !important;
+  width: 430px !important;
   padding: 0 !important;
+  margin-left: -14px;
 }
 
 .label-wrapper {
   padding-left: 30px;
   margin-top: -10px;
+}
+.custom-dropdown #dropdown-autoclose-inside {
+  width: 223px !important;
+  height: 38px;
+  left: 0px;
+  /* text-align: left; */
+  margin-left: -8px;
 }
 
 .msh-wrapper .sub-title,
@@ -57,7 +65,7 @@ label.custom-checkbox.msh-checkbox {
 }
 .search-icon {
   color: #999999 !important;
-  right: 102px !important;
+  right: 131px !important;
   font-size: 22px;
   top: 7px !important;
 }

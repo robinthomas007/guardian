@@ -67,6 +67,7 @@ class ReleaseinformationPage extends Component {
       projectReleaseDateDisabled: false,
       projectReleaseDateReset: false,
       selectedOptions: [],
+      isChecked: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -174,10 +175,19 @@ class ReleaseinformationPage extends Component {
       console.log('checked');
       console.log('data', data);
       console.log('selectedData', data[selectedLabelId]);
-      const modifiedDta = [...this.state.selectedOptions, data[selectedLabelId]];
-      this.setState({ selectedOptions: modifiedDta }, () => {
-        console.log('finalData', this.state.selectedOptions);
-      });
+      if (data.isMultiSelect) {
+        const modifiedDta = [...this.state.selectedOptions, data[selectedLabelId]];
+        this.setState({ selectedOptions: modifiedDta }, () => {
+          console.log('finalData', this.state.selectedOptions);
+        });
+      } else {
+        this.setState(
+          { selectedOptions: [data[selectedLabelId]], isChecked: !this.state.isChecked },
+          () => {
+            console.log('finalData-singleSelect', this.state.selectedOptions);
+          },
+        );
+      }
     } else {
       console.log('not checked!');
     }
@@ -548,13 +558,22 @@ class ReleaseinformationPage extends Component {
                   <ToolTip tabIndex="-1" message={t('releaseInfo:ReleasingLabelMessage')} />
                 </div>
                 <div className="col-6">
-                  {true ? (
+                  {this.props.user.IsAdmin ? (
                     <MultiSelectHierarchy
                       handleChangeCheckbox={this.handleChangeCheckbox}
-                      isAdmin={false}
+                      isAdmin={this.props.user.IsAdmin}
+                      isMultiSelect={false}
+                      isChecked={this.state.isChecked}
+                      selectedOptions={this.state.selectedOptions}
                     />
                   ) : (
-                    <MultiSelectHierarchy isAdmin={this.props.user.IsAdmin} />
+                    <MultiSelectHierarchy
+                      handleChangeCheckbox={this.handleChangeCheckbox}
+                      isAdmin={this.props.user.IsAdmin}
+                      isMultiSelect={true}
+                      isChecked={this.state.isChecked}
+                      selectedOptions={this.state.selectedOptions}
+                    />
                   )}
                 </div>
               </Form.Group>
