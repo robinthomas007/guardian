@@ -7,6 +7,7 @@ import LoadingImg from 'component_library/LoadingImg';
 import { resetDatePicker, isFormValid, CustomInput, NO_LABEL_ID } from '../../Utils.js';
 import moment from 'moment';
 import ReleasingLabelsInput from '../ReleaseInformation/pageComponents/ReleasingLabelsInput';
+import MultiSelectHierarchy from '../../common/MultiSelectHierarchy.js';
 import ProjectTypesInput from '../ReleaseInformation/pageComponents/ProjectTypesInput';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -18,7 +19,6 @@ import { withTranslation } from 'react-i18next';
 import { compose } from 'redux';
 import VideoPlayer from 'components/template/VideoPlayer';
 import { clearConfigCache } from 'prettier';
-import MultiSelectHierarchy from '../../common/MultiSelectHierarchy';
 
 class ReleaseinformationPage extends Component {
   constructor(props) {
