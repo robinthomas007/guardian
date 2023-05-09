@@ -77,12 +77,6 @@ export default function MultiSelectHierarchy({
                     <span className="checkmark "></span>
                   </label>
                   <span>{CompanyName} (Company)</span>
-                  {company.DivisionList.length > 0 && (
-                    <div style={{ marginTop: '-10px' }}>
-                      <div className="vl"></div>
-                      <div className="hl"></div>
-                    </div>
-                  )}
                 </div>
               )}
               {company.DivisionList.length > 0 && renderDivisions(company.DivisionList, hasComapny)}
@@ -102,7 +96,13 @@ export default function MultiSelectHierarchy({
           return (
             <div key={i}>
               {DivisionId && (
-                <div className="inside-wrapper">
+                <div className="inside-wrapper ">
+                  {hasComapny && (
+                    <div className="tree">
+                      <div className={`${i === 0 ? 'vl' : 'vl ex-ht'}`}></div>
+                      <div className="hl"></div>
+                    </div>
+                  )}
                   <label className="custom-checkbox msh-checkbox">
                     <input
                       id="division"
@@ -116,12 +116,6 @@ export default function MultiSelectHierarchy({
                     <span className="checkmark "></span>
                   </label>
                   <span>{DivisionName} (Division)</span>
-                  {division.LabelList.length > 0 && (
-                    <div>
-                      <div className="vl"></div>
-                      <div className="hl"></div>
-                    </div>
-                  )}
                 </div>
               )}
               {division.LabelList.length > 0 && renderLabels(division.LabelList, hasDivision)}
@@ -139,6 +133,12 @@ export default function MultiSelectHierarchy({
           const { LabelId, LabelName } = label;
           return (
             <div key={i}>
+              {hasDivision && (
+                <div className="tree">
+                  <div className={`${i === 0 ? 'vl' : 'vl ex-ht'}`}></div>
+                  <div className="hl"></div>
+                </div>
+              )}
               <label className="custom-checkbox msh-checkbox">
                 <input
                   id="label"

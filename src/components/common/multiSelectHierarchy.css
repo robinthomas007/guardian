@@ -75,22 +75,32 @@ label.custom-checkbox.msh-checkbox {
   top: 7px !important;
 }
 
-.msh-wrapper .vl {
+.tree {
+  position: relative;
+  margin-top: -10px;
+}
+
+.msh-wrapper .tree .vl {
   border-left: 2px solid #ddd;
-  height: 29px;
+  height: 25px;
   position: absolute;
-  top: 35px;
-  left: 10px;
+  top: 0px;
+  left: -18px;
   margin-top: 1px;
 }
 
-.msh-wrapper .hl {
+.msh-wrapper .tree .hl {
   border-bottom: 2px solid #ddd;
   width: 20px;
   display: inline-block;
   position: absolute;
-  top: 63px;
-  left: 10px;
+  top: 24px;
+  left: -17px;
+}
+
+.msh-wrapper .tree .ex-ht {
+  height: 39px;
+  top: -14px;
 }
 
 .msh-wrapper .material-icons.search-icon {
