@@ -3,6 +3,7 @@ import { Form, Button } from 'react-bootstrap';
 import './multiSelectHierarchy.css';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Api from '../../lib/api';
+import LabelSelectHierarchy from './LabelSelectHierarchy';
 
 export default function MultiSelectHierarchy({
   isAdmin,
@@ -11,17 +12,26 @@ export default function MultiSelectHierarchy({
   isChecked,
   selectedOptions,
   type,
+  user,
+  isOpen,
+  handleIsOpen,
 }) {
   const [companyList, setcompanyList] = useState([]);
 
   const [searchInput, setSearchInput] = useState('');
   const [hasSearchCriteria, setHasSearchCreteria] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [releasingLabels, setReleasingLabels] = useState([]);
 
   // useEffect(() => {
   //   console.log('selectedLabels-Sofar', selectedLabel);
   //   console.log('selectedOptions-Sofar', selectedOptions);
   // }, [selectedLabel, setSelectedOptions]);
+  useEffect(() => {
+    const releasingCDLLabels = user.ReleasingLabels.slice(0, 20);
+    console.log(releasingCDLLabels);
+    setReleasingLabels(releasingCDLLabels);
+  }, []);
   useEffect(() => {
     if (searchInput.length >= 3) {
       setLoading(true);
@@ -31,6 +41,7 @@ export default function MultiSelectHierarchy({
         },
         languageCode: localStorage.getItem('languageCode') || 'en',
       };
+
       Api.post('/labels/search', payload)
         .then(res => {
           setHasSearchCreteria(true);
@@ -265,17 +276,31 @@ export default function MultiSelectHierarchy({
         className={`d-inline mx-2 ${
           type === 'requestAccess' ? 'requestFormInput' : 'releaseInfoInput'
         }`}
-        autoClose="inside"
+        autoclose="inside"
+        onClick={e => {
+          handleIsOpen(e);
+        }}
       >
-        <Dropdown.Toggle id="dropdown-autoclose-inside">Select Options</Dropdown.Toggle>
+        <Dropdown.Toggle id="dropdown-autoclose-inside">
+          {selectedOptions.length > 0 ? selectedOptions[1] : 'Select Options'}
+        </Dropdown.Toggle>
 
-        <Dropdown.Menu>
+        <Dropdown.Menu style={{ display: isOpen ? 'block' : 'none' }}>
           <div className="msh-wrapper">
-            <div className="main-title">Companies, Divisions & Labels</div>
-            <div className="msh-content">
-              {loading && <h3>Loading...</h3>}
+            {/* <div className="main-title">Companies, Divisions & Labels</div> */}
 
-              {companyList.length > 0 && hasSearchCriteria && renderCompanies(companyList)}
+            <div className="msh-content" style={{ marginTop: '-25px' }}>
+              {loading && <h3>Loading...</h3>}
+              <span className="sub-title">Select an option</span>
+
+              <LabelSelectHierarchy
+                releasingLabels={releasingLabels}
+                isMultiSelect={false}
+                handleChangeCheckbox={handleChangeCheckbox}
+                selectedLabel={selectedOptions}
+                isAdmin={isAdmin}
+                user={user}
+              />
             </div>
 
             <div className="invalid-tooltip">Label is required.</div>

@@ -68,6 +68,7 @@ class ReleaseinformationPage extends Component {
       projectReleaseDateReset: false,
       selectedOptions: [],
       isChecked: false,
+      isOpen: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -78,6 +79,7 @@ class ReleaseinformationPage extends Component {
     this.handleCoverChange = this.handleCoverChange.bind(this);
     this.clearCoverArt = this.clearCoverArt.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
+    this.handleIsOpen = this.handleIsOpen.bind(this);
   }
 
   handleReleaseTBDChange = e => {
@@ -171,6 +173,12 @@ class ReleaseinformationPage extends Component {
         : e.target.id === 'division'
         ? 'DivisionId'
         : 'LabelId';
+    const selectedLabelName =
+      e.target.id === 'company'
+        ? 'CompanyName'
+        : e.target.id === 'division'
+        ? 'DivisionName'
+        : 'LabelName';
     if (e.target.checked) {
       console.log('checked');
       console.log('data', data);
@@ -181,9 +189,19 @@ class ReleaseinformationPage extends Component {
           console.log('finalData', this.state.selectedOptions);
         });
       } else {
+        const newData = {
+          selectedLabelId: data[selectedLabelId],
+          selectedLabelName: data[selectedLabelName],
+        };
+        console.log('newData', newData);
         this.setState(
-          { selectedOptions: [data[selectedLabelId]], isChecked: !this.state.isChecked },
+          {
+            selectedOptions: [data[selectedLabelId], data[selectedLabelName]],
+            isChecked: !this.state.isChecked,
+            isOpen: !this.state.isOpen,
+          },
           () => {
+            console.log('test######');
             console.log('finalData-singleSelect', this.state.selectedOptions);
           },
         );
@@ -305,6 +323,11 @@ class ReleaseinformationPage extends Component {
     this.handleChange(e);
   }
 
+  handleIsOpen() {
+    console.log('test%%%%%');
+    this.setState({ ...this.state, isOpen: !this.state.isOpen });
+  }
+
   componentDidMount() {
     if (this.props.user && this.props.user.IsLabelReadOnly) {
       this.props.history.push('/findProject');
@@ -338,7 +361,8 @@ class ReleaseinformationPage extends Component {
       projectCoverArt: '',
       projectArtistName: '',
       projectTypeID: '1',
-      projectReleasingLabelID: this.props.user.ReleasingLabels[0].id,
+      projectReleasingLabelID:
+        this.props.user.ReleasingLabels.length > 0 ? this.props.user.ReleasingLabels[0].id : '',
       projectReleaseDate: null,
       projectReleaseDateTBD: false,
       projectNotes: '',
@@ -361,11 +385,15 @@ class ReleaseinformationPage extends Component {
         this.setState({ formInputs: blankInputs }, () => this.setCoverArt());
       }
     } else {
-      if (this.props.user.ReleasingLabels && this.state.formInputs.projectReleasingLabelID === '') {
+      if (
+        this.props.user.ReleasingLabels.length > 0 &&
+        this.state.formInputs.projectReleasingLabelID === ''
+      ) {
         this.setState({
           formInputs: {
             ...this.state.formInputs,
-            projectReleasingLabelID: this.props.user.ReleasingLabels[0].id,
+            projectReleasingLabelID:
+              this.props.user.ReleasingLabels.length > 0 ? this.props.user.ReleasingLabels[0] : '',
           },
         });
       }
@@ -561,10 +589,13 @@ class ReleaseinformationPage extends Component {
                   {this.props.user.IsAdmin ? (
                     <MultiSelectHierarchy
                       handleChangeCheckbox={this.handleChangeCheckbox}
-                      isAdmin={this.props.user.IsAdmin}
+                      isAdmin={true}
                       isMultiSelect={false}
                       type={'releaseInfo'}
+                      user={this.props.user}
                       isChecked={this.state.isChecked}
+                      isOpen={this.state.isOpen}
+                      handleIsOpen={this.handleIsOpen}
                       selectedOptions={this.state.selectedOptions}
                     />
                   ) : (
@@ -575,6 +606,7 @@ class ReleaseinformationPage extends Component {
                       type={'releaseInfo'}
                       releasingLabels={this.props.user.ReleasingLabels}
                       isChecked={this.state.isChecked}
+                      user={this.props.user}
                       selectedOptions={this.state.selectedOptions}
                     />
                   )}

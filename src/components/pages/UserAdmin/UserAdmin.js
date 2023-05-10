@@ -60,9 +60,11 @@ class UserAdmin extends Component {
       showFilterModal: false,
       releasingLabels: [],
       selectedFilterLabelOptions: [],
+      selectedCDLOptions: [],
     };
     this.handleFilterModalView = this.handleFilterModalView.bind(this);
     this.handleLabelSelectChange = this.handleLabelSelectChange.bind(this);
+    this.handleChangeCheckbox = this.handleChangeCheckbox.bind(this);
   }
 
   handleTargetUserUpdate = e => {
@@ -481,16 +483,92 @@ class UserAdmin extends Component {
 
   newHandleLabelSelectChange = options => {
     const { targetUser } = this.state;
+    console.log('Selected-options', options);
     const ids = options.map(opt => opt.value);
 
-    this.setState({ targetUser: { ...targetUser, secondaryLabelIds: ids } });
+    this.setState({ targetUser: { ...targetUser, secondaryLabelIds: ids } }, () => {
+      console.log('secondaryLabelIds', this.state.targetUser);
+    });
+  };
+
+  handleChangeCheckbox = (e, data) => {
+    const selectedLabelId =
+      e.target.id === 'company'
+        ? 'CompanyId'
+        : e.target.id === 'division'
+        ? 'DivisionId'
+        : 'LabelId';
+    const selectedLabelName =
+      e.target.id === 'company'
+        ? 'CompanyName'
+        : e.target.id === 'division'
+        ? 'DivisionName'
+        : 'LabelName';
+    if (e.target.checked) {
+      console.log('checked');
+      console.log('data', data);
+      console.log('selectedLabelID', data[selectedLabelId]);
+      console.log('selectedLabelName', data[selectedLabelName]);
+      const { targetUser } = this.state;
+      if (data.isMultiSelect) {
+        const modifiedDta = [
+          ...this.state.selectedCDLOptions,
+          { value: data[selectedLabelId], label: data[selectedLabelName] },
+        ];
+        console.log('previous SecondaryList', this.state.targetUser.secondaryLabelIds);
+        this.setState(
+          {
+            selectedCDLOptions: modifiedDta,
+            targetUser: {
+              ...targetUser,
+              secondaryLabelIds: [...targetUser.secondaryLabelIds, String(data[selectedLabelId])],
+            },
+          },
+          () => {
+            console.log('Useradmin-SelectedCDLoOptions', this.state.selectedCDLOptions);
+            console.log('targetUser-secondaryIDs', this.state.targetUser);
+          },
+        );
+      } else {
+        const newData = {
+          selectedLabelId: data[selectedLabelId],
+          selectedLabelName: data[selectedLabelName],
+        };
+        console.log('newData', newData);
+        this.setState(
+          {
+            selectedOptions: data[selectedLabelId],
+            isChecked: !this.state.isChecked,
+          },
+          () => {
+            console.log('finalData-singleSelect', this.state.selectedOptions);
+          },
+        );
+      }
+    } else {
+      console.log('not checked!');
+    }
   };
 
   removeLabelFromEditModal = labelId => {
+    console.log('remove item', labelId);
+    console.log('typeof labelId', typeof labelId);
     const { targetUser } = this.state;
     let ids = [...targetUser.secondaryLabelIds];
+    let modifiedCDLOptions = this.state.selectedCDLOptions;
+    console.log('before modified', this.state.selectedCDLOptions);
+    const filteredCDLOptions = modifiedCDLOptions.filter(item => item.value !== labelId);
+    console.log('ModfiedCDLOptions', filteredCDLOptions);
     ids.splice(ids.indexOf(labelId), 1);
-    this.setState({ targetUser: { ...targetUser, secondaryLabelIds: ids } });
+    this.setState(
+      {
+        targetUser: { ...targetUser, secondaryLabelIds: ids },
+        selectedCDLOptions: filteredCDLOptions,
+      },
+      () => {
+        console.log('after removedItem', this.state.targetUser.secondaryLabelIds);
+      },
+    );
   };
 
   handleKeyUp(e) {
@@ -516,6 +594,9 @@ class UserAdmin extends Component {
           removeLabelFromEditModal={this.removeLabelFromEditModal}
           releasingLabels={this.state.releasingLabels}
           selectedOptions={this.state.targetUser.secondaryLabelIds}
+          userData={this.props.user}
+          handleChangeCheckbox={this.handleChangeCheckbox}
+          selectedCDLOptions={this.state.selectedCDLOptions}
         />
 
         <div>

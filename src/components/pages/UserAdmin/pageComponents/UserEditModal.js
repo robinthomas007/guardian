@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
 import LabelsMultiSelect from './LabelsMultiSelect';
 import ReactMultiSelectCheckboxes from 'react-multiselect-checkboxes';
+import MultiSelectHierarchy from '../../../common/multiSelectHierarchy';
 
 class UserEditModal extends Component {
   constructor(props) {
@@ -14,6 +15,7 @@ class UserEditModal extends Component {
         labelID: '',
         phoneNumber: '',
       },
+      isChecked: false,
     };
   }
 
@@ -30,11 +32,11 @@ class UserEditModal extends Component {
   };
 
   render() {
-    const options = this.props.releasingLabels.map(label => ({
-      label: label.name,
-      value: label.id,
-    }));
-    const selectedOptions = options.filter(opt => this.props.selectedOptions.includes(opt.value));
+    // const options = this.props.releasingLabels.map(label => ({
+    //   label: label.name,
+    //   value: label.id,
+    // }));
+    // const selectedOptions = options.filter(opt => this.props.selectedOptions.includes(opt.value));
     return (
       <Modal id="userEditModal" show={this.props.showModal} onHide={this.handleClose}>
         <Modal.Header closeButton>
@@ -80,14 +82,23 @@ class UserEditModal extends Component {
                   defaultText="Select Option"
                   selectedOptions={this.props.selectedOptions}
                 /> */}
-                <ReactMultiSelectCheckboxes
+                {/* <ReactMultiSelectCheckboxes
                   options={options}
                   value={selectedOptions}
                   onChange={option => this.props.newHandleLabelSelectChange(option)}
+                /> */}
+                <MultiSelectHierarchy
+                  handleChangeCheckbox={this.props.handleChangeCheckbox}
+                  isAdmin={true}
+                  isMultiSelect={true}
+                  type={'releaseInfo'}
+                  user={this.props.userData}
+                  isChecked={this.state.isChecked}
+                  selectedOptions={this.props.selectedOptions}
                 />
                 <br />
                 <div>
-                  {selectedOptions.map(label => (
+                  {this.props.selectedCDLOptions.map(label => (
                     <React.Fragment key={label.value}>
                       <button
                         type="button"
