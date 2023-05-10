@@ -10,12 +10,31 @@ class UserSearchFilterModal extends Component {
     super(props);
     this.state = {
       selectedLabelOptions: [],
+      labelList: [],
     };
   }
 
   render() {
     const t = this.props.t;
     const test = { ReleasingLabels: [] };
+
+    // rename function
+    const somefunction = (e, data) => {
+      /// e.target.checked then add the item to array
+      const obj = {};
+      obj.label = data.CompanyName || data.DivisionName || data.LabelName;
+      obj.value = data.CompanyId || data.DivisionId || data.LabelId;
+      // this.setState() //
+      // setlabelList([...labelList, obj])
+      const event = e;
+      this.setState({ labelList: [...this.state.labelList, obj] }, () => {
+        console.log(event, 'indeis callback');
+        console.log(event.target.checked, 'eventevent');
+        this.props.handleSearchFilterLabelChange(event, this.state.labelList);
+      });
+
+      // write logic here if it is unchecked pop item from list
+    };
     return (
       <div
         className={
@@ -42,7 +61,7 @@ class UserSearchFilterModal extends Component {
                 id={'filterReleasingLabels'}
               /> */}
               <MultiSelectHierarchy
-                handleChangeCheckbox={this.props.handleChangeCheckbox}
+                handleChangeCheckbox={somefunction}
                 isAdmin={true}
                 isMultiSelect={true}
                 type={'releaseInfo'}

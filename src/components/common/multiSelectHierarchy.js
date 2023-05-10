@@ -22,13 +22,24 @@ export default function MultiSelectHierarchy({
   const [hasSearchCriteria, setHasSearchCreteria] = useState(false);
   const [loading, setLoading] = useState(false);
   const [releasingLabels, setReleasingLabels] = useState([]);
+  const [selectedList, setSelectedList] = useState([]);
+
+  const pushToSelectedList = obj => {
+    setSelectedList(obj); // call back
+  };
+
+  useEffect(() => {
+    if (selectedList.length > 0)
+      // call fn
+      console.log('test');
+  }, [selectedList]);
 
   // useEffect(() => {
   //   console.log('selectedLabels-Sofar', selectedLabel);
   //   console.log('selectedOptions-Sofar', selectedOptions);
   // }, [selectedLabel, setSelectedOptions]);
   useEffect(() => {
-    const releasingCDLLabels = user.ReleasingLabels.slice(0, 20);
+    const releasingCDLLabels = [];
     console.log(releasingCDLLabels);
     setReleasingLabels(releasingCDLLabels);
   }, []);

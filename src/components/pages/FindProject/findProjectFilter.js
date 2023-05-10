@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Field } from 'redux-form';
 import Dropdown from '../../common/DropdownSelect';
 import multiSelect from '../../common/multiSelect';
@@ -8,6 +8,7 @@ import { formatSelectArray } from '../../common/commonHelper';
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 import i18n from './../../../i18n';
+import MultiSelectHierarchy from '../../common/multiSelectHierarchy';
 
 const selectedFilter = [
   { name: 'labelIds', label: i18n.t('search:Labels') },
@@ -25,6 +26,8 @@ const selectedFilter = [
 const Filter = props => {
   useEffect(() => {}, []);
   const { t } = useTranslation();
+
+  const [labelList, setlabelList] = useState([]);
 
   const values = props.formValues && props.formValues.values;
 
@@ -117,6 +120,9 @@ const Filter = props => {
     let values = _.cloneDeep(_.get(props, 'formValues.values', {}));
     const obj = {};
     obj[name] = data;
+    console.log(values, 'valuesvaluesvaluesvalues');
+    console.log(name, 'name');
+    console.log(data, 'data');
     props.saveFilters({ ...props.formValues.values, ...obj });
     _.forOwn(values, function(item, key) {
       if (!item) {
@@ -163,6 +169,19 @@ const Filter = props => {
     props.handleProjectSearch({ searchCriteria: searchData });
   };
 
+  const getMultiSelectData = (e, data) => {
+    /// e.target.checked then add the item to array
+    const obj = {};
+    obj.label = data.CompanyName || data.DivisionName || data.LabelName;
+    obj.value = data.CompanyId || data.DivisionId || data.LabelId;
+    setlabelList([...labelList, obj]);
+    // write logic here if it is unchecked pop item from list
+  };
+
+  useEffect(() => {
+    if (labelList.length > 0) handleOnSelect(labelList, 'labelIds');
+  }, [labelList]);
+
   const LabelFacets = formatSelectArray(_.get(props, 'data.LabelFacets', []));
   const StatusFacets = formatSelectArray(_.get(props, 'data.StatusFacets', []));
   const HasAudioFacets = formatSelectArray(_.get(props, 'data.HasAudioFacets', []));
@@ -177,14 +196,22 @@ const Filter = props => {
           <br />
           <div className="row no-gutters">
             <div className="col-5">
-              <Field
+              <label>{t('search:ByLabel')}</label>
+              <MultiSelectHierarchy
+                handleChangeCheckbox={getMultiSelectData}
+                isAdmin={true}
+                isMultiSelect={true}
+                type={'requestAccess'}
+                selectedOptions={[]}
+              />
+              {/*<Field
                 label={t('search:ByLabel')}
                 name="labelIds"
                 handleOnSelect={handleOnSelect}
                 component={multiSelect}
                 options={LabelFacets}
                 classes={'multi-select'}
-              />
+              />*/}
             </div>
             <div className="col-2"></div>
             <div className="col-5">
