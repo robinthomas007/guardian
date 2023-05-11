@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { Form } from 'react-bootstrap';
-import LabelsMultiSelect from '../pageComponents/LabelsMultiSelect';
 import MultiSelectHierarchy from '../../../common/multiSelectHierarchy';
-
-// import NameIdDropdown from '../pageComponents/NameIdDropdown';
 
 class UserSearchFilterModal extends Component {
   constructor(props) {
@@ -15,7 +12,6 @@ class UserSearchFilterModal extends Component {
 
   render() {
     const t = this.props.t;
-    const test = { ReleasingLabels: [] };
     return (
       <div
         className={
@@ -25,33 +21,23 @@ class UserSearchFilterModal extends Component {
       >
         <div className="card card-body">
           <h5>{t('admin:modalFilters')}</h5>
-
           <br />
-
-          <div className="row no-gutters">
+          <div className="row mb-10">
             <div className="col-2">
               <label>{t('admin:modalByLabel')}</label>
             </div>
 
             <div className="col-10">
-              {/* <LabelsMultiSelect
-                options={this.props.releasingLabels}
-                onChange={(e, label) => this.props.handleSearchFilterLabelChange(e, label)}
-                defaultText={t('admin:modalSelectOption')}
-                selectedOptions={this.props.selectedFilterLabelOptions}
-                id={'filterReleasingLabels'}
-              /> */}
               <MultiSelectHierarchy
                 handleChangeCheckbox={this.props.handleSearchFilterLabelChange}
                 isAdmin={true}
                 isMultiSelect={true}
                 type={'releaseInfo'}
-                user={test}
-                isChecked={this.state.isChecked}
-                selectedOptions={this.props.selectedOptions}
+                releasingLabels={this.props.LabelFacets}
               />
             </div>
-
+          </div>
+          <div className="row">
             <div className="col-2">
               <label>{t('admin:modalLastUpdated')}</label>
             </div>

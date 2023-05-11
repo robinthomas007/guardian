@@ -92,9 +92,6 @@ class UserEditModal extends Component {
                   isAdmin={true}
                   isMultiSelect={true}
                   type={'releaseInfo'}
-                  user={this.props.userData}
-                  isChecked={this.state.isChecked}
-                  selectedOptions={this.props.selectedOptions}
                 />
                 <br />
                 <div>

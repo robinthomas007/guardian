@@ -152,3 +152,10 @@ button.btn.btn-secondary.action.remove-art {
   flex-grow: 1;
   margin-left: 72px;
 }
+
+.ml-10 {
+  margin-left: 10px;
+}
+.mb-10 {
+  margin-bottom: 10px;
+}

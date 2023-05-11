@@ -547,13 +547,16 @@ class ReleaseinformationPage extends Component {
                   </Form.Label>
                   <ToolTip tabIndex="-1" message={t('releaseInfo:ReleasingLabelMessage')} />
                 </div>
-                <div className="col-6">
-                  <MultiSelectHierarchy
-                    handleChangeCheckbox={this.handleChangeCheckbox}
-                    isAdmin={true}
-                    isMultiSelect={false}
-                    type={'releaseInfo'}
-                  />
+                <div className="col-6 ml-10">
+                  {this.props.user && (
+                    <MultiSelectHierarchy
+                      handleChangeCheckbox={this.handleChangeCheckbox}
+                      isAdmin={true}
+                      isMultiSelect={false}
+                      type={'releaseInfo'}
+                      releasingLabels={this.props.user.ReleasingLabels}
+                    />
+                  )}
                 </div>
               </Form.Group>
 

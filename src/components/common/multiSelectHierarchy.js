@@ -5,13 +5,17 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Api from '../../lib/api';
 import _ from 'lodash';
 
-export default function MultiSelectHierarchy({ handleChangeCheckbox, type, isMultiSelect }) {
+export default function MultiSelectHierarchy({
+  handleChangeCheckbox,
+  type,
+  isMultiSelect,
+  isAdmin,
+  releasingLabels,
+}) {
   const [companyList, setcompanyList] = useState([]);
-
   const [searchInput, setSearchInput] = useState('');
-  const [hasSearchCriteria, setHasSearchCreteria] = useState(false);
+  // const [hasSearchCriteria, setHasSearchCreteria] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [releasingLabels, setReleasingLabels] = useState([]);
   const [selectedList, setSelectedList] = useState([]);
 
   const addSelectedList = (e, data) => {
@@ -29,10 +33,10 @@ export default function MultiSelectHierarchy({ handleChangeCheckbox, type, isMul
   }, [selectedList]);
 
   useEffect(() => {
-    const releasingCDLLabels = [];
-    console.log(releasingCDLLabels);
-    setReleasingLabels(releasingCDLLabels);
-  }, []);
+    if (releasingLabels && releasingLabels.length > 0) {
+      setcompanyList(releasingLabels);
+    }
+  }, [releasingLabels]);
 
   useEffect(() => {
     if (searchInput.length >= 3) {
@@ -46,7 +50,6 @@ export default function MultiSelectHierarchy({ handleChangeCheckbox, type, isMul
 
       Api.post('/labels/search', payload)
         .then(res => {
-          setHasSearchCreteria(true);
           return res.json();
         })
         .then(res => {
@@ -57,8 +60,9 @@ export default function MultiSelectHierarchy({ handleChangeCheckbox, type, isMul
           setLoading(false);
         });
     } else {
-      setHasSearchCreteria(false);
-      setcompanyList([]);
+      if (searchInput.length === 0) {
+        if (releasingLabels && releasingLabels.length > 0) setcompanyList(releasingLabels);
+      }
     }
   }, [searchInput]);
 
@@ -71,7 +75,7 @@ export default function MultiSelectHierarchy({ handleChangeCheckbox, type, isMul
   const renderCompanies = companyList => {
     return (
       <div>
-        <span className="sub-title">Select Options from Search Results</span>
+        {isAdmin && <span className="sub-title">Select Options from Search Results</span>}
         {companyList.map((company, i) => {
           const { CompanyId, CompanyName } = company;
           const hasComapny = CompanyId ? true : false;
@@ -172,32 +176,38 @@ export default function MultiSelectHierarchy({ handleChangeCheckbox, type, isMul
   };
 
   return (
-    <div>
+    <div className="ms-dropdown-wrapper">
       <Dropdown
-        className={`d-inline mx-2 ${
-          type === 'requestAccess' ? 'requestFormInput' : 'releaseInfoInput'
-        }`}
-        autoClose="inside"
+        className={`d-inline ${type === 'requestAccess' ? 'requestFormInput' : 'releaseInfoInput'}`}
+        autoclose="inside"
       >
-        <Dropdown.Toggle id="dropdown-autoclose-inside">Select Options</Dropdown.Toggle>
+        <Dropdown.Toggle id="dropdown-autoclose-inside">
+          {selectedList.length > 1
+            ? selectedList.length + ' Selected'
+            : selectedList.length === 1
+            ? selectedList[0].label
+            : 'Select Options'}
+        </Dropdown.Toggle>
 
         <Dropdown.Menu>
           <div className="msh-wrapper">
             <div className="main-title">Companies, Divisions & Labels</div>
-            <div className="search-input">
-              <Form.Control
-                type="text"
-                name="searchInput"
-                className="form-control requiredInput"
-                value={searchInput}
-                onChange={e => setSearchInput(e.target.value)}
-              />
-              <i className="material-icons search-icon">search</i>
-            </div>
+            {isAdmin && (
+              <div className="search-input">
+                <Form.Control
+                  type="text"
+                  name="searchInput"
+                  className="form-control requiredInput"
+                  value={searchInput}
+                  onChange={e => setSearchInput(e.target.value)}
+                />
+                <i className="material-icons search-icon">search</i>
+              </div>
+            )}
             <div className="msh-content">
               {loading && <h3>Loading...</h3>}
 
-              {companyList.length > 0 && hasSearchCriteria && renderCompanies(companyList)}
+              {companyList.length > 0 && renderCompanies(companyList)}
             </div>
 
             <div className="invalid-tooltip">Label is required.</div>

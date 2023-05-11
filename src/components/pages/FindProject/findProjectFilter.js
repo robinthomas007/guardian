@@ -191,7 +191,6 @@ const Filter = props => {
                 isAdmin={true}
                 isMultiSelect={true}
                 type={'requestAccess'}
-                selectedOptions={[]}
               />
               {/*<Field
                 label={t('search:ByLabel')}

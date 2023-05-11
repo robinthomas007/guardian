@@ -1255,7 +1255,7 @@ ul.search-row li i {
 }
 
 #collapsePanel.search-filters label {
-  margin-left: 20px;
+  /* margin-left: 20px; */
   font-weight: 700;
 }
 

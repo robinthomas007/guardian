@@ -9,7 +9,9 @@
   margin: 0 0 -2px 164px;
 }
 .releaseInfoInput .dropdown-toggle::after {
-  margin: 0 0 -2px 113px;
+  position: absolute;
+  right: 6px;
+  top: 8px;
 }
 
 .msh-content {
@@ -135,14 +137,13 @@ label.custom-checkbox.msh-checkbox {
   width: 280px !important;
   height: 38px;
   left: 0px;
-  /* text-align: left; */
   margin-left: -8px;
 }
 
 .releaseInfoInput #dropdown-autoclose-inside {
-  width: 223px !important;
+  width: 50% !important;
   height: 38px;
   left: 0px;
-  /* text-align: left; */
   margin-left: -8px;
+  text-align: left;
 }

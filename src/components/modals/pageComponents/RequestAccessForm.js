@@ -43,7 +43,6 @@ class RequestAccessForm extends Component {
   };
   handleChangeCheckbox = data => {
     const modificedData = _.map(data, 'value');
-    console.log(modificedData, 'modificedDatamodificedDatamodificedData');
     this.setState({ selectedOptions: modificedData });
   };
 
@@ -169,7 +168,9 @@ class RequestAccessForm extends Component {
               <MultiSelectHierarchy
                 handleChangeCheckbox={this.handleChangeCheckbox}
                 type={'requestAccess'}
+                isMultiSelect={true}
               />
+              <div className="invalid-tooltip">A label selection is required.</div>
             </div>
 
             {/*  <Form.Label id="labelName">
@@ -183,7 +184,6 @@ class RequestAccessForm extends Component {
               onChange={this.handleLabelChange}
               className={'requiredInput'}
     />*/}
-            <div className="invalid-tooltip">A label selection is required.</div>
           </li>
           <li>
             <Form.Label>

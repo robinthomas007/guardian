@@ -644,6 +644,11 @@ class UserAdmin extends Component {
             handleDateFilter={this.handleDateFilter}
             selectedFilterLabelOptions={this.state.selectedFilterLabelOptions}
             t={this.props.t}
+            LabelFacets={
+              this.state.activeTab === 'requestAccess'
+                ? this.state.tableData.AccessRequestSearchResponse.LabelFacets
+                : this.state.tableData.UserSearchResponse.LabelFacets
+            }
           />
 
           <SelectedFilters
