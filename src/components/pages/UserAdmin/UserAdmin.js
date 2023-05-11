@@ -9,6 +9,8 @@ import RequestingAccessTab from './pageComponents/RequestingAccessTab';
 import ExistingUsersTab from './pageComponents/ExistingUsersTab';
 import { resetDatePicker } from '../../Utils';
 import { withTranslation } from 'react-i18next';
+import _ from 'lodash';
+
 class UserAdmin extends Component {
   constructor(props) {
     super(props);
@@ -333,27 +335,16 @@ class UserAdmin extends Component {
       });
   };
 
-  handleSearchFilterLabelChange = (e, label) => {
+  handleSearchFilterLabelChange = data => {
     const AccessRequestSearchCriteria = { ...this.state.AccessRequestSearchCriteria };
     const UserSearchCriteria = { ...this.state.UserSearchCriteria };
     const { selectedFilterLabelOptions } = this.state;
     let modifiedselectedFilterLabelOptions = selectedFilterLabelOptions;
 
-    if (e.target.checked) {
-      AccessRequestSearchCriteria.filter.labelIds.push(label.id);
-      UserSearchCriteria.filter.labelIds.push(label.id);
-      modifiedselectedFilterLabelOptions.push(label.id);
-    } else {
-      AccessRequestSearchCriteria.filter.labelIds.splice(
-        AccessRequestSearchCriteria.filter.labelIds.indexOf(label.id),
-        1,
-      );
-      UserSearchCriteria.filter.labelIds.splice(
-        UserSearchCriteria.filter.labelIds.indexOf(label.id),
-        1,
-      );
-      modifiedselectedFilterLabelOptions.splice(selectedFilterLabelOptions.indexOf(label.id), 1);
-    }
+    const lablelIds = _.map(data, 'value');
+    AccessRequestSearchCriteria.filter.labelIds = lablelIds;
+    UserSearchCriteria.filter.labelIds = lablelIds;
+    modifiedselectedFilterLabelOptions = lablelIds;
 
     this.setState(
       {

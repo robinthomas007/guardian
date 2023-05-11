@@ -5,6 +5,7 @@ import ReleasingLabelsInput from '../../../components/pages/ReleaseInformation/p
 import { isFormValid } from '../../../components/Utils';
 import { showNotyInfo, showNotyError } from 'components/Utils';
 import MultiSelectHierarchy from '../../common/multiSelectHierarchy';
+import _ from 'lodash';
 
 class RequestAccessForm extends Component {
   constructor(props) {
@@ -40,25 +41,10 @@ class RequestAccessForm extends Component {
       },
     );
   };
-  handleChangeCheckbox = (e, data) => {
-    const selectedLabelId =
-      e.target.id === 'company'
-        ? 'CompanyId'
-        : e.target.id === 'division'
-        ? 'DivisionId'
-        : 'LabelId';
-    if (e.target.checked) {
-      console.log('checked');
-      console.log('data', data);
-      console.log('selectedData', data[selectedLabelId]);
-      const modifiedDta = [...this.state.selectedOptions, data[selectedLabelId]];
-      this.setState({ selectedOptions: modifiedDta }, () => {
-        console.log('selectedLabels', this.state.selectedOptions);
-      });
-    } else {
-      console.log('not checked!');
-      // pull the data if exist
-    }
+  handleChangeCheckbox = data => {
+    const modificedData = _.map(data, 'value');
+    console.log(modificedData, 'modificedDatamodificedDatamodificedData');
+    this.setState({ selectedOptions: modificedData });
   };
 
   getLabels = () => {
@@ -182,10 +168,7 @@ class RequestAccessForm extends Component {
               </Form.Label>
               <MultiSelectHierarchy
                 handleChangeCheckbox={this.handleChangeCheckbox}
-                isAdmin={true}
-                isMultiSelect={true}
                 type={'requestAccess'}
-                selectedOptions={[]}
               />
             </div>
 

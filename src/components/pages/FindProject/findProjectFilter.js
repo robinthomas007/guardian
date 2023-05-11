@@ -27,8 +27,6 @@ const Filter = props => {
   useEffect(() => {}, []);
   const { t } = useTranslation();
 
-  const [labelList, setlabelList] = useState([]);
-
   const values = props.formValues && props.formValues.values;
 
   const deleteSelected = (val, name) => {
@@ -123,7 +121,7 @@ const Filter = props => {
     console.log(values, 'valuesvaluesvaluesvalues');
     console.log(name, 'name');
     console.log(data, 'data');
-    props.saveFilters({ ...props.formValues.values, ...obj });
+    props.formValues && props.saveFilters({ ...props.formValues.values, ...obj });
     _.forOwn(values, function(item, key) {
       if (!item) {
         values[key] = '';
@@ -169,18 +167,9 @@ const Filter = props => {
     props.handleProjectSearch({ searchCriteria: searchData });
   };
 
-  const getMultiSelectData = (e, data) => {
-    /// e.target.checked then add the item to array
-    const obj = {};
-    obj.label = data.CompanyName || data.DivisionName || data.LabelName;
-    obj.value = data.CompanyId || data.DivisionId || data.LabelId;
-    setlabelList([...labelList, obj]);
-    // write logic here if it is unchecked pop item from list
+  const getMultiSelectData = data => {
+    handleOnSelect(data, 'labelIds');
   };
-
-  useEffect(() => {
-    if (labelList.length > 0) handleOnSelect(labelList, 'labelIds');
-  }, [labelList]);
 
   const LabelFacets = formatSelectArray(_.get(props, 'data.LabelFacets', []));
   const StatusFacets = formatSelectArray(_.get(props, 'data.StatusFacets', []));

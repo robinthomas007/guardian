@@ -3,19 +3,9 @@ import { Form, Button } from 'react-bootstrap';
 import './multiSelectHierarchy.css';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Api from '../../lib/api';
-import LabelSelectHierarchy from './LabelSelectHierarchy';
+import _ from 'lodash';
 
-export default function MultiSelectHierarchy({
-  isAdmin,
-  handleChangeCheckbox,
-  isMultiSelect,
-  isChecked,
-  selectedOptions,
-  type,
-  user,
-  isOpen,
-  handleIsOpen,
-}) {
+export default function MultiSelectHierarchy({ handleChangeCheckbox, type, isMultiSelect }) {
   const [companyList, setcompanyList] = useState([]);
 
   const [searchInput, setSearchInput] = useState('');
@@ -24,25 +14,26 @@ export default function MultiSelectHierarchy({
   const [releasingLabels, setReleasingLabels] = useState([]);
   const [selectedList, setSelectedList] = useState([]);
 
-  const pushToSelectedList = obj => {
-    setSelectedList(obj); // call back
+  const addSelectedList = (e, data) => {
+    if (e.target.checked) {
+      if (isMultiSelect) setSelectedList([...selectedList, data]);
+      else setSelectedList([data]);
+    } else {
+      const modificedList = selectedList.filter(item => item.value !== data.value);
+      setSelectedList(modificedList);
+    }
   };
 
   useEffect(() => {
-    if (selectedList.length > 0)
-      // call fn
-      console.log('test');
+    handleChangeCheckbox(selectedList);
   }, [selectedList]);
 
-  // useEffect(() => {
-  //   console.log('selectedLabels-Sofar', selectedLabel);
-  //   console.log('selectedOptions-Sofar', selectedOptions);
-  // }, [selectedLabel, setSelectedOptions]);
   useEffect(() => {
     const releasingCDLLabels = [];
     console.log(releasingCDLLabels);
     setReleasingLabels(releasingCDLLabels);
   }, []);
+
   useEffect(() => {
     if (searchInput.length >= 3) {
       setLoading(true);
@@ -71,6 +62,12 @@ export default function MultiSelectHierarchy({
     }
   }, [searchInput]);
 
+  const checkIfIdPresent = id => {
+    const lablelIds = _.map(selectedList, 'value');
+    if (lablelIds.includes(id)) return true;
+    else return false;
+  };
+
   const renderCompanies = companyList => {
     return (
       <div>
@@ -88,13 +85,8 @@ export default function MultiSelectHierarchy({
                       className="form-control"
                       type="checkbox"
                       name={CompanyId}
-                      onChange={e =>
-                        handleChangeCheckbox(e, {
-                          CompanyId,
-                          CompanyName,
-                          isMultiSelect,
-                        })
-                      }
+                      checked={checkIfIdPresent(CompanyId)}
+                      onChange={e => addSelectedList(e, { value: CompanyId, label: CompanyName })}
                     />
                     <span className="checkmark "></span>
                   </label>
@@ -131,9 +123,8 @@ export default function MultiSelectHierarchy({
                       className="form-control"
                       type="checkbox"
                       name={DivisionId}
-                      onChange={e =>
-                        handleChangeCheckbox(e, { DivisionId, DivisionName, isMultiSelect })
-                      }
+                      checked={checkIfIdPresent(DivisionId)}
+                      onChange={e => addSelectedList(e, { value: DivisionId, label: DivisionName })}
                     />
                     <span className="checkmark "></span>
                   </label>
@@ -167,7 +158,8 @@ export default function MultiSelectHierarchy({
                   className="form-control"
                   type="checkbox"
                   name={LabelId}
-                  onChange={e => handleChangeCheckbox(e, { LabelId, LabelName, isMultiSelect })}
+                  checked={checkIfIdPresent(LabelId)}
+                  onChange={e => addSelectedList(e, { value: LabelId, label: LabelName })}
                 />
                 <span className="checkmark "></span>
               </label>
@@ -179,165 +171,39 @@ export default function MultiSelectHierarchy({
     );
   };
 
-  const getLabelFilters = () => {
-    const labels = this.props.filters.labelIds.map((labelID, i) => {
-      let labelName = this.isSelectedLabel(labelID);
-      return labelName ? (
-        <button
-          key={i}
-          className="btn btn-sm btn-secondary"
-          onClick={() => this.props.removeLabelsFilter(labelID)}
-        >
-          {labelName}
-          <i className="material-icons">close</i>
-        </button>
-      ) : null;
-    });
-    return labels.length > 0 ? this.getFilterBubbles(this.props.t('admin:labels'), labels) : null;
-  };
-
-  const getFilterBubbles = (headerText, bubbles) => {
-    return (
-      <span>
-        <label>{headerText}:</label>
-        {bubbles}
-      </span>
-    );
-  };
-
-  // const handleSearchInput = e => {
-  //   console.log('searchInput', searchInput);
-  //   if (searchInput.length >= 3) {
-  //     console.log('search query is more than 3 characters');
-  //     setHasSearchCreteria(true);
-  //   } else {
-  //     setHasSearchCreteria(false);
-  //   }
-  // };
-
-  const handleChange = e => {
-    console.log('search keyword', e.target.value);
-    // const randomNumbers = Math.floor(Math.random(100));
-    // if (e.target.value.length >= 3) {
-    //   console.log('search query is more than 3 characters');
-    //   const newCompanyList = [...companyList];
-    //   newCompanyList.unshift({
-    //     CompanyId: 19245,
-    //     CompanyName: `Atomic Music ${randomNumbers}`,
-    //     DivisionList: [
-    //       {
-    //         DivisionId: 3152,
-    //         DivisionName: 'Atomic Music/Federal Distribution',
-    //         LabelList: [
-    //           {
-    //             LabelId: 3047,
-    //             LabelName: 'Atomic Music/Federal Distribution',
-    //           },
-    //         ],
-    //       },
-    //     ],
-    //   });
-    //   setcompanyList(newCompanyList);
-    // } else {
-    //   setHasSearchCreteria(false);
-    // }
-    // requestFormInput
-    // releaseInfoInput
-    setSearchInput(e.target.value);
-  };
-  if (isAdmin) {
-    return (
-      <>
-        <Dropdown
-          className={`d-inline mx-2 ${
-            type === 'requestAccess' ? 'requestFormInput' : 'releaseInfoInput'
-          }`}
-          autoClose="inside"
-        >
-          <Dropdown.Toggle id="dropdown-autoclose-inside">Select Options</Dropdown.Toggle>
-
-          <Dropdown.Menu>
-            <div className="msh-wrapper">
-              <div className="main-title">Companies, Divisions & Labels</div>
-              <div className="search-input">
-                <Form.Control
-                  type="text"
-                  name="searchInput"
-                  className="form-control requiredInput"
-                  value={searchInput}
-                  onChange={handleChange}
-                />
-                <i className="material-icons search-icon">search</i>
-              </div>
-              <div className="msh-content">
-                {loading && <h3>Loading...</h3>}
-
-                {companyList.length > 0 && hasSearchCriteria && renderCompanies(companyList)}
-              </div>
-
-              <div className="invalid-tooltip">Label is required.</div>
-            </div>
-          </Dropdown.Menu>
-        </Dropdown>
-      </>
-    );
-  } else {
-    return (
+  return (
+    <div>
       <Dropdown
         className={`d-inline mx-2 ${
           type === 'requestAccess' ? 'requestFormInput' : 'releaseInfoInput'
         }`}
-        autoclose="inside"
-        onClick={e => {
-          handleIsOpen(e);
-        }}
+        autoClose="inside"
       >
-        <Dropdown.Toggle id="dropdown-autoclose-inside">
-          {selectedOptions.length > 0 ? selectedOptions[1] : 'Select Options'}
-        </Dropdown.Toggle>
+        <Dropdown.Toggle id="dropdown-autoclose-inside">Select Options</Dropdown.Toggle>
 
-        <Dropdown.Menu style={{ display: isOpen ? 'block' : 'none' }}>
+        <Dropdown.Menu>
           <div className="msh-wrapper">
-            {/* <div className="main-title">Companies, Divisions & Labels</div> */}
-
-            <div className="msh-content" style={{ marginTop: '-25px' }}>
-              {loading && <h3>Loading...</h3>}
-              <span className="sub-title">Select an option</span>
-
-              <LabelSelectHierarchy
-                releasingLabels={releasingLabels}
-                isMultiSelect={false}
-                handleChangeCheckbox={handleChangeCheckbox}
-                selectedLabel={selectedOptions}
-                isAdmin={isAdmin}
-                user={user}
+            <div className="main-title">Companies, Divisions & Labels</div>
+            <div className="search-input">
+              <Form.Control
+                type="text"
+                name="searchInput"
+                className="form-control requiredInput"
+                value={searchInput}
+                onChange={e => setSearchInput(e.target.value)}
               />
+              <i className="material-icons search-icon">search</i>
+            </div>
+            <div className="msh-content">
+              {loading && <h3>Loading...</h3>}
+
+              {companyList.length > 0 && hasSearchCriteria && renderCompanies(companyList)}
             </div>
 
             <div className="invalid-tooltip">Label is required.</div>
           </div>
         </Dropdown.Menu>
       </Dropdown>
-      // <div className="msh-wrapper">
-      //   <div className="main-title">Companies, Divisions & Labels</div>
-      //   <div className="search-input">
-      //     <Form.Control
-      //       type="text"
-      //       name="searchInput"
-      //       className="form-control requiredInput"
-      //       value={searchInput}
-      //       onChange={handleChange}
-      //     />
-      //     <i className="material-icons search-icon">search</i>
-      //   </div>
-      //   <div className="msh-content">
-      //     {loading && <h3>Loading...</h3>}
-
-      //     {companyList.length > 0 && hasSearchCriteria && renderCompanies(companyList)}
-      //   </div>
-
-      //   <div className="invalid-tooltip">Label is required.</div>
-      // </div>
-    );
-  }
+    </div>
+  );
 }
