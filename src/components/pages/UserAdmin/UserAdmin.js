@@ -63,6 +63,7 @@ class UserAdmin extends Component {
       releasingLabels: [],
       selectedFilterLabelOptions: [],
       selectedCDLOptions: [],
+      labelIds: [],
     };
     this.handleFilterModalView = this.handleFilterModalView.bind(this);
     this.handleLabelSelectChange = this.handleLabelSelectChange.bind(this);
@@ -92,6 +93,27 @@ class UserAdmin extends Component {
       );
     }
   };
+  getLabelIds = labelList => {
+    const ids = [];
+    labelList.forEach((company, i) => {
+      ids.push(company.CompanyId);
+      if (company.DivisionList.length > 0) {
+        let divisionList = company.DivisionList;
+        divisionList.forEach((division, i) => {
+          ids.push(division.DivisionId);
+          if (division.LabelList.length > 0) {
+            let LabelList = division.LabelList;
+            LabelList.forEach((label, i) => {
+              ids.push(label.LabelId);
+            });
+          }
+        });
+      }
+    });
+    this.setState({ labelIds: ids }, () => {
+      console.log('labelids', this.state.labelIds);
+    });
+  };
 
   fetchUsers = () => {
     this.setState({ showloader: true });
@@ -114,10 +136,15 @@ class UserAdmin extends Component {
         return response.json();
       })
       .then(userJSON => {
-        this.setState({
-          tableData: userJSON,
-          showloader: false,
-        });
+        this.setState(
+          {
+            tableData: userJSON,
+            showloader: false,
+          },
+          () => {
+            this.getLabelIds(this.state.tableData.UserSearchResponse.LabelFacets);
+          },
+        );
       })
       .catch(error => {
         console.error(error);
@@ -288,10 +315,13 @@ class UserAdmin extends Component {
         return response.json();
       })
       .then(userJSON => {
-        this.setState({
-          tableData: userJSON,
-          showloader: false,
-        });
+        this.setState(
+          {
+            tableData: userJSON,
+            showloader: false,
+          },
+          () => {},
+        );
       })
       .catch(error => {
         console.error(error);
@@ -482,63 +512,23 @@ class UserAdmin extends Component {
     });
   };
 
-  handleChangeCheckbox = (e, data) => {
-    const selectedLabelId =
-      e.target.id === 'company'
-        ? 'CompanyId'
-        : e.target.id === 'division'
-        ? 'DivisionId'
-        : 'LabelId';
-    const selectedLabelName =
-      e.target.id === 'company'
-        ? 'CompanyName'
-        : e.target.id === 'division'
-        ? 'DivisionName'
-        : 'LabelName';
-    if (e.target.checked) {
-      console.log('checked');
-      console.log('data', data);
-      console.log('selectedLabelID', data[selectedLabelId]);
-      console.log('selectedLabelName', data[selectedLabelName]);
-      const { targetUser } = this.state;
-      if (data.isMultiSelect) {
-        const modifiedDta = [
-          ...this.state.selectedCDLOptions,
-          { value: data[selectedLabelId], label: data[selectedLabelName] },
-        ];
-        console.log('previous SecondaryList', this.state.targetUser.secondaryLabelIds);
-        this.setState(
-          {
-            selectedCDLOptions: modifiedDta,
-            targetUser: {
-              ...targetUser,
-              secondaryLabelIds: [...targetUser.secondaryLabelIds, String(data[selectedLabelId])],
-            },
-          },
-          () => {
-            console.log('Useradmin-SelectedCDLoOptions', this.state.selectedCDLOptions);
-            console.log('targetUser-secondaryIDs', this.state.targetUser);
-          },
-        );
-      } else {
-        const newData = {
-          selectedLabelId: data[selectedLabelId],
-          selectedLabelName: data[selectedLabelName],
-        };
-        console.log('newData', newData);
-        this.setState(
-          {
-            selectedOptions: data[selectedLabelId],
-            isChecked: !this.state.isChecked,
-          },
-          () => {
-            console.log('finalData-singleSelect', this.state.selectedOptions);
-          },
-        );
-      }
-    } else {
-      console.log('not checked!');
-    }
+  handleChangeCheckbox = data => {
+    const lablelIds = _.map(data, 'value');
+
+    const { targetUser } = this.state;
+    this.setState(
+      {
+        selectedCDLOptions: data,
+        targetUser: {
+          ...targetUser,
+          secondaryLabelIds: lablelIds,
+        },
+      },
+      () => {
+        console.log('Useradmin-SelectedCDLoOptions', this.state.selectedCDLOptions);
+        console.log('targetUser-secondaryIDs', this.state.targetUser);
+      },
+    );
   };
 
   removeLabelFromEditModal = labelId => {
@@ -588,6 +578,8 @@ class UserAdmin extends Component {
           userData={this.props.user}
           handleChangeCheckbox={this.handleChangeCheckbox}
           selectedCDLOptions={this.state.selectedCDLOptions}
+          LabelFacets={this.state.tableData.UserSearchResponse.LabelFacets}
+          selectedLabelIds={this.state.labelIds}
         />
 
         <div>
@@ -649,6 +641,8 @@ class UserAdmin extends Component {
                 ? this.state.tableData.AccessRequestSearchResponse.LabelFacets
                 : this.state.tableData.UserSearchResponse.LabelFacets
             }
+            selectedLabelIds={[]}
+            userData={this.props.user}
           />
 
           <SelectedFilters

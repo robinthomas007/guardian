@@ -184,13 +184,13 @@ const Filter = props => {
           <h5>{t('search:SearchFilters')}</h5>
           <br />
           <div className="row no-gutters">
-            <div className="col-5">
+            <div className="col-5" style={{ display: 'flex' }}>
               <label>{t('search:ByLabel')}</label>
               <MultiSelectHierarchy
                 handleChangeCheckbox={getMultiSelectData}
-                isAdmin={true}
-                isMultiSelect={true}
-                type={'requestAccess'}
+                isAdmin={props.userData.IsAdmin}
+                isMultiSelect={props.userData.IsAdmin ? true : false}
+                type={'filterModal'}
               />
               {/*<Field
                 label={t('search:ByLabel')}
@@ -248,14 +248,21 @@ const Filter = props => {
               />
             </div>
             <div className="col-2"></div>
-            <div className="col-5">
-              <Field
+            <div className="col-5" style={{ display: 'flex' }}>
+              {/* <Field
                 label={t('search:excludeLabel')}
                 name="excludeLabelIds"
                 handleOnSelect={handleOnSelect}
                 component={multiSelect}
                 options={LabelFacets}
                 classes={'multi-select'}
+              /> */}
+              <label>{t('search:excludeLabel')}</label>
+              <MultiSelectHierarchy
+                handleChangeCheckbox={getMultiSelectData}
+                isAdmin={props.userData.IsAdmin}
+                isMultiSelect={props.userData.IsAdmin ? true : false}
+                type={'filterModal'}
               />
             </div>
           </div>

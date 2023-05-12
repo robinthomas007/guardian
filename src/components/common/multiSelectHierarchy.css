@@ -33,12 +33,13 @@ label.custom-checkbox.msh-checkbox {
 }
 
 .requestFormInput .dropdown-menu {
-  margin-top: 9px !important;
+  margin-top: -4px;
+  margin-left: -6px !important;
 }
 .releaseInfoInput .dropdown-menu {
   margin-top: -3px !important;
 }
-.dropdown-menu {
+.ms-dropdown-wrapper .dropdown-menu {
   box-shadow: 2px 3px 8px #8c9396;
   max-height: 30rem;
   min-width: auto;
@@ -48,6 +49,11 @@ label.custom-checkbox.msh-checkbox {
   width: 450px !important;
   padding: 0 !important;
   margin-left: -14px;
+}
+.ms-dropdown-toggle {
+  color: #495057 !important;
+  background: #f4f5f5 !important;
+  border-color: #ced4da !important;
 }
 
 .label-wrapper {
@@ -137,7 +143,6 @@ label.custom-checkbox.msh-checkbox {
   width: 280px !important;
   height: 38px;
   left: 0px;
-  margin-left: -8px;
 }
 
 .releaseInfoInput #dropdown-autoclose-inside {
@@ -146,4 +151,55 @@ label.custom-checkbox.msh-checkbox {
   left: 0px;
   margin-left: -8px;
   text-align: left;
+}
+
+.userAdminModal #dropdown-autoclose-inside {
+  width: 50% !important;
+  height: 38px;
+  left: 0px;
+  margin-left: -8px;
+  text-align: left;
+}
+.userAdminModal .dropdown-menu {
+  margin-top: -7px !important;
+  margin-left: 0px;
+}
+
+.userAdminModal .dropdown-toggle::after {
+  position: absolute;
+  right: 6px;
+  top: 8px;
+}
+.userEditModal #dropdown-autoclose-inside {
+  width: 216px !important;
+  height: 36px;
+  left: 0px;
+  text-align: left;
+}
+.userEditModal .dropdown-menu {
+  margin-top: -5px !important;
+  margin-left: -5px;
+}
+
+.userEditModal .dropdown-toggle::after {
+  position: absolute;
+  right: 6px;
+  top: 8px;
+}
+
+.filterModal #dropdown-autoclose-inside {
+  width: 203px !important;
+  height: 38px;
+  left: 0px;
+  margin-left: 60px !important;
+  text-align: left;
+}
+.filterModal .dropdown-toggle::after {
+  position: absolute;
+  right: 6px;
+  top: 8px;
+}
+.filterModal .dropdown-menu {
+  margin-top: -7px !important;
+  margin-left: 54px;
 }

@@ -11,6 +11,7 @@ export default function MultiSelectHierarchy({
   isMultiSelect,
   isAdmin,
   releasingLabels,
+  selectedLabelIds,
 }) {
   const [companyList, setcompanyList] = useState([]);
   const [searchInput, setSearchInput] = useState('');
@@ -37,6 +38,11 @@ export default function MultiSelectHierarchy({
       setcompanyList(releasingLabels);
     }
   }, [releasingLabels]);
+  useEffect(() => {
+    if (selectedLabelIds && selectedLabelIds.length > 0) {
+      console.log('selectedLabelIds', selectedLabelIds);
+    }
+  }, [selectedLabelIds]);
 
   useEffect(() => {
     if (searchInput.length >= 3) {
@@ -56,6 +62,7 @@ export default function MultiSelectHierarchy({
           const result = res.Result;
           console.log(result);
           console.log('result', result);
+          console.log(_.values(result).some(_.isEmpty));
           setcompanyList(result);
           setLoading(false);
         });
@@ -68,7 +75,8 @@ export default function MultiSelectHierarchy({
 
   const checkIfIdPresent = id => {
     const lablelIds = _.map(selectedList, 'value');
-    if (lablelIds.includes(id)) return true;
+    // console.log('selectedLabelIds****', selectedLabelIds);
+    if (selectedList.includes(Number(id))) return true;
     else return false;
   };
 
@@ -89,8 +97,10 @@ export default function MultiSelectHierarchy({
                       className="form-control"
                       type="checkbox"
                       name={CompanyId}
-                      checked={checkIfIdPresent(CompanyId)}
-                      onChange={e => addSelectedList(e, { value: CompanyId, label: CompanyName })}
+                      checked={checkIfIdPresent(String(CompanyId))}
+                      onChange={e =>
+                        addSelectedList(e, { value: String(CompanyId), label: CompanyName })
+                      }
                     />
                     <span className="checkmark "></span>
                   </label>
@@ -127,8 +137,10 @@ export default function MultiSelectHierarchy({
                       className="form-control"
                       type="checkbox"
                       name={DivisionId}
-                      checked={checkIfIdPresent(DivisionId)}
-                      onChange={e => addSelectedList(e, { value: DivisionId, label: DivisionName })}
+                      checked={checkIfIdPresent(String(DivisionId))}
+                      onChange={e =>
+                        addSelectedList(e, { value: String(DivisionId), label: DivisionName })
+                      }
                     />
                     <span className="checkmark "></span>
                   </label>
@@ -162,8 +174,8 @@ export default function MultiSelectHierarchy({
                   className="form-control"
                   type="checkbox"
                   name={LabelId}
-                  checked={checkIfIdPresent(LabelId)}
-                  onChange={e => addSelectedList(e, { value: LabelId, label: LabelName })}
+                  checked={checkIfIdPresent(String(LabelId))}
+                  onChange={e => addSelectedList(e, { value: String(LabelId), label: LabelName })}
                 />
                 <span className="checkmark "></span>
               </label>
@@ -177,11 +189,8 @@ export default function MultiSelectHierarchy({
 
   return (
     <div className="ms-dropdown-wrapper">
-      <Dropdown
-        className={`d-inline ${type === 'requestAccess' ? 'requestFormInput' : 'releaseInfoInput'}`}
-        autoclose="inside"
-      >
-        <Dropdown.Toggle id="dropdown-autoclose-inside">
+      <Dropdown className={`d-inline ${type}`} autoclose="inside">
+        <Dropdown.Toggle id="dropdown-autoclose-inside" className="ms-dropdown-toggle">
           {selectedList.length > 1
             ? selectedList.length + ' Selected'
             : selectedList.length === 1
@@ -206,6 +215,7 @@ export default function MultiSelectHierarchy({
             )}
             <div className="msh-content">
               {loading && <h3>Loading...</h3>}
+              <h1>{_.values(companyList).every(_.isEmpty)}</h1>
 
               {companyList.length > 0 && renderCompanies(companyList)}
             </div>

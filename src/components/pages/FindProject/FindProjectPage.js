@@ -211,6 +211,7 @@ class FindProjectPage extends Component {
             saveFilters={this.props.saveFilters}
             searchCriteria={searchCriteria}
             getSearchCriteria={getSearchCriteria}
+            userData={this.props.user}
           />
         </form>
 

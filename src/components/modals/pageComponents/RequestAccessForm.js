@@ -167,8 +167,9 @@ class RequestAccessForm extends Component {
               </Form.Label>
               <MultiSelectHierarchy
                 handleChangeCheckbox={this.handleChangeCheckbox}
-                type={'requestAccess'}
+                type={'requestFormInput'}
                 isMultiSelect={true}
+                isAdmin={true}
               />
               <div className="invalid-tooltip">A label selection is required.</div>
             </div>

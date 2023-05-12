@@ -30,10 +30,11 @@ class UserSearchFilterModal extends Component {
             <div className="col-10">
               <MultiSelectHierarchy
                 handleChangeCheckbox={this.props.handleSearchFilterLabelChange}
-                isAdmin={true}
+                isAdmin={this.props.userData.IsAdmin}
                 isMultiSelect={true}
-                type={'releaseInfo'}
+                type={'userAdminModal'}
                 releasingLabels={this.props.LabelFacets}
+                selectedLabelIds={this.props.selectedLabelIds}
               />
             </div>
           </div>

@@ -551,9 +551,9 @@ class ReleaseinformationPage extends Component {
                   {this.props.user && (
                     <MultiSelectHierarchy
                       handleChangeCheckbox={this.handleChangeCheckbox}
-                      isAdmin={true}
-                      isMultiSelect={false}
-                      type={'releaseInfo'}
+                      isAdmin={this.props.user.IsAdmin}
+                      isMultiSelect={this.props.user.IsAdmin ? true : false}
+                      type={'releaseInfoInput'}
                       releasingLabels={this.props.user.ReleasingLabels}
                     />
                   )}

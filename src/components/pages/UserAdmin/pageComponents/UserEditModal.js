@@ -16,6 +16,7 @@ class UserEditModal extends Component {
         phoneNumber: '',
       },
       isChecked: false,
+      labeleIds: [],
     };
   }
 
@@ -32,6 +33,7 @@ class UserEditModal extends Component {
   };
 
   render() {
+    console.log('secondaryLabelIds******', this.props.selectedOptions);
     // const options = this.props.releasingLabels.map(label => ({
     //   label: label.name,
     //   value: label.id,
@@ -87,14 +89,17 @@ class UserEditModal extends Component {
                   value={selectedOptions}
                   onChange={option => this.props.newHandleLabelSelectChange(option)}
                 /> */}
+
                 <MultiSelectHierarchy
                   handleChangeCheckbox={this.props.handleChangeCheckbox}
-                  isAdmin={true}
+                  isAdmin={this.props.userData.IsAdmin}
                   isMultiSelect={true}
-                  type={'releaseInfo'}
+                  type={'userEditModal'}
+                  releasingLabels={this.props.LabelFacets}
+                  selectedLabelIds={this.props.selectedLabelIds}
                 />
                 <br />
-                <div>
+                {/* <div>
                   {this.props.selectedCDLOptions.map(label => (
                     <React.Fragment key={label.value}>
                       <button
@@ -108,7 +113,7 @@ class UserEditModal extends Component {
                       &nbsp;&nbsp;
                     </React.Fragment>
                   ))}
-                </div>
+                </div> */}
               </Form.Group>
             </Form.Row>
             <Form.Row>
