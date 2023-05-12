@@ -191,6 +191,7 @@ const Filter = props => {
                 isAdmin={props.userData.IsAdmin}
                 isMultiSelect={props.userData.IsAdmin ? true : false}
                 type={'filterModal'}
+                releasingLabels={LabelFacets}
               />
               {/*<Field
                 label={t('search:ByLabel')}
@@ -263,6 +264,7 @@ const Filter = props => {
                 isAdmin={props.userData.IsAdmin}
                 isMultiSelect={props.userData.IsAdmin ? true : false}
                 type={'filterModal'}
+                releasingLabels={LabelFacets}
               />
             </div>
           </div>
