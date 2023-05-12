@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import './multiSelectHierarchy.css';
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -15,9 +15,10 @@ export default function MultiSelectHierarchy({
 }) {
   const [companyList, setcompanyList] = useState([]);
   const [searchInput, setSearchInput] = useState('');
-  // const [hasSearchCriteria, setHasSearchCreteria] = useState(false);
   const [loading, setLoading] = useState(false);
   const [selectedList, setSelectedList] = useState([]);
+
+  const didMountRef = useRef(false);
 
   const addSelectedList = (e, data) => {
     if (e.target.checked) {
@@ -30,7 +31,11 @@ export default function MultiSelectHierarchy({
   };
 
   useEffect(() => {
-    handleChangeCheckbox(selectedList);
+    if (didMountRef.current) {
+      handleChangeCheckbox(selectedList);
+    } else {
+      didMountRef.current = true;
+    }
   }, [selectedList]);
 
   useEffect(() => {
@@ -38,11 +43,6 @@ export default function MultiSelectHierarchy({
       setcompanyList(releasingLabels);
     }
   }, [releasingLabels]);
-  useEffect(() => {
-    if (selectedLabelIds && selectedLabelIds.length > 0) {
-      console.log('selectedLabelIds', selectedLabelIds);
-    }
-  }, [selectedLabelIds]);
 
   useEffect(() => {
     if (searchInput.length >= 3) {
@@ -60,9 +60,6 @@ export default function MultiSelectHierarchy({
         })
         .then(res => {
           const result = res.Result;
-          console.log(result);
-          console.log('result', result);
-          console.log(_.values(result).some(_.isEmpty));
           setcompanyList(result);
           setLoading(false);
         });
@@ -106,7 +103,9 @@ export default function MultiSelectHierarchy({
                   <span>{CompanyName} (Company)</span>
                 </div>
               )}
-              {company.DivisionList.length > 0 && renderDivisions(company.DivisionList, hasComapny)}
+              {company.DivisionList &&
+                company.DivisionList.length > 0 &&
+                renderDivisions(company.DivisionList, hasComapny)}
             </div>
           );
         })}

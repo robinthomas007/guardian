@@ -33,12 +33,11 @@ class UserEditModal extends Component {
   };
 
   render() {
-    console.log('secondaryLabelIds******', this.props.selectedOptions);
-    // const options = this.props.releasingLabels.map(label => ({
-    //   label: label.name,
-    //   value: label.id,
-    // }));
-    // const selectedOptions = options.filter(opt => this.props.selectedOptions.includes(opt.value));
+    const options = this.props.releasingLabels.map(label => ({
+      label: label.name,
+      value: label.id,
+    }));
+    const selectedOptions = options.filter(opt => this.props.selectedOptions.includes(opt.value));
     return (
       <Modal id="userEditModal" show={this.props.showModal} onHide={this.handleClose}>
         <Modal.Header closeButton>
@@ -99,8 +98,8 @@ class UserEditModal extends Component {
                   selectedLabelIds={this.props.selectedLabelIds}
                 />
                 <br />
-                {/* <div>
-                  {this.props.selectedCDLOptions.map(label => (
+                <div>
+                  {selectedOptions.map(label => (
                     <React.Fragment key={label.value}>
                       <button
                         type="button"
@@ -113,7 +112,7 @@ class UserEditModal extends Component {
                       &nbsp;&nbsp;
                     </React.Fragment>
                   ))}
-                </div> */}
+                </div>
               </Form.Group>
             </Form.Row>
             <Form.Row>

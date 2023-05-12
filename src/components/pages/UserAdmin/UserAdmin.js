@@ -93,27 +93,6 @@ class UserAdmin extends Component {
       );
     }
   };
-  getLabelIds = labelList => {
-    const ids = [];
-    labelList.forEach((company, i) => {
-      ids.push(company.CompanyId);
-      if (company.DivisionList.length > 0) {
-        let divisionList = company.DivisionList;
-        divisionList.forEach((division, i) => {
-          ids.push(division.DivisionId);
-          if (division.LabelList.length > 0) {
-            let LabelList = division.LabelList;
-            LabelList.forEach((label, i) => {
-              ids.push(label.LabelId);
-            });
-          }
-        });
-      }
-    });
-    this.setState({ labelIds: ids }, () => {
-      console.log('labelids', this.state.labelIds);
-    });
-  };
 
   fetchUsers = () => {
     this.setState({ showloader: true });
@@ -136,15 +115,10 @@ class UserAdmin extends Component {
         return response.json();
       })
       .then(userJSON => {
-        this.setState(
-          {
-            tableData: userJSON,
-            showloader: false,
-          },
-          () => {
-            this.getLabelIds(this.state.tableData.UserSearchResponse.LabelFacets);
-          },
-        );
+        this.setState({
+          tableData: userJSON,
+          showloader: false,
+        });
       })
       .catch(error => {
         console.error(error);

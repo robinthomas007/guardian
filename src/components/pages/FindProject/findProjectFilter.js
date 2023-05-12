@@ -118,9 +118,6 @@ const Filter = props => {
     let values = _.cloneDeep(_.get(props, 'formValues.values', {}));
     const obj = {};
     obj[name] = data;
-    console.log(values, 'valuesvaluesvaluesvalues');
-    console.log(name, 'name');
-    console.log(data, 'data');
     props.formValues && props.saveFilters({ ...props.formValues.values, ...obj });
     _.forOwn(values, function(item, key) {
       if (!item) {
@@ -168,6 +165,9 @@ const Filter = props => {
   };
 
   const getMultiSelectData = data => {
+    if (props.formValues) {
+      props.initialize({ ...props.formValues.values, ...{ labelIds: data } });
+    }
     handleOnSelect(data, 'labelIds');
   };
 
@@ -191,16 +191,8 @@ const Filter = props => {
                 isAdmin={props.userData.IsAdmin}
                 isMultiSelect={props.userData.IsAdmin ? true : false}
                 type={'filterModal'}
-                releasingLabels={LabelFacets}
+                releasingLabels={props.data.LabelFacets}
               />
-              {/*<Field
-                label={t('search:ByLabel')}
-                name="labelIds"
-                handleOnSelect={handleOnSelect}
-                component={multiSelect}
-                options={LabelFacets}
-                classes={'multi-select'}
-              />*/}
             </div>
             <div className="col-2"></div>
             <div className="col-5">
@@ -250,21 +242,13 @@ const Filter = props => {
             </div>
             <div className="col-2"></div>
             <div className="col-5" style={{ display: 'flex' }}>
-              {/* <Field
-                label={t('search:excludeLabel')}
-                name="excludeLabelIds"
-                handleOnSelect={handleOnSelect}
-                component={multiSelect}
-                options={LabelFacets}
-                classes={'multi-select'}
-              /> */}
               <label>{t('search:excludeLabel')}</label>
               <MultiSelectHierarchy
                 handleChangeCheckbox={getMultiSelectData}
                 isAdmin={props.userData.IsAdmin}
                 isMultiSelect={props.userData.IsAdmin ? true : false}
                 type={'filterModal'}
-                releasingLabels={LabelFacets}
+                releasingLabels={props.data.LabelFacets}
               />
             </div>
           </div>
