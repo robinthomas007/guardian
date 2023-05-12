@@ -75,8 +75,7 @@ export default function MultiSelectHierarchy({
 
   const checkIfIdPresent = id => {
     const lablelIds = _.map(selectedList, 'value');
-    // console.log('selectedLabelIds****', selectedLabelIds);
-    if (selectedList.includes(Number(id))) return true;
+    if (lablelIds.includes(Number(id))) return true;
     else return false;
   };
 
