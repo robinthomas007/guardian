@@ -170,6 +170,7 @@ class RequestAccessForm extends Component {
                 type={'requestFormInput'}
                 isMultiSelect={true}
                 isAdmin={true}
+                selectedLabelIds={[]}
               />
               <div className="invalid-tooltip">A label selection is required.</div>
             </div>

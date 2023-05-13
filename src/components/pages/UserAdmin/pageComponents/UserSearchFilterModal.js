@@ -34,7 +34,7 @@ class UserSearchFilterModal extends Component {
                 isMultiSelect={true}
                 type={'userAdminModal'}
                 releasingLabels={this.props.LabelFacets}
-                selectedLabelIds={this.props.selectedLabelIds}
+                selectedLabelIds={[]}
               />
             </div>
           </div>

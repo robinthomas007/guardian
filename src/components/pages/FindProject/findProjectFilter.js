@@ -164,19 +164,25 @@ const Filter = props => {
     props.handleProjectSearch({ searchCriteria: searchData });
   };
 
-  const getMultiSelectData = data => {
+  const getMultiSelectDataForLabelIds = data => {
     if (props.formValues) {
       props.initialize({ ...props.formValues.values, ...{ labelIds: data } });
     }
     handleOnSelect(data, 'labelIds');
   };
 
+  const getMultiSelectDataForExcludeLabelIds = data => {
+    if (props.formValues) {
+      props.initialize({ ...props.formValues.values, ...{ excludeLabelIds: data } });
+    }
+    handleOnSelect(data, 'excludeLabelIds');
+  };
+  // excludeLabelIds
   const LabelFacets = formatSelectArray(_.get(props, 'data.LabelFacets', []));
   const StatusFacets = formatSelectArray(_.get(props, 'data.StatusFacets', []));
   const HasAudioFacets = formatSelectArray(_.get(props, 'data.HasAudioFacets', []));
   const HasBlockingFacets = formatSelectArray(_.get(props, 'data.HasBlockingFacets', []));
   const HasRightsFacets = formatSelectArray(_.get(props, 'data.HasRightsFacets', []));
-
   return (
     <div>
       <div className="search-filters find-project-filter collapse" id="collapsePanel">
@@ -187,11 +193,12 @@ const Filter = props => {
             <div className="col-5" style={{ display: 'flex' }}>
               <label>{t('search:ByLabel')}</label>
               <MultiSelectHierarchy
-                handleChangeCheckbox={getMultiSelectData}
+                handleChangeCheckbox={getMultiSelectDataForLabelIds}
                 isAdmin={props.userData.IsAdmin}
                 isMultiSelect={props.userData.IsAdmin ? true : false}
                 type={'filterModal'}
                 releasingLabels={props.data.LabelFacets}
+                selectedLabelIds={[]}
               />
             </div>
             <div className="col-2"></div>
@@ -244,11 +251,12 @@ const Filter = props => {
             <div className="col-5" style={{ display: 'flex' }}>
               <label>{t('search:excludeLabel')}</label>
               <MultiSelectHierarchy
-                handleChangeCheckbox={getMultiSelectData}
+                handleChangeCheckbox={getMultiSelectDataForExcludeLabelIds}
                 isAdmin={props.userData.IsAdmin}
                 isMultiSelect={props.userData.IsAdmin ? true : false}
                 type={'filterModal'}
                 releasingLabels={props.data.LabelFacets}
+                selectedLabelIds={[]}
               />
             </div>
           </div>

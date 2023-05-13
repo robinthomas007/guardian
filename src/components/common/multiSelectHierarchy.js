@@ -43,6 +43,9 @@ export default function MultiSelectHierarchy({
       setcompanyList(releasingLabels);
     }
   }, [releasingLabels]);
+  useEffect(() => {
+    setSelectedList(selectedLabelIds);
+  }, []);
 
   useEffect(() => {
     if (searchInput.length >= 3) {

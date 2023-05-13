@@ -95,7 +95,7 @@ class UserEditModal extends Component {
                   isMultiSelect={true}
                   type={'userEditModal'}
                   releasingLabels={this.props.LabelFacets}
-                  selectedLabelIds={this.props.selectedLabelIds}
+                  selectedLabelIds={selectedOptions}
                 />
                 <br />
                 <div>

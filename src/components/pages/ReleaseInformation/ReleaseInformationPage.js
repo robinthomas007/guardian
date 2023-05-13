@@ -286,7 +286,6 @@ class ReleaseinformationPage extends Component {
   }
 
   handleIsOpen() {
-    console.log('test%%%%%');
     this.setState({ ...this.state, isOpen: !this.state.isOpen });
   }
 
@@ -552,9 +551,10 @@ class ReleaseinformationPage extends Component {
                     <MultiSelectHierarchy
                       handleChangeCheckbox={this.handleChangeCheckbox}
                       isAdmin={this.props.user.IsAdmin}
-                      isMultiSelect={this.props.user.IsAdmin ? true : false}
+                      isMultiSelect={false}
                       type={'releaseInfoInput'}
                       releasingLabels={this.props.user.ReleasingLabels}
+                      selectedLabelIds={[]}
                     />
                   )}
                 </div>

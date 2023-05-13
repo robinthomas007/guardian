@@ -62,8 +62,6 @@ class UserAdmin extends Component {
       showFilterModal: false,
       releasingLabels: [],
       selectedFilterLabelOptions: [],
-      selectedCDLOptions: [],
-      labelIds: [],
     };
     this.handleFilterModalView = this.handleFilterModalView.bind(this);
     this.handleLabelSelectChange = this.handleLabelSelectChange.bind(this);
@@ -478,52 +476,30 @@ class UserAdmin extends Component {
 
   newHandleLabelSelectChange = options => {
     const { targetUser } = this.state;
-    console.log('Selected-options', options);
     const ids = options.map(opt => opt.value);
 
-    this.setState({ targetUser: { ...targetUser, secondaryLabelIds: ids } }, () => {
-      console.log('secondaryLabelIds', this.state.targetUser);
-    });
+    this.setState({ targetUser: { ...targetUser, secondaryLabelIds: ids } });
   };
 
   handleChangeCheckbox = data => {
     const lablelIds = _.map(data, 'value');
 
     const { targetUser } = this.state;
-    this.setState(
-      {
-        selectedCDLOptions: data,
-        targetUser: {
-          ...targetUser,
-          secondaryLabelIds: lablelIds,
-        },
+    this.setState({
+      targetUser: {
+        ...targetUser,
+        secondaryLabelIds: lablelIds,
       },
-      () => {
-        console.log('Useradmin-SelectedCDLoOptions', this.state.selectedCDLOptions);
-        console.log('targetUser-secondaryIDs', this.state.targetUser);
-      },
-    );
+    });
   };
 
   removeLabelFromEditModal = labelId => {
-    console.log('remove item', labelId);
-    console.log('typeof labelId', typeof labelId);
     const { targetUser } = this.state;
     let ids = [...targetUser.secondaryLabelIds];
-    let modifiedCDLOptions = this.state.selectedCDLOptions;
-    console.log('before modified', this.state.selectedCDLOptions);
-    const filteredCDLOptions = modifiedCDLOptions.filter(item => item.value !== labelId);
-    console.log('ModfiedCDLOptions', filteredCDLOptions);
     ids.splice(ids.indexOf(labelId), 1);
-    this.setState(
-      {
-        targetUser: { ...targetUser, secondaryLabelIds: ids },
-        selectedCDLOptions: filteredCDLOptions,
-      },
-      () => {
-        console.log('after removedItem', this.state.targetUser.secondaryLabelIds);
-      },
-    );
+    this.setState({
+      targetUser: { ...targetUser, secondaryLabelIds: ids },
+    });
   };
 
   handleKeyUp(e) {
@@ -551,9 +527,7 @@ class UserAdmin extends Component {
           selectedOptions={this.state.targetUser.secondaryLabelIds}
           userData={this.props.user}
           handleChangeCheckbox={this.handleChangeCheckbox}
-          selectedCDLOptions={this.state.selectedCDLOptions}
           LabelFacets={this.state.tableData.UserSearchResponse.LabelFacets}
-          selectedLabelIds={this.state.labelIds}
         />
 
         <div>
@@ -615,7 +589,6 @@ class UserAdmin extends Component {
                 ? this.state.tableData.AccessRequestSearchResponse.LabelFacets
                 : this.state.tableData.UserSearchResponse.LabelFacets
             }
-            selectedLabelIds={[]}
             userData={this.props.user}
           />
 
