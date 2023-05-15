@@ -21,6 +21,7 @@ class RequestAccessForm extends Component {
       ReleasingLabels: [],
       submitDisabled: false,
       selectedOptions: [],
+      selectedList: [],
     };
   }
 
@@ -43,7 +44,7 @@ class RequestAccessForm extends Component {
   };
   handleChangeCheckbox = data => {
     const modificedData = _.map(data, 'value');
-    this.setState({ selectedOptions: modificedData });
+    this.setState({ selectedOptions: modificedData, selectedList: data });
   };
 
   getLabels = () => {
@@ -170,7 +171,7 @@ class RequestAccessForm extends Component {
                 type={'requestFormInput'}
                 isMultiSelect={true}
                 isAdmin={true}
-                selectedLabelIds={[]}
+                selectedLabelIds={this.state.selectedList}
               />
               <div className="invalid-tooltip">A label selection is required.</div>
             </div>
