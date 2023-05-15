@@ -6,7 +6,9 @@
 }
 
 .requestFormInput .dropdown-toggle::after {
-  margin: 0 0 -2px 164px;
+  position: absolute;
+  top: 8px;
+  left: 250px;
 }
 .releaseInfoInput .dropdown-toggle::after {
   position: absolute;
@@ -143,6 +145,7 @@ label.custom-checkbox.msh-checkbox {
   width: 280px !important;
   height: 38px;
   left: 0px;
+  text-align: left;
 }
 
 .releaseInfoInput #dropdown-autoclose-inside {
@@ -151,6 +154,7 @@ label.custom-checkbox.msh-checkbox {
   left: 0px;
   margin-left: -8px;
   text-align: left;
+  overflow: auto;
 }
 
 .userAdminModal #dropdown-autoclose-inside {
@@ -188,11 +192,13 @@ label.custom-checkbox.msh-checkbox {
 }
 
 .filterModal #dropdown-autoclose-inside {
-  width: 203px !important;
+  width: 210px !important;
   height: 38px;
   left: 0px;
-  margin-left: 60px !important;
+  margin-left: 1px !important;
+  /* margin-left: 60px !important; */
   text-align: left;
+  overflow: auto;
 }
 .filterModal .dropdown-toggle::after {
   position: absolute;
@@ -201,5 +207,5 @@ label.custom-checkbox.msh-checkbox {
 }
 .filterModal .dropdown-menu {
   margin-top: -7px !important;
-  margin-left: 54px;
+  margin-left: -5px;
 }

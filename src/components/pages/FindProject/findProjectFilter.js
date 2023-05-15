@@ -190,16 +190,22 @@ const Filter = props => {
           <h5>{t('search:SearchFilters')}</h5>
           <br />
           <div className="row no-gutters">
-            <div className="col-5" style={{ display: 'flex' }}>
-              <label>{t('search:ByLabel')}</label>
-              <MultiSelectHierarchy
-                handleChangeCheckbox={getMultiSelectDataForLabelIds}
-                isAdmin={props.userData.IsAdmin}
-                isMultiSelect={props.userData.IsAdmin ? true : false}
-                type={'filterModal'}
-                releasingLabels={props.data.LabelFacets}
-                selectedLabelIds={[]}
-              />
+            <div className="col-5">
+              <div className="row no-gutters">
+                <div className="col-4">
+                  <label>{t('search:ByLabel')}</label>
+                </div>
+                <div className="col-6">
+                  <MultiSelectHierarchy
+                    handleChangeCheckbox={getMultiSelectDataForLabelIds}
+                    isAdmin={props.userData.IsAdmin}
+                    isMultiSelect={props.userData.IsAdmin ? true : false}
+                    type={'filterModal'}
+                    releasingLabels={props.data.LabelFacets}
+                    selectedLabelIds={[]}
+                  />
+                </div>
+              </div>
             </div>
             <div className="col-2"></div>
             <div className="col-5">
@@ -248,16 +254,22 @@ const Filter = props => {
               />
             </div>
             <div className="col-2"></div>
-            <div className="col-5" style={{ display: 'flex' }}>
-              <label>{t('search:excludeLabel')}</label>
-              <MultiSelectHierarchy
-                handleChangeCheckbox={getMultiSelectDataForExcludeLabelIds}
-                isAdmin={props.userData.IsAdmin}
-                isMultiSelect={props.userData.IsAdmin ? true : false}
-                type={'filterModal'}
-                releasingLabels={props.data.LabelFacets}
-                selectedLabelIds={[]}
-              />
+            <div className="col-5">
+              <div className="row no-gutters">
+                <div className="col-4">
+                  <label>{t('search:excludeLabel')}</label>
+                </div>
+                <div className="col-6">
+                  <MultiSelectHierarchy
+                    handleChangeCheckbox={getMultiSelectDataForExcludeLabelIds}
+                    isAdmin={props.userData.IsAdmin}
+                    isMultiSelect={props.userData.IsAdmin ? true : false}
+                    type={'filterModal'}
+                    releasingLabels={props.data.LabelFacets}
+                    selectedLabelIds={[]}
+                  />
+                </div>
+              </div>
             </div>
           </div>
           <div className="row no-gutters">
