@@ -24,7 +24,9 @@ const selectedFilter = [
 ];
 
 const Filter = props => {
-  useEffect(() => {}, []);
+  const [selectedLabelIds, setselectedLabelIds] = useState([]);
+  const [exSelectedLabelIds, setExSelectedLabelIds] = useState([]);
+
   const { t } = useTranslation();
 
   const values = props.formValues && props.formValues.values;
@@ -36,11 +38,13 @@ const Filter = props => {
         return !_.isEqual(e, val);
       });
       newVal[name] = _.cloneDeep(arr);
+      setselectedLabelIds(_.cloneDeep(arr));
     } else if (name === 'excludeLabelIds') {
       let arr = _.filter(newVal.excludeLabelIds, function(e) {
         return !_.isEqual(e, val);
       });
       newVal[name] = _.cloneDeep(arr);
+      setExSelectedLabelIds(_.cloneDeep(arr));
     } else {
       newVal[name] = null;
     }
@@ -169,6 +173,7 @@ const Filter = props => {
       props.initialize({ ...props.formValues.values, ...{ labelIds: data } });
     }
     handleOnSelect(data, 'labelIds');
+    setselectedLabelIds(data);
   };
 
   const getMultiSelectDataForExcludeLabelIds = data => {
@@ -176,6 +181,7 @@ const Filter = props => {
       props.initialize({ ...props.formValues.values, ...{ excludeLabelIds: data } });
     }
     handleOnSelect(data, 'excludeLabelIds');
+    setExSelectedLabelIds(data);
   };
   // excludeLabelIds
   const LabelFacets = formatSelectArray(_.get(props, 'data.LabelFacets', []));
@@ -202,7 +208,7 @@ const Filter = props => {
                     isMultiSelect={props.userData.IsAdmin ? true : false}
                     type={'filterModal'}
                     releasingLabels={props.data.LabelFacets}
-                    selectedLabelIds={[]}
+                    selectedLabelIds={selectedLabelIds}
                   />
                 </div>
               </div>
@@ -266,7 +272,7 @@ const Filter = props => {
                     isMultiSelect={props.userData.IsAdmin ? true : false}
                     type={'filterModal'}
                     releasingLabels={props.data.LabelFacets}
-                    selectedLabelIds={[]}
+                    selectedLabelIds={exSelectedLabelIds}
                   />
                 </div>
               </div>

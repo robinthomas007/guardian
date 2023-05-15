@@ -9,6 +9,10 @@ import RequestingAccessTab from './pageComponents/RequestingAccessTab';
 import ExistingUsersTab from './pageComponents/ExistingUsersTab';
 import { resetDatePicker } from '../../Utils';
 import { withTranslation } from 'react-i18next';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import * as userAdminAction from './pageComponents/userAdminAction';
+
 import _ from 'lodash';
 
 class UserAdmin extends Component {
@@ -117,6 +121,7 @@ class UserAdmin extends Component {
           tableData: userJSON,
           showloader: false,
         });
+        this.props.setFacets(userJSON);
       })
       .catch(error => {
         console.error(error);
@@ -338,6 +343,7 @@ class UserAdmin extends Component {
   };
 
   handleSearchFilterLabelChange = data => {
+    console.log(data, 'datadatadata');
     const AccessRequestSearchCriteria = { ...this.state.AccessRequestSearchCriteria };
     const UserSearchCriteria = { ...this.state.UserSearchCriteria };
     const { selectedFilterLabelOptions } = this.state;
@@ -436,17 +442,13 @@ class UserAdmin extends Component {
   removeLabelsFilter = labelID => {
     const { selectedFilterLabelOptions } = this.state;
     let modifiedselectedFilterLabelOptions = selectedFilterLabelOptions;
+    modifiedselectedFilterLabelOptions.splice(selectedFilterLabelOptions.indexOf(labelID), 1);
+
     const AccessRequestSearchCriteria = { ...this.state.AccessRequestSearchCriteria };
     const UserSearchCriteria = { ...this.state.UserSearchCriteria };
-    AccessRequestSearchCriteria.filter.labelIds.splice(
-      AccessRequestSearchCriteria.filter.labelIds.indexOf(labelID),
-      1,
-    );
-    UserSearchCriteria.filter.labelIds.splice(
-      UserSearchCriteria.filter.labelIds.indexOf(labelID),
-      1,
-    );
-    modifiedselectedFilterLabelOptions.splice(selectedFilterLabelOptions.indexOf(labelID), 1);
+
+    AccessRequestSearchCriteria.filter.labelIds = modifiedselectedFilterLabelOptions;
+    UserSearchCriteria.filter.labelIds = modifiedselectedFilterLabelOptions;
 
     this.setState(
       {
@@ -586,8 +588,8 @@ class UserAdmin extends Component {
             t={this.props.t}
             LabelFacets={
               this.state.activeTab === 'requestAccess'
-                ? this.state.tableData.AccessRequestSearchResponse.LabelFacets
-                : this.state.tableData.UserSearchResponse.LabelFacets
+                ? this.props.accessFacets
+                : this.props.userFacets
             }
             userData={this.props.user}
           />
@@ -660,4 +662,23 @@ class UserAdmin extends Component {
   }
 }
 
-export default withRouter(withTranslation('admin')(UserAdmin));
+const mapDispatchToProps = dispatch => ({
+  setFacets: result => dispatch(userAdminAction.setFacets(result)),
+});
+
+const mapStateToProps = state => ({
+  userFacets: state.userAdminNewReducer.userFacets,
+  accessFacets: state.userAdminNewReducer.accessFacets,
+});
+
+export default withRouter(
+  compose(
+    withTranslation('admin'),
+    connect(
+      mapStateToProps,
+      mapDispatchToProps,
+    ),
+  )(UserAdmin),
+);
+
+// export default withRouter(withTranslation('admin')(UserAdmin));

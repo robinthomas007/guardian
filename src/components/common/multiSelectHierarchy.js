@@ -43,9 +43,6 @@ export default function MultiSelectHierarchy({
       setcompanyList(releasingLabels);
     }
   }, [releasingLabels]);
-  useEffect(() => {
-    setSelectedList(selectedLabelIds);
-  }, []);
 
   useEffect(() => {
     if (searchInput.length >= 3) {
@@ -74,7 +71,8 @@ export default function MultiSelectHierarchy({
   }, [searchInput]);
 
   const checkIfIdPresent = id => {
-    const lablelIds = _.map(selectedList, 'value');
+    let lablelIds = _.map(selectedList, 'value');
+    // lablelIds = [...lablelIds, ...selectedLabelIds]
     if (lablelIds.includes(id)) return true;
     else return false;
   };

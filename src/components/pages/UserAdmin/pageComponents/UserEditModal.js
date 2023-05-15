@@ -77,18 +77,6 @@ class UserEditModal extends Component {
               <Form.Group controlId="formLabel">
                 <Form.Label>Label/Company</Form.Label>
                 <br />
-                {/* <LabelsMultiSelect
-                  options={this.props.releasingLabels}
-                  onChange={(e, label) => this.props.handleLabelSelectChange(e, label)}
-                  defaultText="Select Option"
-                  selectedOptions={this.props.selectedOptions}
-                /> */}
-                {/* <ReactMultiSelectCheckboxes
-                  options={options}
-                  value={selectedOptions}
-                  onChange={option => this.props.newHandleLabelSelectChange(option)}
-                /> */}
-
                 <MultiSelectHierarchy
                   handleChangeCheckbox={this.props.handleChangeCheckbox}
                   isAdmin={this.props.userData.IsAdmin}
