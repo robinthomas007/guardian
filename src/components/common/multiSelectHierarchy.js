@@ -43,6 +43,11 @@ export default function MultiSelectHierarchy({
       setcompanyList(releasingLabels);
     }
   }, [releasingLabels]);
+  useEffect(() => {
+    if (selectedList.length !== selectedLabelIds.length) {
+      setSelectedList(selectedLabelIds);
+    }
+  }, [selectedLabelIds]);
 
   useEffect(() => {
     if (searchInput.length >= 3) {
@@ -72,7 +77,6 @@ export default function MultiSelectHierarchy({
 
   const checkIfIdPresent = id => {
     let lablelIds = _.map(selectedList, 'value');
-    // lablelIds = [...lablelIds, ...selectedLabelIds]
     if (lablelIds.includes(id)) return true;
     else return false;
   };
@@ -214,8 +218,6 @@ export default function MultiSelectHierarchy({
             )}
             <div className="msh-content">
               {loading && <h3>Loading...</h3>}
-              <h1>{_.values(companyList).every(_.isEmpty)}</h1>
-
               {companyList.length > 0 && renderCompanies(companyList)}
             </div>
 

@@ -66,6 +66,7 @@ class UserAdmin extends Component {
       showFilterModal: false,
       releasingLabels: [],
       selectedFilterLabelOptions: [],
+      selectedList: [],
     };
     this.handleFilterModalView = this.handleFilterModalView.bind(this);
     this.handleLabelSelectChange = this.handleLabelSelectChange.bind(this);
@@ -359,6 +360,7 @@ class UserAdmin extends Component {
         AccessRequestSearchCriteria,
         UserSearchCriteria,
         selectedFilterLabelOptions: modifiedselectedFilterLabelOptions,
+        selectedList: data,
       },
       () => this.fetchUsers(),
     );
@@ -450,11 +452,14 @@ class UserAdmin extends Component {
     AccessRequestSearchCriteria.filter.labelIds = modifiedselectedFilterLabelOptions;
     UserSearchCriteria.filter.labelIds = modifiedselectedFilterLabelOptions;
 
+    const mofifiedSelectedList = this.state.selectedList.filter(item => item.value !== labelID);
+
     this.setState(
       {
         AccessRequestSearchCriteria,
         UserSearchCriteria,
         selectedFilterLabelOptions: modifiedselectedFilterLabelOptions,
+        selectedList: mofifiedSelectedList,
       },
       () => this.fetchUsers(),
     );
@@ -491,6 +496,7 @@ class UserAdmin extends Component {
       targetUser: {
         ...targetUser,
         secondaryLabelIds: lablelIds,
+        selectedList: data,
       },
     });
   };
@@ -530,6 +536,7 @@ class UserAdmin extends Component {
           userData={this.props.user}
           handleChangeCheckbox={this.handleChangeCheckbox}
           LabelFacets={this.state.tableData.UserSearchResponse.LabelFacets}
+          selectedList={this.state.selectedList}
         />
 
         <div>
@@ -592,6 +599,7 @@ class UserAdmin extends Component {
                 : this.props.userFacets
             }
             userData={this.props.user}
+            selectedList={this.state.selectedList}
           />
 
           <SelectedFilters

@@ -69,6 +69,7 @@ class ReleaseinformationPage extends Component {
       selectedOptions: [],
       isChecked: false,
       isOpen: false,
+      selectedList: [],
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -170,6 +171,7 @@ class ReleaseinformationPage extends Component {
     if (data.length > 0)
       this.setState({
         formInputs: { ...this.state.formInputs, projectReleasingLabelID: data[0].value },
+        selectedList: data,
       });
   };
 
@@ -288,6 +290,27 @@ class ReleaseinformationPage extends Component {
   handleIsOpen() {
     this.setState({ ...this.state, isOpen: !this.state.isOpen });
   }
+  getDefaultSelectedList(list) {
+    const result = [];
+    list.forEach((company, i) => {
+      if (company.CompanyId)
+        result.push({ value: String(company.CompanyId), label: company.CompanyName });
+      if (company.DivisionList.length > 0) {
+        let divisionList = company.DivisionList;
+        divisionList.forEach((division, i) => {
+          if (division.DivisionId)
+            result.push({ value: String(division.DivisionId), label: division.DivisionName });
+          if (division.LabelList.length > 0) {
+            let LabelList = division.LabelList;
+            LabelList.forEach((label, i) => {
+              result.push({ value: String(label.LabelId), label: label.LabelName });
+            });
+          }
+        });
+      }
+    });
+    return result;
+  }
 
   componentDidMount() {
     if (this.props.user && this.props.user.IsLabelReadOnly) {
@@ -304,6 +327,10 @@ class ReleaseinformationPage extends Component {
 
     if (this.props.match.params && this.props.match.params.projectID) {
       this.handleDataLoad();
+    }
+    if (this.props.user && this.props.user.ReleasingLabels.length === 1) {
+      const defaultSelectedList = this.getDefaultSelectedList(this.props.user.ReleasingLabels);
+      this.setState({ selectedList: defaultSelectedList });
     }
 
     if (localData && this.state.formInputs !== localData) {
@@ -554,7 +581,7 @@ class ReleaseinformationPage extends Component {
                       isMultiSelect={false}
                       type={'releaseInfoInput'}
                       releasingLabels={this.props.user.ReleasingLabels}
-                      selectedLabelIds={[]}
+                      selectedLabelIds={this.state.selectedList}
                     />
                   )}
                 </div>
