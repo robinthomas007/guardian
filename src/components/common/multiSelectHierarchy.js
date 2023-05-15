@@ -81,10 +81,23 @@ export default function MultiSelectHierarchy({
     else return false;
   };
 
+  function checkEmpty(obj) {
+    for (let key in obj) {
+      if (obj[key] instanceof Object === true) {
+        if (checkEmpty(obj[key]) === false) return false;
+      } else {
+        if (obj[key].length !== 0) return false;
+      }
+    }
+    return true;
+  }
+
   const renderCompanies = companyList => {
     return (
       <div>
-        {isAdmin && <span className="sub-title">Select Options from Search Results</span>}
+        {isAdmin && companyList.length > 0 && (
+          <span className="sub-title">Select Options from Search Results</span>
+        )}
         {companyList.map((company, i) => {
           const { CompanyId, CompanyName } = company;
           const hasComapny = CompanyId ? true : false;
@@ -218,7 +231,13 @@ export default function MultiSelectHierarchy({
             )}
             <div className="msh-content">
               {loading && <h3>Loading...</h3>}
-              {companyList.length > 0 && renderCompanies(companyList)}
+              {companyList.length === 1 && checkEmpty(companyList) ? (
+                <span className="sub-title">No Results Found! Please try again.</span>
+              ) : (
+                renderCompanies(companyList)
+              )}
+
+              {/* {companyList.length > 0 && renderCompanies(companyList)} */}
             </div>
 
             <div className="invalid-tooltip">Label is required.</div>

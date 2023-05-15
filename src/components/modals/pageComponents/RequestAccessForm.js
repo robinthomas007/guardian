@@ -119,7 +119,7 @@ class RequestAccessForm extends Component {
   };
 
   componentDidMount() {
-    this.getLabels();
+    // this.getLabels();
   }
 
   handleSubmit = e => {

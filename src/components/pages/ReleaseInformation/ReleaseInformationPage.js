@@ -423,6 +423,12 @@ class ReleaseinformationPage extends Component {
         this.setState({
           project: responseJSON,
           formInputs: responseJSON.Project,
+          selectedList: [
+            {
+              label: responseJSON.Project.projectReleasingLabel,
+              value: responseJSON.Project.projectReleasingLabelID,
+            },
+          ],
           showloader: false,
         });
         this.props.setHeaderProjectData(this.state.project);

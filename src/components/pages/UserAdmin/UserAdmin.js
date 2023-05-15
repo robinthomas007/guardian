@@ -535,7 +535,7 @@ class UserAdmin extends Component {
           selectedOptions={this.state.targetUser.secondaryLabelIds}
           userData={this.props.user}
           handleChangeCheckbox={this.handleChangeCheckbox}
-          LabelFacets={this.state.tableData.UserSearchResponse.LabelFacets}
+          LabelFacets={this.state.tableData.UserSearchResponse.LabelFacets || []}
           selectedList={this.state.selectedList}
         />
 
