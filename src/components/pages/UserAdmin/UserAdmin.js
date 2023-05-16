@@ -459,7 +459,6 @@ class UserAdmin extends Component {
 
   removeLabelsFilter = labelID => {
     const { selectedFilterLabelOptions } = this.state;
-    console.log('selectedFilterLabelOptions&&&&', selectedFilterLabelOptions);
     let modifiedselectedFilterLabelOptions = selectedFilterLabelOptions;
     modifiedselectedFilterLabelOptions.splice(selectedFilterLabelOptions.indexOf(labelID), 1);
 

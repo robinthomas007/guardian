@@ -31,13 +31,34 @@ class UserEditModal extends Component {
   handleClose = () => {
     this.props.hideUserEditModal();
   };
+  //to get formatted array of object values with label,value
+  getSelectedList(list) {
+    const result = [];
+    list.forEach((company, i) => {
+      if (company.CompanyId)
+        result.push({ value: String(company.CompanyId), label: company.CompanyName });
+      if (company.DivisionList.length > 0) {
+        let divisionList = company.DivisionList;
+        divisionList.forEach((division, i) => {
+          if (division.DivisionId)
+            result.push({ value: String(division.DivisionId), label: division.DivisionName });
+          if (division.LabelList.length > 0) {
+            let LabelList = division.LabelList;
+            LabelList.forEach((label, i) => {
+              result.push({ value: String(label.LabelId), label: label.LabelName });
+            });
+          }
+        });
+      }
+    });
+    return result;
+  }
 
   render() {
-    const options = this.props.releasingLabels.map(label => ({
-      label: label.name,
-      value: label.id,
-    }));
-    const selectedOptions = options.filter(opt => this.props.selectedOptions.includes(opt.value));
+    const LabelFacets = this.getSelectedList(this.props.LabelFacets);
+    const selectedOptions = LabelFacets.filter(opt =>
+      this.props.selectedOptions.includes(opt.value),
+    );
     return (
       <Modal id="userEditModal" show={this.props.showModal} onHide={this.handleClose}>
         <Modal.Header closeButton>

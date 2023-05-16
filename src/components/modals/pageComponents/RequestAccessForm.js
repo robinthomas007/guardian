@@ -26,21 +26,11 @@ class RequestAccessForm extends Component {
   }
 
   handleChange = e => {
-    this.setState(
-      { formInputs: { ...this.state.formInputs, [e.target.name]: e.target.value } },
-      () => {
-        console.log(this.state);
-      },
-    );
+    this.setState({ formInputs: { ...this.state.formInputs, [e.target.name]: e.target.value } });
   };
 
   handleLabelChange = e => {
-    this.setState(
-      { formInputs: { ...this.state.formInputs, LabelID: parseInt(e.target.value) } },
-      () => {
-        console.log(this.state);
-      },
-    );
+    this.setState({ formInputs: { ...this.state.formInputs, LabelID: parseInt(e.target.value) } });
   };
   handleChangeCheckbox = data => {
     const modificedData = _.map(data, 'value');
@@ -62,7 +52,7 @@ class RequestAccessForm extends Component {
       .then(responseJSON => {
         let modifiedReleasingLabels = responseJSON;
         modifiedReleasingLabels.ReleasingLabels.unshift({ id: '', name: 'Select One' });
-        this.setState({ ReleasingLabels: modifiedReleasingLabels }, console.log(responseJSON));
+        this.setState({ ReleasingLabels: modifiedReleasingLabels });
       })
       .catch(error => {
         console.error(error);

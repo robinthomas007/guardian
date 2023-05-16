@@ -350,7 +350,7 @@ class ReleaseinformationPage extends Component {
       projectArtistName: '',
       projectTypeID: '1',
       projectReleasingLabelID:
-        this.props.user.ReleasingLabels.length > 0 ? this.props.user.ReleasingLabels[0].id : '',
+        this.props.user.ReleasingLabels.length > 0 ? this.state.selectedList[0].value : '',
       projectReleaseDate: null,
       projectReleaseDateTBD: false,
       projectNotes: '',
@@ -381,7 +381,7 @@ class ReleaseinformationPage extends Component {
           formInputs: {
             ...this.state.formInputs,
             projectReleasingLabelID:
-              this.props.user.ReleasingLabels.length > 0 ? this.props.user.ReleasingLabels[0] : '',
+              this.props.user.ReleasingLabels.length > 0 ? this.state.selectedList[0].value : '',
           },
         });
       }
