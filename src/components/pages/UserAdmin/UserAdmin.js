@@ -261,7 +261,24 @@ class UserAdmin extends Component {
   };
 
   handleTabClick = key => {
-    this.setState({ activeTab: key });
+    const resetSearchCriteria = {
+      labelIds: [],
+      from: '',
+      to: '',
+    };
+    const AccessRequestSearchCriteria = { ...this.state.AccessRequestSearchCriteria };
+    const UserSearchCriteria = { ...this.state.UserSearchCriteria };
+    AccessRequestSearchCriteria.filter = resetSearchCriteria;
+    UserSearchCriteria.filter = resetSearchCriteria;
+    resetDatePicker('filterEndDate');
+    resetDatePicker('filterStartDate');
+    this.setState({
+      activeTab: key,
+      AccessRequestSearchCriteria,
+      UserSearchCriteria,
+      selectedFilterLabelOptions: [],
+      selectedList: [],
+    });
   };
 
   handleFilterModalView() {
@@ -344,7 +361,6 @@ class UserAdmin extends Component {
   };
 
   handleSearchFilterLabelChange = data => {
-    console.log(data, 'datadatadata');
     const AccessRequestSearchCriteria = { ...this.state.AccessRequestSearchCriteria };
     const UserSearchCriteria = { ...this.state.UserSearchCriteria };
     const { selectedFilterLabelOptions } = this.state;
@@ -443,6 +459,7 @@ class UserAdmin extends Component {
 
   removeLabelsFilter = labelID => {
     const { selectedFilterLabelOptions } = this.state;
+    console.log('selectedFilterLabelOptions&&&&', selectedFilterLabelOptions);
     let modifiedselectedFilterLabelOptions = selectedFilterLabelOptions;
     modifiedselectedFilterLabelOptions.splice(selectedFilterLabelOptions.indexOf(labelID), 1);
 

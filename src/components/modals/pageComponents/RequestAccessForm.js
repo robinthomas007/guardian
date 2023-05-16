@@ -87,9 +87,9 @@ class RequestAccessForm extends Component {
     });
 
     const formattedFormData = {
-      formInputs: { ...this.state.formInputs, LabelID: this.state.selectedOptions.join(',') },
+      ...this.state.formInputs,
+      LabelID: this.state.selectedOptions.join(','),
     };
-    console.log('submittedData', formattedFormData);
     const fetchBody = JSON.stringify(formattedFormData);
 
     fetch(window.env.api.url + '/access', {

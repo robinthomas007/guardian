@@ -146,6 +146,7 @@ label.custom-checkbox.msh-checkbox {
   height: 38px;
   left: 0px;
   text-align: left;
+  overflow: auto;
 }
 
 .releaseInfoInput #dropdown-autoclose-inside {
@@ -163,6 +164,7 @@ label.custom-checkbox.msh-checkbox {
   left: 0px;
   margin-left: -8px;
   text-align: left;
+  overflow: auto;
 }
 .userAdminModal .dropdown-menu {
   margin-top: -7px !important;
@@ -179,6 +181,7 @@ label.custom-checkbox.msh-checkbox {
   height: 36px;
   left: 0px;
   text-align: left;
+  overflow: auto;
 }
 .userEditModal .dropdown-menu {
   margin-top: -5px !important;
