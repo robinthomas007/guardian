@@ -513,7 +513,6 @@ class UserAdmin extends Component {
         ...targetUser,
         secondaryLabelIds: lablelIds,
       },
-      selectedList: data,
     });
   };
 
