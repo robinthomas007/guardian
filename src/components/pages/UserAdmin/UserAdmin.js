@@ -512,8 +512,8 @@ class UserAdmin extends Component {
       targetUser: {
         ...targetUser,
         secondaryLabelIds: lablelIds,
-        selectedList: data,
       },
+      selectedList: data,
     });
   };
 
@@ -551,7 +551,12 @@ class UserAdmin extends Component {
           selectedOptions={this.state.targetUser.secondaryLabelIds}
           userData={this.props.user}
           handleChangeCheckbox={this.handleChangeCheckbox}
-          LabelFacets={this.state.tableData.UserSearchResponse.LabelFacets || []}
+          LabelFacets={
+            this.state.activeTab === 'requestAccess'
+              ? this.props.accessFacets
+              : this.props.userFacets
+          }
+          // LabelFacets={this.state.tableData.UserSearchResponse.LabelFacets}
           selectedList={this.state.selectedList}
         />
 
@@ -601,7 +606,6 @@ class UserAdmin extends Component {
             </li>
             <li className="col-2 d-flex"></li>
           </ul>
-
           <UserSearchFilterModal
             showFilterModal={this.state.showFilterModal}
             releasingLabels={this.state.releasingLabels}
@@ -615,6 +619,7 @@ class UserAdmin extends Component {
                 : this.props.userFacets
             }
             userData={this.props.user}
+            activeTab={this.state.activeTab}
             selectedList={this.state.selectedList}
           />
 

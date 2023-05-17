@@ -173,7 +173,7 @@ export default function MultiSelectHierarchy({
 
   const renderLabels = (LabelList, hasDivision) => {
     return (
-      <div className={`${!hasDivision ? 'rmvPadDivisonLabel' : ''} label-wrapper`}>
+      <div className={`${!hasDivision ? 'rmvPadLabel' : ''} label-wrapper`}>
         {LabelList.map((label, i) => {
           const { LabelId, LabelName } = label;
           return (

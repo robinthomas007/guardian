@@ -311,6 +311,7 @@ class ReleaseinformationPage extends Component {
     });
     return result;
   }
+  exitsLabels = this.getDefaultSelectedList(this.props.user.ReleasingLabels);
 
   componentDidMount() {
     if (this.props.user && this.props.user.IsLabelReadOnly) {
@@ -328,9 +329,15 @@ class ReleaseinformationPage extends Component {
     if (this.props.match.params && this.props.match.params.projectID) {
       this.handleDataLoad();
     }
-    if (this.props.user && this.props.user.ReleasingLabels.length === 1) {
-      const defaultSelectedList = this.getDefaultSelectedList(this.props.user.ReleasingLabels);
-      this.setState({ selectedList: defaultSelectedList });
+    if (this.props.user && this.exitsLabels.length === 1) {
+      console.log('test', this.exitsLabels);
+      this.setState({
+        formInputs: {
+          ...this.state.formInputs,
+          projectReleasingLabelID: this.exitsLabels[0],
+        },
+        selectedList: [this.exitsLabels[0]],
+      });
     }
 
     if (localData && this.state.formInputs !== localData) {
@@ -349,8 +356,7 @@ class ReleaseinformationPage extends Component {
       projectCoverArt: '',
       projectArtistName: '',
       projectTypeID: '1',
-      projectReleasingLabelID:
-        this.props.user.ReleasingLabels.length > 0 ? this.state.selectedList[0].value : '',
+      projectReleasingLabelID: this.exitsLabels.length > 0 ? this.exitsLabels[0].value : '',
       projectReleaseDate: null,
       projectReleaseDateTBD: false,
       projectNotes: '',
@@ -380,8 +386,7 @@ class ReleaseinformationPage extends Component {
         this.setState({
           formInputs: {
             ...this.state.formInputs,
-            projectReleasingLabelID:
-              this.props.user.ReleasingLabels.length > 0 ? this.state.selectedList[0].value : '',
+            projectReleasingLabelID: this.exitsLabels.length > 0 ? this.exitsLabels[0].value : '',
           },
         });
       }

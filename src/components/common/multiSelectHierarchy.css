@@ -133,6 +133,10 @@ label.custom-checkbox.msh-checkbox {
 .rmvPadDivisonLabel {
   padding-left: 0px !important;
 }
+.rmvPadLabel {
+  padding-left: 0px !important;
+  padding-top: 10px !important;
+}
 
 @media (min-width: 576px) {
   div#RequestAccesModal.modal-dialog {

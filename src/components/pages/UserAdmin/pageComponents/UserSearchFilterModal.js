@@ -28,14 +28,26 @@ class UserSearchFilterModal extends Component {
             </div>
 
             <div className="col-10">
-              <MultiSelectHierarchy
-                handleChangeCheckbox={this.props.handleSearchFilterLabelChange}
-                isAdmin={this.props.userData.IsAdmin}
-                isMultiSelect={true}
-                type={'userAdminModal'}
-                releasingLabels={this.props.LabelFacets}
-                selectedLabelIds={this.props.selectedList}
-              />
+              {this.props.activeTab === 'requestAccess' && (
+                <MultiSelectHierarchy
+                  handleChangeCheckbox={this.props.handleSearchFilterLabelChange}
+                  isAdmin={this.props.userData.IsAdmin}
+                  isMultiSelect={true}
+                  type={'userAdminModal'}
+                  releasingLabels={this.props.LabelFacets}
+                  selectedLabelIds={this.props.selectedList}
+                />
+              )}
+              {this.props.activeTab !== 'requestAccess' && (
+                <MultiSelectHierarchy
+                  handleChangeCheckbox={this.props.handleSearchFilterLabelChange}
+                  isAdmin={this.props.userData.IsAdmin}
+                  isMultiSelect={true}
+                  type={'userAdminModal'}
+                  releasingLabels={this.props.LabelFacets}
+                  selectedLabelIds={this.props.selectedList}
+                />
+              )}
             </div>
           </div>
           <div className="row">
