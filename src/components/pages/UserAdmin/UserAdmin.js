@@ -272,13 +272,19 @@ class UserAdmin extends Component {
     UserSearchCriteria.filter = resetSearchCriteria;
     resetDatePicker('filterEndDate');
     resetDatePicker('filterStartDate');
-    this.setState({
-      activeTab: key,
-      AccessRequestSearchCriteria,
-      UserSearchCriteria,
-      selectedFilterLabelOptions: [],
-      selectedList: [],
-    });
+    this.setState(
+      {
+        activeTab: key,
+        AccessRequestSearchCriteria,
+        UserSearchCriteria,
+        selectedFilterLabelOptions: [],
+        selectedList: [],
+      },
+      () => {
+        this.fetchUsers();
+      },
+    );
+    // this.setState({ activeTab: key });
   };
 
   handleFilterModalView() {

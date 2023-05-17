@@ -57,7 +57,6 @@ class UserEditModal extends Component {
   }
 
   render() {
-    // console.log('')
     // console.log('LabelFacetsLabelFacets', this.props.LabelFacets);
     // const LabelFacets = this.getSelectedList(this.props.LabelFacets);
     // const selectedOptions = LabelFacets.filter(opt =>

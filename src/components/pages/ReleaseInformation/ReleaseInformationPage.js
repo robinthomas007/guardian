@@ -330,7 +330,6 @@ class ReleaseinformationPage extends Component {
       this.handleDataLoad();
     }
     if (this.props.user && this.exitsLabels.length === 1) {
-      console.log('test', this.exitsLabels);
       this.setState({
         formInputs: {
           ...this.state.formInputs,
