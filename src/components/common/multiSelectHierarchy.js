@@ -4,6 +4,7 @@ import './multiSelectHierarchy.css';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Api from '../../lib/api';
 import _ from 'lodash';
+import Spinner from '../../component_library/Spinner';
 
 export default function MultiSelectHierarchy({
   handleChangeCheckbox,
@@ -230,7 +231,9 @@ export default function MultiSelectHierarchy({
               </div>
             )}
             <div className="msh-content">
-              {loading && <h3>Loading...</h3>}
+              <div className="spinner">
+                <Spinner show={loading} />
+              </div>
               {companyList.length === 1 && checkEmpty(companyList) ? (
                 <span className="sub-title">No Results Found! Please try again.</span>
               ) : (

@@ -216,3 +216,6 @@ label.custom-checkbox.msh-checkbox {
   margin-top: -7px !important;
   margin-left: -5px;
 }
+.spinner {
+  text-align: center;
+}
