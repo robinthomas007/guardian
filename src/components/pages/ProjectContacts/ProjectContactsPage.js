@@ -21,7 +21,7 @@ class ProjectContactsPage extends Component {
       formInputs: {
         projectPrimaryContact:
           user.name === 'unknown'
-            ? `${user.FullName.split(' ')[1]},${user.FullName.split(' ')[0]}`
+            ? `${user.FullName.split(' ')[1]}, ${user.FullName.split(' ')[0]}`
             : user.name,
         projectPrimaryContactEmail: user.upn ? user.upn.toLowerCase() : user.email.toLowerCase(),
         projectSecurityID: '1',
