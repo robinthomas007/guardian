@@ -19,7 +19,10 @@ class ProjectContactsPage extends Component {
     super(props);
     this.state = {
       formInputs: {
-        projectPrimaryContact: user.name === 'unknown' ? user.FullName : user.name,
+        projectPrimaryContact:
+          user.name === 'unknown'
+            ? `${user.FullName.split(' ')[1]},${user.FullName.split(' ')[0]}`
+            : user.name,
         projectPrimaryContactEmail: user.upn ? user.upn.toLowerCase() : user.email.toLowerCase(),
         projectSecurityID: '1',
         projectAdditionalContacts: '',
