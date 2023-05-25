@@ -216,3 +216,6 @@ a.dropdown-item.disabled {
   background: #eee;
   color: #aaa;
 }
+.last-up-date-to .labels {
+  margin-left: 14px !important;
+}

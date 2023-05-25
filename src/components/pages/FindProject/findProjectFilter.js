@@ -268,7 +268,7 @@ const Filter = props => {
                 <div className="col-6">
                   <MultiSelectHierarchy
                     handleChangeCheckbox={getMultiSelectDataForExcludeLabelIds}
-                    isAdmin={props.userData.IsAdmin}
+                    isAdmin={true || props.userData.IsAdmin}
                     isMultiSelect={props.userData.IsAdmin ? true : false}
                     type={'filterModal'}
                     releasingLabels={props.data.LabelFacets}
@@ -279,13 +279,15 @@ const Filter = props => {
             </div>
           </div>
           <div className="row no-gutters">
-            <div className="col-10 last-up-date">
+            <div className="col-5 last-up-date">
               <Field
                 label={t('search:LastUpdated')}
                 name="from"
                 handleOnSelect={handleOnSelect}
                 component={DateTimePicker}
               />
+            </div>
+            <div className="col-5 last-up-date-to">
               <Field
                 label={t('search:to')}
                 name="to"
@@ -295,13 +297,15 @@ const Filter = props => {
             </div>
           </div>
           <div className="row no-gutters">
-            <div className="col-10 last-up-date">
+            <div className="col-5 last-up-date">
               <Field
                 label={t('search:ReleaseDate')}
                 name="releaseFrom"
                 handleOnSelect={handleOnSelect}
                 component={DateTimePicker}
               />
+            </div>
+            <div className="col-5 last-up-date-to">
               <Field
                 label={t('search:to')}
                 name="releaseTo"
