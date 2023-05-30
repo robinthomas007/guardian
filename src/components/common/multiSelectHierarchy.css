@@ -244,3 +244,55 @@ label.custom-checkbox.msh-checkbox {
 #dropdown-autoclose-inside {
   background-color: #fff !important;
 }
+
+.msh-wrapper .material-icons.plus-icon {
+  display: inline-flex;
+  vertical-align: top;
+  position: absolute;
+  top: 10px;
+  right: 4px;
+  color: rgba(0, 0, 0, 0.7);
+}
+.plus-icon {
+  color: #999999 !important;
+  font-size: 37px;
+  top: -1px !important;
+  right: -7px !important;
+}
+
+.tags_wrapper .tag-btn {
+  color: #ffffff;
+  border-radius: 100px;
+  border-color: #01579b !important;
+  background: #01579b;
+  height: 30px;
+  border: none;
+  padding-bottom: -9px;
+  line-height: 29px;
+  /* width: 109px; */
+  font-size: 12px;
+}
+.tags_wrapper .tag-clear-btn {
+  padding: 0 !important;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #01579b;
+  /* margin-left: 15px; */
+  right: -30px !important;
+  margin-top: 2px;
+  margin-right: -3px;
+  font-weight: 600;
+}
+.tags_wrapper .tag-label {
+  font-size: 15px;
+  padding-right: 31px;
+  padding-left: 10px;
+}
+
+.msh-wrapper .tag-sub-title {
+  font-weight: 300;
+  font-size: 14px;
+  font-style: italic;
+  line-height: 20px !important;
+  color: rgba(0, 0, 0, 0.7);
+}

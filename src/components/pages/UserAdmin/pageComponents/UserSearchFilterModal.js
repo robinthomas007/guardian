@@ -31,7 +31,7 @@ class UserSearchFilterModal extends Component {
               {this.props.activeTab === 'requestAccess' && (
                 <MultiSelectHierarchy
                   handleChangeCheckbox={this.props.handleSearchFilterLabelChange}
-                  isAdmin={this.props.userData.IsAdmin}
+                  user={this.props.userData}
                   isMultiSelect={true}
                   type={'userAdminModal'}
                   releasingLabels={this.props.LabelFacets}
@@ -41,7 +41,7 @@ class UserSearchFilterModal extends Component {
               {this.props.activeTab !== 'requestAccess' && (
                 <MultiSelectHierarchy
                   handleChangeCheckbox={this.props.handleSearchFilterLabelChange}
-                  isAdmin={this.props.userData.IsAdmin}
+                  user={this.props.userData}
                   isMultiSelect={true}
                   type={'userAdminModal'}
                   releasingLabels={this.props.LabelFacets}

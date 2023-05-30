@@ -204,7 +204,7 @@ const Filter = props => {
                 <div className="col-6">
                   <MultiSelectHierarchy
                     handleChangeCheckbox={getMultiSelectDataForLabelIds}
-                    isAdmin={props.userData.IsAdmin}
+                    user={props.userData}
                     isMultiSelect={props.userData.IsAdmin ? true : false}
                     type={'filterModal'}
                     releasingLabels={props.data.LabelFacets}
@@ -268,7 +268,7 @@ const Filter = props => {
                 <div className="col-6">
                   <MultiSelectHierarchy
                     handleChangeCheckbox={getMultiSelectDataForExcludeLabelIds}
-                    isAdmin={true || props.userData.IsAdmin}
+                    user={props.userData}
                     isMultiSelect={props.userData.IsAdmin ? true : false}
                     type={'filterModal'}
                     releasingLabels={props.data.LabelFacets}

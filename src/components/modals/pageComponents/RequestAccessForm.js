@@ -120,6 +120,7 @@ class RequestAccessForm extends Component {
   };
 
   render() {
+    const user = { IsAdmin: true };
     return (
       <Form>
         <ul className="request-form">
@@ -160,7 +161,7 @@ class RequestAccessForm extends Component {
                 handleChangeCheckbox={this.handleChangeCheckbox}
                 type={'requestFormInput'}
                 isMultiSelect={true}
-                isAdmin={true}
+                user={user}
                 selectedLabelIds={this.state.selectedList}
               />
               <div className="invalid-tooltip">A label selection is required.</div>

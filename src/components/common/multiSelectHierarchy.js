@@ -5,12 +5,13 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Api from '../../lib/api';
 import _ from 'lodash';
 import Spinner from '../../component_library/Spinner';
+import { showNotyInfo, showNotyAutoError } from '../../components/Utils';
 
 export default function MultiSelectHierarchy({
   handleChangeCheckbox,
   type,
   isMultiSelect,
-  isAdmin,
+  user,
   releasingLabels,
   selectedLabelIds,
 }) {
@@ -18,6 +19,8 @@ export default function MultiSelectHierarchy({
   const [searchInput, setSearchInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [selectedList, setSelectedList] = useState([]);
+  const [tagQuery, setTagQuery] = useState('');
+  const [selectedTag, setSelectedTag] = useState([]);
 
   const didMountRef = useRef(false);
 
@@ -50,12 +53,15 @@ export default function MultiSelectHierarchy({
     }
   }, [selectedLabelIds]);
 
+  useEffect(() => {}, []);
+
   useEffect(() => {
     if (searchInput.length >= 3) {
       setLoading(true);
       const payload = {
         SearchCriteria: {
           SearchTerm: searchInput,
+          isAdmin: type === 'requestFormInput' ? true : user.IsAdmin,
         },
         languageCode: localStorage.getItem('languageCode') || 'en',
       };
@@ -67,6 +73,15 @@ export default function MultiSelectHierarchy({
         .then(res => {
           const result = res.Result;
           setcompanyList(result);
+          const preRenderList = getDefaultSelectedList(result);
+          console.log('prerender data', preRenderList);
+          console.log('result', res);
+          if (res.Tags.length > 0 && res.Tags[0].name !== undefined) {
+            // setSelectedList([...selectedList, { label: res.Tags[0].name, value: res.Tags[0].id }]);
+            setSelectedList(preRenderList);
+            setSelectedTag([{ tag: res.Tags[0].name, labelIds: [res.Tags[0].id] }]);
+          }
+
           setLoading(false);
         });
     } else {
@@ -82,6 +97,31 @@ export default function MultiSelectHierarchy({
     else return false;
   };
 
+  const getDefaultSelectedList = list => {
+    const result = [];
+    if (list.length > 0)
+      list.forEach((company, i) => {
+        if (company.TagId && company.TagId !== '0')
+          result.push({ value: String(company.CompanyId), label: company.CompanyName });
+        if (company.DivisionList.length > 0) {
+          let divisionList = company.DivisionList;
+          divisionList.forEach((division, i) => {
+            if (division.TagId && division.TagId !== '0')
+              result.push({ value: String(division.DivisionId), label: division.DivisionName });
+            if (division.LabelList.length > 0) {
+              let LabelList = division.LabelList;
+              LabelList.forEach((label, i) => {
+                if (label.TagId && label.TagId !== '0') {
+                  result.push({ value: String(label.LabelId), label: label.LabelName });
+                }
+              });
+            }
+          });
+        }
+      });
+    return result;
+  };
+
   function checkEmpty(obj) {
     for (let key in obj) {
       if (obj[key] instanceof Object === true) {
@@ -92,15 +132,76 @@ export default function MultiSelectHierarchy({
     }
     return true;
   }
+  const removeTag = label => {
+    const labelIds = selectedList.map(list => Number(list.value));
+    console.log('selectedList#####', labelIds);
+    const payload = {
+      LabelsId: labelIds,
+      TagName: selectedTag[0].tag,
+      User: {
+        email: user.email,
+      },
+      IsDeleted: true,
+      Tracking: null,
+    };
+
+    Api.post('/labels/labeltag', payload)
+      .then(res => {
+        return res.json();
+      })
+      .then(res => {
+        if (res.ValidTagName) {
+          showNotyInfo('Successfully removed the label');
+          setSelectedList([]);
+          setSelectedTag([]);
+          setSearchInput('');
+        } else {
+          showNotyAutoError('Something went wrong, please try again!');
+        }
+      })
+      .catch(e => {
+        console.log('Error ', e);
+      });
+  };
+  useEffect(() => {
+    setTagQuery('');
+  }, [selectedTag]);
+  const addTag = () => {
+    if (selectedList.length > 0) {
+      const labelIds = selectedList.map(list => Number(list.value));
+      setSelectedTag([{ tag: tagQuery, labelIds: labelIds }]);
+      const payload = {
+        LabelsId: labelIds,
+        TagName: tagQuery,
+        User: {
+          email: user.email,
+        },
+        IsDeleted: false,
+        Tracking: null,
+      };
+
+      Api.post('/labels/labeltag', payload)
+        .then(res => {
+          return res.json();
+        })
+        .then(res => {
+          if (res.ValidTagName) {
+            showNotyInfo('Successfully added the new label');
+          } else {
+            showNotyAutoError('Something went wrong, please try again!');
+          }
+        });
+    }
+  };
 
   const renderCompanies = companyList => {
     return (
       <div>
-        {isAdmin && companyList.length > 0 && (
+        {user.IsAdmin && companyList.length > 0 && (
           <span className="sub-title">Select Options from Search Results</span>
         )}
         {companyList.map((company, i) => {
-          const { CompanyId, CompanyName } = company;
+          const { CompanyId, CompanyName, TagId } = company;
           const hasComapny = CompanyId ? true : false;
           return (
             <div className="company-wrapper" key={i}>
@@ -176,7 +277,7 @@ export default function MultiSelectHierarchy({
     return (
       <div className={`${!hasDivision ? 'rmvPadLabel' : ''} label-wrapper`}>
         {LabelList.map((label, i) => {
-          const { LabelId, LabelName } = label;
+          const { LabelId, LabelName, TagId } = label;
           return (
             <div key={i}>
               {hasDivision && (
@@ -218,12 +319,12 @@ export default function MultiSelectHierarchy({
         <Dropdown.Menu>
           <div className="msh-wrapper">
             <div className="main-title">Companies, Divisions & Labels</div>
-            {isAdmin && (
+            {user.IsAdmin && (
               <div className="search-input">
                 <Form.Control
                   type="text"
                   name="searchInput"
-                  className="form-control requiredInput"
+                  className="form-control"
                   value={searchInput}
                   onChange={e => setSearchInput(e.target.value)}
                 />
@@ -242,8 +343,39 @@ export default function MultiSelectHierarchy({
 
               {/* {companyList.length > 0 && renderCompanies(companyList)} */}
             </div>
+            {/* isMultiSelect && type !== 'requestFormInput' */}
+            {isMultiSelect && (
+              <div className="tags_wrapper">
+                <div className="main-title">Tags</div>
 
-            <div className="invalid-tooltip">Label is required.</div>
+                <p className="tag-sub-title">
+                  Companies, Divisions & Labels associated with a tag will no longer be displayed as
+                  options within search.
+                </p>
+                <div className="search-input">
+                  <Form.Control
+                    type="text"
+                    name="tagQuery"
+                    className="form-control"
+                    value={tagQuery}
+                    onChange={e => setTagQuery(e.target.value)}
+                  />
+                  <i onClick={addTag} className="material-icons plus-icon">
+                    add_box
+                  </i>
+                </div>
+                {selectedTag.length > 0 && (
+                  <div>
+                    <button type="button" className="tag-btn" onClick={() => removeTag()}>
+                      <span className="tag-label">{selectedTag[0].tag}</span>
+                      <i className="material-icons tag-clear-btn">close</i>
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* <div className="invalid-tooltip">Label is required.</div> */}
           </div>
         </Dropdown.Menu>
       </Dropdown>

@@ -108,7 +108,7 @@ class UserEditModal extends Component {
                 <br />
                 <MultiSelectHierarchy
                   handleChangeCheckbox={this.props.handleChangeCheckbox}
-                  isAdmin={this.props.userData.IsAdmin}
+                  user={this.props.userData}
                   isMultiSelect={true}
                   type={'userEditModal'}
                   releasingLabels={this.props.LabelFacets}
