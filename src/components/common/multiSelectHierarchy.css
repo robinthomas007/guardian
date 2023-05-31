@@ -48,7 +48,8 @@ label.custom-checkbox.msh-checkbox {
   overflow-y: scroll !important;
   overflow-x: hidden;
   transform: translate3d(5px, 35px, 0px) !important;
-  width: 450px !important;
+  /* width: 450px !important; */
+  max-width: 600px;
   padding: 0 !important;
   margin-left: -14px;
   overflow: scroll !important;
@@ -101,6 +102,7 @@ label.custom-checkbox.msh-checkbox {
 
 .inside-wrapper {
   position: relative;
+  width: max-content;
 }
 .search-icon {
   color: #999999 !important;
@@ -150,6 +152,7 @@ label.custom-checkbox.msh-checkbox {
 }
 .search-input {
   position: relative;
+  max-width: max-content;
 }
 
 .rmvPadDivisonLabel {
@@ -245,21 +248,26 @@ label.custom-checkbox.msh-checkbox {
   background-color: #fff !important;
 }
 
-.msh-wrapper .material-icons.plus-icon {
+.msh-wrapper .tagCloseButton {
   display: inline-flex;
   vertical-align: top;
   position: absolute;
-  top: 10px;
-  right: 4px;
+  top: 1px;
+  right: 0px;
   color: rgba(0, 0, 0, 0.7);
+  border: none;
+  background: none;
+  background-image: none;
 }
-.plus-icon {
+.msh-wrapper .material-icons.plus-icon {
   color: #999999 !important;
-  font-size: 37px;
-  top: -1px !important;
-  right: -7px !important;
+  font-size: 38px;
+  margin-right: -12px;
 }
-
+.msh-wrapper .custom-tag-input {
+  color: #a91414;
+  font-size: 14px;
+}
 .tags_wrapper .tag-btn {
   color: #ffffff;
   border-radius: 100px;

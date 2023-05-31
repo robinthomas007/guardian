@@ -21,6 +21,7 @@ export default function MultiSelectHierarchy({
   const [selectedList, setSelectedList] = useState([]);
   const [tagQuery, setTagQuery] = useState('');
   const [selectedTag, setSelectedTag] = useState([]);
+  const [previousSelectedLabel, setPreviousSelectedLabel] = useState([]);
 
   const didMountRef = useRef(false);
 
@@ -29,6 +30,8 @@ export default function MultiSelectHierarchy({
       if (isMultiSelect) setSelectedList([...selectedList, data]);
       else setSelectedList([data]);
     } else {
+      const removedSelectedList = selectedList.filter(item => item.value === data.value);
+      console.log('removedSelectedList', removedSelectedList);
       const modificedList = selectedList.filter(item => item.value !== data.value);
       setSelectedList(modificedList);
     }
@@ -49,6 +52,7 @@ export default function MultiSelectHierarchy({
   }, [releasingLabels]);
   useEffect(() => {
     if (selectedList.length !== selectedLabelIds.length) {
+      console.log('test', selectedLabelIds);
       setSelectedList(selectedLabelIds);
     }
   }, [selectedLabelIds]);
@@ -75,11 +79,17 @@ export default function MultiSelectHierarchy({
           setcompanyList(result);
           const preRenderList = getDefaultSelectedList(result);
           console.log('prerender data', preRenderList);
+          setPreviousSelectedLabel(preRenderList);
           console.log('result', res);
-          if (res.Tags.length > 0 && res.Tags[0].name !== undefined) {
-            // setSelectedList([...selectedList, { label: res.Tags[0].name, value: res.Tags[0].id }]);
+          if (res.TagList.length > 0 && res.TagList[0].name !== undefined) {
+            // setSelectedList([...selectedList, { label: res.TagList[0].name, value: res.TagList[0].id }]);
             setSelectedList(preRenderList);
-            setSelectedTag([{ tag: res.Tags[0].name, labelIds: [res.Tags[0].id] }]);
+            setSelectedTag([{ tag: res.TagList[0].name, labelIds: [res.TagList[0].id] }]);
+            // setTagQuery('Must Remove Existing Tag');
+          } else {
+            setSelectedList([]);
+            setSelectedTag([]);
+            setTagQuery('');
           }
 
           setLoading(false);
@@ -101,17 +111,17 @@ export default function MultiSelectHierarchy({
     const result = [];
     if (list.length > 0)
       list.forEach((company, i) => {
-        if (company.TagId && company.TagId !== '0')
+        if (company.TagName && company.TagName !== '')
           result.push({ value: String(company.CompanyId), label: company.CompanyName });
         if (company.DivisionList.length > 0) {
           let divisionList = company.DivisionList;
           divisionList.forEach((division, i) => {
-            if (division.TagId && division.TagId !== '0')
+            if (division.TagName && division.TagName !== '')
               result.push({ value: String(division.DivisionId), label: division.DivisionName });
             if (division.LabelList.length > 0) {
               let LabelList = division.LabelList;
               LabelList.forEach((label, i) => {
-                if (label.TagId && label.TagId !== '0') {
+                if (label.TagName && label.TagName !== '') {
                   result.push({ value: String(label.LabelId), label: label.LabelName });
                 }
               });
@@ -152,8 +162,11 @@ export default function MultiSelectHierarchy({
       .then(res => {
         if (res.ValidTagName) {
           showNotyInfo('Successfully removed the label');
-          setSelectedList([]);
-          setSelectedTag([]);
+          // setSelectedList([]);
+          // setSelectedTag([]);
+          // setSelectedList([]);
+          // setSelectedTag([]);
+          // setTagQuery('');
           setSearchInput('');
         } else {
           showNotyAutoError('Something went wrong, please try again!');
@@ -169,9 +182,15 @@ export default function MultiSelectHierarchy({
   const addTag = () => {
     if (selectedList.length > 0) {
       const labelIds = selectedList.map(list => Number(list.value));
+
+      const previousLabelIds = previousSelectedLabel.map(list => Number(list.value));
+      const addNewLabelIds = labelIds.filter(val => !previousLabelIds.includes(val));
+      console.log('add selectedlist', labelIds);
+      console.log('previous-selectedlist', addNewLabelIds);
+
       setSelectedTag([{ tag: tagQuery, labelIds: labelIds }]);
       const payload = {
-        LabelsId: labelIds,
+        LabelsId: selectedTag.length > 0 ? addNewLabelIds : labelIds,
         TagName: tagQuery,
         User: {
           email: user.email,
@@ -179,16 +198,18 @@ export default function MultiSelectHierarchy({
         IsDeleted: false,
         Tracking: null,
       };
-
+      console.log('add---payload ', payload);
       Api.post('/labels/labeltag', payload)
         .then(res => {
           return res.json();
         })
         .then(res => {
           if (res.ValidTagName) {
+            // setTagQuery('Must Remove Existing Tag');
+            setPreviousSelectedLabel([]);
             showNotyInfo('Successfully added the new label');
           } else {
-            showNotyAutoError('Something went wrong, please try again!');
+            showNotyAutoError('Label not allowed to associate more than one Tag');
           }
         });
     }
@@ -201,7 +222,7 @@ export default function MultiSelectHierarchy({
           <span className="sub-title">Select Options from Search Results</span>
         )}
         {companyList.map((company, i) => {
-          const { CompanyId, CompanyName, TagId } = company;
+          const { CompanyId, CompanyName, TagName } = company;
           const hasComapny = CompanyId ? true : false;
           return (
             <div className="company-wrapper" key={i}>
@@ -220,7 +241,9 @@ export default function MultiSelectHierarchy({
                     />
                     <span className="checkmark "></span>
                   </label>
-                  <span>{CompanyName} (Company)</span>
+                  <span>
+                    {CompanyName} (Company) {TagName !== '' && renderTagName(TagName, CompanyId)}
+                  </span>
                 </div>
               )}
               {company.DivisionList &&
@@ -237,7 +260,7 @@ export default function MultiSelectHierarchy({
     return (
       <div className={`${!hasComapny ? 'rmvPadDivisonLabel' : ''} divison-wrapper`}>
         {divisionList.map((division, i) => {
-          const { DivisionId, DivisionName } = division;
+          const { DivisionId, DivisionName, TagName } = division;
           const hasDivision = DivisionId ? true : false;
           return (
             <div key={i}>
@@ -262,7 +285,9 @@ export default function MultiSelectHierarchy({
                     />
                     <span className="checkmark "></span>
                   </label>
-                  <span>{DivisionName} (Division)</span>
+                  <span>
+                    {DivisionName} (Division) {TagName !== '' && renderTagName(TagName, DivisionId)}
+                  </span>
                 </div>
               )}
               {division.LabelList.length > 0 && renderLabels(division.LabelList, hasDivision)}
@@ -273,11 +298,61 @@ export default function MultiSelectHierarchy({
     );
   };
 
+  const removeSingleTag = (tagName, labelId) => {
+    console.log('remove single label from tag', labelId);
+    // const labelIds = selectedList.map(list => Number(list.value));
+    // console.log('selectedList#####', labelIds);
+    const modifiedSelectedList = selectedList.filter(list => list.value !== String(labelId));
+    console.log('modifiedSelectedList', modifiedSelectedList);
+    const payload = {
+      LabelsId: [labelId],
+      TagName: tagName,
+      User: {
+        email: user.email,
+      },
+      IsDeleted: true,
+      Tracking: null,
+    };
+
+    Api.post('/labels/labeltag', payload)
+      .then(res => {
+        return res.json();
+      })
+      .then(res => {
+        if (res.ValidTagName) {
+          showNotyInfo('Successfully removed the label');
+          // setSelectedList(modifiedSelectedList);
+          // setSelectedList([]);
+          // setSelectedTag([]);
+          // setSelectedList([]);
+          // setSelectedTag([]);
+          // setTagQuery('');
+          setSearchInput('');
+        } else {
+          showNotyAutoError('Something went wrong, please try again!');
+        }
+      })
+      .catch(e => {
+        console.log('Error ', e);
+      });
+  };
+
+  const renderTagName = (TagName, labelId) => {
+    return (
+      <span className="tags_wrapper">
+        <button type="button" className="tag-btn" onClick={() => removeSingleTag(TagName, labelId)}>
+          <span className="tag-label">{TagName}</span>
+          <i className="material-icons tag-clear-btn">close</i>
+        </button>
+      </span>
+    );
+  };
+
   const renderLabels = (LabelList, hasDivision) => {
     return (
       <div className={`${!hasDivision ? 'rmvPadLabel' : ''} label-wrapper`}>
         {LabelList.map((label, i) => {
-          const { LabelId, LabelName, TagId } = label;
+          const { LabelId, LabelName, TagName } = label;
           return (
             <div key={i}>
               {hasDivision && (
@@ -297,7 +372,9 @@ export default function MultiSelectHierarchy({
                 />
                 <span className="checkmark "></span>
               </label>
-              <span>{LabelName} (Label)</span>
+              <span>
+                {LabelName} (Label) {TagName !== '' && renderTagName(TagName, LabelId)}
+              </span>
             </div>
           );
         })}
@@ -360,9 +437,9 @@ export default function MultiSelectHierarchy({
                     value={tagQuery}
                     onChange={e => setTagQuery(e.target.value)}
                   />
-                  <i onClick={addTag} className="material-icons plus-icon">
-                    add_box
-                  </i>
+                  <button className="tagCloseButton" onClick={addTag}>
+                    <i className="material-icons plus-icon">add_box</i>
+                  </button>
                 </div>
                 {selectedTag.length > 0 && (
                   <div>
