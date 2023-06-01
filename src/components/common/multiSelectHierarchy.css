@@ -54,7 +54,9 @@ label.custom-checkbox.msh-checkbox {
   margin-left: -14px;
   overflow: scroll !important;
 }
-
+.btn-tagList {
+  display: flex;
+}
 .ms-dropdown-wrapper .dropdown-menu.show::-webkit-scrollbar {
   display: inherit;
 }
@@ -84,6 +86,7 @@ label.custom-checkbox.msh-checkbox {
 .label-wrapper {
   padding-left: 30px;
   margin-top: -10px;
+  width: max-content;
 }
 
 .msh-wrapper .sub-title,
@@ -95,7 +98,7 @@ label.custom-checkbox.msh-checkbox {
   font-size: 16px;
 }
 .msh-wrapper input {
-  width: 428px !important;
+  width: 324px !important;
   display: inherit !important;
   height: 35px !important;
 }
@@ -224,11 +227,12 @@ label.custom-checkbox.msh-checkbox {
 }
 
 .filterModal #dropdown-autoclose-inside {
-  width: 264px !important;
+  width: 210px !important;
   height: 38px;
   margin-left: 1px !important;
   text-align: left;
   overflow: auto;
+  border-radius: 4px;
   margin-top: 2px !important;
 }
 .filterModal .dropdown-toggle::after {
@@ -258,6 +262,11 @@ label.custom-checkbox.msh-checkbox {
   border: none;
   background: none;
   background-image: none;
+  box-shadow: none !important;
+}
+.msh-wrapper .tagCloseButton:focus {
+  outline: none;
+  box-shadow: none;
 }
 .msh-wrapper .material-icons.plus-icon {
   color: #999999 !important;
@@ -301,6 +310,6 @@ label.custom-checkbox.msh-checkbox {
   font-weight: 300;
   font-size: 14px;
   font-style: italic;
-  line-height: 20px !important;
+  line-height: 5px !important;
   color: rgba(0, 0, 0, 0.7);
 }

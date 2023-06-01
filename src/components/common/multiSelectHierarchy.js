@@ -81,10 +81,10 @@ export default function MultiSelectHierarchy({
           console.log('prerender data', preRenderList);
           setPreviousSelectedLabel(preRenderList);
           console.log('result', res);
-          if (res.TagList.length > 0 && res.TagList[0].name !== undefined) {
+          if (res.TagList.length > 0 && type !== 'requestFormInput') {
             // setSelectedList([...selectedList, { label: res.TagList[0].name, value: res.TagList[0].id }]);
             setSelectedList(preRenderList);
-            setSelectedTag([{ tag: res.TagList[0].name, labelIds: [res.TagList[0].id] }]);
+            setSelectedTag(res.TagList);
             // setTagQuery('Must Remove Existing Tag');
           } else {
             setSelectedList([]);
@@ -96,6 +96,7 @@ export default function MultiSelectHierarchy({
         });
     } else {
       if (searchInput.length === 0) {
+        setSelectedTag([]);
         if (releasingLabels && releasingLabels.length > 0) setcompanyList(releasingLabels);
       }
     }
@@ -142,12 +143,12 @@ export default function MultiSelectHierarchy({
     }
     return true;
   }
-  const removeTag = label => {
+  const removeTag = tagName => {
     const labelIds = selectedList.map(list => Number(list.value));
     console.log('selectedList#####', labelIds);
     const payload = {
-      LabelsId: labelIds,
-      TagName: selectedTag[0].tag,
+      LabelsId: [],
+      TagName: tagName,
       User: {
         email: user.email,
       },
@@ -162,11 +163,11 @@ export default function MultiSelectHierarchy({
       .then(res => {
         if (res.ValidTagName) {
           showNotyInfo('Successfully removed the label');
+          setSelectedList([]);
+          setSelectedTag([]);
           // setSelectedList([]);
           // setSelectedTag([]);
-          // setSelectedList([]);
-          // setSelectedTag([]);
-          // setTagQuery('');
+          setTagQuery('');
           setSearchInput('');
         } else {
           showNotyAutoError('Something went wrong, please try again!');
@@ -188,7 +189,7 @@ export default function MultiSelectHierarchy({
       console.log('add selectedlist', labelIds);
       console.log('previous-selectedlist', addNewLabelIds);
 
-      setSelectedTag([{ tag: tagQuery, labelIds: labelIds }]);
+      setSelectedTag([{ name: tagQuery, id: null }]);
       const payload = {
         LabelsId: selectedTag.length > 0 ? addNewLabelIds : labelIds,
         TagName: tagQuery,
@@ -206,6 +207,8 @@ export default function MultiSelectHierarchy({
         .then(res => {
           if (res.ValidTagName) {
             // setTagQuery('Must Remove Existing Tag');
+            // setSelectedList([...selectedList])
+
             setPreviousSelectedLabel([]);
             showNotyInfo('Successfully added the new label');
           } else {
@@ -338,14 +341,21 @@ export default function MultiSelectHierarchy({
   };
 
   const renderTagName = (TagName, labelId) => {
-    return (
-      <span className="tags_wrapper">
-        <button type="button" className="tag-btn" onClick={() => removeSingleTag(TagName, labelId)}>
-          <span className="tag-label">{TagName}</span>
-          <i className="material-icons tag-clear-btn">close</i>
-        </button>
-      </span>
-    );
+    if (isMultiSelect && type !== 'requestFormInput') {
+      return (
+        <span className="tags_wrapper">
+          <button
+            type="button"
+            className="tag-btn"
+            onClick={() => removeSingleTag(TagName, labelId)}
+          >
+            <span className="tag-label">{TagName}</span>
+            <i className="material-icons tag-clear-btn">close</i>
+          </button>
+        </span>
+      );
+    }
+    return null;
   };
 
   const renderLabels = (LabelList, hasDivision) => {
@@ -421,13 +431,14 @@ export default function MultiSelectHierarchy({
               {/* {companyList.length > 0 && renderCompanies(companyList)} */}
             </div>
             {/* isMultiSelect && type !== 'requestFormInput' */}
-            {isMultiSelect && (
+            {isMultiSelect && type !== 'requestFormInput' && (
               <div className="tags_wrapper">
                 <div className="main-title">Tags</div>
 
                 <p className="tag-sub-title">
-                  Companies, Divisions & Labels associated with a tag will no longer be displayed as
-                  options within search.
+                  <p>Companies, Divisions & Labels associated with</p>
+                  <p> a tag will no longer be displayed as options </p>
+                  <p>within search.</p>
                 </p>
                 <div className="search-input">
                   <Form.Control
@@ -441,14 +452,20 @@ export default function MultiSelectHierarchy({
                     <i className="material-icons plus-icon">add_box</i>
                   </button>
                 </div>
-                {selectedTag.length > 0 && (
-                  <div>
-                    <button type="button" className="tag-btn" onClick={() => removeTag()}>
-                      <span className="tag-label">{selectedTag[0].tag}</span>
-                      <i className="material-icons tag-clear-btn">close</i>
-                    </button>
-                  </div>
-                )}
+                <div className="btn-tagList">
+                  {selectedTag.map((tagList, index) => (
+                    <div key={index}>
+                      <button
+                        type="button"
+                        className="tag-btn"
+                        onClick={() => removeTag(tagList.name)}
+                      >
+                        <span className="tag-label">{tagList.name}</span>
+                        <i className="material-icons tag-clear-btn">close</i>
+                      </button>
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
 
