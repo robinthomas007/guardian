@@ -56,6 +56,7 @@ label.custom-checkbox.msh-checkbox {
 }
 .btn-tagList {
   display: flex;
+  width: max-content;
 }
 .ms-dropdown-wrapper .dropdown-menu.show::-webkit-scrollbar {
   display: inherit;

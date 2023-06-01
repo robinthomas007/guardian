@@ -205,6 +205,7 @@ const Filter = props => {
                   <MultiSelectHierarchy
                     handleChangeCheckbox={getMultiSelectDataForLabelIds}
                     user={props.userData}
+                    tagList={props.tagList}
                     isMultiSelect={props.userData.IsAdmin ? true : false}
                     type={'filterModal'}
                     releasingLabels={props.data.LabelFacets}
@@ -273,6 +274,7 @@ const Filter = props => {
                     type={'filterModal'}
                     releasingLabels={props.data.LabelFacets}
                     selectedLabelIds={exSelectedLabelIds}
+                    tagList={props.tagList}
                   />
                 </div>
               </div>

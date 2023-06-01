@@ -14,6 +14,7 @@ export default function MultiSelectHierarchy({
   user,
   releasingLabels,
   selectedLabelIds,
+  tagList,
 }) {
   const [companyList, setcompanyList] = useState([]);
   const [searchInput, setSearchInput] = useState('');
@@ -57,11 +58,15 @@ export default function MultiSelectHierarchy({
     }
   }, [selectedLabelIds]);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    setSelectedTag(tagList);
+  }, [tagList]);
 
   useEffect(() => {
     if (searchInput.length >= 3) {
       setLoading(true);
+      // let formattedSearchQuery = searchInput.replace(/[^\w\s]/gi, '');
+      // console.log('desiredOutput', formattedSearchQuery);
       const payload = {
         SearchCriteria: {
           SearchTerm: searchInput,
@@ -81,7 +86,11 @@ export default function MultiSelectHierarchy({
           console.log('prerender data', preRenderList);
           setPreviousSelectedLabel(preRenderList);
           console.log('result', res);
-          if (res.TagList.length > 0 && type !== 'requestFormInput') {
+          if (
+            res.TagList.length > 0 &&
+            type !== 'requestFormInput' &&
+            type !== 'releaseInfoInput'
+          ) {
             // setSelectedList([...selectedList, { label: res.TagList[0].name, value: res.TagList[0].id }]);
             setSelectedList(preRenderList);
             setSelectedTag(res.TagList);
@@ -189,7 +198,7 @@ export default function MultiSelectHierarchy({
       console.log('add selectedlist', labelIds);
       console.log('previous-selectedlist', addNewLabelIds);
 
-      setSelectedTag([{ name: tagQuery, id: null }]);
+      setSelectedTag([...selectedTag, { name: tagQuery, id: null }]);
       const payload = {
         LabelsId: selectedTag.length > 0 ? addNewLabelIds : labelIds,
         TagName: tagQuery,

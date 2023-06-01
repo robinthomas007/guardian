@@ -33,6 +33,7 @@ class UserSearchFilterModal extends Component {
                   handleChangeCheckbox={this.props.handleSearchFilterLabelChange}
                   user={this.props.userData}
                   isMultiSelect={true}
+                  tagList={this.props.tagList}
                   type={'userAdminModal'}
                   releasingLabels={this.props.LabelFacets}
                   selectedLabelIds={this.props.selectedList}

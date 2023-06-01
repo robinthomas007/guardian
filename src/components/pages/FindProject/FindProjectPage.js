@@ -212,6 +212,7 @@ class FindProjectPage extends Component {
             searchCriteria={searchCriteria}
             getSearchCriteria={getSearchCriteria}
             userData={this.props.user}
+            tagList={this.props.tagList}
           />
         </form>
 
@@ -282,6 +283,7 @@ const mapStateToProps = state => ({
   formValues: state.form.FindProjectPageForm,
   searchCriteria: state.findProjectReducer.searchCriteria,
   facets: state.findProjectReducer.facets,
+  tagList: state.findProjectReducer.tagList,
 });
 
 export default withRouter(

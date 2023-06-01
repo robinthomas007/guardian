@@ -18,6 +18,7 @@ export const initialState = {
     pageNumber: '1',
     filter: {},
   },
+  tagList: [],
 };
 
 export default createReducer(initialState, {
@@ -26,6 +27,7 @@ export default createReducer(initialState, {
   },
   [GET_PROJECT_SUCCESS]: (state, action) => {
     state.result = action.result;
+    state.tagList = action.result.TagList;
     state.loading = false;
     if (Object.keys(state.facets).length === 0 && state.facets.constructor === Object) {
       state.facets = action.result.Facets;

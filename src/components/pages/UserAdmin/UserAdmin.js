@@ -624,6 +624,11 @@ class UserAdmin extends Component {
                 ? this.props.accessFacets
                 : this.props.userFacets
             }
+            tagList={
+              this.state.activeTab === 'requestAccess'
+                ? this.props.accessTagList
+                : this.props.userTagList
+            }
             userData={this.props.user}
             activeTab={this.state.activeTab}
             selectedList={this.state.selectedList}
@@ -704,6 +709,8 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = state => ({
   userFacets: state.userAdminNewReducer.userFacets,
   accessFacets: state.userAdminNewReducer.accessFacets,
+  userTagList: state.userAdminNewReducer.userTagList,
+  accessTagList: state.userAdminNewReducer.accessTagList,
 });
 
 export default withRouter(
