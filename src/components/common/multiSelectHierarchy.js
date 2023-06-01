@@ -59,7 +59,9 @@ export default function MultiSelectHierarchy({
   }, [selectedLabelIds]);
 
   useEffect(() => {
-    setSelectedTag(tagList);
+    if (searchInput.length < 3) {
+      setSelectedTag(tagList);
+    }
   }, [tagList]);
 
   useEffect(() => {
@@ -91,10 +93,8 @@ export default function MultiSelectHierarchy({
             type !== 'requestFormInput' &&
             type !== 'releaseInfoInput'
           ) {
-            // setSelectedList([...selectedList, { label: res.TagList[0].name, value: res.TagList[0].id }]);
             setSelectedList(preRenderList);
             setSelectedTag(res.TagList);
-            // setTagQuery('Must Remove Existing Tag');
           } else {
             setSelectedList([]);
             setSelectedTag([]);
