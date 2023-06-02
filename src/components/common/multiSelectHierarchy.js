@@ -31,8 +31,6 @@ export default function MultiSelectHierarchy({
       if (isMultiSelect) setSelectedList([...selectedList, data]);
       else setSelectedList([data]);
     } else {
-      const removedSelectedList = selectedList.filter(item => item.value === data.value);
-      console.log('removedSelectedList', removedSelectedList);
       const modificedList = selectedList.filter(item => item.value !== data.value);
       setSelectedList(modificedList);
     }
@@ -53,7 +51,6 @@ export default function MultiSelectHierarchy({
   }, [releasingLabels]);
   useEffect(() => {
     if (selectedList.length !== selectedLabelIds.length) {
-      console.log('test', selectedLabelIds);
       setSelectedList(selectedLabelIds);
     }
   }, [selectedLabelIds]);
@@ -67,8 +64,6 @@ export default function MultiSelectHierarchy({
   useEffect(() => {
     if (searchInput.length >= 3) {
       setLoading(true);
-      // let formattedSearchQuery = searchInput.replace(/[^\w\s]/gi, '');
-      // console.log('desiredOutput', formattedSearchQuery);
       const payload = {
         SearchCriteria: {
           SearchTerm: searchInput,
@@ -85,9 +80,7 @@ export default function MultiSelectHierarchy({
           const result = res.Result;
           setcompanyList(result);
           const preRenderList = getDefaultSelectedList(result);
-          console.log('prerender data', preRenderList);
           setPreviousSelectedLabel(preRenderList);
-          console.log('result', res);
           if (
             res.TagList.length > 0 &&
             type !== 'requestFormInput' &&
@@ -153,8 +146,7 @@ export default function MultiSelectHierarchy({
     return true;
   }
   const removeTag = tagName => {
-    const labelIds = selectedList.map(list => Number(list.value));
-    console.log('selectedList#####', labelIds);
+    // const labelIds = selectedList.map(list => Number(list.value));
     const payload = {
       LabelsId: [],
       TagName: tagName,
@@ -192,13 +184,10 @@ export default function MultiSelectHierarchy({
   const addTag = () => {
     if (selectedList.length > 0) {
       const labelIds = selectedList.map(list => Number(list.value));
-
       const previousLabelIds = previousSelectedLabel.map(list => Number(list.value));
       const addNewLabelIds = labelIds.filter(val => !previousLabelIds.includes(val));
-      console.log('add selectedlist', labelIds);
-      console.log('previous-selectedlist', addNewLabelIds);
-
       const hasPreviousTag = selectedTag.some(tag => tag.name === tagQuery);
+
       if (!hasPreviousTag) {
         setSelectedTag([...selectedTag, { name: tagQuery, id: null }]);
       }
@@ -211,7 +200,6 @@ export default function MultiSelectHierarchy({
         IsDeleted: false,
         Tracking: null,
       };
-      console.log('add---payload ', payload);
       Api.post('/labels/labeltag', payload)
         .then(res => {
           return res.json();
@@ -314,11 +302,8 @@ export default function MultiSelectHierarchy({
   };
 
   const removeSingleTag = (tagName, labelId) => {
-    console.log('remove single label from tag', labelId);
     // const labelIds = selectedList.map(list => Number(list.value));
-    // console.log('selectedList#####', labelIds);
-    const modifiedSelectedList = selectedList.filter(list => list.value !== String(labelId));
-    console.log('modifiedSelectedList', modifiedSelectedList);
+
     const payload = {
       LabelsId: [labelId],
       TagName: tagName,
