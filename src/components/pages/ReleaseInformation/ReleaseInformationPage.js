@@ -592,6 +592,7 @@ class ReleaseinformationPage extends Component {
                       type={'releaseInfoInput'}
                       releasingLabels={this.props.user.ReleasingLabels}
                       selectedLabelIds={this.state.selectedList}
+                      tagList={[]}
                     />
                   )}
                 </div>

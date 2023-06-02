@@ -113,6 +113,7 @@ class UserEditModal extends Component {
                   type={'userEditModal'}
                   releasingLabels={this.props.LabelFacets}
                   selectedLabelIds={selectedOptions}
+                  tagList={[]}
                 />
                 <br />
                 <div>

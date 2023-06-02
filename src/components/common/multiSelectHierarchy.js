@@ -198,7 +198,10 @@ export default function MultiSelectHierarchy({
       console.log('add selectedlist', labelIds);
       console.log('previous-selectedlist', addNewLabelIds);
 
-      setSelectedTag([...selectedTag, { name: tagQuery, id: null }]);
+      const hasPreviousTag = selectedTag.some(tag => tag.name === tagQuery);
+      if (!hasPreviousTag) {
+        setSelectedTag([...selectedTag, { name: tagQuery, id: null }]);
+      }
       const payload = {
         LabelsId: selectedTag.length > 0 ? addNewLabelIds : labelIds,
         TagName: tagQuery,

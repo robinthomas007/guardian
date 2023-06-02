@@ -47,6 +47,7 @@ class UserSearchFilterModal extends Component {
                   type={'userAdminModal'}
                   releasingLabels={this.props.LabelFacets}
                   selectedLabelIds={this.props.selectedList}
+                  tagList={[]}
                 />
               )}
             </div>

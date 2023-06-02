@@ -161,6 +161,7 @@ class RequestAccessForm extends Component {
                 handleChangeCheckbox={this.handleChangeCheckbox}
                 type={'requestFormInput'}
                 isMultiSelect={true}
+                tagList={[]}
                 user={user}
                 selectedLabelIds={this.state.selectedList}
               />
