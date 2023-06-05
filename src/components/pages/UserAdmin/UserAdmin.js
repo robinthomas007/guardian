@@ -373,7 +373,6 @@ class UserAdmin extends Component {
     let modifiedselectedFilterLabelOptions = selectedFilterLabelOptions;
 
     const lablelIds = _.map(data, 'value');
-    console.log('labelIds from accessRequest', lablelIds);
     AccessRequestSearchCriteria.filter.labelIds = lablelIds;
     UserSearchCriteria.filter.labelIds = lablelIds;
     modifiedselectedFilterLabelOptions = lablelIds;

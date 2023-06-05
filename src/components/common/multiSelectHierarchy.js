@@ -61,6 +61,13 @@ export default function MultiSelectHierarchy({
     }
   }, [tagList]);
 
+  function removeDuplicates(arr) {
+    const uniqueList = arr.filter((obj, index) => {
+      return index === arr.findIndex(o => obj.value === o.value);
+    });
+    return uniqueList;
+  }
+
   useEffect(() => {
     if (searchInput.length >= 3) {
       setLoading(true);
@@ -86,8 +93,8 @@ export default function MultiSelectHierarchy({
             type !== 'requestFormInput' &&
             type !== 'releaseInfoInput'
           ) {
-            // setSelectedList(preRenderList);
-            setSelectedList([...selectedList, ...preRenderList]);
+            const uniqueSelectedList = removeDuplicates([...selectedList, ...preRenderList]);
+            setSelectedList(uniqueSelectedList);
             setSelectedTag(res.TagList);
           } else {
             // setSelectedList([]);
