@@ -86,10 +86,11 @@ export default function MultiSelectHierarchy({
             type !== 'requestFormInput' &&
             type !== 'releaseInfoInput'
           ) {
-            setSelectedList(preRenderList);
+            // setSelectedList(preRenderList);
+            setSelectedList([...selectedList, ...preRenderList]);
             setSelectedTag(res.TagList);
           } else {
-            setSelectedList([]);
+            // setSelectedList([]);
             setSelectedTag([]);
             setTagQuery('');
           }
