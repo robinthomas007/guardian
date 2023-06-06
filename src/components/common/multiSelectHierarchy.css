@@ -55,7 +55,8 @@ label.custom-checkbox.msh-checkbox {
   overflow: scroll !important;
 }
 .btn-tagList {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto auto auto;
   width: max-content;
 }
 .ms-dropdown-wrapper .dropdown-menu.show::-webkit-scrollbar {
