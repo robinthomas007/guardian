@@ -309,6 +309,37 @@ label.custom-checkbox.msh-checkbox {
   padding-left: 10px;
 }
 
+.tag_wrapper .tag-btn {
+  color: #ffffff;
+  border-radius: 100px;
+  border-color: #01579b !important;
+  background: #01579b;
+  height: 20px;
+  border: none;
+  padding-bottom: -9px;
+  line-height: 18px;
+  /* width: 109px; */
+  font-size: 12px;
+  margin: auto;
+  width: auto;
+}
+
+.tag_wrapper .tag-clear-btn {
+  padding: 0 !important;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #01579b;
+  /* margin-left: 15px; */
+  right: -30px !important;
+  margin-top: 1px;
+  font-size: medium;
+  margin-right: -4px;
+  font-weight: 600;
+}
+.tag_wrapper .tag-label {
+  padding-right: 5px;
+}
+
 .msh-wrapper .tag-sub-title {
   font-weight: 300;
   font-size: 14px;

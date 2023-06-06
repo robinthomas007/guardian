@@ -311,7 +311,7 @@ export default function MultiSelectHierarchy({
 
   const removeSingleTag = (tagName, labelId) => {
     // const labelIds = selectedList.map(list => Number(list.value));
-
+    const modifiedSelectedList = selectedList.filter(list => Number(list.value) !== labelId);
     const payload = {
       LabelsId: [labelId],
       TagName: tagName,
@@ -329,7 +329,7 @@ export default function MultiSelectHierarchy({
       .then(res => {
         if (res.ValidTagName) {
           showNotyInfo('Successfully removed the label');
-          // setSelectedList(modifiedSelectedList);
+          setSelectedList(modifiedSelectedList);
           // setSelectedList([]);
           // setSelectedTag([]);
           // setSelectedList([]);
@@ -348,7 +348,7 @@ export default function MultiSelectHierarchy({
   const renderTagName = (TagName, labelId) => {
     if (isMultiSelect && type !== 'requestFormInput') {
       return (
-        <span className="tags_wrapper">
+        <span className="tag_wrapper">
           <button
             type="button"
             className="tag-btn"
