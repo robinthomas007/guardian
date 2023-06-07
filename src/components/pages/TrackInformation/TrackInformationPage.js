@@ -25,6 +25,7 @@ import * as AudioActions from '../../../actions/audioActions';
 import { withTranslation } from 'react-i18next';
 import { compose } from 'redux';
 import ConfirmModal from 'components/modals/ConfirmModal';
+import TrackInformationDataTable from './pageComponents/TrackInformationDataTable';
 
 class TrackInformationPage extends Component {
   constructor(props) {
@@ -104,6 +105,14 @@ class TrackInformationPage extends Component {
   checkIsrcOnBlur = isrc => {
     const user = JSON.parse(sessionStorage.getItem('user'));
     this.props.isrcCheck({ User: { email: user.email }, isrcs: [isrc] });
+    // TODO:  only for video file
+    if (this.state.project && this.state.project.Project.mediaType === 2) {
+      this.props.getCisData({
+        Iscrs: [isrc],
+        ProjectId: this.props.match.params.projectID,
+        mediaType: 2,
+      });
+    }
   };
 
   setActiveDiscTab(tabID) {
@@ -254,6 +263,17 @@ class TrackInformationPage extends Component {
         project.Discs = _.cloneDeep(upcDisc);
         this.setState({ project });
       }
+    }
+    if (this.props.cisData !== nextProps.cisData) {
+      console.log(nextProps.cisData, 'nextProps.cisData');
+      const { project } = this.state;
+      const cisDiscData = project.Discs;
+      const tracks = project.Discs[0].Tracks;
+      tracks[0].fileName = nextProps.cisData[0].fileName;
+      console.log(tracks, 'trackstrackstracks');
+      cisDiscData[0].Tracks = tracks;
+      project.Discs = _.cloneDeep(cisDiscData);
+      this.setState({ project });
     }
 
     if (this.props.ExTracks !== nextProps.ExTracks) {
@@ -717,6 +737,7 @@ class TrackInformationPage extends Component {
           checkIsrc={this.checkIsrc}
           checkIsrcOnBlur={this.checkIsrcOnBlur}
           t={t}
+          isVideo={this.state.project.Project.mediaType === 1 ? false : true}
         />
 
         {!isReadOnlyUser && (
@@ -760,6 +781,7 @@ export default withRouter(
         ExTracks: state.audioReducer.ExTracks,
         loading: state.audioReducer.loading,
         upcLoading: state.releaseReducer.loading,
+        cisData: state.audioReducer.cisData,
       }),
       dispatch => ({
         onUploadStart: uniqFileName => dispatch(uploadProgressActions.startUpload(uniqFileName)),
@@ -769,6 +791,7 @@ export default withRouter(
         findUpc: val => dispatch(releaseAction.findUpc(val)),
         initializeUpcData: () => dispatch(releaseAction.initializeUpcData()),
         isrcCheck: isrc => dispatch(AudioActions.isrcCheck(isrc)),
+        getCisData: (isrcs, ProjectId) => dispatch(AudioActions.getCisData(isrcs, ProjectId)),
       }),
     ),
   )(TrackInformationPage),

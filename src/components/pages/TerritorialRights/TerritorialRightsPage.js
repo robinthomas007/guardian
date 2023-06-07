@@ -372,7 +372,7 @@ function TerritorialRightsPage(props) {
                 </strong>
               </div>
               <div className="col-2 text-right">
-                {rightindex === 0 && (
+                {rightindex === 0 && project.Project.mediaType !== 2 && (
                   <button className="btn btn-secondary" onClick={createANewBlockingPolicy}>
                     + {t('territorial:CreateANewBlockingRights')}
                   </button>
@@ -412,7 +412,8 @@ function TerritorialRightsPage(props) {
                     <tr>
                       <td className="track-bg">
                         <div className="ter-tab-wrapper">
-                          {project.Discs &&
+                          {project.Project.mediaType !== 2 &&
+                            project.Discs &&
                             project.Discs.map((disc, index) => {
                               return (
                                 <div

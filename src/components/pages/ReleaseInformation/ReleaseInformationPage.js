@@ -26,6 +26,7 @@ class ReleaseinformationPage extends Component {
 
     this.state = {
       formInputs: {
+        mediaType: 1,
         projectID: '',
         projectTitle: '',
         projectCoverArt: '',
@@ -41,6 +42,7 @@ class ReleaseinformationPage extends Component {
       },
       project: {
         Project: {
+          mediaType: 1,
           projectID: '',
           projectTitle: '',
           projectTypeID: '',
@@ -115,10 +117,11 @@ class ReleaseinformationPage extends Component {
     let inputValue = '';
     if (e.target.type === 'checkbox') {
       inputValue = e.target.checked ? true : false;
+    } else if (e.target.type === 'radio') {
+      inputValue = Number(e.target.value);
     } else {
       inputValue = e.target.value;
     }
-
     //this gets the inputs into the state.formInputs obj on change
     this.setState({ formInputs: { ...this.state.formInputs, [e.target.id]: inputValue } });
   }
@@ -474,6 +477,44 @@ class ReleaseinformationPage extends Component {
             <div className="col-9">
               <Form.Group className="row d-flex no-gutters">
                 <div className="col-3">
+                  <Form.Label className="col-form-label">{t('releaseInfo:MediaType')}</Form.Label>
+                  <ToolTip tabIndex="-1" message={t('releaseInfo:MediaType')} />
+                </div>
+                <div className="col-3 custom-radio-wrapper">
+                  <div className="custom-radio">
+                    <Form.Control
+                      tabIndex="1+"
+                      id="mediaType"
+                      name="mediaType"
+                      className="form-control"
+                      type="radio"
+                      value={1}
+                      checked={this.state.formInputs.mediaType === 1}
+                      onChange={this.handleChange}
+                    />
+                    <label for="audio">
+                      <i className={'material-icons'}>audiotrack</i> <span>Audio</span>
+                    </label>
+                  </div>
+                  <div className="custom-radio">
+                    <Form.Control
+                      tabIndex="1+"
+                      id="mediaType"
+                      name="mediaType"
+                      className="form-control"
+                      type="radio"
+                      checked={this.state.formInputs.mediaType === 2}
+                      value={2}
+                      onChange={this.handleChange}
+                    />
+                    <label for="video">
+                      <i className={'material-icons'}>videocam</i> <span>Video</span>
+                    </label>
+                  </div>
+                </div>
+              </Form.Group>
+              <Form.Group className="row d-flex no-gutters">
+                <div className="col-3">
                   <Form.Label className="col-form-label">
                     {t('releaseInfo:UPC')} <i> ({t('releaseInfo:Optional')})</i>
                   </Form.Label>
@@ -560,7 +601,7 @@ class ReleaseinformationPage extends Component {
               <Form.Group className="row d-flex no-gutters">
                 <div className="col-3">
                   <Form.Label className="col-form-label">
-                    {t('releaseInfo:ProjectType')}
+                    {t('releaseInfo:Configuration')}
                     <span className="required-ind">*</span>
                   </Form.Label>
                   <ToolTip tabIndex="-1" message={t('releaseInfo:ProjectTypeMessage')} />

@@ -80,8 +80,9 @@ class ProjectContactsPage extends Component {
     showNotyInfo(this.props.t('contact:projectSaved'), () => {
       if (saveAndContinue) {
         if (
-          !this.state.project.Project.projectReleaseDateTBD &&
-          !isPreReleaseDate(this.state.project)
+          (!this.state.project.Project.projectReleaseDateTBD &&
+            !isPreReleaseDate(this.state.project)) ||
+          this.state.project.Project.mediaType === 2
         ) {
           this.props.history.push({
             pathname: '/trackInformation/' + projectID,

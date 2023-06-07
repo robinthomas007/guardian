@@ -28,14 +28,14 @@ class TrackInformationDataTable extends Component {
   }
 
   trackInformationDataHeader = () => {
-    const { t } = this.props;
+    const { t, isVideo } = this.props;
     return (
       <tr>
         <th className="text-center">#</th>
-        <th className="text-center"></th>
-        <th className="text-center"></th>
+        {!isVideo && <th className="text-center"></th>}
+        <th className="text-center">{isVideo ? 'Video File' : ''}</th>
         <th>
-          {t('track:TrackTitle')}{' '}
+          {isVideo ? 'Video Title' : t('track:TrackTitle')}{' '}
           <span className="required-ind">
             <i>({t('track:Required')})</i>
           </span>
@@ -53,13 +53,13 @@ class TrackInformationDataTable extends Component {
           </div>
         </th>
         <th>{t('track:Artist')} </th>
-        <th className="text-center">{t('track:Single')}</th>
+        {!isVideo && <th className="text-center">{t('track:Single')}</th>}
         <th className="release-date-col">
           {t('track:ReleaseDate')} &nbsp;
           <ToolTip tabIndex="-1" message={t('track:ReleaseDateDescription')} />
         </th>
         <th>{t('track:TBD')}</th>
-        <th className="text-center"> {t('track:Actions')}</th>
+        {!isVideo && <th className="text-center"> {t('track:Actions')}</th>}
       </tr>
     );
   };
@@ -199,7 +199,7 @@ class TrackInformationDataTable extends Component {
     if (this.props.data.Discs.length > 0 && this.props.data.Discs[this.props.discID].Tracks) {
       let tableRows = this.props.data.Discs[this.props.discID].Tracks.map((track, i) => {
         const pre = isPreReleaseDate(this.props.data);
-        const { t } = this.props;
+        const { t, isVideo } = this.props;
         return (
           <tr
             className={'draggable-track'}
@@ -219,15 +219,31 @@ class TrackInformationDataTable extends Component {
               ></Form.Control>
               {i + 1}
             </td>
-            <td className="text-center">
-              <i className="material-icons">format_line_spacing</i>
-            </td>
-            <td className="text-center">
-              {track.hasUpload ? <i className="material-icons purple-icon">audiotrack</i> : ''}
-              <span className="loading-sm" id={`${track.fileName}_${i}_ico`}>
-                <AudioLoader show={track.fileUpload} />
-              </span>
-            </td>
+            {!isVideo && (
+              <td className="text-center">
+                <i className="material-icons">format_line_spacing</i>
+              </td>
+            )}
+            {!isVideo && (
+              <td className="text-center">
+                {track.hasUpload ? <i className="material-icons purple-icon">audiotrack</i> : ''}
+                <span className="loading-sm" id={`${track.fileName}_${i}_ico`}>
+                  <AudioLoader show={track.fileUpload} />
+                </span>
+              </td>
+            )}
+            {isVideo && (
+              <td>
+                <Form.Control
+                  type="text"
+                  id={`${track.fileName}_${i}_ico`}
+                  disabled={true}
+                  value={track.fileName}
+                  className={'trackTitleField requiredInput'}
+                ></Form.Control>
+                <div className="invalid-tooltip">{t('track:InvalidTrackTitle')}</div>
+              </td>
+            )}
             <td>
               <Form.Control
                 type="text"
@@ -258,18 +274,20 @@ class TrackInformationDataTable extends Component {
                 onChange={evt => this.handleChange(evt, track, i)}
               ></Form.Control>
             </td>
-            <td className="text-center">
-              <label className="custom-checkbox">
-                <input
-                  type="checkbox"
-                  id={'isSingle'}
-                  checked={track.isSingle}
-                  value={track.isSingle}
-                  onChange={evt => this.setSingle(evt, track, i)}
-                />
-                <span className="checkmark"></span>
-              </label>
-            </td>
+            {!isVideo && (
+              <td className="text-center">
+                <label className="custom-checkbox">
+                  <input
+                    type="checkbox"
+                    id={'isSingle'}
+                    checked={track.isSingle}
+                    value={track.isSingle}
+                    onChange={evt => this.setSingle(evt, track, i)}
+                  />
+                  <span className="checkmark"></span>
+                </label>
+              </td>
+            )}
             <td className="release-date-col">
               <DatePicker
                 id={'trackReleaseDate'}
@@ -308,22 +326,24 @@ class TrackInformationDataTable extends Component {
                 ></span>
               </label>
             </td>
-            <td className="text-center">
-              <button
-                className="btn btn-secondary action"
-                disabled={!pre || track.isCisAudio === true}
-                title={!pre ? `Audio is not required for post release projects` : ''}
-                onClick={() => this.props.showReplaceModal(track, i)}
-              >
-                <i className="material-icons">publish</i>
-              </button>
-              <button
-                className="btn btn-secondary action"
-                onClick={this.props.removeTrack.bind(null, i)}
-              >
-                <i className="material-icons">delete</i>
-              </button>
-            </td>
+            {!isVideo && (
+              <td className="text-center">
+                <button
+                  className="btn btn-secondary action"
+                  disabled={!pre || track.isCisAudio === true}
+                  title={!pre ? `Audio is not required for post release projects` : ''}
+                  onClick={() => this.props.showReplaceModal(track, i)}
+                >
+                  <i className="material-icons">publish</i>
+                </button>
+                <button
+                  className="btn btn-secondary action"
+                  onClick={this.props.removeTrack.bind(null, i)}
+                >
+                  <i className="material-icons">delete</i>
+                </button>
+              </td>
+            )}
           </tr>
         );
       });
@@ -332,10 +352,12 @@ class TrackInformationDataTable extends Component {
   }
 
   render() {
+    const { isVideo } = this.props;
+
     return (
       <div className="table-responsive">
         <Table droppable="true" className="tracks-table">
-          <thead style={{ position: 'sticky', top: '240px', background: '#fff' }}>
+          <thead style={{ position: 'sticky', top: isVideo ? '0px' : '240px', background: '#fff' }}>
             {this.trackInformationDataHeader()}
           </thead>
           <tbody>{this.getTrackRows()}</tbody>

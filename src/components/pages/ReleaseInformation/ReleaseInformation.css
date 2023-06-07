@@ -156,6 +156,56 @@ button.btn.btn-secondary.action.remove-art {
 .ml-10 {
   margin-left: 10px;
 }
+
 .mb-10 {
   margin-bottom: 10px;
+}
+
+.custom-radio-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.custom-radio-wrapper .custom-radio {
+  margin: 0 5px 0 0;
+  width: 100px;
+  height: 45px;
+  position: relative;
+}
+
+.custom-radio-wrapper label,
+.custom-radio-wrapper input {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.custom-radio-wrapper input[type='radio'] {
+  opacity: 0.011;
+  z-index: 100;
+}
+
+.custom-radio-wrapper input[type='radio']:checked + label {
+  background: #01579b;
+  color: #fff;
+}
+
+.custom-radio-wrapper label {
+  padding: 5px;
+  cursor: pointer;
+  z-index: 90;
+  background: #f5f5f5;
+  color: #01579b;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border-radius: 4px;
+}
+
+.custom-radio-wrapper .custom-radio label:hover {
+  background: #01579b !important;
 }

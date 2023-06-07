@@ -21,6 +21,18 @@ const selectedFilter = [
   { name: 'releaseFrom', label: i18n.t('search:ReleaseFrom') },
   { name: 'releaseTo', label: i18n.t('search:ReleaseTo') },
   { name: 'excludeLabelIds', label: i18n.t('search:ExcludeLabels') },
+  { name: 'mediaType', label: i18n.t('search:ProjectType') },
+];
+
+const MediaFacets = [
+  {
+    id: 1,
+    name: 'Audio',
+  },
+  {
+    id: 2,
+    name: 'Video',
+  },
 ];
 
 const Filter = props => {
@@ -184,11 +196,12 @@ const Filter = props => {
     setExSelectedLabelIds(data);
   };
   // excludeLabelIds
-  const LabelFacets = formatSelectArray(_.get(props, 'data.LabelFacets', []));
+  // const LabelFacets = formatSelectArray(_.get(props, 'data.LabelFacets', []));
   const StatusFacets = formatSelectArray(_.get(props, 'data.StatusFacets', []));
   const HasAudioFacets = formatSelectArray(_.get(props, 'data.HasAudioFacets', []));
   const HasBlockingFacets = formatSelectArray(_.get(props, 'data.HasBlockingFacets', []));
   const HasRightsFacets = formatSelectArray(_.get(props, 'data.HasRightsFacets', []));
+  const MediaTypeFacets = formatSelectArray(MediaFacets, []);
   return (
     <div>
       <div className="search-filters find-project-filter collapse" id="collapsePanel">
@@ -229,7 +242,7 @@ const Filter = props => {
           <div className="row no-gutters">
             <div className="col-5">
               <Field
-                label={t('search:HasAudio')}
+                label={t('search:HasAssets')}
                 name="hasAudio"
                 clearable={true}
                 handleOnSelect={handleOnSelect}
@@ -278,6 +291,18 @@ const Filter = props => {
                   />
                 </div>
               </div>
+            </div>
+          </div>
+          <div className="row no-gutters">
+            <div className="col-5">
+              <Field
+                label={t('search:ProjectType')}
+                name="mediaType"
+                clearable={true}
+                handleOnSelect={handleOnSelect}
+                component={Dropdown}
+                options={MediaTypeFacets}
+              />
             </div>
           </div>
           <div className="row no-gutters">

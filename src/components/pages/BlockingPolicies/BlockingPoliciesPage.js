@@ -313,7 +313,7 @@ function BlockingPoliciesPage(props) {
                 </strong>
               </div>
               <div className="col-2 text-right">
-                {policyindex === 0 && (
+                {policyindex === 0 && project.Project.mediaType !== 2 && (
                   <button className="btn btn-secondary" onClick={createANewBlockingPolicy}>
                     + {t('blocking:CreateANewBlockingPolicy')}
                   </button>
@@ -359,7 +359,8 @@ function BlockingPoliciesPage(props) {
                     <tr>
                       <td className="track-bg">
                         <div className="ter-tab-wrapper">
-                          {project.Discs &&
+                          {project.Project.mediaType !== 2 &&
+                            project.Discs &&
                             project.Discs.map((disc, index) => {
                               return (
                                 <div

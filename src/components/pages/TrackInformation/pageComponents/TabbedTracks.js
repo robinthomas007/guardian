@@ -27,12 +27,36 @@ class TabbedTracks extends Component {
     this.props.handleActiveDiscUpdate(key);
   }
 
+  getVideoTable = () => {
+    const { t, data, isVideo } = this.props;
+
+    return (
+      <div>
+        <TrackInformationDataTable
+          data={data}
+          discID={0}
+          updateDiscData={this.updateDiscData}
+          removeTrack={(e, i) => this.props.removeTrack(e, i)}
+          setSingle={(e, track, i) => this.props.setSingle.bind(e, track, i)}
+          showReplaceModal={(track, i) => this.props.showReplaceModal(track, i)}
+          hideReplaceAudioModal={(track, i) => this.props.hideReplaceAudioModal(track, i)}
+          addDisc={this.props.addDisc}
+          handleChildDrag={(e, i) => this.props.handleChildDrag(e, i)}
+          handleChildDrop={(e, i) => this.props.handleChildDrop(e, i)}
+          checkIsrc={this.props.checkIsrc}
+          checkIsrcOnBlur={this.props.checkIsrcOnBlur}
+          t={t}
+          isVideo={isVideo}
+        />
+      </div>
+    );
+  };
+
   getDiscTabs = () => {
-    const { t, diskDeleteConfirmation, data } = this.props;
+    const { t, diskDeleteConfirmation, data, isVideo } = this.props;
     if (data.Discs) {
       let discs = data.Discs.map((disc, i) => {
         const count = i + 1;
-
         return (
           <Tab
             key={count}
@@ -66,6 +90,7 @@ class TabbedTracks extends Component {
               checkIsrc={this.props.checkIsrc}
               checkIsrcOnBlur={this.props.checkIsrcOnBlur}
               t={t}
+              isVideo={isVideo}
             />
           </Tab>
         );
@@ -82,38 +107,48 @@ class TabbedTracks extends Component {
   };
 
   render() {
-    const { t } = this.props;
+    const { t, isVideo } = this.props;
     return (
       <div>
-        <div className="row no-gutters d-flex">
-          <div className="col-9"></div>
-          <div className="col-3 d-flex justify-content-end">
-            <ul className="disc-track-buttons">
-              <li>
-                <button
-                  type="button"
-                  className="btn btn-secondary btn-sm"
-                  onClick={this.props.addDisc}
-                >
-                  <i className="material-icons">adjust</i>
-                  {t('track:AddDisc')}
-                </button>
-              </li>
-              <li>
-                <button
-                  type="button"
-                  className="btn btn-secondary btn-sm"
-                  onClick={this.props.addTrack}
-                >
-                  <i className="material-icons">add</i> {t('track:AddTrack')}
-                </button>
-              </li>
-            </ul>
+        {isVideo ? (
+          this.props.data.Discs && this.props.data.Discs.length > 0 ? (
+            this.getVideoTable()
+          ) : (
+            this.props.addDisc()
+          )
+        ) : (
+          <div>
+            <div className="row no-gutters d-flex">
+              <div className="col-9"></div>
+              <div className="col-3 d-flex justify-content-end">
+                <ul className="disc-track-buttons">
+                  <li>
+                    <button
+                      type="button"
+                      className="btn btn-secondary btn-sm"
+                      onClick={this.props.addDisc}
+                    >
+                      <i className="material-icons">adjust</i>
+                      {t('track:AddDisc')}
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      type="button"
+                      className="btn btn-secondary btn-sm"
+                      onClick={this.props.addTrack}
+                    >
+                      <i className="material-icons">add</i> {t('track:AddTrack')}
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            {this.props.data.Discs && this.props.data.Discs.length > 0
+              ? this.getDiscTabs()
+              : this.props.addDisc()}
           </div>
-        </div>
-        {this.props.data.Discs && this.props.data.Discs.length > 0
-          ? this.getDiscTabs()
-          : this.props.addDisc()}
+        )}
       </div>
     );
   }

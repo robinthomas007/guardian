@@ -65,5 +65,8 @@
   "From": "From",
   "Sections": "Sections",
   "To": "To",
-  "Published": "Published"
+  "Published": "Published",
+  "Asset": "Asset(s)",
+  "ProjectType": "Project Type",
+  "HasAssets": "Has Assets"
 }

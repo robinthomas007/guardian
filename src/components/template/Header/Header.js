@@ -74,6 +74,7 @@ class Header extends Component {
             'https://usaws03-guardian-media.s3.amazonaws.com/videos/The+Guardian+2021+pt.+4+Release+Information.mp4',
           modalHeader: 'Release Information',
           isNav: true,
+          isVideo: true,
         },
         {
           description: 'Contacts',
@@ -87,6 +88,7 @@ class Header extends Component {
             'https://usaws03-guardian-media.s3.amazonaws.com/videos/The+Guardian+2021+pt.+5+Contact+Information.mp4',
           modalHeader: 'Project Contacts',
           isNav: true,
+          isVideo: true,
         },
         {
           description: 'AudioFiles',
@@ -100,6 +102,7 @@ class Header extends Component {
             'https://usaws03-guardian-media.s3.amazonaws.com/videos/The+Guardian+2021+pt.+3.5+Audio+Files.mp4',
           modalHeader: 'Audio Files',
           isNav: true,
+          isVideo: false,
         },
         {
           description: 'TrackInfo',
@@ -113,6 +116,7 @@ class Header extends Component {
             'https://usaws03-guardian-media.s3.amazonaws.com/videos/The+Guardian+2021+pt.+9+Track+Information.mp4',
           modalHeader: 'Track Information',
           isNav: true,
+          isVideo: true,
         },
         {
           description: 'Rights',
@@ -126,6 +130,7 @@ class Header extends Component {
             'https://usaws03-guardian-media.s3.amazonaws.com/videos/The+Guardian+2021+pt.+10+Territorial+Rights.mp4',
           modalHeader: 'Territorial Rights',
           isNav: true,
+          isVideo: true,
         },
         {
           description: 'Blocking',
@@ -139,6 +144,7 @@ class Header extends Component {
             'https://usaws03-guardian-media.s3.amazonaws.com/videos/The+Guardian+2021+pt.+12+Blocking+Policies.mp4',
           modalHeader: 'Post-Release UGC Blocking',
           isNav: true,
+          isVideo: true,
         },
         {
           description: 'Review',
@@ -152,6 +158,7 @@ class Header extends Component {
             'https://usaws03-guardian-media.s3.amazonaws.com/videos/The+Guardian+2021+pt.+13+Review+%26+Submit.mp4',
           modalHeader: 'Review and Submit',
           isNav: true,
+          isVideo: true,
         },
         {
           description: 'Find a Project',
@@ -231,9 +238,15 @@ class Header extends Component {
       return this.getNavIndex(this.state.navSteps);
     }
     const isPreRelease = isPreReleaseDate(this.props.projectData);
+    const renderNavs =
+      this.props.projectData &&
+      this.props.projectData.Project &&
+      this.props.projectData.Project.mediaType === 1
+        ? this.state.navSteps.filter(step => step.isNav)
+        : this.state.navSteps.filter(step => step.isVideo);
     const navToUse = isPreRelease
-      ? this.state.navSteps.filter(step => step.isNav)
-      : this.state.navSteps.filter(step => step.preRelease);
+      ? renderNavs.filter(step => step.isNav)
+      : renderNavs.filter(step => step.preRelease);
     const activeNav = this.getNavIndex(navToUse);
     return activeNav;
   };
@@ -242,9 +255,15 @@ class Header extends Component {
     const isPreRelease = isPreReleaseDate(this.props.projectData);
     //If prerelease date is on, We need 7 steps. Otherwise we need only 5 steps.
     //This can be differentiate based on the flag preRelease
+    const renderNavs =
+      this.props.projectData &&
+      this.props.projectData.Project &&
+      this.props.projectData.Project.mediaType === 1
+        ? this.state.navSteps.filter(step => step.isNav)
+        : this.state.navSteps.filter(step => step.isVideo);
     const navToUse = isPreRelease
-      ? this.state.navSteps.filter(step => step.isNav)
-      : this.state.navSteps.filter(step => step.preRelease);
+      ? renderNavs.filter(step => step.isNav)
+      : renderNavs.filter(step => step.preRelease);
     const activeNav = this.getActiveNav();
     return (
       <ul className="d-flex justify-content-center align-items-stretch">

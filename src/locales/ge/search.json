@@ -65,5 +65,8 @@
   "From": "Aus",
   "Sections": "Abschnitte",
   "To": "Zu",
-  "Published": "Veröffentlicht"
+  "Published": "Veröffentlicht",
+  "Asset": "Vermögenswerte)",
+  "ProjectType": "Projekttyp",
+  "HasAssets": "Hat Vermögenswerte"
 }

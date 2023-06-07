@@ -358,6 +358,7 @@ class FindProjectDataTable extends Component {
               <td onClick={() => this.handleRowClick(project.projectID)}>
                 {project.projectReleasingLabel}
               </td>
+              <td onClick={() => this.handleRowClick(project.projectID)}>{project.mediaType}</td>
               <td onClick={() => this.handleRowClick(project.projectID)}>
                 {project.projectReleaseDate
                   ? `${moment.utc(project.projectReleaseDate).format('MM-DD-YYYY hh:mm A')} UTC`
@@ -549,6 +550,24 @@ class FindProjectDataTable extends Component {
           </th>
           <th
             className="text-nowrap sortable"
+            onMouseOver={(e, columnID) => this.handleMouseOver(e, 'mediaType')}
+            onMouseOut={(e, columnID) => this.handleMouseOut(e, 'mediaType')}
+            onClick={id => this.handleTableSort('mediaType')}
+          >
+            {t('search:ProjectType')}
+            {this.handleSortDisplay('mediaType')}
+            <i
+              className={
+                this.state.activeHover === 'mediaType'
+                  ? 'material-icons'
+                  : 'material-icons invisible'
+              }
+            >
+              arrow_drop_up
+            </i>
+          </th>
+          <th
+            className="text-nowrap sortable"
             onMouseOver={(e, columnID) => this.handleMouseOver(e, 'release_date')}
             onMouseOut={(e, columnID) => this.handleMouseOut(e, 'release_date')}
             onClick={id => this.handleTableSort('release_date')}
@@ -583,7 +602,7 @@ class FindProjectDataTable extends Component {
             </i>
           </th>
 
-          <th className="status text-center">{t('search:Audio')}</th>
+          <th className="status text-center">{t('search:Asset')}</th>
           <th className="status text-center">{t('search:Tracks')}</th>
           <th className="status text-center">{t('search:Rights')}</th>
           <th className="status text-center">{t('search:Blocking')}</th>

@@ -65,5 +65,8 @@
   "From": "De",
   "Sections": "Sections",
   "To": "À",
-  "Published": "Publié"
+  "Published": "Publié",
+  "Asset": "Actif",
+  "ProjectType": "Type de projet",
+  "HasAssets": "Possède des atouts"
 }

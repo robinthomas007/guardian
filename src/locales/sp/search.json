@@ -65,5 +65,8 @@
   "From": "De",
   "Sections": "Secciones",
   "To": "A",
-  "Published": "Publicado"
+  "Published": "Publicado",
+  "Asset": "Activo",
+  "ProjectType": "Projekttyp",
+  "HasAssets": "Tiene activos"
 }
