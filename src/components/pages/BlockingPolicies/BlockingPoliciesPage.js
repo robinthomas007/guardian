@@ -16,6 +16,7 @@ import {
   showNotyAutoError,
   getProjectReview,
   getPlatforms,
+  getVideoPlatforms,
   NO_LABEL_ID,
 } from './../../Utils';
 import moment from 'moment';
@@ -97,11 +98,12 @@ function BlockingPoliciesPage(props) {
   };
 
   const createPolicySet = () => {
+    console.log(props.mediaType, 'this.props.mediaType');
     return {
       blockingPolicySetID: '',
       sequence: blockingPolicies.length > 0 ? blockingPolicies.length + 1 : 1,
       description: '',
-      platformPolicies: getPlatforms(),
+      platformPolicies: Number(props.mediaType) === 2 ? getVideoPlatforms() : getPlatforms(),
       tracks: [],
     };
   };
@@ -358,26 +360,27 @@ function BlockingPoliciesPage(props) {
                   <tbody>
                     <tr>
                       <td className="track-bg">
-                        <div className="ter-tab-wrapper">
-                          {project.Project.mediaType !== 2 &&
-                            project.Discs &&
-                            project.Discs.map((disc, index) => {
-                              return (
-                                <div
-                                  onClick={() => setSelectedDisk(index)}
-                                  className={`${
-                                    selectedDisk === index ? 'active ter-tabs' : 'ter-tabs'
-                                  }`}
-                                >
-                                  {t('blocking:Disc') + ' ' + (index + 1)}
-                                </div>
-                              );
-                            })}
-                        </div>
+                        {project.Project.mediaType !== 2 && (
+                          <div className="ter-tab-wrapper">
+                            {project.Discs &&
+                              project.Discs.map((disc, index) => {
+                                return (
+                                  <div
+                                    onClick={() => setSelectedDisk(index)}
+                                    className={`${
+                                      selectedDisk === index ? 'active ter-tabs' : 'ter-tabs'
+                                    }`}
+                                  >
+                                    {t('blocking:Disc') + ' ' + (index + 1)}
+                                  </div>
+                                );
+                              })}
+                          </div>
+                        )}
                         <div
                           onDrop={e => drop(e, policyindex)}
                           onDragOver={allowDrop}
-                          className="drop-area"
+                          className={`${project.Project.mediaType == 2 ? 'video' : ''} drop-area`}
                           id={`blk-plcy-drop-${policy.sequence}`}
                         >
                           {policy.tracks && policy.tracks.length === 0 && (

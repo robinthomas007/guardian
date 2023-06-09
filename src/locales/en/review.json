@@ -50,5 +50,6 @@
   "Until": "Until",
   "Always": "Always",
   "publish": "Publish",
-  "SuperConfidential": "We have detected that some of the content you are submitting is registered as super confidential. As a result of this we will set the project to private and mask all of the content submitted."
+  "SuperConfidential": "We have detected that some of the content you are submitting is registered as super confidential. As a result of this we will set the project to private and mask all of the content submitted.",
+  "VideoInformation": "Video Information"
 }

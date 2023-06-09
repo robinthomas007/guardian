@@ -21,6 +21,7 @@ import moment from 'moment';
 import { withTranslation } from 'react-i18next';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 
 class ReviewAndSubmitPage extends Component {
   constructor(props) {
@@ -75,6 +76,8 @@ class ReviewAndSubmitPage extends Component {
           this.setState({ showloader: false });
         }
         this.props.setStatus(responseJSON.Project.projectStatus);
+        localStorage.setItem('mediaType', responseJSON.Project.mediaType);
+        this.props.changeMediaType(responseJSON.Project.mediaType);
       })
       .catch(error => {
         console.error(error);
@@ -215,7 +218,7 @@ class ReviewAndSubmitPage extends Component {
   getPage = () => {
     const { t, user } = this.props;
     const isReadOnlyUser = user.DefaultReleasingLabelID === NO_LABEL_ID ? true : false;
-
+    const mediaType = _.get(this.props.data.Project, 'mediaType', 1);
     return (
       <div>
         <div className="page-container">
@@ -428,7 +431,12 @@ class ReviewAndSubmitPage extends Component {
         <div className="page-container review-section">
           <div className="row no-gutters">
             <div className="col-10 justify-content-start">
-              <h2>{t('review:AudioFiles&TrackInformation')}</h2>
+              <h2>
+                {' '}
+                {mediaType === 2
+                  ? t('review:VideoInformation')
+                  : t('review:AudioFiles&TrackInformation')}{' '}
+              </h2>
             </div>
 
             <div className="col-2 justify-content-end">
@@ -453,7 +461,7 @@ class ReviewAndSubmitPage extends Component {
                     role="tabpanel"
                     aria-labelledby="nav-home-tab"
                   >
-                    <AudioFilesTabsContainer discs={this.props.data.Discs} />
+                    <AudioFilesTabsContainer mediaType={mediaType} discs={this.props.data.Discs} />
                   </div>
                 </div>
               </div>
@@ -504,7 +512,7 @@ class ReviewAndSubmitPage extends Component {
             <div className="col-12">
               <br />
               <div className="review-card">
-                <BlockingPoliciesDataTable data={this.props.data} />
+                <BlockingPoliciesDataTable mediaType={mediaType} data={this.props.data} />
               </div>
             </div>
           </div>

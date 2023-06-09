@@ -44,6 +44,7 @@ class FindProjectPage extends Component {
     };
     this.props.setProjectID('', '/findProject');
     this.props.handleProjectSearch({ searchCriteria: searchData });
+    localStorage.removeItem('mediaType');
   }
 
   formSubmit(values) {

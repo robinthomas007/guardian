@@ -119,6 +119,9 @@ class ReleaseinformationPage extends Component {
       inputValue = e.target.checked ? true : false;
     } else if (e.target.type === 'radio') {
       inputValue = Number(e.target.value);
+      // only for video / audio toggle
+      localStorage.setItem('mediaType', inputValue);
+      this.props.changeMediaType(inputValue);
     } else {
       inputValue = e.target.value;
     }
@@ -331,6 +334,8 @@ class ReleaseinformationPage extends Component {
 
     if (this.props.match.params && this.props.match.params.projectID) {
       this.handleDataLoad();
+    } else {
+      localStorage.setItem('mediaType', 1);
     }
     if (this.props.user && this.exitsLabels.length === 1) {
       this.setState({
@@ -439,6 +444,8 @@ class ReleaseinformationPage extends Component {
           showloader: false,
         });
         this.props.setHeaderProjectData(this.state.project);
+        this.props.changeMediaType(responseJSON.Project.mediaType);
+        localStorage.setItem('mediaType', responseJSON.Project.mediaType);
       })
       .catch(error => {
         console.error(error);

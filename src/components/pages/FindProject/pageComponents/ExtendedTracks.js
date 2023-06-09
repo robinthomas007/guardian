@@ -103,16 +103,18 @@ const Tracks = ({
   dwsOrderInfo,
 }) => {
   const { t } = useTranslation();
+
+  console.log(project, 'projectproject232');
   return (
     <Table className="ext-tracks-table" responsive>
       <thead>
         <tr>
           <th>#</th>
           <th>{t('track:FileName')}</th>
-          <th>{t('track:TrackTitle')}</th>
+          <th>{project.mediaType !== 'Video' ? t('track:TrackTitle') : t('track:VideoTitle')}</th>
           <th>{t('track:ISRC')}</th>
           <th>{t('track:Artist')}</th>
-          <th>{t('track:Single')}</th>
+          {project.mediaType !== 'Video' && <th>{t('track:Single')}</th>}
           <th>{t('track:ReleaseDate')}</th>
           <th>{t('track:Deliver')}</th>
           <th className="status text-center">{t('track:HasRights')}</th>
@@ -130,9 +132,11 @@ const Tracks = ({
                 <td>{track.trackTitle}</td>
                 <td>{track.isrc}</td>
                 <td>{track.artist}</td>
-                <td>
-                  <i className="material-icons">{track.isSingle ? 'check' : 'close'}</i>
-                </td>
+                {project.mediaType !== 'Video' && (
+                  <td>
+                    <i className="material-icons">{track.isSingle ? 'check' : 'close'}</i>
+                  </td>
+                )}
                 <td>{track.trackReleaseDate || t('track:TBD')}</td>
                 <td>
                   {dwsData.length > 0 && (

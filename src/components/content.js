@@ -38,6 +38,7 @@ class Content extends Component {
       projectID: '',
       pagePath: '',
       projectStatus: null,
+      mediaType: localStorage.getItem('mediaType'),
       project: {
         Project: {},
       },
@@ -250,6 +251,10 @@ class Content extends Component {
     this.setState({ projectStatus: status });
   };
 
+  changeMediaType = type => {
+    this.setState({ mediaType: type });
+  };
+
   render() {
     if (this.state.userLoaded) {
       return (
@@ -270,6 +275,7 @@ class Content extends Component {
                 handleLogoutClick={this.handleLogoutClick}
                 getUserData={this.getUserData}
                 status={this.state.projectStatus}
+                mediaType={this.state.mediaType}
               />
               <div
                 className={
@@ -290,6 +296,7 @@ class Content extends Component {
                       setProjectID={this.setProjectID}
                       setHeaderProjectData={this.setHeaderProjectData}
                       serverTimeDate={this.state.serverTimeDate}
+                      changeMediaType={this.changeMediaType}
                     />
                   )}
                 />
@@ -348,6 +355,7 @@ class Content extends Component {
                       setProjectID={this.setProjectID}
                       setHeaderProjectData={this.setHeaderProjectData}
                       serverTimeDate={this.state.serverTimeDate}
+                      mediaType={this.state.mediaType}
                     />
                   )}
                 />
@@ -374,6 +382,7 @@ class Content extends Component {
                       setHeaderProjectData={this.setHeaderProjectData}
                       serverTimeDate={this.state.serverTimeDate}
                       setStatus={this.setStatus}
+                      changeMediaType={this.changeMediaType}
                     />
                   )}
                 />

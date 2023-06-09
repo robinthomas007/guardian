@@ -239,9 +239,7 @@ class Header extends Component {
     }
     const isPreRelease = isPreReleaseDate(this.props.projectData);
     const renderNavs =
-      this.props.projectData &&
-      this.props.projectData.Project &&
-      this.props.projectData.Project.mediaType === 1
+      this.props.mediaType === 1
         ? this.state.navSteps.filter(step => step.isNav)
         : this.state.navSteps.filter(step => step.isVideo);
     const navToUse = isPreRelease
@@ -253,18 +251,20 @@ class Header extends Component {
 
   getNavLinks = () => {
     const isPreRelease = isPreReleaseDate(this.props.projectData);
+
     //If prerelease date is on, We need 7 steps. Otherwise we need only 5 steps.
     //This can be differentiate based on the flag preRelease
     const renderNavs =
-      this.props.projectData &&
-      this.props.projectData.Project &&
-      this.props.projectData.Project.mediaType === 1
+      this.props.mediaType === 1
         ? this.state.navSteps.filter(step => step.isNav)
         : this.state.navSteps.filter(step => step.isVideo);
     const navToUse = isPreRelease
       ? renderNavs.filter(step => step.isNav)
       : renderNavs.filter(step => step.preRelease);
     const activeNav = this.getActiveNav();
+    if (this.props.mediaType === 2) {
+      navToUse[2].description = 'VideoInfo';
+    }
     return (
       <ul className="d-flex justify-content-center align-items-stretch">
         {navToUse.map((navLink, i) => {

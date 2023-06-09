@@ -21,16 +21,18 @@ class AudioFilesDataTable extends Component {
             <td className="col-2">{track.trackTitle}</td>
             <td className="col-2">{track.isrc}</td>
             <td className="col-2">{track.artist}</td>
-            <td className="col-1 text-center">
-              <label className="custom-checkbox">
-                {track.isSingle ? (
-                  <input disabled type="checkbox" checked />
-                ) : (
-                  <input disabled type="checkbox" />
-                )}
-                <span className="static-checkmark"></span>
-              </label>
-            </td>
+            {this.props.mediaType !== 2 && (
+              <td className="col-1 text-center">
+                <label className="custom-checkbox">
+                  {track.isSingle ? (
+                    <input disabled type="checkbox" checked />
+                  ) : (
+                    <input disabled type="checkbox" />
+                  )}
+                  <span className="static-checkmark"></span>
+                </label>
+              </td>
+            )}
             <td className="col-2 text-center">
               {track.trackReleaseDate !== ''
                 ? `${moment.utc(track.trackReleaseDate).format('MM-DD-YYYY hh:mm A')} UTC`
@@ -53,7 +55,9 @@ class AudioFilesDataTable extends Component {
             <th className="col-2">{t('review:TrackTitle')}</th>
             <th className="col-2">{t('review:ISRC')}</th>
             <th className="col-2">{t('review:Artist')}</th>
-            <th className="col-1 text-center">{t('review:Single')}</th>
+            {this.props.mediaType !== 2 && (
+              <th className="col-1 text-center">{t('review:Single')}</th>
+            )}
             <th className="col-2 text-center">{t('review:ReleaseDate')}</th>
           </tr>
         </thead>

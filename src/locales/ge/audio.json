@@ -37,6 +37,7 @@
   "NoMatchingISRC": "Kein passender ISRC gefunden",
   "NoFileFoundFromASPEN": "Keine Dateien im ASPEN-Repository von UMG gefunden",
   "weHaveFound": "Wir haben gefunden und hochgeladen",
+  "weHaveFoundYourVideo": "¡Wir haben Ihr Video im ASPEN-Repository von UMG gefunden!",
   "trackFromUMG": "Tracks aus dem ASPEN-Repository von UMG",
   "UploadAudioFile": "Audiodatei hochladen",
   "Uploading": "Hochladen...",

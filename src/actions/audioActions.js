@@ -83,9 +83,13 @@ export const getCisData = data => {
           for (let i = 0; i < data.Iscrs.length; i++) {
             dispatch(endUpload('CIS' + i));
           }
-          showNotyInfo(
-            `${i18n.t('audio:weHaveFound')} ${response.length} ${i18n.t('audio:trackFromUMG')}`,
-          );
+          if (data.mediaType === 2) {
+            showNotyInfo(`${i18n.t('audio:weHaveFoundYourVideo')}`);
+          } else {
+            showNotyInfo(
+              `${i18n.t('audio:weHaveFound')} ${response.length} ${i18n.t('audio:trackFromUMG')}`,
+            );
+          }
         } else {
           for (let i = 0; i < data.Iscrs.length; i++) {
             dispatch(endUpload('CIS' + i));

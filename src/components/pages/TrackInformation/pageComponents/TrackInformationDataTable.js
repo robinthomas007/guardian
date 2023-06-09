@@ -132,6 +132,9 @@ class TrackInformationDataTable extends Component {
   }
 
   handleTBDCheckedLoad = track => {
+    if (this.props.isVideo) {
+      return !track.trackReleaseDate ? true : false;
+    }
     return !track.trackReleaseDate && track.isSingle ? true : false;
   };
 
@@ -294,7 +297,7 @@ class TrackInformationDataTable extends Component {
                 showTimeSelect
                 tabIndex={this.props.discID} // unable to add custom attribute in react-datepicker
                 selected={
-                  track.trackReleaseDate && track.trackReleaseDate != ''
+                  track.trackReleaseDate && track.trackReleaseDate !== ''
                     ? new Date(track.trackReleaseDate)
                     : null
                 }
@@ -303,12 +306,12 @@ class TrackInformationDataTable extends Component {
                 onChange={date => this.handleDateChange(date, track)}
                 customInput={
                   <CustomInput
-                    isreadOnly={track.isSingle ? false : true}
+                    isreadOnly={isVideo ? false : track.isSingle ? false : true}
                     tabIndex={this.props.discID}
                     adClass="trackReleaseDateInput"
                   />
                 }
-                isClearable={track.isSingle ? true : false}
+                isClearable={isVideo ? true : track.isSingle ? true : false}
               />
             </td>
             <td>
@@ -319,7 +322,11 @@ class TrackInformationDataTable extends Component {
                   checked={this.handleTBDCheckedLoad(track)}
                   value={this.handleTBDCheckedLoad(track)}
                   disabled={track.isTbdDisabled || !pre}
-                  onChange={evt => track.isSingle && this.handleTBDClick(evt, track, i)}
+                  onChange={evt =>
+                    isVideo
+                      ? this.handleTBDClick(evt, track, i)
+                      : track.isSingle && this.handleTBDClick(evt, track, i)
+                  }
                 />
                 <span
                   className={`checkmark ${track.isTbdDisabled || !pre ? 'disabled' : ''}`}

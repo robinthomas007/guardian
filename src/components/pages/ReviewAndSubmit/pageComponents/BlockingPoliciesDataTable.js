@@ -89,18 +89,22 @@ class BlockingPoliciesDataTable extends Component {
             <th className="align-items-center">
               <span className="platform-sprite small youtube"></span>
             </th>
-            <th className="align-items-center">
-              <span className="platform-sprite small soundcloud"></span>
-            </th>
+            {this.props.mediaType !== 2 && (
+              <th className="align-items-center">
+                <span className="platform-sprite small soundcloud"></span>
+              </th>
+            )}
             <th className="align-items-center">
               <span className="platform-sprite small facebook"></span>
             </th>
             <th className="align-items-center">
               <span className="platform-sprite small instagram"></span>
             </th>
-            <th className="align-items-center">
-              <img alt="tiktok" src={tiktok} style={{ width: '36%', paddingBottom: '10px' }} />
-            </th>
+            {this.props.mediaType !== 2 && (
+              <th className="align-items-center">
+                <img alt="tiktok" src={tiktok} style={{ width: '36%', paddingBottom: '10px' }} />
+              </th>
+            )}
           </tr>
         </thead>
         <tbody>

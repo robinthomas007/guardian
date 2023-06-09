@@ -321,4 +321,27 @@ export const getPlatforms = () => {
   ];
 };
 
+export const getVideoPlatforms = () => {
+  return [
+    {
+      platformName: 'YouTube',
+      block: false,
+      duration: '',
+      expirationDate: '',
+    },
+    {
+      platformName: 'Facebook',
+      block: false,
+      duration: '',
+      expirationDate: '',
+    },
+    {
+      platformName: 'Instagram',
+      block: false,
+      duration: '',
+      expirationDate: '',
+    },
+  ];
+};
+
 export const NO_LABEL_ID = '-2';

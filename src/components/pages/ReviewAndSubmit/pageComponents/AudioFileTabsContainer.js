@@ -15,7 +15,7 @@ class AudioFilesTabsContainer extends Component {
       const discs = this.props.discs.map((disc, i) => {
         return (
           <Tab key={i} eventKey={i + 1} title={this.props.t('review:Disc') + ' ' + (i + 1)}>
-            <AudioFilesDataTable data={disc.Tracks} />
+            <AudioFilesDataTable data={disc.Tracks} mediaType={this.props.mediaType} />
           </Tab>
         );
       });
