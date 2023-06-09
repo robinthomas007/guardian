@@ -341,13 +341,20 @@ function TerritorialRightsPage(props) {
 
   const isReadOnlyUser = props.user.DefaultReleasingLabelID === NO_LABEL_ID ? true : false;
 
+  const getStepNumber = () => {
+    if (project.Project && project.Project.mediaType === 2) {
+      return 4;
+    }
+    return 5;
+  };
+
   return (
     <div className="col-10">
       <LoadingImg show={showLoader} />
       <div className="row no-gutters step-description">
         <div className="col-12">
           <h2>
-            {t('territorial:step')} <span className="count-circle">5</span>
+            {t('territorial:step')} <span className="count-circle">{getStepNumber()}</span>
             {t('territorial:TerritorialRights')}
           </h2>
           <p>{t('territorial:DescriptionMain')}</p>
@@ -411,22 +418,23 @@ function TerritorialRightsPage(props) {
                   <tbody>
                     <tr>
                       <td className="track-bg">
-                        <div className="ter-tab-wrapper">
-                          {project.Project.mediaType !== 2 &&
-                            project.Discs &&
-                            project.Discs.map((disc, index) => {
-                              return (
-                                <div
-                                  onClick={() => setSelectedDisk(index)}
-                                  className={`${
-                                    selectedDisk === index ? 'active ter-tabs' : 'ter-tabs'
-                                  }`}
-                                >
-                                  {t('territorial:Disc') + ' ' + (index + 1)}
-                                </div>
-                              );
-                            })}
-                        </div>
+                        {project.Project.mediaType !== 2 && (
+                          <div className="ter-tab-wrapper">
+                            {project.Discs &&
+                              project.Discs.map((disc, index) => {
+                                return (
+                                  <div
+                                    onClick={() => setSelectedDisk(index)}
+                                    className={`${
+                                      selectedDisk === index ? 'active ter-tabs' : 'ter-tabs'
+                                    }`}
+                                  >
+                                    {t('territorial:Disc') + ' ' + (index + 1)}
+                                  </div>
+                                );
+                              })}
+                          </div>
+                        )}
                         <div
                           onDrop={e => drop(e, rightindex)}
                           onDragOver={allowDrop}

@@ -212,6 +212,9 @@ class ReviewAndSubmitPage extends Component {
           ? 5
           : 7;
     }
+    if (this.props.data && this.props.data.Project.mediaType === 2) {
+      stepNumber = 6;
+    }
     return stepNumber;
   }
 
@@ -444,7 +447,11 @@ class ReviewAndSubmitPage extends Component {
               isPreReleaseDate(this.props.data) ? (
                 <button
                   className="btn btn-secondary align-content-end float-right"
-                  onClick={() => this.handleProjectCategoryClick('/audioFiles/')}
+                  onClick={() =>
+                    mediaType === 2
+                      ? this.handleProjectCategoryClick('/trackInformation/')
+                      : this.handleProjectCategoryClick('/audioFiles/')
+                  }
                 >
                   <i className="material-icons">edit</i> {t('review:Edit')}
                 </button>

@@ -285,6 +285,13 @@ function BlockingPoliciesPage(props) {
 
   const isReadOnlyUser = props.user.DefaultReleasingLabelID === NO_LABEL_ID ? true : false;
 
+  const getStepNumber = () => {
+    if (project.Project && project.Project.mediaType === 2) {
+      return 5;
+    }
+    return 6;
+  };
+
   return (
     <div className="col-10">
       <BlockingPoliciesModal projectID={props.projectID} t={t} />
@@ -292,7 +299,8 @@ function BlockingPoliciesPage(props) {
       <div className="row no-gutters step-description">
         <div className="col-12">
           <h2>
-            {t('blocking:Step')} <span className="count-circle">6</span> {t('blocking:PostRelease')}{' '}
+            {t('blocking:Step')} <span className="count-circle">{getStepNumber()}</span>{' '}
+            {t('blocking:PostRelease')}{' '}
             <span className="option-text">({t('blocking:Optional')})</span>
           </h2>
           <p>{t('blocking:DescriptionMain')}</p>

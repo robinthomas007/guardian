@@ -258,13 +258,12 @@ class Header extends Component {
       this.props.mediaType === 1
         ? this.state.navSteps.filter(step => step.isNav)
         : this.state.navSteps.filter(step => step.isVideo);
+
     const navToUse = isPreRelease
       ? renderNavs.filter(step => step.isNav)
       : renderNavs.filter(step => step.preRelease);
     const activeNav = this.getActiveNav();
-    if (this.props.mediaType === 2) {
-      navToUse[2].description = 'VideoInfo';
-    }
+
     return (
       <ul className="d-flex justify-content-center align-items-stretch">
         {navToUse.map((navLink, i) => {
@@ -283,7 +282,9 @@ class Header extends Component {
                   }}
                 >
                   <span className="step-description text-nowrap">
-                    {this.props.t(`header:${navLink.description}`)}
+                    {this.props.mediaType === 2 && navLink.description === 'TrackInfo'
+                      ? this.props.t(`header:${'VideoInfo'}`)
+                      : this.props.t(`header:${navLink.description}`)}
                   </span>
                   <span className={activeNav && activeNav > i ? 'step past' : 'step'}>
                     {this.props.projectData.Project ? this.getStepIcon(navLink, i) : null}

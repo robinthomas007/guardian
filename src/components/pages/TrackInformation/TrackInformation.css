@@ -94,6 +94,9 @@ table.table.track-information button.btn.btn-secondary.action {
 .tab-pane > .table-responsive {
   overflow-x: unset;
 }
+.table-responsive {
+  overflow-x: unset;
+}
 
 .react-datepicker {
   display: flex;

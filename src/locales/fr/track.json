@@ -1,6 +1,8 @@
 {
   "step": "Marcher",
   "TrackInformation": "Informations sur la piste",
+  "VideoInformation": "Informations vidéo",
+  "VideoDescriptionMain": "Dans cette étape, votre fichier vidéo sera connecté à votre projet depuis nos systèmes.",
   "DescriptionMain": "Dans cette étape, vous pouvez définir une liste de pistes et une séquence et fournir des métadonnées pour chaque piste, y compris les ISRC et les dates de sortie (si différentes de la sortie de l'album). Cette section doit être complétée en sélectionnant le bouton Enregistrer et continuer ci-dessous.",
   "DescriptionSub": "",
   "Disc": "Disque",

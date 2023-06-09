@@ -653,6 +653,9 @@ class TrackInformationPage extends Component {
   };
 
   getStepNumber = serverTimeDate => {
+    if (this.state.project.Project.mediaType === 2) {
+      return 3;
+    }
     if (this.state.project.Project.projectID) {
       if (this.state.project.Project.projectReleaseDateTBD) {
         return 4;
@@ -712,9 +715,15 @@ class TrackInformationPage extends Component {
             <h2>
               {t('track:step')}{' '}
               <span className="count-circle">{this.getStepNumber(this.props.serverTimeDate)}</span>{' '}
-              {t('track:TrackInformation')}
+              {this.state.project.Project.mediaType === 1
+                ? t('track:TrackInformation')
+                : t('track:VideoInformation')}
             </h2>
-            <p>{t('track:DescriptionMain')}</p>
+            <p>
+              {this.state.project.Project.mediaType === 1
+                ? t('track:DescriptionMain')
+                : t('track:VideoDescriptionMain')}
+            </p>
           </div>
         </div>
 

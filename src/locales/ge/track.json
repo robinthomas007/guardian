@@ -1,6 +1,8 @@
 {
   "step": "Schritt",
   "TrackInformation": "Track-Informationen",
+  "VideoInformation": "Videoinformationen",
+  "VideoDescriptionMain": "In diesem Schritt wird Ihre Videodatei aus unseren Systemen mit Ihrem Projekt verknüpft.",
   "DescriptionMain": "In diesem Schritt können Sie eine Trackliste und -sequenz definieren und Metadaten für jeden Track bereitstellen, einschließlich ISRCs und Veröffentlichungsdaten (sofern diese von der Albumveröffentlichung abweichen). Dieser Abschnitt muss ausgefüllt werden, indem Sie unten auf die Schaltfläche Speichern & Fortfahren klicken.",
   "DescriptionSub": "",
   "Disc": "Rabatt",

@@ -38,7 +38,7 @@ class Content extends Component {
       projectID: '',
       pagePath: '',
       projectStatus: null,
-      mediaType: localStorage.getItem('mediaType'),
+      mediaType: JSON.parse(localStorage.getItem('mediaType')),
       project: {
         Project: {},
       },

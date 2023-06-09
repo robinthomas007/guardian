@@ -1,6 +1,8 @@
 {
   "step": "Paso",
   "TrackInformation": "Información de seguimiento",
+  "VideoInformation": "Información de vídeo",
+  "VideoDescriptionMain": "En este paso, su archivo de video se conectará a su proyecto desde dentro de nuestros sistemas.",
   "DescriptionMain": "En este paso, puede definir una lista de pistas y una secuencia y proporcionar metadatos para cada pista, incluidos los ISRC y las fechas de lanzamiento (si son diferentes del lanzamiento del álbum). Esta sección debe completarse seleccionando el botón Guardar y continuar a continuación.",
   "DescriptionSub": "",
   "Disc": "Disco",

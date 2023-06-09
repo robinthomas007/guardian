@@ -1,6 +1,8 @@
 {
   "step": "Step",
   "TrackInformation": "Track Information",
+  "VideoInformation": "Video Information",
+  "VideoDescriptionMain": "In this step, your video file will be connected to your project from within our systems.",
   "DescriptionMain": "In this step, you can define a tracklist and sequence and provide metadata for each track including ISRCs and release dates (if different from the album release). This section must be completed by selecting the Save & Continue button below.",
   "DescriptionSub": "",
   "Disc": "Disc",

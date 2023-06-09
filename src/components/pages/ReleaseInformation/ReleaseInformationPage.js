@@ -115,6 +115,7 @@ class ReleaseinformationPage extends Component {
 
   handleChange(e) {
     let inputValue = '';
+    let obj = {};
     if (e.target.type === 'checkbox') {
       inputValue = e.target.checked ? true : false;
     } else if (e.target.type === 'radio') {
@@ -122,11 +123,13 @@ class ReleaseinformationPage extends Component {
       // only for video / audio toggle
       localStorage.setItem('mediaType', inputValue);
       this.props.changeMediaType(inputValue);
+      inputValue === 2 ? (obj['projectTypeID'] = '5') : (obj['projectTypeID'] = '1');
     } else {
       inputValue = e.target.value;
     }
+    obj[e.target.id] = inputValue;
     //this gets the inputs into the state.formInputs obj on change
-    this.setState({ formInputs: { ...this.state.formInputs, [e.target.id]: inputValue } });
+    this.setState({ formInputs: { ...this.state.formInputs, ...obj } });
   }
 
   handleDateChange(date) {

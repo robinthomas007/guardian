@@ -235,7 +235,7 @@ class FindProjectDataTable extends Component {
   getAdminButtons = project => {
     return (
       <td>
-        {parseInt(project.statusID) !== 1 ? (
+        {parseInt(project.statusID) !== 1 && project.mediaType !== 'Video' ? (
           <button
             onClick={() =>
               this.handleProjectDownload(project.projectID, project.submissionFileName)
