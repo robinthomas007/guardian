@@ -51,7 +51,9 @@ class AudioFilesDataTable extends Component {
         <thead>
           <tr className="row no-gutters">
             <th className="col-1 text-center">#</th>
-            <th className="col-2">{t('review:AudioFile')}</th>
+            <th className="col-2">
+              {this.props.mediaType !== 2 ? t('review:AudioFile') : t('review:VideoFile')}
+            </th>
             <th className="col-2">{t('review:TrackTitle')}</th>
             <th className="col-2">{t('review:ISRC')}</th>
             <th className="col-2">{t('review:Artist')}</th>

@@ -339,6 +339,7 @@ class ReleaseinformationPage extends Component {
       this.handleDataLoad();
     } else {
       localStorage.setItem('mediaType', 1);
+      this.props.changeMediaType(1);
     }
     if (this.props.user && this.exitsLabels.length === 1) {
       this.setState({
@@ -373,12 +374,15 @@ class ReleaseinformationPage extends Component {
       projectCoverArtFileName: '',
       projectCoverArtBase64Data: '',
       upc: '',
+      mediaType: 1,
     };
   };
 
   componentDidUpdate() {
     if (this.props.clearProject) {
       const blankInputs = this.getBlankFormInputs();
+      localStorage.setItem('mediaType', 1);
+      this.props.changeMediaType(1);
       this.setState({
         releaseDateRequired: true,
         showloader: false,
