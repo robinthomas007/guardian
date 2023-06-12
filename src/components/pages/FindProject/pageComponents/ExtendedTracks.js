@@ -300,7 +300,7 @@ export default ({ discs, project, onIsPublishToggle, expandedProjectIds }) => {
 
   return (
     <tr className="wrapper-tr">
-      <td colSpan={13} className="wrapper-td">
+      <td colSpan={14} className="wrapper-td">
         <LoadingImg show={loading} />
         <div className="ext-tracks-wrapper">{renderTracks()}</div>
       </td>

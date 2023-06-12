@@ -265,7 +265,6 @@ class TrackInformationPage extends Component {
       }
     }
     if (this.props.cisData !== nextProps.cisData) {
-      console.log(nextProps.cisData, 'nextProps.cisData');
       const { project } = this.state;
       const cisDiscData = project.Discs;
       const tracks = project.Discs[0].Tracks;

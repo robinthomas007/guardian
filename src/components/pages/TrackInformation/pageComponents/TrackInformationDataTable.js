@@ -56,7 +56,12 @@ class TrackInformationDataTable extends Component {
         {!isVideo && <th className="text-center">{t('track:Single')}</th>}
         <th className="release-date-col">
           {t('track:ReleaseDate')} &nbsp;
-          <ToolTip tabIndex="-1" message={t('track:ReleaseDateDescription')} />
+          <ToolTip
+            tabIndex="-1"
+            message={
+              isVideo ? t('track:VideoReleaseDateDescription') : t('track:ReleaseDateDescription')
+            }
+          />
         </th>
         <th>{t('track:TBD')}</th>
         {!isVideo && <th className="text-center"> {t('track:Actions')}</th>}
@@ -363,7 +368,7 @@ class TrackInformationDataTable extends Component {
 
     return (
       <div className="table-responsive">
-        <Table droppable="true" className="tracks-table">
+        <Table droppable="true" className={`${isVideo ? 'video-track-table' : ''} tracks-table`}>
           <thead style={{ position: 'sticky', top: isVideo ? '0px' : '240px', background: '#fff' }}>
             {this.trackInformationDataHeader()}
           </thead>

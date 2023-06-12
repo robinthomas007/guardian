@@ -110,10 +110,10 @@ span.checkmark.disabled {
   background-color: #ccc;
   border: solid 1px #ccc;
 }
-.tracks-table {
+.video-track-table.tracks-table {
   min-height: 400px;
 }
 
-.tracks-table td {
+.video-track-table.tracks-table td {
   vertical-align: top !important;
 }
