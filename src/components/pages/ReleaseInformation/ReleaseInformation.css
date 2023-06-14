@@ -209,3 +209,9 @@ button.btn.btn-secondary.action.remove-art {
 .custom-radio-wrapper .custom-radio label:hover {
   background: #01579b !important;
 }
+
+.add-cont-cpy-wrap .copy {
+  margin-left: 10px;
+  cursor: pointer;
+  color: #727070;
+}

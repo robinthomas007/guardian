@@ -34,6 +34,7 @@ class ReviewAndSubmitPage extends Component {
       shareModal: false,
       updateModal: false,
       updateModalData: [],
+      copyText: '',
     };
     this.handleSubmitProjectClick = this.handleSubmitProjectClick.bind(this);
     this.handleProjectCategoryClick = this.handleProjectCategoryClick.bind(this);
@@ -217,6 +218,15 @@ class ReviewAndSubmitPage extends Component {
     }
     return stepNumber;
   }
+
+  copyAdditionalContacts = contacts => {
+    contacts = contacts.replaceAll(',', ';');
+    navigator.clipboard.writeText(contacts);
+    this.setState({ copyText: 'Copied' });
+    setTimeout(() => {
+      this.setState({ copyText: '' });
+    }, 300);
+  };
 
   getPage = () => {
     const { t, user } = this.props;
@@ -424,7 +434,25 @@ class ReviewAndSubmitPage extends Component {
                 <label>{t('review:AdditionalContacts')}:</label>
                 <span>
                   {' '}
-                  {this.props.data.Project ? this.props.data.Project.projectAdditionalContacts : ''}
+                  {this.props.data.Project ? (
+                    <span className="add-cont-cpy-wrap">
+                      {this.props.data.Project.projectAdditionalContacts}
+                      <i
+                        className="material-icons copy"
+                        title="copy contacts"
+                        onClick={() => {
+                          this.copyAdditionalContacts(
+                            this.props.data.Project.projectAdditionalContacts,
+                          );
+                        }}
+                      >
+                        content_copy
+                      </i>
+                      <i>{this.state.copyText}</i>
+                    </span>
+                  ) : (
+                    ''
+                  )}
                 </span>
               </div>
             </div>
