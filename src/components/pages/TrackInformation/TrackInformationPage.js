@@ -269,7 +269,6 @@ class TrackInformationPage extends Component {
       const cisDiscData = project.Discs;
       const tracks = project.Discs[0].Tracks;
       tracks[0].fileName = nextProps.cisData[0].fileName;
-      console.log(tracks, 'trackstrackstracks');
       cisDiscData[0].Tracks = tracks;
       project.Discs = _.cloneDeep(cisDiscData);
       this.setState({ project });

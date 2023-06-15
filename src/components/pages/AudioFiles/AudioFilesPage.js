@@ -99,6 +99,7 @@ class AudioFilesPage extends Component {
         upc: _.get(this.state.project, 'Project.upc', ''),
         Iscrs: isrcs,
         ProjectId: this.props.match.params.projectID,
+        mediaType: 1,
       });
     }
   }
@@ -109,6 +110,7 @@ class AudioFilesPage extends Component {
     this.props.getCisData({
       Iscrs: [isrc],
       ProjectId: this.props.match.params.projectID,
+      mediaType: 1,
     });
   };
 
@@ -401,6 +403,7 @@ class AudioFilesPage extends Component {
             upc: _.get(project, 'Project.upc', ''),
             Iscrs: isrcs,
             ProjectId: this.props.match.params.projectID,
+            mediaType: 1,
           });
         }
       } else {
@@ -605,6 +608,7 @@ class AudioFilesPage extends Component {
             upc: _.get(this.state.project, 'Project.upc', ''),
             Iscrs: isrcs,
             ProjectId: this.props.match.params.projectID,
+            mediaType: 1,
           });
         }
       }
