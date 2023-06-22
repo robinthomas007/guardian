@@ -106,9 +106,11 @@ class ReleaseinformationPage extends Component {
   };
 
   findUpc = () => {
-    const { upc } = this.state.formInputs;
+    const { upc, mediaType } = this.state.formInputs;
     if (upc) {
-      this.props.findUpc(upc);
+      this.props.findUpc({ upc: upc, mediaType: mediaType });
+      // this.props.findUpc(upc);
+
       localStorage.setItem('upc', upc);
     }
   };
@@ -530,7 +532,10 @@ class ReleaseinformationPage extends Component {
               <Form.Group className="row d-flex no-gutters">
                 <div className="col-3">
                   <Form.Label className="col-form-label">
-                    {t('releaseInfo:UPC')} <i> ({t('releaseInfo:Optional')})</i>
+                    {this.state.formInputs.mediaType === 2
+                      ? t('releaseInfo:UPC/ISRC')
+                      : t('releaseInfo:UPC')}{' '}
+                    <i> ({t('releaseInfo:Optional')})</i>
                   </Form.Label>
                   <ToolTip tabIndex="-1" message={t('releaseInfo:UPC')} />
                 </div>
@@ -540,7 +545,11 @@ class ReleaseinformationPage extends Component {
                     id="upc"
                     className="form-control"
                     type="text"
-                    placeholder={t('releaseInfo:UPC')}
+                    placeholder={
+                      this.state.formInputs.mediaType === 2
+                        ? t('releaseInfo:UPCORISRC')
+                        : t('releaseInfo:UPC')
+                    }
                     value={this.state.formInputs.upc}
                     onChange={this.handleChange}
                   />

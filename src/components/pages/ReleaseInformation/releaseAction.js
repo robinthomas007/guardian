@@ -30,7 +30,7 @@ export const validateEmails = data => {
 export const findUpc = val => {
   return dispatch => {
     dispatch(upcRequest(true));
-    return Api.post('/project/upc', { upc: val })
+    return Api.post('/project/upc', val)
       .then(res => res.json())
       .then(response => {
         if (response && response.Status === 'OK') {
