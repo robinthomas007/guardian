@@ -166,6 +166,21 @@ class TrackInformationPage extends Component {
           }
         });
         project.Discs = _.cloneDeep(upcDisc);
+        //TODO
+        const isrcs = [];
+        upcDisc.forEach(disc => {
+          let trackIsrcs = _.map(disc.Tracks, 'isrc');
+          isrcs.push(...trackIsrcs);
+        });
+        const prevPage = JSON.parse(localStorage.getItem('prevStep'));
+        if (prevPage <= 2) {
+          this.props.getCisData({
+            Iscrs: isrcs,
+            ProjectId: this.props.match.params.projectID,
+            mediaType: 2,
+          });
+        }
+        //TODO END
         this.setState({ project });
       }
     }
