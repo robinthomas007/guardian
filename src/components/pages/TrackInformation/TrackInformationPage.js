@@ -166,21 +166,6 @@ class TrackInformationPage extends Component {
           }
         });
         project.Discs = _.cloneDeep(upcDisc);
-        //TODO
-        const isrcs = [];
-        upcDisc.forEach(disc => {
-          let trackIsrcs = _.map(disc.Tracks, 'isrc');
-          isrcs.push(...trackIsrcs);
-        });
-        const prevPage = JSON.parse(localStorage.getItem('prevStep'));
-        if (prevPage <= 2) {
-          this.props.getCisData({
-            Iscrs: isrcs,
-            ProjectId: this.props.match.params.projectID,
-            mediaType: 2,
-          });
-        }
-        //TODO END
         this.setState({ project });
       }
     }
@@ -219,11 +204,27 @@ class TrackInformationPage extends Component {
         this.props.setHeaderProjectData(this.state.project);
         this.checkUpcData();
         this.setifUpcData(_.cloneDeep(responseJSON.Discs));
+        if (responseJSON.Project.mediaType === 2 && responseJSON.Project.upc) {
+          this.cisUploadForVideo();
+        }
+        console.log(responseJSON, 'responseJSON');
       })
       .catch(error => {
         console.error(error);
         this.setState({ showloader: false });
       });
+  }
+
+  cisUploadForVideo() {
+    const prevPage = JSON.parse(localStorage.getItem('prevStep'));
+    if (prevPage <= 2) {
+      const { project } = this.state;
+      this.props.getCisData({
+        Iscrs: project.Project.upc,
+        ProjectId: this.props.match.params.projectID,
+        mediaType: 2,
+      });
+    }
   }
 
   checkUpcData() {
@@ -240,7 +241,7 @@ class TrackInformationPage extends Component {
         project.Discs = _.cloneDeep(upcDisc);
         this.setState({ project });
       } else {
-        this.props.findUpc(localStorage.upc);
+        this.props.findUpc({ upc: localStorage.upc, mediaType: project.Project.mediaType });
       }
     }
   }

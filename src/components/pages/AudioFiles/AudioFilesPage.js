@@ -408,7 +408,7 @@ class AudioFilesPage extends Component {
         }
       } else {
         let upc = _.get(project, 'Project.upc', '');
-        upc && this.props.findUpc(upc);
+        upc && this.props.findUpc({ upc: upc, mediaType: 1 });
       }
     }
   }

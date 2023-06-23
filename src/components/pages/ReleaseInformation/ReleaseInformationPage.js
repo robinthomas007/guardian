@@ -109,8 +109,6 @@ class ReleaseinformationPage extends Component {
     const { upc, mediaType } = this.state.formInputs;
     if (upc) {
       this.props.findUpc({ upc: upc, mediaType: mediaType });
-      // this.props.findUpc(upc);
-
       localStorage.setItem('upc', upc);
     }
   };
