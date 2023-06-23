@@ -151,12 +151,13 @@ class TrackInformationPage extends Component {
               obj['Tracks'][i].isTbdDisabled = true;
             }
           });
-          if (existingDisc.length > 0) {
-            obj['Tracks'].push(...existingDisc[0].Tracks);
-            // avoiding duplicate tracks
-            obj['Tracks'] = _.uniqBy(obj['Tracks'], v => [v.isrc, v.trackTitle].join());
+          if (project.Project.mediaType === 1) {
+            if (existingDisc.length > 0) {
+              obj['Tracks'].push(...existingDisc[0].Tracks);
+              // avoiding duplicate tracks
+              obj['Tracks'] = _.uniqBy(obj['Tracks'], v => [v.isrc, v.trackTitle].join());
+            }
           }
-
           upcDisc.push(obj);
           let hasOtherDisc = _.filter(data, val => val.discNumber !== disc.discNumber);
           if (hasOtherDisc.length > 0) {
@@ -207,7 +208,6 @@ class TrackInformationPage extends Component {
         if (responseJSON.Project.mediaType === 2 && responseJSON.Project.upc) {
           this.cisUploadForVideo();
         }
-        console.log(responseJSON, 'responseJSON');
       })
       .catch(error => {
         console.error(error);
@@ -253,7 +253,7 @@ class TrackInformationPage extends Component {
     if (this.props.upcData !== nextProps.upcData) {
       const { project } = this.state;
       if (nextProps.upcData.ExDiscs && nextProps.upcData.ExDiscs.length > 0) {
-        const upcDisc = [];
+        let upcDisc = [];
         nextProps.upcData.ExDiscs.forEach((disc, index) => {
           let existingDisc = _.filter(project.Discs, val => val.discNumber === disc.discNumber);
           const obj = {};
@@ -266,10 +266,12 @@ class TrackInformationPage extends Component {
               obj['Tracks'][i].isTbdDisabled = true;
             }
           });
-          if (existingDisc.length > 0) {
-            obj['Tracks'].push(...existingDisc[0].Tracks);
-            // avoiding duplicate tracks
-            obj['Tracks'] = _.uniqBy(obj['Tracks'], v => [v.isrc, v.trackTitle].join());
+          if (project.Project.mediaType === 1) {
+            if (existingDisc.length > 0) {
+              obj['Tracks'].push(...existingDisc[0].Tracks);
+              // avoiding duplicate tracks
+              obj['Tracks'] = _.uniqBy(obj['Tracks'], v => [v.isrc, v.trackTitle].join());
+            }
           }
           upcDisc.push(obj);
           let hasOtherDisc = _.filter(project.Discs, val => val.discNumber !== disc.discNumber);
