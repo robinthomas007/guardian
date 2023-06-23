@@ -219,8 +219,11 @@ class TrackInformationPage extends Component {
     const prevPage = JSON.parse(localStorage.getItem('prevStep'));
     if (prevPage <= 2) {
       const { project } = this.state;
+      // upc length is 14 and isrc length is 12
+      const isUpc = project.Project.upc && project.Project.upc.length === 14 ? true : false;
       this.props.getCisData({
-        Iscrs: project.Project.upc,
+        upc: isUpc ? project.Project.upc : '',
+        Iscrs: !isUpc ? [project.Project.upc] : [],
         ProjectId: this.props.match.params.projectID,
         mediaType: 2,
       });
