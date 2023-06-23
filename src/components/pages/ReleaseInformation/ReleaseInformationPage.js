@@ -453,6 +453,9 @@ class ReleaseinformationPage extends Component {
         this.props.setHeaderProjectData(this.state.project);
         this.props.changeMediaType(responseJSON.Project.mediaType);
         localStorage.setItem('mediaType', responseJSON.Project.mediaType);
+        if (responseJSON.Project.upc) {
+          this.findUpc();
+        }
       })
       .catch(error => {
         console.error(error);

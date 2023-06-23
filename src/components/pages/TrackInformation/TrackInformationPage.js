@@ -219,20 +219,27 @@ class TrackInformationPage extends Component {
     const prevPage = JSON.parse(localStorage.getItem('prevStep'));
     if (prevPage <= 2) {
       const { project } = this.state;
-      // upc length is 14 and isrc length is 12
-      const isUpc = project.Project.upc && project.Project.upc.length === 14 ? true : false;
-      this.props.getCisData({
-        upc: isUpc ? project.Project.upc : '',
-        Iscrs: !isUpc ? [project.Project.upc] : [],
-        ProjectId: this.props.match.params.projectID,
-        mediaType: 2,
-      });
+      let isrcs = [];
+      if (
+        project.Discs &&
+        project.Discs[0] &&
+        project.Discs[0].Tracks &&
+        project.Discs[0].Tracks[0]
+      ) {
+        isrcs = project.Discs[0].Tracks[0].isrc;
+      }
+      isrcs.length > 0 &&
+        this.props.getCisData({
+          Iscrs: [isrcs],
+          ProjectId: this.props.match.params.projectID,
+          mediaType: 2,
+        });
     }
   }
 
   checkUpcData() {
-    if (localStorage.upc) {
-      const { project } = this.state;
+    const { project } = this.state;
+    if (localStorage.upc || project.Project.upc) {
       if (this.props.upcData && this.props.upcData.ExDiscs) {
         const upcDisc = [];
         this.props.upcData.ExDiscs.forEach(disc => {
@@ -244,7 +251,10 @@ class TrackInformationPage extends Component {
         project.Discs = _.cloneDeep(upcDisc);
         this.setState({ project });
       } else {
-        this.props.findUpc({ upc: localStorage.upc, mediaType: project.Project.mediaType });
+        this.props.findUpc({
+          upc: localStorage.upc || project.Project.upc,
+          mediaType: project.Project.mediaType,
+        });
       }
     }
   }
@@ -283,6 +293,9 @@ class TrackInformationPage extends Component {
         });
         project.Discs = _.cloneDeep(upcDisc);
         this.setState({ project });
+        if (project.Project.mediaType === 2 && project.Project.upc) {
+          project.Project.upc.length === 14 && this.cisUploadForVideo();
+        }
       }
     }
     if (this.props.cisData !== nextProps.cisData) {
