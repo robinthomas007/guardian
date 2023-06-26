@@ -16,7 +16,7 @@ import {
   NO_LABEL_ID,
 } from '../../Utils';
 import { showNotyInfo, showNotyAutoError, getProjectReview } from 'components/Utils';
-import * as releaseAction from './../ReleaseInformation/releaseAction';
+// import * as releaseAction from './../ReleaseInformation/releaseAction';
 
 // import * as reviewActions from '../../../actions/reviewActions';
 import moment from 'moment';
@@ -81,22 +81,12 @@ class ReviewAndSubmitPage extends Component {
         this.props.setStatus(responseJSON.Project.projectStatus);
         localStorage.setItem('mediaType', responseJSON.Project.mediaType);
         this.props.changeMediaType(responseJSON.Project.mediaType);
-        if (responseJSON.Project.upc) {
-          this.findUpc(responseJSON.Project.upc, responseJSON.Project.mediaType);
-        }
       })
       .catch(error => {
         console.error(error);
         this.setState({ showloader: false });
       });
   }
-
-  findUpc = (upc, mediaType) => {
-    if (upc) {
-      this.props.findUpc({ upc: upc, mediaType: mediaType });
-      localStorage.setItem('upc', upc);
-    }
-  };
 
   getUpdateModalData() {
     this.setState({ showloader: true });
@@ -601,7 +591,7 @@ class ReviewAndSubmitPage extends Component {
 
 const mapDispatchToProps = dispatch => ({
   // handlePublish: val => dispatch(reviewActions.handlePublish(val)),
-  findUpc: val => dispatch(releaseAction.findUpc(val)),
+  // findUpc: val => dispatch(releaseAction.findUpc(val)),
 });
 
 const mapStateToProps = state => ({});
