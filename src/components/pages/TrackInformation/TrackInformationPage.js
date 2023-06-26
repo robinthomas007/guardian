@@ -239,7 +239,7 @@ class TrackInformationPage extends Component {
 
   checkUpcData() {
     const { project } = this.state;
-    if (localStorage.upc || project.Project.upc) {
+    if (localStorage.upc) {
       if (this.props.upcData && this.props.upcData.ExDiscs) {
         const upcDisc = [];
         this.props.upcData.ExDiscs.forEach(disc => {
@@ -252,7 +252,7 @@ class TrackInformationPage extends Component {
         this.setState({ project });
       } else {
         this.props.findUpc({
-          upc: localStorage.upc || project.Project.upc,
+          upc: localStorage.upc,
           mediaType: project.Project.mediaType,
         });
       }
