@@ -348,3 +348,11 @@ label.custom-checkbox.msh-checkbox {
   line-height: 5px !important;
   color: rgba(0, 0, 0, 0.7);
 }
+.msh-req-error {
+  display: block;
+  top: -8px;
+}
+
+.brd-red {
+  border: 1px solid rgba(220, 53, 69, 0.8) !important;
+}

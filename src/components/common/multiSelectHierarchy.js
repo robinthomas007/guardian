@@ -6,6 +6,7 @@ import Api from '../../lib/api';
 import _ from 'lodash';
 import Spinner from '../../component_library/Spinner';
 import { showNotyInfo, showNotyAutoError } from '../../components/Utils';
+import { useTranslation } from 'react-i18next';
 
 export default function MultiSelectHierarchy({
   handleChangeCheckbox,
@@ -15,6 +16,7 @@ export default function MultiSelectHierarchy({
   releasingLabels,
   selectedLabelIds,
   tagList,
+  showRequiredError,
 }) {
   const [companyList, setcompanyList] = useState([]);
   const [searchInput, setSearchInput] = useState('');
@@ -25,6 +27,7 @@ export default function MultiSelectHierarchy({
   const [previousSelectedLabel, setPreviousSelectedLabel] = useState([]);
 
   const didMountRef = useRef(false);
+  const { t } = useTranslation();
 
   const addSelectedList = (e, data) => {
     if (e.target.checked) {
@@ -400,14 +403,21 @@ export default function MultiSelectHierarchy({
   return (
     <div className="ms-dropdown-wrapper">
       <Dropdown className={`d-inline ${type}`} autoclose="inside">
-        <Dropdown.Toggle id="dropdown-autoclose-inside" className="ms-dropdown-toggle">
+        <Dropdown.Toggle
+          id="dropdown-autoclose-inside"
+          className={`${showRequiredError ? 'ms-dropdown-toggle brd-red' : 'ms-dropdown-toggle'}`}
+        >
           {selectedList.length > 1
             ? selectedList.length + ' Selected'
             : selectedList.length === 1
             ? selectedList[0].label
             : 'Select Options'}
         </Dropdown.Toggle>
-
+        <div
+          className={`${showRequiredError ? 'invalid-tooltip msh-req-error' : 'invalid-tooltip'}`}
+        >
+          {t('releaseInfo:ReleasingLabelRequired')}
+        </div>
         <Dropdown.Menu>
           <div className="msh-wrapper">
             <div className="main-title">Companies, Divisions & Labels</div>

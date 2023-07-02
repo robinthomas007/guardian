@@ -22,7 +22,8 @@
   "UPCORISRC": "UPC OR ISRC",
   "UPC/ISRC": "UPC/ISRC",
   "Optional": "Optional",
-  "FindUPC": "Finden Sie UPC/ISRC",
+  "FindUPC": "Finden Sie UPC",
+  "FindUPCORISRC": "Finden Sie UPC/ISRC",
   "EnterAProjectTitle": "Geben Sie einen Projekttitel ein",
   "EnterAnArtistName": "Geben Sie einen Künstlernamen ein",
   "Album": "Album",
@@ -37,5 +38,6 @@
   "ProjectTypeMessage": "Wählen Sie einen Projekttyp für Ihr Projekt aus. Dies kann Ihnen helfen, Projekte mit ähnlichen Titeln zu unterscheiden und zu identifizieren.",
   "ReleasingLabelMessage": "Bitte wählen Sie das Freigabelabel für Ihr Projekt aus. Wenn Sie nur Zugriff auf ein einzelnes Etikett haben, wird Ihr Etikett vorab geladen und erfordert keine Auswahl.",
   "ReleaseDateMessage": "Projekte mit einem Veröffentlichungsdatum vor dem heutigen Datum werden als nach der Veröffentlichung betrachtet. Wenn das Veröffentlichungsdatum des Projekts bestimmt werden soll, wählen Sie TBD.",
-  "NotesMessage": "Irgendetwas bemerkenswertes an dieser Veröffentlichung?"
+  "NotesMessage": "Irgendetwas bemerkenswertes an dieser Veröffentlichung?",
+  "ReleasingLabelRequired": "Etikett freigeben ist erforderlich"
 }

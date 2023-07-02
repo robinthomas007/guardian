@@ -72,6 +72,7 @@ class ReleaseinformationPage extends Component {
       isChecked: false,
       isOpen: false,
       selectedList: [],
+      hasReleasingLabelError: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -186,6 +187,13 @@ class ReleaseinformationPage extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    if (this.state.formInputs && this.state.formInputs.projectReleasingLabelID) {
+      this.setState({ hasReleasingLabelError: false });
+    } else {
+      this.setState({ hasReleasingLabelError: true });
+      isFormValid();
+      return false;
+    }
     if (isFormValid()) {
       this.setState({ showloader: true });
       if (this.state.formInputs.projectID !== '') {
@@ -564,7 +572,9 @@ class ReleaseinformationPage extends Component {
                     type="button"
                   >
                     <i className={'material-icons notranslate'}>search</i>
-                    {t('releaseInfo:FindUPC')}
+                    {this.state.formInputs.mediaType === 2
+                      ? t('releaseInfo:FindUPCORISRC')
+                      : t('releaseInfo:FindUPC')}
                   </button>
                   <VideoPlayer
                     title="UPC Flow"
@@ -658,6 +668,7 @@ class ReleaseinformationPage extends Component {
                       releasingLabels={this.props.user.ReleasingLabels}
                       selectedLabelIds={this.state.selectedList}
                       tagList={[]}
+                      showRequiredError={this.state.hasReleasingLabelError}
                     />
                   )}
                 </div>

@@ -18,6 +18,7 @@ import {
   getPlatforms,
   getVideoPlatforms,
   NO_LABEL_ID,
+  isPreReleaseDate,
 } from './../../Utils';
 import moment from 'moment';
 import _ from 'lodash';
@@ -289,7 +290,15 @@ function BlockingPoliciesPage(props) {
     if (project.Project && project.Project.mediaType === 2) {
       return 5;
     }
-    return 6;
+    if (project.Project && project.Project.projectID) {
+      if (project.Project.projectReleaseDateTBD) {
+        return 6;
+      }
+    }
+    if (project && project.Project && project.Project.projectReleaseDate) {
+      const stepNumber = !isPreReleaseDate(project) ? 4 : 6;
+      return stepNumber;
+    }
   };
 
   return (
