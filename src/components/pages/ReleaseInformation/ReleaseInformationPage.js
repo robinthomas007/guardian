@@ -6,19 +6,18 @@ import { withRouter } from 'react-router-dom';
 import LoadingImg from 'component_library/LoadingImg';
 import { resetDatePicker, isFormValid, CustomInput, NO_LABEL_ID } from '../../Utils.js';
 import moment from 'moment';
-import ReleasingLabelsInput from '../ReleaseInformation/pageComponents/ReleasingLabelsInput';
 import MultiSelectHierarchy from '../../common/multiSelectHierarchy';
 import ProjectTypesInput from '../ReleaseInformation/pageComponents/ProjectTypesInput';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { showNotyError } from 'components/Utils';
-import { reduxForm, Field } from 'redux-form';
+import { reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import * as releaseAction from './releaseAction';
 import { withTranslation } from 'react-i18next';
 import { compose } from 'redux';
 import VideoPlayer from 'components/template/VideoPlayer';
-import { clearConfigCache } from 'prettier';
+import axios from 'axios';
 
 class ReleaseinformationPage extends Component {
   constructor(props) {
@@ -37,8 +36,8 @@ class ReleaseinformationPage extends Component {
         projectReleaseDateTBD: false,
         projectNotes: '',
         projectCoverArtFileName: '',
-        projectCoverArtBase64Data: '',
         upc: '',
+        imageId: '',
       },
       project: {
         Project: {
@@ -61,7 +60,7 @@ class ReleaseinformationPage extends Component {
           projectStatusID: '',
           projectStatus: '',
           projectCoverArtFileName: '',
-          projectCoverArtBase64Data: '',
+          imageId: '',
         },
       },
       releaseDateRequired: true,
@@ -73,6 +72,7 @@ class ReleaseinformationPage extends Component {
       isOpen: false,
       selectedList: [],
       hasReleasingLabelError: false,
+      imageUrl: '',
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -80,7 +80,6 @@ class ReleaseinformationPage extends Component {
     this.handleReleaseTBDChange = this.handleReleaseTBDChange.bind(this);
     this.setParentState = this.setParentState.bind(this);
     this.albumArt = this.albumArt.bind(this);
-    this.handleCoverChange = this.handleCoverChange.bind(this);
     this.clearCoverArt = this.clearCoverArt.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
     this.handleIsOpen = this.handleIsOpen.bind(this);
@@ -141,40 +140,35 @@ class ReleaseinformationPage extends Component {
     this.setState({ formInputs: { ...this.state.formInputs, projectReleaseDate: formattedDate } });
   }
 
-  handleCoverChange(file) {
-    const { formInputs } = this.state;
-    const updatedFormInputs = formInputs;
-    let reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = function() {
-      updatedFormInputs['projectCoverArtBase64Data'] = reader.result;
-      updatedFormInputs['projectCoverArtFileName'] = file.name;
-    };
-    reader.onerror = function() {
-      updatedFormInputs['projectCoverArtBase64Data'] = '';
-      updatedFormInputs['projectCoverArtFileName'] = '';
-    };
-
-    this.setState({ formInputs: updatedFormInputs });
-  }
-
-  setCoverArt() {
-    const coverImg = document.getElementById('projectCoverArtIMG');
-
-    if (coverImg) {
-      coverImg.src = this.state.formInputs.projectCoverArtBase64Data;
-    } else {
-      const img = document.createElement('img');
-      img.src = this.state.formInputs.projectCoverArtBase64Data;
-      img.height = 188;
-      img.width = 188;
-      img.classList.add('obj');
-      img.id = 'projectCoverArtIMG';
-      //img.file = file;
-
-      const preview = document.getElementById('preview');
-      preview.appendChild(img);
+  cisUploadCoverImage(file, isrc) {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('User[email]', this.props.user.email);
+    if (isrc) {
+      formData.append('isrc', isrc);
     }
+    formData.append('imageID', this.state.formInputs.imageId);
+
+    axios
+      .post(window.env.api.url + '/media/api/cisimageupload', formData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .then(response => {
+        console.log(response, 'response');
+        this.setState({
+          formInputs: {
+            ...this.state.formInputs,
+            projectCoverArtFileName: response.data.fileName,
+            imageId: response.data.imageId,
+          },
+          imageUrl: response.data.imageUrl,
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   handleChangeCheckbox = data => {
@@ -257,47 +251,17 @@ class ReleaseinformationPage extends Component {
       showNotyError('Album image is too big(max 3mb)');
       return false;
     }
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-
-      if (!file.type.startsWith('image/')) {
-        continue;
-      }
-      const img = document.createElement('img');
-      img.src = window.URL.createObjectURL(files[i]);
-      img.height = 190;
-      img.width = 190;
-      img.classList.add('obj');
-      img.file = file;
-      img.id = 'projectCoverArtIMG';
-
-      const preview = document.getElementById('preview');
-      preview.appendChild(img);
-
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = (function(aImg) {
-        return function(e) {
-          aImg.src = e.target.result;
-        };
-      })(img);
-
-      this.handleCoverChange(file);
-    }
+    this.cisUploadCoverImage(files[0]);
   }
 
-  clearCoverArt(e) {
-    const { formInputs } = this.state;
-    let modifiedFormInputs = formInputs;
-    modifiedFormInputs['projectCoverArtFileName'] = '';
-    modifiedFormInputs['projectCoverArtBase64Data'] = '';
-
-    this.setState({ formInputs: modifiedFormInputs });
-
-    const projectCoverArtImg = document.getElementById('projectCoverArtIMG');
-    if (projectCoverArtImg) {
-      projectCoverArtImg.remove();
-    }
+  clearCoverArt() {
+    this.setState({
+      formInputs: {
+        ...this.state.formInputs,
+        projectCoverArtFileName: '',
+      },
+      imageUrl: '',
+    });
   }
 
   setParentState(e) {
@@ -307,6 +271,7 @@ class ReleaseinformationPage extends Component {
   handleIsOpen() {
     this.setState({ ...this.state, isOpen: !this.state.isOpen });
   }
+
   getDefaultSelectedList(list) {
     const result = [];
     list.forEach((company, i) => {
@@ -328,6 +293,7 @@ class ReleaseinformationPage extends Component {
     });
     return result;
   }
+
   exitsLabels = this.getDefaultSelectedList(this.props.user.ReleasingLabels);
 
   componentDidMount() {
@@ -339,12 +305,9 @@ class ReleaseinformationPage extends Component {
       this.setState({ releaseDateRequired: false, projectReleaseDateDisabled: true });
     }
 
-    if (this.state.formInputs.projectCoverArtBase64Data !== '') {
-      this.setCoverArt();
-    }
-
     if (this.props.match.params && this.props.match.params.projectID) {
       this.handleDataLoad();
+      this.getCoverArtImage(this.props.match.params.projectID);
     } else {
       localStorage.setItem('mediaType', 1);
       this.props.changeMediaType(1);
@@ -413,10 +376,6 @@ class ReleaseinformationPage extends Component {
         });
       }
 
-      if (this.state.formInputs.projectCoverArtBase64Data !== '') {
-        this.setCoverArt();
-      }
-
       if (this.props.match.params.projectID) {
         this.props.setProjectID(this.props.match.params.projectID, this.props.match.url);
       }
@@ -430,8 +389,30 @@ class ReleaseinformationPage extends Component {
         formInputs['projectTitle'] = nextProps.upcData.Title;
         formInputs['projectArtistName'] = nextProps.upcData.Artist;
         this.setState({ formInputs });
+        if (nextProps.upcData.ExDiscs && nextProps.upcData.ExDiscs.length > 0) {
+          this.cisUploadCoverImage('', nextProps.upcData.ExDiscs[0].ExTracks[0].isrc);
+        }
       }
     }
+  }
+
+  getCoverArtImage(projectID) {
+    const fetchHeaders = new Headers({
+      'Content-Type': 'application/json',
+      Authorization: sessionStorage.getItem('accessToken'),
+    });
+
+    fetch(window.env.api.url + '/media/api/cisimageupload?projectId=' + projectID, {
+      method: 'get',
+      headers: fetchHeaders,
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(res => {
+        this.setState({ imageUrl: res.imageUrl });
+      })
+      .catch(error => console.error(error));
   }
 
   handleDataLoad() {
@@ -761,6 +742,16 @@ class ReleaseinformationPage extends Component {
               <div className="col-9 d-flex flex-fill justify-content-end">
                 <Form.Label className="cover-art-label">{t('releaseInfo:CoverArt')}</Form.Label>
                 <div id="preview" dropppable="true" className="form-control album-art-drop">
+                  {this.state.imageUrl && (
+                    <img
+                      alt="cover"
+                      id="projectCoverArtIMG"
+                      className="obj"
+                      src={this.state.imageUrl}
+                      height={188}
+                      width={188}
+                    />
+                  )}
                   <Button
                     id="removeAlbumArt"
                     className="btn btn-secondary action remove-art"
