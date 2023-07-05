@@ -16,7 +16,7 @@ import {
   NO_LABEL_ID,
 } from '../../Utils';
 import { showNotyInfo, showNotyAutoError, getProjectReview } from 'components/Utils';
-// import * as releaseAction from './../ReleaseInformation/releaseAction';
+import * as releaseAction from './../ReleaseInformation/releaseAction';
 
 // import * as reviewActions from '../../../actions/reviewActions';
 import moment from 'moment';
@@ -37,6 +37,7 @@ class ReviewAndSubmitPage extends Component {
       updateModal: false,
       updateModalData: [],
       copyText: '',
+      imageUrl: '',
     };
     this.handleSubmitProjectClick = this.handleSubmitProjectClick.bind(this);
     this.handleProjectCategoryClick = this.handleProjectCategoryClick.bind(this);
@@ -50,6 +51,18 @@ class ReviewAndSubmitPage extends Component {
     this.hideShareModal = this.hideShareModal.bind(this);
   }
 
+  getCoverArtImage(projectID) {
+    this.props
+      .getCisCoverArt(projectID)
+      .then(response => response.json())
+      .then(responseJSON => {
+        this.setState({ imageUrl: responseJSON.imageUrl });
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+
   componentDidMount() {
     this.setState({
       project: this.props.data,
@@ -58,6 +71,7 @@ class ReviewAndSubmitPage extends Component {
     if (this.props.match && this.props.match.params && this.props.match.params.projectID) {
       localStorage.setItem('prevStep', 7);
       this.handlePageDataLoad();
+      this.getCoverArtImage(this.props.match.params.projectID);
     }
     if (this.props.prevLocation === 'findProject') {
       this.getUpdateModalData();
@@ -326,15 +340,7 @@ class ReviewAndSubmitPage extends Component {
           <div className="review-card">
             <div className="row no-gutters">
               <div className="col-2">
-                <img
-                  alt="img"
-                  className="album-art"
-                  src={
-                    this.props.data && this.props.data.Project
-                      ? this.props.data.Project.projectCoverArtBase64Data
-                      : ''
-                  }
-                />
+                <img alt="img" className="album-art" src={this.state.imageUrl} />
               </div>
               <div className="col-10">
                 <div className="row no-gutters">
@@ -590,8 +596,7 @@ class ReviewAndSubmitPage extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  // handlePublish: val => dispatch(reviewActions.handlePublish(val)),
-  // findUpc: val => dispatch(releaseAction.findUpc(val)),
+  getCisCoverArt: id => dispatch(releaseAction.getCisCoverArt(id)),
 });
 
 const mapStateToProps = state => ({});

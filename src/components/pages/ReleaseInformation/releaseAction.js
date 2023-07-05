@@ -27,6 +27,12 @@ export const validateEmails = data => {
   };
 };
 
+export const getCisCoverArt = projectId => {
+  return () => {
+    return Api.get('/media/api/cisimageupload?projectId=' + projectId);
+  };
+};
+
 export const findUpc = val => {
   return dispatch => {
     dispatch(upcRequest(true));

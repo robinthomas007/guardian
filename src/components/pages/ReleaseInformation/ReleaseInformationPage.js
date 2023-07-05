@@ -73,6 +73,7 @@ class ReleaseinformationPage extends Component {
       selectedList: [],
       hasReleasingLabelError: false,
       imageUrl: '',
+      isFindUpcClicked: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -156,7 +157,6 @@ class ReleaseinformationPage extends Component {
         },
       })
       .then(response => {
-        console.log(response, 'response');
         this.setState({
           formInputs: {
             ...this.state.formInputs,
@@ -361,7 +361,7 @@ class ReleaseinformationPage extends Component {
         projectReleaseDateReset: false,
       });
       if (this.state.formInputs !== blankInputs) {
-        this.setState({ formInputs: blankInputs }, () => this.setCoverArt());
+        this.setState({ formInputs: blankInputs });
       }
     } else {
       if (
@@ -385,34 +385,30 @@ class ReleaseinformationPage extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.upcData !== nextProps.upcData) {
       if (nextProps.upcData.Title) {
-        const { formInputs } = this.state;
+        const { formInputs, isFindUpcClicked } = this.state;
         formInputs['projectTitle'] = nextProps.upcData.Title;
         formInputs['projectArtistName'] = nextProps.upcData.Artist;
         this.setState({ formInputs });
-        if (nextProps.upcData.ExDiscs && nextProps.upcData.ExDiscs.length > 0) {
+        console.log(isFindUpcClicked, 'isFindUpcClicked');
+        if (isFindUpcClicked && nextProps.upcData.ExDiscs && nextProps.upcData.ExDiscs.length > 0) {
           this.cisUploadCoverImage('', nextProps.upcData.ExDiscs[0].ExTracks[0].isrc);
+          this.setState({ isFindUpcClicked: false });
         }
       }
     }
   }
 
   getCoverArtImage(projectID) {
-    const fetchHeaders = new Headers({
-      'Content-Type': 'application/json',
-      Authorization: sessionStorage.getItem('accessToken'),
-    });
-
-    fetch(window.env.api.url + '/media/api/cisimageupload?projectId=' + projectID, {
-      method: 'get',
-      headers: fetchHeaders,
-    })
-      .then(response => {
-        return response.json();
+    this.props
+      .getCisCoverArt(projectID)
+      .then(response => response.json())
+      .then(responseJSON => {
+        this.setState({ imageUrl: responseJSON.imageUrl });
       })
-      .then(res => {
-        this.setState({ imageUrl: res.imageUrl });
-      })
-      .catch(error => console.error(error));
+      .catch(error => {
+        console.error(error);
+        this.setState({ showloader: false });
+      });
   }
 
   handleDataLoad() {
@@ -548,7 +544,10 @@ class ReleaseinformationPage extends Component {
                   <button
                     style={{ marginLeft: '10px', padding: '7px 10px' }}
                     className="btn btn-sm btn-primary"
-                    onClick={this.findUpc}
+                    onClick={() => {
+                      this.findUpc();
+                      this.setState({ isFindUpcClicked: true });
+                    }}
                     title="Comment"
                     type="button"
                   >
@@ -813,6 +812,7 @@ ReleaseinformationPage = reduxForm({
 const mapDispatchToProps = dispatch => ({
   findUpc: val => dispatch(releaseAction.findUpc(val)),
   getProjectDetails: data => dispatch(releaseAction.getProjectDetails(data)),
+  getCisCoverArt: id => dispatch(releaseAction.getCisCoverArt(id)),
   submitProjectDetails: data => dispatch(releaseAction.submitProjectDetails(data)),
   validateProjectDetails: data => dispatch(releaseAction.validateProjectDetails(data)),
   initializeUpcData: () => dispatch(releaseAction.initializeUpcData()),
