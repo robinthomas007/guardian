@@ -38,6 +38,7 @@ class ReleaseinformationPage extends Component {
         projectCoverArtFileName: '',
         upc: '',
         imageId: '',
+        imageIsrc: '',
       },
       project: {
         Project: {
@@ -61,6 +62,7 @@ class ReleaseinformationPage extends Component {
           projectStatus: '',
           projectCoverArtFileName: '',
           imageId: '',
+          imageIsrc: '',
         },
       },
       releaseDateRequired: true,
@@ -111,6 +113,10 @@ class ReleaseinformationPage extends Component {
     if (upc) {
       this.props.findUpc({ upc: upc, mediaType: mediaType });
       localStorage.setItem('upc', upc);
+      if (this.state.isFindUpcClicked) {
+        this.cisUploadCoverImage('', upc);
+        this.setState({ isFindUpcClicked: false });
+      }
     }
   };
 
@@ -141,13 +147,11 @@ class ReleaseinformationPage extends Component {
     this.setState({ formInputs: { ...this.state.formInputs, projectReleaseDate: formattedDate } });
   }
 
-  cisUploadCoverImage(file, isrc) {
+  cisUploadCoverImage(file, upc) {
     const formData = new FormData();
     formData.append('file', file);
     formData.append('User[email]', this.props.user.email);
-    if (isrc) {
-      formData.append('isrc', isrc);
-    }
+    formData.append('Upc', upc);
     formData.append('imageID', this.state.formInputs.imageId);
 
     axios
@@ -162,6 +166,7 @@ class ReleaseinformationPage extends Component {
             ...this.state.formInputs,
             projectCoverArtFileName: response.data.fileName,
             imageId: response.data.imageId,
+            imageIsrc: response.data.isrc,
           },
           imageUrl: response.data.imageUrl,
         });
@@ -385,15 +390,10 @@ class ReleaseinformationPage extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.upcData !== nextProps.upcData) {
       if (nextProps.upcData.Title) {
-        const { formInputs, isFindUpcClicked } = this.state;
+        const { formInputs } = this.state;
         formInputs['projectTitle'] = nextProps.upcData.Title;
         formInputs['projectArtistName'] = nextProps.upcData.Artist;
         this.setState({ formInputs });
-        console.log(isFindUpcClicked, 'isFindUpcClicked');
-        if (isFindUpcClicked && nextProps.upcData.ExDiscs && nextProps.upcData.ExDiscs.length > 0) {
-          this.cisUploadCoverImage('', nextProps.upcData.ExDiscs[0].ExTracks[0].isrc);
-          this.setState({ isFindUpcClicked: false });
-        }
       }
     }
   }
@@ -545,8 +545,9 @@ class ReleaseinformationPage extends Component {
                     style={{ marginLeft: '10px', padding: '7px 10px' }}
                     className="btn btn-sm btn-primary"
                     onClick={() => {
-                      this.findUpc();
-                      this.setState({ isFindUpcClicked: true });
+                      this.setState({ isFindUpcClicked: true }, () => {
+                        this.findUpc();
+                      });
                     }}
                     title="Comment"
                     type="button"
