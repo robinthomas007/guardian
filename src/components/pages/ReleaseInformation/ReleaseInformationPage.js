@@ -403,7 +403,15 @@ class ReleaseinformationPage extends Component {
       .getCisCoverArt(projectID)
       .then(response => response.json())
       .then(responseJSON => {
-        this.setState({ imageUrl: responseJSON.imageUrl });
+        this.setState({
+          imageUrl: responseJSON.imageUrl,
+          formInputs: {
+            ...this.state.formInputs,
+            projectCoverArtFileName: responseJSON.fileName,
+            imageId: responseJSON.imageId,
+            imageIsrc: responseJSON.isrc,
+          },
+        });
       })
       .catch(error => {
         console.error(error);
@@ -738,8 +746,8 @@ class ReleaseinformationPage extends Component {
               </Form.Group>
             </div>
 
-            <div className="col-3 row d-flex no-gutters">
-              <div className="col-9 d-flex flex-fill justify-content-end">
+            <div className="col-3 no-gutters">
+              <div className="col-12 d-flex mb-70">
                 <Form.Label className="cover-art-label">{t('releaseInfo:CoverArt')}</Form.Label>
                 <div id="preview" dropppable="true" className="form-control album-art-drop">
                   {this.state.imageUrl && (
@@ -780,6 +788,10 @@ class ReleaseinformationPage extends Component {
                     />
                   </div>
                 </div>
+              </div>
+              <div className="col-12 d-flex">
+                <Form.Label className="cover-art-label">{t('releaseInfo:ImageID')}</Form.Label>
+                <div>{this.state.formInputs.imageIsrc}</div>
               </div>
             </div>
           </div>

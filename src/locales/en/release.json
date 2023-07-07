@@ -39,5 +39,6 @@
   "ReleasingLabelMessage": "Please select the releasing label for your project. If you only have access to a single label, your label will be pre-loaded and not require a selection.",
   "ReleaseDateMessage": "Projects with a release date prior to today's date will be considered post-release. If the project's release date is to be determined, select TBD.",
   "NotesMessage": "Anything notable about this release?",
-  "ReleasingLabelRequired": "Releasing Label is Required"
+  "ReleasingLabelRequired": "Releasing Label is Required",
+  "ImageID": "Image ID"
 }

@@ -3,7 +3,8 @@
   background-color: #d9f3fe;
   height: 190px;
   width: 190px;
-  top: 50px;
+  /* top: 50px; */
+  position: relative;
 }
 
 .album-art-drop span {
@@ -66,7 +67,7 @@ div.browse-btn {
   border: 1px solid #ccc;
   border-radius: 2px;
   width: 190px;
-  margin-top: 80px;
+  margin-top: 22px;
   margin-left: -13px;
   text-align: center;
   cursor: pointer;
@@ -214,4 +215,7 @@ button.btn.btn-secondary.action.remove-art {
   margin-left: 10px;
   cursor: pointer;
   color: #727070;
+}
+.mb-70 {
+  margin-bottom: 70px;
 }

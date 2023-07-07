@@ -38,6 +38,7 @@ class ReviewAndSubmitPage extends Component {
       updateModalData: [],
       copyText: '',
       imageUrl: '',
+      imageIsrc: '',
     };
     this.handleSubmitProjectClick = this.handleSubmitProjectClick.bind(this);
     this.handleProjectCategoryClick = this.handleProjectCategoryClick.bind(this);
@@ -56,7 +57,7 @@ class ReviewAndSubmitPage extends Component {
       .getCisCoverArt(projectID)
       .then(response => response.json())
       .then(responseJSON => {
-        this.setState({ imageUrl: responseJSON.imageUrl });
+        this.setState({ imageUrl: responseJSON.imageUrl, imageIsrc: responseJSON.isrc });
       })
       .catch(error => {
         console.error(error);
@@ -341,6 +342,10 @@ class ReviewAndSubmitPage extends Component {
             <div className="row no-gutters">
               <div className="col-2">
                 <img alt="img" className="album-art" src={this.state.imageUrl} />
+                <div>
+                  <span>{t('releaseInfo:ImageID')} : </span>
+                  {this.state.imageIsrc}
+                </div>
               </div>
               <div className="col-10">
                 <div className="row no-gutters">

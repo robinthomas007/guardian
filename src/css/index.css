@@ -830,7 +830,7 @@ ul.button-bar li button {
 /* Release Information */
 
 .album-art-drop {
-  position: absolute;
+  /* position: absolute; */
   border: solid 1px #ccc;
   background-color: #ff0000;
   height: 190px;
