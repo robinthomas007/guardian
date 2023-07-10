@@ -151,7 +151,8 @@ class ReleaseinformationPage extends Component {
     const formData = new FormData();
     formData.append('file', file);
     formData.append('User[email]', this.props.user.email);
-    formData.append('Upc', upc);
+    const upcVal = upc ? upc : '';
+    formData.append('Upc', upcVal);
     formData.append('imageID', this.state.formInputs.imageId);
 
     axios
@@ -364,6 +365,7 @@ class ReleaseinformationPage extends Component {
         showloader: false,
         projectReleaseDateDisabled: false,
         projectReleaseDateReset: false,
+        imageUrl: '',
       });
       if (this.state.formInputs !== blankInputs) {
         this.setState({ formInputs: blankInputs });
