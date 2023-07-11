@@ -342,10 +342,12 @@ class ReviewAndSubmitPage extends Component {
             <div className="row no-gutters">
               <div className="col-2">
                 <img alt="img" className="album-art" src={this.state.imageUrl} />
-                <div>
-                  <span>{t('releaseInfo:ImageID')} : </span>
-                  {this.state.imageIsrc}
-                </div>
+                {this.state.imageIsrc && (
+                  <div>
+                    <span>{t('releaseInfo:ImageID')} : </span>
+                    {this.state.imageIsrc}
+                  </div>
+                )}
               </div>
               <div className="col-10">
                 <div className="row no-gutters">

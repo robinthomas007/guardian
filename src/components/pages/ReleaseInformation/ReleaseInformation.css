@@ -67,7 +67,7 @@ div.browse-btn {
   border: 1px solid #ccc;
   border-radius: 2px;
   width: 190px;
-  margin-top: 22px;
+  margin-top: 64px;
   margin-left: -13px;
   text-align: center;
   cursor: pointer;
@@ -150,8 +150,8 @@ button.btn.btn-secondary.action.remove-art {
 }
 
 .cover-art-label {
-  flex-grow: 1;
-  margin-left: 72px;
+  /* flex-grow: 1; */
+  margin-right: 25px;
 }
 
 .ml-10 {
@@ -218,4 +218,8 @@ button.btn.btn-secondary.action.remove-art {
 }
 .mb-70 {
   margin-bottom: 70px;
+}
+
+.justify-end {
+  justify-content: end;
 }

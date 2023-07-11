@@ -253,10 +253,10 @@ class ReleaseinformationPage extends Component {
 
   albumArt(e) {
     const files = e.target.files;
-    if (e.target.files[0].size > 3145727) {
-      showNotyError('Album image is too big(max 3mb)');
-      return false;
-    }
+    // if (e.target.files[0].size > 3145727) {
+    //   showNotyError('Album image is too big(max 3mb)');
+    //   return false;
+    // }
     this.cisUploadCoverImage(files[0]);
   }
 
@@ -486,7 +486,7 @@ class ReleaseinformationPage extends Component {
 
         <Form>
           <div className="row d-flex">
-            <div className="col-9">
+            <div className="col-8">
               <Form.Group className="row d-flex no-gutters">
                 <div className="col-3">
                   <Form.Label className="col-form-label">{t('releaseInfo:MediaType')}</Form.Label>
@@ -748,8 +748,8 @@ class ReleaseinformationPage extends Component {
               </Form.Group>
             </div>
 
-            <div className="col-3 no-gutters">
-              <div className="col-12 d-flex mb-70">
+            <div className="col-4 no-gutters">
+              <div className="col-12 d-flex mb-70 justify-end">
                 <Form.Label className="cover-art-label">{t('releaseInfo:CoverArt')}</Form.Label>
                 <div id="preview" dropppable="true" className="form-control album-art-drop">
                   {this.state.imageUrl && (
@@ -774,9 +774,6 @@ class ReleaseinformationPage extends Component {
                     <br />
                     {t('releaseInfo:orDrag')} &amp; {t('releaseInfo:Drop')}
                     <br />
-                    <br />
-                    Max size: 3mb
-                    <br />
                     (JPG, JPEG, PNG)
                   </span>
                   <input id="projectCoverArt" type="file" onChange={this.albumArt} />
@@ -791,10 +788,12 @@ class ReleaseinformationPage extends Component {
                   </div>
                 </div>
               </div>
-              <div className="col-12 d-flex">
-                <Form.Label className="cover-art-label">{t('releaseInfo:ImageID')}</Form.Label>
-                <div>{this.state.formInputs.imageIsrc}</div>
-              </div>
+              {this.state.formInputs.imageIsrc && (
+                <div className="col-12 d-flex justify-end">
+                  <Form.Label className="cover-art-label">{t('releaseInfo:ImageID')}</Form.Label>
+                  <div style={{ minWidth: '188px' }}>{this.state.formInputs.imageIsrc}</div>
+                </div>
+              )}
             </div>
           </div>
 
