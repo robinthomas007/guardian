@@ -96,8 +96,8 @@ export default function MultiSelectHierarchy({
             type !== 'requestFormInput' &&
             type !== 'releaseInfoInput'
           ) {
-            const uniqueSelectedList = removeDuplicates([...selectedList, ...preRenderList]);
-            setSelectedList(uniqueSelectedList);
+            // const uniqueSelectedList = removeDuplicates([...selectedList, ...preRenderList]);
+            // setSelectedList(uniqueSelectedList);
             setSelectedTag(res.TagList);
           } else {
             // setSelectedList([]);

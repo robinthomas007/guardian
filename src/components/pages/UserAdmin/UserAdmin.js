@@ -382,7 +382,7 @@ class UserAdmin extends Component {
         AccessRequestSearchCriteria,
         UserSearchCriteria,
         selectedFilterLabelOptions: modifiedselectedFilterLabelOptions,
-        selectedList: data,
+        // selectedList: data,
       },
       () => this.fetchUsers(),
     );
@@ -474,14 +474,14 @@ class UserAdmin extends Component {
     AccessRequestSearchCriteria.filter.labelIds = modifiedselectedFilterLabelOptions;
     UserSearchCriteria.filter.labelIds = modifiedselectedFilterLabelOptions;
 
-    const mofifiedSelectedList = this.state.selectedList.filter(item => item.value !== labelID);
+    // const mofifiedSelectedList = this.state.selectedList.filter(item => item.value !== labelID);
 
     this.setState(
       {
         AccessRequestSearchCriteria,
         UserSearchCriteria,
         selectedFilterLabelOptions: modifiedselectedFilterLabelOptions,
-        selectedList: mofifiedSelectedList,
+        // selectedList: mofifiedSelectedList,
       },
       () => this.fetchUsers(),
     );

@@ -50,13 +50,13 @@ const Filter = props => {
         return !_.isEqual(e, val);
       });
       newVal[name] = _.cloneDeep(arr);
-      setselectedLabelIds(_.cloneDeep(arr));
+      // setselectedLabelIds(_.cloneDeep(arr));
     } else if (name === 'excludeLabelIds') {
       let arr = _.filter(newVal.excludeLabelIds, function(e) {
         return !_.isEqual(e, val);
       });
       newVal[name] = _.cloneDeep(arr);
-      setExSelectedLabelIds(_.cloneDeep(arr));
+      // setExSelectedLabelIds(_.cloneDeep(arr));
     } else {
       newVal[name] = null;
     }
@@ -185,7 +185,7 @@ const Filter = props => {
       props.initialize({ ...props.formValues.values, ...{ labelIds: data } });
     }
     handleOnSelect(data, 'labelIds');
-    setselectedLabelIds(data);
+    // setselectedLabelIds(data);
   };
 
   const getMultiSelectDataForExcludeLabelIds = data => {
@@ -193,7 +193,7 @@ const Filter = props => {
       props.initialize({ ...props.formValues.values, ...{ excludeLabelIds: data } });
     }
     handleOnSelect(data, 'excludeLabelIds');
-    setExSelectedLabelIds(data);
+    // setExSelectedLabelIds(data);
   };
   // excludeLabelIds
   // const LabelFacets = formatSelectArray(_.get(props, 'data.LabelFacets', []));
