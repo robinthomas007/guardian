@@ -219,6 +219,7 @@ export default function MultiSelectHierarchy({
           if (res.ValidTagName) {
             // setTagQuery('Must Remove Existing Tag');
             // setSelectedList([...selectedList])
+            setSelectedList([]);
 
             setPreviousSelectedLabel([]);
             showNotyInfo('Successfully added the new label');
@@ -256,7 +257,8 @@ export default function MultiSelectHierarchy({
                     <span className="checkmark "></span>
                   </label>
                   <span>
-                    {CompanyName} (Company) {TagName !== '' && renderTagName(TagName, CompanyId)}
+                    {CompanyName} (Company){' '}
+                    {TagName && TagName !== '' && renderTagName(TagName, CompanyId)}
                   </span>
                 </div>
               )}
@@ -300,7 +302,8 @@ export default function MultiSelectHierarchy({
                     <span className="checkmark "></span>
                   </label>
                   <span>
-                    {DivisionName} (Division) {TagName !== '' && renderTagName(TagName, DivisionId)}
+                    {DivisionName} (Division){' '}
+                    {TagName && TagName !== '' && renderTagName(TagName, DivisionId)}
                   </span>
                 </div>
               )}
@@ -391,7 +394,7 @@ export default function MultiSelectHierarchy({
                 <span className="checkmark "></span>
               </label>
               <span>
-                {LabelName} (Label) {TagName !== '' && renderTagName(TagName, LabelId)}
+                {LabelName} (Label) {TagName && TagName !== '' && renderTagName(TagName, LabelId)}
               </span>
             </div>
           );
