@@ -232,7 +232,7 @@ export default function MultiSelectHierarchy({
           if (res.ValidTagName) {
             // setTagQuery('Must Remove Existing Tag');
             // setSelectedList([...selectedList])
-            // setSelectedList([]);
+            setSelectedList([]);
             if (searchInput.length > 0) {
               invokeSearchAPI();
             } else {
