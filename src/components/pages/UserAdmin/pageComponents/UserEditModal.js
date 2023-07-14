@@ -113,7 +113,8 @@ class UserEditModal extends Component {
                   type={'userEditModal'}
                   releasingLabels={this.props.LabelFacets}
                   selectedLabelIds={selectedOptions}
-                  tagList={[]}
+                  tagList={this.props.tagList}
+                  invokeAdminSearchApi={this.props.invokeAdminSearchApi}
                 />
                 <br />
                 <div>

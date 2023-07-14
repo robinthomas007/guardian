@@ -67,6 +67,7 @@ class UserAdmin extends Component {
       releasingLabels: [],
       selectedFilterLabelOptions: [],
       selectedList: [],
+      invokeAdminSearchApi: false,
     };
     this.handleFilterModalView = this.handleFilterModalView.bind(this);
     this.handleLabelSelectChange = this.handleLabelSelectChange.bind(this);
@@ -97,7 +98,12 @@ class UserAdmin extends Component {
     }
   };
 
-  fetchUsers = () => {
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.invokeAdminSearchApi !== this.state.invokeAdminSearchApi) {
+      this.fetchUsers(true);
+    }
+  }
+  fetchUsers = (isLabelRemoved = false) => {
     this.setState({ showloader: true });
     const fetchHeaders = new Headers({
       'Content-Type': 'application/json',
@@ -122,7 +128,11 @@ class UserAdmin extends Component {
           tableData: userJSON,
           showloader: false,
         });
-        this.props.setFacets(userJSON);
+        const newFacets = {
+          response: userJSON,
+          isLabelRemoved,
+        };
+        this.props.setFacets(newFacets);
       })
       .catch(error => {
         console.error(error);
@@ -536,6 +546,9 @@ class UserAdmin extends Component {
       this.fetchUsers();
     }
   }
+  handleInvokeAdminSearchApi = () => {
+    this.setState({ invokeAdminSearchApi: !this.state.invokeAdminSearchApi });
+  };
 
   render() {
     const { t } = this.props;
@@ -562,6 +575,11 @@ class UserAdmin extends Component {
               : this.props.userFacets
           }
           // LabelFacets={this.state.tableData.UserSearchResponse.LabelFacets}
+          tagList={
+            this.state.activeTab === 'requestAccess'
+              ? this.props.accessTagList
+              : this.props.userTagList
+          }
           selectedList={this.state.selectedList}
         />
 
@@ -631,6 +649,7 @@ class UserAdmin extends Component {
             userData={this.props.user}
             activeTab={this.state.activeTab}
             selectedList={this.state.selectedList}
+            invokeAdminSearchApi={this.handleInvokeAdminSearchApi}
           />
 
           <SelectedFilters

@@ -19,6 +19,7 @@ export const initialState = {
     filter: {},
   },
   tagList: [],
+  isLabelRemoved: false,
 };
 
 export default createReducer(initialState, {
@@ -26,11 +27,14 @@ export default createReducer(initialState, {
     state.loading = action.loading;
   },
   [GET_PROJECT_SUCCESS]: (state, action) => {
-    state.result = action.result;
-    state.tagList = action.result.TagList;
+    state.result = action.result.response;
+    state.tagList = action.result.response.TagList;
     state.loading = false;
-    if (Object.keys(state.facets).length === 0 && state.facets.constructor === Object) {
-      state.facets = action.result.Facets;
+    if (
+      (Object.keys(state.facets).length === 0 && state.facets.constructor === Object) ||
+      action.result.isLabelRemoved
+    ) {
+      state.facets = action.result.response.Facets;
     }
   },
   [GET_PROJECT_FAILURE]: (state, action) => {

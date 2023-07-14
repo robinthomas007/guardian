@@ -24,11 +24,29 @@ class FindProjectPage extends Component {
     this.state = {
       sortOrder: 'desc',
       sortColumn: 'last_updated',
+      invokeProjectSearchApi: false,
     };
     this.formSubmit = this.formSubmit.bind(this);
     this.handlePaginationChange = this.handlePaginationChange.bind(this);
     this.setProjectsView = this.setProjectsView.bind(this);
     this.handleColumnSort = this.handleColumnSort.bind(this);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.invokeProjectSearchApi !== this.state.invokeProjectSearchApi) {
+      const searchCriteria = _.cloneDeep(this.props.searchCriteria.filter);
+      this.props.initialize(this.props.searchCriteria.filter);
+      // if seach keyword also should remains then add the below code for searchTerm
+      //  this.props.searchCriteria.searchTerm ? this.props.searchCriteria.searchTerm :
+      const searchData = {
+        itemsPerPage: this.props.searchCriteria.itemsPerPage,
+        pageNumber: this.props.searchCriteria.pageNumber,
+        searchTerm: '',
+        filter: getSearchCriteria(searchCriteria),
+      };
+      //  this.props.setProjectID('', '/findProject');
+      this.props.handleProjectSearch({ searchCriteria: searchData, isLabelRemoved: true });
+    }
   }
 
   componentDidMount() {
@@ -142,6 +160,10 @@ class FindProjectPage extends Component {
     }
   };
 
+  handleInvokeProjectSearchApi = () => {
+    this.setState({ invokeProjectSearchApi: !this.state.invokeProjectSearchApi });
+  };
+
   render() {
     let { loading, result, handleSubmit, searchCriteria, facets, t } = this.props;
     let data = { ...result };
@@ -214,6 +236,7 @@ class FindProjectPage extends Component {
             getSearchCriteria={getSearchCriteria}
             userData={this.props.user}
             tagList={this.props.tagList}
+            invokeProjectSearchApi={this.handleInvokeProjectSearchApi}
           />
         </form>
 

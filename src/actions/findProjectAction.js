@@ -30,7 +30,11 @@ export const fetchProjects = data => {
       .then(response => response.json())
       .then(response => {
         if (response) {
-          dispatch(fetchSuccess(response));
+          const updatedResponse = {
+            response: response,
+            isLabelRemoved: data.isLabelRemoved,
+          };
+          dispatch(fetchSuccess(updatedResponse));
         } else {
           dispatch(fetchFailure(response.message));
         }

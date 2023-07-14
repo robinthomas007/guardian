@@ -37,6 +37,7 @@ class UserSearchFilterModal extends Component {
                   type={'userAdminModal'}
                   releasingLabels={this.props.LabelFacets}
                   selectedLabelIds={this.props.selectedList}
+                  invokeAdminSearchApi={this.props.invokeAdminSearchApi}
                 />
               )}
               {this.props.activeTab !== 'requestAccess' && (
@@ -45,9 +46,11 @@ class UserSearchFilterModal extends Component {
                   user={this.props.userData}
                   isMultiSelect={true}
                   type={'userAdminModal'}
+                  tagList={this.props.tagList}
                   releasingLabels={this.props.LabelFacets}
                   selectedLabelIds={this.props.selectedList}
-                  tagList={[]}
+                  invokeAdminSearchApi={this.props.invokeAdminSearchApi}
+                  // tagList={[]}
                 />
               )}
             </div>

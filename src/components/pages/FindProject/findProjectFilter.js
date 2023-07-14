@@ -223,6 +223,7 @@ const Filter = props => {
                     type={'filterModal'}
                     releasingLabels={props.data.LabelFacets}
                     selectedLabelIds={selectedLabelIds}
+                    invokeAdminSearchApi={props.invokeProjectSearchApi}
                   />
                 </div>
               </div>
@@ -288,6 +289,7 @@ const Filter = props => {
                     releasingLabels={props.data.LabelFacets}
                     selectedLabelIds={exSelectedLabelIds}
                     tagList={props.tagList}
+                    invokeAdminSearchApi={props.invokeProjectSearchApi}
                   />
                 </div>
               </div>
