@@ -190,7 +190,7 @@ export default function MultiSelectHierarchy({
             invokeAdminSearchApi();
           }
         } else {
-          showNotyAutoError('Something went wrong, please try again!');
+          showNotyAutoError("Tag can't be removed as it is mapped with a project already");
         }
       })
       .catch(e => {
@@ -368,7 +368,7 @@ export default function MultiSelectHierarchy({
             invokeAdminSearchApi();
           }
         } else {
-          showNotyAutoError('Something went wrong, please try again!');
+          showNotyAutoError("Tag can't be removed as it is mapped with a project already");
         }
       })
       .catch(e => {
