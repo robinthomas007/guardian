@@ -186,7 +186,6 @@ export default function MultiSelectHierarchy({
           if (searchInput.length > 0) {
             invokeSearchAPI();
           } else {
-            console.log('is it calling');
             invokeAdminSearchApi();
           }
         } else {
