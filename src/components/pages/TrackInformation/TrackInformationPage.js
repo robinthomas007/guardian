@@ -16,7 +16,7 @@ import {
   showNotyAutoError,
   isPreReleaseDate,
   showNotyInfo,
-  renameFile,
+  isValidIsrc,
   NO_LABEL_ID,
 } from '../../Utils';
 import * as releaseAction from './../ReleaseInformation/releaseAction';
@@ -93,7 +93,7 @@ class TrackInformationPage extends Component {
     let isValidForm = true;
     isrcs = isrcs.filter(n => n);
     for (var i = 0; i < isrcsField.length; i++) {
-      if (!this.isValidIsrc(isrcsField[i].value)) {
+      if (isValidIsrc(isrcsField[i].value)) {
         isValidForm = false;
       }
     }
@@ -385,10 +385,6 @@ class TrackInformationPage extends Component {
     };
   };
 
-  isValidIsrc(isrc) {
-    return isrc.length === 0 || isrc.match(/^[a-zA-Z]{4}[a-zA-Z0-9][0-9]{7}$/) ? true : false;
-  }
-
   setFieldValidation(input, status) {
     if (status === 'is-invalid') {
       input.className = input.className.replace('is-invalid', '') + ' is-invalid';
@@ -407,7 +403,7 @@ class TrackInformationPage extends Component {
     }
 
     for (var i = 0; i < isrcs.length; i++) {
-      if (!this.isValidIsrc(isrcs[i].value) || isDuplicateItem(isrcValues, isrcs[i].value)) {
+      if (!isValidIsrc(isrcs[i].value) || isDuplicateItem(isrcValues, isrcs[i].value)) {
         this.setFieldValidation(isrcs[i], 'is-invalid');
         isValidForm = false;
       } else {

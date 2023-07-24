@@ -49,10 +49,6 @@ class AudioVideoDataTable extends Component {
     );
   }
 
-  isValidIsrc(isrc) {
-    return isrc.length === 0 || isrc.match(/^[a-zA-Z]{4}[a-zA-Z0-9][0-9]{7}$/) ? true : false;
-  }
-
   isValidTitle(title) {
     return title.length > 0 ? true : false;
   }
@@ -66,10 +62,10 @@ class AudioVideoDataTable extends Component {
   }
 
   handleOnBlur(e, trackID) {
-    const { checkIsrcOnBlur } = this.props;
+    const { checkIsrcOnBlur, isValidIsrc } = this.props;
     const { isrcCheckedIds } = this.state;
     if (e.target.className.match('trackIsrcField')) {
-      if (this.isValidIsrc(e.target.value)) {
+      if (isValidIsrc(e.target.value)) {
         this.setFieldValidation(e.target, 'is-Valid');
         if (!isrcCheckedIds.includes(e.target.value)) {
           checkIsrcOnBlur(e.target.value);

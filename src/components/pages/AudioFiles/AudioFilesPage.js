@@ -16,7 +16,7 @@ import {
   NO_LABEL_ID,
 } from '../../Utils';
 import _ from 'lodash';
-import { showNotyInfo } from 'components/Utils';
+import { showNotyInfo, isValidIsrc } from 'components/Utils';
 import * as releaseAction from './../ReleaseInformation/releaseAction';
 import * as AudioActions from '../../../actions/audioActions';
 import { withTranslation } from 'react-i18next';
@@ -89,7 +89,7 @@ class AudioFilesPage extends Component {
     isrcs = isrcs.filter(n => n);
 
     for (var i = 0; i < isrcsField.length; i++) {
-      if (!this.isValidIsrc(isrcsField[i].value)) {
+      if (!isValidIsrc(isrcsField[i].value)) {
         isValidForm = false;
       }
     }
@@ -461,10 +461,6 @@ class AudioFilesPage extends Component {
       });
   }
 
-  isValidIsrc(isrc) {
-    return isrc.length === 0 || isrc.match(/^[a-zA-Z]{4}[a-zA-Z0-9][0-9]{7}$/) ? true : false;
-  }
-
   isValidTitle(title) {
     return title.length > 0 ? true : false;
   }
@@ -488,7 +484,7 @@ class AudioFilesPage extends Component {
     }
 
     for (var i = 0; i < isrcs.length; i++) {
-      if (!this.isValidIsrc(isrcs[i].value) || isDuplicateItem(isrcValues, isrcs[i].value)) {
+      if (!isValidIsrc(isrcs[i].value) || isDuplicateItem(isrcValues, isrcs[i].value)) {
         this.setFieldValidation(isrcs[i], 'is-invalid');
         isValidForm = false;
       } else {
@@ -783,7 +779,7 @@ class AudioFilesPage extends Component {
           diskDeleteConfirmation={this.diskDeleteConfirmation}
           handleChange={this.handleChange}
           resequencePageTableData={this.resequencePageTableData}
-          isValidIsrc={this.isValidIsrc}
+          isValidIsrc={isValidIsrc}
           isValidTitle={this.isValidTitle}
           addDisc={this.addDisc}
           showReplaceModal={(track, i, upload) => this.showReplaceModal(track, i, upload)}

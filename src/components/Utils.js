@@ -40,7 +40,7 @@ export const setInputValidStatus = (input, status) => {
 };
 
 export const isValidIsrc = isrc => {
-  return isrc.length === 0 || isrc.match(/^[a-z0-9]{12}$/i) ? true : false;
+  return isrc.length === 0 || isrc.match(/^[a-zA-Z]{2}[a-zA-Z0-9]{3}[0-9]{7}$/) ? true : false;
 };
 
 export const isValidTitle = title => {

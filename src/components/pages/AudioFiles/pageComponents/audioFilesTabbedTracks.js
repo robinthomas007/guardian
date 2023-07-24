@@ -37,6 +37,7 @@ export default props => (
             cisLoading={props.cisLoading}
             Iscrs={props.Iscrs}
             t={props.t}
+            isValidIsrc={props.isValidIsrc}
             checkIsrcOnBlur={props.checkIsrcOnBlur}
           />
         </Tab>

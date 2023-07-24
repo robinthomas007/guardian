@@ -4,7 +4,7 @@ import ToolTip from 'component_library/Tooltip';
 import AudioLoader from 'component_library/AudioLoader';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
-import { CustomInput, isPreReleaseDate } from '../../../Utils.js';
+import { CustomInput, isPreReleaseDate, isValidIsrc } from '../../../Utils.js';
 import VideoPlayer from 'components/template/VideoPlayer';
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -179,10 +179,6 @@ class TrackInformationDataTable extends Component {
     e.dataTransfer.setData('text/html', e.target);
   }
 
-  isValidIsrc(isrc) {
-    return isrc.length === 0 || isrc.match(/^[a-zA-Z]{4}[a-zA-Z0-9][0-9]{7}$/) ? true : false;
-  }
-
   setFieldValidation(input, status) {
     if (status === 'is-invalid') {
       input.className = input.className.replace('is-invalid', '') + ' is-invalid';
@@ -194,7 +190,7 @@ class TrackInformationDataTable extends Component {
   handleOnBlur(e) {
     const { checkIsrcOnBlur } = this.props;
     if (e.target.className.match('trackIsrcField')) {
-      if (this.isValidIsrc(e.target.value)) {
+      if (isValidIsrc(e.target.value)) {
         this.setFieldValidation(e.target, 'is-Valid');
         checkIsrcOnBlur(e.target.value);
       } else {
