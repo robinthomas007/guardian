@@ -314,6 +314,7 @@ class FindProjectDataTable extends Component {
 
   renderProjects() {
     if (this.props.data.Projects) {
+      const { t } = this.props;
       const tableRows = this.props.data.Projects.map((project, i) => {
         let colour = '';
         if (project.projectReleaseDate && project.projectCreatedDate) {
@@ -361,7 +362,11 @@ class FindProjectDataTable extends Component {
               <td onClick={() => this.handleRowClick(project.projectID)}>{project.mediaType}</td>
               <td onClick={() => this.handleRowClick(project.projectID)}>
                 {project.projectReleaseDate
-                  ? `${moment.utc(project.projectReleaseDate).format('MM-DD-YYYY hh:mm A')} UTC`
+                  ? `${moment.utc(project.projectReleaseDate).format('MM-DD-YYYY hh:mm A')} UTC (${
+                      project.isTimedRelease
+                        ? t('review:GloballyTimed')
+                        : t('review:LocalStoreTurn')
+                    })`
                   : 'TBD'}
               </td>
               <td className="text-nowrap">
