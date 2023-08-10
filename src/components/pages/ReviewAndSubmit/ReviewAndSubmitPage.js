@@ -386,7 +386,11 @@ class ReviewAndSubmitPage extends Component {
                       {this.props.data.Project && this.props.data.Project.projectReleaseDate
                         ? `${moment
                             .utc(this.props.data.Project.projectReleaseDate)
-                            .format('MM-DD-YYYY hh:mm A')} UTC`
+                            .format('MM-DD-YYYY hh:mm A')} UTC (${
+                            this.props.data.Project.isTimedRelease
+                              ? t('review:GloballyTimed')
+                              : t('review:LocalStoreTurn')
+                          })`
                         : 'TBD'}
                     </span>
                   </div>

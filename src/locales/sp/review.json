@@ -52,5 +52,7 @@
   "Always": "Siempre",
   "publish": "Publicar",
   "SuperConfidential": "Hemos detectado que parte del contenido que envías está registrado como súper confidencial. Como resultado, configuraremos el proyecto como privado y enmascararemos todo el contenido enviado.",
-  "VideoInformation": "Información de vídeo"
+  "VideoInformation": "Información de vídeo",
+  "GloballyTimed": "Tiempos globales",
+  "LocalStoreTurn": "Turno de tienda local"
 }

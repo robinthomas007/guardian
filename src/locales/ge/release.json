@@ -39,5 +39,7 @@
   "ReleasingLabelMessage": "Bitte wählen Sie das Freigabelabel für Ihr Projekt aus. Wenn Sie nur Zugriff auf ein einzelnes Etikett haben, wird Ihr Etikett vorab geladen und erfordert keine Auswahl.",
   "ReleaseDateMessage": "Projekte mit einem Veröffentlichungsdatum vor dem heutigen Datum werden als nach der Veröffentlichung betrachtet. Wenn das Veröffentlichungsdatum des Projekts bestimmt werden soll, wählen Sie TBD.",
   "NotesMessage": "Irgendetwas bemerkenswertes an dieser Veröffentlichung?",
-  "ReleasingLabelRequired": "Etikett freigeben ist erforderlich"
+  "ReleasingLabelRequired": "Etikett freigeben ist erforderlich",
+  "GloballyTimed": "Globale Zeiten",
+  "LocalStoreTurn": "Lokaler Laden dran"
 }

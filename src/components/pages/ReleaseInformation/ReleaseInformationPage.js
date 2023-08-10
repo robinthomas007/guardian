@@ -730,7 +730,7 @@ class ReleaseinformationPage extends Component {
                       checked={this.state.formInputs.isTimedRelease === false}
                       onChange={this.handleChange}
                     />
-                    <label for="audio">Local Store Turn</label>
+                    <label for="audio">{t('releaseInfo:LocalStoreTurn')}</label>
                   </div>
                   <div className="release-date-op">
                     <Form.Control
@@ -743,7 +743,7 @@ class ReleaseinformationPage extends Component {
                       checked={this.state.formInputs.isTimedRelease === true}
                       onChange={this.handleChange}
                     />
-                    <label for="audio">Globally Timed</label>
+                    <label for="audio">{t('releaseInfo:GloballyTimed')}</label>
                   </div>
                   <div className="release-date-op">
                     <Form.Control

@@ -52,5 +52,7 @@
   "Always": "Stets",
   "publish": "Veröffentlichen",
   "SuperConfidential": "Wir haben festgestellt, dass einige der von Ihnen übermittelten Inhalte als streng vertraulich registriert sind. Infolgedessen werden wir das Projekt auf privat setzen und alle übermittelten Inhalte maskieren.",
-  "VideoInformation": "Videoinformationen"
+  "VideoInformation": "Videoinformationen",
+  "GloballyTimed": "Globale Zeiten",
+  "LocalStoreTurn": "Lokaler Laden dran"
 }

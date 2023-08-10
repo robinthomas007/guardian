@@ -40,5 +40,7 @@
   "ReleaseDateMessage": "Projects with a release date prior to today's date will be considered post-release. If the project's release date is to be determined, select TBD.",
   "NotesMessage": "Anything notable about this release?",
   "ReleasingLabelRequired": "Releasing Label is Required",
-  "ImageID": "Image ID"
+  "ImageID": "Image ID",
+  "GloballyTimed": "Globally Timed",
+  "LocalStoreTurn": "Local Store Turn"
 }

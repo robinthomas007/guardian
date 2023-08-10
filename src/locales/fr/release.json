@@ -39,5 +39,7 @@
   "ReleasingLabelMessage": "Veuillez sélectionner l'étiquette de publication de votre projet. Si vous n'avez accès qu'à une seule étiquette, votre étiquette sera préchargée et ne nécessitera pas de sélection.",
   "ReleaseDateMessage": "Les projets dont la date de sortie est antérieure à la date d'aujourd'hui seront considérés comme post-sortie. Si la date de sortie du projet est à déterminer, sélectionnez TBD.",
   "NotesMessage": "Quelque chose de notable à propos de cette version ?",
-  "ReleasingLabelRequired": "Libérer l'étiquette est requis"
+  "ReleasingLabelRequired": "Libérer l'étiquette est requis",
+  "GloballyTimed": "Temps mondiaux",
+  "LocalStoreTurn": "Tourner le magasin local"
 }

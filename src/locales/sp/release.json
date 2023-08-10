@@ -39,5 +39,7 @@
   "ReleasingLabelMessage": "Seleccione la etiqueta de lanzamiento de su proyecto. Si solo tiene acceso a una sola etiqueta, su etiqueta estará precargada y no requerirá una selección.",
   "ReleaseDateMessage": "Los proyectos con una fecha de lanzamiento anterior a la fecha de hoy se considerarán posteriores al lanzamiento. Si se va a determinar la fecha de lanzamiento del proyecto, seleccione TBD.",
   "NotesMessage": "¿Algo destacable de este lanzamiento?",
-  "ReleasingLabelRequired": "Etiqueta de liberación es obligatorio"
+  "ReleasingLabelRequired": "Etiqueta de liberación es obligatorio",
+  "GloballyTimed": "Tiempos globales",
+  "LocalStoreTurn": "Turno de tienda local"
 }

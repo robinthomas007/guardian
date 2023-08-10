@@ -52,5 +52,7 @@
   "Always": "Toujours",
   "publish": "Publier",
   "SuperConfidential": "Nous avons détecté qu'une partie du contenu que vous soumettez est enregistrée comme super confidentielle. En conséquence, nous définirons le projet sur privé et masquerons tout le contenu soumis.",
-  "VideoInformation": "Informations vidéo"
+  "VideoInformation": "Informations vidéo",
+  "GloballyTimed": "Temps mondiaux",
+  "LocalStoreTurn": "Tourner le magasin local"
 }
