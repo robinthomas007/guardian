@@ -77,7 +77,8 @@ export default function MultiSelectHierarchy({
     const payload = {
       SearchCriteria: {
         SearchTerm: searchInput,
-        isAdmin: type === 'requestFormInput' ? true : user.IsAdmin,
+        isAdmin: false,
+        // isAdmin: type === 'requestFormInput' ? true : false,
       },
       languageCode: localStorage.getItem('languageCode') || 'en',
     };
@@ -91,12 +92,14 @@ export default function MultiSelectHierarchy({
         setcompanyList(result);
         const preRenderList = getDefaultSelectedList(result);
         setPreviousSelectedLabel(preRenderList);
-        if (res.TagList.length > 0 && type !== 'requestFormInput' && type !== 'releaseInfoInput') {
-          // const uniqueSelectedList = removeDuplicates([...selectedList, ...preRenderList]);
-          // setSelectedList(uniqueSelectedList);
+        if (
+          res.TagList &&
+          res.TagList.length > 0 &&
+          type !== 'requestFormInput' &&
+          type !== 'releaseInfoInput'
+        ) {
           setSelectedTag(res.TagList);
         } else {
-          // setSelectedList([]);
           setSelectedTag([]);
           setTagQuery('');
         }
@@ -158,7 +161,6 @@ export default function MultiSelectHierarchy({
     return true;
   }
   const removeTag = tagName => {
-    // const labelIds = selectedList.map(list => Number(list.value));
     const payload = {
       LabelsId: [],
       TagName: tagName,
@@ -176,13 +178,6 @@ export default function MultiSelectHierarchy({
       .then(res => {
         if (res.ValidTagName) {
           showNotyInfo('Successfully removed the label');
-          // setSelectedList([]);
-          // setSelectedTag([]);
-          // setSelectedList([]);
-          // setSelectedTag([]);
-          // updateFacets(searchInput.length < 3 ? true : false);
-          // setTagQuery('');
-          // setSearchInput('');
           if (searchInput.length > 0) {
             invokeSearchAPI();
           } else {
