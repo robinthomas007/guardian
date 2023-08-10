@@ -223,3 +223,29 @@ button.btn.btn-secondary.action.remove-art {
 .justify-end {
   justify-content: end;
 }
+
+.release-date-options {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  margin-left: -86px;
+}
+
+.release-date-op {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+.release-date-op input {
+  flex: 1;
+}
+
+.release-date-op input:active,
+.release-date-op input:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.release-date-op label {
+  margin-bottom: 0px !important;
+}

@@ -34,6 +34,7 @@ class ReleaseinformationPage extends Component {
         projectReleasingLabelID: '',
         projectReleaseDate: null,
         projectReleaseDateTBD: false,
+        isTimedRelease: false,
         projectNotes: '',
         projectCoverArtFileName: '',
         upc: '',
@@ -80,33 +81,12 @@ class ReleaseinformationPage extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleReleaseTBDChange = this.handleReleaseTBDChange.bind(this);
     this.setParentState = this.setParentState.bind(this);
     this.albumArt = this.albumArt.bind(this);
     this.clearCoverArt = this.clearCoverArt.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
     this.handleIsOpen = this.handleIsOpen.bind(this);
   }
-
-  handleReleaseTBDChange = e => {
-    let { formInputs } = this.state;
-    formInputs.projectReleaseDate = null;
-    this.setState({ formInputs: formInputs });
-
-    if (e.target.checked) {
-      this.setState({
-        projectReleaseDateDisabled: true,
-        releaseDateRequired: false,
-      });
-      resetDatePicker('projectReleaseDate');
-    } else {
-      this.setState({
-        projectReleaseDateDisabled: false,
-        releaseDateRequired: true,
-      });
-    }
-    this.handleChange(e);
-  };
 
   findUpc = () => {
     const { upc, mediaType } = this.state.formInputs;
@@ -126,15 +106,42 @@ class ReleaseinformationPage extends Component {
     if (e.target.type === 'checkbox') {
       inputValue = e.target.checked ? true : false;
     } else if (e.target.type === 'radio') {
-      inputValue = Number(e.target.value);
-      // only for video / audio toggle
-      localStorage.setItem('mediaType', inputValue);
-      this.props.changeMediaType(inputValue);
-      inputValue === 2 ? (obj['projectTypeID'] = '5') : (obj['projectTypeID'] = '1');
+      if (e.target.name === 'mediaType') {
+        inputValue = Number(e.target.value);
+        // only for video / audio toggle
+        localStorage.setItem('mediaType', inputValue);
+        this.props.changeMediaType(inputValue);
+        inputValue === 2 ? (obj['projectTypeID'] = '5') : (obj['projectTypeID'] = '1');
+      } else {
+        let { formInputs } = this.state;
+        inputValue = e.target.value === 'true' ? true : false;
+        // if isTimedRelease is selected then make projectReleaseDateTBD false
+        if (e.target.name === 'isTimedRelease') {
+          obj['projectReleaseDateTBD'] = false;
+          this.setState({
+            projectReleaseDateDisabled: false,
+            releaseDateRequired: true,
+          });
+        }
+        // if projectReleaseDateTBD  is selected then make isTimedRelease false
+        if (e.target.name === 'projectReleaseDateTBD') {
+          inputValue = !formInputs.projectReleaseDateTBD;
+          obj['isTimedRelease'] = null;
+          obj['projectReleaseDate'] = null;
+          if (inputValue) {
+            this.setState({
+              projectReleaseDateDisabled: true,
+              releaseDateRequired: false,
+            });
+            resetDatePicker('projectReleaseDate');
+          }
+        }
+      }
     } else {
       inputValue = e.target.value;
     }
     obj[e.target.id] = inputValue;
+
     //this gets the inputs into the state.formInputs obj on change
     this.setState({ formInputs: { ...this.state.formInputs, ...obj } });
   }
@@ -681,7 +688,7 @@ class ReleaseinformationPage extends Component {
                   </Form.Label>
                   <ToolTip tabIndex="-1" message={t('releaseInfo:ReleaseDateMessage')} />
                 </div>
-                <div className="col-6 release-date">
+                <div className="col-4 release-date">
                   <DatePicker
                     showTimeSelect
                     id="projectReleaseDate"
@@ -711,22 +718,46 @@ class ReleaseinformationPage extends Component {
                     <i>&nbsp;&nbsp; (UTC)</i>
                   </span>
                 </div>
-                <div className="col-auto">
-                  <Form.Label className="col-form-label tbd text-nowrap">
-                    {t('releaseInfo:ReleaseTBD')}
-                  </Form.Label>
-                  <label className="custom-checkbox">
-                    <input
-                      tabIndex="6+"
-                      id="projectReleaseDateTBD"
+                <div className="col-5 release-date-options">
+                  <div className="release-date-op">
+                    <Form.Control
+                      tabIndex="1+"
+                      id="isTimedRelease"
+                      name="isTimedRelease"
                       className="form-control"
-                      type="checkbox"
-                      value={this.state.formInputs.projectReleaseDateTBD}
-                      onChange={this.handleReleaseTBDChange}
-                      checked={this.state.formInputs.projectReleaseDateTBD}
+                      type="radio"
+                      value={false}
+                      checked={this.state.formInputs.isTimedRelease === false}
+                      onChange={this.handleChange}
                     />
-                    <span className="checkmark "></span>
-                  </label>
+                    <label for="audio">Local Store Turn</label>
+                  </div>
+                  <div className="release-date-op">
+                    <Form.Control
+                      tabIndex="1+"
+                      id="isTimedRelease"
+                      name="isTimedRelease"
+                      className="form-control"
+                      type="radio"
+                      value={true}
+                      checked={this.state.formInputs.isTimedRelease === true}
+                      onChange={this.handleChange}
+                    />
+                    <label for="audio">Globally Timed</label>
+                  </div>
+                  <div className="release-date-op">
+                    <Form.Control
+                      tabIndex="1+"
+                      id="projectReleaseDateTBD"
+                      name="projectReleaseDateTBD"
+                      className="form-control"
+                      type="radio"
+                      value={this.state.formInputs.projectReleaseDateTBD ? true : false}
+                      checked={this.state.formInputs.projectReleaseDateTBD}
+                      onChange={this.handleChange}
+                    />
+                    <label for="audio">{t('releaseInfo:ReleaseTBD')}</label>
+                  </div>
                 </div>
               </Form.Group>
 
