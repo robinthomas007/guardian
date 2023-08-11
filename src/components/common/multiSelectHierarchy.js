@@ -490,18 +490,19 @@ export default function MultiSelectHierarchy({
                   </button>
                 </div>
                 <div className="btn-tagList">
-                  {selectedTag.map((tagList, index) => (
-                    <div key={index}>
-                      <button
-                        type="button"
-                        className="tag-btn"
-                        onClick={() => removeTag(tagList.name)}
-                      >
-                        <span className="tag-label">{tagList.name}</span>
-                        <i className="material-icons tag-clear-btn">close</i>
-                      </button>
-                    </div>
-                  ))}
+                  {selectedTag &&
+                    selectedTag.map((tagList, index) => (
+                      <div key={index}>
+                        <button
+                          type="button"
+                          className="tag-btn"
+                          onClick={() => removeTag(tagList.name)}
+                        >
+                          <span className="tag-label">{tagList.name}</span>
+                          <i className="material-icons tag-clear-btn">close</i>
+                        </button>
+                      </div>
+                    ))}
                 </div>
               </div>
             )}
