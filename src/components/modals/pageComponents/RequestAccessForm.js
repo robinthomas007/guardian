@@ -4,7 +4,7 @@ import { Form, Button } from 'react-bootstrap';
 import ReleasingLabelsInput from '../../../components/pages/ReleaseInformation/pageComponents/ReleasingLabelsInput.js';
 import { isFormValid } from '../../../components/Utils';
 import { showNotyInfo, showNotyError } from 'components/Utils';
-import MultiSelectHierarchy from '../../common/multiSelectHierarchy';
+import MultiSelectHierarchy from '../../common/multiSelectTag';
 import _ from 'lodash';
 
 class RequestAccessForm extends Component {

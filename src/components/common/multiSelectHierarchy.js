@@ -77,8 +77,7 @@ export default function MultiSelectHierarchy({
     const payload = {
       SearchCriteria: {
         SearchTerm: searchInput,
-        isAdmin: false,
-        // isAdmin: type === 'requestFormInput' ? true : false,
+        isAdmin: 'requestFormInput' ? true : user.IsAdmin,
       },
       languageCode: localStorage.getItem('languageCode') || 'en',
     };

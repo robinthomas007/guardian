@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
 import LabelsMultiSelect from './LabelsMultiSelect';
 import ReactMultiSelectCheckboxes from 'react-multiselect-checkboxes';
-import MultiSelectHierarchy from '../../../common/multiSelectHierarchy';
+import MultiSelectHierarchy from '../../../common/multiSelectTag';
 
 class UserEditModal extends Component {
   constructor(props) {

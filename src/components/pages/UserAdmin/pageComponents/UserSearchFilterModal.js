@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Form } from 'react-bootstrap';
-import MultiSelectHierarchy from '../../../common/multiSelectHierarchy';
+import MultiSelectHierarchy from '../../../common/multiSelectTag';
 
 class UserSearchFilterModal extends Component {
   constructor(props) {

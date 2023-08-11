@@ -8,7 +8,7 @@ import { formatSelectArray } from '../../common/commonHelper';
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 import i18n from './../../../i18n';
-import MultiSelectHierarchy from '../../common/multiSelectHierarchy';
+import MultiSelectHierarchy from '../../common/multiSelectTag';
 
 const selectedFilter = [
   { name: 'labelIds', label: i18n.t('search:Labels') },
