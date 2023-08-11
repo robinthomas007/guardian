@@ -292,7 +292,12 @@ export default function MultiSelectHierarchy({
               </div>
 
               {companyList[0] === null || checkEmpty(companyList) ? (
-                <span className="sub-title">No Results Found! Please try again.</span>
+                <span className="sub-title">
+                  {searchInput.length >= 3 && !loading
+                    ? 'No Results Found! Please try again'
+                    : null}
+                  .
+                </span>
               ) : (
                 renderCompanies(companyList)
               )}
