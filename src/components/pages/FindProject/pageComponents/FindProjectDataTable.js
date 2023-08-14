@@ -630,6 +630,7 @@ class FindProjectDataTable extends Component {
           <AuditModal
             show={this.state.auditModal ? true : false}
             project={this.state.auditModal}
+            t={this.props.t}
             onHide={() => this.setState({ auditModal: null })}
           />
         )}

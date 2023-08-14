@@ -245,7 +245,7 @@ export default function MultiSelectHierarchy({
                 />
                 <span className="checkmark "></span>
               </label>
-              <span>{LabelName} (Label)</span>
+              <span>{LabelName}</span>
             </div>
           );
         })}

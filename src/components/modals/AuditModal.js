@@ -15,7 +15,7 @@ const getCountries = countries => {
   return _.map(countries, 'name').toString();
 };
 
-const renderStep1Table = project => {
+const renderStep1Table = (project, t) => {
   return (
     <Table className="responsive">
       <thead>
@@ -36,7 +36,13 @@ const renderStep1Table = project => {
           <td>{project.projectArtistName}</td>
           <td>{project.projectType}</td>
           <td>{project.projectReleasingLabel}</td>
-          <td>{project.projectReleaseDate}</td>
+          <td>
+            {project.projectReleaseDate
+              ? `${moment.utc(project.projectReleaseDate).format('MM-DD-YYYY hh:mm A')} UTC (${
+                  project.isTimedRelease ? t('review:GloballyTimed') : t('review:LocalStoreTurn')
+                })`
+              : 'TBD'}
+          </td>
           <td>{project.projectNotes}</td>
         </tr>
       </tbody>
@@ -145,7 +151,7 @@ const renderStep3TrackTable = Discs => {
   );
 };
 
-const renderStep4TrackTable = Discs => {
+const renderStep4TrackTable = (Discs, project, t) => {
   const trackData = _.map(Discs, Disc => {
     return _.map(Disc.Tracks, track => {
       return (
@@ -167,7 +173,14 @@ const renderStep4TrackTable = Discs => {
               <span className="checkmark "></span>
             </label>
           </td>
-          <td>{track.trackReleaseDate ? track.trackReleaseDate : 'TBD'}</td>
+          <td>
+            {' '}
+            {track.trackReleaseDate
+              ? `${moment.utc(track.trackReleaseDate).format('MM-DD-YYYY hh:mm A')} UTC (${
+                  project.isTimedRelease ? t('review:GloballyTimed') : t('review:LocalStoreTurn')
+                })`
+              : 'TBD'}
+          </td>
         </tr>
       );
     });
@@ -622,7 +635,7 @@ const Audit = props => {
                       {moment(item.CreatedDateTime).format('hh:mm a')}.{item.UserName} created a new
                       project, {item.Project.projectTitle} with the following values:{' '}
                     </div>
-                    {renderStep1Table(item.Project)}
+                    {renderStep1Table(item.Project, props.t)}
                   </div>
                 )}
                 {item.StepId === 2 && renderStep2Table(item.Project)}
@@ -657,7 +670,7 @@ const Audit = props => {
                       {moment(item.CreatedDateTime).format('hh:mm a')}.{item.UserName} saved Step 4
                       for {item.Project.projectTitle} with the following values:{' '}
                     </div>
-                    {renderStep4TrackTable(item.Discs)}
+                    {renderStep4TrackTable(item.Discs, project, props.t)}
                   </div>
                 )}
                 {item.StepId === 5 && (
