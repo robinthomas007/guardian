@@ -48,7 +48,6 @@ export default function MultiSelectHierarchy({
 
   useEffect(() => {
     if (releasingLabels && releasingLabels.length > 0) {
-      console.log('company List', companyList);
       setcompanyList(releasingLabels);
     }
   }, [releasingLabels]);
@@ -81,7 +80,6 @@ export default function MultiSelectHierarchy({
       })
       .then(res => {
         const result = res.Result;
-        console.log('resulsj', result[0]);
 
         setcompanyList(result);
         if (result[0] !== null) {
