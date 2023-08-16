@@ -4,7 +4,7 @@ import ToolTip from 'component_library/Tooltip';
 import './ReleaseInformation.css';
 import { withRouter } from 'react-router-dom';
 import LoadingImg from 'component_library/LoadingImg';
-import { resetDatePicker, isFormValid, CustomInput, NO_LABEL_ID } from '../../Utils.js';
+import { resetDatePicker, isFormValid, CustomInput, NO_LABEL_ID, checkEmpty } from '../../Utils.js';
 import moment from 'moment';
 import MultiSelectHierarchy from '../../common/multiSelectTag';
 import ProjectTypesInput from '../ReleaseInformation/pageComponents/ProjectTypesInput';
@@ -291,23 +291,25 @@ class ReleaseinformationPage extends Component {
 
   getDefaultSelectedList(list) {
     const result = [];
-    list.forEach((company, i) => {
-      if (company.CompanyId)
-        result.push({ value: String(company.CompanyId), label: company.CompanyName });
-      if (company.DivisionList.length > 0) {
-        let divisionList = company.DivisionList;
-        divisionList.forEach((division, i) => {
-          if (division.DivisionId)
-            result.push({ value: String(division.DivisionId), label: division.DivisionName });
-          if (division.LabelList.length > 0) {
-            let LabelList = division.LabelList;
-            LabelList.forEach((label, i) => {
-              result.push({ value: String(label.LabelId), label: label.LabelName });
-            });
-          }
-        });
-      }
-    });
+    if (list[0] !== null || !checkEmpty(list)) {
+      list.forEach((company, i) => {
+        if (company.CompanyId)
+          result.push({ value: String(company.CompanyId), label: company.CompanyName });
+        if (company.DivisionList.length > 0) {
+          let divisionList = company.DivisionList;
+          divisionList.forEach((division, i) => {
+            if (division.DivisionId)
+              result.push({ value: String(division.DivisionId), label: division.DivisionName });
+            if (division.LabelList.length > 0) {
+              let LabelList = division.LabelList;
+              LabelList.forEach((label, i) => {
+                result.push({ value: String(label.LabelId), label: label.LabelName });
+              });
+            }
+          });
+        }
+      });
+    }
     return result;
   }
 

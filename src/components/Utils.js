@@ -344,4 +344,15 @@ export const getVideoPlatforms = () => {
   ];
 };
 
+export function checkEmpty(obj) {
+  for (let key in obj) {
+    if (obj[key] instanceof Object === true) {
+      if (checkEmpty(obj[key]) === false) return false;
+    } else {
+      if (obj[key].length !== 0) return false;
+    }
+  }
+  return true;
+}
+
 export const NO_LABEL_ID = '-2';

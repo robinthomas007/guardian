@@ -5,7 +5,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Api from '../../lib/api';
 import _ from 'lodash';
 import Spinner from '../../component_library/Spinner';
-import { showNotyInfo, showNotyAutoError } from '../Utils';
+import { showNotyInfo, showNotyAutoError, checkEmpty } from '../Utils';
 import { useTranslation } from 'react-i18next';
 
 export default function MultiSelectHierarchy({
@@ -127,17 +127,6 @@ export default function MultiSelectHierarchy({
       });
     return result;
   };
-
-  function checkEmpty(obj) {
-    for (let key in obj) {
-      if (obj[key] instanceof Object === true) {
-        if (checkEmpty(obj[key]) === false) return false;
-      } else {
-        if (obj[key].length !== 0) return false;
-      }
-    }
-    return true;
-  }
 
   const renderCompanies = companyList => {
     return (
