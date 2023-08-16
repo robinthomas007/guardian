@@ -202,11 +202,15 @@ class ReleaseinformationPage extends Component {
       return false;
     }
     if (isFormValid()) {
+      const projectFormData = {
+        ...this.state.formInputs,
+        projectArtistName: this.state.formInputs.projectArtistName.substring(0, 254),
+      };
       this.setState({ showloader: true });
       if (this.state.formInputs.projectID !== '') {
         this.props
           .submitProjectDetails({
-            Project: this.state.formInputs,
+            Project: projectFormData,
             languagecode: localStorage.getItem('languageCode') || 'en',
           })
           .then(response => response.json())
@@ -230,12 +234,12 @@ class ReleaseinformationPage extends Component {
       } else {
         this.props
           .validateProjectDetails({
-            Project: this.state.formInputs,
+            Project: projectFormData,
           })
           .then(response => response.json())
           .then(responseJSON => {
             if (responseJSON.IsValid) {
-              localStorage.setItem('projectData', JSON.stringify(this.state.formInputs));
+              localStorage.setItem('projectData', JSON.stringify(projectFormData));
               localStorage.setItem('prevStep', 1);
               this.props.history.push('/projectContacts');
             } else {
