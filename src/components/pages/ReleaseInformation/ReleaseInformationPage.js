@@ -194,6 +194,10 @@ class ReleaseinformationPage extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    console.log(
+      'this.state.formInputs.projectReleasingLabelIDthis.state.formInputs.projectReleasingLabelID',
+      this.state.formInputs.projectReleasingLabelID,
+    );
     if (this.state.formInputs && this.state.formInputs.projectReleasingLabelID) {
       this.setState({ hasReleasingLabelError: false });
     } else {
@@ -292,24 +296,13 @@ class ReleaseinformationPage extends Component {
   getDefaultSelectedList(list) {
     const result = [];
     if (list[0] !== null || !checkEmpty(list)) {
-      list.forEach((company, i) => {
-        if (company.CompanyId)
-          result.push({ value: String(company.CompanyId), label: company.CompanyName });
-        if (company.DivisionList.length > 0) {
-          let divisionList = company.DivisionList;
-          divisionList.forEach((division, i) => {
-            if (division.DivisionId)
-              result.push({ value: String(division.DivisionId), label: division.DivisionName });
-            if (division.LabelList.length > 0) {
-              let LabelList = division.LabelList;
-              LabelList.forEach((label, i) => {
-                result.push({ value: String(label.LabelId), label: label.LabelName });
-              });
-            }
-          });
+      list[0].DivisionList[0].LabelList.forEach((label, i) => {
+        if (label.LabelId) {
+          result.push({ value: String(label.LabelId), label: label.LabelName });
         }
       });
     }
+    console.log('test', result);
     return result;
   }
 
@@ -332,6 +325,7 @@ class ReleaseinformationPage extends Component {
       this.props.changeMediaType(1);
     }
     if (this.props.user && this.exitsLabels.length === 1) {
+      console.log('this.exitsLabelsthis.exitsLabels', this.exitsLabels.length);
       this.setState({
         formInputs: {
           ...this.state.formInputs,
@@ -357,7 +351,7 @@ class ReleaseinformationPage extends Component {
       projectCoverArt: '',
       projectArtistName: '',
       projectTypeID: '1',
-      projectReleasingLabelID: this.exitsLabels.length > 0 ? this.exitsLabels[0].value : '',
+      projectReleasingLabelID: this.exitsLabels.length === 1 ? this.exitsLabels[0].value : '',
       projectReleaseDate: null,
       projectReleaseDateTBD: false,
       projectNotes: '',
@@ -384,14 +378,11 @@ class ReleaseinformationPage extends Component {
         this.setState({ formInputs: blankInputs });
       }
     } else {
-      if (
-        this.props.user.ReleasingLabels.length > 0 &&
-        this.state.formInputs.projectReleasingLabelID === ''
-      ) {
+      if (this.exitsLabels.length === 1 && this.state.formInputs.projectReleasingLabelID === '') {
         this.setState({
           formInputs: {
             ...this.state.formInputs,
-            projectReleasingLabelID: this.exitsLabels.length > 0 ? this.exitsLabels[0].value : '',
+            projectReleasingLabelID: this.exitsLabels.length === 1 ? this.exitsLabels[0].value : '',
           },
         });
       }

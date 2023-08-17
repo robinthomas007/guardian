@@ -241,6 +241,22 @@ select.dropdown {
   background-color: rgba(220, 53, 69, 0.8);
   border-radius: 0.2rem;
 }
+.multiselect-invalid-tooltip {
+  position: absolute;
+  z-index: 5;
+  left: 328px;
+  right: 172px;
+  display: block;
+  padding-right: 10px;
+  max-width: 100%;
+  padding: 0.25rem;
+  margin-top: 0;
+  font-size: 0.675rem;
+  line-height: 1;
+  color: #fff;
+  background-color: rgba(220, 53, 69, 0.8);
+  border-radius: 0.2rem;
+}
 
 ul.request-form li > .invalid-tooltip {
   position: relative;

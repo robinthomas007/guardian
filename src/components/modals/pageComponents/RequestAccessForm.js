@@ -22,6 +22,7 @@ class RequestAccessForm extends Component {
       submitDisabled: false,
       selectedOptions: [],
       selectedList: [],
+      isLabelSelected: false,
     };
   }
 
@@ -112,10 +113,20 @@ class RequestAccessForm extends Component {
     // this.getLabels();
   }
 
+  checkIfLabeleSelected() {
+    if (this.state.selectedList.length <= 0) {
+      this.setState({ isLabelSelected: true });
+    }
+  }
+
   handleSubmit = e => {
     e.preventDefault();
-    if (isFormValid()) {
-      this.sumbitRequestAccess();
+    this.checkIfLabeleSelected();
+    console.log(isFormValid() && this.state.selectedList.length > 0);
+    if (isFormValid() && this.state.selectedList.length > 0) {
+      this.setState({ isLabelSelected: false }, () => {
+        this.sumbitRequestAccess();
+      });
     }
   };
 
@@ -165,7 +176,9 @@ class RequestAccessForm extends Component {
                 user={user}
                 selectedLabelIds={this.state.selectedList}
               />
-              <div className="invalid-tooltip">A label selection is required.</div>
+              {this.state.isLabelSelected && (
+                <div className="multiselect-invalid-tooltip">A label selection is required.</div>
+              )}
             </div>
 
             {/*  <Form.Label id="labelName">
