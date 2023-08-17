@@ -194,10 +194,6 @@ class ReleaseinformationPage extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    console.log(
-      'this.state.formInputs.projectReleasingLabelIDthis.state.formInputs.projectReleasingLabelID',
-      this.state.formInputs.projectReleasingLabelID,
-    );
     if (this.state.formInputs && this.state.formInputs.projectReleasingLabelID) {
       this.setState({ hasReleasingLabelError: false });
     } else {
@@ -302,7 +298,6 @@ class ReleaseinformationPage extends Component {
         }
       });
     }
-    console.log('test', result);
     return result;
   }
 
@@ -325,7 +320,6 @@ class ReleaseinformationPage extends Component {
       this.props.changeMediaType(1);
     }
     if (this.props.user && this.exitsLabels.length === 1) {
-      console.log('this.exitsLabelsthis.exitsLabels', this.exitsLabels.length);
       this.setState({
         formInputs: {
           ...this.state.formInputs,

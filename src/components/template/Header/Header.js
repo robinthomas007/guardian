@@ -372,7 +372,6 @@ class Header extends Component {
     if (!IsLabelReadOnly && (!projectStatusID || projectStatusID === 1 || projectStatusID === 4)) {
       this.getNavLinks();
     } else {
-      console.log('Else part');
       //If no project ID, We are loading normal header without status and other new project releated settings.
       this.setState({
         showProgressBar: false,

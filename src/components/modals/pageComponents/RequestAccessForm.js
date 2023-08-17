@@ -122,7 +122,6 @@ class RequestAccessForm extends Component {
   handleSubmit = e => {
     e.preventDefault();
     this.checkIfLabeleSelected();
-    console.log(isFormValid() && this.state.selectedList.length > 0);
     if (isFormValid() && this.state.selectedList.length > 0) {
       this.setState({ isLabelSelected: false }, () => {
         this.sumbitRequestAccess();
