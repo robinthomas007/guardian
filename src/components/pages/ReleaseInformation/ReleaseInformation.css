@@ -234,7 +234,7 @@ button.btn.btn-secondary.action.remove-art {
 .release-date-op {
   display: flex;
   align-items: center;
-  flex: 1;
+  /* flex: 1; */
 }
 .release-date-op input {
   flex: 1;
@@ -248,4 +248,13 @@ button.btn.btn-secondary.action.remove-art {
 
 .release-date-op label {
   margin-bottom: 0px !important;
+}
+
+.release-date-op button.tooltip-btn.btn.btn-primary {
+  margin-left: 6px !important;
+  margin-top: 0px !important;
+}
+
+.release-date-op input[type='radio'] {
+  margin-right: 6px;
 }

@@ -709,7 +709,7 @@ class ReleaseinformationPage extends Component {
                     <i>&nbsp;&nbsp; (UTC)</i>
                   </span>
                 </div>
-                <div className="col-5 release-date-options">
+                <div className="col-6 release-date-options">
                   <div className="release-date-op">
                     <Form.Control
                       tabIndex="1+"
@@ -722,6 +722,7 @@ class ReleaseinformationPage extends Component {
                       onChange={this.handleChange}
                     />
                     <label for="audio">{t('releaseInfo:LocalStoreTurn')}</label>
+                    <ToolTip tabIndex="-1" message={t('releaseInfo:LocalStoreTurnMessage')} />
                   </div>
                   <div className="release-date-op">
                     <Form.Control
@@ -735,6 +736,7 @@ class ReleaseinformationPage extends Component {
                       onChange={this.handleChange}
                     />
                     <label for="audio">{t('releaseInfo:GloballyTimed')}</label>
+                    <ToolTip tabIndex="-1" message={t('releaseInfo:GloballyTimedMessage')} />
                   </div>
                   <div className="release-date-op">
                     <Form.Control
@@ -748,6 +750,7 @@ class ReleaseinformationPage extends Component {
                       onChange={this.handleChange}
                     />
                     <label for="audio">{t('releaseInfo:ReleaseTBD')}</label>
+                    <ToolTip tabIndex="-1" message={t('releaseInfo:ReleaseTBDMessage')} />
                   </div>
                 </div>
               </Form.Group>

@@ -41,5 +41,8 @@
   "NotesMessage": "Quelque chose de notable à propos de cette version ?",
   "ReleasingLabelRequired": "Libérer l'étiquette est requis",
   "GloballyTimed": "Temps mondiaux",
-  "LocalStoreTurn": "Tourner le magasin local"
+  "LocalStoreTurn": "Tourner le magasin local",
+  "LocalStoreTurnMessage": "Le projet devient disponible à minuit/tour de magasin dans le fuseau horaire de chaque territoire.",
+  "GloballyTimedMessage": "Le projet devient disponible dans le monde entier à une heure spécifiée, quel que soit le fuseau horaire.",
+  "ReleaseTBDMessage": "Date de sortie à déterminer / Pas de date de sortie"
 }

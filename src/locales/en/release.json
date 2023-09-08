@@ -42,5 +42,8 @@
   "ReleasingLabelRequired": "Releasing Label is Required",
   "ImageID": "Image ID",
   "GloballyTimed": "Globally Timed",
-  "LocalStoreTurn": "Local Store Turn"
+  "LocalStoreTurn": "Local Store Turn",
+  "LocalStoreTurnMessage": "Project becomes available at midnight/store-turn in each territories time zone.",
+  "GloballyTimedMessage": "Project becomes available worldwide at a specified time, regardless of time zone.",
+  "ReleaseTBDMessage": "Release date to be determined / No release date"
 }

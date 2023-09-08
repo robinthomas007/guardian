@@ -41,5 +41,8 @@
   "NotesMessage": "Irgendetwas bemerkenswertes an dieser Veröffentlichung?",
   "ReleasingLabelRequired": "Etikett freigeben ist erforderlich",
   "GloballyTimed": "Globale Zeiten",
-  "LocalStoreTurn": "Lokaler Laden dran"
+  "LocalStoreTurn": "Lokaler Laden dran",
+  "LocalStoreTurnMessage": "Das Projekt wird um Mitternacht/Ladenöffnung in der Zeitzone jedes Gebiets verfügbar.",
+  "GloballyTimedMessage": "Das Projekt wird zu einem bestimmten Zeitpunkt weltweit verfügbar, unabhängig von der Zeitzone.",
+  "ReleaseTBDMessage": "Veröffentlichungsdatum noch festzulegen / Kein Veröffentlichungsdatum"
 }

@@ -41,5 +41,8 @@
   "NotesMessage": "¿Algo destacable de este lanzamiento?",
   "ReleasingLabelRequired": "Etiqueta de liberación es obligatorio",
   "GloballyTimed": "Tiempos globales",
-  "LocalStoreTurn": "Turno de tienda local"
+  "LocalStoreTurn": "Turno de tienda local",
+  "LocalStoreTurnMessage": "El proyecto estará disponible a la medianoche/turno de tienda en la zona horaria de cada territorio.",
+  "GloballyTimedMessage": "El proyecto estará disponible en todo el mundo a una hora determinada, independientemente de la zona horaria.",
+  "ReleaseTBDMessage": "Fecha de lanzamiento por determinar / Sin fecha de lanzamiento"
 }
