@@ -6,7 +6,7 @@ import './react-toastify-override.css';
 export default () => (
   <ToastContainer
     closeButton={false}
-    position="top-right"
+    position="top-center"
     autoClose={false}
     hideProgressBar={false}
     closeOnClick

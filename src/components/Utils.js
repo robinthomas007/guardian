@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { toast } from 'react-toastify';
+import { toast, Zoom } from 'react-toastify';
 import i18n from './../i18n';
 
 export function isDuplicateItem(array, what) {
@@ -181,23 +181,23 @@ export function isDuplicateTrackTitle() {
 }
 
 export function showNotyError(message, afterClose, id) {
-  toast.error(message, { onClose: afterClose, toastId: id });
+  toast.error(message, { onClose: afterClose, toastId: id, transition: Zoom });
 }
 
 export function showNotyMaskWarning(message, afterClose, id) {
-  toast.error(message, { onClose: afterClose, toastId: id });
+  toast.error(message, { onClose: afterClose, toastId: id, transition: Zoom });
 }
 
 export function showNotyAutoError(message, afterClose, id) {
-  toast.error(message, { autoClose: 3000, onClose: afterClose, toastId: id });
+  toast.error(message, { autoClose: 3000, onClose: afterClose, toastId: id, transition: Zoom });
 }
 
 export function showNotyWarning(message, afterClose) {
-  toast.warn(message, { autoClose: 3000, onClose: afterClose });
+  toast.warn(message, { autoClose: 3000, onClose: afterClose, transition: Zoom });
 }
 
 export function showNotyInfo(message, afterClose, id) {
-  toast.info(message, { autoClose: 3000, onClose: afterClose, toastId: id });
+  toast.info(message, { autoClose: 3000, onClose: afterClose, toastId: id, transition: Zoom });
 }
 
 export const CustomInput = props => {
