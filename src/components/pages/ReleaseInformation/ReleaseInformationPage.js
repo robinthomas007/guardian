@@ -709,7 +709,7 @@ class ReleaseinformationPage extends Component {
                     <i>&nbsp;&nbsp; (UTC)</i>
                   </span>
                 </div>
-                <div className="col-6 release-date-options">
+                <div className="col-5 release-date-options">
                   <div className="release-date-op">
                     <Form.Control
                       tabIndex="1+"
