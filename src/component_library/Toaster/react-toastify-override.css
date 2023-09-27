@@ -1,26 +1,40 @@
 .Toastify__toast {
-  min-height: 50px;
-  margin-bottom: 1px;
-  border-radius: 0px;
+  border-bottom: 1px solid #fff;
 }
 
 /** Used to define container behavior: width, position: fixed etc... **/
 .Toastify__toast-container {
-  width: 100vw;
-  height: 50px;
+  width: 30vw;
+  z-index: 99999;
+  /* height: 50px;
   text-align: center;
   right: 0;
   top: 0;
   padding: 0;
-  border: 0px;
+  border: 0px; */
 }
 
-.Toastify__toast--info {
+/* .Toastify__toast--info {
   background-color: #01578b;
+} */
+
+/* .Toastify__toast--error {
+  background-color: #7f1b2e;
+}
+*/
+
+.Toastify__progress-bar {
+  height: 7px;
 }
 
-.Toastify__toast--error {
-  background-color: #7f1b2e;
+.auto-error
+  .Toastify__progress-bar.Toastify__progress-bar--animated.Toastify__progress-bar--default {
+  background: red;
+}
+
+.auto-success
+  .Toastify__progress-bar.Toastify__progress-bar--animated.Toastify__progress-bar--default {
+  background: green;
 }
 
 .Toastify__toast-body {
@@ -28,4 +42,71 @@
   font-size: 1em;
   font-weight: 600;
   line-height: 1.2;
+}
+.Toastify__toast {
+  padding: 0;
+}
+
+.Toastify__toast-body {
+  padding: 0;
+}
+
+.custom-notification {
+  padding-left: 40px !important;
+  border-radius: 4px;
+  padding: 20px;
+  background-color: #f5f5f5;
+  padding-left: 71px !important;
+}
+
+.custom-notification .noti-content {
+  color: #000;
+}
+
+.custom-notification .material-icons {
+  font-size: 40px;
+  border-radius: 100%;
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.custom-notification .heading {
+  text-transform: capitalize;
+}
+
+.custom-noti-success .heading {
+  color: rgb(32, 96, 32);
+}
+.custom-noti-error .heading {
+  color: #bf0303;
+}
+.custom-noti-info .heading {
+  color: #01579b;
+}
+.custom-noti-success .material-icons {
+  border: 2px solid rgb(32, 96, 32);
+  color: rgb(32, 96, 32);
+}
+.custom-noti-error .material-icons {
+  border: 2px solid #bf0303;
+  color: #bf0303;
+}
+
+.custom-noti-info .material-icons {
+  border: 2px solid #01579b;
+  color: #01579b;
+}
+
+.custom-noti-success {
+  border-bottom: 8px solid rgb(32, 96, 32);
+}
+
+.custom-noti-error {
+  border-bottom: 8px solid #bf0303;
+}
+
+.custom-noti-info {
+  border-bottom: 8px solid #01579b;
 }

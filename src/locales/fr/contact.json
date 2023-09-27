@@ -21,5 +21,5 @@
   "IncorrectlyFormattedEmail": "Adresse(s) e-mail au format incorrect",
   "mask": "Projet de masque",
   "maskMessage": "Artiste de masque et informations sur la piste",
-  "maskWarning": "Les métadonnées de ce projet sont masquées. Le titre du projet, l'artiste, les titres des pistes et les artistes seront tous masqués."
+  "maskWarning": "Les métadonnées de ce projet sont masquées. Le titre du projet, l'artiste, les titres des pistes et les artistes seront tous masqués. (Cliquez pour fermer)"
 }

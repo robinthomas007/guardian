@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { toast, Zoom } from 'react-toastify';
+import { Slide, toast, Zoom } from 'react-toastify';
 import i18n from './../i18n';
 
 export function isDuplicateItem(array, what) {
@@ -180,24 +180,82 @@ export function isDuplicateTrackTitle() {
   return isDuplicate;
 }
 
+const renderIcon = type => {
+  switch (type) {
+    case 'success':
+      return <i className="material-icons"> done</i>;
+    case 'error':
+      return <i className="material-icons">error</i>;
+    case 'warn':
+      return <i className="material-icons"> info</i>;
+    case 'info':
+      return <i className="material-icons"> info</i>;
+    default:
+      break;
+  }
+};
+
+const renderMessage = (message, type) => {
+  return (
+    <div className={`custom-notification custom-noti-${type}`}>
+      {renderIcon(type)}
+      <div>
+        <h4 className="heading">{type}</h4>
+      </div>
+      <p className="noti-content">{message}</p>
+    </div>
+  );
+};
+
 export function showNotyError(message, afterClose, id) {
-  toast.error(message, { onClose: afterClose, toastId: id, transition: Zoom });
+  toast(renderMessage(message, 'error'), {
+    onClose: afterClose,
+    toastId: id,
+    transition: Slide,
+    position: 'top-right',
+    className: 'auto-error',
+  });
 }
 
 export function showNotyMaskWarning(message, afterClose, id) {
-  toast.error(message, { onClose: afterClose, toastId: id, transition: Zoom });
+  toast(renderMessage(message, 'error'), {
+    onClose: afterClose,
+    toastId: id,
+    transition: Slide,
+    position: 'top-right',
+    className: 'auto-error',
+  });
 }
 
 export function showNotyAutoError(message, afterClose, id) {
-  toast.error(message, { autoClose: 3000, onClose: afterClose, toastId: id, transition: Zoom });
+  toast(renderMessage(message, 'error'), {
+    autoClose: 3000,
+    onClose: afterClose,
+    toastId: id,
+    transition: Slide,
+    position: 'top-right',
+    className: 'auto-error',
+  });
 }
 
 export function showNotyWarning(message, afterClose) {
-  toast.warn(message, { autoClose: 3000, onClose: afterClose, transition: Zoom });
+  toast.warn(renderMessage(message, 'warn'), {
+    autoClose: 3000,
+    onClose: afterClose,
+    transition: Slide,
+    position: 'top-right',
+  });
 }
 
 export function showNotyInfo(message, afterClose, id) {
-  toast.info(message, { autoClose: 3000, onClose: afterClose, toastId: id, transition: Zoom });
+  toast(renderMessage(message, 'success'), {
+    autoClose: 3000,
+    onClose: afterClose,
+    toastId: id,
+    transition: Slide,
+    position: 'top-right',
+    className: 'auto-success',
+  });
 }
 
 export const CustomInput = props => {
