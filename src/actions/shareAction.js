@@ -1,6 +1,6 @@
 import * as actions from 'types/share.types';
 import Api from 'lib/api';
-import { showNotyInfo, showNotyAutoError } from './../components/Utils';
+import { showNotySucess, showNotyAutoError } from './../components/Utils';
 
 export const shareSuccess = comment => {
   return {
@@ -30,7 +30,7 @@ export const postEmails = data => {
       .then(response => response.json())
       .then(response => {
         if (response.result) {
-          showNotyInfo(response.message);
+          showNotySucess(response.message);
           dispatch(shareSuccess(response.Comment));
         } else {
           showNotyAutoError('Error sending email');

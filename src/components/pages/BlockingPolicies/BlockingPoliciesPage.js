@@ -12,7 +12,7 @@ import { Table, Form } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import {
   Duration,
-  showNotyInfo,
+  showNotySucess,
   showNotyAutoError,
   getProjectReview,
   getPlatforms,
@@ -197,7 +197,7 @@ function BlockingPoliciesPage(props) {
   };
 
   const showNotification = projectID => {
-    showNotyInfo(props.t('blocking:NotyInfo'), () => {
+    showNotySucess(props.t('blocking:NotyInfo'), () => {
       props.history.push({
         pathname: '/reviewSubmit/' + projectID,
       });

@@ -37,6 +37,21 @@
   background: green;
 }
 
+.auto-warning
+  .Toastify__progress-bar.Toastify__progress-bar--animated.Toastify__progress-bar--warning {
+  background: rgb(193, 83, 9);
+}
+
+.auto-info
+  .Toastify__progress-bar.Toastify__progress-bar--animated.Toastify__progress-bar--default {
+  background: #023052;
+}
+
+.auto-progress
+  .Toastify__progress-bar.Toastify__progress-bar--animated.Toastify__progress-bar--default {
+  background: #023052;
+}
+
 .Toastify__toast-body {
   font-family: 'Roboto Condensed', sans-serif;
   font-size: 1em;
@@ -54,16 +69,17 @@
 .custom-notification {
   padding-left: 40px !important;
   border-radius: 4px;
-  padding: 20px;
+  padding: 12px;
   background-color: #f5f5f5;
   padding-left: 71px !important;
 }
 
 .custom-notification .noti-content {
   color: #000;
+  font-size: 15px;
 }
 
-.custom-notification .material-icons {
+.custom-notification .material-icons.icon-big {
   font-size: 40px;
   border-radius: 100%;
   position: absolute;
@@ -85,17 +101,35 @@
 .custom-noti-info .heading {
   color: #01579b;
 }
-.custom-noti-success .material-icons {
+
+.custom-noti-warning .heading {
+  color: #f49f03;
+}
+
+.custom-noti-uploading .heading {
+  color: #01579b;
+}
+.custom-noti-success .material-icons.icon-big {
   border: 2px solid rgb(32, 96, 32);
   color: rgb(32, 96, 32);
 }
-.custom-noti-error .material-icons {
+.custom-noti-error .material-icons.icon-big {
   border: 2px solid #bf0303;
   color: #bf0303;
 }
 
-.custom-noti-info .material-icons {
+.custom-noti-info .material-icons.icon-big {
   border: 2px solid #01579b;
+  color: #01579b;
+}
+
+.custom-noti-warning .material-icons.icon-big {
+  border: 2px solid #f49f03;
+  color: #f49f03;
+}
+
+.custom-noti-uploading .material-icons.icon-big {
+  /* border: 2px solid #01579b; */
   color: #01579b;
 }
 
@@ -109,4 +143,32 @@
 
 .custom-noti-info {
   border-bottom: 8px solid #01579b;
+}
+
+.custom-noti-warning {
+  border-bottom: 8px solid #f49f03;
+}
+
+.custom-noti-uploading {
+  border-bottom: 8px solid #01579b;
+}
+
+.custom-notification .material-icons.icon-close {
+  position: absolute;
+  right: 6px;
+  top: 5px;
+  color: #696464;
+}
+
+.icon-spin {
+  animation: spin 2s linear infinite; /* Adjust duration and timing function as needed */
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

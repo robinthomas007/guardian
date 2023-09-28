@@ -1,6 +1,6 @@
 import * as actions from './release.types';
 import Api from '../../../lib/api';
-import { showNotyAutoError } from 'components/Utils';
+import { showNotyWarning } from 'components/Utils';
 import i18n from './../../../i18n';
 
 export const getProjectDetails = data => {
@@ -42,7 +42,7 @@ export const findUpc = val => {
         if (response && response.Status === 'OK') {
           dispatch(upcSuccess(response));
         } else {
-          showNotyAutoError(i18n.t('releaseInfo:NoMatchingUPCfound'));
+          showNotyWarning(i18n.t('releaseInfo:NoMatchingUPCfound'));
           localStorage.removeItem('upc');
         }
         dispatch(upcRequest(false));

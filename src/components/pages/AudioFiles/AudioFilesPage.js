@@ -13,15 +13,18 @@ import {
   isDuplicateISRC,
   showNotyError,
   showNotyAutoError,
+  showNotySucess,
+  isValidIsrc,
   NO_LABEL_ID,
+  renderMessage,
 } from '../../Utils';
 import _ from 'lodash';
-import { showNotyInfo, isValidIsrc } from 'components/Utils';
 import * as releaseAction from './../ReleaseInformation/releaseAction';
 import * as AudioActions from '../../../actions/audioActions';
 import { withTranslation } from 'react-i18next';
 import { compose } from 'redux';
 import ConfirmModal from 'components/modals/ConfirmModal';
+import { toast } from 'react-toastify';
 
 class AudioFilesPage extends Component {
   constructor(props) {
@@ -167,7 +170,7 @@ class AudioFilesPage extends Component {
   showNotification(saveAndContinue) {
     const projectID = this.state.projectID ? this.state.projectID : '';
 
-    showNotyInfo(this.props.t('audio:trackSaved'), () => {
+    showNotySucess(this.props.t('audio:trackSaved'), () => {
       if (saveAndContinue) {
         this.props.history.push({
           pathname: '/trackInformation/' + projectID,
@@ -303,12 +306,16 @@ class AudioFilesPage extends Component {
   };
 
   handleFileUpload(files, trackID) {
-    const { onUploadStart, onUploadProgress, onUploadComplete } = this.props;
+    const { onUploadStart, onUploadProgress, onUploadComplete, t } = this.props;
     const removeTrack = this.removeTrack;
     const projectID = this.state.projectID ? this.state.projectID : '';
     files.map(file => {
       const uniqFileName = `${file.name}-${new Date().getTime()}/${trackID ? trackID : ''}`;
-      onUploadStart(uniqFileName, trackID);
+      // onUploadStart(uniqFileName, trackID);
+      const toastId = toast(
+        renderMessage(t('audio:UploadInProgress'), 'uploading', 'uploading', 1),
+      );
+
       let formData = new FormData();
       // formData.append('file', renameFile(file, file.name.split(/\.(?=[^\.]+$)/)[0] + '.flac'));
       formData.append('file', file);
@@ -321,14 +328,34 @@ class AudioFilesPage extends Component {
       request.upload.addEventListener('progress', function(e) {
         // upload progress as percentage
         let percent_completed = (e.loaded / e.total) * 100;
-        onUploadProgress(uniqFileName, Math.round(percent_completed));
+        // onUploadProgress(uniqFileName, Math.round(percent_completed));
+        toast.update(toastId, {
+          render: renderMessage(
+            t('audio:UploadInProgress'),
+            'uploading',
+            'uploading',
+            Math.round(percent_completed),
+          ),
+          autoClose: false,
+          className: 'auto-progress',
+        });
       });
 
       // request finished event
       request.addEventListener('load', e => {
-        onUploadComplete(uniqFileName);
+        // onUploadComplete(uniqFileName);
+        toast.update(toastId, {
+          render: renderMessage(t('audio:UploadInProgress'), 'success', 'Upload Success', 100),
+          autoClose: 3000,
+          className: 'auto-success',
+        });
         if (request.status >= 300) {
-          showNotyError(this.props.t('audio:UploadingFailed'), 3);
+          toast.update(toastId, {
+            render: renderMessage(t('audio:UploadInProgress'), 'error', 'Upload Failed', 10),
+            autoClose: 3000,
+            className: 'auto-error',
+          });
+          // showNotyError(this.props.t('audio:UploadingFailed'), 3);
           removeTrack(file.name, trackID);
         }
       });

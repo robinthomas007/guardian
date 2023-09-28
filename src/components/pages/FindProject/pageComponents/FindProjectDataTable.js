@@ -3,7 +3,7 @@ import { Table } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import AdminStatusDropdown from '../pageComponents/AdminStatusDropdown';
 import LoadingImg from 'component_library/LoadingImg';
-import { showNotyInfo, showNotyAutoError } from 'components/Utils';
+import { showNotySucess, showNotyAutoError } from 'components/Utils';
 import moment from 'moment';
 import ExtendedTracks from './ExtendedTracks';
 import ConfirmModal from 'components/modals/ConfirmModal';
@@ -186,7 +186,7 @@ class FindProjectDataTable extends Component {
       })
       .then(responseJSON => {
         this.setState({ showloader: false });
-        showNotyInfo(this.props.t('search:NotyInfo'));
+        showNotySucess(this.props.t('search:NotyInfo'));
       })
       .catch(error => {
         console.error(error);
@@ -214,7 +214,7 @@ class FindProjectDataTable extends Component {
       body: JSON.stringify(fetchBody),
     })
       .then(_response => {
-        showNotyInfo(this.props.t('search:NotyDeleteInfo'));
+        showNotySucess(this.props.t('search:NotyDeleteInfo'));
         afterProjectDelete();
         return null;
       })

@@ -7,7 +7,7 @@ import './ProjectContacts.css';
 import LoadingImg from 'component_library/LoadingImg';
 import { isFormValid, isPreReleaseDate } from '../../Utils.js';
 import _ from 'lodash';
-import { showNotyInfo, showNotyAutoError, NO_LABEL_ID } from 'components/Utils';
+import { showNotySucess, showNotyAutoError, NO_LABEL_ID } from 'components/Utils';
 import { connect } from 'react-redux';
 import * as releaseAction from './../ReleaseInformation/releaseAction';
 import { withTranslation } from 'react-i18next';
@@ -77,7 +77,7 @@ class ProjectContactsPage extends Component {
   }
 
   showNotification(e, projectID, saveAndContinue) {
-    showNotyInfo(this.props.t('contact:projectSaved'), () => {
+    showNotySucess(this.props.t('contact:projectSaved'), () => {
       if (saveAndContinue) {
         if (
           (!this.state.project.Project.projectReleaseDateTBD &&
@@ -97,7 +97,7 @@ class ProjectContactsPage extends Component {
   }
 
   showNotSavedNotification(e) {
-    showNotyAutoError(this.props.t('contact:projectSaved'));
+    showNotyAutoError(this.props.t('contact:projectNotSaved'));
   }
 
   handleChange(e) {

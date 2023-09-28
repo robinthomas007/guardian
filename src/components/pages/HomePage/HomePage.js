@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import RequestAccessModal from '../../modals/RequestAccessModal';
 import './HomePage.css';
 import GuardianLogo from 'images/guardian-logo.png';
-import { showNotyInfo, showNotyAutoError, getCookie } from 'components/Utils';
+import { showNotySucess, showNotyAutoError, getCookie } from 'components/Utils';
 import { withTranslation } from 'react-i18next';
 import LanguageDropdown from '../../common/LanguageDropdown';
 import jwt_decode from 'jwt-decode';
@@ -67,7 +67,7 @@ class HomePage extends Component {
   }
 
   showRequestAccessSent(e) {
-    showNotyInfo('Your request for access to the Guardian has been successfully sent.');
+    showNotySucess('Your request for access to the Guardian has been successfully sent.');
   }
 
   showRequestAccessError(e) {

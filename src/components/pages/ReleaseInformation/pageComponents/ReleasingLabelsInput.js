@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Form } from 'react-bootstrap';
-import { showNotyInfo } from 'components/Utils';
+import { showNotySucess } from 'components/Utils';
 
 class ReleasingLabelsInput extends Component {
   constructor(props) {
@@ -27,7 +27,7 @@ class ReleasingLabelsInput extends Component {
   }
 
   showNotification() {
-    showNotyInfo(
+    showNotySucess(
       'Your track information has been successfully saved and submitted for intial protection.',
     );
   }

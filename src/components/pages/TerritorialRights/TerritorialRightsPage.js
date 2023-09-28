@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
 import { Table, Form } from 'react-bootstrap';
 import ReactMultiSelectCheckboxes from 'react-multiselect-checkboxes';
-import { showNotyInfo, showNotyAutoError, NO_LABEL_ID } from './../../Utils';
+import { showNotySucess, showNotyAutoError, showNotyError, NO_LABEL_ID } from './../../Utils';
 import _ from 'lodash';
 import './TerritorialRights.css';
 
@@ -87,7 +87,7 @@ function TerritorialRightsPage(props) {
           blksets[blksets.length - 1].tracks.push(...arrObj);
           blksets[blksets.length - 1].NoRights = true;
           setTerritorialRights(blksets);
-          showNotyAutoError(t('territorial:NotyErrorForOwnRights'));
+          showNotyError(t('territorial:NotyErrorForOwnRights'));
         } else {
           updateProjectStatus('1');
         }
@@ -253,7 +253,7 @@ function TerritorialRightsPage(props) {
   };
 
   const showNotification = projectID => {
-    showNotyInfo(props.t('territorial:NotyInfo'), () => {
+    showNotySucess(props.t('territorial:NotyInfo'), () => {
       props.history.push({
         pathname: '/blockingPolicies/' + projectID,
       });

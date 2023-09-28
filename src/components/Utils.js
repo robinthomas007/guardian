@@ -1,7 +1,8 @@
 import React from 'react';
 import moment from 'moment';
-import { Slide, toast, Zoom } from 'react-toastify';
+import { Slide, toast } from 'react-toastify';
 import i18n from './../i18n';
+import { ProgressBar } from 'react-bootstrap';
 
 export function isDuplicateItem(array, what) {
   return array.filter(item => item !== '' && item === what).length > 1;
@@ -183,26 +184,32 @@ export function isDuplicateTrackTitle() {
 const renderIcon = type => {
   switch (type) {
     case 'success':
-      return <i className="material-icons"> done</i>;
+      return <i className="material-icons icon-big"> done</i>;
     case 'error':
-      return <i className="material-icons">error</i>;
-    case 'warn':
-      return <i className="material-icons"> info</i>;
+      return <i className="material-icons icon-big">error</i>;
+    case 'warning':
+      return <i className="material-icons icon-big"> info</i>;
     case 'info':
-      return <i className="material-icons"> info</i>;
+      return <i className="material-icons icon-big"> info</i>;
+    case 'uploading':
+      return <i className="material-icons icon-big icon-spin"> sync</i>;
     default:
       break;
   }
 };
 
-const renderMessage = (message, type) => {
+export const renderMessage = (message, type, customHeading, progress) => {
+  const variant = type === 'success' ? 'success' : type === 'error' ? 'danger' : 'info';
   return (
     <div className={`custom-notification custom-noti-${type}`}>
-      {renderIcon(type)}
+      <i className="material-icons icon-close"> close</i>;{renderIcon(type)}
       <div>
-        <h4 className="heading">{type}</h4>
+        <h4 className="heading">{customHeading ? customHeading : type}</h4>
       </div>
       <p className="noti-content">{message}</p>
+      {progress && (
+        <ProgressBar striped variant={variant} animated now={progress} label={`${progress}%`} />
+      )}
     </div>
   );
 };
@@ -218,7 +225,7 @@ export function showNotyError(message, afterClose, id) {
 }
 
 export function showNotyMaskWarning(message, afterClose, id) {
-  toast(renderMessage(message, 'error'), {
+  toast(renderMessage(message, 'error', 'Project Masked'), {
     onClose: afterClose,
     toastId: id,
     transition: Slide,
@@ -239,15 +246,27 @@ export function showNotyAutoError(message, afterClose, id) {
 }
 
 export function showNotyWarning(message, afterClose) {
-  toast.warn(renderMessage(message, 'warn'), {
+  toast.warn(renderMessage(message, 'warning'), {
     autoClose: 3000,
     onClose: afterClose,
     transition: Slide,
     position: 'top-right',
+    className: 'auto-warning',
   });
 }
 
 export function showNotyInfo(message, afterClose, id) {
+  toast(renderMessage(message, 'info'), {
+    autoClose: 3000,
+    onClose: afterClose,
+    toastId: id,
+    transition: Slide,
+    position: 'top-right',
+    className: 'auto-info',
+  });
+}
+
+export function showNotySucess(message, afterClose, id) {
   toast(renderMessage(message, 'success'), {
     autoClose: 3000,
     onClose: afterClose,

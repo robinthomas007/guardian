@@ -15,7 +15,7 @@ import {
   isPreReleaseDate,
   NO_LABEL_ID,
 } from '../../Utils';
-import { showNotyInfo, showNotyAutoError, getProjectReview } from 'components/Utils';
+import { showNotySucess, showNotyMaskWarning, getProjectReview } from 'components/Utils';
 import * as releaseAction from './../ReleaseInformation/releaseAction';
 
 // import * as reviewActions from '../../../actions/reviewActions';
@@ -197,10 +197,10 @@ class ReviewAndSubmitPage extends Component {
       .then(responseJSON => {
         this.setState({ showloader: false });
         if (responseJSON.IsIsrcSuperConfidential) {
-          showNotyAutoError(this.props.t('review:SuperConfidential'));
+          showNotyMaskWarning(this.props.t('review:SuperConfidential'));
         }
         setTimeout(() => {
-          showNotyInfo(this.props.t('review:NotyInfo'), () => {
+          showNotySucess(this.props.t('review:NotyInfo'), () => {
             return this.props.history.push({ pathname: '/findProject/' });
           });
           localStorage.setItem('prevStep', 7);

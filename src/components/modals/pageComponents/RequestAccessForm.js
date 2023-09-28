@@ -3,7 +3,7 @@ import { Form, Button } from 'react-bootstrap';
 // import LabelsDropDown from 'components/modals/pageComponents/LabelsDropDown';
 import ReleasingLabelsInput from '../../../components/pages/ReleaseInformation/pageComponents/ReleasingLabelsInput.js';
 import { isFormValid } from '../../../components/Utils';
-import { showNotyInfo, showNotyError } from 'components/Utils';
+import { showNotySucess, showNotyError } from 'components/Utils';
 import MultiSelectHierarchy from '../../common/multiSelectTag';
 import _ from 'lodash';
 
@@ -61,7 +61,7 @@ class RequestAccessForm extends Component {
   };
 
   handleAccessSuccess = () => {
-    showNotyInfo('Your request for access to the Guardian has been successfully sent.');
+    showNotySucess('Your request for access to the Guardian has been successfully sent.');
   };
 
   handleAccessError = message => {

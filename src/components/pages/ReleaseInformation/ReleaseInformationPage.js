@@ -264,10 +264,6 @@ class ReleaseinformationPage extends Component {
 
   albumArt(e) {
     const files = e.target.files;
-    // if (e.target.files[0].size > 3145727) {
-    //   showNotyError('Album image is too big(max 3mb)');
-    //   return false;
-    // }
     this.cisUploadCoverImage(files[0]);
   }
 

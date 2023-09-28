@@ -2,7 +2,7 @@ import * as actions from 'types/review.types';
 import * as findProjectactions from 'types/findProject.types';
 
 import Api from 'lib/api';
-import { showNotyInfo, showNotyAutoError } from './../components/Utils';
+import { showNotySucess, showNotyAutoError } from './../components/Utils';
 import { fetchProjects } from './findProjectAction';
 
 export const publishSuccess = comment => {
@@ -33,7 +33,7 @@ export const handlePublish = (data, searchData) => {
       .then(response => response.json())
       .then(response => {
         if (response.Result) {
-          showNotyInfo(response.message);
+          showNotySucess(response.message);
           dispatch(publishSuccess(response));
           dispatch(fetchProjects({ searchCriteria: searchData }));
         } else {

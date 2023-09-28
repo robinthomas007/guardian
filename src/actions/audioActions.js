@@ -1,8 +1,9 @@
 import * as actions from 'types/audio.types';
 import Api from 'lib/api';
-import { showNotyAutoError, showNotyInfo } from './../components/Utils';
+import { showNotyInfo, showNotyWarning, renderMessage } from './../components/Utils';
 import { startUpload, setUploadProgress, endUpload } from './../redux/uploadProgressAlert/actions';
 import i18n from './../i18n';
+import { toast } from 'react-toastify';
 
 export const fetchSuccess = result => {
   return {
@@ -35,7 +36,7 @@ export const isrcCheck = data => {
         if (response.Status === 'OK' && response.ExTracks && response.ExTracks.length > 0) {
           dispatch(fetchSuccess(response.ExTracks));
         } else {
-          showNotyAutoError(i18n.t('audio:NoMatchingISRC'));
+          showNotyWarning(i18n.t('audio:NoMatchingISRC'));
           dispatch(fetchFailure(response.message));
         }
       })
@@ -69,11 +70,18 @@ export const cisFetchRequest = (loading, Iscrs) => {
 };
 
 export const getCisData = data => {
+  const toastId = toast(
+    renderMessage(i18n.t('audio:UploadInProgress'), 'uploading', 'uploading', 10),
+    { autoClose: 10 },
+  );
   return dispatch => {
     dispatch(cisFetchRequest(true, data.Iscrs));
     for (let i = 0; i < data.Iscrs.length; i++) {
-      dispatch(startUpload('CIS' + i));
-      dispatch(setUploadProgress('CIS' + i, 100));
+      toast.update(toastId, {
+        render: renderMessage(i18n.t('audio:UploadInProgress'), 'uploading', 'uploading', 50),
+        autoClose: false,
+        className: 'auto-progress',
+      });
     }
     return Api.post('/media/api/cisupload', data)
       .then(response => response.json())
@@ -81,7 +89,16 @@ export const getCisData = data => {
         if (response && response.length > 0) {
           dispatch(cisFetchSuccess(response));
           for (let i = 0; i < data.Iscrs.length; i++) {
-            dispatch(endUpload('CIS' + i));
+            toast.update(toastId, {
+              render: renderMessage(
+                i18n.t('audio:UploadInProgress'),
+                'success',
+                'Upload Success',
+                100,
+              ),
+              autoClose: 1000,
+              className: 'auto-success',
+            });
           }
           if (data.mediaType === 2) {
             showNotyInfo(`${i18n.t('audio:weHaveFoundYourVideo')}`);
@@ -92,10 +109,13 @@ export const getCisData = data => {
           }
         } else {
           for (let i = 0; i < data.Iscrs.length; i++) {
-            dispatch(endUpload('CIS' + i));
+            toast.update(toastId, {
+              render: renderMessage(i18n.t('audio:UploadInProgress'), 'error', 'Upload Failed', 10),
+              autoClose: 1000,
+              className: 'auto-error',
+            });
           }
-          showNotyInfo(i18n.t('audio:NoFileFoundFromASPEN'));
-          showNotyInfo();
+          showNotyWarning(i18n.t('audio:NoFileFoundFromASPEN'));
           dispatch(cisFetchFailure(response));
         }
       })

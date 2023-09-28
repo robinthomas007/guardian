@@ -5,7 +5,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Api from '../../lib/api';
 import _ from 'lodash';
 import Spinner from '../../component_library/Spinner';
-import { showNotyInfo, showNotyAutoError, checkEmpty } from '../Utils';
+import { showNotyAutoError, checkEmpty } from '../Utils';
 import { useTranslation } from 'react-i18next';
 
 export default function MultiSelectHierarchy({

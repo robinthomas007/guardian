@@ -5,7 +5,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Api from '../../lib/api';
 import _ from 'lodash';
 import Spinner from '../../component_library/Spinner';
-import { showNotyInfo, showNotyAutoError } from '../../components/Utils';
+import { showNotySucess, showNotyAutoError } from '../../components/Utils';
 import { useTranslation } from 'react-i18next';
 
 export default function MultiSelectHierarchy({
@@ -176,7 +176,7 @@ export default function MultiSelectHierarchy({
       })
       .then(res => {
         if (res.ValidTagName) {
-          showNotyInfo('Successfully removed the label');
+          showNotySucess('Successfully removed the label');
           if (searchInput.length > 0) {
             invokeSearchAPI();
           } else {
@@ -232,7 +232,7 @@ export default function MultiSelectHierarchy({
               invokeAdminSearchApi();
             }
             setPreviousSelectedLabel([]);
-            showNotyInfo('Successfully added the new label');
+            showNotySucess('Successfully added the new label');
           } else {
             showNotyAutoError('Label not allowed to associate more than one Tag');
           }
@@ -344,7 +344,7 @@ export default function MultiSelectHierarchy({
       })
       .then(res => {
         if (res.ValidTagName) {
-          showNotyInfo('Successfully removed the label');
+          showNotySucess('Successfully removed the label');
           // setSelectedList(modifiedSelectedList);
           // setSelectedList([]);
           // setSelectedTag([]);
