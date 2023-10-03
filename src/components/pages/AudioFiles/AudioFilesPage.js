@@ -581,14 +581,14 @@ class AudioFilesPage extends Component {
   }
 
   componentDidMount() {
-    if (this.props.discs.length > 0) {
-      const { discs } = this.props;
-      this.setState({ discs: _.cloneDeep(discs) });
-    } else {
-      if (this.props.match.params && this.props.match.params.projectID) {
-        this.handleDataLoad();
-        this.props.setProjectID(this.props.match.params.projectID, this.props.match.url);
-      }
+    // if (this.props.discs.length > 0) {
+    //   const { discs } = this.props;
+    //   this.setState({ discs: _.cloneDeep(discs) });
+    // } else {
+    if (this.props.match.params && this.props.match.params.projectID) {
+      this.handleDataLoad();
+      this.props.setProjectID(this.props.match.params.projectID, this.props.match.url);
+      // }
     }
   }
 
