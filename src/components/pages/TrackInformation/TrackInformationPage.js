@@ -576,7 +576,7 @@ class TrackInformationPage extends Component {
       : '';
     files.map(file => {
       const uniqFileName = `${file.name}-${new Date().getTime()}`;
-      // onUploadStart(uniqFileName);
+      onUploadStart(uniqFileName);
       const toastId = toast(
         renderMessage(t('audio:UploadInProgress'), 'uploading', 'uploading', 1),
       );
@@ -596,7 +596,7 @@ class TrackInformationPage extends Component {
       request.upload.addEventListener('progress', function(e) {
         // upload progress as percentage
         let percent_completed = (e.loaded / e.total) * 100;
-        // onUploadProgress(uniqFileName, Math.round(percent_completed));
+        onUploadProgress(uniqFileName, Math.round(percent_completed));
         toast.update(toastId, {
           render: renderMessage(
             t('audio:UploadInProgress'),
@@ -611,7 +611,7 @@ class TrackInformationPage extends Component {
 
       request.addEventListener('load', e => {
         this.handleFileUploadView(track.trackNumber, false);
-        // onUploadComplete(uniqFileName);
+        onUploadComplete(uniqFileName);
         toast.update(toastId, {
           render: renderMessage(t('audio:UploadInProgress'), 'success', 'Upload Success', 100),
           autoClose: 3000,

@@ -251,7 +251,7 @@ class Content extends Component {
     if (this.state.userLoaded) {
       return (
         <ErrorBoundary>
-          <UploadProgressAlert uploads={this.props.uploads} />
+          {/*<UploadProgressAlert uploads={this.props.uploads} />*/}
           <div className="row d-flex no-gutters">
             <div
               className="col-12"

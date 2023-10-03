@@ -311,7 +311,7 @@ class AudioFilesPage extends Component {
     const projectID = this.state.projectID ? this.state.projectID : '';
     files.map(file => {
       const uniqFileName = `${file.name}-${new Date().getTime()}/${trackID ? trackID : ''}`;
-      // onUploadStart(uniqFileName, trackID);
+      onUploadStart(uniqFileName, trackID);
       const toastId = toast(
         renderMessage(t('audio:UploadInProgress'), 'uploading', 'uploading', 1),
       );
@@ -328,7 +328,7 @@ class AudioFilesPage extends Component {
       request.upload.addEventListener('progress', function(e) {
         // upload progress as percentage
         let percent_completed = (e.loaded / e.total) * 100;
-        // onUploadProgress(uniqFileName, Math.round(percent_completed));
+        onUploadProgress(uniqFileName, Math.round(percent_completed));
         toast.update(toastId, {
           render: renderMessage(
             t('audio:UploadInProgress'),
@@ -343,7 +343,7 @@ class AudioFilesPage extends Component {
 
       // request finished event
       request.addEventListener('load', e => {
-        // onUploadComplete(uniqFileName);
+        onUploadComplete(uniqFileName);
         toast.update(toastId, {
           render: renderMessage(t('audio:UploadInProgress'), 'success', 'Upload Success', 100),
           autoClose: 3000,
@@ -581,14 +581,14 @@ class AudioFilesPage extends Component {
   }
 
   componentDidMount() {
-    // if (this.props.discs.length > 0) {
-    //   const { discs } = this.props;
-    //   this.setState({ discs: _.cloneDeep(discs) });
-    // } else {
-    if (this.props.match.params && this.props.match.params.projectID) {
-      this.handleDataLoad();
-      this.props.setProjectID(this.props.match.params.projectID, this.props.match.url);
-      // }
+    if (this.props.discs.length > 0) {
+      const { discs } = this.props;
+      this.setState({ discs: _.cloneDeep(discs) });
+    } else {
+      if (this.props.match.params && this.props.match.params.projectID) {
+        this.handleDataLoad();
+        this.props.setProjectID(this.props.match.params.projectID, this.props.match.url);
+      }
     }
   }
 
