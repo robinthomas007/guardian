@@ -236,7 +236,7 @@ export function showNotyMaskWarning(message, afterClose, id) {
 
 export function showNotyAutoError(message, afterClose, id) {
   toast(renderMessage(message, 'error'), {
-    autoClose: 3000,
+    autoClose: 5000,
     onClose: afterClose,
     toastId: id,
     transition: Slide,
@@ -247,7 +247,7 @@ export function showNotyAutoError(message, afterClose, id) {
 
 export function showNotyWarning(message, afterClose) {
   toast.warn(renderMessage(message, 'warning'), {
-    autoClose: 3000,
+    autoClose: 5000,
     onClose: afterClose,
     transition: Slide,
     position: 'top-right',
@@ -257,7 +257,7 @@ export function showNotyWarning(message, afterClose) {
 
 export function showNotyInfo(message, afterClose, id) {
   toast(renderMessage(message, 'info'), {
-    autoClose: 3000,
+    autoClose: 5000,
     onClose: afterClose,
     toastId: id,
     transition: Slide,
@@ -268,7 +268,7 @@ export function showNotyInfo(message, afterClose, id) {
 
 export function showNotySucess(message, afterClose, id) {
   toast(renderMessage(message, 'success'), {
-    autoClose: 3000,
+    autoClose: 5000,
     onClose: afterClose,
     toastId: id,
     transition: Slide,
