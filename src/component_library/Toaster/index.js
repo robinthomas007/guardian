@@ -14,6 +14,6 @@ export default () => (
     draggable={false}
     pauseOnFocusLoss={false}
     pauseOnHover={false}
-    limit={4}
+    limit={2}
   />
 );

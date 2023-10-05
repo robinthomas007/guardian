@@ -309,12 +309,10 @@ class AudioFilesPage extends Component {
     const { onUploadStart, onUploadProgress, onUploadComplete, t } = this.props;
     const removeTrack = this.removeTrack;
     const projectID = this.state.projectID ? this.state.projectID : '';
+    const toastId = toast(renderMessage(t('audio:UploadInProgress'), 'uploading', 'uploading', 1));
     files.map(file => {
       const uniqFileName = `${file.name}-${new Date().getTime()}/${trackID ? trackID : ''}`;
       onUploadStart(uniqFileName, trackID);
-      const toastId = toast(
-        renderMessage(t('audio:UploadInProgress'), 'uploading', 'uploading', 1),
-      );
 
       let formData = new FormData();
       // formData.append('file', renameFile(file, file.name.split(/\.(?=[^\.]+$)/)[0] + '.flac'));
