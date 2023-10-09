@@ -253,10 +253,7 @@ class Content extends Component {
         <ErrorBoundary>
           {/*<UploadProgressAlert uploads={this.props.uploads} />*/}
           <div className="row d-flex no-gutters">
-            <div
-              className="col-12"
-              style={{ marginTop: Object.keys(this.props.uploads).length > 0 ? '54px' : '0px' }}
-            >
+            <div className="col-12" style={{ marginTop: 0 }}>
               <Header
                 userData={this.state.user}
                 projectData={this.state.project}
