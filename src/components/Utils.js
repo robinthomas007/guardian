@@ -229,7 +229,8 @@ export function showNotyMaskWarning(message, afterClose, id) {
     onClose: afterClose,
     toastId: id,
     transition: Slide,
-    position: 'top-right',
+    style: { top: '3rem', width: '43vw' },
+    position: 'top-center',
     className: 'auto-error',
   });
 }
@@ -433,3 +434,7 @@ export function checkEmpty(obj) {
 }
 
 export const NO_LABEL_ID = '-2';
+
+export const formatProjectTitleToMasked = (isMasked, projectTitle) => {
+  return isMasked ? `${projectTitle}(Masked)` : projectTitle;
+};

@@ -11,6 +11,8 @@ import LoadingImg from 'component_library/LoadingImg';
 import ReactToPrint from 'react-to-print';
 import tiktok from '../../images/tiktok.png';
 
+import { formatProjectTitleToMasked } from 'components/Utils';
+
 const getCountries = countries => {
   return _.map(countries, 'name').toString();
 };
@@ -32,7 +34,7 @@ const renderStep1Table = (project, t) => {
       <tbody>
         <tr>
           <td>{project.upc}</td>
-          <td>{project.projectTitle}</td>
+          <td>{formatProjectTitleToMasked(project.isMasked, project.projectTitle)}</td>
           <td>{project.projectArtistName}</td>
           <td>{project.projectType}</td>
           <td>{project.projectReleasingLabel}</td>
@@ -492,7 +494,10 @@ const Audit = props => {
       <Modal.Header closeButton>
         <div className="row filter-head">
           <div className="col-3">
-            <h3>Audit Trail for {project ? project.projectTitle : ''}</h3>
+            <h3>
+              Audit Trail for{' '}
+              {project ? formatProjectTitleToMasked(project.isMasked, project.projectTitle) : ''}
+            </h3>
           </div>
           <div className="col-8">
             <div className="display-filter">
@@ -633,7 +638,9 @@ const Audit = props => {
                       <span className="round-step-circle">2</span>
                       On {moment(item.CreatedDateTime).format('DD/MM/YYYY')} at{' '}
                       {moment(item.CreatedDateTime).format('hh:mm a')}.{item.UserName} created a new
-                      project, {item.Project.projectTitle} with the following values:{' '}
+                      project,{' '}
+                      {formatProjectTitleToMasked(item.Project.isMasked, item.Project.projectTitle)}{' '}
+                      with the following values:{' '}
                     </div>
                     {renderStep1Table(item.Project, props.t)}
                   </div>
@@ -657,7 +664,9 @@ const Audit = props => {
                       step <span className="round-step-circle">3</span>
                       On {moment(item.CreatedDateTime).format('DD/MM/YYYY')} at{' '}
                       {moment(item.CreatedDateTime).format('hh:mm a')}.{item.UserName} saved Step 3
-                      for {item.Project.projectTitle} with the following values:{' '}
+                      for{' '}
+                      {formatProjectTitleToMasked(item.Project.isMasked, item.Project.projectTitle)}{' '}
+                      with the following values:{' '}
                     </div>
                     {renderStep3TrackTable(item.Discs)}
                   </div>
@@ -668,7 +677,9 @@ const Audit = props => {
                       step <span className="round-step-circle">4</span>
                       On {moment(item.CreatedDateTime).format('DD/MM/YYYY')} at{' '}
                       {moment(item.CreatedDateTime).format('hh:mm a')}.{item.UserName} saved Step 4
-                      for {item.Project.projectTitle} with the following values:{' '}
+                      for{' '}
+                      {formatProjectTitleToMasked(item.Project.isMasked, item.Project.projectTitle)}{' '}
+                      with the following values:{' '}
                     </div>
                     {renderStep4TrackTable(item.Discs, project, props.t)}
                   </div>
@@ -679,7 +690,9 @@ const Audit = props => {
                       step <span className="round-step-circle">5</span>
                       On {moment(item.CreatedDateTime).format('DD/MM/YYYY')} at{' '}
                       {moment(item.CreatedDateTime).format('hh:mm a')}.{item.UserName} saved Step 5
-                      for {item.Project.projectTitle} with the following values:{' '}
+                      for{' '}
+                      {formatProjectTitleToMasked(item.Project.isMasked, item.Project.projectTitle)}{' '}
+                      with the following values:{' '}
                     </div>
                     {renderStep5RightsTable(item.TerritorialRightsSets)}
                   </div>
@@ -690,7 +703,9 @@ const Audit = props => {
                       step <span className="round-step-circle">6</span>
                       On {moment(item.CreatedDateTime).format('DD/MM/YYYY')} at{' '}
                       {moment(item.CreatedDateTime).format('hh:mm a')}.{item.UserName} saved Step 6
-                      for {item.Project.projectTitle} with the following values:{' '}
+                      for{' '}
+                      {formatProjectTitleToMasked(item.Project.isMasked, item.Project.projectTitle)}{' '}
+                      with the following values:{' '}
                     </div>
                     {renderStep6BlockingPolicyTable(item.BlockingPolicySets, t)}
                   </div>
@@ -701,7 +716,8 @@ const Audit = props => {
                       step <span className="round-step-circle">7</span>
                       On {moment(item.CreatedDateTime).format('DD/MM/YYYY')} at{' '}
                       {moment(item.CreatedDateTime).format('hh:mm a')}.{item.UserName} has changed
-                      the status to {item.Project.projectStatus} for {item.Project.projectTitle}
+                      the status to {item.Project.projectStatus} for{' '}
+                      {formatProjectTitleToMasked(item.Project.isMasked, item.Project.projectTitle)}
                     </div>
                   </div>
                 )}

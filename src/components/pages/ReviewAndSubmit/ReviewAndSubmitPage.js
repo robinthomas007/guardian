@@ -15,7 +15,12 @@ import {
   isPreReleaseDate,
   NO_LABEL_ID,
 } from '../../Utils';
-import { showNotySucess, showNotyMaskWarning, getProjectReview } from 'components/Utils';
+import {
+  showNotySucess,
+  showNotyMaskWarning,
+  getProjectReview,
+  formatProjectTitleToMasked,
+} from 'components/Utils';
 import * as releaseAction from './../ReleaseInformation/releaseAction';
 
 // import * as reviewActions from '../../../actions/reviewActions';
@@ -355,7 +360,12 @@ class ReviewAndSubmitPage extends Component {
                     <label>{t('review:ProjectTitle')}:</label>
                     <span>
                       {' '}
-                      {this.props.data.Project ? this.props.data.Project.projectTitle : ''}
+                      {this.props.data.Project
+                        ? formatProjectTitleToMasked(
+                            this.props.data.Project.isMasked,
+                            this.props.data.Project.projectTitle,
+                          )
+                        : ''}
                     </span>
                   </div>
                   <div className="col-6">

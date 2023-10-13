@@ -3,7 +3,7 @@ import { Table } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import AdminStatusDropdown from '../pageComponents/AdminStatusDropdown';
 import LoadingImg from 'component_library/LoadingImg';
-import { showNotySucess, showNotyAutoError } from 'components/Utils';
+import { showNotySucess, showNotyAutoError, formatProjectTitleToMasked } from 'components/Utils';
 import moment from 'moment';
 import ExtendedTracks from './ExtendedTracks';
 import ConfirmModal from 'components/modals/ConfirmModal';
@@ -352,7 +352,9 @@ class FindProjectDataTable extends Component {
               <td onClick={() => this.handleRowClick(project.projectID)}>
                 {moment.utc(project.projectLastModified).format('MM-DD-YYYY hh:mm A')} UTC
               </td>
-              <td onClick={() => this.handleRowClick(project.projectID)}>{project.projectTitle}</td>
+              <td onClick={() => this.handleRowClick(project.projectID)}>
+                {formatProjectTitleToMasked(project.isMasked, project.projectTitle)}
+              </td>
               <td onClick={() => this.handleRowClick(project.projectID)}>
                 {project.projectArtistName}
               </td>

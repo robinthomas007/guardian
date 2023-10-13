@@ -10,6 +10,7 @@ import _ from 'lodash';
 import { withTranslation } from 'react-i18next';
 import { compose } from 'redux';
 import LanguageDropdown from '../../common/LanguageDropdown';
+import { formatProjectTitleToMasked } from '../../../components/Utils';
 
 let interval = null;
 const hexArray = [
@@ -462,7 +463,12 @@ class Header extends Component {
             <div className="col-10 align-self-start">
               <h1>
                 {this.props.projectData.Project && this.props.projectData.Project.projectTitle
-                  ? `${this.props.projectData.Project.projectArtistName} - ${this.props.projectData.Project.projectTitle}`
+                  ? `${
+                      this.props.projectData.Project.projectArtistName
+                    } - ${formatProjectTitleToMasked(
+                      this.props.projectData.Project.isMasked,
+                      this.props.projectData.Project.projectTitle,
+                    )}`
                   : this.getDefaultPageTitle(this.props.t('header:NewProject'))}
               </h1>
             </div>
@@ -535,24 +541,33 @@ class Header extends Component {
                         <strong className="bold">{noti.AssignedBy}</strong>{' '}
                         {t('header:leftComment')} <strong className="bold">{noti.Step} </strong>
                         {t('header:forTheProject')}
-                        <strong className="bold"> "{noti.ProjectTitle}" </strong> (
-                        {moment.utc(noti.DateCreated).fromNow()})
+                        <strong className="bold">
+                          {' '}
+                          "{formatProjectTitleToMasked(noti.IsMasked, noti.ProjectTitle)}"{' '}
+                        </strong>{' '}
+                        ({moment.utc(noti.DateCreated).fromNow()})
                       </p>
                     )}
                     {noti.NotificationType === 'Audio' && (
                       <p>
                         <strong className="bold">{noti.AssignedBy}</strong>{' '}
                         {t('header:uploadAudioFiles')} {t('header:forTheProject')}
-                        <strong className="bold"> "{noti.ProjectTitle}" </strong> (
-                        {moment.utc(noti.DateCreated).fromNow()})
+                        <strong className="bold">
+                          {' '}
+                          "{formatProjectTitleToMasked(noti.IsMasked, noti.ProjectTitle)}"{' '}
+                        </strong>{' '}
+                        ({moment.utc(noti.DateCreated).fromNow()})
                       </p>
                     )}
                     {noti.NotificationType === 'Submit' && (
                       <p>
                         <strong className="bold">{noti.AssignedBy}</strong>{' '}
                         {t('header:completedProject')}
-                        <strong className="bold"> "{noti.ProjectTitle}" </strong> (
-                        {moment.utc(noti.DateCreated).fromNow()})
+                        <strong className="bold">
+                          {' '}
+                          "{formatProjectTitleToMasked(noti.IsMasked, noti.ProjectTitle)}"{' '}
+                        </strong>{' '}
+                        ({moment.utc(noti.DateCreated).fromNow()})
                       </p>
                     )}
                     {noti.NotificationType === 'Tracks' && (
@@ -560,24 +575,33 @@ class Header extends Component {
                         <strong className="bold">{noti.AssignedBy}</strong>{' '}
                         {t('header:completedTracks')} <strong className="bold">{noti.Step} </strong>
                         {t('header:forTheProject')}
-                        <strong className="bold"> "{noti.ProjectTitle}" </strong> (
-                        {moment.utc(noti.DateCreated).fromNow()})
+                        <strong className="bold">
+                          {' '}
+                          "{formatProjectTitleToMasked(noti.IsMasked, noti.ProjectTitle)}"{' '}
+                        </strong>{' '}
+                        ({moment.utc(noti.DateCreated).fromNow()})
                       </p>
                     )}
                     {noti.NotificationType === 'Masking' && (
                       <p>
                         <strong className="bold">{noti.AssignedBy}</strong>{' '}
                         {t('header:hasOptedMask')}
-                        <strong className="bold"> "{noti.ProjectTitle}" </strong> (
-                        {moment.utc(noti.DateCreated).fromNow()})
+                        <strong className="bold">
+                          {' '}
+                          "{formatProjectTitleToMasked(noti.IsMasked, noti.ProjectTitle)}"{' '}
+                        </strong>{' '}
+                        ({moment.utc(noti.DateCreated).fromNow()})
                       </p>
                     )}
                     {noti.NotificationType === 'Project Save' && (
                       <p>
                         <strong className="bold">{noti.AssignedBy}</strong> {t('header:hasAdded')}{' '}
                         {noti.AssignedTo} {t('header:toTheProject')}
-                        <strong className="bold"> "{noti.ProjectTitle}" </strong> (
-                        {moment.utc(noti.DateCreated).fromNow()})
+                        <strong className="bold">
+                          {' '}
+                          "{formatProjectTitleToMasked(noti.IsMasked, noti.ProjectTitle)}"{' '}
+                        </strong>{' '}
+                        ({moment.utc(noti.DateCreated).fromNow()})
                       </p>
                     )}
                   </div>
