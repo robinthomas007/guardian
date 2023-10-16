@@ -229,7 +229,6 @@ export function showNotyMaskWarning(message, afterClose, id) {
     onClose: afterClose,
     toastId: id,
     transition: Slide,
-    style: { top: '3rem', width: '43vw' },
     position: 'top-center',
     className: 'auto-error',
   });
