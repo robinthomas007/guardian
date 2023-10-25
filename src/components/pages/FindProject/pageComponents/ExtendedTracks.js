@@ -119,6 +119,8 @@ const Tracks = ({
           <th>{t('track:Deliver')}</th>
           <th className="status text-center">{t('track:HasRights')}</th>
           <th>{t('track:Deliver')}?</th>
+          <th>under 30 seconds?</th>
+          {/*under 30 sec? to convert  all languages and place it in global file   */}
         </tr>
       </thead>
       <tbody>
@@ -178,6 +180,13 @@ const Tracks = ({
                     onChange={() => onIsPublishToggle(project, track.trackID)}
                     disabled={project.status === 'In Progress'}
                   />
+                </td>
+                <td className="status">
+                  {track.isLessThan30Secs ? (
+                    <i className="material-icons warning">report_problem</i>
+                  ) : (
+                    <i className="material-icons success">verified_user</i>
+                  )}
                 </td>
               </tr>
               {extendedTrackIds.includes(track.trackID) ? (

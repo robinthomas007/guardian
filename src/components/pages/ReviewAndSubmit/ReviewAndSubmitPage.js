@@ -23,7 +23,7 @@ import {
 } from 'components/Utils';
 import * as releaseAction from './../ReleaseInformation/releaseAction';
 
-// import * as reviewActions from '../../../actions/reviewActions';
+import * as reviewActions from '../../../actions/reviewActions';
 import moment from 'moment';
 import { withTranslation } from 'react-i18next';
 import { compose } from 'redux';
@@ -201,6 +201,7 @@ class ReviewAndSubmitPage extends Component {
       })
       .then(responseJSON => {
         this.setState({ showloader: false });
+        this.handlePublish();
         if (responseJSON.IsIsrcSuperConfidential) {
           showNotyMaskWarning(this.props.t('review:SuperConfidential'));
         }
@@ -217,9 +218,24 @@ class ReviewAndSubmitPage extends Component {
       });
   };
 
-  // handlePublish = () => {
-  //   this.props.handlePublish({ ProjectID: this.props.data.Project.projectID });
-  // };
+  handlePublish = () => {
+    const languageCode = localStorage.getItem('languageCode') || 'en';
+    const initialState = {
+      itemsPerPage: '10',
+      pageNumber: '1',
+      searchTerm: '',
+      filter: {},
+    };
+    this.props.handlePublish(
+      {
+        ProjectIds: [this.props.data.Project.projectID],
+        PublishTrackIds: [],
+        IsAutoPublish: true,
+        languageCode: languageCode,
+      },
+      initialState,
+    );
+  };
 
   getStepNumber() {
     let stepNumber = 7;
@@ -618,6 +634,7 @@ class ReviewAndSubmitPage extends Component {
 
 const mapDispatchToProps = dispatch => ({
   getCisCoverArt: id => dispatch(releaseAction.getCisCoverArt(id)),
+  handlePublish: (val, searchData) => dispatch(reviewActions.handlePublish(val, searchData)),
 });
 
 const mapStateToProps = state => ({});
