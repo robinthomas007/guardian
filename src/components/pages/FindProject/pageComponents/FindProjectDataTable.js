@@ -45,6 +45,13 @@ class FindProjectDataTable extends Component {
       <i className="material-icons">block</i>
     );
   };
+  checkProjectStepAssetStatus = stepStatus => {
+    return stepStatus ? (
+      <i className="material-icons success">verified_user</i>
+    ) : (
+      <i className="material-icons">block</i>
+    );
+  };
 
   handleRowClick = projectID => {
     this.props.history.push('/reviewSubmit/' + projectID);
@@ -311,6 +318,15 @@ class FindProjectDataTable extends Component {
       });
     }
   };
+  hasShortTracksInMultipleDiscs = discs => {
+    for (let disc of discs) {
+      // Use the some() method to check if any track in the disc has isLessThan30Secs true
+      if (disc.Tracks.some(track => track.isLessThan30Secs)) {
+        return false;
+      }
+    }
+    return true;
+  };
 
   renderProjects() {
     if (this.props.data.Projects) {
@@ -329,6 +345,11 @@ class FindProjectDataTable extends Component {
         const tracksCount = project.Discs.reduce((acc, disc) => {
           return acc + disc.Tracks.length;
         }, 0);
+        console.log('project index', i);
+        console.log('project disc number', tracksCount);
+        const hasShortTracks = this.hasShortTracksInMultipleDiscs(
+          this.props.data.Projects[i].Discs,
+        );
 
         return (
           <React.Fragment key={i}>
@@ -411,7 +432,7 @@ class FindProjectDataTable extends Component {
                 onClick={() => this.handleRowClick(project.projectID)}
                 className={`status text-center ${colour}`}
               >
-                {this.checkProjectStepStatus(project.isAudioFilesComplete)}
+                {this.checkProjectStepAssetStatus(hasShortTracks)}
               </td>
               <td
                 onClick={() => this.handleRowClick(project.projectID)}

@@ -104,7 +104,6 @@ const Tracks = ({
 }) => {
   const { t } = useTranslation();
 
-  console.log(project, 'projectproject232');
   return (
     <Table className="ext-tracks-table" responsive>
       <thead>
@@ -118,9 +117,8 @@ const Tracks = ({
           <th>{t('track:ReleaseDate')}</th>
           <th>{t('track:Deliver')}</th>
           <th className="status text-center">{t('track:HasRights')}</th>
-          <th>{'Asset'}</th>
+          <th>{t('track:Asset')}</th>
           <th>{t('track:Deliver')}?</th>
-          {/*under 30 sec? to convert  all languages and place it in global file   */}
         </tr>
       </thead>
       <tbody>

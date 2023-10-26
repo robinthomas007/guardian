@@ -35,5 +35,6 @@
   "Deliver": "Entregar",
   "Partner": "Pareja",
   "FirstDeliveryDate": "Primera fecha de entrega",
-  "LastDeliveryDate": "Última fecha de entrega"
+  "LastDeliveryDate": "Última fecha de entrega",
+  "Asset": "Activo"
 }

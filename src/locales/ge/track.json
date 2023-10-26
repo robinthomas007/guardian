@@ -35,5 +35,6 @@
   "Deliver": "Liefern",
   "Partner": "Partner",
   "FirstDeliveryDate": "Erster Liefertermin",
-  "LastDeliveryDate": "Letztes Lieferdatum"
+  "LastDeliveryDate": "Letztes Lieferdatum",
+  "Asset": "Vermögenswert"
 }

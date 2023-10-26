@@ -35,5 +35,6 @@
   "Deliver": "Deliver",
   "Partner": "Partner",
   "FirstDeliveryDate": "First Delivery Date",
-  "LastDeliveryDate": "Last Delivery Date"
+  "LastDeliveryDate": "Last Delivery Date",
+  "Asset": "Asset"
 }
