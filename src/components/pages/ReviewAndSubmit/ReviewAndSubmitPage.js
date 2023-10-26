@@ -14,6 +14,8 @@ import {
   convertToLocaleTime,
   isPreReleaseDate,
   NO_LABEL_ID,
+  compareJson,
+  formatDiscData,
 } from '../../Utils';
 import {
   showNotySucess,
@@ -201,10 +203,10 @@ class ReviewAndSubmitPage extends Component {
       })
       .then(responseJSON => {
         this.setState({ showloader: false });
-        this.handlePublish();
         if (responseJSON.IsIsrcSuperConfidential) {
           showNotyMaskWarning(this.props.t('review:SuperConfidential'));
         }
+        this.checkEligibilityForAutoPublish();
         setTimeout(() => {
           showNotySucess(this.props.t('review:NotyInfo'), () => {
             return this.props.history.push({ pathname: '/findProject/' });
@@ -218,6 +220,42 @@ class ReviewAndSubmitPage extends Component {
       });
   };
 
+  checkEligibilityForAutoPublish = () => {
+    if (!this.props.data.Project.upc) {
+      return false;
+    }
+    const fetchHeaders = new Headers({
+      'Content-Type': 'application/json',
+      Authorization: sessionStorage.getItem('accessToken'),
+    });
+
+    const fetchBody = JSON.stringify({
+      upc: this.props.data.Project.upc,
+      mediaType: this.props.data.Project.mediaType,
+    });
+
+    fetch(window.env.api.url + '/project/upc', {
+      method: 'POST',
+      headers: fetchHeaders,
+      body: fetchBody,
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(responseJSON => {
+        const hasProjectModified = compareJson(
+          formatDiscData(responseJSON.ExDiscs),
+          formatDiscData(this.props.data.Discs),
+        );
+        if (hasProjectModified) {
+          this.handlePublish();
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+
   handlePublish = () => {
     const languageCode = localStorage.getItem('languageCode') || 'en';
     const initialState = {
@@ -226,10 +264,15 @@ class ReviewAndSubmitPage extends Component {
       searchTerm: '',
       filter: {},
     };
+
+    const allTrackIDs = this.props.data.Discs.flatMap(disc =>
+      disc.Tracks.map(track => track.trackID),
+    );
+
     this.props.handlePublish(
       {
         ProjectIds: [this.props.data.Project.projectID],
-        PublishTrackIds: [],
+        PublishTrackIds: allTrackIDs, //this.props.data.Discs,
         IsAutoPublish: true,
         languageCode: languageCode,
       },

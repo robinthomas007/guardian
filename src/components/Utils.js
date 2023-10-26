@@ -437,3 +437,23 @@ export const NO_LABEL_ID = '-2';
 export const formatProjectTitleToMasked = (isMasked, projectTitle) => {
   return isMasked ? `${projectTitle}(Masked)` : projectTitle;
 };
+
+export const formatDiscData = discs => {
+  const trackLabel = discs[0].Tracks ? 'Tracks' : 'ExTracks';
+  return discs.map(disc => {
+    return {
+      discNumber: disc.discNumber,
+      Tracks: disc[trackLabel].map(track => {
+        return {
+          trackTitle: track.trackTitle,
+          isrc: track.isrc,
+          artist: track.artist,
+        };
+      }),
+    };
+  });
+};
+
+export const compareJson = (obj1, obj2) => {
+  return JSON.stringify(obj1) === JSON.stringify(obj2);
+};
