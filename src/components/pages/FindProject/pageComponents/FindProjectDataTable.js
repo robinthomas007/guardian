@@ -49,7 +49,7 @@ class FindProjectDataTable extends Component {
     return stepStatus ? (
       <i className="material-icons success">verified_user</i>
     ) : (
-      <i className="material-icons">block</i>
+      <i className="material-icons warning">report_problem</i>
     );
   };
 

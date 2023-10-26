@@ -206,7 +206,7 @@ class ReviewAndSubmitPage extends Component {
         if (responseJSON.IsIsrcSuperConfidential) {
           showNotyMaskWarning(this.props.t('review:SuperConfidential'));
         }
-        this.checkEligibilityForAutoPublish();
+        if (this.props.data.Project.upc) this.checkEligibilityForAutoPublish();
         setTimeout(() => {
           showNotySucess(this.props.t('review:NotyInfo'), () => {
             return this.props.history.push({ pathname: '/findProject/' });
