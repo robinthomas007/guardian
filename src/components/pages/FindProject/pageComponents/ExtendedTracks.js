@@ -116,8 +116,8 @@ const Tracks = ({
           {project.mediaType !== 'Video' && <th>{t('track:Single')}</th>}
           <th>{t('track:ReleaseDate')}</th>
           <th>{t('track:Deliver')}</th>
+          <th className="status text-center">{t('track:Asset')}</th>
           <th className="status text-center">{t('track:HasRights')}</th>
-          <th>{t('track:Asset')}</th>
           <th>{t('track:Deliver')}?</th>
         </tr>
       </thead>
@@ -166,14 +166,14 @@ const Tracks = ({
                   )}
                 </td>
                 <td className="status text-center">
-                  {track.nonExclusive ? (
+                  {track.isLessThan30Secs ? (
                     <i className="material-icons warning">report_problem</i>
                   ) : (
                     <i className="material-icons success">verified_user</i>
                   )}
                 </td>
-                <td className="status">
-                  {track.isLessThan30Secs ? (
+                <td className="status text-center">
+                  {track.nonExclusive ? (
                     <i className="material-icons warning">report_problem</i>
                   ) : (
                     <i className="material-icons success">verified_user</i>
